@@ -1,0 +1,16 @@
+//
+//  MediaViewController.h
+//  Taxinomes
+//
+//  Created by mac adam on 13/10/11.
+//  Copyright 2011 APDL. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface MediaViewController : UITableViewController{
+    IBOutlet UITableView *mediaTable;
+    NSMutableArray *listOfItems;
+}
+
+@end

@@ -1,0 +1,317 @@
+K 25
+svn:wc:ra_dav:version-url
+V 27
+/!svn/ver/1278/trunk/c_tidy
+END
+mappedio.c
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/!svn/ver/1278/trunk/c_tidy/mappedio.c
+END
+parser.h
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/!svn/ver/1278/trunk/c_tidy/parser.h
+END
+localize.c
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/!svn/ver/1278/trunk/c_tidy/localize.c
+END
+attrs.h
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/!svn/ver/1278/trunk/c_tidy/attrs.h
+END
+mappedio.h
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/!svn/ver/1278/trunk/c_tidy/mappedio.h
+END
+tidyenum.h
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/!svn/ver/1278/trunk/c_tidy/tidyenum.h
+END
+config.c
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/!svn/ver/1278/trunk/c_tidy/config.c
+END
+forward.h
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/!svn/ver/1278/trunk/c_tidy/forward.h
+END
+config.h
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/!svn/ver/1278/trunk/c_tidy/config.h
+END
+tagask.c
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/!svn/ver/1278/trunk/c_tidy/tagask.c
+END
+charsets.c
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/!svn/ver/1278/trunk/c_tidy/charsets.c
+END
+istack.c
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/!svn/ver/1278/trunk/c_tidy/istack.c
+END
+tidy.h
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/!svn/ver/1278/trunk/c_tidy/tidy.h
+END
+charsets.h
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/!svn/ver/1278/trunk/c_tidy/charsets.h
+END
+streamio.c
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/!svn/ver/1278/trunk/c_tidy/streamio.c
+END
+streamio.h
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/!svn/ver/1278/trunk/c_tidy/streamio.h
+END
+message.h
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/!svn/ver/1278/trunk/c_tidy/message.h
+END
+platform.h
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/!svn/ver/1278/trunk/c_tidy/platform.h
+END
+win32tc.c
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/!svn/ver/1278/trunk/c_tidy/win32tc.c
+END
+tags.c
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/!svn/ver/1278/trunk/c_tidy/tags.c
+END
+win32tc.h
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/!svn/ver/1278/trunk/c_tidy/win32tc.h
+END
+tidylib.c
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/!svn/ver/1278/trunk/c_tidy/tidylib.c
+END
+access.c
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/!svn/ver/1278/trunk/c_tidy/access.c
+END
+tags.h
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/!svn/ver/1278/trunk/c_tidy/tags.h
+END
+iconvtc.c
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/!svn/ver/1278/trunk/c_tidy/iconvtc.c
+END
+access.h
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/!svn/ver/1278/trunk/c_tidy/access.h
+END
+tidy-int.h
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/!svn/ver/1278/trunk/c_tidy/tidy-int.h
+END
+fileio.c
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/!svn/ver/1278/trunk/c_tidy/fileio.c
+END
+attrask.c
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/!svn/ver/1278/trunk/c_tidy/attrask.c
+END
+iconvtc.h
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/!svn/ver/1278/trunk/c_tidy/iconvtc.h
+END
+attrget.c
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/!svn/ver/1278/trunk/c_tidy/attrget.c
+END
+buffio.c
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/!svn/ver/1278/trunk/c_tidy/buffio.c
+END
+tmbstr.c
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/!svn/ver/1278/trunk/c_tidy/tmbstr.c
+END
+fileio.h
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/!svn/ver/1278/trunk/c_tidy/fileio.h
+END
+pprint.c
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/!svn/ver/1278/trunk/c_tidy/pprint.c
+END
+attrdict.c
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/!svn/ver/1278/trunk/c_tidy/attrdict.c
+END
+lexer.c
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/!svn/ver/1278/trunk/c_tidy/lexer.c
+END
+buffio.h
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/!svn/ver/1278/trunk/c_tidy/buffio.h
+END
+tmbstr.h
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/!svn/ver/1278/trunk/c_tidy/tmbstr.h
+END
+pprint.h
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/!svn/ver/1278/trunk/c_tidy/pprint.h
+END
+clean.c
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/!svn/ver/1278/trunk/c_tidy/clean.c
+END
+attrdict.h
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/!svn/ver/1278/trunk/c_tidy/attrdict.h
+END
+lexer.h
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/!svn/ver/1278/trunk/c_tidy/lexer.h
+END
+entities.c
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/!svn/ver/1278/trunk/c_tidy/entities.c
+END
+utf8.c
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/!svn/ver/1278/trunk/c_tidy/utf8.c
+END
+clean.h
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/!svn/ver/1278/trunk/c_tidy/clean.h
+END
+entities.h
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/!svn/ver/1278/trunk/c_tidy/entities.h
+END
+alloc.c
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/!svn/ver/1278/trunk/c_tidy/alloc.c
+END
+version.h
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/!svn/ver/1278/trunk/c_tidy/version.h
+END
+utf8.h
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/!svn/ver/1278/trunk/c_tidy/utf8.h
+END
+parser.c
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/!svn/ver/1278/trunk/c_tidy/parser.c
+END
+attrs.c
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/!svn/ver/1278/trunk/c_tidy/attrs.c
+END
