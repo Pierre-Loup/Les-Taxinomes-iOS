@@ -1,112 +1,0 @@
-10
-
-dir
-0
-https://les-taxinomes-iphone.googlecode.com/svn/Taxinomes/xib/fr.lproj
-https://les-taxinomes-iphone.googlecode.com/svn
-add
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-b286ee86-7510-74a6-7b1f-938bd5384fbc
-
-MainWIndows.xib
-file
-
-
-
-add
-
-HomeView.xib
-file
-
-
-
-add
-
-MediaListCellView.xib
-file
-
-
-
-add
-
-AccountView.xib
-file
-
-
-
-add
-
-LegalInformationsView.xib
-file
-
-
-
-add
-
-MediaFullSizeView.xib
-file
-
-
-
-add
-
-Photo.xib
-file
-
-
-
-add
-
-MediasListView.xib
-file
-
-
-
-add
-
-NavigateView.xib
-file
-
-
-
-add
-
-MainWindow.xib
-file
-
-
-
-add
-
-SiteTaxinomes.xib
-file
-
-
-
-add
-
-MediaDetailView.xib
-file
-
-
-
-add
-
