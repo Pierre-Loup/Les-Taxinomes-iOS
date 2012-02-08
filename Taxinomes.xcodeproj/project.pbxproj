@@ -91,7 +91,6 @@
 		C885AD1514D0B304002ECCD0 /* MediaListCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C885AD1714D0B304002ECCD0 /* MediaListCellView.xib */; };
 		C885AD1914D0B328002ECCD0 /* MediaFullSizeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C885AD1B14D0B328002ECCD0 /* MediaFullSizeView.xib */; };
 		C885AD2214D0B374002ECCD0 /* MediaFullSizeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C885AD1B14D0B328002ECCD0 /* MediaFullSizeView.xib */; };
-		C885B25614D35BF9001D69A5 /* GridCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C885B25514D35BF9001D69A5 /* GridCellView.xib */; };
 		C885CC0714D17D82005B42CD /* tabbar_home.png in Resources */ = {isa = PBXBuildFile; fileRef = C885CC0514D17D82005B42CD /* tabbar_home.png */; };
 		C885CC0814D17D82005B42CD /* tabbar_account.png in Resources */ = {isa = PBXBuildFile; fileRef = C885CC0614D17D82005B42CD /* tabbar_account.png */; };
 		C8865AE114879D1B0059AAD6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C8865ADF14879D1B0059AAD6 /* Default.png */; };
@@ -104,6 +103,7 @@
 		C888EF5A148EC5AD000A8F52 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C888EF58148EC5AD000A8F52 /* Icon@2x.png */; };
 		C888EF60148EC603000A8F52 /* LegalInformationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C888EF5E148EC603000A8F52 /* LegalInformationsViewController.m */; };
 		C88942301486D3B5004DA238 /* lpd_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C889422F1486D3B5004DA238 /* lpd_logo.png */; };
+		C88953FE14D96F6100754C40 /* GridCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C88953FC14D96F6100754C40 /* GridCellView.xib */; };
 		C898616714C8CA5D00C237A0 /* MainWIndows.xib in Resources */ = {isa = PBXBuildFile; fileRef = C898616514C8CA5D00C237A0 /* MainWIndows.xib */; };
 		C898616914C8CA8000C237A0 /* MediasListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C898616B14C8CA8000C237A0 /* MediasListView.xib */; };
 		C898616D14C8CA9A00C237A0 /* MediaDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C898616F14C8CA9A00C237A0 /* MediaDetailView.xib */; };
@@ -273,7 +273,6 @@
 		C8858A7914CEDFF0008FEB13 /* lena.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lena.png; sourceTree = "<group>"; };
 		C885AD1814D0B31B002ECCD0 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/MediaListCellView.xib; sourceTree = "<group>"; };
 		C885AD1C14D0B334002ECCD0 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/MediaFullSizeView.xib; sourceTree = "<group>"; };
-		C885B25514D35BF9001D69A5 /* GridCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GridCellView.xib; sourceTree = "<group>"; };
 		C885CC0514D17D82005B42CD /* tabbar_home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbar_home.png; sourceTree = "<group>"; };
 		C885CC0614D17D82005B42CD /* tabbar_account.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbar_account.png; sourceTree = "<group>"; };
 		C8865ADF14879D1B0059AAD6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -288,6 +287,7 @@
 		C888EF5D148EC603000A8F52 /* LegalInformationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LegalInformationsViewController.h; sourceTree = "<group>"; };
 		C888EF5E148EC603000A8F52 /* LegalInformationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LegalInformationsViewController.m; sourceTree = "<group>"; };
 		C889422F1486D3B5004DA238 /* lpd_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lpd_logo.png; sourceTree = "<group>"; };
+		C88953FD14D96F6100754C40 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/GridCellView.xib; sourceTree = "<group>"; };
 		C898616814C8CA6F00C237A0 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/MainWIndows.xib; sourceTree = "<group>"; };
 		C898616C14C8CA9200C237A0 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/MediasListView.xib; sourceTree = "<group>"; };
 		C898617014C8CAA100C237A0 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/MediaDetailView.xib; sourceTree = "<group>"; };
@@ -704,8 +704,8 @@
 		C885B25414D35A3E001D69A5 /* Custom Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C88953FC14D96F6100754C40 /* GridCellView.xib */,
 				C885AD1714D0B304002ECCD0 /* MediaListCellView.xib */,
-				C885B25514D35BF9001D69A5 /* GridCellView.xib */,
 			);
 			name = "Custom Cells";
 			sourceTree = "<group>";
@@ -813,8 +813,8 @@
 				C8A1B6A514D186A900CD2AE4 /* AccountView.xib in Resources */,
 				C8A1B6A614D186A900CD2AE4 /* HomeView.xib in Resources */,
 				C8A1B6A714D186A900CD2AE4 /* NavigateView.xib in Resources */,
-				C885B25614D35BF9001D69A5 /* GridCellView.xib in Resources */,
 				C8D19AFD14D74965006A5552 /* MediaUploadFormView.xib in Resources */,
+				C88953FE14D96F6100754C40 /* GridCellView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -954,6 +954,14 @@
 				C885AD1C14D0B334002ECCD0 /* fr */,
 			);
 			name = MediaFullSizeView.xib;
+			sourceTree = "<group>";
+		};
+		C88953FC14D96F6100754C40 /* GridCellView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C88953FD14D96F6100754C40 /* fr */,
+			);
+			name = GridCellView.xib;
 			sourceTree = "<group>";
 		};
 		C898616514C8CA5D00C237A0 /* MainWIndows.xib */ = {

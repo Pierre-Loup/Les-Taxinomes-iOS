@@ -35,8 +35,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    ConnectionManager *connectionManager = [ConnectionManager sharedConnectionManager];
-    [connectionManager authWithLogin:@"pierre" password:@"crLu2Vzi"];
     
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Connexion" style:UIBarButtonItemStylePlain target:self action:@selector(signinButtonAction:)];
     [self.navigationItem setLeftBarButtonItem:leftButton animated:YES];
@@ -64,6 +62,8 @@
 
 -(IBAction)signinButtonAction:(id)sender{
     NSLog(@"%@",@"signinButtonAction");
+    ConnectionManager *connectionManager = [ConnectionManager sharedConnectionManager];
+    [connectionManager authWithLogin:@"pierre" password:@"crLu2Vzi"];
 }
 
 - (IBAction)cameraButtonAction:(id) sender{

@@ -17,11 +17,11 @@ static NSString *kHelloWorld = @"Hello, World";
 static NSString *kIkooLol = @"Kikoo lol";
 static NSString *kNoDescription = @"Pas de description";
 
-static NSString *kHost = @"www.lestaxinomes.org";
-static NSString *kXMLRCPWebServiceURL = @"http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur";
+//static NSString *kHost = @"www.lestaxinomes.org";
+//static NSString *kXMLRCPWebServiceURL = @"http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur";
 
-//static NSString *kHost = @"taxinomes.arscenic.org";
-//static NSString *kXMLRCPWebServiceURL = @"http://taxinomes.arscenic.org/spip.php?action=xmlrpc_serveur";
+static NSString *kHost = @"taxinomes.arscenic.org";
+static NSString *kXMLRCPWebServiceURL = @"http://taxinomes.arscenic.org/spip.php?action=xmlrpc_serveur";
 
 static NSInteger kNbMediasStep = 10;
 //XML-RPC

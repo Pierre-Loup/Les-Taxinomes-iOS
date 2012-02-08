@@ -162,7 +162,7 @@ static ConnectionManager *instance = nil;
 - (Author *)authWithLogin:(NSString *) login password:(NSString *) password{
     
     XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
-    NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:login, password, nil] forKeys:[NSArray arrayWithObjects:@"login", @"pass", nil]];
+    NSDictionary *args = [NSArray arrayWithObjects:login, password, nil];
     [xmlrpcRequest setMethod:@"spip.auth" withObject:args];
     id result = [self executeXMLRPCRequest:xmlrpcRequest];
     [xmlrpcRequest release];
