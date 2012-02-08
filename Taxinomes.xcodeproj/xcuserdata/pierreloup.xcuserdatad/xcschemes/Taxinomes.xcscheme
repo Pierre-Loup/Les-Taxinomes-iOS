@@ -15,7 +15,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "37D2E7D8144709ED0044EC3A"
                BuildableName = "Taxinomes.app"
-               BlueprintName = "Taxinomes"
+               BlueprintName = "Les Taxinomes"
                ReferencedContainer = "container:Taxinomes.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -43,7 +43,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "37D2E7D8144709ED0044EC3A"
             BuildableName = "Taxinomes.app"
-            BlueprintName = "Taxinomes"
+            BlueprintName = "Les Taxinomes"
             ReferencedContainer = "container:Taxinomes.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -61,7 +61,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "37D2E7D8144709ED0044EC3A"
             BuildableName = "Taxinomes.app"
-            BlueprintName = "Taxinomes"
+            BlueprintName = "Les Taxinomes"
             ReferencedContainer = "container:Taxinomes.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -79,7 +79,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "37D2E7D8144709ED0044EC3A"
             BuildableName = "Taxinomes.app"
-            BlueprintName = "Taxinomes"
+            BlueprintName = "Les Taxinomes"
             ReferencedContainer = "container:Taxinomes.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
