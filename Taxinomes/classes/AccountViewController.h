@@ -28,12 +28,17 @@
 @interface AccountViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate> {
     UITableView *_tableView;
     UITableViewCell *_gridCell;
+    UIView *_accountSigninSubview;
 }
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (retain, nonatomic) IBOutlet UITableViewCell *gridCell;
+@property (retain, nonatomic) IBOutlet UIView *accountSigninSubview;
 
--(IBAction)signinButtonAction:(id)sender;
+- (IBAction)signinButtonAction:(id) sender;
+- (IBAction)forgotenPasswordButtonAction:(id) sender;
+- (IBAction)submitSigninButtonAction:(id) sender;
+- (IBAction)signupButtonAction:(id) sender;
 - (IBAction)cameraButtonAction:(id) sender;
 
 @end

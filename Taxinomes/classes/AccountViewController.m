@@ -29,6 +29,7 @@
 @implementation AccountViewController
 @synthesize tableView = _tableView;
 @synthesize gridCell = _gridCell;
+@synthesize accountSigninSubview = _accountSigninSubview;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -79,12 +80,22 @@
 
 -(IBAction)signinButtonAction:(id)sender{
     NSLog(@"%@",@"signinButtonAction");
+    [[NSBundle mainBundle] loadNibNamed:@"AccountSigninSubview" owner:self options:nil];
+    [self.view addSubview: self.accountSigninSubview];    
+}
+- (IBAction)forgotenPasswordButtonAction:(id) sender{
+    NSLog(@"%@",@"forgotenPasswordButtonAction");
+}
+- (IBAction)submitSigninButtonAction:(id) sender{
+    NSLog(@"%@",@"submitSigninButtonAction");
     ConnectionManager *connectionManager = [ConnectionManager sharedConnectionManager];
     [connectionManager authWithLogin:@"pierre" password:@"crLu2Vzi"];
 }
-
+- (IBAction)signupButtonAction:(id) sender{
+    NSLog(@"%@",@"signupButtonAction");
+}
 - (IBAction)cameraButtonAction:(id) sender{
-    NSLog(@"%@",@"cameraButtonActionn");
+    NSLog(@"%@",@"cameraButtonAction");
 }
 
 #pragma mark - Table view data source
