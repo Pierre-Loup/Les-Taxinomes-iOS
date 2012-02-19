@@ -16,10 +16,12 @@ including :
 
 - GHUnit and Andrew Donoho's Reachability class.  (Taxinomes/classes/Reachability/)
 - All-Seeing Interactive's ASIHTTPRequest classes.   (Taxinomes/classes/ASI/)
-- World Wide Web Consortium's tidy library.  (Taxinomes/classes/c_tidy)
-- Divisible by Zero's Cocoa XML-RPC Client Framework (Taxinomes/classes/XML-RPC)
+- World Wide Web Consortium's tidy library.  (Taxinomes/classes/c_tidy/)
+- Divisible by Zero's Cocoa XML-RPC Client Framework (Taxinomes/classes/XML-RPC/)
 - toxicsoftware.com's CTidy class. (Taxinomes/classes/)
 - Michael Waterfall and Danilo Ercoli's NSString+XMLExtensions class (Taxinomes/classes/)
+- Gustavo Pelosi Ambrozio's NSMutableDictionary+ImageMetadata class (Taxinomes/classes/GusUtils/)
+- Matt Gallagher's NSData+Base64 class (Taxinomes/classes/)
 
 Please consult their respective headers for the terms of their individual licenses.
 

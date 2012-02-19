@@ -13,32 +13,54 @@
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
  
- Foobar is distributed in the hope that it will be useful,
+ This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
  
  You should have received a copy of the GNU General Public License
- along with Foobar.  If not, see <http://www.gnu.org/licenses/>
+ along with this program.  If not, see <http://www.gnu.org/licenses/>
  
  */
 
 #import <UIKit/UIKit.h>
+#import "MediaManager.h"
+#import "ConnectionManager.h"
+#import "Author.h"
 
-@interface AccountViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate> {
+@interface AccountViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, MediaManagerDelegate, ConnectionManagerDelegate> {
     UITableView *_tableView;
-    UITableViewCell *_gridCell;
-    UIView *_accountSigninSubview;
+    UIImageView *_avatarView;
+    UILabel *_nameLabel;
+    UIView *_signinSubview;
+    UIView *_loadingSubview;
+    UITextField *_userTextField;
+    UITextField *_passwordTextField;  
+    NSArray *_accountMenuLabels;
 }
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
-@property (retain, nonatomic) IBOutlet UITableViewCell *gridCell;
-@property (retain, nonatomic) IBOutlet UIView *accountSigninSubview;
+@property (retain, nonatomic) IBOutlet UIImageView *avatarView;
+@property (retain, nonatomic) IBOutlet UILabel *nameLabel;
+@property (retain, nonatomic) IBOutlet UIView *signinSubview;
+@property (retain, nonatomic) IBOutlet UIView *loadingSubview;
+@property (retain, nonatomic) IBOutlet UITextField *userTextField;
+@property (retain, nonatomic) IBOutlet UITextField *passwordTextField; 
+@property (retain, nonatomic) NSArray *accountMenuLabels;
 
-- (IBAction)signinButtonAction:(id) sender;
-- (IBAction)forgotenPasswordButtonAction:(id) sender;
-- (IBAction)submitSigninButtonAction:(id) sender;
-- (IBAction)signupButtonAction:(id) sender;
+
 - (IBAction)cameraButtonAction:(id) sender;
+- (IBAction)forgotenPasswordButtonAction:(id)sender;
+- (IBAction)submitSigninButtonAction:(id)sender;
+- (IBAction)signupButtonAction:(id)sender;
+- (IBAction)presentSigninSubview:(id)sender;
+- (IBAction)dismissSigninSubview:(id)sender;
+- (IBAction)presentLoadingSubview:(id)sender;
+- (IBAction)dismissLoadingSubview:(id)sender;
+- (IBAction)dismissKeyboardSubview:(id)sender;
+
+- (void) setLoadingSubviewHidden:(BOOL)hidden animated:(BOOL)animated;
+- (void) setSigninSubviewHidden:(BOOL)hidden animated:(BOOL)animated;
+- (void) setViewComponentsHidden:(BOOL)hidden;
 
 @end

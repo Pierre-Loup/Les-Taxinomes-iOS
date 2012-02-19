@@ -13,19 +13,19 @@
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
  
- Foobar is distributed in the hope that it will be useful,
+ This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
  
  You should have received a copy of the GNU General Public License
- along with Foobar.  If not, see <http://www.gnu.org/licenses/>
+ along with this program.  If not, see <http://www.gnu.org/licenses/>
  
  */
 
 #import "HomeViewController.h"
 #import "LegalInformationsViewController.h"
-#import <MobileCoreServices/UTCoreTypes.h>
+
 
 @implementation HomeViewController
 @synthesize cameraButton = _cameraButton;
@@ -78,6 +78,8 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma mark - Actions
+
 - (IBAction)infoButtonAction:(id) sender {
     LegalInformationsViewController *legalInformationsViewController = [[LegalInformationsViewController alloc] initWithNibName:@"LegalInformationsView" bundle:nil];
     [self.navigationController pushViewController:legalInformationsViewController animated:YES];    
@@ -85,30 +87,25 @@
 }
 
 - (IBAction)cameraButtonAction:(id) sender {
+    MediaManager *mediaManager = [MediaManager sharedMediaManager];
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.delegate = self;    
+    imagePicker.delegate = mediaManager;    
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePicker.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeImage, nil];
-    
-    imagePicker.allowsEditing = YES;
+    imagePicker.allowsEditing = NO;
     
     [self presentModalViewController:imagePicker animated:YES];
-    
-    [imagePicker release];
+    mediaManager.delegate = self;
+    [mediaManager takePicture];
+    [imagePicker retain];
 }
 
--(void)imagePickerController:(UIImagePickerController *)picker
-didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    
-	NSLog(@"%@",@"didFinishPickingMediaWithInfo");
-    
+#pragma mark - MediaManagerDelegate
+
+- (void)didFinishTakingPicture{
     [self dismissModalViewControllerAnimated:YES];
 }
 
--(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [self dismissModalViewControllerAnimated:YES];
-}
+
 
 @end

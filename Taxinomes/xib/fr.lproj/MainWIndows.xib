@@ -69,7 +69,7 @@
 				<bool key="IBUIHorizontal">NO</bool>
 				<object class="IBUINavigationController" key="IBUISelectedViewController" id="637635232">
 					<object class="IBUITabBarItem" key="IBUITabBarItem" id="1054489965">
-						<string key="IBUITitle">Mon compte</string>
+						<string key="IBUITitle">Mon espace</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">tabbar_account.png</string>

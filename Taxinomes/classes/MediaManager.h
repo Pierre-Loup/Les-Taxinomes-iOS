@@ -1,9 +1,9 @@
 //
-//  MediasListTableViewCell.h
+//  MediaManager.h
 //  Taxinomes
 //
-//  Created by Pierre-Loup Tristant on 06/11/11.
-//  Copyright (c) 2011 Les petits débrouillards Bretagne. All rights reserved.
+//  Created by Pierre-Loup Tristant on 16/02/12.
+//  Copyright (c) 2012 Les petits débrouillards Bretagne. All rights reserved.
 //
 
 /*
@@ -23,15 +23,22 @@
  
  */
 
-#import <UIKit/UIKit.h>
-#import "Article.h"
+#import <Foundation/Foundation.h>
+#import <MobileCoreServices/UTCoreTypes.h>
+#import <CoreLocation/CoreLocation.h>
 
-@class MediasListCellView;
+@protocol MediaManagerDelegate
+- (void)didFinishTakingPicture;
+@end
 
-@interface MediasListTableViewCell : UITableViewCell {
-    MediasListCellView *cellView;
+@interface MediaManager : NSObject <UIImagePickerControllerDelegate, CLLocationManagerDelegate> {
+    id delegate;
+    CLLocationManager *_locationManager;
 }
 
-- (void)setArticle:(Article *) article;
+@property (nonatomic, assign) id delegate;
+@property (retain, nonatomic) CLLocationManager *locationManager;
 
++ (MediaManager *)sharedMediaManager;
+- (void)takePicture;
 @end

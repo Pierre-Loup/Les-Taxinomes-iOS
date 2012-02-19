@@ -13,13 +13,13 @@
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
  
- Foobar is distributed in the hope that it will be useful,
+ This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
  
  You should have received a copy of the GNU General Public License
- along with Foobar.  If not, see <http://www.gnu.org/licenses/>
+ along with this program.  If not, see <http://www.gnu.org/licenses/>
  
  */
 
@@ -33,6 +33,9 @@
 static ConnectionManager *instance = nil;
 
 @implementation ConnectionManager
+@synthesize error = _error;
+@synthesize author= _author;
+@synthesize authStatus, delegate;
 
 - (void)dealloc {
 	[instance release];
@@ -42,6 +45,7 @@ static ConnectionManager *instance = nil;
 + (ConnectionManager *)sharedConnectionManager {
 	if(instance == nil) {
 		instance = [[ConnectionManager alloc] init];
+        instance.author = UNAUTHENTICATED;
 	}
 	
 	return instance;
@@ -64,7 +68,7 @@ static ConnectionManager *instance = nil;
     XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
     NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d,%d", start, limit], nil] forKeys:[NSArray arrayWithObjects:@"limite", nil]];
     [xmlrpcRequest setMethod:@"spip.liste_articles" withObject:args];
-    id result = [self executeXMLRPCRequest:xmlrpcRequest];
+    id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
     [xmlrpcRequest release];
     
     if([result isKindOfClass:[NSError class]]){
@@ -97,7 +101,7 @@ static ConnectionManager *instance = nil;
     //NSArray *argsObjects = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d,%d", start, limit], nil];
     NSDictionary *args = [NSDictionary dictionaryWithObjects:argsObjects forKeys:argsKeys];
     [xmlrpcRequest setMethod:@"geodiv.liste_medias" withObject:args];
-    id result = [self executeXMLRPCRequest:xmlrpcRequest];
+    id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
     [xmlrpcRequest release];
     
     if([result isKindOfClass:[NSError class]]){
@@ -125,7 +129,7 @@ static ConnectionManager *instance = nil;
     //NSArray *argsObjects = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d,%d", start, limit], nil];
     NSDictionary *args = [NSDictionary dictionaryWithObjects:argsObjects forKeys:argsKeys];
     [xmlrpcRequest setMethod:@"geodiv.lire_media" withObject:args];
-    id result = [self executeXMLRPCRequest:xmlrpcRequest];
+    id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
     [xmlrpcRequest release];
     
     if([result isKindOfClass:[NSError class]]){
@@ -149,7 +153,7 @@ static ConnectionManager *instance = nil;
     //NSLog(@"%f",kScreenScale*MEDIA_MAX_WIDHT);
     NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:[id_article intValue]],[NSNumber numberWithDouble:kScreenScale*MEDIA_MAX_WIDHT], nil] forKeys:[NSArray arrayWithObjects:@"id_article", @"document_largeur", nil]];
     [xmlrpcRequest setMethod:@"geodiv.lire_media" withObject:args];
-    id result = [self executeXMLRPCRequest:xmlrpcRequest];
+    id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
     [xmlrpcRequest release];
     
     if([result isKindOfClass:[NSError class]]){
@@ -166,7 +170,7 @@ static ConnectionManager *instance = nil;
     XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
     NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:[id_author intValue]], nil] forKeys:[NSArray arrayWithObjects:@"id_auteur", nil]];
     [xmlrpcRequest setMethod:@"spip.lire_auteur" withObject:args];
-    id result = [self executeXMLRPCRequest:xmlrpcRequest];
+    id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
     [xmlrpcRequest release];
     
     if([result isKindOfClass:[NSDictionary class]]){
@@ -176,24 +180,30 @@ static ConnectionManager *instance = nil;
     }
 }
 
-- (Author *)authWithLogin:(NSString *) login password:(NSString *) password{
-    
+- (void)authWithLogin:(NSString *) login password:(NSString *) password{
+    self.authStatus = AUTH_PENDING;
     XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
     NSDictionary *args = [NSArray arrayWithObjects:login, password, nil];
     [xmlrpcRequest setMethod:@"spip.auth" withObject:args];
-    id result = [self executeXMLRPCRequest:xmlrpcRequest];
+    id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:YES];
     [xmlrpcRequest release];
     
     if([result isKindOfClass:[NSDictionary class]]){
-        return [Author authorWithXMLRPCResponse:result];
+        self.authStatus = AUTHENTICATED;
+        self.author = [Author authorWithXMLRPCResponse:result];
+        [delegate didAuthenticate];
     } else {
-        return nil;
+        self.authStatus = AUTH_FAILED;
+        //TODO: LOCAL ERROR LABELS
+        [delegate didFailToAuthenticate:@"Login ou mot de passe éronné"];
+
     }
 }
 
-- (id)executeXMLRPCRequest:(XMLRPCRequest *)req {
+- (id)executeXMLRPCRequest:(XMLRPCRequest *)req  authenticated:(BOOL)auth{
     
 	ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:[req host]];
+    [request setUseCookiePersistence:auth];
 	[request setRequestMethod:@"POST"];
 	[request setTimeOutSeconds:30];
     NSLog(@"executeXMLRPCRequest host: %@",[req host]);
@@ -229,6 +239,13 @@ static ConnectionManager *instance = nil;
 	
     return [userInfoResponse object];
     
+}
+
+- (Article *)addArticleWithInformations: (NSDictionary *)info {
+    XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
+    [xmlrpcRequest setMethod:@"geodiv.creer_media" withObject:info];
+    [self executeXMLRPCRequest:xmlrpcRequest authenticated:YES];
+    [xmlrpcRequest release];
 }
 
 @end
