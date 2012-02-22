@@ -26,14 +26,26 @@
 #import <UIKit/UIKit.h>
 #import <MobileCoreServices/UTCoreTypes.h>
 
-@interface MediaUploadFormViewController : UIViewController <UIImagePickerControllerDelegate> {
+@interface MediaUploadFormViewController : UIViewController <UIImagePickerControllerDelegate, UITextFieldDelegate, UITextViewDelegate> {
     UITableView *_tableView;
     UIImageView *_mediaSnapshotView;
     UIImage *_media;
+    UITableViewCell *_titleCell;
+    UITableViewCell *_textCell;
+    UITableViewCell *_publishCell;
+    UITextField *_titleInput;
+    UITextView *_textInput;
+    UISwitch *_publishSwitch;
 }
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) IBOutlet UIImageView *mediaSnapshotView;
 @property (nonatomic, retain) IBOutlet UIImage *media;
+@property (nonatomic, retain) IBOutlet UITableViewCell *titleCell;
+@property (nonatomic, retain) IBOutlet UITableViewCell *textCell;
+@property (nonatomic, retain) IBOutlet UITableViewCell *publishCell;
+@property (nonatomic, retain) IBOutlet UITextField *titleInput;
+@property (nonatomic, retain) IBOutlet UITextView *textInput;
+@property (nonatomic, retain) IBOutlet UISwitch *publishSwitch;
 
 @end

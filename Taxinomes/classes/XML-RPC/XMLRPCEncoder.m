@@ -28,6 +28,7 @@
 #import "XMLRPCEncoder.h"
 #import "XMLRPCExtensions.h"
 #import "NSString+XMLExtensions.h"
+#import "NSData+Base64.h"
 
 @interface XMLRPCEncoder (XMLRPCEncoderPrivate)
 
@@ -54,6 +55,7 @@
 - (NSString *)encodeString: (NSString *)string;
 - (NSString *)encodeDate: (NSDate *)date;
 - (NSString *)encodeData: (NSData *)data;
+- (NSString *)encodeImage: (UIImage *)image;
 
 @end
 
@@ -236,6 +238,10 @@
 	{
 		return [self encodeData: object];
 	}
+	else if ([object isKindOfClass: [UIImage class]])
+	{
+		return [self encodeImage: object];
+	}
 	else
 	{
 		return [self encodeString: object];
@@ -334,6 +340,22 @@
 	str = [str substringFromIndex:r.location+7];
 	r = [str rangeOfString:@"</data>"];
 	str = [str substringToIndex:r.location-1];
+	str = [NSString stringWithFormat:@"<value><base64>%@</base64></value>",str];
+	return str;
+}
+
+- (NSString *)encodeImage: (UIImage *)image
+{
+    //	NSString *buffer = [NSString base64StringFromData: data
+    //		length: [data length]];
+    //	return [self valueTag: @"base64" value: buffer];
+    //NSData *d = UIImagePNGRepresentation(image);
+	NSData *d = UIImageJPEGRepresentation(image, 1.0);
+	NSString *str =  [d base64EncodedString];//[NSString stringWithUTF8String:[d bytes]];
+	//NSRange r = [str rangeOfString:@"<data>"];
+	//str = [str substringFromIndex:r.location+7];
+	//r = [str rangeOfString:@"</data>"];
+	//str = [str substringToIndex:r.location-1];
 	str = [NSString stringWithFormat:@"<value><base64>%@</base64></value>",str];
 	return str;
 }

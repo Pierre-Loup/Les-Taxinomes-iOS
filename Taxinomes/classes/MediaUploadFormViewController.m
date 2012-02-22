@@ -32,6 +32,12 @@
 @synthesize tableView = _tableView;
 @synthesize mediaSnapshotView = _mediaSnapshotView;
 @synthesize media =_media;
+@synthesize titleCell = _titleCell;
+@synthesize textCell = _textCell;
+@synthesize publishCell = _publishCell;
+@synthesize titleInput = _titleInput;
+@synthesize textInput = _textInput;
+@synthesize publishSwitch = _publishSwitch;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -91,10 +97,24 @@
 - (IBAction)uploadMedia:(id)sender {
     //NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:[id_article intValue]],[NSNumber numberWithDouble:[UIScreen mainScreen].bounds.size.width ], nil] forKeys:[NSArray arrayWithObjects:@"id_article", @"document_largeur", nil]];
     //NSLog(@"%f",kScreenScale*MEDIA_MAX_WIDHT);
-    NSDictionary *document = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects: @"clavier_pierreloup.png", @"image/png", UIImagePNGRepresentation(self.media), nil] forKeys:[NSArray arrayWithObjects:@"name", @"type", @"bits", nil]];
-    NSDictionary *info = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:document,  nil] forKeys:[NSArray arrayWithObjects: @"document", nil]];
+    
+    NSDictionary *document = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects: @"000000000000000000000.jpg", @"image/jpeg", self.media, nil] forKeys:[NSArray arrayWithObjects:@"name", @"type", @"bits", nil]];
+    NSMutableDictionary *info = [NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:document,  nil] forKeys:[NSArray arrayWithObjects: @"document", nil]];
+    // Title
+    if (self.titleInput.text != @"") {
+        [info setValue:self.titleInput.text forKey:@"titre"];
+    }
+    // Test
+    if (self.textInput.text != @"") {
+        [info setValue:self.textInput.text forKey:@"texte"];
+    }
+    // Publish
+    if (self.publishSwitch.on) {
+        [info setValue:@"publie" forKey:@"statut"];
+    }
     DataManager *dataManager = [DataManager sharedDataManager];
-    [dataManager addArticleWithInformations:info];
+    [dataManager addArticleWithInformations:[NSDictionary dictionaryWithDictionary:info]];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Table view data source
@@ -102,12 +122,37 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+        return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    if (section == 0)
+        return 3;
+    else
+        return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat defaultHeight = 44.0;
+    if ([indexPath section] == 0) {
+        switch ([indexPath row]) {
+            case 0:
+                return self.titleCell.frame.size.height;
+                break;
+            case 1:
+                return self.textCell.frame.size.height;
+                break;
+            case 2:
+                return self.publishCell.frame.size.height;
+                break;
+            default:
+                return defaultHeight;
+                break;
+        }
+    } else {
+        return defaultHeight;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -116,17 +161,36 @@
     
     UITableViewCell *cell = nil;
     
-    cell = [tableView dequeueReusableCellWithIdentifier:gridCellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: @"accountMenuCell"];
+    if ([indexPath section] == 0) {
+        switch ([indexPath row]) {
+            case 0:
+                return self.titleCell;
+                break;
+            case 1:
+                return self.textCell;
+                break;
+            case 2:
+                return self.publishCell;
+                break;
+            default:
+                cell = [tableView dequeueReusableCellWithIdentifier:gridCellIdentifier];
+                if (cell == nil) {
+                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: @"accountMenuCell"];
+                }
+                return cell;
+                break;
+        }
+    } else {
+        cell = [tableView dequeueReusableCellWithIdentifier:gridCellIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: @"accountMenuCell"];
+        }
+        cell.textLabel.text = @"Uploader";
+        cell.textLabel.textAlignment = UITextAlignmentCenter;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        return cell;
     }
-    
-    cell.textLabel.text = @"Uploader";
-    cell.textLabel.textAlignment = UITextAlignmentCenter;
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -149,6 +213,29 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [self dismissModalViewControllerAnimated:YES];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - UIImageTextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == self.titleInput) {
+        [self.textInput becomeFirstResponder];
+    } else {
+        [textField resignFirstResponder];
+    }
+    return YES;
+}
+
+#pragma mark - UIImageTextViewdDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
+    if([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    
+    return YES;
 }
 
 @end
