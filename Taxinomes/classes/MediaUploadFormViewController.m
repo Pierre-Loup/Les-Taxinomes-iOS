@@ -221,11 +221,14 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     self.media = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
     self.mediaSnapshotView.image = self.media;
     
+    NSLog(@"%@",info);
+    /*
     NSMutableDictionary *metadata = [NSMutableDictionary dictionaryWithDictionary:[info objectForKey:UIImagePickerControllerMediaMetadata]];
     _gis = [[metadata location] retain];
     
     _latitudeInput.text = [NSString stringWithFormat:@"%f",_gis.coordinate.latitude];
     _longitudeInput.text = [NSString stringWithFormat:@"%f",_gis.coordinate.longitude];
+     */
     
 }
 

@@ -18,9 +18,9 @@
 		37D2E7FC144709EE0044EC3A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7E1144709ED0044EC3A /* CoreGraphics.framework */; };
 		37D2E806144709EE0044EC3A /* TaxinomesTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 37D2E805144709EE0044EC3A /* TaxinomesTests.h */; };
 		37D2E808144709EE0044EC3A /* TaxinomesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 37D2E807144709EE0044EC3A /* TaxinomesTests.m */; };
+		A5A6018215003C660026F78C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = A5A6017F15003C660026F78C /* LICENSE */; };
+		A5A6018315003C660026F78C /* NSMutableDictionary+ImageMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = A5A6018115003C660026F78C /* NSMutableDictionary+ImageMetadata.m */; };
 		C8339C1514ED4F93000A4E37 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8339C1414ED4F93000A4E37 /* CoreLocation.framework */; };
-		C8339C1F14ED585F000A4E37 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = C8339C1C14ED585F000A4E37 /* LICENSE */; };
-		C8339C2014ED585F000A4E37 /* NSMutableDictionary+ImageMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = C8339C1E14ED585F000A4E37 /* NSMutableDictionary+ImageMetadata.m */; };
 		C8339C2414ED593A000A4E37 /* MediaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C8339C2314ED593A000A4E37 /* MediaManager.m */; };
 		C8339C2614ED6356000A4E37 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8339C2514ED6355000A4E37 /* CoreMedia.framework */; };
 		C8339C2814ED6366000A4E37 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8339C2714ED6365000A4E37 /* AssetsLibrary.framework */; };
@@ -149,10 +149,10 @@
 		37D2E801144709EE0044EC3A /* TaxinomesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TaxinomesTests-Info.plist"; sourceTree = "<group>"; };
 		37D2E805144709EE0044EC3A /* TaxinomesTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaxinomesTests.h; sourceTree = "<group>"; };
 		37D2E807144709EE0044EC3A /* TaxinomesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaxinomesTests.m; sourceTree = "<group>"; };
+		A5A6017F15003C660026F78C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		A5A6018015003C660026F78C /* NSMutableDictionary+ImageMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+ImageMetadata.h"; sourceTree = "<group>"; };
+		A5A6018115003C660026F78C /* NSMutableDictionary+ImageMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+ImageMetadata.m"; sourceTree = "<group>"; };
 		C8339C1414ED4F93000A4E37 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		C8339C1C14ED585F000A4E37 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		C8339C1D14ED585F000A4E37 /* NSMutableDictionary+ImageMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+ImageMetadata.h"; sourceTree = "<group>"; };
-		C8339C1E14ED585F000A4E37 /* NSMutableDictionary+ImageMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+ImageMetadata.m"; sourceTree = "<group>"; };
 		C8339C2214ED593A000A4E37 /* MediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaManager.h; sourceTree = "<group>"; };
 		C8339C2314ED593A000A4E37 /* MediaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaManager.m; sourceTree = "<group>"; };
 		C8339C2514ED6355000A4E37 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -495,9 +495,9 @@
 		C8339C1B14ED585F000A4E37 /* GusUtils */ = {
 			isa = PBXGroup;
 			children = (
-				C8339C1C14ED585F000A4E37 /* LICENSE */,
-				C8339C1D14ED585F000A4E37 /* NSMutableDictionary+ImageMetadata.h */,
-				C8339C1E14ED585F000A4E37 /* NSMutableDictionary+ImageMetadata.m */,
+				A5A6017F15003C660026F78C /* LICENSE */,
+				A5A6018015003C660026F78C /* NSMutableDictionary+ImageMetadata.h */,
+				A5A6018115003C660026F78C /* NSMutableDictionary+ImageMetadata.m */,
 			);
 			path = GusUtils;
 			sourceTree = "<group>";
@@ -857,7 +857,7 @@
 				C8F7A51214E30CDB00425104 /* COPYING in Resources */,
 				C8F835AD14EAC28F006A71E0 /* LoadingSubview.xib in Resources */,
 				C881A8FF14EAE21A00A85DA8 /* SigninSubview.xib in Resources */,
-				C8339C1F14ED585F000A4E37 /* LICENSE in Resources */,
+				A5A6018215003C660026F78C /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -953,9 +953,9 @@
 				C8A1B69814D1844700CD2AE4 /* AccountViewController.m in Sources */,
 				C8A1B69D14D1866600CD2AE4 /* NavigateViewController.m in Sources */,
 				C8D19AFC14D74965006A5552 /* MediaUploadFormViewController.m in Sources */,
-				C8339C2014ED585F000A4E37 /* NSMutableDictionary+ImageMetadata.m in Sources */,
 				C8339C2414ED593A000A4E37 /* MediaManager.m in Sources */,
 				C884A1AB14F17B6D00DEFEE4 /* NSData+Base64.m in Sources */,
+				A5A6018315003C660026F78C /* NSMutableDictionary+ImageMetadata.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
