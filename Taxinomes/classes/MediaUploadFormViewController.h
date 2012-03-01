@@ -25,6 +25,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MobileCoreServices/UTCoreTypes.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface MediaUploadFormViewController : UIViewController <UIImagePickerControllerDelegate, UITextFieldDelegate, UITextViewDelegate> {
     UITableView *_tableView;
@@ -33,9 +34,15 @@
     UITableViewCell *_titleCell;
     UITableViewCell *_textCell;
     UITableViewCell *_publishCell;
+    UITableViewCell *_latitudeCell;
+    UITableViewCell *_longitudeCell;
     UITextField *_titleInput;
     UITextView *_textInput;
+    UITextField *_latitudeInput;
+    UITextField *_longitudeInput;
     UISwitch *_publishSwitch;
+    CLLocation *_gis;
+    
 }
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
@@ -44,8 +51,12 @@
 @property (nonatomic, retain) IBOutlet UITableViewCell *titleCell;
 @property (nonatomic, retain) IBOutlet UITableViewCell *textCell;
 @property (nonatomic, retain) IBOutlet UITableViewCell *publishCell;
+@property (nonatomic, retain) IBOutlet UITableViewCell *latitudeCell;
+@property (nonatomic, retain) IBOutlet UITableViewCell *longitudeCell;
 @property (nonatomic, retain) IBOutlet UITextField *titleInput;
 @property (nonatomic, retain) IBOutlet UITextView *textInput;
+@property (nonatomic, retain) IBOutlet UITextField *latitudeInput;
+@property (nonatomic, retain) IBOutlet UITextField *longitudeInput;
 @property (nonatomic, retain) IBOutlet UISwitch *publishSwitch;
 
 @end

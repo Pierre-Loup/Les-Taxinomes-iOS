@@ -25,6 +25,7 @@
 
 #import "MediaUploadFormViewController.h"
 #import "NSData+Base64.h"
+#import "NSMutableDictionary+ImageMetadata.h"
 #import "DataManager.h"
 
 
@@ -38,6 +39,10 @@
 @synthesize titleInput = _titleInput;
 @synthesize textInput = _textInput;
 @synthesize publishSwitch = _publishSwitch;
+@synthesize latitudeCell =_latitudeCell;
+@synthesize longitudeCell = _longitudeCell;
+@synthesize latitudeInput = _latitudeInput;
+@synthesize longitudeInput = _longitudeInput;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -98,7 +103,9 @@
     //NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:[id_article intValue]],[NSNumber numberWithDouble:[UIScreen mainScreen].bounds.size.width ], nil] forKeys:[NSArray arrayWithObjects:@"id_article", @"document_largeur", nil]];
     //NSLog(@"%f",kScreenScale*MEDIA_MAX_WIDHT);
     
-    NSDictionary *document = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects: @"000000000000000000000.jpg", @"image/jpeg", self.media, nil] forKeys:[NSArray arrayWithObjects:@"name", @"type", @"bits", nil]];
+	NSData *imageData = [NSData dataWithData:UIImageJPEGRepresentation(self.media, 1.0f)];//1.0f = 100% quality
+
+    NSDictionary *document = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects: @"000000000000000000000.jpg", @"image/jpeg", imageData, nil] forKeys:[NSArray arrayWithObjects:@"name", @"type", @"bits", nil]];
     NSMutableDictionary *info = [NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:document,  nil] forKeys:[NSArray arrayWithObjects: @"document", nil]];
     // Title
     if (self.titleInput.text != @"") {
@@ -128,7 +135,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0)
-        return 3;
+        return 5;
     else
         return 1;
 }
@@ -172,6 +179,12 @@
             case 2:
                 return self.publishCell;
                 break;
+            case 3:
+                return self.latitudeCell;
+                break;
+            case 4:
+                return self.longitudeCell;
+                break;
             default:
                 cell = [tableView dequeueReusableCellWithIdentifier:gridCellIdentifier];
                 if (cell == nil) {
@@ -207,6 +220,13 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     self.media = nil;
     self.media = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
     self.mediaSnapshotView.image = self.media;
+    
+    NSMutableDictionary *metadata = [NSMutableDictionary dictionaryWithDictionary:[info objectForKey:UIImagePickerControllerMediaMetadata]];
+    _gis = [[metadata location] retain];
+    
+    _latitudeInput.text = [NSString stringWithFormat:@"%f",_gis.coordinate.latitude];
+    _longitudeInput.text = [NSString stringWithFormat:@"%f",_gis.coordinate.longitude];
+    
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker

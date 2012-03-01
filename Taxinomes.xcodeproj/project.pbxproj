@@ -317,7 +317,7 @@
 		C8A1B6A414D186A900CD2AE4 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/NavigateView.xib; sourceTree = "<group>"; };
 		C8D19AF914D74965006A5552 /* MediaUploadFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaUploadFormViewController.h; sourceTree = "<group>"; };
 		C8D19AFA14D74965006A5552 /* MediaUploadFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaUploadFormViewController.m; sourceTree = "<group>"; };
-		C8D19AFB14D74965006A5552 /* MediaUploadFormView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MediaUploadFormView.xib; path = ../classes/MediaUploadFormView.xib; sourceTree = "<group>"; };
+		C8D19AFB14D74965006A5552 /* MediaUploadFormView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaUploadFormView.xib; sourceTree = "<group>"; };
 		C8DFCFC114EE60F1005D9101 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C8F7A50D14E306DF00425104 /* LICENCE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENCE; sourceTree = "<group>"; };
 		C8F7A50F14E3070300425104 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
@@ -487,6 +487,7 @@
 				C8A1B69614D1844700CD2AE4 /* AccountViewController.m */,
 				C8D19AF914D74965006A5552 /* MediaUploadFormViewController.h */,
 				C8D19AFA14D74965006A5552 /* MediaUploadFormViewController.m */,
+				C8D19AFB14D74965006A5552 /* MediaUploadFormView.xib */,
 			);
 			name = Account;
 			sourceTree = "<group>";
@@ -634,7 +635,6 @@
 				C898616F14C8CA9A00C237A0 /* MediaDetailView.xib */,
 				C898617314C8CAAC00C237A0 /* LegalInformationsView.xib */,
 				C885AD1B14D0B328002ECCD0 /* MediaFullSizeView.xib */,
-				C8D19AFB14D74965006A5552 /* MediaUploadFormView.xib */,
 				C881A8FD14EAE21A00A85DA8 /* SigninSubview.xib */,
 				C8F835AA14EAC28F006A71E0 /* LoadingSubview.xib */,
 			);

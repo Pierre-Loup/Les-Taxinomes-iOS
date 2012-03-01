@@ -206,8 +206,8 @@ static ConnectionManager *instance = nil;
     [request setUseCookiePersistence:auth];
 	[request setRequestMethod:@"POST"];
 	[request setTimeOutSeconds:30];
-    NSLog(@"executeXMLRPCRequest host: %@",[req host]);
-    NSLog(@"executeXMLRPCRequest request: %@",[req source]);
+    //NSLog(@"executeXMLRPCRequest host: %@",[req host]);
+    //NSLog(@"executeXMLRPCRequest request: %@",[req source]);
     [request appendPostData:[[req source] dataUsingEncoding:NSUTF8StringEncoding]];
 	[request startSynchronous];
 	
