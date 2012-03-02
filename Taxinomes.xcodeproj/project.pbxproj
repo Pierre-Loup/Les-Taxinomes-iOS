@@ -20,6 +20,7 @@
 		37D2E808144709EE0044EC3A /* TaxinomesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 37D2E807144709EE0044EC3A /* TaxinomesTests.m */; };
 		A5A6018215003C660026F78C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = A5A6017F15003C660026F78C /* LICENSE */; };
 		A5A6018315003C660026F78C /* NSMutableDictionary+ImageMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = A5A6018115003C660026F78C /* NSMutableDictionary+ImageMetadata.m */; };
+		A5A6018615004E420026F78C /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = A5A6018515004E410026F78C /* UIImage+Resize.m */; };
 		C8339C1514ED4F93000A4E37 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8339C1414ED4F93000A4E37 /* CoreLocation.framework */; };
 		C8339C2414ED593A000A4E37 /* LTPhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8339C2314ED593A000A4E37 /* LTPhotoPickerViewController.m */; };
 		C8339C2614ED6356000A4E37 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8339C2514ED6355000A4E37 /* CoreMedia.framework */; };
@@ -152,6 +153,8 @@
 		A5A6017F15003C660026F78C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		A5A6018015003C660026F78C /* NSMutableDictionary+ImageMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+ImageMetadata.h"; sourceTree = "<group>"; };
 		A5A6018115003C660026F78C /* NSMutableDictionary+ImageMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+ImageMetadata.m"; sourceTree = "<group>"; };
+		A5A6018515004E410026F78C /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
+		A5A6018715004E4C0026F78C /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		C8339C1414ED4F93000A4E37 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		C8339C2214ED593A000A4E37 /* LTPhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTPhotoPickerViewController.h; sourceTree = "<group>"; };
 		C8339C2314ED593A000A4E37 /* LTPhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTPhotoPickerViewController.m; sourceTree = "<group>"; };
@@ -664,6 +667,8 @@
 				C87C6791147440B500A055F1 /* NSString+XMLExtensions.m */,
 				C884A1A914F17B6700DEFEE4 /* NSData+Base64.h */,
 				C884A1AA14F17B6D00DEFEE4 /* NSData+Base64.m */,
+				A5A6018715004E4C0026F78C /* UIImage+Resize.h */,
+				A5A6018515004E410026F78C /* UIImage+Resize.m */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -964,6 +969,7 @@
 				C8339C2414ED593A000A4E37 /* LTPhotoPickerViewController.m in Sources */,
 				C884A1AB14F17B6D00DEFEE4 /* NSData+Base64.m in Sources */,
 				A5A6018315003C660026F78C /* NSMutableDictionary+ImageMetadata.m in Sources */,
+				A5A6018615004E420026F78C /* UIImage+Resize.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
