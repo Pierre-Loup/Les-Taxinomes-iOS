@@ -25,10 +25,10 @@
 
 #import "HomeViewController.h"
 #import "LegalInformationsViewController.h"
+#import "MediaUploadFormViewController.h"
 
 
 @implementation HomeViewController
-@synthesize cameraButton = _cameraButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -57,12 +57,6 @@
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
     [self.navigationItem setLeftBarButtonItem:leftButton animated:YES];
     [leftButton release];
-    
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
-        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(cameraButtonAction:)];
-        [self.navigationItem setRightBarButtonItem:rightButton animated:YES];
-        [rightButton release];
-    }
 }
 
 - (void)viewDidUnload
@@ -85,27 +79,5 @@
     [self.navigationController pushViewController:legalInformationsViewController animated:YES];    
     [legalInformationsViewController release];
 }
-
-- (IBAction)cameraButtonAction:(id) sender {
-    MediaManager *mediaManager = [MediaManager sharedMediaManager];
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.delegate = mediaManager;    
-    imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    imagePicker.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeImage, nil];
-    imagePicker.allowsEditing = NO;
-    
-    [self presentModalViewController:imagePicker animated:YES];
-    mediaManager.delegate = self;
-    [mediaManager takePicture];
-    [imagePicker retain];
-}
-
-#pragma mark - MediaManagerDelegate
-
-- (void)didFinishTakingPicture{
-    [self dismissModalViewControllerAnimated:YES];
-}
-
-
 
 @end

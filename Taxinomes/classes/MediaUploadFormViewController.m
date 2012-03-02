@@ -44,9 +44,11 @@
 @synthesize latitudeInput = _latitudeInput;
 @synthesize longitudeInput = _longitudeInput;
 
+@synthesize gis = _gis;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithNibName:@"MediaUploadFormView" bundle:nil];
     if (self) {
     }
     return self;

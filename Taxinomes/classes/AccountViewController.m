@@ -64,12 +64,6 @@
 {
     [super viewDidLoad];
     
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
-        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(cameraButtonAction:)];
-        [self.navigationItem setRightBarButtonItem:rightButton animated:YES];
-        [rightButton release];
-    }
-    
     // Setup sign in subview, not visible because out of the screen (bottom)
     [[NSBundle mainBundle] loadNibNamed:@"SigninSubview" owner:self options:nil];
     CGRect frame = self.signinSubview.frame;	
@@ -132,20 +126,6 @@
 - (IBAction)signupButtonAction:(id)sender {
     NSString *url = [NSString stringWithString:@"http://taxinomes.arscenic.org/spip.php?page=inscription"];
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
-}
-
-- (IBAction)cameraButtonAction:(id) sender{
-    MediaManager *mediaManager = [MediaManager sharedMediaManager];
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.delegate = mediaManager;    
-    imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    imagePicker.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeImage, nil];
-    imagePicker.allowsEditing = NO;
-    
-    [self presentModalViewController:imagePicker animated:YES];
-    mediaManager.delegate = self;
-    [mediaManager takePicture];
-    [imagePicker retain];
 }
 
 - (IBAction)presentSigninSubview:(id)sender {    

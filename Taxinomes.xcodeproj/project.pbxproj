@@ -21,7 +21,7 @@
 		A5A6018215003C660026F78C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = A5A6017F15003C660026F78C /* LICENSE */; };
 		A5A6018315003C660026F78C /* NSMutableDictionary+ImageMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = A5A6018115003C660026F78C /* NSMutableDictionary+ImageMetadata.m */; };
 		C8339C1514ED4F93000A4E37 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8339C1414ED4F93000A4E37 /* CoreLocation.framework */; };
-		C8339C2414ED593A000A4E37 /* MediaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C8339C2314ED593A000A4E37 /* MediaManager.m */; };
+		C8339C2414ED593A000A4E37 /* LTPhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8339C2314ED593A000A4E37 /* LTPhotoPickerViewController.m */; };
 		C8339C2614ED6356000A4E37 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8339C2514ED6355000A4E37 /* CoreMedia.framework */; };
 		C8339C2814ED6366000A4E37 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8339C2714ED6365000A4E37 /* AssetsLibrary.framework */; };
 		C8339C2A14ED6393000A4E37 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8339C2914ED6393000A4E37 /* ImageIO.framework */; };
@@ -153,8 +153,8 @@
 		A5A6018015003C660026F78C /* NSMutableDictionary+ImageMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+ImageMetadata.h"; sourceTree = "<group>"; };
 		A5A6018115003C660026F78C /* NSMutableDictionary+ImageMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+ImageMetadata.m"; sourceTree = "<group>"; };
 		C8339C1414ED4F93000A4E37 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		C8339C2214ED593A000A4E37 /* MediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaManager.h; sourceTree = "<group>"; };
-		C8339C2314ED593A000A4E37 /* MediaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaManager.m; sourceTree = "<group>"; };
+		C8339C2214ED593A000A4E37 /* LTPhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTPhotoPickerViewController.h; sourceTree = "<group>"; };
+		C8339C2314ED593A000A4E37 /* LTPhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTPhotoPickerViewController.m; sourceTree = "<group>"; };
 		C8339C2514ED6355000A4E37 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		C8339C2714ED6365000A4E37 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		C8339C2914ED6393000A4E37 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
@@ -447,6 +447,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		A5A60184150045890026F78C /* LTControllers */ = {
+			isa = PBXGroup;
+			children = (
+				C8339C2214ED593A000A4E37 /* LTPhotoPickerViewController.h */,
+				C8339C2314ED593A000A4E37 /* LTPhotoPickerViewController.m */,
+			);
+			name = LTControllers;
+			sourceTree = "<group>";
+		};
 		C823D3C014D186F8005C8D93 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -662,6 +671,7 @@
 		C87C680F147440B500A055F1 /* viewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				A5A60184150045890026F78C /* LTControllers */,
 				C823D3C014D186F8005C8D93 /* Home */,
 				C823D3C114D18701005C8D93 /* Medias */,
 				C823D3C214D18708005C8D93 /* Navigate */,
@@ -680,8 +690,6 @@
 				C87C6787147440B500A055F1 /* DataManager.m */,
 				C8852A4B1479459500F54543 /* SqliteDatabase.h */,
 				C8852A4C1479459600F54543 /* SqliteDatabase.m */,
-				C8339C2214ED593A000A4E37 /* MediaManager.h */,
-				C8339C2314ED593A000A4E37 /* MediaManager.m */,
 			);
 			name = core;
 			sourceTree = "<group>";
@@ -953,7 +961,7 @@
 				C8A1B69814D1844700CD2AE4 /* AccountViewController.m in Sources */,
 				C8A1B69D14D1866600CD2AE4 /* NavigateViewController.m in Sources */,
 				C8D19AFC14D74965006A5552 /* MediaUploadFormViewController.m in Sources */,
-				C8339C2414ED593A000A4E37 /* MediaManager.m in Sources */,
+				C8339C2414ED593A000A4E37 /* LTPhotoPickerViewController.m in Sources */,
 				C884A1AB14F17B6D00DEFEE4 /* NSData+Base64.m in Sources */,
 				A5A6018315003C660026F78C /* NSMutableDictionary+ImageMetadata.m in Sources */,
 			);

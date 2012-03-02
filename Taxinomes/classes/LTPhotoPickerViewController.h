@@ -1,9 +1,9 @@
 //
-//  HomeViewController.h
+//  LTPhotoPickerViewController.h
 //  Taxinomes
 //
-//  Created by Pierre-Loup Tristant on 26/01/12.
-//  Copyright (c) 2011 Les petits débrouillards Bretagne. All rights reserved.
+//  Created by Pierre-Loup Tristant on 16/02/12.
+//  Copyright (c) 2012 Les petits débrouillards Bretagne. All rights reserved.
 //
 
 /*
@@ -23,11 +23,14 @@
  
  */
 
-#import <UIKit/UIKit.h>
-#import "LTPhotoPickerViewController.h"
+#import <Foundation/Foundation.h>
+#import <MobileCoreServices/UTCoreTypes.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface HomeViewController : LTPhotoPickerViewController
-
-- (IBAction)infoButtonAction:(id) sender;
+@interface LTPhotoPickerViewController : UIViewController <UINavigationControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate> {
+    CLLocationManager* _locationManager;
+    CLLocation* _photoLocation;
+    UIImage* _photo; 
+}
 
 @end

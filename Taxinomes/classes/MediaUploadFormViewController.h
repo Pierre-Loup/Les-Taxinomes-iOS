@@ -59,4 +59,6 @@
 @property (nonatomic, retain) IBOutlet UITextField *longitudeInput;
 @property (nonatomic, retain) IBOutlet UISwitch *publishSwitch;
 
+@property (nonatomic, retain) CLLocation *gis;
+
 @end

@@ -24,11 +24,11 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "MediaManager.h"
 #import "ConnectionManager.h"
+#import "LTPhotoPickerViewController.h"
 #import "Author.h"
 
-@interface AccountViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, MediaManagerDelegate, ConnectionManagerDelegate> {
+@interface AccountViewController : LTPhotoPickerViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ConnectionManagerDelegate> {
     UITableView *_tableView;
     UIImageView *_avatarView;
     UILabel *_nameLabel;
@@ -49,7 +49,6 @@
 @property (retain, nonatomic) NSArray *accountMenuLabels;
 
 
-- (IBAction)cameraButtonAction:(id) sender;
 - (IBAction)forgotenPasswordButtonAction:(id)sender;
 - (IBAction)submitSigninButtonAction:(id)sender;
 - (IBAction)signupButtonAction:(id)sender;
