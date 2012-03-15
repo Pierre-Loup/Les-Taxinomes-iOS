@@ -26,25 +26,32 @@
 #import "MediaUploadFormViewController.h"
 #import "NSData+Base64.h"
 #import "NSMutableDictionary+ImageMetadata.h"
-#import "DataManager.h"
+#import "LTDataManager.h"
 
 
 @implementation MediaUploadFormViewController
-@synthesize tableView = _tableView;
-@synthesize mediaSnapshotView = _mediaSnapshotView;
-@synthesize media =_media;
-@synthesize titleCell = _titleCell;
-@synthesize textCell = _textCell;
-@synthesize publishCell = _publishCell;
-@synthesize titleInput = _titleInput;
-@synthesize textInput = _textInput;
-@synthesize publishSwitch = _publishSwitch;
-@synthesize latitudeCell =_latitudeCell;
-@synthesize longitudeCell = _longitudeCell;
-@synthesize latitudeInput = _latitudeInput;
-@synthesize longitudeInput = _longitudeInput;
+@synthesize tableView = tableView_;
+@synthesize mediaSnapshotView = mediaSnapshotView_;
+@synthesize media = media_;
+@synthesize titleCell = titleCell_;
+@synthesize textCell = textCell_;
+@synthesize licenseCell = licenseCell_;
+@synthesize latitudeCell = latitudeCell_;
+@synthesize longitudeCell = longitudeCell_;
+@synthesize publishCell = publishCell_;
+@synthesize titleInput = titleInput_;
+@synthesize textInput = textInput_;
+@synthesize licenseTypeChooser = licenseTypeChooser_;
+@synthesize publishSwitch = publishSwitch_;
+@synthesize latitudeInput = latitudeInput_;
+@synthesize longitudeInput = longitudeInput_;
+@synthesize shareButton = shareButton_;
 
-@synthesize gis = _gis;
+@synthesize gis = gis_;
+
+#pragma mark -
+
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -62,12 +69,58 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+- (NSIndexPath*)indexPathForInputView:(UIView*)view{
+    
+    if (view == titleInput_) {
+        return [NSIndexPath indexPathForRow:0 inSection:0];
+    } else if (view == textInput_) {
+        return [NSIndexPath indexPathForRow:0 inSection:1];
+    } else if (view == licenseTypeChooser_) {
+        return [NSIndexPath indexPathForRow:0 inSection:2];
+    } else if (view == latitudeInput_) {
+        return [NSIndexPath indexPathForRow:0 inSection:3];
+    } else if (view == longitudeInput_) {
+        return [NSIndexPath indexPathForRow:1 inSection:3];
+    } else if (view == publishSwitch_) {
+        return [NSIndexPath indexPathForRow:0 inSection:4];
+    }
+    
+    return nil;
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    self.navigationItem.title = @"Partage";
+    
+    //Setup Table View
+    titleForSectionHeader_ = [[NSArray arrayWithObjects:@"Titre", 
+                                                        @"Texte", 
+                                                        @"Licence",
+                                                        @"Localisation", 
+                                                        @"Status", nil] retain];
+    rowsInSection_ = [[NSArray arrayWithObjects:[NSNumber numberWithInt:1],
+                                                [NSNumber numberWithInt:1],
+                                                [NSNumber numberWithInt:1],
+                                                [NSNumber numberWithInt:2],
+                                                [NSNumber numberWithInt:1],
+                                                nil] retain];
+    cellForIndexPath_ = [[NSDictionary alloc] initWithObjectsAndKeys:   
+                         titleCell_,
+                         [NSIndexPath indexPathForRow:0 inSection:0],
+                         textCell_,
+                         [NSIndexPath indexPathForRow:0 inSection:1],
+                         licenseCell_,
+                         [NSIndexPath indexPathForRow:0 inSection:2],
+                         latitudeCell_,
+                         [NSIndexPath indexPathForRow:0 inSection:3],
+                         longitudeCell_,
+                         [NSIndexPath indexPathForRow:1 inSection:3],
+                         publishCell_,
+                         [NSIndexPath indexPathForRow:0 inSection:4],
+                         nil];  
     
     if(self.media == nil){
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
@@ -80,10 +133,11 @@
     } else {
         self.mediaSnapshotView.image = self.media;
     }
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    self.navigationController.tabBarItem.title = @"Publier";
+    
+    if (self.gis != nil) {
+        self.latitudeInput.text = [NSString stringWithFormat:@"%f", self.gis.coordinate.latitude];
+        self.longitudeInput.text = [NSString stringWithFormat:@"%f", self.gis.coordinate.longitude];
+    }
 }
 
 - (void)viewDidUnload
@@ -93,13 +147,11 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 #pragma mark - IBActions
+
+- (IBAction)shareButtonPressed:(id)sender {
+    [self displayLoaderViewWithDetermination:YES whileExecuting:@selector(uploadMedia:)]; 
+}
 
 - (IBAction)uploadMedia:(id)sender {
     //NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:[id_article intValue]],[NSNumber numberWithDouble:[UIScreen mainScreen].bounds.size.width ], nil] forKeys:[NSArray arrayWithObjects:@"id_article", @"document_largeur", nil]];
@@ -107,8 +159,8 @@
     
 	NSData *imageData = [NSData dataWithData:UIImageJPEGRepresentation(self.media, 1.0f)];//1.0f = 100% quality
 
-    NSDictionary *document = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects: @"000000000000000000000.jpg", @"image/jpeg", imageData, nil] forKeys:[NSArray arrayWithObjects:@"name", @"type", @"bits", nil]];
-    NSMutableDictionary *info = [NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:document,  nil] forKeys:[NSArray arrayWithObjects: @"document", nil]];
+    NSDictionary *document = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects: @"000000000000000000000.jpg", @"image/jpeg", imageData, nil] forKeys:[NSArray arrayWithObjects:@"name", @"type", @"bits", nil]];    NSDictionary *gis = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects: self.latitudeInput.text, self.longitudeInput.text, nil] forKeys:[NSArray arrayWithObjects:@"lat", @"lon",nil]];
+    NSMutableDictionary *info = [NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:document, gis,  nil] forKeys:[NSArray arrayWithObjects: @"document",@"gis", nil]];
     // Title
     if (self.titleInput.text != @"") {
         [info setValue:self.titleInput.text forKey:@"titre"];
@@ -121,8 +173,9 @@
     if (self.publishSwitch.on) {
         [info setValue:@"publie" forKey:@"statut"];
     }
-    DataManager *dataManager = [DataManager sharedDataManager];
-    [dataManager addArticleWithInformations:[NSDictionary dictionaryWithDictionary:info]];
+    ConnectionManager* connectionManager = [ConnectionManager sharedConnectionManager];
+    connectionManager.progressDelegate = self;
+    [connectionManager addArticleWithInformations:[NSDictionary dictionaryWithDictionary:info]];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -131,85 +184,27 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-        return 2;
+        return [titleForSectionHeader_ count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0)
-        return 5;
-    else
-        return 1;
+    NSNumber *rows = (NSNumber*)[rowsInSection_ objectAtIndex:section];
+    return [rows intValue];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat defaultHeight = 44.0;
-    if ([indexPath section] == 0) {
-        switch ([indexPath row]) {
-            case 0:
-                return self.titleCell.frame.size.height;
-                break;
-            case 1:
-                return self.textCell.frame.size.height;
-                break;
-            case 2:
-                return self.publishCell.frame.size.height;
-                break;
-            default:
-                return defaultHeight;
-                break;
-        }
-    } else {
-        return defaultHeight;
-    }
+    UITableViewCell *cell = (UITableViewCell*)[cellForIndexPath_ objectForKey:indexPath];
+    return cell.frame.size.height;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return [titleForSectionHeader_ objectAtIndex:section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *gridCellIdentifier = @"accountMenuCell";
-    
-    UITableViewCell *cell = nil;
-    
-    if ([indexPath section] == 0) {
-        switch ([indexPath row]) {
-            case 0:
-                return self.titleCell;
-                break;
-            case 1:
-                return self.textCell;
-                break;
-            case 2:
-                return self.publishCell;
-                break;
-            case 3:
-                return self.latitudeCell;
-                break;
-            case 4:
-                return self.longitudeCell;
-                break;
-            default:
-                cell = [tableView dequeueReusableCellWithIdentifier:gridCellIdentifier];
-                if (cell == nil) {
-                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: @"accountMenuCell"];
-                }
-                return cell;
-                break;
-        }
-    } else {
-        cell = [tableView dequeueReusableCellWithIdentifier:gridCellIdentifier];
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: @"accountMenuCell"];
-        }
-        cell.textLabel.text = @"Uploader";
-        cell.textLabel.textAlignment = UITextAlignmentCenter;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        return cell;
-    }
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSelector:@selector(uploadMedia:)];    
+    return (UITableViewCell*)[cellForIndexPath_ objectForKey:indexPath];
 }
 
 
@@ -243,12 +238,25 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 #pragma mark - UIImageTextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (textField == self.titleInput) {
-        [self.textInput becomeFirstResponder];
-    } else {
-        [textField resignFirstResponder];
-    }
+    [textField resignFirstResponder];
     return YES;
+}
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField { //Keyboard becomes visible
+    [UIView animateWithDuration:0.25 animations:^(void){
+        self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, 
+                                      self.tableView.frame.size.width, self.tableView.frame.size.height - 215 + 50); //resize
+    } completion:^(BOOL finished){
+        [tableView_ scrollToRowAtIndexPath:[self indexPathForInputView: textField] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    }];
+    
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField { //keyboard will hide
+    [UIView animateWithDuration:0.25 animations:^(void){
+        self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, 
+                                  self.tableView.frame.size.width, self.tableView.frame.size.height + 215 - 50); //resize
+    }];
 }
 
 #pragma mark - UIImageTextViewdDelegate

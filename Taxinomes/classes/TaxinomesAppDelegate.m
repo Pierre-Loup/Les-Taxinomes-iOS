@@ -26,8 +26,9 @@
 #import "TaxinomesAppDelegate.h"
 #import "MediasListViewController.h"
 #import "ConnectionManager.h"
-#import "DataManager.h"
+#import "LTDataManager.h"
 #import "Constants.h"
+#import "License.h"
 
 @implementation TaxinomesAppDelegate
 
@@ -41,14 +42,6 @@
 }*/
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application{
-    
-    if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
-        ([UIScreen mainScreen].scale == 2.0)) {
-        kScreenScale = [UIScreen mainScreen].scale;
-    } else {
-        // non-Retina display
-        kScreenScale = 1.0;
-    }
     
     /*
     // on déclare le tabbar :
@@ -75,9 +68,11 @@
     //DataManager *dataManager = [DataManager sharedDataManager];    
     //Article *article = [dataManager getArticleWithId:@"27"];
     //[dataManager getArticles];
-    //ConnectionManager *connectionManager = [ConnectionManager sharedConnectionManager];
+    ConnectionManager *connectionManager = [ConnectionManager sharedConnectionManager];
     //connectionManager getArticlesByDateWithLimit:5 startingAtRecord:5];
-    //[connectionManager getAuthorWithId:@"207"];
+    if ([[License allLicenses] count] == 0) {
+        [connectionManager getLicenses];
+    }
     UINavigationBar *bar = [self.tabBarController.navigationController navigationBar];
     [bar setTintColor:[UIColor colorWithRed:(95.0/255.0) green:(130.0/255) blue:(55.0/255.0) alpha:1.0]];
     [self.window addSubview: self.tabBarController.view];
@@ -122,13 +117,15 @@
      */
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    /*
-     Called when the application is about to terminate.
-     Save data if appropriate.
-     See also applicationDidEnterBackground:.
-     */
+- (void)applicationWillTerminate:(UIApplication *)application {
+	
+    NSError *error;
+    NSManagedObjectContext *managedObjectContext = [[LTDataManager sharedDataManager] mainManagedObjectContext];
+    if (managedObjectContext != nil) {
+        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+			// Handle the error.
+        } 
+    }
 }
 
 - (void)dealloc

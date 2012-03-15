@@ -26,39 +26,56 @@
 #import <UIKit/UIKit.h>
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <CoreLocation/CoreLocation.h>
+#import "LTPhotoPickerViewController.h"
 
-@interface MediaUploadFormViewController : UIViewController <UIImagePickerControllerDelegate, UITextFieldDelegate, UITextViewDelegate> {
-    UITableView *_tableView;
-    UIImageView *_mediaSnapshotView;
-    UIImage *_media;
-    UITableViewCell *_titleCell;
-    UITableViewCell *_textCell;
-    UITableViewCell *_publishCell;
-    UITableViewCell *_latitudeCell;
-    UITableViewCell *_longitudeCell;
-    UITextField *_titleInput;
-    UITextView *_textInput;
-    UITextField *_latitudeInput;
-    UITextField *_longitudeInput;
-    UISwitch *_publishSwitch;
-    CLLocation *_gis;
+@interface MediaUploadFormViewController : LTPhotoPickerViewController <UITextFieldDelegate, UITextViewDelegate> {
+    
+    NSArray* titleForSectionHeader_;
+    NSArray* rowsInSection_;
+    NSDictionary* cellForIndexPath_;
+    NSDictionary* indexPathForInputView_;
+    CLLocation* gis_;
+    UIImage* media_;
+    
+    UITableView* tableView_;
+    UIImageView* mediaSnapshotView_;
+    //Cells
+    UITableViewCell* titleCell_;
+    UITableViewCell* textCell_;
+    UITableViewCell* licenseCell_;
+    UITableViewCell* latitudeCell_;
+    UITableViewCell* longitudeCell_;
+    UITableViewCell* publishCell_;
+    
+    UITextField* titleInput_;
+    UITextView* textInput_;
+    UIButton* licenseTypeChooser_;
+    UITextField* latitudeInput_;
+    UITextField* longitudeInput_;
+    UISwitch* publishSwitch_;
+    UIButton* shareButton_;
     
 }
 
-@property (retain, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, retain) IBOutlet UIImageView *mediaSnapshotView;
-@property (nonatomic, retain) IBOutlet UIImage *media;
-@property (nonatomic, retain) IBOutlet UITableViewCell *titleCell;
-@property (nonatomic, retain) IBOutlet UITableViewCell *textCell;
-@property (nonatomic, retain) IBOutlet UITableViewCell *publishCell;
-@property (nonatomic, retain) IBOutlet UITableViewCell *latitudeCell;
-@property (nonatomic, retain) IBOutlet UITableViewCell *longitudeCell;
-@property (nonatomic, retain) IBOutlet UITextField *titleInput;
-@property (nonatomic, retain) IBOutlet UITextView *textInput;
-@property (nonatomic, retain) IBOutlet UITextField *latitudeInput;
-@property (nonatomic, retain) IBOutlet UITextField *longitudeInput;
-@property (nonatomic, retain) IBOutlet UISwitch *publishSwitch;
+@property (retain, nonatomic) IBOutlet UITableView* tableView;
+@property (nonatomic, retain) IBOutlet UIImageView* mediaSnapshotView;
+@property (nonatomic, retain) IBOutlet UIImage* media;
+@property (nonatomic, retain) IBOutlet UITableViewCell* titleCell;
+@property (nonatomic, retain) IBOutlet UITableViewCell* textCell;
+@property (nonatomic, retain) IBOutlet UITableViewCell* licenseCell;
+@property (nonatomic, retain) IBOutlet UITableViewCell* latitudeCell;
+@property (nonatomic, retain) IBOutlet UITableViewCell* longitudeCell;
+@property (nonatomic, retain) IBOutlet UITableViewCell* publishCell;
+@property (nonatomic, retain) IBOutlet UITextField* titleInput;
+@property (nonatomic, retain) IBOutlet UITextView* textInput;
+@property (nonatomic, retain) IBOutlet UIButton* licenseTypeChooser;
+@property (nonatomic, retain) IBOutlet UITextField* latitudeInput;
+@property (nonatomic, retain) IBOutlet UITextField* longitudeInput;
+@property (nonatomic, retain) IBOutlet UISwitch* publishSwitch;
+@property (nonatomic, retain) IBOutlet UIButton* shareButton;
 
-@property (nonatomic, retain) CLLocation *gis;
+@property (nonatomic, retain) CLLocation* gis;
+
+- (IBAction)uploadMedia:(id)sender;
 
 @end

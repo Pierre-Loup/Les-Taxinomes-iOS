@@ -26,7 +26,9 @@
 #import <Foundation/Foundation.h>
 #import "Article.h"
 #import "Author.h"
+#import "License.h"
 #import "XMLRPCRequest.h"
+#import "ASIProgressDelegate.h"
 typedef enum {
     UNAUTHENTICATED = 0,
     AUTH_PENDING,
@@ -41,15 +43,18 @@ typedef enum {
 
 @interface ConnectionManager : NSObject {
     id delegate;
+    id <ASIProgressDelegate> progressDelegate_;
     Author *_author;
     NSError *_error;
     AuthenticationStatus authStatus;
 }
 
 @property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id progressDelegate;
 @property (nonatomic, retain) Author *author;
 @property (nonatomic, retain) NSError *error;
 @property (nonatomic, assign) AuthenticationStatus authStatus;
+
 
            
 + (ConnectionManager *)sharedConnectionManager;
@@ -59,6 +64,7 @@ typedef enum {
 - (Article *)getShortArticleWithId:(NSString *)id_article;
 - (Article *)getArticleWithId:(NSString *)id_article;
 - (Author *)getAuthorWithId:(NSString *)id_author;
+- (NSArray *)getLicenses;
 - (void)authWithLogin:(NSString *)login password:(NSString *)password;
 - (id)executeXMLRPCRequest:(XMLRPCRequest *)req authenticated:(BOOL) auth;
 - (Article *)addArticleWithInformations: (NSDictionary *)info ;

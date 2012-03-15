@@ -23,6 +23,8 @@ including :
 - Gustavo Pelosi Ambrozio's NSMutableDictionary+ImageMetadata class (Taxinomes/classes/GusUtils/)
 - Matt Gallagher's NSData+Base64 class (Taxinomes/classes/)
 - Trevor Harmon's UIImage+Resize class (Taxinomes/classes/)
+- Paul Alexander Pants Framework (Taxinomes/Pants Framework)
+- Matej Bukovinski MBProgressHUD class (Taxinomes/classes/)
 
 Please consult their respective headers for the terms of their individual licenses.
 

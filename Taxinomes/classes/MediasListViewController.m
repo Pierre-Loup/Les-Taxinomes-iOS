@@ -26,7 +26,7 @@
 #import "MediasListViewController.h"
 #import "MediasListTableViewCell.h"
 #import "Author.h"
-#import "DataManager.h"
+#import "LTDataManager.h"
 #import "Constants.h"
 #import "MediaDetailViewController.h"
 #import "Reachability.h"
@@ -167,7 +167,7 @@
     return ([articleForIndexPath count]+1);
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *medialListCellIdentifier = @"mediasListCell";
     
@@ -183,10 +183,10 @@
         }
     }
     
-    Article *article = [articleForIndexPath objectForKey:indexPath];    
+    Article *article = [articleForIndexPath objectForKey:indexPath];
     UITableViewCell *cell = nil;
     
-    cell = [tableView dequeueReusableCellWithIdentifier:medialListCellIdentifier];
+    cell = [aTableView dequeueReusableCellWithIdentifier:medialListCellIdentifier];
     if (cell == nil) {
         [[NSBundle mainBundle] loadNibNamed:@"MediaListCellView" owner:self options:nil];
         cell = self.mediaTableViewCell;
@@ -265,7 +265,7 @@
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     NSArray *nextArticles;
     if([[Reachability reachabilityWithHostName:kHost] isReachable]){
-        DataManager *dm = [DataManager sharedDataManager];
+        LTDataManager *dm = [LTDataManager sharedDataManager];
         nextArticles = [dm getShortArticlesByDateWithLimit:kNbMediasStep startingAtRecord:[articleForIndexPath count]];
         if([nextArticles count] != 0) {
             [self performSelectorOnMainThread:@selector(addMediasToBottom:) withObject:nextArticles waitUntilDone:NO];                

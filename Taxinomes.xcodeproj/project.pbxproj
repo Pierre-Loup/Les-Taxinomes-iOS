@@ -18,6 +18,11 @@
 		37D2E7FC144709EE0044EC3A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7E1144709ED0044EC3A /* CoreGraphics.framework */; };
 		37D2E806144709EE0044EC3A /* TaxinomesTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 37D2E805144709EE0044EC3A /* TaxinomesTests.h */; };
 		37D2E808144709EE0044EC3A /* TaxinomesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 37D2E807144709EE0044EC3A /* TaxinomesTests.m */; };
+		A500F22615081B8E00CFEA24 /* LTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A500F22515081B8E00CFEA24 /* LTViewController.m */; };
+		A500F22915081C9C00CFEA24 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A500F22815081C9B00CFEA24 /* MBProgressHUD.m */; };
+		A56DA4651508E4E200AD4A92 /* LTDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A56DA4631508E4E200AD4A92 /* LTDataModel.xcdatamodeld */; };
+		A591B7AD150CA0DF00CE89BA /* License.m in Sources */ = {isa = PBXBuildFile; fileRef = A591B7AC150CA0DF00CE89BA /* License.m */; };
+		A591B7B3150D57F000CE89BA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A591B7B2150D57F000CE89BA /* CoreData.framework */; };
 		A5A6018215003C660026F78C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = A5A6017F15003C660026F78C /* LICENSE */; };
 		A5A6018315003C660026F78C /* NSMutableDictionary+ImageMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = A5A6018115003C660026F78C /* NSMutableDictionary+ImageMetadata.m */; };
 		A5A6018615004E420026F78C /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = A5A6018515004E410026F78C /* UIImage+Resize.m */; };
@@ -54,7 +59,7 @@
 		C87C67C3147440B500A055F1 /* win32tc.c in Sources */ = {isa = PBXBuildFile; fileRef = C87C6780147440B500A055F1 /* win32tc.c */; };
 		C87C67C4147440B500A055F1 /* ConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C87C6783147440B500A055F1 /* ConnectionManager.m */; };
 		C87C67C5147440B500A055F1 /* CTidy.m in Sources */ = {isa = PBXBuildFile; fileRef = C87C6785147440B500A055F1 /* CTidy.m */; };
-		C87C67C6147440B500A055F1 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C87C6787147440B500A055F1 /* DataManager.m */; };
+		C87C67C6147440B500A055F1 /* LTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C87C6787147440B500A055F1 /* LTDataManager.m */; };
 		C87C67C7147440B500A055F1 /* MediasListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = C87C6789147440B500A055F1 /* MediasListCellView.m */; };
 		C87C67C8147440B500A055F1 /* MediasListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C87C678B147440B500A055F1 /* MediasListTableViewCell.m */; };
 		C87C67C9147440B500A055F1 /* MediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C87C678D147440B500A055F1 /* MediasListViewController.m */; };
@@ -94,7 +99,6 @@
 		C8858A7714CEDD1B008FEB13 /* MediaFullSizeViewContoller.m in Sources */ = {isa = PBXBuildFile; fileRef = C8858A7614CEDD1B008FEB13 /* MediaFullSizeViewContoller.m */; };
 		C885AD1514D0B304002ECCD0 /* MediaListCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C885AD1714D0B304002ECCD0 /* MediaListCellView.xib */; };
 		C885AD1914D0B328002ECCD0 /* MediaFullSizeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C885AD1B14D0B328002ECCD0 /* MediaFullSizeView.xib */; };
-		C885AD2214D0B374002ECCD0 /* MediaFullSizeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C885AD1B14D0B328002ECCD0 /* MediaFullSizeView.xib */; };
 		C885CC0714D17D82005B42CD /* tabbar_home.png in Resources */ = {isa = PBXBuildFile; fileRef = C885CC0514D17D82005B42CD /* tabbar_home.png */; };
 		C885CC0814D17D82005B42CD /* tabbar_account.png in Resources */ = {isa = PBXBuildFile; fileRef = C885CC0614D17D82005B42CD /* tabbar_account.png */; };
 		C8865AE114879D1B0059AAD6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C8865ADF14879D1B0059AAD6 /* Default.png */; };
@@ -150,6 +154,14 @@
 		37D2E801144709EE0044EC3A /* TaxinomesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TaxinomesTests-Info.plist"; sourceTree = "<group>"; };
 		37D2E805144709EE0044EC3A /* TaxinomesTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaxinomesTests.h; sourceTree = "<group>"; };
 		37D2E807144709EE0044EC3A /* TaxinomesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaxinomesTests.m; sourceTree = "<group>"; };
+		A500F22415081B8E00CFEA24 /* LTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTViewController.h; sourceTree = "<group>"; };
+		A500F22515081B8E00CFEA24 /* LTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTViewController.m; sourceTree = "<group>"; };
+		A500F22715081C9B00CFEA24 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		A500F22815081C9B00CFEA24 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		A56DA4641508E4E200AD4A92 /* LTDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LTDataModel.xcdatamodel; sourceTree = "<group>"; };
+		A591B7AB150CA0DF00CE89BA /* License.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = License.h; path = model/License.h; sourceTree = "<group>"; };
+		A591B7AC150CA0DF00CE89BA /* License.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = License.m; path = model/License.m; sourceTree = "<group>"; };
+		A591B7B2150D57F000CE89BA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		A5A6017F15003C660026F78C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		A5A6018015003C660026F78C /* NSMutableDictionary+ImageMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+ImageMetadata.h"; sourceTree = "<group>"; };
 		A5A6018115003C660026F78C /* NSMutableDictionary+ImageMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+ImageMetadata.m"; sourceTree = "<group>"; };
@@ -217,8 +229,8 @@
 		C87C6783147440B500A055F1 /* ConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionManager.m; sourceTree = "<group>"; };
 		C87C6784147440B500A055F1 /* CTidy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTidy.h; sourceTree = "<group>"; };
 		C87C6785147440B500A055F1 /* CTidy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTidy.m; sourceTree = "<group>"; };
-		C87C6786147440B500A055F1 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
-		C87C6787147440B500A055F1 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		C87C6786147440B500A055F1 /* LTDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTDataManager.h; sourceTree = "<group>"; };
+		C87C6787147440B500A055F1 /* LTDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTDataManager.m; sourceTree = "<group>"; };
 		C87C6788147440B500A055F1 /* MediasListCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediasListCellView.h; sourceTree = "<group>"; };
 		C87C6789147440B500A055F1 /* MediasListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediasListCellView.m; sourceTree = "<group>"; };
 		C87C678A147440B500A055F1 /* MediasListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediasListTableViewCell.h; sourceTree = "<group>"; };
@@ -333,6 +345,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A591B7B3150D57F000CE89BA /* CoreData.framework in Frameworks */,
 				C8DFCFC214EE60F1005D9101 /* AVFoundation.framework in Frameworks */,
 				C8339C2A14ED6393000A4E37 /* ImageIO.framework in Frameworks */,
 				C8339C2814ED6366000A4E37 /* AssetsLibrary.framework in Frameworks */,
@@ -389,6 +402,7 @@
 		37D2E7DC144709ED0044EC3A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A591B7B2150D57F000CE89BA /* CoreData.framework */,
 				C8DFCFC114EE60F1005D9101 /* AVFoundation.framework */,
 				C8339C2914ED6393000A4E37 /* ImageIO.framework */,
 				C8339C2714ED6365000A4E37 /* AssetsLibrary.framework */,
@@ -414,7 +428,6 @@
 				C87C6798147440B500A055F1 /* TaxinomesAppDelegate.h */,
 				C87C6799147440B500A055F1 /* TaxinomesAppDelegate.m */,
 				C87C674C147440B500A055F1 /* classes */,
-				C87C67A9147440B500A055F1 /* Constants.h */,
 				37D2E7E4144709ED0044EC3A /* Supporting Files */,
 				C87C67D9147440B500A055F1 /* ressources */,
 			);
@@ -424,6 +437,7 @@
 		37D2E7E4144709ED0044EC3A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C87C67A9147440B500A055F1 /* Constants.h */,
 				37D2E7E5144709ED0044EC3A /* Taxinomes-Info.plist */,
 				37D2E7E6144709ED0044EC3A /* InfoPlist.strings */,
 				37D2E7E9144709ED0044EC3A /* main.m */,
@@ -453,6 +467,8 @@
 		A5A60184150045890026F78C /* LTControllers */ = {
 			isa = PBXGroup;
 			children = (
+				A500F22415081B8E00CFEA24 /* LTViewController.h */,
+				A500F22515081B8E00CFEA24 /* LTViewController.m */,
 				C8339C2214ED593A000A4E37 /* LTPhotoPickerViewController.h */,
 				C8339C2314ED593A000A4E37 /* LTPhotoPickerViewController.m */,
 			);
@@ -656,6 +672,8 @@
 		C87C680E147440B500A055F1 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				A500F22715081C9B00CFEA24 /* MBProgressHUD.h */,
+				A500F22815081C9B00CFEA24 /* MBProgressHUD.m */,
 				C8339C1B14ED585F000A4E37 /* GusUtils */,
 				C87C6818147440B500A055F1 /* ASI */,
 				C87C679A147440B500A055F1 /* XML-RPC */,
@@ -691,8 +709,8 @@
 			children = (
 				C87C6782147440B500A055F1 /* ConnectionManager.h */,
 				C87C6783147440B500A055F1 /* ConnectionManager.m */,
-				C87C6786147440B500A055F1 /* DataManager.h */,
-				C87C6787147440B500A055F1 /* DataManager.m */,
+				C87C6786147440B500A055F1 /* LTDataManager.h */,
+				C87C6787147440B500A055F1 /* LTDataManager.m */,
 				C8852A4B1479459500F54543 /* SqliteDatabase.h */,
 				C8852A4C1479459600F54543 /* SqliteDatabase.m */,
 			);
@@ -749,10 +767,13 @@
 		C8821D781477BFF5003DBE60 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				A56DA4631508E4E200AD4A92 /* LTDataModel.xcdatamodeld */,
 				C8821D791477C019003DBE60 /* Article.h */,
 				C8821D7A1477C019003DBE60 /* Article.m */,
 				C8821D8014781134003DBE60 /* Author.h */,
 				C8821D8114781134003DBE60 /* Author.m */,
+				A591B7AB150CA0DF00CE89BA /* License.h */,
+				A591B7AC150CA0DF00CE89BA /* License.m */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -811,7 +832,7 @@
 		37D2E7D0144709ED0044EC3A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = "Les petits débrouillards Bretagne";
 			};
 			buildConfigurationList = 37D2E7D3144709ED0044EC3A /* Build configuration list for PBXProject "Taxinomes" */;
@@ -857,7 +878,6 @@
 				C885AD1514D0B304002ECCD0 /* MediaListCellView.xib in Resources */,
 				C898616714C8CA5D00C237A0 /* MainWIndows.xib in Resources */,
 				C885AD1914D0B328002ECCD0 /* MediaFullSizeView.xib in Resources */,
-				C885AD2214D0B374002ECCD0 /* MediaFullSizeView.xib in Resources */,
 				C885CC0714D17D82005B42CD /* tabbar_home.png in Resources */,
 				C885CC0814D17D82005B42CD /* tabbar_account.png in Resources */,
 				C8A1B6A514D186A900CD2AE4 /* AccountView.xib in Resources */,
@@ -934,7 +954,7 @@
 				C87C67C3147440B500A055F1 /* win32tc.c in Sources */,
 				C87C67C4147440B500A055F1 /* ConnectionManager.m in Sources */,
 				C87C67C5147440B500A055F1 /* CTidy.m in Sources */,
-				C87C67C6147440B500A055F1 /* DataManager.m in Sources */,
+				C87C67C6147440B500A055F1 /* LTDataManager.m in Sources */,
 				C87C67C7147440B500A055F1 /* MediasListCellView.m in Sources */,
 				C87C67C8147440B500A055F1 /* MediasListTableViewCell.m in Sources */,
 				C87C67C9147440B500A055F1 /* MediasListViewController.m in Sources */,
@@ -970,6 +990,10 @@
 				C884A1AB14F17B6D00DEFEE4 /* NSData+Base64.m in Sources */,
 				A5A6018315003C660026F78C /* NSMutableDictionary+ImageMetadata.m in Sources */,
 				A5A6018615004E420026F78C /* UIImage+Resize.m in Sources */,
+				A500F22615081B8E00CFEA24 /* LTViewController.m in Sources */,
+				A500F22915081C9C00CFEA24 /* MBProgressHUD.m in Sources */,
+				A56DA4651508E4E200AD4A92 /* LTDataModel.xcdatamodeld in Sources */,
+				A591B7AD150CA0DF00CE89BA /* License.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1155,7 +1179,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Taxinomes/Taxinomes-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = TOUCHXMLUSETIDY;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					TAXINOMES_DEV,
+					TOUCHXMLUSETIDY,
+				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Taxinomes/Taxinomes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -1173,7 +1200,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Taxinomes/Taxinomes-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = TOUCHXMLUSETIDY;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					TAXINOMES_DEV,
+					TOUCHXMLUSETIDY,
+				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Taxinomes/Taxinomes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -1250,6 +1280,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A56DA4631508E4E200AD4A92 /* LTDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A56DA4641508E4E200AD4A92 /* LTDataModel.xcdatamodel */,
+			);
+			currentVersion = A56DA4641508E4E200AD4A92 /* LTDataModel.xcdatamodel */;
+			path = LTDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 37D2E7D0144709ED0044EC3A /* Project object */;
 }

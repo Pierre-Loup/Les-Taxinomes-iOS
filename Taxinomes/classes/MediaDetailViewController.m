@@ -25,7 +25,7 @@
 
 #import "MediaDetailViewController.h"
 #import "MediaFullSizeViewContoller.h"
-#import "DataManager.h"
+#import "LTDataManager.h"
 #import "Constants.h"
 
 @implementation MediaDetailViewController
@@ -73,7 +73,7 @@
     [super viewDidAppear:animated];    
     
     self.navigationController.tabBarItem.title = @"Media";
-    DataManager *dm = [DataManager sharedDataManager];
+    LTDataManager *dm = [LTDataManager sharedDataManager];
     if(self.article == nil)
         self.article = [dm getArticleWithId:self.id_article];
     

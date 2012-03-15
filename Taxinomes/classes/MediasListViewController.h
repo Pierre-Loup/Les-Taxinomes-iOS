@@ -24,7 +24,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "DataManager.h"
+#import "LTDataManager.h"
 
 typedef enum {
     FAILED = 0,
@@ -33,7 +33,7 @@ typedef enum {
 } MediaLoadingStatus;
 
 @interface MediasListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
-    UITableView *tableView;
+    UITableView *tableView_;
     NSMutableDictionary *articleForIndexPath;
     UITableViewCell *spinnerCell;
     MediaLoadingStatus mediaLoadingStatus;

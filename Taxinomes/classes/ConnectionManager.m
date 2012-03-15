@@ -29,12 +29,14 @@
 #import "ASIHTTPRequest.h"
 #import "Article.h"
 #import "Author.h"
+#import "License.h"
 
 static ConnectionManager *instance = nil;
 
 @implementation ConnectionManager
 @synthesize error = _error;
 @synthesize author= _author;
+@synthesize progressDelegate = progressDelegate_;
 @synthesize authStatus, delegate;
 
 - (void)dealloc {
@@ -94,8 +96,8 @@ static ConnectionManager *instance = nil;
     NSArray *requestedFields = [NSArray arrayWithObjects:@"id_article", @"titre", @"date", @"vignette", @"auteurs", nil];
     NSArray *argsKeys = [NSArray arrayWithObjects:@"limite", @"champs_demandes", @"tri", @"vignette_format", @"vignette_largeur", @"vignette_hauteur", nil];
     
-    NSNumber *thumbnailWidth = [NSNumber numberWithDouble:(kScreenScale*THUMBNAIL_MAX_WIDHT)];
-    NSNumber *thumbnailHeight = [NSNumber numberWithDouble:(kScreenScale*THUMBNAIL_MAX_HEIGHT)];
+    NSNumber *thumbnailWidth = [NSNumber numberWithDouble:(THUMBNAIL_MAX_WIDHT)];
+    NSNumber *thumbnailHeight = [NSNumber numberWithDouble:(THUMBNAIL_MAX_HEIGHT)];
     NSArray *argsObjects = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d,%d", start, limit], requestedFields, [NSArray arrayWithObject:@"date DESC"], @"carre", thumbnailWidth, thumbnailHeight, nil];
     //NSArray *argsKeys = [NSArray arrayWithObjects:@"limite", nil];
     //NSArray *argsObjects = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d,%d", start, limit], nil];
@@ -122,8 +124,8 @@ static ConnectionManager *instance = nil;
     NSArray *requestedFields = [NSArray arrayWithObjects:@"id_article", @"titre", @"date", @"vignette", @"auteurs", nil];
     NSArray *argsKeys = [NSArray arrayWithObjects:@"id_article", @"champs_demandes", @"vignette_format", @"vignette_largeur", @"vignette_hauteur", nil];
     //NSLog(@"%f",kScreenScale);
-    NSNumber *thumbnailWidth = [NSNumber numberWithDouble:(kScreenScale*THUMBNAIL_MAX_WIDHT)];
-    NSNumber *thumbnailHeight = [NSNumber numberWithDouble:(kScreenScale*THUMBNAIL_MAX_HEIGHT)];
+    NSNumber *thumbnailWidth = [NSNumber numberWithDouble:(THUMBNAIL_MAX_WIDHT)];
+    NSNumber *thumbnailHeight = [NSNumber numberWithDouble:(THUMBNAIL_MAX_HEIGHT)];
     NSArray *argsObjects = [NSArray arrayWithObjects:id_article, requestedFields, @"carre", thumbnailWidth, thumbnailHeight, nil];
     //NSArray *argsKeys = [NSArray arrayWithObjects:@"limite", nil];
     //NSArray *argsObjects = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d,%d", start, limit], nil];
@@ -151,7 +153,7 @@ static ConnectionManager *instance = nil;
     XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
     //NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:[id_article intValue]],[NSNumber numberWithDouble:[UIScreen mainScreen].bounds.size.width ], nil] forKeys:[NSArray arrayWithObjects:@"id_article", @"document_largeur", nil]];
     //NSLog(@"%f",kScreenScale*MEDIA_MAX_WIDHT);
-    NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:[id_article intValue]],[NSNumber numberWithDouble:kScreenScale*MEDIA_MAX_WIDHT], nil] forKeys:[NSArray arrayWithObjects:@"id_article", @"document_largeur", nil]];
+    NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:[id_article intValue]],[NSNumber numberWithDouble:MEDIA_MAX_WIDHT], nil] forKeys:[NSArray arrayWithObjects:@"id_article", @"document_largeur", nil]];
     [xmlrpcRequest setMethod:@"geodiv.lire_media" withObject:args];
     id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
     [xmlrpcRequest release];
@@ -180,6 +182,32 @@ static ConnectionManager *instance = nil;
     }
 }
 
+- (NSArray*)getLicenses {
+    XMLRPCRequest* xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
+    [xmlrpcRequest setMethod:@"spip.liste_licences" withObject:[NSDictionary dictionary]];
+    id response = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
+    [xmlrpcRequest release];
+    if ( [response isKindOfClass: [NSDictionary class]]) {
+        NSDictionary* responseDict = (NSDictionary*)response;
+        NSMutableArray* licenses = [[NSMutableArray alloc] initWithCapacity:[responseDict count]];
+        for(NSString *key in response){
+            if ([[responseDict objectForKey:key] isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *xmlLicenseDict = [responseDict objectForKey:key];
+                License* license = nil;
+                license = [License licenseWithXMLRPCResponse:xmlLicenseDict];
+                if (license != nil) {
+                    [licenses addObject:license];
+                }
+            }
+                
+        }
+        return [licenses autorelease];
+    } else {
+        return nil;
+    }
+    
+}
+
 - (void)authWithLogin:(NSString *) login password:(NSString *) password{
     self.authStatus = AUTH_PENDING;
     XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
@@ -203,6 +231,8 @@ static ConnectionManager *instance = nil;
 - (id)executeXMLRPCRequest:(XMLRPCRequest *)req  authenticated:(BOOL)auth{
     
 	ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:[req host]];
+    request.uploadProgressDelegate = progressDelegate_;
+    request.downloadProgressDelegate = progressDelegate_;
     [request setUseCookiePersistence:auth];
 	[request setRequestMethod:@"POST"];
 	[request setTimeOutSeconds:30];

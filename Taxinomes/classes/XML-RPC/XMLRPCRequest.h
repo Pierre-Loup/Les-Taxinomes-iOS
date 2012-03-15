@@ -27,7 +27,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TaxinomesAppDelegate.h"
 
 @class CTidy;
 @class XMLRPCEncoder;
