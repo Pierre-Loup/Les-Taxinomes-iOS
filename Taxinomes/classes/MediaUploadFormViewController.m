@@ -154,7 +154,7 @@
 }
 
 - (IBAction)uploadMedia:(id)sender {
-    //NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:[id_article intValue]],[NSNumber numberWithDouble:[UIScreen mainScreen].bounds.size.width ], nil] forKeys:[NSArray arrayWithObjects:@"id_article", @"document_largeur", nil]];
+    //NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:[id_media intValue]],[NSNumber numberWithDouble:[UIScreen mainScreen].bounds.size.width ], nil] forKeys:[NSArray arrayWithObjects:@"id_media", @"document_largeur", nil]];
     //NSLog(@"%f",kScreenScale*MEDIA_MAX_WIDHT);
     
 	NSData *imageData = [NSData dataWithData:UIImageJPEGRepresentation(self.media, 1.0f)];//1.0f = 100% quality
@@ -173,9 +173,9 @@
     if (self.publishSwitch.on) {
         [info setValue:@"publie" forKey:@"statut"];
     }
-    ConnectionManager* connectionManager = [ConnectionManager sharedConnectionManager];
+    LTConnectionManager* connectionManager = [LTConnectionManager sharedLTConnectionManager];
     connectionManager.progressDelegate = self;
-    [connectionManager addArticleWithInformations:[NSDictionary dictionaryWithDictionary:info]];
+    [connectionManager addmediaWithInformations:[NSDictionary dictionaryWithDictionary:info]];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

@@ -59,4 +59,4 @@
 //Database
 #define kDatabaseFile @"taxinomes-1.0.db"
 #define kAuthorCacheTime 3600.0
-#define kArticleCacheTime 3600.0
+#define kmediaCacheTime 3600.0

@@ -24,11 +24,11 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "ConnectionManager.h"
+#import "LTConnectionManager.h"
 #import "LTPhotoPickerViewController.h"
 #import "Author.h"
 
-@interface AccountViewController : LTPhotoPickerViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ConnectionManagerDelegate> {
+@interface AccountViewController : LTPhotoPickerViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, LTConnectionManagerDelegate> {
     UITableView *_tableView;
     UIImageView *_avatarView;
     UILabel *_nameLabel;

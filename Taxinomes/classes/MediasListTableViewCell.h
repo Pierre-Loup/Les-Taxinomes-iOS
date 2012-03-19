@@ -24,7 +24,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "Article.h"
+#import "media.h"
 
 @class MediasListCellView;
 
@@ -32,6 +32,6 @@
     MediasListCellView *cellView;
 }
 
-- (void)setArticle:(Article *) article;
+- (void)setmedia:(Media *) media;
 
 @end

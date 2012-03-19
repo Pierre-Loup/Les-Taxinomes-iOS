@@ -25,7 +25,7 @@
 
 #import "TaxinomesAppDelegate.h"
 #import "MediasListViewController.h"
-#import "ConnectionManager.h"
+#import "LTConnectionManager.h"
 #import "LTDataManager.h"
 #import "Constants.h"
 #import "License.h"
@@ -42,41 +42,15 @@
 }*/
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application{
-    
-    /*
-    // on déclare le tabbar :
-    tabBarController = [[UITabBarController alloc] init];
-    //on initialise media et on l'implémente en mettant dans un controlleur
-    site = [[SiteTaxinomes alloc] init];
-    UINavigationController *tableNavController = [[[UINavigationController alloc] initWithRootViewController:site] autorelease];
-    tableNavController.tabBarItem.image = [UIImage imageNamed:@"naviguer.png"];
-    [site release];
-    [tableNavController setNavigationBarHidden:TRUE];
-    //pareil pour caméra
-    media = [[MediaViewController alloc] init];
-    UINavigationController *table2NavController = [[[UINavigationController alloc] initWithRootViewController:media] autorelease];
-    table2NavController.tabBarItem.image = [UIImage imageNamed:@"media.png"];
-    [media release];
-    [table2NavController setNavigationBarHidden:TRUE];
-    //on implemente le tabbar
-    tabBarController.viewControllers = [NSArray arrayWithObjects:tableNavController,table2NavController,nil];
-    */
-    
-    //MediasListViewController *mediasListViewController = [[MediasListViewController alloc] initWithNibName:@"MediasListView" bundle:nil];
-    //navigationController = [[UINavigationController alloc] initWithRootViewController:mediasListViewController];
-    //[mediasListViewController release];
-    //DataManager *dataManager = [DataManager sharedDataManager];    
-    //Article *article = [dataManager getArticleWithId:@"27"];
-    //[dataManager getArticles];
-    ConnectionManager *connectionManager = [ConnectionManager sharedConnectionManager];
-    //connectionManager getArticlesByDateWithLimit:5 startingAtRecord:5];
+    LTConnectionManager *connectionManager = [LTConnectionManager sharedLTConnectionManager];
     if ([[License allLicenses] count] == 0) {
         [connectionManager getLicenses];
     }
+    [connectionManager getSectionWithIdentifier:[NSNumber numberWithInt:12]];
+    
     UINavigationBar *bar = [self.tabBarController.navigationController navigationBar];
     [bar setTintColor:[UIColor colorWithRed:(95.0/255.0) green:(130.0/255) blue:(55.0/255.0) alpha:1.0]];
     [self.window addSubview: self.tabBarController.view];
-    //[mediasListViewController release];
     [self.window makeKeyAndVisible];
 }
 

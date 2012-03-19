@@ -1,9 +1,9 @@
 //
-//  MediasListCellView.h
+//  Section.m
 //  Taxinomes
 //
-//  Created by Pierre-Loup Tristant on 06/11/11.
-//  Copyright (c) 2011 Les petits débrouillards Bretagne. All rights reserved.
+//  Created by Pierre-Loup Tristant on 19/03/12.
+//  Copyright (c) 2012 Les petits débrouillards Bretagne. All rights reserved.
 //
 
 /*
@@ -23,15 +23,15 @@
  
  */
 
-#import <UIKit/UIKit.h>
-#import "media.h"
+#import "Section.h"
+#import "Section.h"
 
-@interface MediasListCellView : UIView {
-    Media *media;
-}
 
-@property (nonatomic, retain) Media *media;
+@implementation Section
 
-- (void)setmedia:(Media *) amedia;
+@dynamic identifiant;
+@dynamic desription;
+@dynamic imageURL;
+@dynamic parent;
 
 @end

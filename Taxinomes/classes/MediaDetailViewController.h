@@ -24,21 +24,21 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "Article.h"
+#import "media.h"
 
 @interface MediaDetailViewController : UIViewController <UIScrollViewDelegate>{
-    NSString* _id_article;
-    Article* _article;
+    NSString* _id_media;
+    Media* _media;
     UIScrollView* _scrollView;
     UIActivityIndicatorView* _spinner;
 }
 
-@property (nonatomic, retain) Article *article;
-@property (nonatomic, retain) NSString *id_article;
+@property (nonatomic, retain) Media *media;
+@property (nonatomic, retain) NSString *id_media;
 @property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, retain) UIActivityIndicatorView *spinner;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil articleId:(NSString *)id_article;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil mediaId:(NSString *)id_media;
 - (IBAction)ClickEventOnMedia:(id)sender;
 
 @end

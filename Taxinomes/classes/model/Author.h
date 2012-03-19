@@ -1,9 +1,9 @@
 //
-//  MediasListCellView.h
+//  Author.h
 //  Taxinomes
 //
-//  Created by Pierre-Loup Tristant on 06/11/11.
-//  Copyright (c) 2011 Les petits débrouillards Bretagne. All rights reserved.
+//  Created by Pierre-Loup Tristant on 19/03/12.
+//  Copyright (c) 2012 Les petits débrouillards Bretagne. All rights reserved.
 //
 
 /*
@@ -23,15 +23,20 @@
  
  */
 
-#import <UIKit/UIKit.h>
-#import "media.h"
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface MediasListCellView : UIView {
-    Media *media;
-}
 
-@property (nonatomic, retain) Media *media;
+@interface Author : NSManagedObject
 
-- (void)setmedia:(Media *) amedia;
+@property (nonatomic, retain) NSNumber * identifier;
+@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * biography;
+@property (nonatomic, retain) NSDate * signupDate;
+@property (nonatomic, retain) NSNumber * avatarURL;
+@property (nonatomic, retain) NSDate * localUpdateDate;
+@property (nonatomic, retain) NSString * status;
+
++ (Author*)authorWithXMLRPCResponse:(NSDictionary*)response;
 
 @end

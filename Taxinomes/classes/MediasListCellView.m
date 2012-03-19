@@ -27,7 +27,7 @@
 #import "Author.h";
 
 @implementation MediasListCellView
-@synthesize article;
+@synthesize media;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -58,12 +58,12 @@
     UIColor *titleColor = [UIColor colorWithRed:(95.0/255.0) green:(130.0/255.0) blue:(55.0/255.0) alpha:1.0];
 	UIFont *titleFont = [UIFont systemFontOfSize:17];
     
-    NSString *authorName = [NSString stringWithString:((Author *)[article.authors objectAtIndex:0]).name];
+    NSString *authorName = [NSString stringWithString:((Author *)[media.authors objectAtIndex:0]).name];
     UIColor *authorNameColor = [UIColor colorWithRed:(130.0/255.0) green:(210.0/255.0) blue:(55.0/255.0) alpha:1.0];
 	UIFont *authorNameFont = [UIFont systemFontOfSize:17];
     
     // taille des textes
-	CGSize sizeTitle = [article.title sizeWithFont:titleFont];
+	CGSize sizeTitle = [media.title sizeWithFont:titleFont];
     //Author *author =
 	CGSize sizeAuthor = [authorName sizeWithFont:authorNameFont];
 	
@@ -74,7 +74,7 @@
 	// dessin du libelle
 	[titleColor set];
 	CGPoint point = CGPointMake( xTextOffset, yTextOffset );
-	[article.title drawAtPoint:point forWidth:maxWidthForTexts withFont:titleFont lineBreakMode:UILineBreakModeTailTruncation];
+	[media.title drawAtPoint:point forWidth:maxWidthForTexts withFont:titleFont lineBreakMode:UILineBreakModeTailTruncation];
 	
 	// dessin du solde
 	[authorNameColor set];
@@ -82,12 +82,12 @@
 	[authorName drawAtPoint:point forWidth:maxWidthForTexts withFont:titleFont lineBreakMode:UILineBreakModeTailTruncation];
     
     CGRect zone = CGRectMake(xMargin, yMargin, thumbnailHeight, thumbnailWidth);
-    [article.mediaThumbnail drawInRect:zone];
+    [media.mediaThumbnail drawInRect:zone];
 }
 
 
-- (void)setArticle:(Article *) aArticle {
-    article = aArticle;
+- (void)setmedia:(Media *) amedia {
+    media = amedia;
 }
 
 @end

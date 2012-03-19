@@ -50,8 +50,8 @@
     // Configure the view for the selected state
 }
 
-- (void)setArticle:(Article *) article{
-    [cellView setArticle:article];
+- (void)setmedia:(Media *) media{
+    [cellView setmedia:media];
 }
 
 @end

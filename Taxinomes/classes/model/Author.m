@@ -1,9 +1,9 @@
-     //
+//
 //  Author.m
 //  Taxinomes
 //
-//  Created by Pierre-Loup Tristant on 19/11/11.
-//  Copyright (c) 2011 Les petits débrouillards Bretagne. All rights reserved.
+//  Created by Pierre-Loup Tristant on 19/03/12.
+//  Copyright (c) 2012 Les petits débrouillards Bretagne. All rights reserved.
 //
 
 /*
@@ -25,17 +25,18 @@
 
 #import "Author.h"
 
-@implementation Author
-@synthesize id_author = _id_author;
-@synthesize biography = _biography;
-@synthesize name = _name;
-@synthesize signupDate = _signupDate;
-@synthesize status = _status;
-@synthesize avatarURL = _avatarURL;
-@synthesize avatar = _avatar;
-@synthesize dataReceivedDate = _dataReceivedDate;
 
-+ (Author *)authorWithXMLRPCResponse: (NSDictionary *) response{
+@implementation Author
+
+@dynamic identifier;
+@dynamic name;
+@dynamic biography;
+@dynamic signupDate;
+@dynamic avatarURL;
+@dynamic localUpdateDate;
+@dynamic status;
+
++ (Author*)authorWithXMLRPCResponse:(NSDictionary*)response {
     Author *author = [[[Author alloc] init] autorelease];
     if(response == nil){
         return author;
@@ -66,28 +67,17 @@
     author.dataReceivedDate = [NSDate date];
     
     /*//DEBUG    
-    NSLog(author.id_author);
-    NSLog(author.name);
-    NSLog(author.biography);
-    NSLog([author.signupDate description]);
-    NSLog(author.status);
-    NSLog(author.avatarURL);
-    //*/
+     NSLog(author.id_author);
+     NSLog(author.name);
+     NSLog(author.biography);
+     NSLog([author.signupDate description]);
+     NSLog(author.status);
+     NSLog(author.avatarURL);
+     //*/
     
     [signupDate release];
     
     return author;
-}
-
-- (void)dealloc{
-    [_id_author release];
-    [_name release];
-    [_biography release];
-    [_status release];
-    [_signupDate release];
-    [_avatarURL release];
-    [_avatar release];
-    [_dataReceivedDate release];
 }
 
 @end

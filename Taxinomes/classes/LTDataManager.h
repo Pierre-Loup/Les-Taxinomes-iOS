@@ -25,10 +25,9 @@
 
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
-#import "SqliteDatabase.h"
-#import "ConnectionManager.h"
+#import "LTConnectionManager.h"
 #import "Author.h"
-#import "Article.h"
+#import "media.h"
 
 @interface LTDataManager : NSObject {
     NSManagedObjectContext *mainManagedObjectContext_;

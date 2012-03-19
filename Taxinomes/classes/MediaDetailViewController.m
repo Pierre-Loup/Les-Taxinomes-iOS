@@ -29,22 +29,22 @@
 #import "Constants.h"
 
 @implementation MediaDetailViewController
-@synthesize id_article = _id_article;
-@synthesize article = _article;
+@synthesize id_media = _id_media;
+@synthesize media = _media;
 @synthesize scrollView = _scrollView;
 @synthesize spinner = _spinner;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil articleId:(NSString *)id_article {
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil mediaId:(NSString *)id_media {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.id_article = id_article;
+        self.id_media = id_media;
     }
     return self;
 }
 
 - (void) dealloc {
-    [_id_article release];
-    [_article release];
+    [_id_media release];
+    [_media release];
     [_scrollView release];
     [super dealloc];
 }
@@ -74,10 +74,10 @@
     
     self.navigationController.tabBarItem.title = @"Media";
     LTDataManager *dm = [LTDataManager sharedDataManager];
-    if(self.article == nil)
-        self.article = [dm getArticleWithId:self.id_article];
+    if(self.media == nil)
+        self.media = [dm getmediaWithId:self.id_media];
     
-    NSString *authorId = ((Author *)[self.article.authors objectAtIndex:0]).id_author;
+    NSString *authorId = ((Author *)[self.media.authors objectAtIndex:0]).id_author;
     Author *author = [[dm getAuthorWithId:authorId] retain];
     
     
@@ -92,33 +92,33 @@
     int marginsLeftRight = 5;
     int marginsTopBottom = 10;
     
-    //Article Title Background
-    CGRect articleTitleBackgroundFrame = CGRectMake(marginsLeftRight, marginsTopBottom, maxWidth-(marginsLeftRight*2), imageOffsetTop-(marginsTopBottom*2));
-    UIImageView *articleTitleView = [[UIImageView alloc] initWithFrame:articleTitleBackgroundFrame];
-    articleTitleView.image = [UIImage imageNamed:@"bg_titre_left.png"];
+    //media Title Background
+    CGRect mediaTitleBackgroundFrame = CGRectMake(marginsLeftRight, marginsTopBottom, maxWidth-(marginsLeftRight*2), imageOffsetTop-(marginsTopBottom*2));
+    UIImageView *mediaTitleView = [[UIImageView alloc] initWithFrame:mediaTitleBackgroundFrame];
+    mediaTitleView.image = [UIImage imageNamed:@"bg_titre_left.png"];
     
-    //Article Title Text
+    //media Title Text
     CGRect titleLabelFrame = CGRectMake(marginsLeftRight, 0, maxWidth-(marginsLeftRight*2)-65, imageOffsetTop-(marginsTopBottom*2));
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:titleLabelFrame];
     titleLabel.lineBreakMode = UILineBreakModeTailTruncation;
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.font = [UIFont systemFontOfSize:20];
-    titleLabel.text = self.article.title;
+    titleLabel.text = self.media.title;
     titleLabel.backgroundColor = [UIColor clearColor];
-    [articleTitleView addSubview:titleLabel];
+    [mediaTitleView addSubview:titleLabel];
     [titleLabel release];
-    [self.scrollView addSubview:articleTitleView];
-    [articleTitleView release];
+    [self.scrollView addSubview:mediaTitleView];
+    [mediaTitleView release];
 
     
     //Media image
     
     int mediaWidth = maxWidth-(marginsLeftRight*2);
-    int mediaHeight = ((maxWidth-(marginsLeftRight*2))/self.article.media.size.width)*self.article.media.size.height;
+    int mediaHeight = ((maxWidth-(marginsLeftRight*2))/self.media.media.size.width)*self.media.media.size.height;
     
     CGRect mediaFrame = CGRectMake(marginsLeftRight, imageOffsetTop, mediaWidth, mediaHeight);
     UIImageView *mediaView = [[UIImageView alloc] initWithFrame:mediaFrame];
-    mediaView.image = self.article.media;
+    mediaView.image = self.media.media;
     
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ClickEventOnMedia:)];
     [tapRecognizer setNumberOfTouchesRequired:1];
@@ -167,7 +167,7 @@
     authorNameLabel.lineBreakMode = UILineBreakModeWordWrap;
     authorNameLabel.numberOfLines = 3;
     authorNameLabel.font = [UIFont systemFontOfSize:12];
-    authorNameLabel.text = [NSString stringWithFormat:@"Publié par %@ le %@\n %d vues",author.name, [df stringFromDate:self.article.date],self.article.visits];
+    authorNameLabel.text = [NSString stringWithFormat:@"Publié par %@ le %@\n %d vues",author.name, [df stringFromDate:self.media.date],self.media.visits];
     [self.scrollView addSubview:authorNameLabel];
     [authorNameLabel release];
     
@@ -194,8 +194,8 @@
     int descTextViewOffsetTop = descTitleOffsetTop+40;
     CGRect descTextViewFrame = CGRectMake(marginsLeftRight, descTextViewOffsetTop, maxWidth-(marginsLeftRight*2), 20);
     UITextView *descTextView = [[UITextView alloc] initWithFrame:descTextViewFrame];
-    if(self.article.text != @""){
-        descTextView.text = self.article.text;
+    if(self.media.text != @""){
+        descTextView.text = self.media.text;
     } else {
         descTextView.text = kNoDescription;
     }
@@ -233,7 +233,7 @@
 }
 
 - (IBAction)ClickEventOnMedia:(id)sender{
-    MediaFullSizeViewContoller *mediaFullSizeViewController = [[MediaFullSizeViewContoller alloc] initWithNibName:@"MediaFullSizeView" bundle:nil media:self.article.media];
+    MediaFullSizeViewContoller *mediaFullSizeViewController = [[MediaFullSizeViewContoller alloc] initWithNibName:@"MediaFullSizeView" bundle:nil media:self.media.media];
     [self.navigationController pushViewController:mediaFullSizeViewController animated:YES];
     [mediaFullSizeViewController release];
 }

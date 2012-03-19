@@ -83,7 +83,7 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    ConnectionManager *connectionManager = [ConnectionManager sharedConnectionManager];
+    LTConnectionManager *connectionManager = [LTConnectionManager sharedLTConnectionManager];
     if(connectionManager.authStatus != AUTHENTICATED){
         [self setViewComponentsHidden:YES];
         [self setSigninSubviewHidden:NO animated:YES];
@@ -149,7 +149,7 @@
 }
 
 - (void)submitAuthentication:(id)sender {
-    ConnectionManager *connectionManager = [ConnectionManager sharedConnectionManager];
+    LTConnectionManager *connectionManager = [LTConnectionManager sharedLTConnectionManager];
     connectionManager.delegate = self;
     [connectionManager authWithLogin:@"pierre" password:@"crLu2Vzi"];
     //[connectionManager authWithLogin:self.userTextField.text password:self.passwordTextField.text];
@@ -202,7 +202,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    //NSLog(@"Rows : %d",[articles count]);
+    //NSLog(@"Rows : %d",[medias count]);
     if(section == 0)
         return [self.accountMenuLabels count];
     else
@@ -239,7 +239,7 @@
         //mediaUploadFormViewController.media = [UIImage imageNamed:@"Icon.png"];
         [self.navigationController pushViewController:mediaUploadFormViewController animated:YES];
     } else if ([indexPath row] == 0 && [indexPath section] == 1) {
-        ConnectionManager *connectionManager = [ConnectionManager sharedConnectionManager];
+        LTConnectionManager *connectionManager = [LTConnectionManager sharedLTConnectionManager];
         connectionManager.authStatus = UNAUTHENTICATED;
         [self setViewComponentsHidden:YES];
         [self setSigninSubviewHidden:NO animated:YES];
@@ -263,10 +263,10 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
-#pragma mark - ConnectionManagerDelegate
+#pragma mark - LTConnectionManagerDelegate
 
 - (void)didAuthenticate {
-    ConnectionManager *connectionManager = [ConnectionManager sharedConnectionManager];
+    LTConnectionManager *connectionManager = [LTConnectionManager sharedLTConnectionManager];
     Author *author = connectionManager.author;
     self.avatarView.image = author.avatar;
     self.nameLabel.text = author.name;

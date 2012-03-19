@@ -32,13 +32,13 @@
 #import "Reachability.h"
 
 @implementation MediasListViewController
-@synthesize tableView, articleForIndexPath, spinnerCell, loadingTopVew;
+@synthesize tableView, mediaForIndexPath, spinnerCell, loadingTopVew;
 @synthesize mediaTableViewCell = _mediaTableViewCell;
 @synthesize retryCell = _retryCell;
 
 - (void)dealloc {
     [spinnerCell dealloc];
-    [articleForIndexPath dealloc];
+    [mediaForIndexPath dealloc];
     [tableView release];
     [super dealloc];
 }
@@ -51,13 +51,13 @@
     [super didReceiveMemoryWarning];
     
     NSArray *visibleCells = [[tableView indexPathsForVisibleRows] retain];
-    NSMutableArray *visibleArticles = [[NSMutableArray alloc] initWithCapacity:[visibleCells count]];
+    NSMutableArray *visiblemedias = [[NSMutableArray alloc] initWithCapacity:[visibleCells count]];
     for(NSIndexPath *indexPath in visibleCells){
-        [visibleArticles addObject:[articles objectAtIndex:[indexPath row]]];
+        [visiblemedias addObject:[medias objectAtIndex:[indexPath row]]];
     }
-    [articles release];
-    self.articles = visibleArticles;
-    [visibleArticles release];
+    [medias release];
+    self.medias = visiblemedias;
+    [visiblemedias release];
     [tableView reloadData];
      */
 }
@@ -70,14 +70,14 @@
     /*
     if([[Reachability reachabilityWithHostName:kHost] isReachable]){
         DataManager *dm = [DataManager sharedDataManager];
-        NSArray *articles = [dm getShortArticlesByDateWithLimit:kNbMediasStep startingAtRecord:0];
+        NSArray *medias = [dm getShortmediasByDateWithLimit:kNbMediasStep startingAtRecord:0];
         
-        if([articles count] != 0){
+        if([medias count] != 0){
             mediaLoadingStatus = SUCCEED;
-            self.articleForIndexPath = [NSMutableDictionary dictionaryWithCapacity:[articles count]];
+            self.mediaForIndexPath = [NSMutableDictionary dictionaryWithCapacity:[medias count]];
             int i;
-            for (i=0; i< [articles count]; i++) {
-                [articleForIndexPath setObject:[articles objectAtIndex:i] forKey:[NSIndexPath indexPathForRow:i inSection:0]];
+            for (i=0; i< [medias count]; i++) {
+                [mediaForIndexPath setObject:[medias objectAtIndex:i] forKey:[NSIndexPath indexPathForRow:i inSection:0]];
             }
         } else {
             mediaLoadingStatus = FAILED;
@@ -90,7 +90,7 @@
      */
     
     mediaLoadingStatus = PENDING;
-    self.articleForIndexPath = [[NSMutableDictionary alloc] init];
+    self.mediaForIndexPath = [[NSMutableDictionary alloc] init];
     [self performSelectorInBackground:@selector(loadNextMediasInBackground) withObject:nil];
     
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:self.view.frame];
@@ -163,15 +163,15 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    //NSLog(@"Rows : %d",[articles count]);
-    return ([articleForIndexPath count]+1);
+    //NSLog(@"Rows : %d",[medias count]);
+    return ([mediaForIndexPath count]+1);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *medialListCellIdentifier = @"mediasListCell";
     
-    if([indexPath row] == ([articleForIndexPath count])) {        
+    if([indexPath row] == ([mediaForIndexPath count])) {        
         if ( mediaLoadingStatus == SUCCEED) {
             [self performSelectorInBackground:@selector(loadNextMediasInBackground) withObject:nil];
             mediaLoadingStatus = PENDING;
@@ -183,7 +183,7 @@
         }
     }
     
-    Article *article = [articleForIndexPath objectForKey:indexPath];
+    Media *media = [mediaForIndexPath objectForKey:indexPath];
     UITableViewCell *cell = nil;
     
     cell = [aTableView dequeueReusableCellWithIdentifier:medialListCellIdentifier];
@@ -196,10 +196,10 @@
     
     
     //[((MediasListTableViewCell *)cell) setImage:[UIImage imageNamed:@"Ixia.gif"]];   
-    //[((MediasListTableViewCell *)cell) setArticle:article];
-    ((UIImageView *)[cell viewWithTag:1]).image = article.mediaThumbnail;
-    ((UILabel *)[cell viewWithTag:2]).text = article.title;
-    ((UILabel *)[cell viewWithTag:3]).text = ((Author *)[article.authors objectAtIndex:0]).name;
+    //[((MediasListTableViewCell *)cell) setmedia:media];
+    ((UIImageView *)[cell viewWithTag:1]).image = media.mediaThumbnail;
+    ((UILabel *)[cell viewWithTag:2]).text = media.title;
+    ((UILabel *)[cell viewWithTag:3]).text = ((Author *)[media.authors objectAtIndex:0]).name;
     cell.opaque = YES;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -216,12 +216,12 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Article *article = [[articleForIndexPath objectForKey:indexPath] retain];
-    if(article != nil){
-        MediaDetailViewController *mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailView" bundle:nil articleId:article.id_article];
+    Media *media = [[mediaForIndexPath objectForKey:indexPath] retain];
+    if(media != nil){
+        MediaDetailViewController *mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailView" bundle:nil mediaId:media.id_media];
         [self.navigationController pushViewController:mediaDetailViewController animated:YES];
         [mediaDetailViewController release];
-        [article release];
+        [media release];
     }
     
 }
@@ -263,12 +263,12 @@
 
 -(void)loadNextMediasInBackground {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    NSArray *nextArticles;
+    NSArray *nextmedias;
     if([[Reachability reachabilityWithHostName:kHost] isReachable]){
         LTDataManager *dm = [LTDataManager sharedDataManager];
-        nextArticles = [dm getShortArticlesByDateWithLimit:kNbMediasStep startingAtRecord:[articleForIndexPath count]];
-        if([nextArticles count] != 0) {
-            [self performSelectorOnMainThread:@selector(addMediasToBottom:) withObject:nextArticles waitUntilDone:NO];                
+        nextmedias = [dm getShortmediasByDateWithLimit:kNbMediasStep startingAtRecord:[mediaForIndexPath count]];
+        if([nextmedias count] != 0) {
+            [self performSelectorOnMainThread:@selector(addMediasToBottom:) withObject:nextmedias waitUntilDone:NO];                
         } else {
             [self performSelectorOnMainThread:@selector(connectionErrorAlert:) withObject:nil waitUntilDone:NO];  
         }
@@ -281,22 +281,22 @@
 /*
 -(void)loadNewMediasInBackground {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    NSArray *nextArticles;
+    NSArray *nextmedias;
     if([[Reachability reachabilityWithHostName:kHost] isReachable]){
         DataManager *dm = [DataManager sharedDataManager];
-        nextArticles = [dm getShortArticlesByDateWithLimit:kNbMediasStep startingAtRecord:[articleForIndexPath count]];
+        nextmedias = [dm getShortmediasByDateWithLimit:kNbMediasStep startingAtRecord:[mediaForIndexPath count]];
     }
-    [self performSelectorOnMainThread:@selector(addMediasToBottom:) withObject:nextArticles waitUntilDone:NO];
+    [self performSelectorOnMainThread:@selector(addMediasToBottom:) withObject:nextmedias waitUntilDone:NO];
     [pool release];
 }
  */
 
-- (void) addMediasToBottom:(NSArray *)nextArticles {
-    if(nextArticles != nil){
+- (void) addMediasToBottom:(NSArray *)nextmedias {
+    if(nextmedias != nil){
         int i;
-        int nbArticles = [articleForIndexPath count];
-        for (i=0; i<[nextArticles count]; i++) {
-            [articleForIndexPath setObject:[nextArticles objectAtIndex:i] forKey:[NSIndexPath indexPathForRow:i+nbArticles inSection:0]];
+        int nbmedias = [mediaForIndexPath count];
+        for (i=0; i<[nextmedias count]; i++) {
+            [mediaForIndexPath setObject:[nextmedias objectAtIndex:i] forKey:[NSIndexPath indexPathForRow:i+nbmedias inSection:0]];
         }
         [self.tableView reloadData];
     }    
