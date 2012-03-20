@@ -24,7 +24,6 @@
  */
 
 #import "MediasListViewController.h"
-#import "MediasListTableViewCell.h"
 #import "Author.h"
 #import "LTDataManager.h"
 #import "Constants.h"
@@ -197,7 +196,7 @@
     
     //[((MediasListTableViewCell *)cell) setImage:[UIImage imageNamed:@"Ixia.gif"]];   
     //[((MediasListTableViewCell *)cell) setmedia:media];
-    ((UIImageView *)[cell viewWithTag:1]).image = media.mediaThumbnail;
+    //((UIImageView *)[cell viewWithTag:1]).image = media.mediaThumbnail;
     ((UILabel *)[cell viewWithTag:2]).text = media.title;
     ((UILabel *)[cell viewWithTag:3]).text = ((Author *)[media.authors objectAtIndex:0]).name;
     cell.opaque = YES;
@@ -216,6 +215,7 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    /*
     Media *media = [[mediaForIndexPath objectForKey:indexPath] retain];
     if(media != nil){
         MediaDetailViewController *mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailView" bundle:nil mediaId:media.id_media];
@@ -223,6 +223,7 @@
         [mediaDetailViewController release];
         [media release];
     }
+    */
     
 }
 

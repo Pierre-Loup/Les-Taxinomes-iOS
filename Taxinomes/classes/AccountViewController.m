@@ -268,7 +268,7 @@
 - (void)didAuthenticate {
     LTConnectionManager *connectionManager = [LTConnectionManager sharedLTConnectionManager];
     Author *author = connectionManager.author;
-    self.avatarView.image = author.avatar;
+    //self.avatarView.image = author.avatar;
     self.nameLabel.text = author.name;
     [self setViewComponentsHidden:NO];
     [self setLoadingSubviewHidden:YES animated:YES];

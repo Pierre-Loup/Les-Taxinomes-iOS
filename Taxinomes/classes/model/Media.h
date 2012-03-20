@@ -26,7 +26,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Author, License;
+@class Author, License, Section;
 
 @interface Media : NSManagedObject
 
@@ -47,7 +47,7 @@
 @property (nonatomic, retain) NSDate * localUpdateDate;
 @property (nonatomic, retain) License *license;
 @property (nonatomic, retain) Author *authors;
-@property (nonatomic, retain) NSManagedObject *section;
+@property (nonatomic, retain) Section *section;
 
 + (Media *)mediaWithXMLRPCResponse: (NSDictionary *) response;
 

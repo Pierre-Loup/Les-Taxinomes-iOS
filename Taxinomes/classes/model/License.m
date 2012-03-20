@@ -26,7 +26,7 @@
     
     NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
     
-    License *license = (License *)[NSEntityDescription insertNewObjectForEntityForName:kEntityLicenseName inManagedObjectContext:context];
+    License *license = (License *)[NSEntityDescription insertNewObjectForEntityForName:kLicenseEntityName inManagedObjectContext:context];
     
     license.identifier = [NSNumber numberWithInt:[(NSString*)[response objectForKey:@"id"] intValue]];
     license.name = [response objectForKey:@"name"];

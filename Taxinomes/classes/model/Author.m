@@ -37,6 +37,7 @@
 @dynamic status;
 
 + (Author*)authorWithXMLRPCResponse:(NSDictionary*)response {
+    /*
     Author *author = [[[Author alloc] init] autorelease];
     if(response == nil){
         return author;
@@ -65,19 +66,18 @@
     }
     
     author.dataReceivedDate = [NSDate date];
-    
-    /*//DEBUG    
+      
      NSLog(author.id_author);
      NSLog(author.name);
      NSLog(author.biography);
      NSLog([author.signupDate description]);
      NSLog(author.status);
      NSLog(author.avatarURL);
-     //*/
     
     [signupDate release];
     
     return author;
+    */
 }
 
 @end

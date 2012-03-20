@@ -23,7 +23,7 @@
 		A56DA4651508E4E200AD4A92 /* LTDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A56DA4631508E4E200AD4A92 /* LTDataModel.xcdatamodeld */; };
 		A573CBAF1517E76E00F58878 /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = A573CBAE1517E76E00F58878 /* Author.m */; };
 		A573CBB21517E79A00F58878 /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = A573CBB11517E79A00F58878 /* Media.m */; };
-		A573CBB51517E7AD00F58878 /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = A573CBB41517E7AD00F58878 /* Section.m */; };
+		A573CBBE1517EEF400F58878 /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = A573CBBD1517EEF400F58878 /* Section.m */; };
 		A591B7AD150CA0DF00CE89BA /* License.m in Sources */ = {isa = PBXBuildFile; fileRef = A591B7AC150CA0DF00CE89BA /* License.m */; };
 		A591B7B3150D57F000CE89BA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A591B7B2150D57F000CE89BA /* CoreData.framework */; };
 		A5A6018215003C660026F78C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = A5A6017F15003C660026F78C /* LICENSE */; };
@@ -64,8 +64,6 @@
 		C87C67C4147440B500A055F1 /* LTConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C87C6783147440B500A055F1 /* LTConnectionManager.m */; };
 		C87C67C5147440B500A055F1 /* CTidy.m in Sources */ = {isa = PBXBuildFile; fileRef = C87C6785147440B500A055F1 /* CTidy.m */; };
 		C87C67C6147440B500A055F1 /* LTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C87C6787147440B500A055F1 /* LTDataManager.m */; };
-		C87C67C7147440B500A055F1 /* MediasListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = C87C6789147440B500A055F1 /* MediasListCellView.m */; };
-		C87C67C8147440B500A055F1 /* MediasListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C87C678B147440B500A055F1 /* MediasListTableViewCell.m */; };
 		C87C67C9147440B500A055F1 /* MediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C87C678D147440B500A055F1 /* MediasListViewController.m */; };
 		C87C67CB147440B500A055F1 /* NSString+XMLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = C87C6791147440B500A055F1 /* NSString+XMLExtensions.m */; };
 		C87C67CF147440B500A055F1 /* TaxinomesAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C87C6799147440B500A055F1 /* TaxinomesAppDelegate.m */; };
@@ -164,8 +162,8 @@
 		A573CBAE1517E76E00F58878 /* Author.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Author.m; path = model/Author.m; sourceTree = "<group>"; };
 		A573CBB01517E79A00F58878 /* Media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Media.h; path = model/Media.h; sourceTree = "<group>"; };
 		A573CBB11517E79A00F58878 /* Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Media.m; path = model/Media.m; sourceTree = "<group>"; };
-		A573CBB31517E7AD00F58878 /* Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Section.h; path = model/Section.h; sourceTree = "<group>"; };
-		A573CBB41517E7AD00F58878 /* Section.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Section.m; path = model/Section.m; sourceTree = "<group>"; };
+		A573CBBC1517EEF300F58878 /* Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Section.h; path = model/Section.h; sourceTree = "<group>"; };
+		A573CBBD1517EEF400F58878 /* Section.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Section.m; path = model/Section.m; sourceTree = "<group>"; };
 		A591B7AB150CA0DF00CE89BA /* License.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = License.h; path = model/License.h; sourceTree = "<group>"; };
 		A591B7AC150CA0DF00CE89BA /* License.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = License.m; path = model/License.m; sourceTree = "<group>"; };
 		A591B7B2150D57F000CE89BA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -239,10 +237,6 @@
 		C87C6785147440B500A055F1 /* CTidy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTidy.m; sourceTree = "<group>"; };
 		C87C6786147440B500A055F1 /* LTDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTDataManager.h; sourceTree = "<group>"; };
 		C87C6787147440B500A055F1 /* LTDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTDataManager.m; sourceTree = "<group>"; };
-		C87C6788147440B500A055F1 /* MediasListCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediasListCellView.h; sourceTree = "<group>"; };
-		C87C6789147440B500A055F1 /* MediasListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediasListCellView.m; sourceTree = "<group>"; };
-		C87C678A147440B500A055F1 /* MediasListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediasListTableViewCell.h; sourceTree = "<group>"; };
-		C87C678B147440B500A055F1 /* MediasListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediasListTableViewCell.m; sourceTree = "<group>"; };
 		C87C678C147440B500A055F1 /* MediasListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediasListViewController.h; sourceTree = "<group>"; };
 		C87C678D147440B500A055F1 /* MediasListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediasListViewController.m; sourceTree = "<group>"; };
 		C87C6790147440B500A055F1 /* NSString+XMLExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XMLExtensions.h"; sourceTree = "<group>"; };
@@ -710,7 +704,6 @@
 				C823D3C114D18701005C8D93 /* Medias */,
 				C823D3C214D18708005C8D93 /* Navigate */,
 				C823D3C314D18713005C8D93 /* Account */,
-				C87C6811147440B500A055F1 /* customViews */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -724,17 +717,6 @@
 				C87C6787147440B500A055F1 /* LTDataManager.m */,
 			);
 			name = core;
-			sourceTree = "<group>";
-		};
-		C87C6811147440B500A055F1 /* customViews */ = {
-			isa = PBXGroup;
-			children = (
-				C87C6788147440B500A055F1 /* MediasListCellView.h */,
-				C87C6789147440B500A055F1 /* MediasListCellView.m */,
-				C87C678A147440B500A055F1 /* MediasListTableViewCell.h */,
-				C87C678B147440B500A055F1 /* MediasListTableViewCell.m */,
-			);
-			name = customViews;
 			sourceTree = "<group>";
 		};
 		C87C6818147440B500A055F1 /* ASI */ = {
@@ -783,8 +765,8 @@
 				A573CBAE1517E76E00F58878 /* Author.m */,
 				A573CBB01517E79A00F58878 /* Media.h */,
 				A573CBB11517E79A00F58878 /* Media.m */,
-				A573CBB31517E7AD00F58878 /* Section.h */,
-				A573CBB41517E7AD00F58878 /* Section.m */,
+				A573CBBC1517EEF300F58878 /* Section.h */,
+				A573CBBD1517EEF400F58878 /* Section.m */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -967,8 +949,6 @@
 				C87C67C4147440B500A055F1 /* LTConnectionManager.m in Sources */,
 				C87C67C5147440B500A055F1 /* CTidy.m in Sources */,
 				C87C67C6147440B500A055F1 /* LTDataManager.m in Sources */,
-				C87C67C7147440B500A055F1 /* MediasListCellView.m in Sources */,
-				C87C67C8147440B500A055F1 /* MediasListTableViewCell.m in Sources */,
 				C87C67C9147440B500A055F1 /* MediasListViewController.m in Sources */,
 				C87C67CB147440B500A055F1 /* NSString+XMLExtensions.m in Sources */,
 				C87C67CF147440B500A055F1 /* TaxinomesAppDelegate.m in Sources */,
@@ -1005,7 +985,7 @@
 				A591B7AD150CA0DF00CE89BA /* License.m in Sources */,
 				A573CBAF1517E76E00F58878 /* Author.m in Sources */,
 				A573CBB21517E79A00F58878 /* Media.m in Sources */,
-				A573CBB51517E7AD00F58878 /* Section.m in Sources */,
+				A573CBBE1517EEF400F58878 /* Section.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

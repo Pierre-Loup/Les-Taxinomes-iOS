@@ -71,7 +71,7 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];    
-    
+    /*
     self.navigationController.tabBarItem.title = @"Media";
     LTDataManager *dm = [LTDataManager sharedDataManager];
     if(self.media == nil)
@@ -211,6 +211,7 @@
     
     [self.spinner stopAnimating];
     [author release];
+     */
      
 }
 
@@ -233,9 +234,11 @@
 }
 
 - (IBAction)ClickEventOnMedia:(id)sender{
+    /*
     MediaFullSizeViewContoller *mediaFullSizeViewController = [[MediaFullSizeViewContoller alloc] initWithNibName:@"MediaFullSizeView" bundle:nil media:self.media.media];
     [self.navigationController pushViewController:mediaFullSizeViewController animated:YES];
     [mediaFullSizeViewController release];
+     */
 }
 
 @end

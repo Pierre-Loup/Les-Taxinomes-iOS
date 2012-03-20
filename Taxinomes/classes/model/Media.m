@@ -26,6 +26,7 @@
 #import "Media.h"
 #import "Author.h"
 #import "License.h"
+#import "Section.h"
 
 
 @implementation Media

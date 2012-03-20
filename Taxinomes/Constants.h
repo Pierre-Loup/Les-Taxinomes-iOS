@@ -24,7 +24,36 @@
  */
 
 //CORE DATA
-#define kEntityLicenseName @"License"
+//Entities
+#define kLicenseEntityName @"License"
+#define kAuthorEntityName @"Author"
+#define kMediaEntityName @"Media"
+#define kSectionEntityName @"Section"
+//MediaEntity
+#define kMediaEntityIdentifierField @"identifier"
+#define kMediaEntityTitleField @"title"
+#define kMediaEntityTextField @"text"
+#define kMediaEntityStatusField @"status"
+#define kMediaEntityDateField @"date"
+#define kMediaEntityVisitsField @"visits"
+#define kMediaEntityPopularityField @"popularity"
+#define kMediaEntityUpdateDateField @"updateDate"
+#define kMediaEntityMediaThumbnailUrlField @"mediaThumbnailUrl"
+#define kMediaEntityMediaThumbnailLocalFileField @"mediaThumbnailLocalFile"
+#define kMediaEntityMediaMediumLocalFileField @"mediaMediumLocalFile"
+#define kMediaEntityMediaMediumURLField @"mediaMediumURL"
+#define kMediaEntityMediaLargeURLField @"mediaLargeURL"
+#define kMediaEntityMediaLargeLocalFileField @"mediaLargeLocalFile"
+#define kMediaEntityLocalUpdateDateField @"localUpdateDate"
+#define kMediaEntityLicenseField @"license"
+#define kMediaEntityAuthorsField @"authors"
+#define kMediaEntitySectionField @"section"
+//MediaEntity
+#define kSectionEntityIdentifierField @"identifiant"
+#define kSectionEntityDescriptionField @"desription"
+#define kSectionEntityImageURLField @"imageURL"
+#define kSectionEntityTitleField @"title"
+#define kSectionEntityParentField @"parent"
 
 //Color
 //#5F8237
@@ -55,8 +84,3 @@
 #define kDefaultLimit 50
 #define kLimitParamName @"limite"
 #define kSortParamName @"tri"
-
-//Database
-#define kDatabaseFile @"taxinomes-1.0.db"
-#define kAuthorCacheTime 3600.0
-#define kmediaCacheTime 3600.0
