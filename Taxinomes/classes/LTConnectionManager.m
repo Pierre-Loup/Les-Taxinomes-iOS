@@ -27,7 +27,7 @@
 #import "XMLRPCResponse.h"
 #import "Constants.h"
 #import "ASIHTTPRequest.h"
-#import "media.h"
+#import "Media.h"
 #import "Author.h"
 #import "License.h"
 
@@ -44,7 +44,7 @@ static LTConnectionManager *instance = nil;
 	[super dealloc];
 }
 
-+ (LTConnectionManager *)sharedLTConnectionManager {
++ (LTConnectionManager *)sharedConnectionManager {
 	if(instance == nil) {
 		instance = [[LTConnectionManager alloc] init];
         instance.author = UNAUTHENTICATED;
@@ -79,7 +79,7 @@ static LTConnectionManager *instance = nil;
     }
     
     for(NSDictionary *media in result){
-        [medias addObject:[media mediaWithXMLRPCResponse:media]];
+        [medias addObject:[Media mediaWithXMLRPCResponse:media]];
     }
     
     return medias;
@@ -112,7 +112,7 @@ static LTConnectionManager *instance = nil;
     }
     
     for(NSDictionary *media in result){
-        [medias addObject:[media mediaWithXMLRPCResponse:media]];
+        [medias addObject:[Media mediaWithXMLRPCResponse:media]];
     }
     
     return medias;

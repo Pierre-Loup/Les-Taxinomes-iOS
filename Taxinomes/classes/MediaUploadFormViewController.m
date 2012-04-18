@@ -173,7 +173,7 @@
     if (self.publishSwitch.on) {
         [info setValue:@"publie" forKey:@"statut"];
     }
-    LTConnectionManager* connectionManager = [LTConnectionManager sharedLTConnectionManager];
+    LTConnectionManager* connectionManager = [LTConnectionManager sharedConnectionManager];
     connectionManager.progressDelegate = self;
     [connectionManager addmediaWithInformations:[NSDictionary dictionaryWithDictionary:info]];
     [self.navigationController popViewControllerAnimated:YES];

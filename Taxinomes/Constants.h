@@ -29,6 +29,10 @@
 #define kAuthorEntityName @"Author"
 #define kMediaEntityName @"Media"
 #define kSectionEntityName @"Section"
+//LicenseEntity
+#define kLicenseEntityIdentifierField @"identifier"
+//AuthorEntity
+#define kAuthorEntityIdentifierField @"identifier"
 //MediaEntity
 #define kMediaEntityIdentifierField @"identifier"
 #define kMediaEntityTitleField @"title"
@@ -60,6 +64,7 @@
 
 #define kStandardGreenColor [UIColor colorWithRed:(95.0/255.0) green:(130.0/255.0) blue:(55.0/255.0) alpha:1.0] 
 
+// Sizes
 #define THUMBNAIL_MAX_HEIGHT 100.0
 #define THUMBNAIL_MAX_WIDHT 100.0
 #define MEDIA_MAX_WIDHT 512.0

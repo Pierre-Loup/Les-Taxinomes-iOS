@@ -57,7 +57,7 @@ typedef enum {
 
 
            
-+ (LTConnectionManager *)sharedLTConnectionManager;
++ (LTConnectionManager *)sharedConnectionManager;
 
 - (NSArray *)getmediasByDateWithLimit:(NSInteger)limit startingAtRecord:(NSInteger)start;
 - (NSArray *)getShortmediasByDateWithLimit:(NSInteger) limit startingAtRecord:(NSInteger)start;

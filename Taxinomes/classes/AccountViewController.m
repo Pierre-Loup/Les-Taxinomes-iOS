@@ -83,7 +83,7 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    LTConnectionManager *connectionManager = [LTConnectionManager sharedLTConnectionManager];
+    LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
     if(connectionManager.authStatus != AUTHENTICATED){
         [self setViewComponentsHidden:YES];
         [self setSigninSubviewHidden:NO animated:YES];
@@ -149,7 +149,7 @@
 }
 
 - (void)submitAuthentication:(id)sender {
-    LTConnectionManager *connectionManager = [LTConnectionManager sharedLTConnectionManager];
+    LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
     connectionManager.delegate = self;
     [connectionManager authWithLogin:@"pierre" password:@"crLu2Vzi"];
     //[connectionManager authWithLogin:self.userTextField.text password:self.passwordTextField.text];
@@ -239,7 +239,7 @@
         //mediaUploadFormViewController.media = [UIImage imageNamed:@"Icon.png"];
         [self.navigationController pushViewController:mediaUploadFormViewController animated:YES];
     } else if ([indexPath row] == 0 && [indexPath section] == 1) {
-        LTConnectionManager *connectionManager = [LTConnectionManager sharedLTConnectionManager];
+        LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
         connectionManager.authStatus = UNAUTHENTICATED;
         [self setViewComponentsHidden:YES];
         [self setSigninSubviewHidden:NO animated:YES];
@@ -266,7 +266,7 @@
 #pragma mark - LTConnectionManagerDelegate
 
 - (void)didAuthenticate {
-    LTConnectionManager *connectionManager = [LTConnectionManager sharedLTConnectionManager];
+    LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
     Author *author = connectionManager.author;
     //self.avatarView.image = author.avatar;
     self.nameLabel.text = author.name;

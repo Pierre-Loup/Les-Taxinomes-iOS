@@ -37,6 +37,7 @@
 @property (nonatomic, retain) NSDate * localUpdateDate;
 @property (nonatomic, retain) NSString * status;
 
-+ (Author*)authorWithXMLRPCResponse:(NSDictionary*)response;
++ (Author *)authorWithXMLRPCResponse:(NSDictionary*)response;
++ (Author *)authorWithIdentifier: (NSNumber *)identifier;
 
 @end

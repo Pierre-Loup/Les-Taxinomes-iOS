@@ -24,6 +24,7 @@
  */
 
 #import "Author.h"
+#import "LTDataManager.h"
 
 
 @implementation Author
@@ -37,47 +38,64 @@
 @dynamic status;
 
 + (Author*)authorWithXMLRPCResponse:(NSDictionary*)response {
-    /*
-    Author *author = [[[Author alloc] init] autorelease];
+    
     if(response == nil){
-        return author;
+        return nil;
     }
     
-    author.id_author = [response objectForKey:@"id_auteur"]!=nil?[response objectForKey:@"id_auteur"]:@"";
-    author.name = [response objectForKey:@"nom"]!=nil?[response objectForKey:@"nom"]:@"";
-    author.biography = [response objectForKey:@"bio"]!=nil?[response objectForKey:@"bio"]:@"";
+    NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
+    
+    Author *author = (Author *)[NSEntityDescription insertNewObjectForEntityForName:kAuthorEntityName inManagedObjectContext:context];
+    
+    author.identifier = [response objectForKey:@"id_auteur"];
+    author.name = [response objectForKey:@"nom"];
+    author.biography = [response objectForKey:@"bio"];
     
     NSString *strSignupDate = [NSString stringWithFormat:@"%@ +0000",[response objectForKey:@"date_inscription"]];
-    NSDate *signupDate = [[NSDate alloc] initWithString:strSignupDate];
+    NSDate *signupDate = [[[NSDate alloc] initWithString:strSignupDate] autorelease];
     if(signupDate != nil)
         author.signupDate = signupDate;
     else
         author.signupDate = [NSDate dateWithTimeIntervalSince1970:0];
     
-    author.status = [response objectForKey:@"statut"]!=nil?[response objectForKey:@"statut"]:@"";
-    author.avatarURL = [response objectForKey:@"logo"]!=nil?[response objectForKey:@"logo"]:@"";
+    author.avatarURL = [response objectForKey:@"logo"];
+    author.localUpdateDate = [NSDate date];
+    author.status = [response objectForKey:@"statut"];
     
-    if(author.avatarURL != @""){
-        NSURL *imageUrl = [NSURL URLWithString:author.avatarURL];
-        NSData *imageData = [NSData dataWithContentsOfURL:imageUrl];
-        author.avatar = [[UIImage alloc] initWithData:imageData];
-    } else {
-        author.avatar = [UIImage imageNamed:@"default_avatar.png"];
+    if (![context save:nil]) {
+        return nil;
     }
     
-    author.dataReceivedDate = [NSDate date];
-      
-     NSLog(author.id_author);
-     NSLog(author.name);
-     NSLog(author.biography);
-     NSLog([author.signupDate description]);
-     NSLog(author.status);
-     NSLog(author.avatarURL);
-    
-    [signupDate release];
-    
     return author;
-    */
+}
+
++ (Author *)authorWithIdentifier: (NSNumber *)identifier {
+    NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
+    [request setEntity:entity];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%@ == %d",kAuthorEntityIdentifierField,[identifier intValue]];
+    [request setPredicate:predicate];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kAuthorEntityIdentifierField ascending:YES];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [request setSortDescriptors:sortDescriptors];
+    [sortDescriptors release];
+    [sortDescriptor release];
+    
+    NSError *error = nil;
+    NSMutableArray *mutableFetchResults = [[[context executeFetchRequest:request error:&error] mutableCopy] autorelease];
+    [request release];
+    if ([mutableFetchResults count] == 0) {
+        return nil;
+    } else if ([mutableFetchResults count] > 1) {
+        return [mutableFetchResults objectAtIndex:0];
+    } else {
+        return [mutableFetchResults objectAtIndex:0];
+    }
+    return nil;
 }
 
 @end

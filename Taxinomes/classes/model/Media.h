@@ -50,5 +50,7 @@
 @property (nonatomic, retain) Section *section;
 
 + (Media *)mediaWithXMLRPCResponse: (NSDictionary *) response;
++ (Media *)mediaWithIdentifier: (NSNumber *)identifier;
++ (NSArray *)allMedias;
 
 @end

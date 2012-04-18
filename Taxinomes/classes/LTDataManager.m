@@ -109,7 +109,7 @@ static LTDataManager *instance = nil;
 - (Author *)getAuthorWithId: (NSString *) id_author{
     Author *author = [sqliteDatabase selectAuthorWithId:id_author];
     //NSLog(@"%f",[[NSDate date] timeIntervalSinceDate:author.dataReceivedDate]);
-    LTConnectionManager *connectionManager = [LTConnectionManager sharedLTConnectionManager];
+    LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
     if(author==nil){        
         author = [connectionManager getAuthorWithId:id_author];
         [sqliteDatabase insertAuthor:author];
@@ -126,7 +126,7 @@ static LTDataManager *instance = nil;
 - (media *)getmediaWithId: (NSString *) id_media{
     media *media = [sqliteDatabase selectmediaWithId:id_media];
     //NSLog(@"%f",[[NSDate date] timeIntervalSinceDate:media.dataReceivedDate]);
-    LTConnectionManager *connectionManager = [LTConnectionManager sharedLTConnectionManager];
+    LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
     if(media==nil){        
         media = [connectionManager getmediaWithId:id_media];
         [sqliteDatabase insertmedia:media];
@@ -142,7 +142,7 @@ static LTDataManager *instance = nil;
 - (media *)getShortmediaWithId: (NSString *) id_media{
     media *media = [sqliteDatabase selectmediaWithId:id_media];
     //NSLog(@"%f",[[NSDate date] timeIntervalSinceDate:media.dataReceivedDate]);
-    LTConnectionManager *connectionManager = [LTConnectionManager sharedLTConnectionManager];
+    LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
     if(media==nil){        
         media = [connectionManager getShortmediaWithId:id_media];
         [sqliteDatabase insertmedia:media];
@@ -157,12 +157,12 @@ static LTDataManager *instance = nil;
 
 - (NSArray *)getShortmediasByDateWithLimit: (NSInteger) limit startingAtRecord: (NSInteger) start{
 
-    LTConnectionManager *connectionManager = [LTConnectionManager sharedLTConnectionManager];
+    LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
     return [NSMutableArray arrayWithArray:[connectionManager getShortmediasByDateWithLimit:limit startingAtRecord:start]];
 }
 
 - (void)addmediaWithInformations: (NSDictionary *)info {
-    LTConnectionManager *connectionManager = [LTConnectionManager sharedLTConnectionManager];
+    LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
     [connectionManager addmediaWithInformations:info];
 }
  

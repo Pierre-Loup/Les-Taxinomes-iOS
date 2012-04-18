@@ -45,20 +45,7 @@
 
 - (void)didReceiveMemoryWarning
 {
-    // Releases the view if it doesn't have a superview.
-    /*
-    [super didReceiveMemoryWarning];
-    
-    NSArray *visibleCells = [[tableView indexPathsForVisibleRows] retain];
-    NSMutableArray *visiblemedias = [[NSMutableArray alloc] initWithCapacity:[visibleCells count]];
-    for(NSIndexPath *indexPath in visibleCells){
-        [visiblemedias addObject:[medias objectAtIndex:[indexPath row]]];
-    }
-    [medias release];
-    self.medias = visiblemedias;
-    [visiblemedias release];
-    [tableView reloadData];
-     */
+    [TCImageView resetGlobalCache];
 }
 
 #pragma mark - View lifecycle
@@ -89,9 +76,8 @@
      */
     
     mediaLoadingStatus = PENDING;
-    self.mediaForIndexPath = [[NSMutableDictionary alloc] init];
-    [self performSelectorInBackground:@selector(loadNextMediasInBackground) withObject:nil];
-    
+    self.mediaForIndexPath = [NSMutableDictionary dictionary];
+    [self reloadDatas];  
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:self.view.frame];
     backgroundImage.image = [UIImage imageNamed:@"fond.png"];
     CGRect backgroundSubviewFrame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
@@ -192,20 +178,23 @@
         self.mediaTableViewCell = nil;
         
     }
-    
-    
-    //[((MediasListTableViewCell *)cell) setImage:[UIImage imageNamed:@"Ixia.gif"]];   
-    //[((MediasListTableViewCell *)cell) setmedia:media];
-    //((UIImageView *)[cell viewWithTag:1]).image = media.mediaThumbnail;
+
+    TCImageView * mediaImageView = (TCImageView *)[cell viewWithTag:1];    
+    if (![mediaImageView.url isEqualToString:media.mediaThumbnailUrl]) {
+        [mediaImageView setHidden:YES];
+        mediaImageView.caching = YES;
+        mediaImageView.delegate = self;
+        [mediaImageView reloadWithUrl:media.mediaThumbnailUrl];
+    }
     ((UILabel *)[cell viewWithTag:2]).text = media.title;
-    ((UILabel *)[cell viewWithTag:3]).text = ((Author *)[media.authors objectAtIndex:0]).name;
+    ((UILabel *)[cell viewWithTag:3]).text = media.authors.name;
     cell.opaque = YES;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
-#pragma mark - Table view delegate
+#pragma mark Table view delegate
 
 /*
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -215,15 +204,14 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    /*
+
     Media *media = [[mediaForIndexPath objectForKey:indexPath] retain];
     if(media != nil){
-        MediaDetailViewController *mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailView" bundle:nil mediaId:media.id_media];
+        MediaDetailViewController *mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailView" bundle:nil mediaId:media.identifier];
         [self.navigationController pushViewController:mediaDetailViewController animated:YES];
         [mediaDetailViewController release];
         [media release];
     }
-    */
     
 }
 
@@ -266,10 +254,10 @@
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     NSArray *nextmedias;
     if([[Reachability reachabilityWithHostName:kHost] isReachable]){
-        LTDataManager *dm = [LTDataManager sharedDataManager];
-        nextmedias = [dm getShortmediasByDateWithLimit:kNbMediasStep startingAtRecord:[mediaForIndexPath count]];
+        LTConnectionManager *cm = [LTConnectionManager sharedConnectionManager];
+        nextmedias = [cm getShortmediasByDateWithLimit:kNbMediasStep startingAtRecord:[mediaForIndexPath count]];
         if([nextmedias count] != 0) {
-            [self performSelectorOnMainThread:@selector(addMediasToBottom:) withObject:nextmedias waitUntilDone:NO];                
+            [self performSelectorOnMainThread:@selector(reloadDatas) withObject:nil waitUntilDone:NO];                
         } else {
             [self performSelectorOnMainThread:@selector(connectionErrorAlert:) withObject:nil waitUntilDone:NO];  
         }
@@ -291,6 +279,17 @@
     [pool release];
 }
  */
+
+- (void)reloadDatas {
+    NSArray *medias =  [Media allMedias];
+    NSInteger row = 0;
+    for (Media *media in medias) {
+       [mediaForIndexPath setObject:media forKey:[NSIndexPath indexPathForRow:row inSection:0]];
+        row++;
+    }
+    [self.tableView reloadData];
+    mediaLoadingStatus = SUCCEED;
+}
 
 - (void) addMediasToBottom:(NSArray *)nextmedias {
     if(nextmedias != nil){
@@ -318,6 +317,13 @@
         [self.tableView reloadData];
         [self performSelectorInBackground:@selector(loadNextMediasInBackground) withObject:nil];
     }
+}
+
+#pragma mark - TCImageViewDelegate
+
+-(void)TCImageView:(TCImageView *)view WillUpdateImage:(UIImage *)image {
+    
+    [view setHidden:NO];
 }
 
 

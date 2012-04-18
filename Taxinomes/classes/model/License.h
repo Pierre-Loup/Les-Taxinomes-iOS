@@ -19,7 +19,8 @@
 @property (nonatomic, retain) NSString * desc;
 @property (nonatomic, retain) NSString * abbr;
 
-+ (License *)licenseWithXMLRPCResponse: (NSDictionary *) response ;
++ (License *)licenseWithXMLRPCResponse: (NSDictionary *)response ;
++ (License *)licenseWithIdentifier: (NSNumber *)identifier;
 + (NSArray *)allLicenses;
 
 @end

@@ -42,7 +42,7 @@
 }*/
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application{
-    LTConnectionManager *connectionManager = [LTConnectionManager sharedLTConnectionManager];
+    LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
     if ([[License allLicenses] count] == 0) {
         [connectionManager getLicenses];
     }

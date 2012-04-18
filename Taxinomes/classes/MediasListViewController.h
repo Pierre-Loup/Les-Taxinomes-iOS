@@ -25,6 +25,7 @@
 
 #import <UIKit/UIKit.h>
 #import "LTDataManager.h"
+#import "TCImageView.h"
 
 typedef enum {
     FAILED = 0,
@@ -32,7 +33,7 @@ typedef enum {
     SUCCEED
 } MediaLoadingStatus;
 
-@interface MediasListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+@interface MediasListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, TCImageViewDelegate> {
     UITableView *tableView_;
     NSMutableDictionary *mediaForIndexPath;
     UITableViewCell *spinnerCell;

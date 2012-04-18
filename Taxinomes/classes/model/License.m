@@ -42,8 +42,37 @@
     return license;
 }
 
-+ (NSArray *)allLicenses {
++ (License *)licenseWithIdentifier: (NSNumber *)identifier {
      NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
+    [request setEntity:entity];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%@ == %d",kLicenseEntityIdentifierField,[identifier intValue]];
+    [request setPredicate:predicate];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kLicenseEntityIdentifierField ascending:YES];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [request setSortDescriptors:sortDescriptors];
+    [sortDescriptors release];
+    [sortDescriptor release];
+    
+    NSError *error = nil;
+    NSMutableArray *mutableFetchResults = [[[context executeFetchRequest:request error:&error] mutableCopy] autorelease];
+    [request release];
+    if ([mutableFetchResults count] == 0) {
+        return nil;
+    } else if ([mutableFetchResults count] > 1) {
+        return [mutableFetchResults objectAtIndex:0];
+    } else {
+        return [mutableFetchResults objectAtIndex:0];
+    }
+    return nil;
+}
+
++ (NSArray *)allLicenses {
+    NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
     [request setEntity:entity];
@@ -55,11 +84,12 @@
     
     NSError *error = nil;
     NSMutableArray *mutableFetchResults = [[context executeFetchRequest:request error:&error] mutableCopy];
+    [request release];
     if (mutableFetchResults == nil) {
         // Handle the error.
     }
     
-    return mutableFetchResults;
+    return [mutableFetchResults autorelease];
 }
 
 

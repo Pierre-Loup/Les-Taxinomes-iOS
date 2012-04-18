@@ -27,6 +27,7 @@
 #import "Author.h"
 #import "License.h"
 #import "Section.h"
+#import "LTDataManager.h"
 
 
 @implementation Media
@@ -51,87 +52,115 @@
 @dynamic section;
 
 + (Media *)mediaWithXMLRPCResponse: (NSDictionary *) response {
-    /*
-    Media *media = [[[media alloc] init] autorelease];
+    
     if(response == nil){
-        return media;
+        return nil;
     }
     
-    media.id_media = [response objectForKey:@"id_media"]!=nil?[response objectForKey:@"id_media"]:@"";
-    media.title = [response objectForKey:@"titre"]!=nil?[response objectForKey:@"titre"]:@"";
-    media.text =[response objectForKey:@"texte"]!=nil?[response objectForKey:@"texte"]:@"";
+    NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
     
+    Media *media = (Media *)[NSEntityDescription insertNewObjectForEntityForName:kMediaEntityName inManagedObjectContext:context];
+    
+    media.identifier = [response objectForKey:@"id_media"];
+    media.title = [response objectForKey:@"titre"];
+    media.text = [response objectForKey:@"text"];
+    media.status = [response objectForKey:@"statut"];
     NSString *strDateDesc = [NSString stringWithFormat:@"%@ +0000",[response objectForKey:@"date"]];
-    NSDate *date = [[NSDate alloc] initWithString:strDateDesc];
+    NSDate *date = [[[NSDate alloc] initWithString:strDateDesc] autorelease];
     if(date != nil)
         media.date = date;
     else
         media.date = [NSDate dateWithTimeIntervalSince1970:0];
     
+    NSInteger visits = [response objectForKey:@"visites"]!=nil?[[response objectForKey:@"visites"] intValue]:0;
+    media.visits = [NSNumber numberWithInt:visits];
+    
+    CGFloat popularity = [response objectForKey:@"popularite"]!=nil?[[response objectForKey:@"popularite"] floatValue]:0.0;
+    media.popularity = [NSNumber numberWithFloat:popularity];
+    
     NSString *strUpdateDateDesc = [NSString stringWithFormat:@"%@ +0000",[response objectForKey:@"date_modif"]];
-    NSDate *updateDate = [[NSDate alloc] initWithString:strUpdateDateDesc];
+    NSDate *updateDate = [[[NSDate alloc] initWithString:strUpdateDateDesc] autorelease];
     if(updateDate != nil)
         media.updateDate = updateDate;
     else
         media.updateDate = [NSDate dateWithTimeIntervalSince1970:0];
     
-    media.status = [response objectForKey:@"statut"]!=nil?[response objectForKey:@"statut"]:@"";
-    //media.id_section = [response objectForKey:@"id_rubrique"]!=nil?[response objectForKey:@"id_rubrique"]:@"";
-    //media.id_license = [response objectForKey:@"id_licence"]!=nil?[response objectForKey:@"id_licence"]:@"";
+    media.mediaThumbnailUrl = [response objectForKey:@"vignette"];
     
-    media.popularity = [response objectForKey:@"popularite"]!=nil?[[response objectForKey:@"popularite"] floatValue]:0.0;
-    media.visits = [response objectForKey:@"visites"]!=nil?[[response objectForKey:@"visites"] intValue]:0;
+    media.mediaThumbnailLocalFile = @"";
+    media.mediaMediumLocalFile = @"";
+    media.mediaMediumURL = [response objectForKey:@"document"];
+    media.mediaLargeURL = @"";
+    media.mediaLargeLocalFile = @"";
+    media.localUpdateDate = [NSDate date];
     
-    media.dataReceivedDate = [NSDate date];
-    media.mediaURL = [response objectForKey:@"document"]!=nil?[response objectForKey:@"document"]:@"";
-    if(media.mediaURL != @""){
-        NSURL *mediaUrl = [NSURL URLWithString:media.mediaURL];
-        NSData *mediaData = [NSData dataWithContentsOfURL:mediaUrl];
-        media.media = [[UIImage alloc] initWithData:mediaData];
-    } else {
-        media.media = [UIImage imageNamed:@"lpd_logo.png"];
-    }
-    
-    media.mediaThumbnailURL = [response objectForKey:@"vignette"]!=nil?[response objectForKey:@"vignette"]:@"";
-    if(media.mediaThumbnailURL != @""){
-        NSURL *mediaThumbnailUrl = [NSURL URLWithString:media.mediaThumbnailURL];
-        NSData *mediaThumbnailData = [NSData dataWithContentsOfURL:mediaThumbnailUrl];
-        media.mediaThumbnail = [[UIImage alloc] initWithData:mediaThumbnailData];
-    } else {
-        media.mediaThumbnail = [UIImage imageNamed:@"lpd_logo.png"];
-    }
+    NSInteger licenceId = [[response objectForKey:@"id_licence"] intValue];
+    media.license = [License licenseWithIdentifier:[NSNumber numberWithInt:licenceId]];
     
     if([[response objectForKey:@"auteurs"] isKindOfClass:[NSArray class]]){
-        NSMutableArray *authors = [[NSMutableArray alloc] initWithCapacity:[[response objectForKey:@"auteurs"] count]];
-        Author *author;
-        for(NSDictionary *authorDict in [response objectForKey:@"auteurs"]){
-            author = [[Author alloc] init];
-            author.id_author = [authorDict objectForKey:@"id_auteur"];
-            author.name = [authorDict objectForKey:@"nom"]!=nil?[authorDict objectForKey:@"nom"]:@"";
-            [authors addObject:author];
-            [author release];
-        }
-        media.authors = [NSArray arrayWithArray:authors];
-        [authors release];
+        NSDictionary *authorDict = [[response objectForKey:@"auteurs"] objectAtIndex:0];
+        NSInteger authorId = [[authorDict objectForKey:@"id_auteur"] intValue];
+        media.authors = [Author authorWithIdentifier:[NSNumber numberWithInt:authorId]];
     }
     
-    //DEBUG
-     NSLog(media.id_media);
-     NSLog(media.id_author);
-     NSLog(media.id_section);
-     NSLog(media.id_license);
-     NSLog([media.date description]);
-     NSLog([media.updateDate description]);
-     NSLog(media.title);
-     NSLog(media.text);
-     NSLog(media.status):
-     NSLog(@"%f",media.popularity);
-     NSLog(@"%d",media.visits);azerty 
-    [date release];
-    [updateDate release];
+    
+    media.section = nil;
+    
+    if (![context save:nil]) {
+        return nil;
+    }
     
     return media;
-    */
+
+}
+
++ (Media *)mediaWithIdentifier: (NSNumber *)identifier {
+    NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
+    [request setEntity:entity];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%@ == %d",kMediaEntityIdentifierField,[identifier intValue]];
+    [request setPredicate:predicate];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kMediaEntityIdentifierField ascending:YES];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [request setSortDescriptors:sortDescriptors];
+    [sortDescriptors release];
+    [sortDescriptor release];
+    
+    NSError *error = nil;
+    NSMutableArray *mutableFetchResults = [[context executeFetchRequest:request error:&error] mutableCopy];
+    if (mutableFetchResults == nil) {
+        return nil;
+    } else if ([mutableFetchResults count] > 1) {
+        return [mutableFetchResults objectAtIndex:0];
+    } else {
+        return [mutableFetchResults objectAtIndex:0];
+    }
+    return nil;
+}
+
++ (NSArray *)allMedias {
+    NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
+    [request setEntity:entity];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"identifier" ascending:YES];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [request setSortDescriptors:sortDescriptors];
+    [sortDescriptors release];
+    [sortDescriptor release];
+    
+    NSError *error = nil;
+    NSMutableArray *mutableFetchResults = [[context executeFetchRequest:request error:&error] mutableCopy];
+    [request release];
+    if (mutableFetchResults == nil) {
+        return nil;
+    }
+    
+    return [mutableFetchResults autorelease];
 }
 
 @end
