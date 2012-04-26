@@ -24,7 +24,8 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "LTViewController.h"
 
-@interface NavigateViewController : UIViewController
+@interface NavigateViewController : LTViewController
 
 @end

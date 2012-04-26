@@ -29,6 +29,23 @@
 #import "Section.h"
 #import "LTDataManager.h"
 
+#define kMediaIdTag @"id_article"
+#define kTitleTag @"titre"
+#define kTextTag @"texte"
+#define kStatusTag @"statut"
+#define kDateTag @"date"
+#define kVisitsTag @"visites"
+#define kPopularityTag @"popularite"
+#define kModifyDateTag @"date_modif"
+#define kMediaThumbnailTag @"vignette"
+#define kMediaMediumImageTag @"document"
+#define kLicenseTag @"id_licence"
+#define kAuthorsTag @"auteurs"
+#define kAuthorIdTag @"id_auteur"
+#define kGisTag @"gis"
+#define kGisLongitudeTag @"lon"
+#define kGisLatitudeTag @"lat"
+
 
 @implementation Media
 
@@ -47,6 +64,8 @@
 @dynamic mediaLargeURL;
 @dynamic mediaLargeLocalFile;
 @dynamic localUpdateDate;
+@dynamic latitude;
+@dynamic longitude;
 @dynamic license;
 @dynamic authors;
 @dynamic section;
@@ -57,52 +76,69 @@
         return nil;
     }
     
+    NSNumber * mediaIdentifier = nil;
+    if ([[response objectForKey:kMediaIdTag] isKindOfClass:[NSString class]]) {
+        NSString * strMediaIdentifier = (NSString *)[response objectForKey:kMediaIdTag];
+        mediaIdentifier = [NSNumber numberWithInt:[strMediaIdentifier intValue]];
+    } else {
+        return nil;
+    }
+    
     NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
     
-    Media *media = (Media *)[NSEntityDescription insertNewObjectForEntityForName:kMediaEntityName inManagedObjectContext:context];
+    Media *media = [Media mediaWithIdentifier:mediaIdentifier];
     
-    media.identifier = [response objectForKey:@"id_media"];
-    media.title = [response objectForKey:@"titre"];
-    media.text = [response objectForKey:@"text"];
-    media.status = [response objectForKey:@"statut"];
-    NSString *strDateDesc = [NSString stringWithFormat:@"%@ +0000",[response objectForKey:@"date"]];
+    if (!media) {
+        media = (Media *)[NSEntityDescription insertNewObjectForEntityForName:kMediaEntityName inManagedObjectContext:context];
+        media.identifier = mediaIdentifier;
+    }
+    
+    media.title = [response objectForKey:kTitleTag];
+    media.text = [response objectForKey:kTextTag]?[response objectForKey:kTextTag]:kNoDescription;
+    media.status = [response objectForKey:kStatusTag];
+    NSString *strDateDesc = [NSString stringWithFormat:@"%@ +0000",[response objectForKey:kDateTag]];
     NSDate *date = [[[NSDate alloc] initWithString:strDateDesc] autorelease];
     if(date != nil)
         media.date = date;
     else
         media.date = [NSDate dateWithTimeIntervalSince1970:0];
     
-    NSInteger visits = [response objectForKey:@"visites"]!=nil?[[response objectForKey:@"visites"] intValue]:0;
-    media.visits = [NSNumber numberWithInt:visits];
-    
-    CGFloat popularity = [response objectForKey:@"popularite"]!=nil?[[response objectForKey:@"popularite"] floatValue]:0.0;
+    NSString * visits = [response objectForKey:kVisitsTag]!=nil?[response objectForKey:kVisitsTag]:@"0";
+    media.visits = [NSNumber numberWithInteger:[visits integerValue]];
+    CGFloat popularity = [response objectForKey:kPopularityTag]!=nil?[[response objectForKey:kPopularityTag] floatValue]:0.0;
     media.popularity = [NSNumber numberWithFloat:popularity];
     
-    NSString *strUpdateDateDesc = [NSString stringWithFormat:@"%@ +0000",[response objectForKey:@"date_modif"]];
+    NSString *strUpdateDateDesc = [NSString stringWithFormat:@"%@ +0000",[response objectForKey:kModifyDateTag]];
     NSDate *updateDate = [[[NSDate alloc] initWithString:strUpdateDateDesc] autorelease];
     if(updateDate != nil)
         media.updateDate = updateDate;
     else
         media.updateDate = [NSDate dateWithTimeIntervalSince1970:0];
     
-    media.mediaThumbnailUrl = [response objectForKey:@"vignette"];
+    media.mediaThumbnailUrl = [response objectForKey:kMediaThumbnailTag];
     
     media.mediaThumbnailLocalFile = @"";
     media.mediaMediumLocalFile = @"";
-    media.mediaMediumURL = [response objectForKey:@"document"];
+    media.mediaMediumURL = [response objectForKey:kMediaMediumImageTag];
     media.mediaLargeURL = @"";
     media.mediaLargeLocalFile = @"";
     media.localUpdateDate = [NSDate date];
     
-    NSInteger licenceId = [[response objectForKey:@"id_licence"] intValue];
+    NSInteger licenceId = [[response objectForKey:kLicenseTag] intValue];
     media.license = [License licenseWithIdentifier:[NSNumber numberWithInt:licenceId]];
     
-    if([[response objectForKey:@"auteurs"] isKindOfClass:[NSArray class]]){
-        NSDictionary *authorDict = [[response objectForKey:@"auteurs"] objectAtIndex:0];
-        NSInteger authorId = [[authorDict objectForKey:@"id_auteur"] intValue];
-        media.authors = [Author authorWithIdentifier:[NSNumber numberWithInt:authorId]];
+    if([[response objectForKey:kAuthorsTag] isKindOfClass:[NSArray class]]){
+        NSDictionary * authorDict = [[response objectForKey:kAuthorsTag] objectAtIndex:0];
+        media.authors = [Author authorWithXMLRPCResponse:authorDict];
     }
     
+    if ([[response objectForKey:kGisTag] isKindOfClass:[NSArray class]]) {
+        NSDictionary * gisDict = [[response objectForKey:kGisTag] objectAtIndex:0];
+        NSString *strLatitude = [gisDict objectForKey:kGisLatitudeTag];
+        NSString *strLongitude = [gisDict objectForKey:kGisLongitudeTag];
+        media.longitude = [NSNumber numberWithFloat:[strLongitude floatValue]];
+        media.latitude = [NSNumber numberWithFloat:[strLatitude floatValue]];
+    }
     
     media.section = nil;
     
@@ -121,7 +157,7 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
     [request setEntity:entity];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%@ == %d",kMediaEntityIdentifierField,[identifier intValue]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %d",kMediaEntityIdentifierField,[identifier intValue]];
     [request setPredicate:predicate];
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kMediaEntityIdentifierField ascending:YES];
@@ -132,9 +168,11 @@
     
     NSError *error = nil;
     NSMutableArray *mutableFetchResults = [[context executeFetchRequest:request error:&error] mutableCopy];
-    if (mutableFetchResults == nil) {
+    if (mutableFetchResults == nil
+        || [mutableFetchResults count] == 0) {
         return nil;
     } else if ([mutableFetchResults count] > 1) {
+        NSLog(@"multiple records in database: %d",[mutableFetchResults count]);
         return [mutableFetchResults objectAtIndex:0];
     } else {
         return [mutableFetchResults objectAtIndex:0];
@@ -147,7 +185,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
     [request setEntity:entity];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"identifier" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kMediaEntityDateField ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     [request setSortDescriptors:sortDescriptors];
     [sortDescriptors release];

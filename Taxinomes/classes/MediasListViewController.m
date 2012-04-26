@@ -56,7 +56,7 @@
     /*
     if([[Reachability reachabilityWithHostName:kHost] isReachable]){
         DataManager *dm = [DataManager sharedDataManager];
-        NSArray *medias = [dm getShortmediasByDateWithLimit:kNbMediasStep startingAtRecord:0];
+        NSArray *medias = [dm getShortMediasByDateWithLimit:kNbMediasStep startingAtRecord:0];
         
         if([medias count] != 0){
             mediaLoadingStatus = SUCCEED;
@@ -77,17 +77,7 @@
     
     mediaLoadingStatus = PENDING;
     self.mediaForIndexPath = [NSMutableDictionary dictionary];
-    [self reloadDatas];  
-    UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:self.view.frame];
-    backgroundImage.image = [UIImage imageNamed:@"fond.png"];
-    CGRect backgroundSubviewFrame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    UIView *backgroundSubview = [[UIView alloc] initWithFrame:backgroundSubviewFrame];
-    backgroundSubview.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.90];
-    [backgroundImage addSubview:backgroundSubview];
-    if([tableView respondsToSelector:@selector(setBackgroundView:)]){
-        self.tableView.backgroundView = backgroundImage;
-    }    
-    [backgroundImage release];
+    [self reloadDatas];
     /*
     UIButton* infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
     [infoButton addTarget:self action:@selector(infoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -186,8 +176,17 @@
         mediaImageView.delegate = self;
         [mediaImageView reloadWithUrl:media.mediaThumbnailUrl];
     }
-    ((UILabel *)[cell viewWithTag:2]).text = media.title;
+    
+    UILabel * titleLabel = ((UILabel *)[cell viewWithTag:2]);
+    if (media.title && ![media.title isEqualToString:@""]) {
+        titleLabel.text = media.title;
+        
+    } else {
+        titleLabel.text = kNoTitle;
+    }
+    
     ((UILabel *)[cell viewWithTag:3]).text = media.authors.name;
+
     cell.opaque = YES;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -255,7 +254,7 @@
     NSArray *nextmedias;
     if([[Reachability reachabilityWithHostName:kHost] isReachable]){
         LTConnectionManager *cm = [LTConnectionManager sharedConnectionManager];
-        nextmedias = [cm getShortmediasByDateWithLimit:kNbMediasStep startingAtRecord:[mediaForIndexPath count]];
+        nextmedias = [cm getShortMediasByDateWithLimit:kNbMediasStep startingAtRecord:[mediaForIndexPath count]];
         if([nextmedias count] != 0) {
             [self performSelectorOnMainThread:@selector(reloadDatas) withObject:nil waitUntilDone:NO];                
         } else {

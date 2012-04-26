@@ -26,9 +26,13 @@
     
     NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
     
-    License *license = (License *)[NSEntityDescription insertNewObjectForEntityForName:kLicenseEntityName inManagedObjectContext:context];
+    License *license = [License licenseWithIdentifier:[NSNumber numberWithInt:[(NSString*)[response objectForKey:@"id"] intValue]]];
     
-    license.identifier = [NSNumber numberWithInt:[(NSString*)[response objectForKey:@"id"] intValue]];
+    if (!license) {
+        license = (License *)[NSEntityDescription insertNewObjectForEntityForName:kLicenseEntityName inManagedObjectContext:context];
+        license.identifier = [NSNumber numberWithInt:[(NSString*)[response objectForKey:@"id"] intValue]];
+    }
+    
     license.name = [response objectForKey:@"name"];
     license.icon = [response objectForKey:@"icon"];
     license.link = [response objectForKey:@"link"];

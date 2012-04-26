@@ -60,32 +60,7 @@ static LTConnectionManager *instance = nil;
 	return self;
 }
 
-- (NSArray *)getmediasByDateWithLimit: (NSInteger) limit startingAtRecord: (NSInteger) start{
-    
-    NSMutableArray *medias = [[NSMutableArray alloc] initWithCapacity:limit];
-    
-    if(limit == 0 || limit > kDefaultLimit)
-        limit = kDefaultLimit;
-    
-    XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
-    NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d,%d", start, limit], nil] forKeys:[NSArray arrayWithObjects:@"limite", nil]];
-    [xmlrpcRequest setMethod:@"spip.liste_medias" withObject:args];
-    id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
-    [xmlrpcRequest release];
-    
-    if([result isKindOfClass:[NSError class]]){
-        //NSLog(@"failed");
-        return [NSMutableArray array];
-    }
-    
-    for(NSDictionary *media in result){
-        [medias addObject:[Media mediaWithXMLRPCResponse:media]];
-    }
-    
-    return medias;
-}
-
-- (NSArray *)getShortmediasByDateWithLimit: (NSInteger) limit startingAtRecord: (NSInteger) start{
+- (NSArray *)getShortMediasByDateWithLimit: (NSInteger) limit startingAtRecord: (NSInteger) start{
     
     NSMutableArray *medias = [[[NSMutableArray alloc] initWithCapacity:limit] autorelease];
     
@@ -118,42 +93,12 @@ static LTConnectionManager *instance = nil;
     return medias;
 }
 
-- (Media *)getShortmediaWithId: (NSString *) id_media{
-        
-    XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
-    NSArray *requestedFields = [NSArray arrayWithObjects:@"id_media", @"titre", @"date", @"vignette", @"auteurs", nil];
-    NSArray *argsKeys = [NSArray arrayWithObjects:@"id_media", @"champs_demandes", @"vignette_format", @"vignette_largeur", @"vignette_hauteur", nil];
-    //NSLog(@"%f",kScreenScale);
-    NSNumber *thumbnailWidth = [NSNumber numberWithDouble:(THUMBNAIL_MAX_WIDHT)];
-    NSNumber *thumbnailHeight = [NSNumber numberWithDouble:(THUMBNAIL_MAX_HEIGHT)];
-    NSArray *argsObjects = [NSArray arrayWithObjects:id_media, requestedFields, @"carre", thumbnailWidth, thumbnailHeight, nil];
-    //NSArray *argsKeys = [NSArray arrayWithObjects:@"limite", nil];
-    //NSArray *argsObjects = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d,%d", start, limit], nil];
-    NSDictionary *args = [NSDictionary dictionaryWithObjects:argsObjects forKeys:argsKeys];
-    [xmlrpcRequest setMethod:@"geodiv.lire_media" withObject:args];
-    id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
-    [xmlrpcRequest release];
-    
-    if([result isKindOfClass:[NSError class]]){
-        NSLog(@"failed");
-        return [NSMutableArray array];
-    }
-    
-    if([result isKindOfClass:[NSError class]]){
-        NSLog(@"failed");
+- (Media *)getMediaWithId:(NSNumber *)mediaIdentifier {
+    if (!mediaIdentifier) {
         return nil;
     }
-    
-    return [Media mediaWithXMLRPCResponse:result];
-
-}
-
-- (Media *)getmediaWithId: (NSString *) id_media{
-    
     XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
-    //NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:[id_media intValue]],[NSNumber numberWithDouble:[UIScreen mainScreen].bounds.size.width ], nil] forKeys:[NSArray arrayWithObjects:@"id_media", @"document_largeur", nil]];
-    //NSLog(@"%f",kScreenScale*MEDIA_MAX_WIDHT);
-    NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:[id_media intValue]],[NSNumber numberWithDouble:MEDIA_MAX_WIDHT], nil] forKeys:[NSArray arrayWithObjects:@"id_media", @"document_largeur", nil]];
+    NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:mediaIdentifier,[NSNumber numberWithDouble:MEDIA_MAX_WIDHT], nil] forKeys:[NSArray arrayWithObjects:@"id_article", @"document_largeur", nil]];
     [xmlrpcRequest setMethod:@"geodiv.lire_media" withObject:args];
     id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
     [xmlrpcRequest release];
@@ -162,15 +107,15 @@ static LTConnectionManager *instance = nil;
         NSLog(@"failed");
         return nil;
     }
-    
     return [Media mediaWithXMLRPCResponse:result];
-    
 }
 
-- (Author *)getAuthorWithId: (NSString *) id_author{
-    
+- (Author *)getAuthorWithId:(NSNumber *)authorIdentifier {
+    if (!authorIdentifier) {
+        return nil;
+    }
     XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
-    NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:[id_author intValue]], nil] forKeys:[NSArray arrayWithObjects:@"id_auteur", nil]];
+    NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:authorIdentifier, nil] forKeys:[NSArray arrayWithObjects:@"id_auteur", nil]];
     [xmlrpcRequest setMethod:@"spip.lire_auteur" withObject:args];
     id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
     [xmlrpcRequest release];
@@ -295,14 +240,6 @@ static LTConnectionManager *instance = nil;
 	[request release];
 	
     return [userInfoResponse object];
-    
-}
-
-- (Media *)addmediaWithInformations: (NSDictionary *)info {
-    XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
-    [xmlrpcRequest setMethod:@"geodiv.creer_media" withObject:info];
-    [self executeXMLRPCRequest:xmlrpcRequest authenticated:YES];
-    [xmlrpcRequest release];
 }
 
 @end

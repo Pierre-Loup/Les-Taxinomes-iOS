@@ -59,15 +59,12 @@ typedef enum {
            
 + (LTConnectionManager *)sharedConnectionManager;
 
-- (NSArray *)getmediasByDateWithLimit:(NSInteger)limit startingAtRecord:(NSInteger)start;
-- (NSArray *)getShortmediasByDateWithLimit:(NSInteger) limit startingAtRecord:(NSInteger)start;
-- (Media *)getShortmediaWithId:(NSString *)id_media;
-- (Media *)getmediaWithId:(NSString *)id_media;
-- (Author *)getAuthorWithId:(NSString *)id_author;
+- (NSArray *)getShortMediasByDateWithLimit:(NSInteger)limit startingAtRecord:(NSInteger)start;
+- (Media *)getMediaWithId:(NSNumber *)mediaIdentifier;
+- (Author *)getAuthorWithId:(NSNumber *)authorIdentifier;
 - (NSArray *)getLicenses;
 - (void)getSectionWithIdentifier:(NSNumber*)identifier;
 - (void)authWithLogin:(NSString *)login password:(NSString *)password;
 - (id)executeXMLRPCRequest:(XMLRPCRequest *)req authenticated:(BOOL) auth;
-- (Media *)addmediaWithInformations: (NSDictionary *)info ;
 
 @end

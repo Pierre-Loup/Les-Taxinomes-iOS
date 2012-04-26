@@ -24,21 +24,37 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "media.h"
+#import <MapKit/MapKit.h>
+#import "LTDataManager.h"
+#import "Media.h"
 
-@interface MediaDetailViewController : UIViewController <UIScrollViewDelegate>{
-    NSString* _id_media;
-    Media* _media;
-    UIScrollView* _scrollView;
-    UIActivityIndicatorView* _spinner;
+#import "LTViewController.h"
+#import "LTTitleView.h"
+#import "TCImageView.h"
+
+@interface MediaDetailViewController : LTViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, TCImageViewDelegate,  LTDataManagerDelegate, MKMapViewDelegate>{
+    NSNumber * mediaIdentifier_;
+    Media * media_;
+    
+    UIScrollView * scrollView_;
+    LTTitleView * mediaTitleView_;
+    TCImageView * mediaImageView_;
+    LTTitleView * authorTitleView_;
+    TCImageView * authorAvatarView_;
+    UILabel * authorNameLabel_;
+    LTTitleView * descTitleView_;
+    UITextView * descTextView_;
+    LTTitleView * mapTitleView_;
+    MKMapView * mapView_;
 }
 
-@property (nonatomic, retain) Media *media;
-@property (nonatomic, retain) NSString *id_media;
-@property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, retain) UIActivityIndicatorView *spinner;
+@property (nonatomic, retain) Media * media;
+@property (nonatomic, retain) NSNumber * mediaIdentifier;
+@property (nonatomic, retain) IBOutlet UIScrollView * scrollView;
+@property (nonatomic, retain) TCImageView * mediaImageView;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil mediaId:(NSNumber *)id_media;
-- (IBAction)ClickEventOnMedia:(id)sender;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil mediaId:(NSNumber *)mediaIdentifier;
+- (void)refreshView;
+- (void)mediaImageTouched:(UIImage *)sender;
 
 @end

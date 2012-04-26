@@ -17,6 +17,7 @@
 @property (nonatomic, retain) MBProgressHUD* loaderView;
 
 - (void) displayLoaderViewWithDetermination:(BOOL)determinate whileExecuting:(SEL)myTask;
+- (void) displayLoader;
 - (void) hideLoaderView;
 
 @end

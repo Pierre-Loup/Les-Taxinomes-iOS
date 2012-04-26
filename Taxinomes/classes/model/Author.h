@@ -33,7 +33,7 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * biography;
 @property (nonatomic, retain) NSDate * signupDate;
-@property (nonatomic, retain) NSNumber * avatarURL;
+@property (nonatomic, retain) NSString * avatarURL;
 @property (nonatomic, retain) NSDate * localUpdateDate;
 @property (nonatomic, retain) NSString * status;
 

@@ -175,7 +175,7 @@
     }
     LTConnectionManager* connectionManager = [LTConnectionManager sharedConnectionManager];
     connectionManager.progressDelegate = self;
-    [connectionManager addmediaWithInformations:[NSDictionary dictionaryWithDictionary:info]];
+    //[connectionManager addmediaWithInformations:[NSDictionary dictionaryWithDictionary:info]];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

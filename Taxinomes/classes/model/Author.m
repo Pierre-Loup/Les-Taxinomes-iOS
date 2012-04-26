@@ -43,12 +43,28 @@
         return nil;
     }
     
+    NSNumber * authorIdentifier = nil;
+    if ([[response objectForKey:@"id_auteur"] isKindOfClass:[NSString class]]) {
+        NSString * strAuthorIdentifier = (NSString *)[response objectForKey:@"id_auteur"];
+        authorIdentifier = [NSNumber numberWithInt:[strAuthorIdentifier intValue]];
+    } else {
+        return nil;
+    }
+    
     NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
     
-    Author *author = (Author *)[NSEntityDescription insertNewObjectForEntityForName:kAuthorEntityName inManagedObjectContext:context];
+    Author *author = [Author authorWithIdentifier:authorIdentifier];
+    if (!author) {
+        Author *author = (Author *)[NSEntityDescription insertNewObjectForEntityForName:kAuthorEntityName inManagedObjectContext:context];
+        author.identifier = authorIdentifier;
+    }
+    NSString * authorName = (NSString *)[response objectForKey:@"nom"];
+    if (authorName && ![authorName isEqualToString:@""]) {
+        author.name = [response objectForKey:@"nom"];
+    } else {
+        author.name = kNoAuthorName;
+    }
     
-    author.identifier = [response objectForKey:@"id_auteur"];
-    author.name = [response objectForKey:@"nom"];
     author.biography = [response objectForKey:@"bio"];
     
     NSString *strSignupDate = [NSString stringWithFormat:@"%@ +0000",[response objectForKey:@"date_inscription"]];
@@ -76,7 +92,7 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
     [request setEntity:entity];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%@ == %d",kAuthorEntityIdentifierField,[identifier intValue]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %d",kAuthorEntityIdentifierField,[identifier intValue]];
     [request setPredicate:predicate];
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kAuthorEntityIdentifierField ascending:YES];

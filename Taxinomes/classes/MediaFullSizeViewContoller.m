@@ -30,11 +30,11 @@
 @synthesize spinner = _spinner;
 @synthesize mediaView = _mediaView;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil media:(UIImage *)media {
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil mediaURL:(NSString *)mediaURL {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         UIImageView *mediaView = [[UIImageView alloc] initWithFrame:self.view.frame];
-        mediaView.image = media;
+        mediaView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:mediaURL]]];
         self.mediaView = mediaView;
         [mediaView release];
     }

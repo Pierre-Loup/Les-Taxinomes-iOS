@@ -72,9 +72,12 @@
 #define kHelloWorld @"Hello, World"
 #define kIkooLol @"Kikoo lol"
 #define kNoDescription @"Pas de description"
+#define kNoTitle @"Sans titre"
+#define kNoAuthorName @"Anonyme"
 #define kPhotoGroupName @"Les Taxinomes"
 
-
+// Times
+#define kMediaCacheTime 3600.0
 
 #ifdef TAXINOMES_DEV
     #define kHost @"taxinomes.arscenic.org"

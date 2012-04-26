@@ -44,6 +44,8 @@
 @property (nonatomic, retain) NSString * mediaMediumURL;
 @property (nonatomic, retain) NSString * mediaLargeURL;
 @property (nonatomic, retain) NSString * mediaLargeLocalFile;
+@property (nonatomic, retain) NSNumber * latitude;
+@property (nonatomic, retain) NSNumber * longitude;
 @property (nonatomic, retain) NSDate * localUpdateDate;
 @property (nonatomic, retain) License *license;
 @property (nonatomic, retain) Author *authors;

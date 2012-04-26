@@ -25,6 +25,7 @@
 
 #import "LTDataManager.h"
 #import "Constants.h"
+#import "Media.h"
 
 static LTDataManager *instance = nil;
 
@@ -44,129 +45,82 @@ static LTDataManager *instance = nil;
 	return instance;
 }
 
-/*
-- (NSManagedObjectContext *)mainManagedObjectContext {
-    
-    if (!mainManagedObjectContext_) {
-        
-        mainManagedObjectContext_ = [[NSManagedObjectContext alloc] init];
-        
-        [mainManagedObjectContext_ setPersistentStoreCoordinator:[self pe]];
-        
-        [mainManagedObjectContext_ setUndoManager:nil];
-        
-        [mainManagedObjectContext_ setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
-        
-        [mainManagedObjectContext_ setRetainsRegisteredObjects:NO];
-        
-    }
-    
-    
-    
-    return mainManagedObjectContext_;
-    
-}
-
-- (void)initDatabase {
-    // First, test for existence.
-    BOOL success;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSError *error;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *writableDBPath = [documentsDirectory stringByAppendingPathComponent:kDatabaseFile];
-    success = [fileManager fileExistsAtPath:writableDBPath];
-    
-    if (success) {
-		//NSLog(@"Database exists : %@", writableDBPath);
-	} else {
-        // The writable database does not exist, delete the old Databases
-        NSArray *contentsOfDocumentsDirectory = [fileManager contentsOfDirectoryAtPath:documentsDirectory error:&error];
-        for( NSString* file in contentsOfDocumentsDirectory) {
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES '.*\.db$'"];
-            if ([predicate evaluateWithObject:file]) {
-                success = [fileManager removeItemAtPath:[documentsDirectory stringByAppendingPathComponent:file] error:&error];
-            }
-        }
-       
-        // The writable database does not exist, so copy the default to the appropriate location.
-        NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:kDatabaseFile];
-        success = [fileManager copyItemAtPath:defaultDBPath toPath:writableDBPath error:&error];
-        //NSLog(defaultDBPath);
-        //NSLog(writableDBPath);
-        if (!success) {
-            NSAssert1(0, @"DataManager>Failed to create writable database file with message '%@'.", [error localizedDescription]);
-        }
-    }
-    
-    // The database is stored in the application bundle. 
-    NSString *path = [documentsDirectory stringByAppendingPathComponent:kDatabaseFile];
-    // Open the database. The database was prepared outside the application.
-    sqlite3_open([path UTF8String], &database);
-	sqliteDatabase = [[SqliteDatabase alloc] initWithDb:database];
-}
-
-- (Author *)getAuthorWithId: (NSString *) id_author{
-    Author *author = [sqliteDatabase selectAuthorWithId:id_author];
-    //NSLog(@"%f",[[NSDate date] timeIntervalSinceDate:author.dataReceivedDate]);
+- (Author *)getAuthorWithId:(NSNumber *)authorIdentifier {
+    Author * author = [Author authorWithIdentifier:authorIdentifier];
     LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
-    if(author==nil){        
-        author = [connectionManager getAuthorWithId:id_author];
-        [sqliteDatabase insertAuthor:author];
-    } else if ([[NSDate date] timeIntervalSinceDate:author.dataReceivedDate] > kAuthorCacheTime 
-               || author.avatar == nil){
-        [sqliteDatabase deleteAuthorWithId:id_author];
-        author = [connectionManager getAuthorWithId:id_author];
-        [sqliteDatabase insertAuthor:author];
+    if(author == nil 
+       || author.avatarURL == nil
+       ||[[NSDate date] timeIntervalSinceDate:author.localUpdateDate] > kMediaCacheTime){        
+        author = [connectionManager getAuthorWithId:authorIdentifier];
     }
     
     return author;
 }
 
-- (media *)getmediaWithId: (NSString *) id_media{
-    media *media = [sqliteDatabase selectmediaWithId:id_media];
-    //NSLog(@"%f",[[NSDate date] timeIntervalSinceDate:media.dataReceivedDate]);
+- (BOOL)getAuthorAsychIfNeededWithId:(NSNumber *)authorIdentifier withDelegate:(id<LTDataManagerDelegate>)delegate {
+    Author * author = [Author authorWithIdentifier:authorIdentifier];
     LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
-    if(media==nil){        
-        media = [connectionManager getmediaWithId:id_media];
-        [sqliteDatabase insertmedia:media];
-    } else if ([[NSDate date] timeIntervalSinceDate:media.dataReceivedDate] > kmediaCacheTime){
-        [sqliteDatabase deletemediaWithId:id_media];
-        media = [connectionManager getmediaWithId:id_media];
-        [sqliteDatabase insertmedia:media];
+    /*
+    if(author == nil 
+       || author.avatarURL == nil
+       ||[[NSDate date] timeIntervalSinceDate:author.localUpdateDate] > kMediaCacheTime){   */     
+    if (YES) {   
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+        
+        dispatch_async(queue, ^{
+            Author * author = [connectionManager getAuthorWithId:authorIdentifier];
+            
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [delegate authorRetrieved:author];
+                [delegate release];
+            });
+        });
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (Media *)getMediaWithId:(NSNumber *)mediaIdentifier {
+    Media * media = [Media mediaWithIdentifier:mediaIdentifier];
+    LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
+    if( media == nil
+       || media.mediaMediumURL == nil
+       || [[NSDate date] timeIntervalSinceDate:media.localUpdateDate] > kMediaCacheTime){        
+        media = [connectionManager getMediaWithId:mediaIdentifier];
     }
     
     return media;
 }
 
-- (media *)getShortmediaWithId: (NSString *) id_media{
-    media *media = [sqliteDatabase selectmediaWithId:id_media];
-    //NSLog(@"%f",[[NSDate date] timeIntervalSinceDate:media.dataReceivedDate]);
+- (BOOL)getMediaAsychIfNeededWithId:(NSNumber *)mediaIdentifier withDelegate:(id<LTDataManagerDelegate>)delegate {
+    [mediaIdentifier retain];
+    [delegate retain];
+    Media * media = [Media mediaWithIdentifier:mediaIdentifier];
     LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
-    if(media==nil){        
-        media = [connectionManager getShortmediaWithId:id_media];
-        [sqliteDatabase insertmedia:media];
-    } else if ([[NSDate date] timeIntervalSinceDate:media.dataReceivedDate] > kmediaCacheTime){
-        [sqliteDatabase deletemediaWithId:id_media];
-        media = [connectionManager getShortmediaWithId:id_media];
-        [sqliteDatabase insertmedia:media];
+    /*
+    if( media == nil
+       || media.mediaMediumURL == nil
+       || [[NSDate date] timeIntervalSinceDate:media.localUpdateDate] > kMediaCacheTime){ */
+    if (YES) {
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+        
+        dispatch_async(queue, ^{
+            Media * media = [connectionManager getMediaWithId:mediaIdentifier];
+            
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [delegate mediaRetrieved:media];
+                [delegate release];
+                [mediaIdentifier release];
+            });
+        });
+        return YES;
+    } else {
+        [mediaIdentifier release];
     }
     
-    return media;
+    return NO;
 }
-
-- (NSArray *)getShortmediasByDateWithLimit: (NSInteger) limit startingAtRecord: (NSInteger) start{
-
-    LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
-    return [NSMutableArray arrayWithArray:[connectionManager getShortmediasByDateWithLimit:limit startingAtRecord:start]];
-}
-
-- (void)addmediaWithInformations: (NSDictionary *)info {
-    LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
-    [connectionManager addmediaWithInformations:info];
-}
- 
- */
 
 #pragma mark -
 #pragma mark Saving

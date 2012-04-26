@@ -24,15 +24,22 @@
  */
 
 #import <Foundation/Foundation.h>
-#import <sqlite3.h>
 #import "LTConnectionManager.h"
 #import "Author.h"
-#import "media.h"
+#import "Media.h"
+
+@protocol LTDataManagerDelegate <NSObject>
+@optional
+- (void)mediaRetrieved:(Media *)media;
+- (void)authorRetrieved:(Author *)author;
+@end
 
 @interface LTDataManager : NSObject {
     NSManagedObjectContext *mainManagedObjectContext_;
     NSManagedObjectModel *managedObjectModel_;
-     NSPersistentStoreCoordinator *persistentStoreCoordinator_;    
+    NSPersistentStoreCoordinator *persistentStoreCoordinator_;
+    
+    id<LTDataManagerDelegate> delegate_;
 }
 
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
@@ -41,6 +48,10 @@
 
 @property (nonatomic, readonly) NSString *applicationDocumentsDirectory;
 
+- (Author *)getAuthorWithId:(NSNumber *)authorIdentifier;
+- (BOOL)getAuthorAsychIfNeededWithId:(NSNumber *)authorIdentifier withDelegate:(id<LTDataManagerDelegate>)delegate;
+- (Media *)getMediaWithId:(NSNumber *)mediaIdentifier;
+- (BOOL)getMediaAsychIfNeededWithId:(NSNumber *)mediaIdentifier withDelegate:(id<LTDataManagerDelegate>)delegate;
 + (LTDataManager *)sharedDataManager;
 - (IBAction)saveAction:sender;
 

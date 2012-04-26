@@ -46,7 +46,7 @@
     if ([[License allLicenses] count] == 0) {
         [connectionManager getLicenses];
     }
-    [connectionManager getSectionWithIdentifier:[NSNumber numberWithInt:12]];
+    //[connectionManager getSectionWithIdentifier:[NSNumber numberWithInt:12]];
     
     UINavigationBar *bar = [self.tabBarController.navigationController navigationBar];
     [bar setTintColor:[UIColor colorWithRed:(95.0/255.0) green:(130.0/255) blue:(55.0/255.0) alpha:1.0]];

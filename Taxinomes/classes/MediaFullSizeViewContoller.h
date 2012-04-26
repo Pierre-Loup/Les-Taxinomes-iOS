@@ -35,6 +35,6 @@
 @property(retain,nonatomic) UIActivityIndicatorView* spinner;
 @property(retain,nonatomic) UIImageView *mediaView;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil media:(UIImage *)media;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil mediaURL:(NSString *)mediaURL ;
 
 @end
