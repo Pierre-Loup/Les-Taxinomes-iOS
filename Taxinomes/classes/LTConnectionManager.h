@@ -29,6 +29,8 @@
 #import "License.h"
 #import "XMLRPCRequest.h"
 #import "ASIProgressDelegate.h"
+#import "LTDataManager.h"
+
 typedef enum {
     UNAUTHENTICATED = 0,
     AUTH_PENDING,
@@ -42,29 +44,30 @@ typedef enum {
 @end
 
 @interface LTConnectionManager : NSObject {
-    id delegate;
+    id authDelegate_;
     id <ASIProgressDelegate> progressDelegate_;
     Author *_author;
     NSError *_error;
     AuthenticationStatus authStatus;
 }
 
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id authDelegate;
 @property (nonatomic, assign) id progressDelegate;
 @property (nonatomic, retain) Author *author;
 @property (nonatomic, retain) NSError *error;
 @property (nonatomic, assign) AuthenticationStatus authStatus;
 
-
-           
 + (LTConnectionManager *)sharedConnectionManager;
 
 - (NSArray *)getShortMediasByDateWithLimit:(NSInteger)limit startingAtRecord:(NSInteger)start;
 - (Media *)getMediaWithId:(NSNumber *)mediaIdentifier;
+- (void)getMediaAsynchWithId:(NSNumber *)mediaIdentifier delegate:(id)delegate;
 - (Author *)getAuthorWithId:(NSNumber *)authorIdentifier;
+- (void)getAuthorAsynchWithId:(NSNumber *)authorIdentifier delegate:(id)delegate;
 - (NSArray *)getLicenses;
 - (void)getSectionWithIdentifier:(NSNumber*)identifier;
 - (void)authWithLogin:(NSString *)login password:(NSString *)password;
+- (void)addMediaWithInformations: (NSDictionary *)info;
 - (id)executeXMLRPCRequest:(XMLRPCRequest *)req authenticated:(BOOL) auth;
 
 @end

@@ -91,12 +91,13 @@
     if((self.mediaView.image.size.height/self.mediaView.image.size.width) > (maxHeight/maxWidth) ){
         mediaWidth = maxWidth;
         mediaHeight = (maxWidth/self.mediaView.image.size.width)*self.mediaView.image.size.height;
-        //self.scrollView.maximumZoomScale = (self.mediaView.image.size.width/maxWidth)*2;
+        self.scrollView.maximumZoomScale = (self.mediaView.image.size.width/maxWidth)*2;
     } else {
         mediaHeight = maxHeight;
         mediaWidth = (maxHeight/self.mediaView.image.size.height)*self.mediaView.image.size.width;
-        //self.scrollView.maximumZoomScale = (self.mediaView.image.size.height/maxHeight)*2;
+        self.scrollView.maximumZoomScale = (self.mediaView.image.size.height/maxHeight)*2;
     }
+    
     
     self.mediaView.frame = CGRectMake(self.mediaView.frame.origin.x, self.mediaView.frame.origin.y, mediaWidth, mediaHeight);
     

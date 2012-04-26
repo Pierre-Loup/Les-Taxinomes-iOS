@@ -156,7 +156,19 @@
 - (IBAction)uploadMedia:(id)sender {
     //NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:[id_media intValue]],[NSNumber numberWithDouble:[UIScreen mainScreen].bounds.size.width ], nil] forKeys:[NSArray arrayWithObjects:@"id_media", @"document_largeur", nil]];
     //NSLog(@"%f",kScreenScale*MEDIA_MAX_WIDHT);
-    
+    UIImage * imageToUpload;
+    if (media_.size.width > MEDIA_MAX_WIDHT) {
+        CGFloat imageHeight = (MEDIA_MAX_WIDHT/media_.size.width)*media_.size.height;
+        CGSize newSize = CGSizeMake(MEDIA_MAX_WIDHT, imageHeight);
+        UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+        [media_ drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();    
+        UIGraphicsEndImageContext();
+        imageToUpload = newImage;
+    } else {
+        imageToUpload = media_;
+    }
+   
 	NSData *imageData = [NSData dataWithData:UIImageJPEGRepresentation(self.media, 1.0f)];//1.0f = 100% quality
 
     NSDictionary *document = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects: @"000000000000000000000.jpg", @"image/jpeg", imageData, nil] forKeys:[NSArray arrayWithObjects:@"name", @"type", @"bits", nil]];    NSDictionary *gis = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects: self.latitudeInput.text, self.longitudeInput.text, nil] forKeys:[NSArray arrayWithObjects:@"lat", @"lon",nil]];
@@ -175,7 +187,7 @@
     }
     LTConnectionManager* connectionManager = [LTConnectionManager sharedConnectionManager];
     connectionManager.progressDelegate = self;
-    //[connectionManager addmediaWithInformations:[NSDictionary dictionaryWithDictionary:info]];
+    [connectionManager addMediaWithInformations:[NSDictionary dictionaryWithDictionary:info]];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -184,7 +196,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-        return [titleForSectionHeader_ count];
+    return [titleForSectionHeader_ count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -249,7 +261,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     } completion:^(BOOL finished){
         [tableView_ scrollToRowAtIndexPath:[self indexPathForInputView: textField] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
     }];
-    
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField { //keyboard will hide
@@ -267,7 +278,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         [textView resignFirstResponder];
         return NO;
     }
-    
     return YES;
 }
 

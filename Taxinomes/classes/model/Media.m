@@ -172,7 +172,7 @@
         || [mutableFetchResults count] == 0) {
         return nil;
     } else if ([mutableFetchResults count] > 1) {
-        NSLog(@"multiple records in database: %d",[mutableFetchResults count]);
+        NSLog(@"[WARNING] multiple records (%d) in database for id %d",[mutableFetchResults count],[identifier intValue]);
         return [mutableFetchResults objectAtIndex:0];
     } else {
         return [mutableFetchResults objectAtIndex:0];

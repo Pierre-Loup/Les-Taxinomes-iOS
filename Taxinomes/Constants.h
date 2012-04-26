@@ -67,7 +67,7 @@
 // Sizes
 #define THUMBNAIL_MAX_HEIGHT 100.0
 #define THUMBNAIL_MAX_WIDHT 100.0
-#define MEDIA_MAX_WIDHT 512.0
+#define MEDIA_MAX_WIDHT 620.0
 
 #define kHelloWorld @"Hello, World"
 #define kIkooLol @"Kikoo lol"

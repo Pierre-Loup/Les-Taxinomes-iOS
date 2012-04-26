@@ -70,6 +70,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"Média";
     [self.scrollView setHidden:YES];
     self.scrollView.backgroundColor = [UIColor clearColor];
     self.scrollView.opaque = NO;
@@ -132,11 +133,13 @@
     [mapView_ addGestureRecognizer:tapGestureRecognizer];
     [tapGestureRecognizer release];
     [self.scrollView addSubview:mapView_];
+    [self.scrollView setHidden:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self displayLoader];
+    [self refreshView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -237,9 +240,11 @@
 }
 
 - (void)mediaImageTouched:(UIImage *)sender {
+    /*
      MediaFullSizeViewContoller *mediaFullSizeViewController = [[MediaFullSizeViewContoller alloc] initWithNibName:@"MediaFullSizeView" bundle:nil mediaURL:self.media.mediaLargeURL];
      [self.navigationController pushViewController:mediaFullSizeViewController animated:YES];
      [mediaFullSizeViewController release];
+     */
 }
 
 - (void)mapTouched:(MKMapView *)sender {
@@ -251,24 +256,26 @@
 - (void)TCImageView:(TCImageView *) view FinisehdImage:(UIImage *)image {
     [self refreshView];
     [self.scrollView setHidden:NO];
-    [self hideLoaderView];
+    if ([view.url isEqualToString:media_.mediaMediumURL]) {
+        [self hideLoaderView];
+        [self.scrollView setHidden:NO];
+    }
 }
 
 -(void) TCImageView:(TCImageView *) view failedWithError:(NSError *)error {
     [self refreshView];
     [self hideLoaderView];
+    [self.scrollView setHidden:NO];
 }
 
 #pragma mark - LTDataManagerDelegate
 
 - (void)mediaRetrieved:(Media *)media {
-    NSLog(@"mediaRetrieved:");
     self.media = media;
     [self refreshView];
 }
 
 - (void)authorRetrieved:(Author *)author {
-    NSLog(@"authorRetrieved:");
     [self refreshView];
 }
 

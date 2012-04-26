@@ -27,7 +27,6 @@
 
 @interface MediaFullSizeViewContoller : UIViewController <UIScrollViewDelegate>{
     UIScrollView* _scrollView;
-    UIActivityIndicatorView* _spinner;
     UIImageView *_mediaView;
 }
 

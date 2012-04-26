@@ -51,7 +51,7 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
     if (shouldZoomToUserLocation_) {
-        [mapView setRegion:MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(0.0, 10.0)) animated:YES];
+        [mapView setRegion:MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(5.0, 5.0)) animated:YES];
     }
     shouldZoomToUserLocation_ = NO;
 }

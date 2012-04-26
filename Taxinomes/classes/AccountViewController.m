@@ -150,9 +150,9 @@
 
 - (void)submitAuthentication:(id)sender {
     LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
-    connectionManager.delegate = self;
-    [connectionManager authWithLogin:@"pierre" password:@"crLu2Vzi"];
-    //[connectionManager authWithLogin:self.userTextField.text password:self.passwordTextField.text];
+    connectionManager.authDelegate = self;
+    //[connectionManager authWithLogin:@"pierre" password:@"crLu2Vzi"];
+    [connectionManager authWithLogin:self.userTextField.text password:self.passwordTextField.text];
 }
 
 #pragma mark - Table view components management

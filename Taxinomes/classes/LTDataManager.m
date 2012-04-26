@@ -58,26 +58,19 @@ static LTDataManager *instance = nil;
 }
 
 - (BOOL)getAuthorAsychIfNeededWithId:(NSNumber *)authorIdentifier withDelegate:(id<LTDataManagerDelegate>)delegate {
+    [authorIdentifier retain];
+    [delegate retain];
     Author * author = [Author authorWithIdentifier:authorIdentifier];
     LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
-    /*
+    [delegate autorelease];
+    [delegate autorelease];
+
     if(author == nil 
        || author.avatarURL == nil
-       ||[[NSDate date] timeIntervalSinceDate:author.localUpdateDate] > kMediaCacheTime){   */     
-    if (YES) {   
-        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-        
-        dispatch_async(queue, ^{
-            Author * author = [connectionManager getAuthorWithId:authorIdentifier];
-            
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                [delegate authorRetrieved:author];
-                [delegate release];
-            });
-        });
+       ||[[NSDate date] timeIntervalSinceDate:author.localUpdateDate] > kMediaCacheTime){
+        [connectionManager getAuthorAsynchWithId:authorIdentifier delegate:delegate];
         return YES;
     }
-    
     return NO;
 }
 
@@ -98,27 +91,14 @@ static LTDataManager *instance = nil;
     [delegate retain];
     Media * media = [Media mediaWithIdentifier:mediaIdentifier];
     LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
-    /*
+    [mediaIdentifier autorelease];
+    [delegate autorelease];
     if( media == nil
        || media.mediaMediumURL == nil
-       || [[NSDate date] timeIntervalSinceDate:media.localUpdateDate] > kMediaCacheTime){ */
-    if (YES) {
-        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-        
-        dispatch_async(queue, ^{
-            Media * media = [connectionManager getMediaWithId:mediaIdentifier];
-            
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                [delegate mediaRetrieved:media];
-                [delegate release];
-                [mediaIdentifier release];
-            });
-        });
+       || [[NSDate date] timeIntervalSinceDate:media.localUpdateDate] > kMediaCacheTime){
+        [connectionManager getMediaAsynchWithId:mediaIdentifier delegate:delegate];
         return YES;
-    } else {
-        [mediaIdentifier release];
     }
-    
     return NO;
 }
 

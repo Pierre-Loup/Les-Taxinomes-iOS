@@ -37,10 +37,12 @@ static LTConnectionManager *instance = nil;
 @synthesize error = _error;
 @synthesize author= _author;
 @synthesize progressDelegate = progressDelegate_;
-@synthesize authStatus, delegate;
+@synthesize authDelegate = authDelegate_;
+@synthesize authStatus;
 
 - (void)dealloc {
 	[instance release];
+    [authDelegate_ release];
 	[super dealloc];
 }
 
@@ -110,6 +112,27 @@ static LTConnectionManager *instance = nil;
     return [Media mediaWithXMLRPCResponse:result];
 }
 
+- (void)getMediaAsynchWithId:(NSNumber *)mediaIdentifier delegate:(id)delegate {
+    if (!mediaIdentifier) {
+        return;
+    }
+    XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
+    NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:mediaIdentifier,[NSNumber numberWithDouble:MEDIA_MAX_WIDHT], nil] forKeys:[NSArray arrayWithObjects:@"id_article", @"document_largeur", nil]];
+    [xmlrpcRequest setMethod:@"geodiv.lire_media" withObject:args];
+    
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    
+    dispatch_async(queue, ^{
+        id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [xmlrpcRequest release];
+            if([result isKindOfClass:[NSDictionary class]])
+                [delegate mediaRetrieved:[Media mediaWithXMLRPCResponse:result]];
+        });
+    });
+}
+
 - (Author *)getAuthorWithId:(NSNumber *)authorIdentifier {
     if (!authorIdentifier) {
         return nil;
@@ -125,6 +148,27 @@ static LTConnectionManager *instance = nil;
     } else {
         return nil;
     }
+}
+
+- (void)getAuthorAsynchWithId:(NSNumber *)authorIdentifier delegate:(id)delegate {
+    if (!authorIdentifier) {
+        return;
+    }
+    XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
+    NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:authorIdentifier, nil] forKeys:[NSArray arrayWithObjects:@"id_auteur", nil]];
+    [xmlrpcRequest setMethod:@"spip.lire_auteur" withObject:args];
+    
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    
+    dispatch_async(queue, ^{
+        id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [xmlrpcRequest release];
+            if([result isKindOfClass:[NSDictionary class]])
+                [delegate authorRetrieved:[Author authorWithXMLRPCResponse:result]];
+        });
+    });
 }
 
 - (NSArray*)getLicenses {
@@ -191,13 +235,20 @@ static LTConnectionManager *instance = nil;
     if([result isKindOfClass:[NSDictionary class]]){
         self.authStatus = AUTHENTICATED;
         self.author = [Author authorWithXMLRPCResponse:result];
-        [delegate didAuthenticate];
+        [authDelegate_ didAuthenticate];
     } else {
         self.authStatus = AUTH_FAILED;
         //TODO: LOCAL ERROR LABELS
-        [delegate didFailToAuthenticate:@"Login ou mot de passe éronné"];
+        [authDelegate_ didFailToAuthenticate:@"Login ou mot de passe éronné"];
 
     }
+}
+
+- (void)addMediaWithInformations: (NSDictionary *)info {
+    XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
+    [xmlrpcRequest setMethod:@"geodiv.creer_media" withObject:info];
+    [self executeXMLRPCRequest:xmlrpcRequest authenticated:YES];
+    [xmlrpcRequest release];
 }
 
 - (id)executeXMLRPCRequest:(XMLRPCRequest *)req  authenticated:(BOOL)auth{

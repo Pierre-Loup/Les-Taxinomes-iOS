@@ -34,10 +34,11 @@
 - (void)authorRetrieved:(Author *)author;
 @end
 
-@interface LTDataManager : NSObject {
+@interface LTDataManager : NSObject <LTDataManagerDelegate> {
     NSManagedObjectContext *mainManagedObjectContext_;
     NSManagedObjectModel *managedObjectModel_;
     NSPersistentStoreCoordinator *persistentStoreCoordinator_;
+    NSLock * dbLock_;
     
     id<LTDataManagerDelegate> delegate_;
 }
@@ -45,6 +46,7 @@
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, retain, readonly) NSManagedObjectContext *mainManagedObjectContext;
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, retain, readonly) NSLock * dbLock_;
 
 @property (nonatomic, readonly) NSString *applicationDocumentsDirectory;
 
