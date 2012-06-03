@@ -8,12 +8,12 @@
 
 /*
  
- This program is free software: you can redistribute it and/or modify
+ Les Taxinomes iPhone is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
  
- This program is distributed in the hope that it will be useful,
+ Les Taxinomes iPhone is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
@@ -25,6 +25,7 @@
 
 #import <UIKit/UIKit.h>
 #import "LTDataManager.h"
+#import "LTViewController.h"
 #import "TCImageView.h"
 
 typedef enum {
@@ -33,12 +34,16 @@ typedef enum {
     SUCCEED
 } MediaLoadingStatus;
 
-@interface MediasListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, TCImageViewDelegate> {
-    UITableView *tableView_;
+@interface MediasListViewController : LTViewController <UITableViewDataSource, UITableViewDelegate, TCImageViewDelegate, LTConnectionManagerDelegate> {
+    LTDataManager * dataManager_;
+    LTConnectionManager * connectionManger_;
     NSMutableDictionary *mediaForIndexPath;
-    UITableViewCell *spinnerCell;
     MediaLoadingStatus mediaLoadingStatus;
-    //BOOL isLoadingNewMedias;
+    
+    // UI
+    UIBarButtonItem * reloadBarButton_;
+    UITableView *tableView_;
+    UITableViewCell *spinnerCell;
     UIView *loadingTopVew;
     UITableViewCell* _mediaTableViewCell;
     UITableViewCell* _retryCell;
@@ -51,7 +56,8 @@ typedef enum {
 @property (nonatomic, retain) IBOutlet UITableViewCell* mediaTableViewCell;
 @property (nonatomic, retain) IBOutlet UITableViewCell* retryCell;
 
-- (IBAction)reloadButtonAction:(id)sender;
+- (IBAction)loadSynchMedias:(id)sender;
+- (IBAction)refreshButtonAction:(id)sender;
 
 @end
 

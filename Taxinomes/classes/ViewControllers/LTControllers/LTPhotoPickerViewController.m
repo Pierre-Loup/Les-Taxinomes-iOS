@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Les petits débrouillards Bretagne. All rights reserved.
 //
 
+
+
 #import "LTPhotoPickerViewController.h"
 #import "NSMutableDictionary+ImageMetadata.h"
 #import "Constants.h"
@@ -39,7 +41,6 @@
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.delegate = self;    
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    imagePicker.mediaTypes = nil;
     imagePicker.mediaTypes = [[[NSArray alloc] initWithObjects: (NSString *) kUTTypeImage, nil] autorelease];
     imagePicker.allowsEditing = NO;
     
@@ -64,7 +65,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
             [metadata setLocation:_locationManager.location];
             _photoLocation = [_locationManager.location retain];
         }
-        NSLog(@"%@",metadata);
         ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
         _photo = [(UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage] retain];
         [assetsLibrary writeImageToSavedPhotosAlbum:_photo.CGImage metadata:metadata completionBlock:nil];
@@ -79,7 +79,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark - CLLocationManagerDelegate

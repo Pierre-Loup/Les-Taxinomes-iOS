@@ -8,12 +8,12 @@
 
 /*
  
- This program is free software: you can redistribute it and/or modify
+ Les Taxinomes iPhone is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
  
- This program is distributed in the hope that it will be useful,
+ Les Taxinomes iPhone is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
@@ -29,7 +29,6 @@
 #import "License.h"
 #import "XMLRPCRequest.h"
 #import "ASIProgressDelegate.h"
-#import "LTDataManager.h"
 
 typedef enum {
     UNAUTHENTICATED = 0,
@@ -38,36 +37,47 @@ typedef enum {
     AUTHENTICATED
 } AuthenticationStatus;
 
-@protocol LTConnectionManagerDelegate
-- (void)didAuthenticate;
-- (void)didFailToAuthenticate:(NSString *)message;
+@protocol LTConnectionManagerDelegate <NSObject>
+@optional
+- (void)didRetrievedShortMedias:(NSArray *)medias;
+- (void)didRetrievedMedia:(Media *)media;
+- (void)didRetrievedAuthor:(Author *)author;
+- (void)didSuccessfullyUploadMedia:(Media *)media;
+- (void)didFailWithError:(NSError *)error;
+@end
+
+@protocol LTConnectionManagerAuthDelegate
+- (void)didAuthenticateWithAuthor:(Author *)author;
+- (void)didFailToAuthenticateWithError:(NSError *)error;
 @end
 
 @interface LTConnectionManager : NSObject {
-    id authDelegate_;
+    id <LTConnectionManagerAuthDelegate> authDelegate_;
     id <ASIProgressDelegate> progressDelegate_;
-    Author *_author;
-    NSError *_error;
+    Author * authenticatedUser_;
     AuthenticationStatus authStatus;
 }
 
-@property (nonatomic, assign) id authDelegate;
-@property (nonatomic, assign) id progressDelegate;
-@property (nonatomic, retain) Author *author;
-@property (nonatomic, retain) NSError *error;
+@property (nonatomic, retain) id authDelegate;
+@property (nonatomic, retain) id progressDelegate;
+@property (nonatomic, retain) Author * authenticatedUser;
 @property (nonatomic, assign) AuthenticationStatus authStatus;
 
 + (LTConnectionManager *)sharedConnectionManager;
 
+- (void)getShortMediasAsychByDateWithLimit:(NSInteger)limit startingAtRecord:(NSInteger)start delegate:(id<LTConnectionManagerDelegate>)delegate;
 - (NSArray *)getShortMediasByDateWithLimit:(NSInteger)limit startingAtRecord:(NSInteger)start;
 - (Media *)getMediaWithId:(NSNumber *)mediaIdentifier;
-- (void)getMediaAsynchWithId:(NSNumber *)mediaIdentifier delegate:(id)delegate;
+- (void)getMediaAsynchWithId:(NSNumber *)mediaIdentifier delegate:(id<LTConnectionManagerDelegate>)delegate;
 - (Author *)getAuthorWithId:(NSNumber *)authorIdentifier;
-- (void)getAuthorAsynchWithId:(NSNumber *)authorIdentifier delegate:(id)delegate;
+- (void)getAuthorAsynchWithId:(NSNumber *)authorIdentifier delegate:(id<LTConnectionManagerDelegate>)delegate;
 - (NSArray *)getLicenses;
 //- (void)getSectionWithIdentifier:(NSNumber*)identifier;
-- (void)authWithLogin:(NSString *)login password:(NSString *)password;
+- (void)authAsynchWithLogin:(NSString *)login password:(NSString *)password delegate:(id<LTConnectionManagerAuthDelegate>)delegate;
+- (BOOL)isAuthenticated;
+- (void)unAuthenticate; 
 - (void)addMediaWithInformations: (NSDictionary *)info;
+- (void)addMediaAsynchWithInformations: (NSDictionary *)info delegate:(id<LTConnectionManagerDelegate>)delegate;
 - (id)executeXMLRPCRequest:(XMLRPCRequest *)req authenticated:(BOOL) auth;
 
 @end

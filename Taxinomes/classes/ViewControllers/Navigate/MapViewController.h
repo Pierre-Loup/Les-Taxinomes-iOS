@@ -2,7 +2,7 @@
 //  MapViewController.h
 //  Taxinomes
 //
-//  Created by Pierre-Loup Personnel on 26/04/12.
+//  Created by Pierre-Loup Tristant on 26/04/12.
 //  Copyright (c) 2012 Les petits débrouillards Bretagne. All rights reserved.
 //
 

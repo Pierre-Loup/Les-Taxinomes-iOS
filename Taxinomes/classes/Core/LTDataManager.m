@@ -8,12 +8,12 @@
 
 /*
  
- This program is free software: you can redistribute it and/or modify
+ Les Taxinomes iPhone is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
  
- This program is distributed in the hope that it will be useful,
+ Les Taxinomes iPhone is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
@@ -30,6 +30,16 @@
 static LTDataManager *instance = nil;
 
 @implementation LTDataManager
+@synthesize synchLimit = synchLimit_;
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        synchLimit_ = 0;
+    }
+    return self;
+}
 
 - (void)dealloc {
 	[mainManagedObjectContext_ release];
@@ -57,17 +67,16 @@ static LTDataManager *instance = nil;
     return author;
 }
 
-- (BOOL)getAuthorAsychIfNeededWithId:(NSNumber *)authorIdentifier withDelegate:(id<LTDataManagerDelegate>)delegate {
+- (BOOL)getAuthorAsychIfNeededWithId:(NSNumber *)authorIdentifier withDelegate:(id<LTConnectionManagerDelegate>)delegate {
     [authorIdentifier retain];
     [delegate retain];
     Author * author = [Author authorWithIdentifier:authorIdentifier];
     LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
     [delegate autorelease];
-    [delegate autorelease];
-
-    if(author == nil 
-       || author.avatarURL == nil
-       ||[[NSDate date] timeIntervalSinceDate:author.localUpdateDate] > kMediaCacheTime){
+    
+    if(author == nil
+       || ([[NSDate date] timeIntervalSinceDate:author.localUpdateDate] > kMediaCacheTime)){
+        
         [connectionManager getAuthorAsynchWithId:authorIdentifier delegate:delegate];
         return YES;
     }
@@ -86,13 +95,14 @@ static LTDataManager *instance = nil;
     return media;
 }
 
-- (BOOL)getMediaAsychIfNeededWithId:(NSNumber *)mediaIdentifier withDelegate:(id<LTDataManagerDelegate>)delegate {
+- (BOOL)getMediaAsychIfNeededWithId:(NSNumber *)mediaIdentifier withDelegate:(id<LTConnectionManagerDelegate>)delegate {
     [mediaIdentifier retain];
     [delegate retain];
     Media * media = [Media mediaWithIdentifier:mediaIdentifier];
     LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
     [mediaIdentifier autorelease];
     [delegate autorelease];
+    NSLog(@"media.text %@",media.text);
     if( media == nil
        || media.mediaMediumURL == nil
        || [[NSDate date] timeIntervalSinceDate:media.localUpdateDate] > kMediaCacheTime){

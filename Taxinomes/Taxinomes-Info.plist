@@ -41,11 +41,11 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>0.2</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMainNibFile</key>
-	<string>MainWIndows</string>
+	<string>MainWindow</string>
 	<key>UILaunchImageFile</key>
 	<string>Default.png</string>
 	<key>UISupportedInterfaceOrientations</key>

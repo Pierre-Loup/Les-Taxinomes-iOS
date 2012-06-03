@@ -8,12 +8,12 @@
 
 /*
  
- This program is free software: you can redistribute it and/or modify
+ Les Taxinomes iPhone is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
  
- This program is distributed in the hope that it will be useful,
+ Les Taxinomes iPhone is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
@@ -25,7 +25,6 @@
 
 #import "MediasListViewController.h"
 #import "Author.h"
-#import "LTDataManager.h"
 #import "Constants.h"
 #import "MediaDetailViewController.h"
 #import "Reachability.h"
@@ -46,6 +45,9 @@
 - (void)didReceiveMemoryWarning
 {
     [TCImageView resetGlobalCache];
+    [mediaForIndexPath removeAllObjects];
+    [self.tableView reloadData];
+    
 }
 
 #pragma mark - View lifecycle
@@ -53,54 +55,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIBarButtonItem* cameraBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonAction:)];
-    [self.navigationItem setRightBarButtonItem:cameraBarButton animated:YES];
-    [cameraBarButton release];
-    /*
-    if([[Reachability reachabilityWithHostName:kHost] isReachable]){
-        DataManager *dm = [DataManager sharedDataManager];
-        NSArray *medias = [dm getShortMediasByDateWithLimit:kNbMediasStep startingAtRecord:0];
-        
-        if([medias count] != 0){
-            mediaLoadingStatus = SUCCEED;
-            self.mediaForIndexPath = [NSMutableDictionary dictionaryWithCapacity:[medias count]];
-            int i;
-            for (i=0; i< [medias count]; i++) {
-                [mediaForIndexPath setObject:[medias objectAtIndex:i] forKey:[NSIndexPath indexPathForRow:i inSection:0]];
-            }
-        } else {
-            mediaLoadingStatus = FAILED;
-            [self performSelectorOnMainThread:@selector(connectionErrorAlert:) withObject:nil waitUntilDone:NO];
-        }
-    } else {
-        mediaLoadingStatus = FAILED;
-        [self performSelectorOnMainThread:@selector(connectionErrorAlert:) withObject:nil waitUntilDone:NO];
-    }
-     */
     
+    dataManager_ = [[LTDataManager sharedDataManager] retain];
+    connectionManger_ = [[LTConnectionManager sharedConnectionManager] retain];
+    
+   reloadBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonAction:)];
+    [self.navigationItem setRightBarButtonItem:reloadBarButton_ animated:YES];
+    [reloadBarButton_ release];
     
     mediaLoadingStatus = PENDING;
     self.mediaForIndexPath = [NSMutableDictionary dictionary];
     [self reloadDatas];
-    /*
-    UIButton* infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
-    [infoButton addTarget:self action:@selector(infoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *modalButton = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
-    [self.navigationItem setLeftBarButtonItem:modalButton animated:YES];
-    [modalButton release];
-    */
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    [dataManager_ release];
+    dataManager_ = nil;
+    [connectionManger_ release];
+    connectionManger_ = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -152,7 +126,7 @@
     
     if([indexPath row] == ([mediaForIndexPath count])) {        
         if ( mediaLoadingStatus == SUCCEED) {
-            [self performSelectorInBackground:@selector(loadNextMediasInBackground) withObject:nil];
+            [self performSelectorInBackground:@selector(loadSynchMedias:) withObject:nil];
             mediaLoadingStatus = PENDING;
             return spinnerCell;
         } else if (mediaLoadingStatus == PENDING) {
@@ -210,7 +184,7 @@
 
     Media *media = [[mediaForIndexPath objectForKey:indexPath] retain];
     if(media != nil){
-        MediaDetailViewController *mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailView" bundle:nil mediaId:media.identifier];
+        MediaDetailViewController *mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailViewController" bundle:nil mediaId:media.identifier];
         [self.navigationController pushViewController:mediaDetailViewController animated:YES];
         [mediaDetailViewController release];
         [media release];
@@ -218,66 +192,20 @@
     
 }
 
-
-
-#pragma mark - Scroll view delegate
-
-/*
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-    //NSLog(@"%f %f",scrollView.contentOffset.y, tableView.rowHeight);
-    if((scrollView.contentOffset.y+tableView.rowHeight)<= 0.0){
-        isLoadingNewMedias = YES;
-        //maxOffset = scrollView.contentOffset.y;
-    }
+- (IBAction)loadSynchMedias:(id)sender {
+    [connectionManger_ getShortMediasAsychByDateWithLimit:kNbMediasStep startingAtRecord:dataManager_.synchLimit delegate:self];
 }
 
-//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if(isLoadingNewMedias){
-        //scrollView.contentOffset = CGPointMake(0.0, scrollView.contentOffset.y);
-        [scrollView setContentOffset:CGPointMake(0.0, -tableView.rowHeight) animated:NO];
-        isLoadingNewMedias = NO;
-    }
-    NSLog(@"%f",scrollView.contentOffset.y);
-    CGFloat height = (-scrollView.contentOffset.y)<=tableView.rowHeight?(-scrollView.contentOffset.y):tableView.rowHeight;
-    CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, height);
-    if(loadingTopVew != nil)
-        [loadingTopVew release];
-    [loadingTopVew removeFromSuperview];
-    loadingTopVew = [[UIView alloc ] initWithFrame:frame];
-    loadingTopVew.backgroundColor = [UIColor blueColor];
-    [self.view addSubview:loadingTopVew];
-    
-}
-*/
-
-
-
--(void)loadNextMediasInBackground {
-    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    NSArray *nextmedias;
-    if([[Reachability reachabilityWithHostName:kHost] isReachable]){
-        LTConnectionManager *cm = [LTConnectionManager sharedConnectionManager];
-        nextmedias = [cm getShortMediasByDateWithLimit:kNbMediasStep startingAtRecord:[mediaForIndexPath count]];
-        if([nextmedias count] != 0) {
-            [self performSelectorOnMainThread:@selector(reloadDatas) withObject:nil waitUntilDone:NO];                
-        } else {
-            [self performSelectorOnMainThread:@selector(connectionErrorAlert:) withObject:nil waitUntilDone:NO];  
-        }
-    } else {
-        [self performSelectorOnMainThread:@selector(connectionErrorAlert:) withObject:nil waitUntilDone:NO];  
-    }
-    [pool release];
-}
-
--(void)refreshButtonAction:(id)sender {
+- (IBAction)refreshButtonAction:(id)sender {
+    reloadBarButton_.enabled = NO;
+    [self displayLoader];
+    dataManager_.synchLimit = 0;
     [mediaForIndexPath removeAllObjects];
-    [self loadNextMediasInBackground];
+    [self performSelectorInBackground:@selector(loadSynchMedias:) withObject:nil];
 }
-
 
 - (void)reloadDatas {
-    NSArray *medias =  [Media allMedias];
+    NSArray *medias =  [Media allSynchMedias];
     NSInteger row = 0;
     for (Media *media in medias) {
        [mediaForIndexPath setObject:media forKey:[NSIndexPath indexPathForRow:row inSection:0]];
@@ -287,34 +215,6 @@
     mediaLoadingStatus = SUCCEED;
 }
 
-- (void) addMediasToBottom:(NSArray *)nextmedias {
-    if(nextmedias != nil){
-        int i;
-        int nbmedias = [mediaForIndexPath count];
-        for (i=0; i<[nextmedias count]; i++) {
-            [mediaForIndexPath setObject:[nextmedias objectAtIndex:i] forKey:[NSIndexPath indexPathForRow:i+nbmedias inSection:0]];
-        }
-        [self.tableView reloadData];
-    }    
-    mediaLoadingStatus = SUCCEED;
-}
-
-- (void) connectionErrorAlert:(id)sender {
-    mediaLoadingStatus = FAILED;
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Problème lors de la communication avec le serveur" message:@"Vérifiez que vous avez accès au Wifi ou au réseau internet mobile " delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
-    [alert release];
-    [self.tableView reloadData];
-}
-
-- (IBAction)reloadButtonAction:(id)sender{
-    if (mediaLoadingStatus != PENDING) {
-        mediaLoadingStatus = PENDING;
-        [self.tableView reloadData];
-        [self performSelectorInBackground:@selector(loadNextMediasInBackground) withObject:nil];
-    }
-}
-
 #pragma mark - TCImageViewDelegate
 
 -(void)TCImageView:(TCImageView *)view WillUpdateImage:(UIImage *)image {
@@ -322,6 +222,23 @@
     [view setHidden:NO];
 }
 
+#pragma mark - LTConnectionManagerDelegate
 
+- (void)didRetrievedShortMedias:(NSArray *)medias {
+    dataManager_.synchLimit += [medias count];
+    [self reloadDatas];
+    [self hideLoader];
+    reloadBarButton_.enabled = YES;
+}
+
+- (void)didFailWithError:(NSError *)error {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_network_unreachable_title") message:TRANSLATE(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:TRANSLATE(@"common_OK") otherButtonTitles:nil];
+    [alert show];
+    [alert release];
+    mediaLoadingStatus = FAILED;
+    [self.tableView reloadData];
+    [self hideLoader];
+    reloadBarButton_.enabled = YES;
+}
 
 @end

@@ -8,12 +8,12 @@
 
 /*
  
- This program is free software: you can redistribute it and/or modify
+ Les Taxinomes iPhone is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
  
- This program is distributed in the hope that it will be useful,
+ Les Taxinomes iPhone is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
@@ -22,6 +22,9 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>
  
  */
+
+// Macros
+#define TRANSLATE(x) NSLocalizedString((x),@"")
 
 //CORE DATA
 //Entities
@@ -69,26 +72,36 @@
 #define THUMBNAIL_MAX_WIDHT 100.0
 #define MEDIA_MAX_WIDHT 620.0
 
+// Texts
 #define kHelloWorld @"Hello, World"
-#define kIkooLol @"Kikoo lol"
 #define kNoDescription @"Pas de description"
 #define kNoTitle @"Sans titre"
 #define kNoAuthorName @"Anonyme"
 #define kPhotoGroupName @"Les Taxinomes"
+#define kUploadMediaTextSignature @"Média mis en ligne depuis l'application des Taxinomes pour iPhone"
 
 // Times
 #define kMediaCacheTime 3600.0
 
-#ifdef TAXINOMES_DEV
-    #define kHost @"taxinomes.arscenic.org"
-    #define kXMLRCPWebServiceURL @"http://taxinomes.arscenic.org/spip.php?action=xmlrpc_serveur"
+#if DEBUG 
+    #define kHost @"www.lestaxinomes.org"
+    #define kXMLRCPWebServiceURL @"http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur"
+    #define kHTTPHost @"http://www.lestaxinomes.org"
 #else
     #define kHost @"www.lestaxinomes.org"
     #define kXMLRCPWebServiceURL @"http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur"
+    #define kHTTPHost @"http://www.lestaxinomes.org"
 #endif
 
-#define kNbMediasStep 10
-//XML-RPC
+// WS XML-RPC
 #define kDefaultLimit 50
+#define kNbMediasStep 10
 #define kLimitParamName @"limite"
 #define kSortParamName @"tri"
+#define kSessionCookieName @"spip_session"
+
+// Errors
+#define kLTDefaultErrorDomain @"LTDefaultErrorDomain"
+#define kLTConnectionManagerInternalError @"LTConnectionManagerInternalError"
+#define kLTAuthenticationFailedError @"LTAuthenticationFailedError"
+#define kNetworkRequestErrorDomain @"ASIHTTPRequestErrorDomain"

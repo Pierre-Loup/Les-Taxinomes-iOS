@@ -2,6 +2,28 @@
   Localization.string.strings
   Taxinomes
 
-  Created by Pierre-Loup Personnel on 30/04/12.
+  Created by Pierre-Loup Tristant on 30/04/12.
   Copyright (c) 2012 Les petits débrouillards Bretagne. All rights reserved.
 */
+
+"common_cancel" = "Cancel";
+"common_OK" = "OK";
+"common_logout" = "Logout";
+"common_signin" = "Sign In";
+
+/* ALERTS */
+"alert_auth_failed_title" = "Authentication failed";
+"alert_auth_failed_text" = "Checkout your login and your password";
+"alert_network_unreachable_title" = "Réseau indisponible";
+"alert_network_unreachable_text" = "Vérifiez que vous êtes connecté au wifi ou au réseau internet mobile";
+"alert_upload_failed" = "Media sharing failed. Pease retry later";
+"alert_upload_succeded" = "Media sharing succeded.";
+
+/* MEDIA UPLOAD FORM */
+"media_upload_view_title" = "Share";
+"media_upload_no_title" = "No title";
+"media_upload_no_license_text" = "No license";
+
+/* ERROR MESSAGES */
+"error_auth_failed" = "Authentication failed. Checkout your login and your password";
+"error_network_unreachable" = "Network unreachable. Checkout your wifi or your mobile internet connection";

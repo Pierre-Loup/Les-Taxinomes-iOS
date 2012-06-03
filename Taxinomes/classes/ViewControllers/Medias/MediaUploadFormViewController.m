@@ -8,12 +8,12 @@
 
 /*
  
- This program is free software: you can redistribute it and/or modify
+ Les Taxinomes iPhone is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
  
- This program is distributed in the hope that it will be useful,
+ Les Taxinomes iPhone is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
@@ -27,7 +27,16 @@
 #import "NSData+Base64.h"
 #import "NSMutableDictionary+ImageMetadata.h"
 #import "LTDataManager.h"
+#import "LTConnectionManager.h"
 
+@interface MediaUploadFormViewController (Private)
+// Actions
+- (IBAction)uploadMedia:(id)sender;
+// Tools
+- (NSIndexPath*)indexPathForInputView:(UIView*)view;
+- (UIResponder *)formFirstResponder;
+- (void)dismissKeyboard;
+@end
 
 @implementation MediaUploadFormViewController
 @synthesize tableView = tableView_;
@@ -41,7 +50,6 @@
 @synthesize publishCell = publishCell_;
 @synthesize titleInput = titleInput_;
 @synthesize textInput = textInput_;
-@synthesize licenseTypeChooser = licenseTypeChooser_;
 @synthesize publishSwitch = publishSwitch_;
 @synthesize latitudeInput = latitudeInput_;
 @synthesize longitudeInput = longitudeInput_;
@@ -51,12 +59,32 @@
 
 #pragma mark -
 
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
-    self = [super initWithNibName:@"MediaUploadFormView" bundle:nil];
+    self = [self initWithNibName:@"MediaUploadFormViewController" bundle:nil];
     if (self) {
+    }
+    return self;
+}
+
+-(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    
+    self = [super initWithNibName:@"MediaUploadFormViewController" bundle:nil];
+    if (self) {
+        titleForSectionHeader_ = [[NSArray arrayWithObjects:@"Titre", 
+                                   @"Texte", 
+                                   @"Licence",
+                                   @"Localisation", 
+                                   @"Status", nil] retain];
+        rowsInSection_ = [[NSArray arrayWithObjects:[NSNumber numberWithInt:1],
+                           [NSNumber numberWithInt:1],
+                           [NSNumber numberWithInt:1],
+                           [NSNumber numberWithInt:2],
+                           [NSNumber numberWithInt:1],
+                           nil] retain];
+        media_ = nil;
+        gis_ = nil;
+        license_ = nil;
     }
     return self;
 }
@@ -69,23 +97,16 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (NSIndexPath*)indexPathForInputView:(UIView*)view{
+- (void)dealloc {
     
-    if (view == titleInput_) {
-        return [NSIndexPath indexPathForRow:0 inSection:0];
-    } else if (view == textInput_) {
-        return [NSIndexPath indexPathForRow:0 inSection:1];
-    } else if (view == licenseTypeChooser_) {
-        return [NSIndexPath indexPathForRow:0 inSection:2];
-    } else if (view == latitudeInput_) {
-        return [NSIndexPath indexPathForRow:0 inSection:3];
-    } else if (view == longitudeInput_) {
-        return [NSIndexPath indexPathForRow:1 inSection:3];
-    } else if (view == publishSwitch_) {
-        return [NSIndexPath indexPathForRow:0 inSection:4];
-    }
     
-    return nil;
+    [titleForSectionHeader_ release];
+    [rowsInSection_ release];
+    
+    [media_ release];
+    [gis_ release];
+    [license_ release];
+    [super dealloc];
 }
 
 #pragma mark - View lifecycle
@@ -93,20 +114,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.title = @"Partage";
+    self.navigationItem.title = TRANSLATE(@"media_upload_view_title");
     
-    //Setup Table View
-    titleForSectionHeader_ = [[NSArray arrayWithObjects:@"Titre", 
-                                                        @"Texte", 
-                                                        @"Licence",
-                                                        @"Localisation", 
-                                                        @"Status", nil] retain];
-    rowsInSection_ = [[NSArray arrayWithObjects:[NSNumber numberWithInt:1],
-                                                [NSNumber numberWithInt:1],
-                                                [NSNumber numberWithInt:1],
-                                                [NSNumber numberWithInt:2],
-                                                [NSNumber numberWithInt:1],
-                                                nil] retain];
     cellForIndexPath_ = [[NSDictionary alloc] initWithObjectsAndKeys:   
                          titleCell_,
                          [NSIndexPath indexPathForRow:0 inSection:0],
@@ -120,8 +129,9 @@
                          [NSIndexPath indexPathForRow:1 inSection:3],
                          publishCell_,
                          [NSIndexPath indexPathForRow:0 inSection:4],
-                         nil];  
-    
+                         nil];
+    [latitudeInput_ setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
+    [longitudeInput_ setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
     if(self.media == nil){
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
         imagePicker.delegate = self;    
@@ -138,24 +148,55 @@
         self.latitudeInput.text = [NSString stringWithFormat:@"%f", self.gis.coordinate.latitude];
         self.longitudeInput.text = [NSString stringWithFormat:@"%f", self.gis.coordinate.longitude];
     }
+    
+    if (license_) {
+        licenseCell_.textLabel.text = license_.name;
+    } else {
+        licenseCell_.textLabel.text = TRANSLATE(@"media_upload_no_license_text");
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    LTConnectionManager * cm = [LTConnectionManager sharedConnectionManager];
+    if (![cm isAuthenticated]) {
+        [self displayAuthenticationSheetAnimated:NO];
+    }
 }
 
 - (void)viewDidUnload
 {
+    [cellForIndexPath_ release];
+    cellForIndexPath_ = nil;
+    self.tableView = nil;
+    self.mediaSnapshotView = nil;
+    self.media = nil;
+    self.titleCell = nil;
+    self.textCell = nil;
+    self.licenseCell = nil;
+    self.latitudeCell = nil;
+    self.longitudeCell = nil;
+    self.publishCell = nil;
+    self.titleInput = nil;
+    self.textInput = nil;
+    self.publishSwitch = nil;
+    self.latitudeInput = nil;
+    self.longitudeInput = nil;
+    self.shareButton = nil;
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 #pragma mark - IBActions
 
 - (IBAction)shareButtonPressed:(id)sender {
-    [self displayLoaderViewWithDetermination:YES whileExecuting:@selector(uploadMedia:)]; 
+    [self uploadMedia:sender]; 
 }
 
 - (IBAction)uploadMedia:(id)sender {
-    //NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:[id_media intValue]],[NSNumber numberWithDouble:[UIScreen mainScreen].bounds.size.width ], nil] forKeys:[NSArray arrayWithObjects:@"id_media", @"document_largeur", nil]];
-    //NSLog(@"%f",kScreenScale*MEDIA_MAX_WIDHT);
+    
+    [self dismissKeyboard];
+    [self displayLoaderViewWithDetermination];
     UIImage * imageToUpload;
     if (media_.size.width > MEDIA_MAX_WIDHT) {
         CGFloat imageHeight = (MEDIA_MAX_WIDHT/media_.size.width)*media_.size.height;
@@ -171,24 +212,96 @@
    
 	NSData *imageData = [NSData dataWithData:UIImageJPEGRepresentation(imageToUpload, 1.0f)];//1.0f = 100% quality
 
-    NSDictionary *document = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects: @"000000000000000000000.jpg", @"image/jpeg", imageData, nil] forKeys:[NSArray arrayWithObjects:@"name", @"type", @"bits", nil]];    NSDictionary *gis = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects: self.latitudeInput.text, self.longitudeInput.text, nil] forKeys:[NSArray arrayWithObjects:@"lat", @"lon",nil]];
-    NSMutableDictionary *info = [NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:document, gis,  nil] forKeys:[NSArray arrayWithObjects: @"document",@"gis", nil]];
+    
+    NSMutableDictionary *info = [NSMutableDictionary dictionary];
     // Title
-    if (self.titleInput.text != @"") {
+    if (![self.titleInput.text isEqualToString:@""]
+        && self.titleInput.text != nil) {
         [info setValue:self.titleInput.text forKey:@"titre"];
+    } else {
+        [info setValue:TRANSLATE(@"media_upload_no_title") forKey:@"titre"];
     }
     // Test
-    if (self.textInput.text != @"") {
-        [info setValue:self.textInput.text forKey:@"texte"];
+    if (self.textInput.text 
+        && self.textInput.text != nil) {
+        [info setValue:[NSString stringWithFormat:@"%@\n\n%@",self.textInput.text,kUploadMediaTextSignature] forKey:@"texte"];
+    } else {
+        [info setValue:[NSString stringWithFormat:@"%@",kUploadMediaTextSignature] forKey:@"texte"];
     }
+    
     // Publish
     if (self.publishSwitch.on) {
         [info setValue:@"publie" forKey:@"statut"];
+    } else {
+        [info setValue:@"prepa" forKey:@"statut"];
     }
+    
+    // License
+    if (license_) {
+        [info setValue:[NSString stringWithFormat:@"%@",[license_.identifier stringValue]] forKey:@"id_licence"];
+    }
+    
+    // Media
+    NSDictionary *document = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects: [NSString stringWithFormat:@"%@.jpg",[info objectForKey:@"title"]], @"image/jpeg", imageData, nil] forKeys:[NSArray arrayWithObjects:@"name", @"type", @"bits", nil]];
+    [info setValue:document forKey:@"document"];
+    
+    // Media location (GIS)
+    NSDictionary *gis = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects: self.latitudeInput.text, self.longitudeInput.text, nil] forKeys:[NSArray arrayWithObjects:@"lat", @"lon",nil]];
+    [info setValue:gis forKey:@"gis"];
+    
+    
     LTConnectionManager* connectionManager = [LTConnectionManager sharedConnectionManager];
     connectionManager.progressDelegate = self;
-    [connectionManager addMediaWithInformations:[NSDictionary dictionaryWithDictionary:info]];
-    [self.navigationController popViewControllerAnimated:YES];
+    [connectionManager addMediaAsynchWithInformations:info delegate:self];
+}
+
+- (void)displayAuthenticationSheetAnimated:(BOOL)animated {
+    AuthenticationSheetViewController * authenticationSheetViewController = [[AuthenticationSheetViewController alloc] initWithNibName:@"AuthenticationSheetViewController" bundle:nil];
+    authenticationSheetViewController.delegate = self;
+    UINavigationController * navigationController = [[UINavigationController alloc] initWithRootViewController:authenticationSheetViewController];
+    self.hidesBottomBarWhenPushed = NO;
+    [self.navigationController presentModalViewController:navigationController animated:animated];
+    [authenticationSheetViewController release];
+    [navigationController release];
+}
+
+#pragma mark - Tools
+
+- (NSIndexPath*)indexPathForInputView:(UIView*)view{
+    
+    if (view == titleInput_) {
+        return [NSIndexPath indexPathForRow:0 inSection:0];
+    } else if (view == textInput_) {
+        return [NSIndexPath indexPathForRow:0 inSection:1];
+    } else if (view == latitudeInput_) {
+        return [NSIndexPath indexPathForRow:0 inSection:3];
+    } else if (view == longitudeInput_) {
+        return [NSIndexPath indexPathForRow:1 inSection:3];
+    } else if (view == publishSwitch_) {
+        return [NSIndexPath indexPathForRow:0 inSection:4];
+    }
+    
+    return nil;
+}
+
+- (UIResponder *)formFirstResponder {
+    
+    if ([titleInput_ isFirstResponder]) {
+        return titleInput_;
+    } else if ([textInput_ isFirstResponder]) {
+        return textInput_;
+    } else if ([latitudeInput_ isFirstResponder]) {
+        return latitudeInput_;
+    } else if ([longitudeInput_ isFirstResponder]) {
+        return longitudeInput_;
+    } else if ([publishSwitch_ isFirstResponder]) {
+        return publishSwitch_;
+    }
+    return nil;
+}
+
+- (void)dismissKeyboard {
+    [[self formFirstResponder] resignFirstResponder];
 }
 
 #pragma mark - Table view data source
@@ -219,6 +332,16 @@
     return (UITableViewCell*)[cellForIndexPath_ objectForKey:indexPath];
 }
 
+#pragma mark UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([[tableView cellForRowAtIndexPath:indexPath] isEqual:licenseCell_]) {
+        MediaLicenseChooserViewController * mediaChooserVC = [[MediaLicenseChooserViewController alloc] init];
+        mediaChooserVC.delegate = self;
+        mediaChooserVC.currentLicense = license_;
+        [self.navigationController pushViewController:mediaChooserVC animated:YES];
+    }
+}
 
 #pragma mark - UIImagePickerControllerDelegate
 
@@ -270,7 +393,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     }];
 }
 
-#pragma mark - UIImageTextViewdDelegate
+#pragma mark - UITextViewdDelegate
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     
@@ -279,6 +402,43 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         return NO;
     }
     return YES;
+}
+
+- (void)didDismissAuthenticationSheet {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - MediaLicenseChooserDelegate
+
+- (void)didChooseLicense:(License *)license {
+    [license release];
+    if (license) {
+        license_ = [license retain];
+        licenseCell_.textLabel.text = license.name;
+    } else {
+        license = nil;
+        licenseCell_.textLabel.text = TRANSLATE(@"media_upload_no_license_text");
+    }
+    
+}
+
+#pragma mark - LTConnextionManagerDelegate
+
+- (void)didSuccessfullyUploadMedia:(Media *)media {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"media_upload_view_title") message:TRANSLATE(@"alert_upload_succeded") delegate:nil cancelButtonTitle:TRANSLATE(@"common_OK") otherButtonTitles:nil];
+    [alert show];
+    [alert release];
+    [self hideLoader];
+    [self.navigationController popViewControllerAnimated:YES];
+
+}
+
+- (void)didFailWithError:(NSError *)error {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"media_upload_view_title") message:TRANSLATE(@"alert_upload_failed") delegate:nil cancelButtonTitle:TRANSLATE(@"common_OK") otherButtonTitles:nil];
+    [alert show];
+    [alert release];
+    [self hideLoader];
+    //[self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

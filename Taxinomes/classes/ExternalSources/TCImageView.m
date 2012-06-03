@@ -53,8 +53,6 @@
 - (void)loadImage
 {
 	//NSLog(@"TCImage loadImage; delegate retain");
-    
-	[self.delegate retain];
     if (self.caching){
         NSFileManager *fileManager = [NSFileManager defaultManager];
         if ([fileManager fileExistsAtPath:[[TCImageView cacheDirectoryAddress] stringByAppendingPathComponent:[self cachedImageSystemName]]])
@@ -84,17 +82,12 @@
 				
                 if ([self.delegate respondsToSelector:@selector(TCImageView:FinisehdImage:)]) {
                     [self.delegate TCImageView:self FinisehdImage:localImage];
-                } 
-                
-				//NSLog(@"TCImage loadImage; delegate release");
-                
-				[_delegate release];
+                }
                 
                 return;
             }
         }
     }
-    [_delegate release];
     // Loads image from network if no "return;" is triggered (no cache file found)
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[self.url stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]  ] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30.0];
     
@@ -110,8 +103,6 @@
         
         [_data release], _data = nil;
         [_connection release], _connection = nil;
-        
-        [_delegate release];
         
     }
 }
@@ -146,8 +137,6 @@
     [_data release], _data = nil;
     [_connection cancel];
 	[_connection release], _connection = nil;
-    
-    [_delegate release];
     
 }
 
@@ -211,8 +200,6 @@
     
     
 	//NSLog(@"TCImage connectionDidFinishLoading; delegate release");
-    
-	[_delegate release];
 }
 
 
@@ -265,6 +252,7 @@
 {
     [_placeholder release];
     [_url release];
+    [_delegate release];
     [super dealloc];
     
 }

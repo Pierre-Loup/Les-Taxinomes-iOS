@@ -8,12 +8,12 @@
 
 /*
  
- This program is free software: you can redistribute it and/or modify
+ Les Taxinomes iPhone is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
  
- This program is distributed in the hope that it will be useful,
+ Les Taxinomes iPhone is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
@@ -25,41 +25,29 @@
 
 #import <UIKit/UIKit.h>
 #import "LTConnectionManager.h"
+#import "AuthenticationSheetViewController.h"
 #import "LTPhotoPickerViewController.h"
 #import "Author.h"
+#import "TCImageView.h"
 
-@interface AccountViewController : LTPhotoPickerViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, LTConnectionManagerDelegate> {
+@interface AccountViewController : LTPhotoPickerViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, AuthenticationSheetViewControllerDelegate, LTConnectionManagerAuthDelegate> {
+    Author * authenticatedUser_;
+    
+    UIBarButtonItem * rightBarButton_;
     UITableView *_tableView;
-    UIImageView *_avatarView;
-    UILabel *_nameLabel;
-    UIView *_signinSubview;
-    UIView *_loadingSubview;
-    UITextField *_userTextField;
-    UITextField *_passwordTextField;  
+    UIImageView * defaultAvatarView_;
+    TCImageView * avatarView_;
+    UILabel * userNameLabel_;
+    
     NSArray *_accountMenuLabels;
 }
 
-@property (retain, nonatomic) IBOutlet UITableView *tableView;
-@property (retain, nonatomic) IBOutlet UIImageView *avatarView;
-@property (retain, nonatomic) IBOutlet UILabel *nameLabel;
-@property (retain, nonatomic) IBOutlet UIView *signinSubview;
-@property (retain, nonatomic) IBOutlet UIView *loadingSubview;
-@property (retain, nonatomic) IBOutlet UITextField *userTextField;
-@property (retain, nonatomic) IBOutlet UITextField *passwordTextField; 
-@property (retain, nonatomic) NSArray *accountMenuLabels;
+@property (retain, nonatomic) IBOutlet UITableView * tableView;
+@property (retain, nonatomic) IBOutlet UIImageView * defaultAvatarView;
+@property (retain, nonatomic) IBOutlet UILabel * userNameLabel;
+@property (retain, nonatomic) NSArray * accountMenuLabels;
 
-
-- (IBAction)forgotenPasswordButtonAction:(id)sender;
-- (IBAction)submitSigninButtonAction:(id)sender;
-- (IBAction)signupButtonAction:(id)sender;
-- (IBAction)presentSigninSubview:(id)sender;
-- (IBAction)dismissSigninSubview:(id)sender;
-- (IBAction)presentLoadingSubview:(id)sender;
-- (IBAction)dismissLoadingSubview:(id)sender;
-- (IBAction)dismissKeyboardSubview:(id)sender;
-
-- (void) setLoadingSubviewHidden:(BOOL)hidden animated:(BOOL)animated;
-- (void) setSigninSubviewHidden:(BOOL)hidden animated:(BOOL)animated;
-- (void) setViewComponentsHidden:(BOOL)hidden;
+- (void)displayAuthenticationSheetAnimated:(BOOL)animated;
+- (IBAction)logoutButtonPressed:(id)sender;
 
 @end

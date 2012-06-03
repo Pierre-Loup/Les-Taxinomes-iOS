@@ -8,12 +8,12 @@
 
 /*
  
- This program is free software: you can redistribute it and/or modify
+ Les Taxinomes iPhone is free software: you can redistribusigninSubviewte it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
  
- This program is distributed in the hope that it will be useful,
+ Les Taxinomes iPhone is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
@@ -26,21 +26,23 @@
 #import "AccountViewController.h"
 #import "MediaUploadFormViewController.h"
 
+@interface AccountViewController (Private)
+- (void)switchToAuthenticatedMode:(BOOL)animated;
+- (void)switchToUnauthenticatedMode:(BOOL)animated;
+@end
+
 @implementation AccountViewController
 @synthesize tableView = _tableView;
-@synthesize avatarView = _avatarView;
-@synthesize nameLabel = _nameLabel;
-@synthesize signinSubview = _signinSubview;
-@synthesize loadingSubview = _loadingSubview;
-@synthesize userTextField = _userTextField;
-@synthesize passwordTextField = _passwordTextField;
+@synthesize defaultAvatarView = defaultAvatarView_;
+@synthesize userNameLabel = userNameLabel_;
 @synthesize accountMenuLabels = _accountMenuLabels;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        rightBarButton_ = nil;
+        authenticatedUser_ = nil;
     }
     return self;
 }
@@ -54,8 +56,9 @@
 }
 
 - (void) dealloc {
-    self.signinSubview = nil;
-    self.loadingSubview = nil;
+    [rightBarButton_ release];
+    self.accountMenuLabels = nil;
+    [avatarView_ release];
     [super dealloc];
 }
 
@@ -64,41 +67,39 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // Setup sign in subview, not visible because out of the screen (bottom)
-    [[NSBundle mainBundle] loadNibNamed:@"SigninSubview" owner:self options:nil];
-    CGRect frame = self.signinSubview.frame;	
-    frame.origin.y = frame.size.height;
-	self.signinSubview.frame = frame;
-    [self.view addSubview: self.signinSubview];
-    
-    // Setup loading subview, not visible because out of the screen (top)
-    [[NSBundle mainBundle] loadNibNamed:@"LoadingSubview" owner:self options:nil];
-    frame = self.loadingSubview.frame;
-	frame.origin.y = -frame.size.height;
-	self.loadingSubview.frame = frame;
-    [self.view addSubview: self.loadingSubview];
-    
     self.accountMenuLabels = [NSArray arrayWithObjects:@"Publier un média", @"Média publiés", nil];
+    [self.view setHidden:YES];
     
+    NSString * userAvatarURL = @"";
+    LTConnectionManager * cm = [LTConnectionManager sharedConnectionManager];
+    if ([cm isAuthenticated]) {
+        userAvatarURL = authenticatedUser_.avatarURL;;
+    }
+    
+    avatarView_ = [[TCImageView alloc] initWithURL:userAvatarURL placeholderView:nil];
+    avatarView_.frame = defaultAvatarView_.frame;
+    [self.view addSubview:avatarView_];
 }
 
-- (void) viewWillAppear:(BOOL)animated {
-    LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
-    if(connectionManager.authStatus != AUTHENTICATED){
-        [self setViewComponentsHidden:YES];
-        [self setSigninSubviewHidden:NO animated:YES];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    LTConnectionManager * cm = [LTConnectionManager sharedConnectionManager];
+    if ([cm isAuthenticated]) {
+        [self switchToAuthenticatedMode:NO];
+    } else {
+        [self switchToUnauthenticatedMode:NO];
     }
 }
 
+
 - (void) viewWillDisappear:(BOOL)animated {
-    [self dismissSigninSubview:self];
-    [self setLoadingSubviewHidden:YES animated:animated];
     [self.view becomeFirstResponder];
 }
 
 - (void)viewDidUnload
 {
+    [authenticatedUser_ release];
+    authenticatedUser_ = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -113,83 +114,18 @@
 
 #pragma mark - IBAction
 
-- (IBAction)forgotenPasswordButtonAction:(id) sender{
-    NSLog(@"%@",@"forgotenPasswordButtonAction");
-}
-
-- (IBAction)submitSigninButtonAction:(id) sender{
-    NSLog(@"%@",@"submitSigninButtonAction");
-    [self setSigninSubviewHidden:YES animated:NO];
-    [self setLoadingSubviewHidden:NO animated:NO];
-    [self performSelectorInBackground:@selector(submitAuthentication:) withObject:self];
-}
-
-- (IBAction)signupButtonAction:(id)sender {
-    NSString *url = [NSString stringWithString:@"http://taxinomes.arscenic.org/spip.php?page=inscription"];
-	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
-}
-
-- (IBAction)presentSigninSubview:(id)sender {    
-    [self setSigninSubviewHidden:NO animated:YES];
-}
-
-- (IBAction)dismissSigninSubview:(id)sender {    
-    [self setSigninSubviewHidden:YES animated:YES];
-}
-
-- (IBAction)presentLoadingSubview:(id)sender {    
-    [self setLoadingSubviewHidden:NO animated:YES];
-}
-
-- (IBAction)dismissLoadingSubview:(id)sender {    
-    [self setLoadingSubviewHidden:YES animated:YES];
+- (void)displayAuthenticationSheetAnimated:(BOOL)animated {
+    AuthenticationSheetViewController * authenticationSheetViewController = [[AuthenticationSheetViewController alloc] initWithNibName:@"AuthenticationSheetViewController" bundle:nil];
+    authenticationSheetViewController.delegate = self;
+    UINavigationController * navigationController = [[UINavigationController alloc] initWithRootViewController:authenticationSheetViewController];
+    authenticationSheetViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentModalViewController:navigationController animated:animated];
+    [authenticationSheetViewController release];
+    [navigationController release];
 }
 
 - (IBAction)dismissKeyboardSubview:(id)sender {    
     [sender becomeFirstResponder];
-}
-
-- (void)submitAuthentication:(id)sender {
-    LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
-    connectionManager.authDelegate = self;
-    //[connectionManager authWithLogin:@"pierre" password:@"crLu2Vzi"];
-    [connectionManager authWithLogin:self.userTextField.text password:self.passwordTextField.text];
-}
-
-#pragma mark - Table view components management
-
-- (void) setLoadingSubviewHidden:(BOOL) hidden animated:(BOOL) animated {
-    CGRect frame = self.loadingSubview.frame;
-    frame.size.height = self.view.frame.size.height;
-    frame.origin.y = hidden?self.view.frame.size.height:self.view.frame.origin.y;
-    
-    if(animated) {
-        [UIView animateWithDuration:0.5 animations:^{
-            self.loadingSubview.frame = frame;
-        }];
-    } else {
-        self.loadingSubview.frame = frame;
-    }
-}
-
-- (void) setSigninSubviewHidden:(BOOL) hidden animated:(BOOL) animated {
-    CGRect frame = self.signinSubview.frame;
-    frame.size.height = self.view.frame.size.height;
-    frame.origin.y = hidden?self.view.frame.size.height:self.view.frame.origin.y;
-    
-    if(animated) {
-        [UIView animateWithDuration:0.5 animations:^{
-            self.signinSubview.frame = frame;
-        }];
-    } else {
-        self.signinSubview.frame = frame;
-    }
-}
-
-- (void) setViewComponentsHidden:(BOOL)hidden {
-    self.avatarView.hidden = hidden;
-    self.tableView.hidden = hidden;
-    self.nameLabel.hidden = hidden;
 }
 
 #pragma mark - Table view data source
@@ -197,7 +133,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -207,7 +143,7 @@
     if(section == 0)
         return [self.accountMenuLabels count];
     else
-        return 1;
+        return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -223,9 +159,6 @@
     if ([indexPath section] == 0) {
         cell.textLabel.text = [self.accountMenuLabels objectAtIndex:[indexPath row]];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    } else {
-        cell.textLabel.text = @"Se déconnecter";
-        cell.textLabel.textAlignment = UITextAlignmentCenter;
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -236,53 +169,67 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if ([indexPath row] == 0 && [indexPath section] == 0) {
-        MediaUploadFormViewController *mediaUploadFormViewController = [[MediaUploadFormViewController alloc] initWithNibName:@"MediaUploadFormView" bundle:nil];
-        //mediaUploadFormViewController.media = [UIImage imageNamed:@"Icon.png"];
+        MediaUploadFormViewController * mediaUploadFormViewController = [[MediaUploadFormViewController alloc] initWithNibName:@"MediaUploadFormViewController" bundle:nil];
         [self.navigationController pushViewController:mediaUploadFormViewController animated:YES];
         [mediaUploadFormViewController release];
-    } else if ([indexPath row] == 0 && [indexPath section] == 1) {
-        LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
-        connectionManager.authStatus = UNAUTHENTICATED;
-        [self setViewComponentsHidden:YES];
-        [self setSigninSubviewHidden:NO animated:YES];
     }
-}
-
-#pragma mark - Text field delegate
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (textField == self.userTextField) {
-        [self.passwordTextField becomeFirstResponder];
-    } else if (textField == self.passwordTextField) {
-        [self.passwordTextField resignFirstResponder];
-    }
-    return YES;
 }
 
 #pragma mark - MediaManagerDelegate
 
-- (void)didFinishTakingPicture{
+- (void)didFinishTakingPicture {
     [self dismissModalViewControllerAnimated:YES];
 }
 
-#pragma mark - LTConnectionManagerDelegate
+#pragma mark - Action
 
-- (void)didAuthenticate {
+- (IBAction)logoutButtonPressed:(id)sender {
     LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
-    Author *author = connectionManager.author;
-    //self.avatarView.image = author.avatar;
-    self.nameLabel.text = author.name;
-    [self setViewComponentsHidden:NO];
-    [self setLoadingSubviewHidden:YES animated:YES];
+    [connectionManager unAuthenticate];
+    [self switchToUnauthenticatedMode:YES];
 }
 
-- (void)didFailToAuthenticate:(NSString *)message {
-    [self setLoadingSubviewHidden:YES animated:NO];
-    UIAlertView *alert =[[UIAlertView alloc] initWithTitle:@"Echec de l'authentification" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
-    [alert release];
-    [self setSigninSubviewHidden:NO animated:NO];
+- (IBAction)signInButtonPressed:(id)sender {
+    LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
+    [connectionManager unAuthenticate];
+    [self switchToUnauthenticatedMode:YES];
+}
 
+- (void)switchToAuthenticatedMode:(BOOL)animated {
+    if (authenticatedUser_) {
+        self.userNameLabel.text = authenticatedUser_.name;
+        [avatarView_ reloadWithUrl:authenticatedUser_.avatarURL];
+    }
+    [self.view setHidden:NO];
+    [rightBarButton_ release];
+    rightBarButton_ = nil;
+    rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common_logout") style:UIBarButtonItemStylePlain target:self action:@selector(logoutButtonPressed:)];
+    [self.navigationItem setRightBarButtonItem:rightBarButton_ animated:YES];
+    
+    [self dismissModalViewControllerAnimated:animated];
+}
+
+- (void)switchToUnauthenticatedMode:(BOOL)animated {
+    [self displayAuthenticationSheetAnimated:animated];
+    [rightBarButton_ release];
+    rightBarButton_ = nil;
+    rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common_signin") style:UIBarButtonItemStylePlain target:self action:@selector(signInButtonPressed:)];
+    [self.navigationItem setRightBarButtonItem:rightBarButton_ animated:YES];
+    [self.view setHidden:YES];
+}
+
+#pragma mark - LTConnectionManagerAuthDelegate
+
+- (void)didAuthenticateWithAuthor:(Author *)author {
+    [authenticatedUser_ release];
+    authenticatedUser_ = [author retain];
+    self.userNameLabel.text = authenticatedUser_.name;
+    [avatarView_ reloadWithUrl:authenticatedUser_.avatarURL];
+    [self switchToAuthenticatedMode:YES];
+}
+
+- (void)didFailToAuthenticateWithError:(NSError *)error {
+    [self switchToUnauthenticatedMode:YES];
 }
 
 @end

@@ -8,12 +8,12 @@
 
 /*
  
- This program is free software: you can redistribute it and/or modify
+ Les Taxinomes iPhone is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
  
- This program is distributed in the hope that it will be useful,
+ Les Taxinomes iPhone is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
@@ -28,30 +28,25 @@
 #import "Author.h"
 #import "Media.h"
 
-@protocol LTDataManagerDelegate <NSObject>
-@optional
-- (void)mediaRetrieved:(Media *)media;
-- (void)authorRetrieved:(Author *)author;
-@end
-
-@interface LTDataManager : NSObject <LTDataManagerDelegate> {
-    NSManagedObjectContext *mainManagedObjectContext_;
-    NSManagedObjectModel *managedObjectModel_;
-    NSPersistentStoreCoordinator *persistentStoreCoordinator_;
+@interface LTDataManager : NSObject <LTConnectionManagerDelegate> {
+    NSManagedObjectContext * mainManagedObjectContext_;
+    NSManagedObjectModel * managedObjectModel_;
+    NSPersistentStoreCoordinator * persistentStoreCoordinator_;
     
-    id<LTDataManagerDelegate> delegate_;
+    id<LTConnectionManagerDelegate> delegate_;
+    NSInteger synchLimit_;
 }
 
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, retain, readonly) NSManagedObjectContext *mainManagedObjectContext;
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-
-@property (nonatomic, readonly) NSString *applicationDocumentsDirectory;
+@property (nonatomic, assign) NSInteger synchLimit;
+@property (nonatomic, readonly) NSString * applicationDocumentsDirectory;
 
 - (Author *)getAuthorWithId:(NSNumber *)authorIdentifier;
-- (BOOL)getAuthorAsychIfNeededWithId:(NSNumber *)authorIdentifier withDelegate:(id<LTDataManagerDelegate>)delegate;
+- (BOOL)getAuthorAsychIfNeededWithId:(NSNumber *)authorIdentifier withDelegate:(id<LTConnectionManagerDelegate>)delegate;
 - (Media *)getMediaWithId:(NSNumber *)mediaIdentifier;
-- (BOOL)getMediaAsychIfNeededWithId:(NSNumber *)mediaIdentifier withDelegate:(id<LTDataManagerDelegate>)delegate;
+- (BOOL)getMediaAsychIfNeededWithId:(NSNumber *)mediaIdentifier withDelegate:(id<LTConnectionManagerDelegate>)delegate;
 + (LTDataManager *)sharedDataManager;
 - (IBAction)saveAction:sender;
 

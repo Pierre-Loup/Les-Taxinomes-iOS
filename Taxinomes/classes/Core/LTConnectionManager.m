@@ -8,12 +8,12 @@
 
 /*
  
- This program is free software: you can redistribute it and/or modify
+ Les Taxinomes iPhone is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
  
- This program is distributed in the hope that it will be useful,
+ Les Taxinomes iPhone is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
@@ -23,6 +23,7 @@
  
  */
 
+#import <SystemConfiguration/SystemConfiguration.h>
 #import "LTConnectionManager.h"
 #import "XMLRPCResponse.h"
 #import "Constants.h"
@@ -34,22 +35,22 @@
 static LTConnectionManager *instance = nil;
 
 @implementation LTConnectionManager
-@synthesize error = _error;
-@synthesize author= _author;
+@synthesize authenticatedUser = authenticatedUser_;
 @synthesize progressDelegate = progressDelegate_;
 @synthesize authDelegate = authDelegate_;
 @synthesize authStatus;
 
 - (void)dealloc {
 	[instance release];
-    [authDelegate_ release];
+    self.authenticatedUser = nil;
+    self.authDelegate = nil;
+    self.progressDelegate = nil;
 	[super dealloc];
 }
 
 + (LTConnectionManager *)sharedConnectionManager {
 	if(instance == nil) {
 		instance = [[LTConnectionManager alloc] init];
-        instance.author = UNAUTHENTICATED;
 	}
 	
 	return instance;
@@ -57,12 +58,52 @@ static LTConnectionManager *instance = nil;
 
 - (id)init {
 	if (self = [super init]) {
-        
+        self.authStatus = UNAUTHENTICATED;
 	}
 	return self;
 }
 
-- (NSArray *)getShortMediasByDateWithLimit: (NSInteger) limit startingAtRecord: (NSInteger) start{
+- (void)getShortMediasAsychByDateWithLimit:(NSInteger)limit startingAtRecord:(NSInteger)start delegate:(id<LTConnectionManagerDelegate>)delegate{
+    
+    if(limit == 0 || limit > kDefaultLimit)
+        limit = kDefaultLimit;
+    
+    XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
+    NSArray *requestedFields = [NSArray arrayWithObjects:@"id_media", @"titre", @"date", @"vignette", @"auteurs", nil];
+    NSArray *argsKeys = [NSArray arrayWithObjects:@"limite", @"champs_demandes", @"tri", @"vignette_format", @"vignette_largeur", @"vignette_hauteur", nil];
+    
+    NSNumber *thumbnailWidth = [NSNumber numberWithDouble:(THUMBNAIL_MAX_WIDHT)];
+    NSNumber *thumbnailHeight = [NSNumber numberWithDouble:(THUMBNAIL_MAX_HEIGHT)];
+    NSArray *argsObjects = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d,%d", start, limit], requestedFields, [NSArray arrayWithObject:@"date DESC"], @"carre", thumbnailWidth, thumbnailHeight, nil];
+    NSDictionary *args = [NSDictionary dictionaryWithObjects:argsObjects forKeys:argsKeys];
+    [xmlrpcRequest setMethod:@"geodiv.liste_medias" withObject:args];
+    
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    
+    dispatch_async(queue, ^{
+        id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [xmlrpcRequest release];
+            if([result isKindOfClass:[NSArray  class]]) {
+                NSMutableArray *medias = [NSMutableArray arrayWithCapacity:limit];
+                for(NSDictionary *media in result){
+                    [medias addObject:[Media mediaWithXMLRPCResponse:media]];
+                }
+                [delegate didRetrievedShortMedias:medias];
+            } else if ([result isKindOfClass:[NSError class]]){
+                [delegate didFailWithError:result];
+            } else {
+                NSString * localizedErrorString = [NSString stringWithFormat:@"%@ Failed retrieving Medias",kLTConnectionManagerInternalError];
+                NSDictionary * userInfo = [NSDictionary dictionaryWithObject:localizedErrorString forKey:NSLocalizedDescriptionKey];
+                NSError * error = [NSError errorWithDomain:kLTConnectionManagerInternalError code:0 userInfo:userInfo];
+                [delegate didFailWithError:error];
+            }
+        });
+    });
+}
+
+- (NSArray *)getShortMediasByDateWithLimit: (NSInteger) limit startingAtRecord: (NSInteger) start {
     
     NSMutableArray *medias = [[[NSMutableArray alloc] initWithCapacity:limit] autorelease];
     
@@ -76,20 +117,13 @@ static LTConnectionManager *instance = nil;
     NSNumber *thumbnailWidth = [NSNumber numberWithDouble:(THUMBNAIL_MAX_WIDHT)];
     NSNumber *thumbnailHeight = [NSNumber numberWithDouble:(THUMBNAIL_MAX_HEIGHT)];
     NSArray *argsObjects = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d,%d", start, limit], requestedFields, [NSArray arrayWithObject:@"date DESC"], @"carre", thumbnailWidth, thumbnailHeight, nil];
-    //NSArray *argsKeys = [NSArray arrayWithObjects:@"limite", nil];
-    //NSArray *argsObjects = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d,%d", start, limit], nil];
     NSDictionary *args = [NSDictionary dictionaryWithObjects:argsObjects forKeys:argsKeys];
     [xmlrpcRequest setMethod:@"geodiv.liste_medias" withObject:args];
     id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
     [xmlrpcRequest release];
     
     if([result isKindOfClass:[NSError class]]){
-        //NSLog(@"failed");
         return [NSMutableArray array];
-    }
-    
-    for(NSDictionary *media in result){
-        [medias addObject:[Media mediaWithXMLRPCResponse:media]];
     }
     
     return medias;
@@ -112,7 +146,7 @@ static LTConnectionManager *instance = nil;
     return [Media mediaWithXMLRPCResponse:result];
 }
 
-- (void)getMediaAsynchWithId:(NSNumber *)mediaIdentifier delegate:(id)delegate {
+- (void)getMediaAsynchWithId:(NSNumber *)mediaIdentifier delegate:(id<LTConnectionManagerDelegate>)delegate {
     if (!mediaIdentifier) {
         return;
     }
@@ -127,8 +161,16 @@ static LTConnectionManager *instance = nil;
         
         dispatch_sync(dispatch_get_main_queue(), ^{
             [xmlrpcRequest release];
-            if([result isKindOfClass:[NSDictionary class]])
-                [delegate mediaRetrieved:[Media mediaWithXMLRPCResponse:result]];
+            if([result isKindOfClass:[NSDictionary class]]) {
+                [delegate didRetrievedMedia:[Media mediaWithXMLRPCResponse:result]];
+            } else if ([result isKindOfClass:[NSError class]]){
+                [delegate didFailWithError:result];
+            } else {
+                NSString * localizedErrorString = [NSString stringWithFormat:@"%@ Failed retrieving Media with id: %d",kLTConnectionManagerInternalError, [mediaIdentifier intValue]];
+                NSDictionary * userInfo = [NSDictionary dictionaryWithObject:localizedErrorString forKey:NSLocalizedDescriptionKey];
+                NSError * error = [NSError errorWithDomain:kLTConnectionManagerInternalError code:0 userInfo:userInfo];
+                [delegate didFailWithError:error];
+            }
         });
     });
 }
@@ -150,7 +192,7 @@ static LTConnectionManager *instance = nil;
     }
 }
 
-- (void)getAuthorAsynchWithId:(NSNumber *)authorIdentifier delegate:(id)delegate {
+- (void)getAuthorAsynchWithId:(NSNumber *)authorIdentifier delegate:(id<LTConnectionManagerDelegate>)delegate {
     if (!authorIdentifier) {
         return;
     }
@@ -165,8 +207,16 @@ static LTConnectionManager *instance = nil;
         
         dispatch_sync(dispatch_get_main_queue(), ^{
             [xmlrpcRequest release];
-            if([result isKindOfClass:[NSDictionary class]])
-                [delegate authorRetrieved:[Author authorWithXMLRPCResponse:result]];
+            if([result isKindOfClass:[NSDictionary class]]) {
+                [delegate didRetrievedAuthor:[Author authorWithXMLRPCResponse:result]];
+            } else if ([result isKindOfClass:[NSError class]]){
+                [delegate didFailWithError:result];
+            } else {
+                NSString * localizedErrorString = [NSString stringWithFormat:@"%@ Failed retrieving Author with id: %d",kLTConnectionManagerInternalError, [authorIdentifier intValue]];
+                NSDictionary * userInfo = [NSDictionary dictionaryWithObject:localizedErrorString forKey:NSLocalizedDescriptionKey];
+                NSError * error = [NSError errorWithDomain:kLTConnectionManagerInternalError code:0 userInfo:userInfo];
+                [delegate didFailWithError:error];
+            }
         });
     });
 }
@@ -188,7 +238,7 @@ static LTConnectionManager *instance = nil;
                     [licenses addObject:license];
                 }
             }
-                
+            
         }
         return [licenses autorelease];
     } else {
@@ -197,52 +247,94 @@ static LTConnectionManager *instance = nil;
 }
 
 /*
-- (void)getSectionWithIdentifier:(NSNumber*)identifier {
-    XMLRPCRequest* xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
-    NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:identifier, nil] forKeys:[NSArray arrayWithObjects:@"id_rubrique", nil]];
-    [xmlrpcRequest setMethod:@"spip.lire_rubrique" withObject:args];
-    id response = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
-    [xmlrpcRequest release];
-    if ( [response isKindOfClass: [NSDictionary class]]) {
-        NSDictionary* responseDict = (NSDictionary*)response;
-        NSMutableArray* licenses = [[NSMutableArray alloc] initWithCapacity:[responseDict count]];
-        for(NSString *key in response){
-            if ([[responseDict objectForKey:key] isKindOfClass:[NSDictionary class]]) {
-                NSDictionary *xmlLicenseDict = [responseDict objectForKey:key];
-                License* license = nil;
-                license = [License licenseWithXMLRPCResponse:xmlLicenseDict];
-                if (license != nil) {
-                    [licenses addObject:license];
-                }
-            }
-            
-        }
-        return [licenses autorelease];
-    } else {
-        return nil;
-    }
-    
-}
-//*/
+ - (void)getSectionWithIdentifier:(NSNumber*)identifier {
+ XMLRPCRequest* xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
+ NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:identifier, nil] forKeys:[NSArray arrayWithObjects:@"id_rubrique", nil]];
+ [xmlrpcRequest setMethod:@"spip.lire_rubrique" withObject:args];
+ id response = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
+ [xmlrpcRequest release];
+ if ( [response isKindOfClass: [NSDictionary class]]) {
+ NSDictionary* responseDict = (NSDictionary*)response;
+ NSMutableArray* licenses = [[NSMutableArray alloc] initWithCapacity:[responseDict count]];
+ for(NSString *key in response){
+ if ([[responseDict objectForKey:key] isKindOfClass:[NSDictionary class]]) {
+ NSDictionary *xmlLicenseDict = [responseDict objectForKey:key];
+ License* license = nil;
+ license = [License licenseWithXMLRPCResponse:xmlLicenseDict];
+ if (license != nil) {
+ [licenses addObject:license];
+ }
+ }
+ 
+ }
+ return [licenses autorelease];
+ } else {
+ return nil;
+ }
+ 
+ }
+ //*/
 
-- (void)authWithLogin:(NSString *) login password:(NSString *) password{
+- (void)authAsynchWithLogin:(NSString *)login password:(NSString *)password delegate:(id<LTConnectionManagerAuthDelegate>)delegate{
     self.authStatus = AUTH_PENDING;
     XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
     NSDictionary *args = [NSArray arrayWithObjects:login, password, nil];
     [xmlrpcRequest setMethod:@"spip.auth" withObject:args];
-    id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:YES];
-    [xmlrpcRequest release];
     
-    if([result isKindOfClass:[NSDictionary class]]){
-        self.authStatus = AUTHENTICATED;
-        self.author = [Author authorWithXMLRPCResponse:result];
-        [authDelegate_ didAuthenticate];
-    } else {
-        self.authStatus = AUTH_FAILED;
-        //TODO: LOCAL ERROR LABELS
-        [authDelegate_ didFailToAuthenticate:@"Login ou mot de passe éronné"];
+    
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    
+    dispatch_async(queue, ^{
+        id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:YES];
+        
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [xmlrpcRequest release];
+            if([result isKindOfClass:[NSDictionary class]]){
+                self.authStatus = AUTHENTICATED;
+                self.authenticatedUser = [Author authorWithXMLRPCResponse:result];
+                [authDelegate_ didAuthenticateWithAuthor:self.authenticatedUser];
+            } else {
+                self.authStatus = AUTH_FAILED;
+                //TODO: LOCAL ERROR LABELS
+                if ([result isKindOfClass:[NSError class]]) {
+                    NSError * error = (NSError *)result;
+                    [authDelegate_ didFailToAuthenticateWithError:error];
+                } else {
+                    NSError * error = [NSError errorWithDomain:kLTAuthenticationFailedError code:0 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:TRANSLATE(@"error_auth_failed"), NSLocalizedDescriptionKey, nil]];
+                    [authDelegate_ didFailToAuthenticateWithError:error];
+                }
+            }
+        });
+    });
+}
 
+- (BOOL)isAuthenticated {
+    BOOL returnValue = NO;
+    if (authenticatedUser_ == nil) {
+        return returnValue;
     }
+    
+    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[[NSURL URLWithString:kHTTPHost] absoluteURL]];
+    for (NSHTTPCookie * cookie in cookies) {
+        if([cookie.name isEqualToString:kSessionCookieName]
+           && cookie.value != nil
+           && ![cookie.value isEqualToString:@""]
+           && [cookie.expiresDate timeIntervalSinceNow] > 0.0) {
+            returnValue = YES;
+        }
+    }
+    return returnValue;
+}
+
+- (void)unAuthenticate {
+    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[[NSURL URLWithString:kHTTPHost] absoluteURL]];
+    for (NSHTTPCookie * cookie in cookies) {
+        if([cookie.name isEqualToString:kSessionCookieName]) {
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
+        }
+    }
+    self.authenticatedUser = nil;
 }
 
 - (void)addMediaWithInformations: (NSDictionary *)info {
@@ -252,24 +344,61 @@ static LTConnectionManager *instance = nil;
     [xmlrpcRequest release];
 }
 
+- (void)addMediaAsynchWithInformations: (NSDictionary *)info delegate:(id<LTConnectionManagerDelegate>)delegate {
+    XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
+    [xmlrpcRequest setMethod:@"geodiv.creer_media" withObject:info];
+    
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    
+    dispatch_async(queue, ^{
+        id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:YES];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [xmlrpcRequest release];
+            if([result isKindOfClass:[NSDictionary class]]) {
+                if ([result objectForKey:@"faultString"] 
+                    && [result objectForKey:@"faultCode"]) {
+                    if ([delegate respondsToSelector:@selector(didFailWithError:)]) {
+                        [delegate didFailWithError:result];
+                    }
+                } else {
+                    if ([delegate respondsToSelector:@selector(didSuccessfullyUploadMedia:)]) {
+                        [delegate didSuccessfullyUploadMedia:[Media mediaWithXMLRPCResponse:result]];
+                    }
+                }
+            } else if ([result isKindOfClass:[NSError class]]){
+                if ([delegate respondsToSelector:@selector(didFailWithError:)]) {
+                    [delegate didFailWithError:result];
+                }
+            } else {
+                if ([delegate respondsToSelector:@selector(didFailWithError:)]) {
+                    [delegate didFailWithError:nil];
+                }
+            }
+        });
+    });
+}
+
 - (id)executeXMLRPCRequest:(XMLRPCRequest *)req  authenticated:(BOOL)auth{
     
 	ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:[req host]];
     request.uploadProgressDelegate = progressDelegate_;
-    request.downloadProgressDelegate = progressDelegate_;
     [request setUseCookiePersistence:auth];
 	[request setRequestMethod:@"POST"];
 	[request setTimeOutSeconds:30];
+    [request appendPostData:[[req source] dataUsingEncoding:NSUTF8StringEncoding]];
+#if DEBUG
     //NSLog(@"executeXMLRPCRequest host: %@",[req host]);
     //NSLog(@"executeXMLRPCRequest request: %@",[req source]);
-    [request appendPostData:[[req source] dataUsingEncoding:NSUTF8StringEncoding]];
+#endif  
 	[request startSynchronous];
-	
+	request.uploadProgressDelegate = nil;
 	//generic error
 	NSError *err = [request error];
     if (err) {
         //TODO ERROR
-        //NSLog(@"executeXMLRPCRequest error: %@", err);
+#if DEBUG
+        NSLog(@"executeXMLRPCRequest error: %@", err);
+#endif
 		[request release];
         return err;
     }
@@ -277,13 +406,15 @@ static LTConnectionManager *instance = nil;
     
     int statusCode = [request responseStatusCode];
     if (statusCode >= 404) {
-         NSDictionary *usrInfo = [NSDictionary dictionaryWithObjectsAndKeys:[request responseStatusMessage], NSLocalizedDescriptionKey, nil];
-        self.error = [NSError errorWithDomain:@"org.taxinomes.iphone.http_connection_error" code:statusCode userInfo:usrInfo];
+        NSDictionary *usrInfo = [NSDictionary dictionaryWithObjectsAndKeys:[request responseStatusMessage], NSLocalizedDescriptionKey, nil];
+        NSError * error = [NSError errorWithDomain:kNetworkRequestErrorDomain code:statusCode userInfo:usrInfo];
         [request release];
-        return self.error;
+        return error;
     }
     
-	NSLog(@"executeXMLRPCRequest response: %@", [request responseString]);	
+#if DEBUG
+	NSLog(@"executeXMLRPCRequest response: %@", [request responseString]);
+#endif
 	XMLRPCResponse *userInfoResponse = [[[XMLRPCResponse alloc] initWithData:[request responseData]] autorelease];
     if([userInfoResponse isKindOfClass:[NSError class]]){
         [request release];

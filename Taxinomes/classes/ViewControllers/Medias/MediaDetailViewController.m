@@ -8,12 +8,12 @@
 
 /*
  
- This program is free software: you can redistribute it and/or modify
+ Les Taxinomes iPhone is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
  
- This program is distributed in the hope that it will be useful,
+ Les Taxinomes iPhone is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
@@ -71,6 +71,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    asynchLoadCounter_ = 0;
     self.title = @"Média";
     [self.scrollView setHidden:YES];
     self.scrollView.backgroundColor = [UIColor clearColor];
@@ -116,6 +117,7 @@
     
     descTextView_ = [[UITextView alloc] init];
     descTextView_.editable = NO;
+    [descTextView_ setDataDetectorTypes:UIDataDetectorTypeAll];
     [self.scrollView addSubview:descTextView_];
     
     mapTitleView_ = [[LTTitleView titleViewWithOrigin:CGPointMake(5, 5)] retain];
@@ -137,24 +139,19 @@
     [self.scrollView setHidden:YES];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self displayLoader];
-    [self refreshView];
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     LTDataManager *dm = [LTDataManager sharedDataManager];
     self.media = [Media mediaWithIdentifier: 
                   self.mediaIdentifier];
-    BOOL isLoadingMedia = [dm getMediaAsychIfNeededWithId:self.mediaIdentifier withDelegate:self];
-    BOOL isLoadingAuthor =  [dm getAuthorAsychIfNeededWithId:self.media.author.identifier withDelegate:self];
-    if(!isLoadingMedia
-       && !isLoadingAuthor) {
-        self.media = [dm getMediaWithId:self.mediaIdentifier];
-        [self refreshView];
+    if([dm getMediaAsychIfNeededWithId:self.mediaIdentifier withDelegate:self])
+        asynchLoadCounter_ = asynchLoadCounter_ + 1;
+    if([dm getAuthorAsychIfNeededWithId:self.media.author.identifier withDelegate:self])
+        asynchLoadCounter_ = asynchLoadCounter_ + 1;
+    if (asynchLoadCounter_ > 0) {
+        [self displayLoader];
     }
+    [self refreshView];
 }
 
 - (void)refreshView {
@@ -172,6 +169,7 @@
     NSString * mediaImageUrl = media_.mediaMediumURL?media_.mediaMediumURL:@"";
     if (![mediaImageView_.url isEqualToString:mediaImageUrl]
         && ![mediaImageUrl isEqualToString:@""]) {
+        asynchLoadCounter_ = asynchLoadCounter_ + 1;
         [mediaImageView_ reloadWithUrl:mediaImageUrl];
     }
     
@@ -186,6 +184,7 @@
     NSString * authorAvatarUrl = media_.author.avatarURL?media_.author.avatarURL:@"";
     if (![authorAvatarView_.url isEqualToString:authorAvatarUrl]
         && ![authorAvatarUrl isEqualToString:@""]) {
+        asynchLoadCounter_ = asynchLoadCounter_ + 1;
         [authorAvatarView_ reloadWithUrl:authorAvatarUrl];
     }
     authorAvatarView_.frame = CGRectMake(5.0, 80.0+imageHeight, 50.0, 50.0);
@@ -242,10 +241,18 @@
 
 - (void)mediaImageTouched:(UIImage *)sender {
     /*
-     MediaFullSizeViewContoller *mediaFullSizeViewController = [[MediaFullSizeViewContoller alloc] initWithNibName:@"MediaFullSizeView" bundle:nil mediaURL:self.media.mediaLargeURL];
+     MediaFullSizeViewContoller *mediaFullSizeViewController = [[MediaFullSizeViewContoller alloc] initWithNibName:@"MediaFullSizeViewController" bundle:nil mediaURL:self.media.mediaLargeURL];
      [self.navigationController pushViewController:mediaFullSizeViewController animated:YES];
      [mediaFullSizeViewController release];
      */
+}
+
+- (void)displayContentIfNeeded {
+    [self refreshView];
+    if (asynchLoadCounter_ <= 0) {
+        [self hideLoader];
+        [self.scrollView setHidden:NO];
+    }
 }
 
 - (void)mapTouched:(MKMapView *)sender {
@@ -255,29 +262,33 @@
 #pragma mark - View lifecycle
 
 - (void)TCImageView:(TCImageView *) view FinisehdImage:(UIImage *)image {
-    [self refreshView];
-    [self.scrollView setHidden:NO];
-    if ([view.url isEqualToString:media_.mediaMediumURL]) {
-        [self hideLoaderView];
-        [self.scrollView setHidden:NO];
-    }
+    asynchLoadCounter_ = asynchLoadCounter_ - 1;
+    [self displayContentIfNeeded];
 }
 
 -(void) TCImageView:(TCImageView *) view failedWithError:(NSError *)error {
-    [self refreshView];
-    [self hideLoaderView];
-    [self.scrollView setHidden:NO];
+    asynchLoadCounter_ = asynchLoadCounter_ - 1;
+    [self displayContentIfNeeded];
 }
 
-#pragma mark - LTDataManagerDelegate
+#pragma mark - LTConnectionManagerDelegate
 
-- (void)mediaRetrieved:(Media *)media {
-    self.media = media;
-    [self refreshView];
+- (void)didRetrievedMedia:(Media *)media {
+    asynchLoadCounter_ = asynchLoadCounter_ - 1;
+    [self displayContentIfNeeded];
 }
 
-- (void)authorRetrieved:(Author *)author {
-    [self refreshView];
+- (void)didRetrievedAuthor:(Author *)author {
+    asynchLoadCounter_ = asynchLoadCounter_ - 1;
+    [self displayContentIfNeeded];
+}
+
+- (void)didFailWithError:(NSError *)error {
+#if TAXINOMES_DEV
+    NSLog(@"%@",error.localizedDescription);
+#endif
+    asynchLoadCounter_ = asynchLoadCounter_ - 1;
+    [self displayContentIfNeeded];
 }
 
 @end

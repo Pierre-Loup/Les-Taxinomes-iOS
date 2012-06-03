@@ -6,6 +6,23 @@
 //  Copyright (c) 2012 Les petits débrouillards Bretagne. All rights reserved.
 //
 
+/*
+ 
+ Les Taxinomes iPhone is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ Les Taxinomes iPhone is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>
+ 
+ */
+
 #define kLoadingLabel @"Chargement"
 
 #import "LTViewController.h"
@@ -15,27 +32,25 @@
 
 #pragma mark - Loader
 
-- (void) displayLoaderViewWithDetermination:(BOOL)determinate whileExecuting:(SEL)myTask {
+- (void) displayLoaderViewWithDetermination{
     if (loaderView_ != nil) {
         [loaderView_ removeFromSuperview];
         [loaderView_ release];
     }
     
-    loaderView_ = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
+    loaderView_ = [[MBProgressHUD alloc] initWithWindow:self.view.window];
     
 	// Add HUD to screen
-	[[[UIApplication sharedApplication] keyWindow] addSubview:loaderView_];
+	[self.view.window addSubview:loaderView_];
     
 	// Register for HUD callbacks so we can remove it from the window at the right time
 	loaderView_.delegate = self;
 	loaderView_.labelText = kLoadingLabel;
     
-    if (determinate) {
-        loaderView_.mode = MBProgressHUDModeDeterminate;
-    }
+    loaderView_.mode = MBProgressHUDModeDeterminate;
     
 	// Show the HUD while the provided method executes in a new thread
-	[loaderView_ showWhileExecuting:myTask onTarget:self withObject:nil animated:YES];
+	[loaderView_ show:YES];
 }
 
 - (void) displayLoader {
@@ -44,10 +59,10 @@
         [loaderView_ release];
     }
     
-    loaderView_ = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
+    loaderView_ = [[MBProgressHUD alloc] initWithView:self.view];
     
 	// Add HUD to screen
-	[[[UIApplication sharedApplication] keyWindow] addSubview:loaderView_];
+	[self.view addSubview:loaderView_];
     
 	// Register for HUD callbacks so we can remove it from the window at the right time
 	loaderView_.delegate = self;
@@ -58,18 +73,22 @@
 }
 
 
-- (void) hideLoaderView {
+- (void) hideLoader {
     // Remove HUD from screen when the HUD was hidden
-	[loaderView_ removeFromSuperview];
-	[loaderView_ release];
-    loaderView_ = nil;
+    if(loaderView_) {
+        [loaderView_ removeFromSuperview];
+        [loaderView_ release];
+        loaderView_ = nil;
+    }
 }
 
 - (void)hudWasHidden {
 	// Remove HUD from screen when the HUD was hidden
-	[loaderView_ removeFromSuperview];
-	[loaderView_ release];
-    loaderView_ = nil;
+    if (loaderView_) {
+        [loaderView_ removeFromSuperview];
+        [loaderView_ release];
+        loaderView_ = nil;
+    }
 }
 
 #pragma mark - View lifecycle
@@ -84,8 +103,10 @@
 }
 
 - (void)viewDidLoad {
-    loaderView_ = nil;
     [super viewDidLoad];
+    loaderView_ = nil;
+    
+    [self.navigationController.navigationBar setTintColor:kStandardGreenColor];
     /*
      UIImageView *backgroundView = [[UIImageView alloc] initWithFrame:self.view.frame];
      backgroundView.image = [UIImage imageNamed:@"fond.png"];
@@ -121,17 +142,19 @@
 }
 
 - (void)dealloc {
-    [super dealloc];
     // Remove HUD from screen when the HUD was hidden
 	[loaderView_ removeFromSuperview];
 	[loaderView_ release];
     loaderView_ = nil;
+    [super dealloc];
 }
 
 #pragma mark - ASIProgressDelegate
 
 - (void)setProgress:(float)newProgress {
+#if DEBUG
     NSLog(@"%f",newProgress);
+#endif
     loaderView_.progress = newProgress;
 }
 
