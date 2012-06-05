@@ -19,6 +19,13 @@
 "alert_upload_failed" = "Le partage du média a échoué. Réésayez plus tard";
 "alert_upload_succeded" = "Le média a bien été partagé.";
 
+/* HOME */
+"home.welcom_text" = "Bienvenue sur les Taxinomes !\n\nVous êtes curieux de nature ?\n\nVous allez pouvoir partager votre goût pour la nature !\n\nGrâce au site \"Les Taxinomes\", vous participez à l’inventaire de la biodiversité.";
+
+/* ACCOUNT */
+"account_uploas_media" = "Publier un média";
+"account_my_medias" = "Mes médias";
+
 /* MEDIA UPLOAD FORM */
 "media_upload_view_title" = "Partager";
 "media_upload_no_title" = "Sans titre";

@@ -24,16 +24,19 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "Media.h"
+#import "LTViewController.h"
+#import "TCImageView.h"
+#import "LTConnectionManager.h"
+#import "TCImageView.h"
 
-@interface MediaFullSizeViewContoller : UIViewController <UIScrollViewDelegate>{
-    UIScrollView* _scrollView;
-    UIImageView *_mediaView;
+@interface MediaFullSizeViewContoller : LTViewController <UIScrollViewDelegate, LTConnectionManagerDelegate, TCImageViewDelegate>{
+    UIScrollView * scrollView_;
+    TCImageView * mediaView_;
+    Media * media_;
 }
 
-@property(retain,nonatomic) IBOutlet UIScrollView* scrollView;
-@property(retain,nonatomic) UIActivityIndicatorView* spinner;
-@property(retain,nonatomic) UIImageView *mediaView;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil mediaURL:(NSString *)mediaURL ;
+@property(retain,nonatomic) IBOutlet UIScrollView * scrollView;
+@property(retain,nonatomic) Media * media;
 
 @end

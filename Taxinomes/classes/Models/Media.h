@@ -48,13 +48,15 @@
 @property (nonatomic, retain) NSDate * updateDate;
 @property (nonatomic, retain) NSNumber * visits;
 @property (nonatomic, retain) NSNumber * sychGapForDateSorting;
-@property (nonatomic, retain) Author *author;
-@property (nonatomic, retain) License *license;
-@property (nonatomic, retain) Section *section;
+@property (nonatomic, retain) Author * author;
+@property (nonatomic, retain) License * license;
+@property (nonatomic, retain) Section * section;
 
 + (Media *)mediaWithXMLRPCResponse: (NSDictionary *) response;
++ (Media *)mediaLargeURLWithXMLRPCResponse:(NSDictionary *)response;
 + (Media *)mediaWithIdentifier: (NSNumber *)identifier;
 + (NSArray *)allMedias;
 + (NSArray *)allSynchMedias;
++ (NSArray *)allSynchMediasForAuthor:(Author *)author;
 
 @end

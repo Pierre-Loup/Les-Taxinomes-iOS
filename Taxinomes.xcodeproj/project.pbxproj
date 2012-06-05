@@ -17,6 +17,7 @@
 		37D2E7FC144709EE0044EC3A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7E1144709ED0044EC3A /* CoreGraphics.framework */; };
 		37D2E806144709EE0044EC3A /* TaxinomesTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 37D2E805144709EE0044EC3A /* TaxinomesTests.h */; };
 		37D2E808144709EE0044EC3A /* TaxinomesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 37D2E807144709EE0044EC3A /* TaxinomesTests.m */; };
+		A502F333157D63D5001EDE44 /* JesayaFree.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A502F332157D63D5001EDE44 /* JesayaFree.ttf */; };
 		A50D5D0A1572164900BF9DF0 /* MediaLicenseChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A50D5D081572164900BF9DF0 /* MediaLicenseChooserViewController.m */; };
 		A50D5D0B1572164900BF9DF0 /* MediaLicenseChooserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A50D5D091572164900BF9DF0 /* MediaLicenseChooserViewController.xib */; };
 		A539D1EE154AF6B60048CDF1 /* bg_titre_left.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1DE154AF6B60048CDF1 /* bg_titre_left.png */; };
@@ -166,6 +167,7 @@
 		37D2E801144709EE0044EC3A /* TaxinomesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TaxinomesTests-Info.plist"; sourceTree = "<group>"; };
 		37D2E805144709EE0044EC3A /* TaxinomesTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaxinomesTests.h; sourceTree = "<group>"; };
 		37D2E807144709EE0044EC3A /* TaxinomesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaxinomesTests.m; sourceTree = "<group>"; };
+		A502F332157D63D5001EDE44 /* JesayaFree.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = JesayaFree.ttf; path = Ressources/JesayaFree.ttf; sourceTree = "<group>"; };
 		A50D5D071572164900BF9DF0 /* MediaLicenseChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaLicenseChooserViewController.h; sourceTree = "<group>"; };
 		A50D5D081572164900BF9DF0 /* MediaLicenseChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaLicenseChooserViewController.m; sourceTree = "<group>"; };
 		A50D5D091572164900BF9DF0 /* MediaLicenseChooserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaLicenseChooserViewController.xib; sourceTree = "<group>"; };
@@ -745,6 +747,7 @@
 		C87C67D9147440B500A055F1 /* Ressources */ = {
 			isa = PBXGroup;
 			children = (
+				A502F332157D63D5001EDE44 /* JesayaFree.ttf */,
 				A59F1B8E15778F1200F3B6A9 /* oiseau.aif */,
 				A5CA5F2C154E82BB00C3EB2E /* Localizable.strings */,
 				C87C67DA147440B500A055F1 /* Images */,
@@ -955,6 +958,7 @@
 				A59CEAA315507FB800754A8E /* default_avatar_medium@2x.png in Resources */,
 				A50D5D0B1572164900BF9DF0 /* MediaLicenseChooserViewController.xib in Resources */,
 				A59F1B90157790A500F3B6A9 /* oiseau.aif in Resources */,
+				A502F333157D63D5001EDE44 /* JesayaFree.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

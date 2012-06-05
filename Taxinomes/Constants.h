@@ -53,7 +53,7 @@
 #define kMediaEntityMediaLargeLocalFileField @"mediaLargeLocalFile"
 #define kMediaEntityLocalUpdateDateField @"localUpdateDate"
 #define kMediaEntityLicenseField @"license"
-#define kMediaEntityAuthorsField @"authors"
+#define kMediaEntityAuthorsField @"author"
 #define kMediaEntitySectionField @"section"
 //MediaEntity
 #define kSectionEntityIdentifierField @"identifiant"
@@ -70,7 +70,8 @@
 // Sizes
 #define THUMBNAIL_MAX_HEIGHT 100.0
 #define THUMBNAIL_MAX_WIDHT 100.0
-#define MEDIA_MAX_WIDHT 620.0
+#define MEDIA_MAX_WIDHT 512.0
+#define MEDIA_MAX_WIDHT_LARGE 1024.0
 
 // Texts
 #define kHelloWorld @"Hello, World"

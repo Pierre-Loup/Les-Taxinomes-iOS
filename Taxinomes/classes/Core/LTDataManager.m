@@ -75,6 +75,7 @@ static LTDataManager *instance = nil;
     [delegate autorelease];
     
     if(author == nil
+       || author.avatarURL == nil
        || ([[NSDate date] timeIntervalSinceDate:author.localUpdateDate] > kMediaCacheTime)){
         
         [connectionManager getAuthorAsynchWithId:authorIdentifier delegate:delegate];

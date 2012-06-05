@@ -29,6 +29,7 @@
 
 
 @implementation HomeViewController
+@synthesize welcomLabel = welcomLabel_;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -52,6 +53,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //welcomLabel_ = [[UILabel alloc] initWithFrame:self.view.frame];
+    [welcomLabel_ setNumberOfLines:0];
+    [welcomLabel_ setLineBreakMode:UILineBreakModeTailTruncation];
+    [welcomLabel_ setContentMode:UIViewContentModeCenter];
+    [welcomLabel_ setTextAlignment:UITextAlignmentCenter];
+    [welcomLabel_ setFont:[UIFont fontWithName:@"Jesaya Free" size:17.0]];
+    welcomLabel_.text = TRANSLATE(@"home.welcom_text");
+    //[self.view addSubview:welcomLabel_];
+    
     UIButton* infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
     [infoButton addTarget:self action:@selector(infoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
@@ -59,9 +70,16 @@
     [leftButton release];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    //[welcomLabel_ setFont:[UIFont fontWithName:@"jesaya_free" size:17.0]];
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    [welcomLabel_ release];
+    welcomLabel_ = nil;
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }

@@ -26,17 +26,13 @@
 #import "MediaFullSizeViewContoller.h"
 
 @implementation MediaFullSizeViewContoller
-@synthesize scrollView = _scrollView;
-@synthesize spinner = _spinner;
-@synthesize mediaView = _mediaView;
+@synthesize scrollView = scrollView_;
+@synthesize media = media_;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil mediaURL:(NSString *)mediaURL {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        UIImageView *mediaView = [[UIImageView alloc] initWithFrame:self.view.frame];
-        mediaView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:mediaURL]]];
-        self.mediaView = mediaView;
-        [mediaView release];
+        
     }
     return self;
 }
@@ -51,61 +47,38 @@
 
 #pragma mark - View lifecycle
 
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView
-{
-}
-*/
-
-
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
+    [self displayLoader];
+    
+    self.title = media_.title;
+    
+    mediaView_ = [[TCImageView alloc] initWithURL:@"" placeholderView:nil];
+    mediaView_.delegate = self;
+    [scrollView_ addSubview:mediaView_];
+    
+    LTConnectionManager * connectionManager = [LTConnectionManager sharedConnectionManager];
+    [connectionManager getMediaLargeURLAsynchWithId:media_.identifier delegate:self];
 }
 
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
+    [mediaView_ release];
+    mediaView_ = nil;
+    [scrollView_ release];
+    scrollView_ = nil;
+    
+    self.media = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
 
--(void)viewDidAppear:(BOOL)animated{
+- (void)viewDidAppear:(BOOL)animated{
+    /*
     
-    double maxWidth = self.view.frame.size.width;
-    double maxHeight = self.view.frame.size.height;
-    double mediaWidth;
-    double mediaHeight;
-    
-    if((self.mediaView.image.size.height/self.mediaView.image.size.width) > (maxHeight/maxWidth) ){
-        mediaWidth = maxWidth;
-        mediaHeight = (maxWidth/self.mediaView.image.size.width)*self.mediaView.image.size.height;
-        self.scrollView.maximumZoomScale = (self.mediaView.image.size.width/maxWidth)*2;
-    } else {
-        mediaHeight = maxHeight;
-        mediaWidth = (maxHeight/self.mediaView.image.size.height)*self.mediaView.image.size.width;
-        self.scrollView.maximumZoomScale = (self.mediaView.image.size.height/maxHeight)*2;
-    }
-    
-    
-    self.mediaView.frame = CGRectMake(self.mediaView.frame.origin.x, self.mediaView.frame.origin.y, mediaWidth, mediaHeight);
-    
-    self.navigationController.tabBarItem.title = @"Media";
-    self.scrollView.delegate = self;
-    
-    CGRect frame = CGRectMake(0, 0, maxWidth, maxHeight*2);
-    self.scrollView.contentSize = frame.size;
-    
-    [self.scrollView addSubview:self.mediaView];
-    self.scrollView.maximumZoomScale = 5.0;
-    self.scrollView.minimumZoomScale = 1.0;
-    self.scrollView.bouncesZoom = NO;
-    
-    self.scrollView.contentSize = self.mediaView.frame.size;    
-    [self.spinner stopAnimating];
+    */
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -117,7 +90,60 @@
 #pragma mark - UIScrollViewDelegate
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
-    return self.mediaView;
+    return mediaView_;
+}
+
+#pragma mark - LTConnectionManagerDelegate
+
+- (void)didRetrievedMedia:(Media *)media {
+    [mediaView_ reloadWithUrl:media.mediaLargeURL];
+}
+
+- (void)didFailWithError:(NSError *)error {
+#if TAXINOMES_DEV
+    NSLog(@"%@",error.localizedDescription);
+#endif
+    [self hideLoader];
+}
+
+#pragma mark - TCImageViewDelegate
+
+- (void)TCImageView:(TCImageView *) view FinisehdImage:(UIImage *)image {
+    double maxWidth = self.view.frame.size.width;
+    double maxHeight = self.view.frame.size.height;
+    double mediaWidth;
+    double mediaHeight;
+    
+    if((mediaView_.image.size.height/mediaView_.image.size.width) > (maxHeight/maxWidth) ){
+        mediaWidth = maxWidth;
+        mediaHeight = (maxWidth/mediaView_.image.size.width)*mediaView_.image.size.height;
+        self.scrollView.maximumZoomScale = (mediaView_.image.size.width/maxWidth)*5;
+    } else {
+        mediaHeight = maxHeight;
+        mediaWidth = (maxHeight/mediaView_.image.size.height)*mediaView_.image.size.width;
+        self.scrollView.maximumZoomScale = (mediaView_.image.size.height/maxHeight)*5;
+    }
+    
+    
+    mediaView_.frame = CGRectMake(mediaView_.frame.origin.x, mediaView_.frame.origin.y, mediaWidth, mediaHeight);
+    
+    self.navigationController.tabBarItem.title = @"Media";
+    self.scrollView.delegate = self;
+    
+    CGRect frame = CGRectMake(0, 0, maxWidth, maxHeight*2);
+    self.scrollView.contentSize = frame.size;
+    
+    [self.scrollView addSubview:mediaView_];
+    self.scrollView.maximumZoomScale = 5.0;
+    self.scrollView.minimumZoomScale = 1.0;
+    self.scrollView.bouncesZoom = NO;
+    
+    self.scrollView.contentSize = mediaView_.frame.size;
+    [self hideLoader];
+}
+
+-(void) TCImageView:(TCImageView *) view failedWithError:(NSError *)error {
+    [self hideLoader];
 }
 
 @end

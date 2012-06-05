@@ -25,6 +25,7 @@
 
 #import "AccountViewController.h"
 #import "MediaUploadFormViewController.h"
+#import "MediasListViewController.h"
 
 @interface AccountViewController (Private)
 - (void)switchToAuthenticatedMode:(BOOL)animated;
@@ -64,16 +65,15 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    self.accountMenuLabels = [NSArray arrayWithObjects:@"Publier un média", @"Média publiés", nil];
+    self.accountMenuLabels = [NSArray arrayWithObjects:TRANSLATE(@"account_uploas_media"), TRANSLATE(@"account_my_medias"), nil];
     [self.view setHidden:YES];
     
     NSString * userAvatarURL = @"";
     LTConnectionManager * cm = [LTConnectionManager sharedConnectionManager];
     if ([cm isAuthenticated]) {
-        userAvatarURL = authenticatedUser_.avatarURL;;
+        userAvatarURL = authenticatedUser_.avatarURL;
     }
     
     avatarView_ = [[TCImageView alloc] initWithURL:userAvatarURL placeholderView:nil];
@@ -166,12 +166,19 @@
     return cell;
 }
 
+#pragma mark UITableViewDelegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if ([indexPath row] == 0 && [indexPath section] == 0) {
+    if (indexPath.row == 0 && indexPath.section == 0) {
         MediaUploadFormViewController * mediaUploadFormViewController = [[MediaUploadFormViewController alloc] initWithNibName:@"MediaUploadFormViewController" bundle:nil];
         [self.navigationController pushViewController:mediaUploadFormViewController animated:YES];
         [mediaUploadFormViewController release];
+    } else if (indexPath.row == 1 && indexPath.section == 0) {
+        MediasListViewController * mediasListViewController = [[MediasListViewController alloc] initWithNibName:@"MediasListViewController" bundle:nil];
+        mediasListViewController.currentUser = authenticatedUser_;
+        [self.navigationController pushViewController:mediasListViewController animated:YES];
+        [mediasListViewController release];
     }
 }
 

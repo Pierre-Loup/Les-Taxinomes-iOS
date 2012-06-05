@@ -65,10 +65,11 @@ typedef enum {
 
 + (LTConnectionManager *)sharedConnectionManager;
 
-- (void)getShortMediasAsychByDateWithLimit:(NSInteger)limit startingAtRecord:(NSInteger)start delegate:(id<LTConnectionManagerDelegate>)delegate;
+- (void)getShortMediasAsychByDateForAuthor:(Author *)author withLimit:(NSInteger)limit startingAtRecord:(NSInteger)start delegate:(id<LTConnectionManagerDelegate>)delegate;
 - (NSArray *)getShortMediasByDateWithLimit:(NSInteger)limit startingAtRecord:(NSInteger)start;
 - (Media *)getMediaWithId:(NSNumber *)mediaIdentifier;
 - (void)getMediaAsynchWithId:(NSNumber *)mediaIdentifier delegate:(id<LTConnectionManagerDelegate>)delegate;
+- (void)getMediaLargeURLAsynchWithId:(NSNumber *)mediaIdentifier delegate:(id<LTConnectionManagerDelegate>)delegate;
 - (Author *)getAuthorWithId:(NSNumber *)authorIdentifier;
 - (void)getAuthorAsynchWithId:(NSNumber *)authorIdentifier delegate:(id<LTConnectionManagerDelegate>)delegate;
 - (NSArray *)getLicenses;

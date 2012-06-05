@@ -26,8 +26,12 @@
 #import <UIKit/UIKit.h>
 #import "LTPhotoPickerViewController.h"
 
-@interface HomeViewController : LTPhotoPickerViewController
+@interface HomeViewController : LTPhotoPickerViewController {
+    UILabel * welcomLabel_;
+}
 
 - (IBAction)infoButtonAction:(id) sender;
+
+@property (nonatomic, retain) IBOutlet UILabel * welcomLabel;
 
 @end

@@ -240,11 +240,10 @@
 }
 
 - (void)mediaImageTouched:(UIImage *)sender {
-    /*
-     MediaFullSizeViewContoller *mediaFullSizeViewController = [[MediaFullSizeViewContoller alloc] initWithNibName:@"MediaFullSizeViewController" bundle:nil mediaURL:self.media.mediaLargeURL];
-     [self.navigationController pushViewController:mediaFullSizeViewController animated:YES];
-     [mediaFullSizeViewController release];
-     */
+    MediaFullSizeViewContoller * mediaFullSizeViewController = [[MediaFullSizeViewContoller alloc] initWithNibName:@"MediaFullSizeViewController" bundle:nil];
+    mediaFullSizeViewController.media = media_;
+    [self.navigationController pushViewController:mediaFullSizeViewController animated:YES];
+    [mediaFullSizeViewController release];
 }
 
 - (void)displayContentIfNeeded {
@@ -259,7 +258,7 @@
     NSLog(@"mapTouched:");
 }
 
-#pragma mark - View lifecycle
+#pragma mark - TCImageViewDelegate
 
 - (void)TCImageView:(TCImageView *) view FinisehdImage:(UIImage *)image {
     asynchLoadCounter_ = asynchLoadCounter_ - 1;

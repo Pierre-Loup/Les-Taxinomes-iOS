@@ -56,19 +56,6 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Taxinomes/Classes/Core/LTConnectionManager.m"
-         timestampString = "359928411.82152"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "169"
-         endingLineNumber = "169"
-         landmarkName = "-getMediaAsynchWithId:delegate:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
@@ -147,19 +134,6 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Taxinomes/Classes/ViewControllers/Account/AccountViewController.m"
-         timestampString = "359933873.46999"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "232"
-         endingLineNumber = "232"
-         landmarkName = "-didFailToAuthenticateWithError:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
@@ -176,26 +150,26 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Taxinomes/Classes/Core/LTDataManager.m"
-         timestampString = "360446728.55444"
+         filePath = "Taxinomes/Classes/ViewControllers/Home/HomeViewController.m"
+         timestampString = "360539942.883243"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "80"
-         endingLineNumber = "80"
-         landmarkName = "-getAuthorAsychIfNeededWithId:withDelegate:"
+         startingLineNumber = "36"
+         endingLineNumber = "36"
+         landmarkName = "-initWithNibName:bundle:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Taxinomes/Classes/Core/LTConnectionManager.m"
-         timestampString = "360449186.891569"
+         filePath = "Taxinomes/Classes/Core/LTDataManager.m"
+         timestampString = "360626744.794493"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "358"
-         endingLineNumber = "358"
-         landmarkName = "-addMediaAsynchWithInformations:delegate:"
+         startingLineNumber = "77"
+         endingLineNumber = "77"
+         landmarkName = "-getAuthorAsychIfNeededWithId:withDelegate:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

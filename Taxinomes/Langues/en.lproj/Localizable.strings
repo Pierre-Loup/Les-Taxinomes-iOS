@@ -14,10 +14,17 @@
 /* ALERTS */
 "alert_auth_failed_title" = "Authentication failed";
 "alert_auth_failed_text" = "Checkout your login and your password";
-"alert_network_unreachable_title" = "Réseau indisponible";
-"alert_network_unreachable_text" = "Vérifiez que vous êtes connecté au wifi ou au réseau internet mobile";
-"alert_upload_failed" = "Media sharing failed. Pease retry later";
+"alert_network_unreachable_title" = "Network unreachable";
+"alert_network_unreachable_text" = "Checkout your wireless connection";
+"alert_upload_failed" = "Media sharing failed. Please retry later";
 "alert_upload_succeded" = "Media sharing succeded.";
+
+/* HOME */
+"home.welcom_text" = "Bienvenue sur les Taxinomes !\n\nVous êtes curieux de nature ?\n\nVous allez pouvoir partager votre goût pour la nature !\n\nGrâce au site \"Les Taxinomes\", vous participez à l’inventaire de la biodiversité.";
+
+/* ACCOUNT */
+"account_uploas_media" = "Upload a media";
+"account_my_medias" = "My medias";
 
 /* MEDIA UPLOAD FORM */
 "media_upload_view_title" = "Share";

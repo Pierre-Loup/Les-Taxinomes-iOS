@@ -63,15 +63,22 @@ static LTConnectionManager *instance = nil;
 	return self;
 }
 
-- (void)getShortMediasAsychByDateWithLimit:(NSInteger)limit startingAtRecord:(NSInteger)start delegate:(id<LTConnectionManagerDelegate>)delegate{
+- (void)getShortMediasAsychByDateForAuthor:(Author *)author 
+                                 withLimit:(NSInteger)limit 
+                          startingAtRecord:(NSInteger)start 
+                                  delegate:(id<LTConnectionManagerDelegate>)delegate{
     
     if(limit == 0 || limit > kDefaultLimit)
         limit = kDefaultLimit;
     
     XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
-    NSArray *requestedFields = [NSArray arrayWithObjects:@"id_media", @"titre", @"date", @"vignette", @"auteurs", nil];
+    NSArray *requestedFields = [NSArray arrayWithObjects:@"id_media", @"titre", @"date", @"statut", @"vignette", @"auteurs", nil];
     NSArray *argsKeys = [NSArray arrayWithObjects:@"limite", @"champs_demandes", @"tri", @"vignette_format", @"vignette_largeur", @"vignette_hauteur", nil];
     
+    BOOL authenticated = NO;
+    if (author) {
+        authenticated = YES;
+    }
     NSNumber *thumbnailWidth = [NSNumber numberWithDouble:(THUMBNAIL_MAX_WIDHT)];
     NSNumber *thumbnailHeight = [NSNumber numberWithDouble:(THUMBNAIL_MAX_HEIGHT)];
     NSArray *argsObjects = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d,%d", start, limit], requestedFields, [NSArray arrayWithObject:@"date DESC"], @"carre", thumbnailWidth, thumbnailHeight, nil];
@@ -81,14 +88,17 @@ static LTConnectionManager *instance = nil;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
     
     dispatch_async(queue, ^{
-        id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
+        id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:authenticated];
         
         dispatch_sync(dispatch_get_main_queue(), ^{
             [xmlrpcRequest release];
             if([result isKindOfClass:[NSArray  class]]) {
                 NSMutableArray *medias = [NSMutableArray arrayWithCapacity:limit];
-                for(NSDictionary *media in result){
-                    [medias addObject:[Media mediaWithXMLRPCResponse:media]];
+                for(NSDictionary *mediaXML in result){
+                    Media * mediaObject = [Media mediaWithXMLRPCResponse:mediaXML];
+                    if (mediaObject) {
+                        [medias addObject:mediaObject];
+                    }
                 }
                 [delegate didRetrievedShortMedias:medias];
             } else if ([result isKindOfClass:[NSError class]]){
@@ -96,7 +106,9 @@ static LTConnectionManager *instance = nil;
             } else {
                 NSString * localizedErrorString = [NSString stringWithFormat:@"%@ Failed retrieving Medias",kLTConnectionManagerInternalError];
                 NSDictionary * userInfo = [NSDictionary dictionaryWithObject:localizedErrorString forKey:NSLocalizedDescriptionKey];
-                NSError * error = [NSError errorWithDomain:kLTConnectionManagerInternalError code:0 userInfo:userInfo];
+                NSError * error = [NSError errorWithDomain:kLTConnectionManagerInternalError 
+                                                      code:0 
+                                                  userInfo:userInfo];
                 [delegate didFailWithError:error];
             }
         });
@@ -163,6 +175,38 @@ static LTConnectionManager *instance = nil;
             [xmlrpcRequest release];
             if([result isKindOfClass:[NSDictionary class]]) {
                 [delegate didRetrievedMedia:[Media mediaWithXMLRPCResponse:result]];
+            } else if ([result isKindOfClass:[NSError class]]){
+                [delegate didFailWithError:result];
+            } else {
+                NSString * localizedErrorString = [NSString stringWithFormat:@"%@ Failed retrieving Media with id: %d",kLTConnectionManagerInternalError, [mediaIdentifier intValue]];
+                NSDictionary * userInfo = [NSDictionary dictionaryWithObject:localizedErrorString forKey:NSLocalizedDescriptionKey];
+                NSError * error = [NSError errorWithDomain:kLTConnectionManagerInternalError code:0 userInfo:userInfo];
+                [delegate didFailWithError:error];
+            }
+        });
+    });
+}
+
+- (void)getMediaLargeURLAsynchWithId:(NSNumber *)mediaIdentifier delegate:(id<LTConnectionManagerDelegate>)delegate {
+    if (!mediaIdentifier) {
+        return;
+    }
+    XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
+    NSArray * values = [NSArray arrayWithObjects:mediaIdentifier, [NSArray arrayWithObjects:@"id_media", @"document", nil],nil];
+    NSArray * keys = [NSArray arrayWithObjects:@"id_article",@"champs_demandes", nil];
+    NSDictionary * args = [NSDictionary dictionaryWithObjects:values forKeys:keys];
+    
+    [xmlrpcRequest setMethod:@"geodiv.lire_media" withObject:args];
+    
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    
+    dispatch_async(queue, ^{
+        id result = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [xmlrpcRequest release];
+            if([result isKindOfClass:[NSDictionary class]]) {
+                [delegate didRetrievedMedia:[Media mediaLargeURLWithXMLRPCResponse:result]];
             } else if ([result isKindOfClass:[NSError class]]){
                 [delegate didFailWithError:result];
             } else {

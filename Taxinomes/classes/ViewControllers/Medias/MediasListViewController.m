@@ -30,14 +30,15 @@
 #import "Reachability.h"
 
 @implementation MediasListViewController
-@synthesize tableView, mediaForIndexPath, spinnerCell, loadingTopVew;
+@synthesize currentUser = currentUser_;
+@synthesize mediaForIndexPath = mediaForIndexPath_;
+@synthesize tableView = tableView_;
+@synthesize spinnerCell = spinnerCell_;
 @synthesize mediaTableViewCell = _mediaTableViewCell;
 @synthesize retryCell = _retryCell;
 
 - (void)dealloc {
-    [spinnerCell dealloc];
-    [mediaForIndexPath dealloc];
-    [tableView release];
+    [currentUser_ release];
     [super dealloc];
 }
 
@@ -45,7 +46,7 @@
 - (void)didReceiveMemoryWarning
 {
     [TCImageView resetGlobalCache];
-    [mediaForIndexPath removeAllObjects];
+    [mediaForIndexPath_ removeAllObjects];
     [self.tableView reloadData];
     
 }
@@ -56,6 +57,10 @@
 {
     [super viewDidLoad];
     
+    if (currentUser_) {
+        self.title = TRANSLATE(@"account_my_medias");
+    }
+    
     dataManager_ = [[LTDataManager sharedDataManager] retain];
     connectionManger_ = [[LTConnectionManager sharedConnectionManager] retain];
     
@@ -63,18 +68,27 @@
     [self.navigationItem setRightBarButtonItem:reloadBarButton_ animated:YES];
     [reloadBarButton_ release];
     
-    mediaLoadingStatus = PENDING;
+    mediaLoadingStatus_ = PENDING;
     self.mediaForIndexPath = [NSMutableDictionary dictionary];
     [self reloadDatas];
 }
 
 - (void)viewDidUnload
 {
-    [super viewDidUnload];
     [dataManager_ release];
     dataManager_ = nil;
     [connectionManger_ release];
     connectionManger_ = nil;
+    self.tableView = nil;
+    [reloadBarButton_ release];
+    reloadBarButton_ = nil;
+    [mediaTableViewCell_ release];
+    mediaTableViewCell_ = nil;
+    [spinnerCell_ release];
+    spinnerCell_ = nil;
+    [mediaForIndexPath_ release];
+    mediaForIndexPath_ = nil;
+    [super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -117,26 +131,29 @@
 {
     // Return the number of rows in the section.
     //NSLog(@"Rows : %d",[medias count]);
-    return ([mediaForIndexPath count]+1);
+    if (mediaLoadingStatus_ == NOMORETOLOAD) {
+        return [mediaForIndexPath_ count];
+    }
+    return ([mediaForIndexPath_ count]+1);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *medialListCellIdentifier = @"mediasListCell";
     
-    if([indexPath row] == ([mediaForIndexPath count])) {        
-        if ( mediaLoadingStatus == SUCCEED) {
+    if([indexPath row] == ([mediaForIndexPath_ count])) {        
+        if ( mediaLoadingStatus_ == SUCCEED) {
             [self performSelectorInBackground:@selector(loadSynchMedias:) withObject:nil];
-            mediaLoadingStatus = PENDING;
-            return spinnerCell;
-        } else if (mediaLoadingStatus == PENDING) {
-            return spinnerCell;
+            mediaLoadingStatus_ = PENDING;
+            return spinnerCell_;
+        } else if (mediaLoadingStatus_ == PENDING) {
+            return spinnerCell_;
         } else {
             return self.retryCell;
         }
     }
     
-    Media *media = [mediaForIndexPath objectForKey:indexPath];
+    Media *media = [mediaForIndexPath_ objectForKey:indexPath];
     UITableViewCell *cell = nil;
     
     cell = [aTableView dequeueReusableCellWithIdentifier:medialListCellIdentifier];
@@ -182,7 +199,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    Media *media = [[mediaForIndexPath objectForKey:indexPath] retain];
+    Media *media = [[mediaForIndexPath_ objectForKey:indexPath] retain];
     if(media != nil){
         MediaDetailViewController *mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailViewController" bundle:nil mediaId:media.identifier];
         [self.navigationController pushViewController:mediaDetailViewController animated:YES];
@@ -193,26 +210,32 @@
 }
 
 - (IBAction)loadSynchMedias:(id)sender {
-    [connectionManger_ getShortMediasAsychByDateWithLimit:kNbMediasStep startingAtRecord:dataManager_.synchLimit delegate:self];
+    [connectionManger_ getShortMediasAsychByDateForAuthor:currentUser_ withLimit:kNbMediasStep startingAtRecord:dataManager_.synchLimit delegate:self];
 }
 
 - (IBAction)refreshButtonAction:(id)sender {
+    mediaLoadingStatus_ = PENDING;
     reloadBarButton_.enabled = NO;
     [self displayLoader];
     dataManager_.synchLimit = 0;
-    [mediaForIndexPath removeAllObjects];
+    [mediaForIndexPath_ removeAllObjects];
     [self performSelectorInBackground:@selector(loadSynchMedias:) withObject:nil];
 }
 
 - (void)reloadDatas {
-    NSArray *medias =  [Media allSynchMedias];
+    NSArray *medias = nil;
+    if (currentUser_) {
+        medias = [Media allSynchMediasForAuthor:currentUser_];
+    } else {
+        medias = [Media allSynchMedias];
+    }
     NSInteger row = 0;
     for (Media *media in medias) {
-       [mediaForIndexPath setObject:media forKey:[NSIndexPath indexPathForRow:row inSection:0]];
+       [mediaForIndexPath_ setObject:media forKey:[NSIndexPath indexPathForRow:row inSection:0]];
         row++;
     }
     [self.tableView reloadData];
-    mediaLoadingStatus = SUCCEED;
+    mediaLoadingStatus_ = SUCCEED;
 }
 
 #pragma mark - TCImageViewDelegate
@@ -225,6 +248,9 @@
 #pragma mark - LTConnectionManagerDelegate
 
 - (void)didRetrievedShortMedias:(NSArray *)medias {
+    if ([medias count] == 0) {
+        mediaLoadingStatus_ = NOMORETOLOAD;
+    }
     dataManager_.synchLimit += [medias count];
     [self reloadDatas];
     [self hideLoader];
@@ -235,7 +261,7 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_network_unreachable_title") message:TRANSLATE(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:TRANSLATE(@"common_OK") otherButtonTitles:nil];
     [alert show];
     [alert release];
-    mediaLoadingStatus = FAILED;
+    mediaLoadingStatus_ = FAILED;
     [self.tableView reloadData];
     [self hideLoader];
     reloadBarButton_.enabled = YES;

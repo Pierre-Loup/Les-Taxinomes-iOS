@@ -38,7 +38,7 @@
 #define kPopularityTag @"popularite"
 #define kModifyDateTag @"date_modif"
 #define kMediaThumbnailTag @"vignette"
-#define kMediaMediumImageTag @"document"
+#define kMediaImageURLTag @"document"
 #define kLicenseTag @"id_licence"
 #define kAuthorsTag @"auteurs"
 #define kAuthorIdTag @"id_auteur"
@@ -70,14 +70,15 @@
 @dynamic license;
 @dynamic section;
 
-+ (Media *)mediaWithXMLRPCResponse: (NSDictionary *) response {
++ (Media *)mediaWithXMLRPCResponse:(NSDictionary *)response {
     
     if(response == nil){
         return nil;
     }
     
     NSNumber * mediaIdentifier = nil;
-    if ([[response objectForKey:kMediaIdTag] isKindOfClass:[NSString class]]) {
+    if ([[response objectForKey:kMediaIdTag] isKindOfClass:[NSString class]]
+        && [[response objectForKey:kStatusTag] isEqualToString:@"publie"]) {
         NSString * strMediaIdentifier = (NSString *)[response objectForKey:kMediaIdTag];
         mediaIdentifier = [NSNumber numberWithInt:[strMediaIdentifier intValue]];
     } else {
@@ -142,8 +143,8 @@
     media.mediaThumbnailLocalFile = @"";
     // Medium image
     media.mediaMediumLocalFile = @"";
-    if ([response objectForKey:kMediaMediumImageTag]) {
-        media.mediaMediumURL = [response objectForKey:kMediaMediumImageTag];
+    if ([response objectForKey:kMediaImageURLTag]) {
+        media.mediaMediumURL = [response objectForKey:kMediaImageURLTag];
     }
     // Large image
     media.mediaLargeURL = @"";
@@ -179,7 +180,33 @@
     
 }
 
-+ (Media *)mediaWithIdentifier: (NSNumber *)identifier {
++ (Media *)mediaLargeURLWithXMLRPCResponse:(NSDictionary *)response {
+    if(response == nil){
+        return nil;
+    }
+    
+    NSNumber * mediaIdentifier = nil;
+    if ([[response objectForKey:kMediaIdTag] isKindOfClass:[NSString class]]) {
+        NSString * strMediaIdentifier = (NSString *)[response objectForKey:kMediaIdTag];
+        mediaIdentifier = [NSNumber numberWithInt:[strMediaIdentifier intValue]];
+    } else {
+        return nil;
+    }
+    
+    Media *media = [Media mediaWithIdentifier:mediaIdentifier];
+    
+    if (!media) {
+        return nil;
+    }
+    
+    media.mediaMediumLocalFile = @"";
+    if ([response objectForKey:kMediaImageURLTag]) {
+        media.mediaLargeURL = [response objectForKey:kMediaImageURLTag];
+    }
+    return media;
+}
+
++ (Media *)mediaWithIdentifier:(NSNumber *)identifier {
     NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     
@@ -232,6 +259,10 @@
 }
 
 + (NSArray *)allSynchMedias {
+    return [Media allSynchMediasForAuthor:nil];
+}
+
++ (NSArray *)allSynchMediasForAuthor:(Author *)author {
     LTDataManager * dataManager = [LTDataManager sharedDataManager];
     if (dataManager.synchLimit == 0) {
         return [NSArray array];
@@ -242,6 +273,13 @@
     request.fetchLimit = dataManager.synchLimit;
     NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
     [request setEntity:entity];
+    
+    if (author) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K.%K == %d",kMediaEntityAuthorsField, kAuthorEntityIdentifierField,[author.identifier intValue]];
+        NSLog(@"%@",predicate.predicateFormat);
+        [request setPredicate:predicate];
+    }
+    
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kMediaEntityDateField ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     [request setSortDescriptors:sortDescriptors];
