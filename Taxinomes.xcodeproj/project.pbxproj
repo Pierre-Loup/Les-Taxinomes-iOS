@@ -126,6 +126,8 @@
 		A5CA5F25154D8CCD00C3EB2E /* MediaListCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D3E3154AFA1A0048CDF1 /* MediaListCellView.xib */; };
 		A5CA5F2E154E82BB00C3EB2E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5CA5F2C154E82BB00C3EB2E /* Localizable.strings */; };
 		A5CA5F30154E82C600C3EB2E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5CA5F2C154E82BB00C3EB2E /* Localizable.strings */; };
+		A5DDDBB215908EA800B91FFB /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = A5DDDBB015908EA800B91FFB /* background.png */; };
+		A5DDDBB315908EA800B91FFB /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5DDDBB115908EA800B91FFB /* background@2x.png */; };
 		A5F92EEF1556C76100C1F622 /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F92EEE1556C76100C1F622 /* Media.m */; };
 		C8339C1514ED4F93000A4E37 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8339C1414ED4F93000A4E37 /* CoreLocation.framework */; };
 		C8339C2614ED6356000A4E37 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8339C2514ED6355000A4E37 /* CoreMedia.framework */; };
@@ -155,7 +157,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		37D2E7D9144709ED0044EC3A /* Les Taxinomes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Les Taxinomes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		37D2E7D9144709ED0044EC3A /* LesTaxinomes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LesTaxinomes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37D2E7DD144709ED0044EC3A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		37D2E7DF144709ED0044EC3A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		37D2E7E1144709ED0044EC3A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -349,6 +351,8 @@
 		A5AF0EC2154888CF007F65DD /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		A5CA5F2D154E82BB00C3EB2E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = Langues/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A5CA5F2F154E82C600C3EB2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Langues/en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A5DDDBB015908EA800B91FFB /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = Taxinomes/Ressources/Images/background.png; sourceTree = SOURCE_ROOT; };
+		A5DDDBB115908EA800B91FFB /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "background@2x.png"; path = "Taxinomes/Ressources/Images/background@2x.png"; sourceTree = SOURCE_ROOT; };
 		A5F92EED1556C76100C1F622 /* Media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Media.h; path = Taxinomes/Classes/Models/Media.h; sourceTree = SOURCE_ROOT; };
 		A5F92EEE1556C76100C1F622 /* Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Media.m; path = Taxinomes/Classes/Models/Media.m; sourceTree = SOURCE_ROOT; };
 		C8339C1414ED4F93000A4E37 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -425,7 +429,7 @@
 		37D2E7DA144709ED0044EC3A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				37D2E7D9144709ED0044EC3A /* Les Taxinomes.app */,
+				37D2E7D9144709ED0044EC3A /* LesTaxinomes.app */,
 				37D2E7F7144709EE0044EC3A /* TaxinomesTests.octest */,
 			);
 			name = Products;
@@ -758,6 +762,8 @@
 		C87C67DA147440B500A055F1 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				A5DDDBB015908EA800B91FFB /* background.png */,
+				A5DDDBB115908EA800B91FFB /* background@2x.png */,
 				A59CEAA015507FB800754A8E /* default_avatar_medium.png */,
 				A59CEAA115507FB800754A8E /* default_avatar_medium@2x.png */,
 				A539D1DE154AF6B60048CDF1 /* bg_titre_left.png */,
@@ -852,9 +858,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		37D2E7D8144709ED0044EC3A /* Les Taxinomes */ = {
+		37D2E7D8144709ED0044EC3A /* LesTaxinomes */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 37D2E80B144709EE0044EC3A /* Build configuration list for PBXNativeTarget "Les Taxinomes" */;
+			buildConfigurationList = 37D2E80B144709EE0044EC3A /* Build configuration list for PBXNativeTarget "LesTaxinomes" */;
 			buildPhases = (
 				37D2E7D5144709ED0044EC3A /* Sources */,
 				37D2E7D6144709ED0044EC3A /* Frameworks */,
@@ -864,9 +870,9 @@
 			);
 			dependencies = (
 			);
-			name = "Les Taxinomes";
+			name = LesTaxinomes;
 			productName = Taxinomes;
-			productReference = 37D2E7D9144709ED0044EC3A /* Les Taxinomes.app */;
+			productReference = 37D2E7D9144709ED0044EC3A /* LesTaxinomes.app */;
 			productType = "com.apple.product-type.application";
 		};
 		37D2E7F6144709EE0044EC3A /* TaxinomesTests */ = {
@@ -910,7 +916,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				37D2E7D8144709ED0044EC3A /* Les Taxinomes */,
+				37D2E7D8144709ED0044EC3A /* LesTaxinomes */,
 				37D2E7F6144709EE0044EC3A /* TaxinomesTests */,
 			);
 		};
@@ -959,6 +965,8 @@
 				A50D5D0B1572164900BF9DF0 /* MediaLicenseChooserViewController.xib in Resources */,
 				A59F1B90157790A500F3B6A9 /* oiseau.aif in Resources */,
 				A502F333157D63D5001EDE44 /* JesayaFree.ttf in Resources */,
+				A5DDDBB215908EA800B91FFB /* background.png in Resources */,
+				A5DDDBB315908EA800B91FFB /* background@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1083,7 +1091,7 @@
 /* Begin PBXTargetDependency section */
 		37D2E7FE144709EE0044EC3A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 37D2E7D8144709ED0044EC3A /* Les Taxinomes */;
+			target = 37D2E7D8144709ED0044EC3A /* LesTaxinomes */;
 			targetProxy = 37D2E7FD144709EE0044EC3A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1105,7 +1113,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					armv6,
+				);
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -1131,7 +1142,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					armv6,
+				);
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
@@ -1151,7 +1165,10 @@
 		37D2E80C144709EE0044EC3A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					armv6,
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1174,7 +1191,10 @@
 		37D2E80D144709EE0044EC3A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					armv6,
+				);
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1241,7 +1261,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		37D2E80B144709EE0044EC3A /* Build configuration list for PBXNativeTarget "Les Taxinomes" */ = {
+		37D2E80B144709EE0044EC3A /* Build configuration list for PBXNativeTarget "LesTaxinomes" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				37D2E80C144709EE0044EC3A /* Debug */,

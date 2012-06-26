@@ -63,6 +63,7 @@
 {
     self = [self initWithNibName:@"MediaUploadFormViewController" bundle:nil];
     if (self) {
+
     }
     return self;
 }
@@ -84,7 +85,7 @@
                            nil] retain];
         media_ = nil;
         gis_ = nil;
-        license_ = nil;
+        license_ = [[License defaultLicense] retain];
     }
     return self;
 }
@@ -98,8 +99,6 @@
 }
 
 - (void)dealloc {
-    
-    
     [titleForSectionHeader_ release];
     [rowsInSection_ release];
     
@@ -252,7 +251,7 @@
     
     LTConnectionManager* connectionManager = [LTConnectionManager sharedConnectionManager];
     connectionManager.progressDelegate = self;
-    [connectionManager addMediaAsynchWithInformations:info delegate:self];
+    [connectionManager addMediaWithInformations:info delegate:self];
 }
 
 - (void)displayAuthenticationSheetAnimated:(BOOL)animated {

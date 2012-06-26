@@ -25,10 +25,11 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import <MapKit/MapKit.h>
 
 @class Author, License, Section;
 
-@interface Media : NSManagedObject
+@interface Media : NSManagedObject <MKAnnotation>
 
 @property (nonatomic, retain) NSDate * date;
 @property (nonatomic, retain) NSNumber * identifier;
@@ -44,13 +45,14 @@
 @property (nonatomic, retain) NSNumber * popularity;
 @property (nonatomic, retain) NSString * status;
 @property (nonatomic, retain) NSString * text;
-@property (nonatomic, retain) NSString * title;
+@property (nonatomic, copy) NSString * title;
 @property (nonatomic, retain) NSDate * updateDate;
 @property (nonatomic, retain) NSNumber * visits;
 @property (nonatomic, retain) NSNumber * sychGapForDateSorting;
 @property (nonatomic, retain) Author * author;
 @property (nonatomic, retain) License * license;
 @property (nonatomic, retain) Section * section;
+@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 
 + (Media *)mediaWithXMLRPCResponse: (NSDictionary *) response;
 + (Media *)mediaLargeURLWithXMLRPCResponse:(NSDictionary *)response;

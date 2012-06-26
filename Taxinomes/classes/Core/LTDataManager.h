@@ -33,7 +33,6 @@
     NSManagedObjectModel * managedObjectModel_;
     NSPersistentStoreCoordinator * persistentStoreCoordinator_;
     
-    id<LTConnectionManagerDelegate> delegate_;
     NSInteger synchLimit_;
 }
 
@@ -43,11 +42,20 @@
 @property (nonatomic, assign) NSInteger synchLimit;
 @property (nonatomic, readonly) NSString * applicationDocumentsDirectory;
 
-- (Author *)getAuthorWithId:(NSNumber *)authorIdentifier;
-- (BOOL)getAuthorAsychIfNeededWithId:(NSNumber *)authorIdentifier withDelegate:(id<LTConnectionManagerDelegate>)delegate;
-- (Media *)getMediaWithId:(NSNumber *)mediaIdentifier;
-- (BOOL)getMediaAsychIfNeededWithId:(NSNumber *)mediaIdentifier withDelegate:(id<LTConnectionManagerDelegate>)delegate;
+- (BOOL)getAuthorAsychIfNeededWithId:(NSNumber *)authorIdentifier 
+                        withDelegate:(id<LTConnectionManagerDelegate>)delegate;
+
+- (BOOL)getMediaAsychIfNeededWithId:(NSNumber *)mediaIdentifier 
+                       withDelegate:(id<LTConnectionManagerDelegate>)delegate;
+
 + (LTDataManager *)sharedDataManager;
+
+// Core Data
 - (IBAction)saveAction:sender;
+- (NSManagedObjectContext *) mainManagedObjectContext;
+- (NSManagedObjectModel *)managedObjectModel;
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator;
+- (NSString *)applicationDocumentsDirectory;
+
 
 @end

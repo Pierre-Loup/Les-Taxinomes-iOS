@@ -29,6 +29,10 @@
 
 static LTDataManager *instance = nil;
 
+@interface LTDataManager (Private)
+
+@end
+
 @implementation LTDataManager
 @synthesize synchLimit = synchLimit_;
 
@@ -55,66 +59,38 @@ static LTDataManager *instance = nil;
 	return instance;
 }
 
-- (Author *)getAuthorWithId:(NSNumber *)authorIdentifier {
-    Author * author = [Author authorWithIdentifier:authorIdentifier];
-    LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
-    if(author == nil 
-       || author.avatarURL == nil
-       ||[[NSDate date] timeIntervalSinceDate:author.localUpdateDate] > kMediaCacheTime){        
-        author = [connectionManager getAuthorWithId:authorIdentifier];
-    }
+- (BOOL)getAuthorAsychIfNeededWithId:(NSNumber *)authorIdentifier 
+                        withDelegate:(id<LTConnectionManagerDelegate>)delegate {
     
-    return author;
-}
-
-- (BOOL)getAuthorAsychIfNeededWithId:(NSNumber *)authorIdentifier withDelegate:(id<LTConnectionManagerDelegate>)delegate {
-    [authorIdentifier retain];
-    [delegate retain];
     Author * author = [Author authorWithIdentifier:authorIdentifier];
     LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
-    [delegate autorelease];
     
     if(author == nil
        || author.avatarURL == nil
        || ([[NSDate date] timeIntervalSinceDate:author.localUpdateDate] > kMediaCacheTime)){
         
-        [connectionManager getAuthorAsynchWithId:authorIdentifier delegate:delegate];
+        [connectionManager getAuthorWithId:authorIdentifier delegate:delegate];
         return YES;
     }
     return NO;
 }
 
-- (Media *)getMediaWithId:(NSNumber *)mediaIdentifier {
-    Media * media = [Media mediaWithIdentifier:mediaIdentifier];
-    LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
-    if( media == nil
-       || media.mediaMediumURL == nil
-       || [[NSDate date] timeIntervalSinceDate:media.localUpdateDate] > kMediaCacheTime){        
-        media = [connectionManager getMediaWithId:mediaIdentifier];
-    }
+- (BOOL)getMediaAsychIfNeededWithId:(NSNumber *)mediaIdentifier 
+                       withDelegate:(id<LTConnectionManagerDelegate>)delegate {
     
-    return media;
-}
-
-- (BOOL)getMediaAsychIfNeededWithId:(NSNumber *)mediaIdentifier withDelegate:(id<LTConnectionManagerDelegate>)delegate {
-    [mediaIdentifier retain];
-    [delegate retain];
     Media * media = [Media mediaWithIdentifier:mediaIdentifier];
     LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
-    [mediaIdentifier autorelease];
-    [delegate autorelease];
     NSLog(@"media.text %@",media.text);
     if( media == nil
        || media.mediaMediumURL == nil
        || [[NSDate date] timeIntervalSinceDate:media.localUpdateDate] > kMediaCacheTime){
-        [connectionManager getMediaAsynchWithId:mediaIdentifier delegate:delegate];
+        [connectionManager getMediaWithId:mediaIdentifier delegate:delegate];
         return YES;
     }
     return NO;
 }
 
-#pragma mark -
-#pragma mark Saving
+#pragma mark - Core Data
 
 /**
  Performs the save action for the application, which is to send the save:
@@ -127,10 +103,6 @@ static LTDataManager *instance = nil;
 		// Handle error
     }
 }
-
-
-#pragma mark -
-#pragma mark Core Data stack
 
 /**
  Returns the managed object context for the application.

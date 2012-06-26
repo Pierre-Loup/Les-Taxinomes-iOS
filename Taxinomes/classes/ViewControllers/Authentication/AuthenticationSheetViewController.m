@@ -35,12 +35,13 @@
 @synthesize passwordTextField = passwordTextField_;
 @synthesize signinButton = signinButton_;
 @synthesize signupButton = signupButton_;
+@synthesize shouldDisplayCancelButton = shouldDisplayCancelButton_;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        shouldDisplayCancelButton_ = YES;
     }
     return self;
 }
@@ -49,9 +50,11 @@
 {
     [super viewDidLoad];
     self.title = @"Connexion";
-    UIBarButtonItem * cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common_cancel") style:UIBarButtonSystemItemCancel target:self action:@selector(dismissAuthenticationSheet:)];
-    [self.navigationItem setRightBarButtonItem:cancelBarButton];
-    [cancelBarButton release];
+    if (shouldDisplayCancelButton_) {
+        UIBarButtonItem * cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common_cancel") style:UIBarButtonSystemItemCancel target:self action:@selector(dismissAuthenticationSheet:)];
+        [self.navigationItem setRightBarButtonItem:cancelBarButton];
+        [cancelBarButton release];
+    }
 }
 
 - (void)viewDidUnload
@@ -81,9 +84,9 @@
     LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
     connectionManager.authDelegate = self;
 #if DEBUG
-    [connectionManager authAsynchWithLogin:@"pierre" password:@"crLu2Vzi" delegate:self];
+    [connectionManager authWithLogin:@"pierre" password:@"crLu2Vzi" delegate:self];
 #else
-    [connectionManager authAsynchWithLogin:self.loginTextField.text password:self.passwordTextField.text delegate:self];
+    [connectionManager authWithLogin:self.loginTextField.text password:self.passwordTextField.text delegate:self];
 #endif
 }
 

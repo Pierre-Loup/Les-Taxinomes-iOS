@@ -59,7 +59,7 @@
     [scrollView_ addSubview:mediaView_];
     
     LTConnectionManager * connectionManager = [LTConnectionManager sharedConnectionManager];
-    [connectionManager getMediaLargeURLAsynchWithId:media_.identifier delegate:self];
+    [connectionManager getMediaLargeURLWithId:media_.identifier delegate:self];
 }
 
 

@@ -46,7 +46,7 @@
     
 }
 
-@property (nonatomic, retain) id<MediaLicenseChooserDelegate> delegate;
+@property (nonatomic, assign) id<MediaLicenseChooserDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UITableView * tableView;
 @property (nonatomic, retain) NSMutableArray * licenses;
 @property (nonatomic, retain) License * currentLicense;

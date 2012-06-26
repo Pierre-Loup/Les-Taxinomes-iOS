@@ -41,13 +41,16 @@
     UITextField * passwordTextField_;
     UIButton * signinButton_;
     UIButton * signupButton_;
+    
+    BOOL shouldDisplayCancelButton_;
 }
 
-@property (nonatomic, retain) id<AuthenticationSheetViewControllerDelegate> delegate;
+@property (nonatomic, assign) id<AuthenticationSheetViewControllerDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UITextField * loginTextField;
 @property (nonatomic, retain) IBOutlet UITextField * passwordTextField;
 @property (nonatomic, retain) IBOutlet UIButton * signinButton;
 @property (nonatomic, retain) IBOutlet UIButton * signupButton;
+@property (nonatomic, assign) BOOL shouldDisplayCancelButton;
 
 - (IBAction)dismissAuthenticationSheet:(id)sender;
 - (IBAction)submitAuthentication:(id)sender;

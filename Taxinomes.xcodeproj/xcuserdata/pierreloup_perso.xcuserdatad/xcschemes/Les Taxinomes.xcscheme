@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "37D2E7D8144709ED0044EC3A"
-               BuildableName = "Les Taxinomes.app"
-               BlueprintName = "Les Taxinomes"
+               BuildableName = "LesTaxinomes.app"
+               BlueprintName = "LesTaxinomes"
                ReferencedContainer = "container:Taxinomes.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -43,8 +43,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "37D2E7D8144709ED0044EC3A"
-            BuildableName = "Les Taxinomes.app"
-            BlueprintName = "Les Taxinomes"
+            BuildableName = "LesTaxinomes.app"
+            BlueprintName = "LesTaxinomes"
             ReferencedContainer = "container:Taxinomes.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -54,7 +54,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "37D2E7D8144709ED0044EC3A"
-            BuildableName = "Les Taxinomes.app"
-            BlueprintName = "Les Taxinomes"
+            BuildableName = "LesTaxinomes.app"
+            BlueprintName = "LesTaxinomes"
             ReferencedContainer = "container:Taxinomes.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -80,8 +80,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "37D2E7D8144709ED0044EC3A"
-            BuildableName = "Les Taxinomes.app"
-            BlueprintName = "Les Taxinomes"
+            BuildableName = "LesTaxinomes.app"
+            BlueprintName = "LesTaxinomes"
             ReferencedContainer = "container:Taxinomes.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

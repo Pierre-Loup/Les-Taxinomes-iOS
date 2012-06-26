@@ -71,7 +71,7 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
     [request setEntity:entity];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%@ == %d",kLicenseEntityIdentifierField,[identifier intValue]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %d",kLicenseEntityIdentifierField,[identifier intValue]];
     [request setPredicate:predicate];
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kLicenseEntityIdentifierField ascending:YES];
@@ -91,6 +91,10 @@
         return [mutableFetchResults objectAtIndex:0];
     }
     return nil;
+}
+
++ (License *)defaultLicense {
+    return [License licenseWithIdentifier:[NSNumber numberWithInt:8]];
 }
 
 + (NSArray *)allLicenses {

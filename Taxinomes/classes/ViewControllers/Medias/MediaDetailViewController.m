@@ -197,6 +197,7 @@
     authorNameLabel_.numberOfLines = 0;
     authorNameLabel_.font = [UIFont systemFontOfSize:14.0];
     authorNameLabel_.text = [NSString stringWithFormat:@"Publié par %@ le %@\n%d vues", media_.author.name, [df stringFromDate:self.media.date],[self.media.visits integerValue]];
+    [authorNameLabel_ setBackgroundColor:[UIColor clearColor]];
     
     descTitleView_.frame = CGRectMake(5.0, 135.0+imageHeight, descTitleView_.frame.size.width, descTitleView_.frame.size.height);
     [descTitleView_ setHidden:NO];
@@ -209,6 +210,7 @@
     }
     descHeight = (CGFloat)descTextView_.contentSize.height;
     descTextView_.frame = CGRectMake(0.0, 170.0+imageHeight, 320.0, descHeight);
+    [descTextView_ setBackgroundColor:[UIColor clearColor]];
     
     mapTitleView_.frame = CGRectMake(5.0, 175.0+imageHeight+descHeight, mapTitleView_.frame.size.width, mapTitleView_.frame.size.height);
     [mapTitleView_ setHidden:NO];

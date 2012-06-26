@@ -68,7 +68,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.accountMenuLabels = [NSArray arrayWithObjects:TRANSLATE(@"account_uploas_media"), TRANSLATE(@"account_my_medias"), nil];
-    [self.view setHidden:YES];
+    [self.tableView setHidden:YES];
     
     NSString * userAvatarURL = @"";
     LTConnectionManager * cm = [LTConnectionManager sharedConnectionManager];
@@ -207,7 +207,7 @@
         self.userNameLabel.text = authenticatedUser_.name;
         [avatarView_ reloadWithUrl:authenticatedUser_.avatarURL];
     }
-    [self.view setHidden:NO];
+    [self.tableView setHidden:NO];
     [rightBarButton_ release];
     rightBarButton_ = nil;
     rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common_logout") style:UIBarButtonItemStylePlain target:self action:@selector(logoutButtonPressed:)];
@@ -222,7 +222,7 @@
     rightBarButton_ = nil;
     rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common_signin") style:UIBarButtonItemStylePlain target:self action:@selector(signInButtonPressed:)];
     [self.navigationItem setRightBarButtonItem:rightBarButton_ animated:YES];
-    [self.view setHidden:YES];
+    [self.tableView setHidden:YES];
 }
 
 #pragma mark - LTConnectionManagerAuthDelegate

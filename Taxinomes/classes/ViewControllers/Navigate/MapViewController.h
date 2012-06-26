@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "Annotation.h"
+#import "LTConnectionManager.h"
+#import "LTViewController.h"
 
-@interface MapViewController : UIViewController <MKMapViewDelegate> {
+@interface MapViewController : LTViewController <MKMapViewDelegate, LTConnectionManagerDelegate> {
     BOOL shouldZoomToUserLocation_;
     IBOutlet MKMapView * mapView_;
-    NSMutableArray * annotations_;
+    NSMutableArray * medias_;
 }
 
 @end

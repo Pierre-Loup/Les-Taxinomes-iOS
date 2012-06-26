@@ -252,7 +252,6 @@
 {
     [_placeholder release];
     [_url release];
-    [_delegate release];
     [super dealloc];
     
 }

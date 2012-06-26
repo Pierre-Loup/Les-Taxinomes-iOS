@@ -24,6 +24,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 #import "media.h"
 #import "Author.h"
 #import "License.h"
@@ -39,7 +40,7 @@ typedef enum {
 
 @protocol LTConnectionManagerDelegate <NSObject>
 @optional
-- (void)didRetrievedShortMedias:(NSArray *)medias;
+- (void)didRetrievedShortMedias:(NSArray *)mediass;
 - (void)didRetrievedMedia:(Media *)media;
 - (void)didRetrievedAuthor:(Author *)author;
 - (void)didSuccessfullyUploadMedia:(Media *)media;
@@ -58,27 +59,43 @@ typedef enum {
     AuthenticationStatus authStatus;
 }
 
-@property (nonatomic, retain) id authDelegate;
-@property (nonatomic, retain) id progressDelegate;
+@property (nonatomic, assign) id authDelegate;
+@property (nonatomic, assign) id progressDelegate;
 @property (nonatomic, retain) Author * authenticatedUser;
 @property (nonatomic, assign) AuthenticationStatus authStatus;
 
 + (LTConnectionManager *)sharedConnectionManager;
 
-- (void)getShortMediasAsychByDateForAuthor:(Author *)author withLimit:(NSInteger)limit startingAtRecord:(NSInteger)start delegate:(id<LTConnectionManagerDelegate>)delegate;
-- (NSArray *)getShortMediasByDateWithLimit:(NSInteger)limit startingAtRecord:(NSInteger)start;
-- (Media *)getMediaWithId:(NSNumber *)mediaIdentifier;
-- (void)getMediaAsynchWithId:(NSNumber *)mediaIdentifier delegate:(id<LTConnectionManagerDelegate>)delegate;
-- (void)getMediaLargeURLAsynchWithId:(NSNumber *)mediaIdentifier delegate:(id<LTConnectionManagerDelegate>)delegate;
-- (Author *)getAuthorWithId:(NSNumber *)authorIdentifier;
-- (void)getAuthorAsynchWithId:(NSNumber *)authorIdentifier delegate:(id<LTConnectionManagerDelegate>)delegate;
-- (NSArray *)getLicenses;
-//- (void)getSectionWithIdentifier:(NSNumber*)identifier;
-- (void)authAsynchWithLogin:(NSString *)login password:(NSString *)password delegate:(id<LTConnectionManagerAuthDelegate>)delegate;
+- (void)getShortMediasByDateForAuthor:(Author *)author 
+                                 withLimit:(NSInteger)limit 
+                          startingAtRecord:(NSInteger)start 
+                                  delegate:(id<LTConnectionManagerDelegate>)delegate;
+
+- (void)getShortMediasNearLocation:(CLLocationCoordinate2D)location
+                        forAuthor:(Author *)author
+                        withLimit:(NSInteger)limit 
+                 startingAtRecord:(NSInteger)start 
+                          delegate:(id<LTConnectionManagerDelegate>)delegate;
+
+- (void)getMediaWithId:(NSNumber *)mediaIdentifier 
+                    delegate:(id<LTConnectionManagerDelegate>)delegate;
+
+- (void)getMediaLargeURLWithId:(NSNumber *)mediaIdentifier 
+                            delegate:(id<LTConnectionManagerDelegate>)delegate;
+
+- (void)getAuthorWithId:(NSNumber *)authorIdentifier 
+                     delegate:(id<LTConnectionManagerDelegate>)delegate;
+- (void)getLicenses;
+
+- (void)authWithLogin:(NSString *)login 
+                   password:(NSString *)password 
+                   delegate:(id<LTConnectionManagerAuthDelegate>)delegate;
+
+- (void)addMediaWithInformations: (NSDictionary *)info 
+                              delegate:(id<LTConnectionManagerDelegate>)delegate;
+
 - (BOOL)isAuthenticated;
 - (void)unAuthenticate; 
-- (void)addMediaWithInformations: (NSDictionary *)info;
-- (void)addMediaAsynchWithInformations: (NSDictionary *)info delegate:(id<LTConnectionManagerDelegate>)delegate;
 - (id)executeXMLRPCRequest:(XMLRPCRequest *)req authenticated:(BOOL) auth;
 
 @end

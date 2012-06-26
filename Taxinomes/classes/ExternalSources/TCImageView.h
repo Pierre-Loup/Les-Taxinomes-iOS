@@ -44,7 +44,7 @@
 @property (assign,readwrite,getter = isCaching) BOOL caching;
 @property (assign,readwrite) NSTimeInterval cacheTime;
 
-@property (retain) id<TCImageViewDelegate> delegate;
+@property (assign) id<TCImageViewDelegate> delegate;
 
 + (void)resetGlobalCache; // This will remove all cached images managed by any TCImageView instatces
 + (NSString*)cacheDirectoryAddress;

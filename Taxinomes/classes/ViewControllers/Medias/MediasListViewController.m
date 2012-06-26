@@ -64,7 +64,7 @@
     dataManager_ = [[LTDataManager sharedDataManager] retain];
     connectionManger_ = [[LTConnectionManager sharedConnectionManager] retain];
     
-   reloadBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonAction:)];
+    reloadBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonAction:)];
     [self.navigationItem setRightBarButtonItem:reloadBarButton_ animated:YES];
     [reloadBarButton_ release];
     
@@ -163,7 +163,7 @@
         self.mediaTableViewCell = nil;
         
     }
-
+    
     TCImageView * mediaImageView = (TCImageView *)[cell viewWithTag:1];    
     if (![mediaImageView.url isEqualToString:media.mediaThumbnailUrl]) {
         [mediaImageView setHidden:YES];
@@ -181,7 +181,7 @@
     }
     
     ((UILabel *)[cell viewWithTag:3]).text = media.author.name;
-
+    
     cell.opaque = YES;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -191,14 +191,14 @@
 #pragma mark Table view delegate
 
 /*
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 68.0;
-}
-*/
+ - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+ return 68.0;
+ }
+ */
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    
     Media *media = [[mediaForIndexPath_ objectForKey:indexPath] retain];
     if(media != nil){
         MediaDetailViewController *mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailViewController" bundle:nil mediaId:media.identifier];
@@ -231,7 +231,7 @@
     }
     NSInteger row = 0;
     for (Media *media in medias) {
-       [mediaForIndexPath_ setObject:media forKey:[NSIndexPath indexPathForRow:row inSection:0]];
+        [mediaForIndexPath_ setObject:media forKey:[NSIndexPath indexPathForRow:row inSection:0]];
         row++;
     }
     [self.tableView reloadData];
