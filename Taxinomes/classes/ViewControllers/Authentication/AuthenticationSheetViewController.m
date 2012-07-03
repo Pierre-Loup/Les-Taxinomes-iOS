@@ -46,6 +46,11 @@
     return self;
 }
 
+- (void)dealloc {
+    connectionManager_.authDelegate = nil;
+    [super dealloc];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -81,12 +86,12 @@
 
 - (IBAction)submitAuthentication:(id)sender {
     [self displayLoader];
-    LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
-    connectionManager.authDelegate = self;
+    connectionManager_ = [LTConnectionManager sharedConnectionManager];
+    connectionManager_.authDelegate = self;
 #if DEBUG
-    [connectionManager authWithLogin:@"pierre" password:@"crLu2Vzi" delegate:self];
+    [connectionManager_ authWithLogin:@"pierre" password:@"crLu2Vzi" delegate:self];
 #else
-    [connectionManager authWithLogin:self.loginTextField.text password:self.passwordTextField.text delegate:self];
+    [connectionManager_ authWithLogin:self.loginTextField.text password:self.passwordTextField.text delegate:self];
 #endif
 }
 

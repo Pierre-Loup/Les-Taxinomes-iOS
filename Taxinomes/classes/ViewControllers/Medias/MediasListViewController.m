@@ -34,11 +34,12 @@
 @synthesize mediaForIndexPath = mediaForIndexPath_;
 @synthesize tableView = tableView_;
 @synthesize spinnerCell = spinnerCell_;
-@synthesize mediaTableViewCell = _mediaTableViewCell;
-@synthesize retryCell = _retryCell;
-
+@synthesize mediaTableViewCell = mediaTableViewCell_;
 - (void)dealloc {
     [currentUser_ release];
+    [dataManager_ release];
+    [connectionManger_ release];
+    [mediaForIndexPath_ release];
     [super dealloc];
 }
 
@@ -53,6 +54,13 @@
 
 #pragma mark - View lifecycle
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -61,6 +69,9 @@
         self.title = TRANSLATE(@"account_my_medias");
     }
     
+    
+    mediaForIndexPath_ = [NSMutableDictionary new];
+    mediaLoadingStatus_ = PENDING;
     dataManager_ = [[LTDataManager sharedDataManager] retain];
     connectionManger_ = [[LTConnectionManager sharedConnectionManager] retain];
     
@@ -68,17 +79,11 @@
     [self.navigationItem setRightBarButtonItem:reloadBarButton_ animated:YES];
     [reloadBarButton_ release];
     
-    mediaLoadingStatus_ = PENDING;
-    self.mediaForIndexPath = [NSMutableDictionary dictionary];
     [self reloadDatas];
 }
 
 - (void)viewDidUnload
 {
-    [dataManager_ release];
-    dataManager_ = nil;
-    [connectionManger_ release];
-    connectionManger_ = nil;
     self.tableView = nil;
     [reloadBarButton_ release];
     reloadBarButton_ = nil;
@@ -86,8 +91,6 @@
     mediaTableViewCell_ = nil;
     [spinnerCell_ release];
     spinnerCell_ = nil;
-    [mediaForIndexPath_ release];
-    mediaForIndexPath_ = nil;
     [super viewDidUnload];
 }
 
@@ -131,10 +134,16 @@
 {
     // Return the number of rows in the section.
     //NSLog(@"Rows : %d",[medias count]);
-    if (mediaLoadingStatus_ == NOMORETOLOAD) {
-        return [mediaForIndexPath_ count];
-    }
-    return ([mediaForIndexPath_ count]+1);
+    switch (mediaLoadingStatus_) {
+        case FAILED:
+        case NOMORETOLOAD:
+            return [mediaForIndexPath_ count];
+            break;
+        default:
+            return ([mediaForIndexPath_ count]+1);
+            break;
+    } 
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -148,8 +157,6 @@
             return spinnerCell_;
         } else if (mediaLoadingStatus_ == PENDING) {
             return spinnerCell_;
-        } else {
-            return self.retryCell;
         }
     }
     
@@ -210,7 +217,7 @@
 }
 
 - (IBAction)loadSynchMedias:(id)sender {
-    [connectionManger_ getShortMediasAsychByDateForAuthor:currentUser_ withLimit:kNbMediasStep startingAtRecord:dataManager_.synchLimit delegate:self];
+    [connectionManger_ getShortMediasByDateForAuthor:currentUser_ withLimit:kNbMediasStep startingAtRecord:dataManager_.synchLimit delegate:self];
 }
 
 - (IBAction)refreshButtonAction:(id)sender {

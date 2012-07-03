@@ -16,6 +16,7 @@
 @end
 
 @implementation MapViewController
+@synthesize mapView = mapView_;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -64,9 +65,9 @@
 }
 
 - (void)loadClosestMedias {
-    LTConnectionManager * connectionManager =  [LTConnectionManager sharedConnectionManager];
+    connectionManager_ =  [LTConnectionManager sharedConnectionManager];
     [self displayLoader];
-    [connectionManager getShortMediasNearLocation:mapView_.userLocation.coordinate forAuthor:nil withLimit:kNbMediasStep startingAtRecord:0 delegate:self];
+    [connectionManager_ getShortMediasNearLocation:mapView_.userLocation.coordinate forAuthor:nil withLimit:kNbMediasStep startingAtRecord:0 delegate:self];
 }
 
 #pragma mark - MKMapViewDelegate

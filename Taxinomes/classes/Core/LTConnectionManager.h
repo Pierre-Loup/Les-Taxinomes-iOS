@@ -54,13 +54,13 @@ typedef enum {
 
 @interface LTConnectionManager : NSObject {
     id <LTConnectionManagerAuthDelegate> authDelegate_;
-    id <ASIProgressDelegate> progressDelegate_;
     Author * authenticatedUser_;
     AuthenticationStatus authStatus;
 }
 
 @property (nonatomic, assign) id authDelegate;
-@property (nonatomic, assign) id progressDelegate;
+@property (nonatomic, assign) id<ASIProgressDelegate> downloadProgressDelegate;
+@property (nonatomic, assign) id<ASIProgressDelegate> uploadProgressDelegate;
 @property (nonatomic, retain) Author * authenticatedUser;
 @property (nonatomic, assign) AuthenticationStatus authStatus;
 

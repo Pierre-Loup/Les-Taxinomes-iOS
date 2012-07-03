@@ -34,14 +34,13 @@
 
 - (void) displayLoaderViewWithDetermination{
     if (loaderView_ != nil) {
-        [loaderView_ removeFromSuperview];
-        [loaderView_ release];
+        return;
     }
     
-    loaderView_ = [[MBProgressHUD alloc] initWithWindow:self.view.window];
+    loaderView_ = [[MBProgressHUD alloc] initWithView:self.view];
     
 	// Add HUD to screen
-	[self.view.window addSubview:loaderView_];
+	[self.view addSubview:loaderView_];
     
 	// Register for HUD callbacks so we can remove it from the window at the right time
 	loaderView_.delegate = self;
@@ -55,8 +54,7 @@
 
 - (void) displayLoader {
     if (loaderView_ != nil) {
-        [loaderView_ removeFromSuperview];
-        [loaderView_ release];
+        return;
     }
     
     loaderView_ = [[MBProgressHUD alloc] initWithView:self.view];
@@ -121,6 +119,9 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    [loaderView_ removeFromSuperview];
+    [loaderView_ release];
+    loaderView_ = nil;
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }

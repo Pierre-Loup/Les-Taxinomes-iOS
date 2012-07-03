@@ -126,7 +126,7 @@
     [mapTitleView_ setHidden:YES];
     
     mapView_ = [[MKMapView alloc] initWithFrame:CGRectMake(0.0, 0.0, 0.0, 0.0)];
-    mapView_.mapType = MKMapTypeStandard;
+    mapView_.mapType = MKMapTypeSatellite;
     mapView_.scrollEnabled = NO;
     mapView_.zoomEnabled = NO;
     mapView_.delegate = self;
@@ -233,6 +233,9 @@
     }
     
     [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, 525.0+imageHeight+descHeight)];
+    if (asynchLoadCounter_ > 0) {
+        [self displayLoader];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

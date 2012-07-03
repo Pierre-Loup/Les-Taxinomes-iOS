@@ -11,6 +11,7 @@
 @implementation TCImageView
 
 @synthesize caching = _caching, url = _url, placeholder = _placeholder, cacheTime = _cacheTime, delegate = _delegate;
+@synthesize downloadProgressDelegate = downloadProgressDelegate_;
 
 - (id)initWithURL:(NSURL *)imageURL placeholderImage:(UIImage *)image;
 {    
@@ -90,7 +91,7 @@
     }
     // Loads image from network if no "return;" is triggered (no cache file found)
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[self.url stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]  ] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30.0];
-    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self  ];
 }
 
@@ -129,7 +130,7 @@
 #pragma NSURLConnection Delegates
 
 -(void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     if (_delegate && [_delegate respondsToSelector:@selector(TCImageView:failedWithError:)]) {
         [_delegate TCImageView:self failedWithError:error];
     }
@@ -140,19 +141,28 @@
     
 }
 
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    expectedBytes_ = [response expectedContentLength];
+}
+
 
 - (void)connection:(NSURLConnection *)theConnection didReceiveData:(NSData *)incrementalData 
 {
-    //	NSLog(@"didReceiveData");
     if (_data == nil)
         _data = [[NSMutableData alloc] initWithCapacity:2048];
     
     [_data appendData:incrementalData];
+    
+    if ([downloadProgressDelegate_ respondsToSelector:@selector(setProgress:)]) {
+        float progress = ((float)[_data length]/expectedBytes_);
+        [downloadProgressDelegate_ setProgress:progress];
+    }
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)theConnection 
 {
 	//NSLog(@"connectionDidFinishLoading");
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     NSFileManager *fileManager = [NSFileManager defaultManager];
 	
 	UIImage *imageData = [UIImage imageWithData:_data];

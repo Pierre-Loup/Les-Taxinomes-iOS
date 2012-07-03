@@ -45,6 +45,7 @@
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<int key="IBMKMapType">1</int>
 					</object>
 				</array>
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
@@ -143,13 +144,13 @@
 					<string key="className">MapViewController</string>
 					<string key="superclassName">LTViewController</string>
 					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">mapView_</string>
+						<string key="NS.key.0">mapView</string>
 						<string key="NS.object.0">MKMapView</string>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">mapView_</string>
+						<string key="NS.key.0">mapView</string>
 						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">mapView_</string>
+							<string key="name">mapView</string>
 							<string key="candidateClassName">MKMapView</string>
 						</object>
 					</object>

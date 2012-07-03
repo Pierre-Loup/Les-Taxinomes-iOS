@@ -56,6 +56,7 @@
     
     mediaView_ = [[TCImageView alloc] initWithURL:@"" placeholderView:nil];
     mediaView_.delegate = self;
+    mediaView_.downloadProgressDelegate = self;
     [scrollView_ addSubview:mediaView_];
     
     LTConnectionManager * connectionManager = [LTConnectionManager sharedConnectionManager];
@@ -96,6 +97,8 @@
 #pragma mark - LTConnectionManagerDelegate
 
 - (void)didRetrievedMedia:(Media *)media {
+    [self hideLoader];
+    [self displayLoaderViewWithDetermination];
     [mediaView_ reloadWithUrl:media.mediaLargeURL];
 }
 
@@ -139,10 +142,13 @@
     self.scrollView.bouncesZoom = NO;
     
     self.scrollView.contentSize = mediaView_.frame.size;
+    
+    view.downloadProgressDelegate = nil;
     [self hideLoader];
 }
 
 -(void) TCImageView:(TCImageView *) view failedWithError:(NSError *)error {
+    view.downloadProgressDelegate = nil;
     [self hideLoader];
 }
 

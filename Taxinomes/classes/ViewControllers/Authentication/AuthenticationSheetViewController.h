@@ -36,6 +36,7 @@
 
 @interface AuthenticationSheetViewController :LTViewController <LTConnectionManagerAuthDelegate> {
     id<AuthenticationSheetViewControllerDelegate> delegate_;
+    LTConnectionManager* connectionManager_;
     
     UITextField * loginTextField_;
     UITextField * passwordTextField_;

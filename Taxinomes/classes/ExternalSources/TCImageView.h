@@ -5,6 +5,7 @@
 
 
 #import <Foundation/Foundation.h>
+#import "ASIProgressDelegate.h"
 
 #define CACHED_IMAGE_JPEG_QUALITY 1.0
 
@@ -37,6 +38,7 @@
     NSTimeInterval _cacheTime;
 	
 	id<TCImageViewDelegate> _delegate;
+    float expectedBytes_;
     
 }
 @property (readonly) NSString* url;
@@ -45,6 +47,7 @@
 @property (assign,readwrite) NSTimeInterval cacheTime;
 
 @property (assign) id<TCImageViewDelegate> delegate;
+@property (assign) id<ASIProgressDelegate> downloadProgressDelegate;
 
 + (void)resetGlobalCache; // This will remove all cached images managed by any TCImageView instatces
 + (NSString*)cacheDirectoryAddress;

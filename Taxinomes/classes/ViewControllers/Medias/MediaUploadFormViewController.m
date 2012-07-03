@@ -83,6 +83,8 @@
                            [NSNumber numberWithInt:2],
                            [NSNumber numberWithInt:1],
                            nil] retain];
+        cellForIndexPath_ = [NSDictionary new];
+        
         media_ = nil;
         gis_ = nil;
         license_ = [[License defaultLicense] retain];
@@ -101,7 +103,7 @@
 - (void)dealloc {
     [titleForSectionHeader_ release];
     [rowsInSection_ release];
-    
+    [cellForIndexPath_ release];
     [media_ release];
     [gis_ release];
     [license_ release];
@@ -114,7 +116,7 @@
 {
     [super viewDidLoad];
     self.navigationItem.title = TRANSLATE(@"media_upload_view_title");
-    
+    [cellForIndexPath_ release];
     cellForIndexPath_ = [[NSDictionary alloc] initWithObjectsAndKeys:   
                          titleCell_,
                          [NSIndexPath indexPathForRow:0 inSection:0],
@@ -166,8 +168,6 @@
 
 - (void)viewDidUnload
 {
-    [cellForIndexPath_ release];
-    cellForIndexPath_ = nil;
     self.tableView = nil;
     self.mediaSnapshotView = nil;
     self.media = nil;
@@ -250,7 +250,7 @@
     
     
     LTConnectionManager* connectionManager = [LTConnectionManager sharedConnectionManager];
-    connectionManager.progressDelegate = self;
+    connectionManager.uploadProgressDelegate = self;
     [connectionManager addMediaWithInformations:info delegate:self];
 }
 

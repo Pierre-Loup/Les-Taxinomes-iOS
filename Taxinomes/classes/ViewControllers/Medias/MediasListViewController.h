@@ -40,15 +40,10 @@ typedef enum {
     
     LTDataManager * dataManager_;
     LTConnectionManager * connectionManger_;
-    NSMutableDictionary * mediaForIndexPath_;
     MediaLoadingStatus mediaLoadingStatus_;
     
     // UI
     UIBarButtonItem * reloadBarButton_;
-    UITableView *tableView_;
-    UITableViewCell * spinnerCell_;
-    UITableViewCell * mediaTableViewCell_;
-    UITableViewCell * retryCell_;
 }
 
 @property (nonatomic, retain) Author * currentUser;
@@ -56,7 +51,6 @@ typedef enum {
 @property (nonatomic, retain) NSMutableDictionary * mediaForIndexPath;
 @property (nonatomic, retain) IBOutlet UITableViewCell * spinnerCell;
 @property (nonatomic, retain) IBOutlet UITableViewCell * mediaTableViewCell;
-@property (nonatomic, retain) IBOutlet UITableViewCell * retryCell;
 
 - (IBAction)loadSynchMedias:(id)sender;
 - (IBAction)refreshButtonAction:(id)sender;
