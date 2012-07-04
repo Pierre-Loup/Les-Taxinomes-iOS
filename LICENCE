@@ -14,22 +14,21 @@ Les Taxinomes iPhone is free software: you can redistribute it and/or modify
 A different license may apply to other software included in this package, 
 including :
 
-- GHUnit and Andrew Donoho's Reachability class.  (Taxinomes/classes/Reachability/)
-- All-Seeing Interactive's ASIHTTPRequest classes.   (Taxinomes/classes/ASI/)
-- World Wide Web Consortium's tidy library.  (Taxinomes/classes/c_tidy/)
-- Divisible by Zero's Cocoa XML-RPC Client Framework (Taxinomes/classes/XML-RPC/)
-- toxicsoftware.com's CTidy class. (Taxinomes/classes/)
-- Michael Waterfall and Danilo Ercoli's NSString+XMLExtensions class (Taxinomes/classes/)
-- Gustavo Pelosi Ambrozio's NSMutableDictionary+ImageMetadata class (Taxinomes/classes/GusUtils/)
-- Matt Gallagher's NSData+Base64 class (Taxinomes/classes/)
-- Trevor Harmon's UIImage+Resize class (Taxinomes/classes/)
-- Paul Alexander Pants Framework (Taxinomes/Pants Framework)
-- Matej Bukovinski MBProgressHUD class (Taxinomes/classes/)
+- GHUnit and Andrew Donoho's Reachability class.  (Taxinomes/classes/ExternalSources/Reachability/)
+- All-Seeing Interactive's ASIHTTPRequest classes.   (Taxinomes/classes/ExternalSources/ASI/)
+- World Wide Web Consortium's tidy library.  (Taxinomes/classes/ExternalSources/c_tidy/)
+- Divisible by Zero's Cocoa XML-RPC Client Framework (Taxinomes/classes/ExternalSources/XML-RPC/)
+- toxicsoftware.com's CTidy class. (Taxinomes/classes/ExternalSources/)
+- Michael Waterfall and Danilo Ercoli's NSString+XMLExtensions class (Taxinomes/classes/ExternalSources/)
+- Gustavo Pelosi Ambrozio's NSMutableDictionary+ImageMetadata class (Taxinomes/classes/ExternalSources/GusUtils/)
+- Matt Gallagher's NSData+Base64 class (Taxinomes/classes/ExternalSources/)
+- Trevor Harmon's UIImage+Resize class (Taxinomes/classes/ExternalSources/)
+- Matej Bukovinski's MBProgressHUD class (Taxinomes/classes/ExternalSources/)
+- First Water Tech Ltd's UIGlossyButton class (Taxinomes/classes/ExternalSources/)
 
 Please consult their respective headers for the terms of their individual licenses.
 
 The images files of the Taxinomes/images are copyrighted :
 
-default_avatar.png and default_avatar@2x.png to Wordpress and Gravatar
 tabbar_home.png and tabbar_account.png to Joseph Wain and Glyphish (http://glyphish.com)
 all other image files to Anthony Bossard and Les petits débrouillards Bretagne.

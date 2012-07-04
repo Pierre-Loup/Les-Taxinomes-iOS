@@ -65,7 +65,8 @@
 //Color
 //#5F8237
 
-#define kStandardGreenColor [UIColor colorWithRed:(95.0/255.0) green:(130.0/255.0) blue:(55.0/255.0) alpha:1.0] 
+#define kStandardGreenColor [UIColor colorWithRed:(95.0/255.0) green:(130.0/255.0) blue:(55.0/255.0) alpha:1.0]
+#define kLightGreenColor [UIColor colorWithRed:(132.0/255.0) green:(211.0/255.0) blue:(58.0/255.0) alpha:1.0] 
 
 // Sizes
 #define THUMBNAIL_MAX_HEIGHT 100.0
@@ -93,6 +94,8 @@
     #define kXMLRCPWebServiceURL @"http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur"
     #define kHTTPHost @"http://www.lestaxinomes.org"
 #endif
+#define kForgottenPasswordURL @"http://www.lestaxinomes.org/spip.php?page=spip_pass"
+#define kSignupURL @"http://www.lestaxinomes.org/spip.php?page=inscription"
 
 // WS XML-RPC
 #define kDefaultLimit 50

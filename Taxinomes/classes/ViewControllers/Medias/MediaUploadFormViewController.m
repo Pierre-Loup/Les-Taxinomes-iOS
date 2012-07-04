@@ -116,6 +116,11 @@
 {
     [super viewDidLoad];
     self.navigationItem.title = TRANSLATE(@"media_upload_view_title");
+    
+    shareButton_.tintColor = kLightGreenColor;
+    shareButton_.buttonCornerRadius = 10.0;
+    [shareButton_ setGradientType:kUIGlossyButtonGradientTypeLinearGlossyStandard];
+    
     [cellForIndexPath_ release];
     cellForIndexPath_ = [[NSDictionary alloc] initWithObjectsAndKeys:   
                          titleCell_,

@@ -34,7 +34,6 @@
 @synthesize loginTextField = loginTextField_;
 @synthesize passwordTextField = passwordTextField_;
 @synthesize signinButton = signinButton_;
-@synthesize signupButton = signupButton_;
 @synthesize shouldDisplayCancelButton = shouldDisplayCancelButton_;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -60,6 +59,10 @@
         [self.navigationItem setRightBarButtonItem:cancelBarButton];
         [cancelBarButton release];
     }
+
+    signinButton_.tintColor = kLightGreenColor;
+    signinButton_.buttonCornerRadius = 10.0;
+    [signinButton_ setGradientType:kUIGlossyButtonGradientTypeLinearGlossyStandard];
 }
 
 - (void)viewDidUnload
@@ -93,6 +96,16 @@
 #else
     [connectionManager_ authWithLogin:self.loginTextField.text password:self.passwordTextField.text delegate:self];
 #endif
+}
+
+- (IBAction)forgottenPasswordButtonTouched:(id)sender {
+    NSURL* forgottenPasswordURL = [NSURL URLWithString:kForgottenPasswordURL];
+    [[UIApplication sharedApplication] openURL:forgottenPasswordURL];
+}
+
+- (IBAction)signupButtonTouched:(id)sender {
+    NSURL* signupURL = [NSURL URLWithString:kSignupURL];
+    [[UIApplication sharedApplication] openURL:signupURL];
 }
 
 #pragma mark - LTConnectionManagerDelegate

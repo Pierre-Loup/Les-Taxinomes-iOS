@@ -26,6 +26,7 @@
 #import <UIKit/UIKit.h>
 #import "LTViewController.h"
 #import "LTConnectionManager.h"
+#import "UIGlossyButton.h"
 
 @protocol AuthenticationSheetViewControllerDelegate <NSObject>
 @optional
@@ -37,23 +38,17 @@
 @interface AuthenticationSheetViewController :LTViewController <LTConnectionManagerAuthDelegate> {
     id<AuthenticationSheetViewControllerDelegate> delegate_;
     LTConnectionManager* connectionManager_;
-    
-    UITextField * loginTextField_;
-    UITextField * passwordTextField_;
-    UIButton * signinButton_;
-    UIButton * signupButton_;
-    
-    BOOL shouldDisplayCancelButton_;
 }
 
 @property (nonatomic, assign) id<AuthenticationSheetViewControllerDelegate> delegate;
-@property (nonatomic, retain) IBOutlet UITextField * loginTextField;
-@property (nonatomic, retain) IBOutlet UITextField * passwordTextField;
-@property (nonatomic, retain) IBOutlet UIButton * signinButton;
-@property (nonatomic, retain) IBOutlet UIButton * signupButton;
+@property (nonatomic, retain) IBOutlet UITextField* loginTextField;
+@property (nonatomic, retain) IBOutlet UITextField* passwordTextField;
+@property (nonatomic, retain) IBOutlet UIGlossyButton* signinButton;
 @property (nonatomic, assign) BOOL shouldDisplayCancelButton;
 
 - (IBAction)dismissAuthenticationSheet:(id)sender;
 - (IBAction)submitAuthentication:(id)sender;
+- (IBAction)forgottenPasswordButtonTouched:(id)sender;
+- (IBAction)signupButtonTouched:(id)sender;
 
 @end
