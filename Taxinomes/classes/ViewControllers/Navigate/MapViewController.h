@@ -3,7 +3,7 @@
 //  Taxinomes
 //
 //  Created by Pierre-Loup Tristant on 26/04/12.
-//  Copyright (c) 2012 Les petits débrouillards Bretagne. All rights reserved.
+//  Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -12,10 +12,14 @@
 #import "LTConnectionManager.h"
 #import "LTViewController.h"
 
-@interface MapViewController : LTViewController <MKMapViewDelegate, LTConnectionManagerDelegate> {
-    LTConnectionManager * connectionManager_;
+@interface MapViewController : LTViewController <MKMapViewDelegate, CLLocationManagerDelegate, LTConnectionManagerDelegate> {
+    LTConnectionManager* connectionManager_;
+    CLLocationManager* locationManager_;
     BOOL shouldZoomToUserLocation_;
-    NSMutableArray * medias_;
+    NSInteger searchStarIndex_;
+    
+    UIBarButtonItem* reloadBarButton_;
+    UIBarButtonItem* scanBarButton_;
 }
 
 

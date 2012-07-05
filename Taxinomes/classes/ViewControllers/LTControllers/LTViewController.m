@@ -3,7 +3,7 @@
 //  Taxinomes
 //
 //  Created by Pierre-Loup on 07/03/12.
-//  Copyright (c) 2012 Les petits débrouillards Bretagne. All rights reserved.
+//  Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
 /*

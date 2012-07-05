@@ -3,7 +3,7 @@
 //  Taxinomes
 //
 //  Created by Pierre-Loup Tristant on 26/04/12.
-//  Copyright (c) 2012 Les petits débrouillards Bretagne. All rights reserved.
+//  Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
 #import "MapViewController.h"
@@ -12,7 +12,7 @@
 #define kPinAnnotationIdentifier @"pin"
 
 @interface MapViewController ()
-- (void)loadClosestMedias;
+- (void)loadMoreCloseMedias;
 @end
 
 @implementation MapViewController
@@ -29,6 +29,9 @@
 
 - (void)dealloc {
     [mapView_ release];
+    [locationManager_ release];
+    [reloadBarButton_ release];
+    [scanBarButton_ release];
     [super dealloc];
 }
 
@@ -36,14 +39,22 @@
 {
     [super viewDidLoad];
     
-    UIBarButtonItem * reloadBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonAction:)];
-    [self.navigationItem setRightBarButtonItem:reloadBarButton animated:YES];
-    [reloadBarButton release];
+    reloadBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonAction:)];
+    UIBarButtonItem* spaceItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil] autorelease];
+    scanBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(scanButtonAction:)];
+    NSArray* rightBarButtonItems = [NSArray arrayWithObjects:reloadBarButton_, spaceItem, scanBarButton_, nil];
+    [self.navigationItem setRightBarButtonItems:rightBarButtonItems];
     
+    shouldZoomToUserLocation_ = YES;
+    searchStarIndex_ = 0;
     mapView_.delegate = self;
     mapView_.showsUserLocation = YES;
-    shouldZoomToUserLocation_ = YES;
-    
+    if ([CLLocationManager locationServicesEnabled]
+        && [CLLocationManager significantLocationChangeMonitoringAvailable]) {
+        locationManager_ = [[CLLocationManager alloc] init];
+        [locationManager_ setDelegate:self];
+        [locationManager_ startMonitoringSignificantLocationChanges];
+    }
 }
 
 - (void)viewDidUnload
@@ -58,16 +69,35 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)didReceiveMemoryWarning {
+    [mapView_ removeAnnotations:mapView_.annotations];
+    searchStarIndex_ = 0;
+    mapView_.showsUserLocation = YES;
+}
+
 #pragma mark - Actions
 
 - (IBAction)refreshButtonAction:(id)sender {
-    [self loadClosestMedias];
+    shouldZoomToUserLocation_ = YES;
+    searchStarIndex_ = 0;
+    [mapView_ removeAnnotations:mapView_.annotations];
+    mapView_.showsUserLocation = NO;
+    mapView_.showsUserLocation = YES;
 }
 
-- (void)loadClosestMedias {
-    connectionManager_ =  [LTConnectionManager sharedConnectionManager];
-    [self displayLoader];
-    [connectionManager_ getShortMediasNearLocation:mapView_.userLocation.coordinate forAuthor:nil withLimit:kNbMediasStep startingAtRecord:0 delegate:self];
+- (IBAction)scanButtonAction:(id)sender {
+    [self loadMoreCloseMedias];
+}
+
+- (void)loadMoreCloseMedias {
+    if (mapView_.showsUserLocation) {
+        connectionManager_ =  [LTConnectionManager sharedConnectionManager];
+        reloadBarButton_.enabled = NO;
+        scanBarButton_.enabled = NO;
+        [self displayLoader];
+        [connectionManager_ getShortMediasNearLocation:mapView_.userLocation.coordinate forAuthor:nil withLimit:kNbMediasStep startingAtRecord:searchStarIndex_ delegate:self];
+    }
+    
 }
 
 #pragma mark - MKMapViewDelegate
@@ -77,21 +107,30 @@
  }
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
-    if (shouldZoomToUserLocation_) {
-        if ([mapView_ isUserLocationVisible] && CLLocationCoordinate2DIsValid(userLocation.coordinate)) {
-            [mapView setRegion:MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(5.0, 5.0)) animated:YES];
-             [self loadClosestMedias];
+    if (mapView_.showsUserLocation 
+        && CLLocationCoordinate2DIsValid(userLocation.coordinate)) {
+        if (shouldZoomToUserLocation_) {
+            [mapView setRegion:MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(0.5, 0.5)) animated:YES];
+            [self loadMoreCloseMedias];
             shouldZoomToUserLocation_ = NO;
         }
     }
-    mapView_.showsUserLocation = YES;
+}
+
+#pragma mark CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    searchStarIndex_ = 0;
 }
 
 #pragma mark - LTConnectionManagerDelegate
 
 - (void)didRetrievedShortMedias:(NSArray *)medias {
     [mapView_ addAnnotations:medias];
+    searchStarIndex_ += [medias count];
     [self hideLoader];
+    reloadBarButton_.enabled = YES;
+    scanBarButton_.enabled = YES;
 }
 
 - (void)didFailWithError:(NSError *)error {

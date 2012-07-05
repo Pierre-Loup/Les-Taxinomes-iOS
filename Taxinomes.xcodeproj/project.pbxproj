@@ -115,6 +115,7 @@
 		A539D4FC154B004D0048CDF1 /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D4FB154B004D0048CDF1 /* Section.m */; };
 		A539D4FF154B004D0048CDF1 /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D4FE154B004D0048CDF1 /* Author.m */; };
 		A539D513154B03210048CDF1 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D510154B00840048CDF1 /* Annotation.m */; };
+		A53E292815A63289006D6B07 /* Brest.gpx in Resources */ = {isa = PBXBuildFile; fileRef = A53E292715A63289006D6B07 /* Brest.gpx */; };
 		A5582F4D15A4D9D1008F2F93 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */; };
 		A5582F5315A4DF47008F2F93 /* UIGlossyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A5582F5215A4DF47008F2F93 /* UIGlossyButton.m */; };
 		A5597486155D83CF0072D082 /* MediaSynchGap.m in Sources */ = {isa = PBXBuildFile; fileRef = A5597485155D83CF0072D082 /* MediaSynchGap.m */; };
@@ -343,6 +344,7 @@
 		A539D4FE154B004D0048CDF1 /* Author.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Author.m; path = Taxinomes/Classes/Models/Author.m; sourceTree = SOURCE_ROOT; };
 		A539D50F154B00840048CDF1 /* Annotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Annotation.h; path = Taxinomes/Classes/Models/Annotation.h; sourceTree = SOURCE_ROOT; };
 		A539D510154B00840048CDF1 /* Annotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Annotation.m; path = Taxinomes/Classes/Models/Annotation.m; sourceTree = SOURCE_ROOT; };
+		A53E292715A63289006D6B07 /* Brest.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Brest.gpx; path = Ressources/Brest.gpx; sourceTree = "<group>"; };
 		A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A5582F5115A4DF47008F2F93 /* UIGlossyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIGlossyButton.h; path = Taxinomes/Classes/ExternalSources/UIGlossyButton.h; sourceTree = SOURCE_ROOT; };
 		A5582F5215A4DF47008F2F93 /* UIGlossyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIGlossyButton.m; path = Taxinomes/Classes/ExternalSources/UIGlossyButton.m; sourceTree = SOURCE_ROOT; };
@@ -422,7 +424,6 @@
 		37D2E7CE144709ED0044EC3A = {
 			isa = PBXGroup;
 			children = (
-				A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */,
 				C8F7A51114E30CDA00425104 /* COPYING */,
 				C8F7A50F14E3070300425104 /* README */,
 				C8F7A50D14E306DF00425104 /* LICENCE */,
@@ -445,6 +446,7 @@
 		37D2E7DC144709ED0044EC3A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */,
 				A59F1B8B15778E8E00F3B6A9 /* AudioToolbox.framework */,
 				A5AF0EC2154888CF007F65DD /* MapKit.framework */,
 				A591B7B2150D57F000CE89BA /* CoreData.framework */,
@@ -758,6 +760,7 @@
 		C87C67D9147440B500A055F1 /* Ressources */ = {
 			isa = PBXGroup;
 			children = (
+				A53E292715A63289006D6B07 /* Brest.gpx */,
 				A502F332157D63D5001EDE44 /* JesayaFree.ttf */,
 				A59F1B8E15778F1200F3B6A9 /* oiseau.aif */,
 				A5CA5F2C154E82BB00C3EB2E /* Localizable.strings */,
@@ -976,6 +979,7 @@
 				A502F333157D63D5001EDE44 /* JesayaFree.ttf in Resources */,
 				A5DDDBB215908EA800B91FFB /* background.png in Resources */,
 				A5DDDBB315908EA800B91FFB /* background@2x.png in Resources */,
+				A53E292815A63289006D6B07 /* Brest.gpx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

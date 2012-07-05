@@ -3,7 +3,7 @@
 //  Taxinomes
 //
 //  Created by Pierre-Loup Tristant on 13/10/11.
-//  Copyright (c) 2011 Les petits débrouillards Bretagne. All rights reserved.
+//  Copyright (c) 2011 Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
 /*
@@ -30,16 +30,13 @@
 @class SiteTaxinomes;
 
 @interface TaxinomesAppDelegate : NSObject <UIApplicationDelegate>{
-    UIWindow *_window;
-    UITabBarController *_tabBarController;
-    UIImageView *_launchScreenView;
-    
     SystemSoundID launchSoundID_;
+    UIImageView* launchScreenView_;
     
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet UITabBarController *tabBarController;
+@property (nonatomic, retain) IBOutlet UIWindow* window;
+@property (nonatomic, retain) IBOutlet UITabBarController* tabBarController;
 @property (nonatomic, retain) UIImageView *launchScreenView;
 
 - (void) dismissLaunchScreenView:(NSTimer*)timer;

@@ -3,7 +3,7 @@
 //  Taxinomes
 //
 //  Created by Pierre-Loup Tristant on 13/10/11.
-//  Copyright (c) 2011 Les petits débrouillards Bretagne. All rights reserved.
+//  Copyright (c) 2011 Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
 /*
@@ -32,9 +32,8 @@
 
 @implementation TaxinomesAppDelegate
 
-@synthesize window = _window; 
-@synthesize tabBarController =_tabBarController;
-@synthesize launchScreenView = _launchScreenView;
+@synthesize window = window_; 
+@synthesize tabBarController = tabBarController_;
 
 /*- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     
@@ -58,6 +57,9 @@
         AudioServicesCreateSystemSoundID((CFURLRef)[NSURL fileURLWithPath: launchSoundPath], &launchSoundID_);
     }
     [self playLaunchSound];
+    
+    launchScreenView_ = [[UIImageView alloc] initWithFrame: self.tabBarController.view.frame];
+    launchScreenView_.image = [UIImage imageNamed:@"Default.png"];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -66,6 +68,7 @@
      Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
      Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
      */
+    [launchScreenView_ removeFromSuperview];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -74,9 +77,7 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
-    self.launchScreenView = [[[UIImageView alloc] initWithFrame: self.tabBarController.view.frame] autorelease];
-    self.launchScreenView.image = [UIImage imageNamed:@"Default.png"];
-    [self.window addSubview:self.launchScreenView];
+    [self.window addSubview:launchScreenView_];
     
 }
 
@@ -88,6 +89,7 @@
     [navigationController.view addSubview:launchScreenView];
      */
     [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(dismissLaunchScreenView:) userInfo:nil repeats:NO];
+    
     [self playLaunchSound];
 }
 
@@ -112,8 +114,8 @@
 - (void)dealloc
 {
     AudioServicesDisposeSystemSoundID(launchSoundID_);
+    [launchScreenView_ release];
     self.tabBarController = nil;
-    self.launchScreenView = nil;
     self.window = nil;
     [super dealloc];
 }
@@ -121,8 +123,7 @@
 #pragma mark Helpers
 
 - (void) dismissLaunchScreenView:(NSTimer*)timer {
-    [self.launchScreenView removeFromSuperview];
-    self.launchScreenView = nil;
+    [launchScreenView_ removeFromSuperview];
 }
 
 - (void) playLaunchSound {
