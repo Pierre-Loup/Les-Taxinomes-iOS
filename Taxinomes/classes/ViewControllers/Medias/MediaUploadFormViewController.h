@@ -24,6 +24,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 #import "License.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <CoreLocation/CoreLocation.h>
@@ -35,7 +36,6 @@
 
 @interface MediaUploadFormViewController : LTPhotoPickerViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate,LTConnectionManagerDelegate, AuthenticationSheetViewControllerDelegate, MediaLicenseChooserDelegate> {
     
-    NSArray* titleForSectionHeader_;
     NSArray* rowsInSection_;
     NSDictionary* cellForIndexPath_;
     NSDictionary* indexPathForInputView_;
@@ -46,17 +46,16 @@
 
 @property (retain, nonatomic) IBOutlet UITableView* tableView;
 @property (nonatomic, retain) IBOutlet UIImageView* mediaSnapshotView;
-@property (nonatomic, retain) IBOutlet UIImage* media;
+@property (nonatomic, retain) IBOutlet UIImage* mediaImage;
 @property (nonatomic, retain) IBOutlet UITableViewCell* titleCell;
 @property (nonatomic, retain) IBOutlet UITableViewCell* textCell;
 @property (nonatomic, retain) IBOutlet UITableViewCell* licenseCell;
-@property (nonatomic, retain) IBOutlet UITableViewCell* latitudeCell;
-@property (nonatomic, retain) IBOutlet UITableViewCell* longitudeCell;
+@property (nonatomic, retain) IBOutlet UITableViewCell* emptyLocalisationCell;
+@property (nonatomic, retain) IBOutlet UITableViewCell* mapLocalisationCell;
 @property (nonatomic, retain) IBOutlet UITableViewCell* publishCell;
 @property (nonatomic, retain) IBOutlet UITextField* titleInput;
 @property (nonatomic, retain) IBOutlet UITextView* textInput;
-@property (nonatomic, retain) IBOutlet UITextField* latitudeInput;
-@property (nonatomic, retain) IBOutlet UITextField* longitudeInput;
+@property (nonatomic, retain) IBOutlet MKMapView* mapView;
 @property (nonatomic, retain) IBOutlet UISwitch* publishSwitch;
 @property (nonatomic, retain) IBOutlet UIGlossyButton* shareButton;
 

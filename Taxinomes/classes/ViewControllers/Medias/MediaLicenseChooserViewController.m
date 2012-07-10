@@ -65,7 +65,7 @@
     [licenses_ addObjectsFromArray:[License allLicenses]];
     currentLicenseIndexPath_ = [[self indexPathForCurrentLicense] retain];
     
-    rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common_OK") style:UIBarButtonItemStyleDone target:self action:@selector(oKButtonButtonPressed:)];
+    rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common_OK") style:UIBarButtonItemStylePlain target:self action:@selector(oKButtonButtonPressed:)];
     [self.navigationItem setRightBarButtonItem:rightBarButton_ animated:NO];
 
 }

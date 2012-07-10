@@ -95,7 +95,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     if (buttonIndex == 0) {
         MediaUploadFormViewController *mediaUploadFormViewController = [MediaUploadFormViewController new];
         mediaUploadFormViewController.gis = _photoLocation;
-        mediaUploadFormViewController.media = _photo;
+        mediaUploadFormViewController.mediaImage = _photo;
         [self.navigationController pushViewController:mediaUploadFormViewController animated:YES];
         [_photo release];
         [_photoLocation release];

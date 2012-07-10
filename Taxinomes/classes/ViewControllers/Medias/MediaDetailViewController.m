@@ -126,7 +126,7 @@
     [mapTitleView_ setHidden:YES];
     
     mapView_ = [[MKMapView alloc] initWithFrame:CGRectMake(0.0, 0.0, 0.0, 0.0)];
-    mapView_.mapType = MKMapTypeSatellite;
+    mapView_.mapType = MKMapTypeStandard;
     mapView_.scrollEnabled = NO;
     mapView_.zoomEnabled = NO;
     mapView_.delegate = self;

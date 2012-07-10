@@ -23,6 +23,7 @@
  
  */
 
+#import <AssetsLibrary/ALAsset.h>
 #import "MediaUploadFormViewController.h"
 #import "NSData+Base64.h"
 #import "NSMutableDictionary+ImageMetadata.h"
@@ -36,23 +37,24 @@
 - (NSIndexPath*)indexPathForInputView:(UIView*)view;
 - (UIResponder *)formFirstResponder;
 - (void)dismissKeyboard;
+- (void)refreshMapView;
+- (void)refreshForm;
 @end
 
 @implementation MediaUploadFormViewController
 @synthesize tableView = tableView_;
 @synthesize mediaSnapshotView = mediaSnapshotView_;
-@synthesize media = media_;
+@synthesize mediaImage = mediaImage_;
 @synthesize titleCell = titleCell_;
 @synthesize textCell = textCell_;
 @synthesize licenseCell = licenseCell_;
-@synthesize latitudeCell = latitudeCell_;
-@synthesize longitudeCell = longitudeCell_;
+@synthesize emptyLocalisationCell = emptyLocalisationCell_;
+@synthesize mapLocalisationCell = mapLocalisationCell_;
 @synthesize publishCell = publishCell_;
 @synthesize titleInput = titleInput_;
 @synthesize textInput = textInput_;
+@synthesize mapView = mapView_;
 @synthesize publishSwitch = publishSwitch_;
-@synthesize latitudeInput = latitudeInput_;
-@synthesize longitudeInput = longitudeInput_;
 @synthesize shareButton = shareButton_;
 
 @synthesize gis = gis_;
@@ -63,7 +65,7 @@
 {
     self = [self initWithNibName:@"MediaUploadFormViewController" bundle:nil];
     if (self) {
-
+        
     }
     return self;
 }
@@ -72,20 +74,16 @@
     
     self = [super initWithNibName:@"MediaUploadFormViewController" bundle:nil];
     if (self) {
-        titleForSectionHeader_ = [[NSArray arrayWithObjects:@"Titre", 
-                                   @"Texte", 
-                                   @"Licence",
-                                   @"Localisation", 
-                                   @"Status", nil] retain];
+        
         rowsInSection_ = [[NSArray arrayWithObjects:[NSNumber numberWithInt:1],
                            [NSNumber numberWithInt:1],
                            [NSNumber numberWithInt:1],
-                           [NSNumber numberWithInt:2],
+                           [NSNumber numberWithInt:1],
                            [NSNumber numberWithInt:1],
                            nil] retain];
         cellForIndexPath_ = [NSDictionary new];
         
-        media_ = nil;
+        mediaImage_ = nil;
         gis_ = nil;
         license_ = [[License defaultLicense] retain];
     }
@@ -101,10 +99,9 @@
 }
 
 - (void)dealloc {
-    [titleForSectionHeader_ release];
     [rowsInSection_ release];
     [cellForIndexPath_ release];
-    [media_ release];
+    [mediaImage_ release];
     [gis_ release];
     [license_ release];
     [super dealloc];
@@ -121,44 +118,24 @@
     shareButton_.buttonCornerRadius = 10.0;
     [shareButton_ setGradientType:kUIGlossyButtonGradientTypeLinearGlossyStandard];
     
-    [cellForIndexPath_ release];
-    cellForIndexPath_ = [[NSDictionary alloc] initWithObjectsAndKeys:   
-                         titleCell_,
-                         [NSIndexPath indexPathForRow:0 inSection:0],
-                         textCell_,
-                         [NSIndexPath indexPathForRow:0 inSection:1],
-                         licenseCell_,
-                         [NSIndexPath indexPathForRow:0 inSection:2],
-                         latitudeCell_,
-                         [NSIndexPath indexPathForRow:0 inSection:3],
-                         longitudeCell_,
-                         [NSIndexPath indexPathForRow:1 inSection:3],
-                         publishCell_,
-                         [NSIndexPath indexPathForRow:0 inSection:4],
-                         nil];
-    [latitudeInput_ setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
-    [longitudeInput_ setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
-    if(self.media == nil){
+    [self refreshForm];
+    
+    if(mediaImage_){
+        self.mediaSnapshotView.image = mediaImage_;       
+    } else {
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
         imagePicker.delegate = self;    
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         imagePicker.mediaTypes = [[[NSArray alloc] initWithObjects: (NSString *) kUTTypeImage, nil] autorelease];
         imagePicker.allowsEditing = NO;
-        
         [self presentModalViewController:imagePicker animated:YES];
-    } else {
-        self.mediaSnapshotView.image = self.media;
-    }
-    
-    if (self.gis != nil) {
-        self.latitudeInput.text = [NSString stringWithFormat:@"%f", self.gis.coordinate.latitude];
-        self.longitudeInput.text = [NSString stringWithFormat:@"%f", self.gis.coordinate.longitude];
+        [imagePicker release]; 
     }
     
     if (license_) {
-        licenseCell_.textLabel.text = license_.name;
+        licenseCell_.detailTextLabel.text = license_.name;
     } else {
-        licenseCell_.textLabel.text = TRANSLATE(@"media_upload_no_license_text");
+        licenseCell_.detailTextLabel.text = TRANSLATE(@"media_upload_no_license_text");
     }
 }
 
@@ -175,18 +152,16 @@
 {
     self.tableView = nil;
     self.mediaSnapshotView = nil;
-    self.media = nil;
     self.titleCell = nil;
     self.textCell = nil;
     self.licenseCell = nil;
-    self.latitudeCell = nil;
-    self.longitudeCell = nil;
+    self.emptyLocalisationCell = nil;
+    self.mapLocalisationCell= nil;
     self.publishCell = nil;
     self.titleInput = nil;
     self.textInput = nil;
+    self.mapView = nil;
     self.publishSwitch = nil;
-    self.latitudeInput = nil;
-    self.longitudeInput = nil;
     self.shareButton = nil;
     [super viewDidUnload];
 }
@@ -202,20 +177,20 @@
     [self dismissKeyboard];
     [self displayLoaderViewWithDetermination];
     UIImage * imageToUpload;
-    if (media_.size.width > MEDIA_MAX_WIDHT) {
-        CGFloat imageHeight = (MEDIA_MAX_WIDHT/media_.size.width)*media_.size.height;
+    if (mediaImage_.size.width > MEDIA_MAX_WIDHT) {
+        CGFloat imageHeight = (MEDIA_MAX_WIDHT/mediaImage_.size.width)*mediaImage_.size.height;
         CGSize newSize = CGSizeMake(MEDIA_MAX_WIDHT, imageHeight);
         UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
-        [media_ drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+        [mediaImage_ drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
         UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();    
         UIGraphicsEndImageContext();
         imageToUpload = newImage;
     } else {
-        imageToUpload = media_;
+        imageToUpload = mediaImage_;
     }
-   
+    
 	NSData *imageData = [NSData dataWithData:UIImageJPEGRepresentation(imageToUpload, 1.0f)];//1.0f = 100% quality
-
+    
     
     NSMutableDictionary *info = [NSMutableDictionary dictionary];
     // Title
@@ -250,7 +225,9 @@
     [info setValue:document forKey:@"document"];
     
     // Media location (GIS)
-    NSDictionary *gis = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects: self.latitudeInput.text, self.longitudeInput.text, nil] forKeys:[NSArray arrayWithObjects:@"lat", @"lon",nil]];
+    NSString* latitudeStr = [NSString stringWithFormat:@"%f", self.gis.coordinate.latitude];
+    NSString* longitudeStr = [NSString stringWithFormat:@"%f", self.gis.coordinate.longitude];
+    NSDictionary *gis = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:latitudeStr, longitudeStr, nil] forKeys:[NSArray arrayWithObjects:@"lat", @"lon",nil]];
     [info setValue:gis forKey:@"gis"];
     
     
@@ -277,12 +254,6 @@
         return [NSIndexPath indexPathForRow:0 inSection:0];
     } else if (view == textInput_) {
         return [NSIndexPath indexPathForRow:0 inSection:1];
-    } else if (view == latitudeInput_) {
-        return [NSIndexPath indexPathForRow:0 inSection:3];
-    } else if (view == longitudeInput_) {
-        return [NSIndexPath indexPathForRow:1 inSection:3];
-    } else if (view == publishSwitch_) {
-        return [NSIndexPath indexPathForRow:0 inSection:4];
     }
     
     return nil;
@@ -294,10 +265,6 @@
         return titleInput_;
     } else if ([textInput_ isFirstResponder]) {
         return textInput_;
-    } else if ([latitudeInput_ isFirstResponder]) {
-        return latitudeInput_;
-    } else if ([longitudeInput_ isFirstResponder]) {
-        return longitudeInput_;
     } else if ([publishSwitch_ isFirstResponder]) {
         return publishSwitch_;
     }
@@ -308,12 +275,42 @@
     [[self formFirstResponder] resignFirstResponder];
 }
 
+- (void)refreshMapView {
+    MKPlacemark* annotation = [[[MKPlacemark alloc] initWithCoordinate:gis_.coordinate addressDictionary:nil] autorelease];
+    [mapView_ addAnnotation:annotation];
+    [mapView_ setRegion:MKCoordinateRegionMake(gis_.coordinate, MKCoordinateSpanMake(0.1, 0.1))];
+}
+
+- (void)refreshForm {
+    UITableViewCell* localisationCell = nil;
+    if (gis_) {
+        localisationCell = mapLocalisationCell_;
+        [self refreshMapView];
+    } else {
+        localisationCell = emptyLocalisationCell_;
+    }
+    
+    [cellForIndexPath_ release];
+    cellForIndexPath_ = [[NSDictionary alloc] initWithObjectsAndKeys:   
+                         titleCell_,
+                         [NSIndexPath indexPathForRow:0 inSection:0],
+                         textCell_,
+                         [NSIndexPath indexPathForRow:0 inSection:1],
+                         licenseCell_,
+                         [NSIndexPath indexPathForRow:0 inSection:2],
+                         localisationCell,
+                         [NSIndexPath indexPathForRow:0 inSection:3],
+                         publishCell_,
+                         [NSIndexPath indexPathForRow:0 inSection:4],
+                         nil];
+    [tableView_ reloadData];
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return [titleForSectionHeader_ count];
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -325,10 +322,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = (UITableViewCell*)[cellForIndexPath_ objectForKey:indexPath];
     return cell.frame.size.height;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [titleForSectionHeader_ objectAtIndex:section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -353,19 +346,29 @@
 didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [self dismissModalViewControllerAnimated:YES];
-    self.media = nil;
-    self.media = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
-    self.mediaSnapshotView.image = self.media;
+    self.mediaImage = nil;
+    self.mediaImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
+    self.mediaSnapshotView.image = self.mediaImage;
     
-    NSLog(@"%@",info);
-    /*
-    NSMutableDictionary *metadata = [NSMutableDictionary dictionaryWithDictionary:[info objectForKey:UIImagePickerControllerMediaMetadata]];
-    _gis = [[metadata location] retain];
+    NSURL* asserURL = [info objectForKey:UIImagePickerControllerReferenceURL];
+    // Get the assets library
+    ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
+    [library assetForURL:asserURL resultBlock:^(ALAsset *asset) {
+        if (asset) {
+            ALAssetRepresentation *representation = [asset defaultRepresentation];
+            NSMutableDictionary *imageMetadata = [NSMutableDictionary dictionaryWithDictionary:[representation metadata]];
+            [gis_ release];
+            gis_ = [[imageMetadata location] retain];
+            if (gis_) {
+                [self refreshForm];
+            }
+            
+        }
+    } failureBlock:^(NSError *error) {
+        
+    }];
     
-    _latitudeInput.text = [NSString stringWithFormat:@"%f",_gis.coordinate.latitude];
-    _longitudeInput.text = [NSString stringWithFormat:@"%f",_gis.coordinate.longitude];
-     */
-    
+    [library release];
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -384,7 +387,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 -(void)textFieldDidBeginEditing:(UITextField *)textField { //Keyboard becomes visible
     [UIView animateWithDuration:0.25 animations:^(void){
         self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, 
-                                      self.tableView.frame.size.width, self.tableView.frame.size.height - 215 + 50); //resize
+                                          self.tableView.frame.size.width, self.tableView.frame.size.height - 215 + 50); //resize
     } completion:^(BOOL finished){
         [tableView_ scrollToRowAtIndexPath:[self indexPathForInputView: textField] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
     }];
@@ -393,7 +396,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 -(void)textFieldDidEndEditing:(UITextField *)textField { //keyboard will hide
     [UIView animateWithDuration:0.25 animations:^(void){
         self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, 
-                                  self.tableView.frame.size.width, self.tableView.frame.size.height + 215 - 50); //resize
+                                          self.tableView.frame.size.width, self.tableView.frame.size.height + 215 - 50); //resize
     }];
 }
 
@@ -418,10 +421,10 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [license release];
     if (license) {
         license_ = [license retain];
-        licenseCell_.textLabel.text = license.name;
+        licenseCell_.detailTextLabel.text = license.name;
     } else {
         license = nil;
-        licenseCell_.textLabel.text = TRANSLATE(@"media_upload_no_license_text");
+        licenseCell_.detailTextLabel.text = TRANSLATE(@"media_upload_no_license_text");
     }
     
 }
@@ -434,7 +437,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [alert release];
     [self hideLoader];
     [self.navigationController popViewControllerAnimated:YES];
-
+    
 }
 
 - (void)didFailWithError:(NSError *)error {

@@ -38,6 +38,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    connectionManager_ =  [LTConnectionManager sharedConnectionManager];
     
     reloadBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonAction:)];
     UIBarButtonItem* spaceItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil] autorelease];
@@ -91,7 +92,6 @@
 
 - (void)loadMoreCloseMedias {
     if (mapView_.showsUserLocation) {
-        connectionManager_ =  [LTConnectionManager sharedConnectionManager];
         reloadBarButton_.enabled = NO;
         scanBarButton_.enabled = NO;
         [self displayLoader];
@@ -126,15 +126,41 @@
 #pragma mark - LTConnectionManagerDelegate
 
 - (void)didRetrievedShortMedias:(NSArray *)medias {
-    [mapView_ addAnnotations:medias];
+    BOOL shouldLoadMoreMedias = YES;
+    for (Media* newMedia in medias) {
+        __block Media* blockNewMedia = newMedia;
+        NSInteger mediaFoundIndex = [mapView_.annotations indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+            if ([obj isKindOfClass:[Media class]]) {
+                Media* displayedMedia = (Media *)obj;
+                if ([blockNewMedia.identifier intValue] == [displayedMedia.identifier intValue]) {
+                    *stop = YES;
+                    return YES;
+                }
+            }
+            return NO;
+        }];
+        if (mediaFoundIndex == NSNotFound) {
+            shouldLoadMoreMedias = NO;
+        } else {
+            NSLog(@"Media already displayed");
+        }
+    }
+    
     searchStarIndex_ += [medias count];
-    [self hideLoader];
-    reloadBarButton_.enabled = YES;
-    scanBarButton_.enabled = YES;
+    if (shouldLoadMoreMedias) {
+        [self loadMoreCloseMedias];
+    } else {
+        [mapView_ addAnnotations:medias];
+        [self hideLoader];
+        reloadBarButton_.enabled = YES;
+        scanBarButton_.enabled = YES;
+    }
 }
 
 - (void)didFailWithError:(NSError *)error {
     [self hideLoader];
+    reloadBarButton_.enabled = YES;
+    scanBarButton_.enabled = YES;
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_network_unreachable_title") message:TRANSLATE(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:TRANSLATE(@"common_OK") otherButtonTitles:nil];
     [alert show];
     [alert release];

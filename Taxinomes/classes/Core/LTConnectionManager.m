@@ -435,7 +435,7 @@ static LTConnectionManager *instance = nil;
     [request appendPostData:[[req source] dataUsingEncoding:NSUTF8StringEncoding]];
 #if DEBUG
     NSLog(@"executeXMLRPCRequest host: %@",[req host]);
-    NSLog(@"executeXMLRPCRequest request: %@",[req source]);
+    //NSLog(@"executeXMLRPCRequest request: %@",[req source]);
 #endif  
 	[request startSynchronous];
 	request.uploadProgressDelegate = nil;
