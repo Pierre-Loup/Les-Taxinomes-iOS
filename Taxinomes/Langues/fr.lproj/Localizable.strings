@@ -10,6 +10,11 @@
 "common_OK" = "OK";
 "common_logout" = "Déconnexion";
 "common_signin" = "Connexion";
+"common.title" = "Titre";
+"common.texte" = "Texte";
+"common.city" = "Ville";
+"common.zipcode" = "Code postal";
+"common.country" = "Pays";
 
 /* ALERTS */
 "alert_auth_failed_title" = "L'authentification à échouée";
@@ -30,6 +35,10 @@
 "media_upload_view_title" = "Partager";
 "media_upload_no_title" = "Sans titre";
 "media_upload_no_license_text" = "Aucune licence";
+"media_upload.location_picker_cell.text" = "Localisation du média";
+
+/* MEDIA LOCATION PICKER */
+"media_location_picker.drag_me" = "Deplacez moi !";
 
 /* ERROR MESSAGES */
 "error_auth_failed" = "L'authentification à échouée. Vérifiez votre que votre login et votre mot de passe";

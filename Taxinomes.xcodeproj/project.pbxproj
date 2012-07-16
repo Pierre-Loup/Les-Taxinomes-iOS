@@ -31,6 +31,8 @@
 		A519589D15AAA60300417641 /* ELCImagePickerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A519588D15AAA60300417641 /* ELCImagePickerController.xib */; };
 		A51958A015AAA60300417641 /* Overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = A519589315AAA60300417641 /* Overlay.png */; };
 		A51958A115AAA60300417641 /* Overlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A519589415AAA60300417641 /* Overlay@2x.png */; };
+		A52CF5ED15ADE2AB00FD0D66 /* MapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A52CF5EC15ADE2AB00FD0D66 /* MapCell.m */; };
+		A52CF5F015ADE2C400FD0D66 /* MapCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A52CF5EF15ADE2C400FD0D66 /* MapCell.xib */; };
 		A539D1EE154AF6B60048CDF1 /* bg_titre_left.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1DE154AF6B60048CDF1 /* bg_titre_left.png */; };
 		A539D1EF154AF6B60048CDF1 /* chooser_background.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1DF154AF6B60048CDF1 /* chooser_background.png */; };
 		A539D1F0154AF6B60048CDF1 /* default_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E0154AF6B60048CDF1 /* default_avatar.png */; };
@@ -127,10 +129,14 @@
 		A539D4FF154B004D0048CDF1 /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D4FE154B004D0048CDF1 /* Author.m */; };
 		A539D513154B03210048CDF1 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D510154B00840048CDF1 /* Annotation.m */; };
 		A53E292815A63289006D6B07 /* Brest.gpx in Resources */ = {isa = PBXBuildFile; fileRef = A53E292715A63289006D6B07 /* Brest.gpx */; };
+		A5568F1015AF5942008A9C8B /* SingleLineInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5568F0F15AF5942008A9C8B /* SingleLineInputCell.m */; };
+		A5568F1215AF599B008A9C8B /* SingleLineInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5568F1115AF599B008A9C8B /* SingleLineInputCell.xib */; };
 		A5582F4D15A4D9D1008F2F93 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */; };
 		A5582F5315A4DF47008F2F93 /* UIGlossyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A5582F5215A4DF47008F2F93 /* UIGlossyButton.m */; };
 		A5597486155D83CF0072D082 /* MediaSynchGap.m in Sources */ = {isa = PBXBuildFile; fileRef = A5597485155D83CF0072D082 /* MediaSynchGap.m */; };
 		A591B7B3150D57F000CE89BA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A591B7B2150D57F000CE89BA /* CoreData.framework */; };
+		A5986FD115B4B53D00154F87 /* MediaLocalisationPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5986FCF15B4B53D00154F87 /* MediaLocalisationPickerViewController.m */; };
+		A5986FD215B4B53D00154F87 /* MediaLocalisationPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5986FD015B4B53D00154F87 /* MediaLocalisationPickerViewController.xib */; };
 		A59CEAA215507FB800754A8E /* default_avatar_medium.png in Resources */ = {isa = PBXBuildFile; fileRef = A59CEAA015507FB800754A8E /* default_avatar_medium.png */; };
 		A59CEAA315507FB800754A8E /* default_avatar_medium@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A59CEAA115507FB800754A8E /* default_avatar_medium@2x.png */; };
 		A59F1B8C15778E8E00F3B6A9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A59F1B8B15778E8E00F3B6A9 /* AudioToolbox.framework */; };
@@ -203,6 +209,9 @@
 		A519588D15AAA60300417641 /* ELCImagePickerController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ELCImagePickerController.xib; sourceTree = "<group>"; };
 		A519589315AAA60300417641 /* Overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Overlay.png; sourceTree = "<group>"; };
 		A519589415AAA60300417641 /* Overlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Overlay@2x.png"; sourceTree = "<group>"; };
+		A52CF5EB15ADE2AB00FD0D66 /* MapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapCell.h; sourceTree = "<group>"; };
+		A52CF5EC15ADE2AB00FD0D66 /* MapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapCell.m; sourceTree = "<group>"; };
+		A52CF5EF15ADE2C400FD0D66 /* MapCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapCell.xib; sourceTree = "<group>"; };
 		A539D1DE154AF6B60048CDF1 /* bg_titre_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg_titre_left.png; path = Taxinomes/Ressources/Images/bg_titre_left.png; sourceTree = SOURCE_ROOT; };
 		A539D1DF154AF6B60048CDF1 /* chooser_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = chooser_background.png; path = Taxinomes/Ressources/Images/chooser_background.png; sourceTree = SOURCE_ROOT; };
 		A539D1E0154AF6B60048CDF1 /* default_avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default_avatar.png; path = Taxinomes/Ressources/Images/default_avatar.png; sourceTree = SOURCE_ROOT; };
@@ -372,12 +381,18 @@
 		A539D50F154B00840048CDF1 /* Annotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Annotation.h; path = Taxinomes/Classes/Models/Annotation.h; sourceTree = SOURCE_ROOT; };
 		A539D510154B00840048CDF1 /* Annotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Annotation.m; path = Taxinomes/Classes/Models/Annotation.m; sourceTree = SOURCE_ROOT; };
 		A53E292715A63289006D6B07 /* Brest.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Brest.gpx; path = Ressources/Brest.gpx; sourceTree = "<group>"; };
+		A5568F0E15AF5942008A9C8B /* SingleLineInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleLineInputCell.h; sourceTree = "<group>"; };
+		A5568F0F15AF5942008A9C8B /* SingleLineInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleLineInputCell.m; sourceTree = "<group>"; };
+		A5568F1115AF599B008A9C8B /* SingleLineInputCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleLineInputCell.xib; sourceTree = "<group>"; };
 		A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A5582F5115A4DF47008F2F93 /* UIGlossyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIGlossyButton.h; path = Taxinomes/Classes/ExternalSources/UIGlossyButton.h; sourceTree = SOURCE_ROOT; };
 		A5582F5215A4DF47008F2F93 /* UIGlossyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIGlossyButton.m; path = Taxinomes/Classes/ExternalSources/UIGlossyButton.m; sourceTree = SOURCE_ROOT; };
 		A5597484155D83CF0072D082 /* MediaSynchGap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaSynchGap.h; path = Taxinomes/Classes/Models/MediaSynchGap.h; sourceTree = SOURCE_ROOT; };
 		A5597485155D83CF0072D082 /* MediaSynchGap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaSynchGap.m; path = Taxinomes/Classes/Models/MediaSynchGap.m; sourceTree = SOURCE_ROOT; };
 		A591B7B2150D57F000CE89BA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		A5986FCE15B4B53D00154F87 /* MediaLocalisationPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaLocalisationPickerViewController.h; sourceTree = "<group>"; };
+		A5986FCF15B4B53D00154F87 /* MediaLocalisationPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaLocalisationPickerViewController.m; sourceTree = "<group>"; };
+		A5986FD015B4B53D00154F87 /* MediaLocalisationPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaLocalisationPickerViewController.xib; sourceTree = "<group>"; };
 		A59CEAA015507FB800754A8E /* default_avatar_medium.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default_avatar_medium.png; path = Taxinomes/Ressources/Images/default_avatar_medium.png; sourceTree = SOURCE_ROOT; };
 		A59CEAA115507FB800754A8E /* default_avatar_medium@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "default_avatar_medium@2x.png"; path = "Taxinomes/Ressources/Images/default_avatar_medium@2x.png"; sourceTree = SOURCE_ROOT; };
 		A59F1B8B15778E8E00F3B6A9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -575,6 +590,12 @@
 			children = (
 				A539D3E2154AFA1A0048CDF1 /* GridCellView.xib */,
 				A539D3E3154AFA1A0048CDF1 /* MediaListCellView.xib */,
+				A52CF5EB15ADE2AB00FD0D66 /* MapCell.h */,
+				A52CF5EC15ADE2AB00FD0D66 /* MapCell.m */,
+				A52CF5EF15ADE2C400FD0D66 /* MapCell.xib */,
+				A5568F0E15AF5942008A9C8B /* SingleLineInputCell.h */,
+				A5568F0F15AF5942008A9C8B /* SingleLineInputCell.m */,
+				A5568F1115AF599B008A9C8B /* SingleLineInputCell.xib */,
 			);
 			name = Cells;
 			path = Taxinomes/Classes/Views/Cells;
@@ -646,6 +667,9 @@
 				A50D5D071572164900BF9DF0 /* MediaLicenseChooserViewController.h */,
 				A50D5D081572164900BF9DF0 /* MediaLicenseChooserViewController.m */,
 				A50D5D091572164900BF9DF0 /* MediaLicenseChooserViewController.xib */,
+				A5986FCE15B4B53D00154F87 /* MediaLocalisationPickerViewController.h */,
+				A5986FCF15B4B53D00154F87 /* MediaLocalisationPickerViewController.m */,
+				A5986FD015B4B53D00154F87 /* MediaLocalisationPickerViewController.xib */,
 			);
 			name = Medias;
 			path = Taxinomes/Classes/ViewControllers/Medias;
@@ -1046,6 +1070,9 @@
 				A519589D15AAA60300417641 /* ELCImagePickerController.xib in Resources */,
 				A51958A015AAA60300417641 /* Overlay.png in Resources */,
 				A51958A115AAA60300417641 /* Overlay@2x.png in Resources */,
+				A52CF5F015ADE2C400FD0D66 /* MapCell.xib in Resources */,
+				A5568F1215AF599B008A9C8B /* SingleLineInputCell.xib in Resources */,
+				A5986FD215B4B53D00154F87 /* MediaLocalisationPickerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1160,6 +1187,9 @@
 				A519589815AAA60300417641 /* ELCAssetCell.m in Sources */,
 				A519589A15AAA60300417641 /* ELCAssetTablePicker.m in Sources */,
 				A519589C15AAA60300417641 /* ELCImagePickerController.m in Sources */,
+				A52CF5ED15ADE2AB00FD0D66 /* MapCell.m in Sources */,
+				A5568F1015AF5942008A9C8B /* SingleLineInputCell.m in Sources */,
+				A5986FD115B4B53D00154F87 /* MediaLocalisationPickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -117,6 +117,35 @@
     }
 }
 
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id < MKAnnotation >)annotation {
+    if ([annotation isEqual:mapView_.userLocation]) {
+        return nil;
+    }
+    
+    MKPinAnnotationView * annotationView = (MKPinAnnotationView *)[mapView_ dequeueReusableAnnotationViewWithIdentifier:kPinAnnotationIdentifier];
+    if (!annotationView) {
+        annotationView = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:kPinAnnotationIdentifier] autorelease];
+    }
+    [annotationView setRightCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeDetailDisclosure]];
+    [annotationView setAnimatesDrop:YES];
+    [annotationView setAnnotation:annotation];
+    [annotationView setUserInteractionEnabled:YES];
+    [annotationView setCanShowCallout:YES];
+    
+    return annotationView;
+}
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+    if ([view.annotation isKindOfClass:[Media class]]) {
+        Media * media = (Media *)view.annotation;
+        MediaDetailViewController * mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailViewController" 
+                                                                                                            bundle:nil 
+                                                                                                           mediaId:media.identifier];
+        [self.navigationController pushViewController:mediaDetailViewController animated:YES];
+        [mediaDetailViewController release];
+    }
+}
+
 #pragma mark CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
@@ -164,35 +193,6 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_network_unreachable_title") message:TRANSLATE(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:TRANSLATE(@"common_OK") otherButtonTitles:nil];
     [alert show];
     [alert release];
-}
-
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id < MKAnnotation >)annotation {
-    if ([annotation isEqual:mapView_.userLocation]) {
-        return nil;
-    }
-
-   MKPinAnnotationView * annotationView = (MKPinAnnotationView *)[mapView_ dequeueReusableAnnotationViewWithIdentifier:kPinAnnotationIdentifier];
-    if (!annotationView) {
-        annotationView = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:kPinAnnotationIdentifier] autorelease];
-    }
-    [annotationView setRightCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeDetailDisclosure]];
-    [annotationView setAnimatesDrop:YES];
-    [annotationView setAnnotation:annotation];
-    [annotationView setUserInteractionEnabled:YES];
-    [annotationView setCanShowCallout:YES];
-    
-    return annotationView;
-}
-
-- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
-    if ([view.annotation isKindOfClass:[Media class]]) {
-        Media * media = (Media *)view.annotation;
-        MediaDetailViewController * mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailViewController" 
-                                                                                                        bundle:nil 
-                                                                                                       mediaId:media.identifier];
-        [self.navigationController pushViewController:mediaDetailViewController animated:YES];
-        [mediaDetailViewController release];
-    }
 }
 
 @end

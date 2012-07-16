@@ -24,11 +24,35 @@
  */
 
 #import <AssetsLibrary/ALAsset.h>
-#import "MediaUploadFormViewController.h"
 #import "NSData+Base64.h"
 #import "NSMutableDictionary+ImageMetadata.h"
 #import "LTDataManager.h"
 #import "LTConnectionManager.h"
+#import "MediaUploadFormViewController.h"
+#import "MapCell.h"
+#import "SingleLineInputCell.h"
+
+#define kLocalisationPickerCellId @"localisationPickerCell"
+#define kCityCellId @"CityCell"
+#define kZipcodeCellId @"ZipcodeCell"
+#define kCountryCellId @"CountryCell"
+
+//SECTION 0
+#define kTitleCellIndexPath [NSIndexPath indexPathForRow:0 inSection:0]
+//SECTION 1
+#define kTexteCellIndexPath [NSIndexPath indexPathForRow:0 inSection:1]
+//SECTION 2
+#define kLicenseCellIndexPath [NSIndexPath indexPathForRow:0 inSection:2]
+//SECTION 3
+#define kLocationPickerCellIndexPath [NSIndexPath indexPathForRow:0 inSection:3]
+#define kMapCellIndexPath [NSIndexPath indexPathForRow:1 inSection:3]
+#define kCityCellIndexPath [NSIndexPath indexPathForRow:2 inSection:3]
+#define kZipcodeIndexPath [NSIndexPath indexPathForRow:3 inSection:3]
+#define kCountryCellIndexPath [NSIndexPath indexPathForRow:4 inSection:3]
+//SECTION 4
+#define kPublishCellIndexPath [NSIndexPath indexPathForRow:0 inSection:4]
+
+#define kSectionsNumber 4
 
 @interface MediaUploadFormViewController (Private)
 // Actions
@@ -39,21 +63,23 @@
 - (void)dismissKeyboard;
 - (void)refreshMapView;
 - (void)refreshForm;
+- (void)updateMediaLocation:(CLLocation *)location;
+- (void)keyboardDidShow:(NSNotification *)n;
+- (void)keyboardWillHide:(NSNotification *)n;
 @end
 
 @implementation MediaUploadFormViewController
 @synthesize tableView = tableView_;
 @synthesize mediaSnapshotView = mediaSnapshotView_;
 @synthesize mediaImage = mediaImage_;
-@synthesize titleCell = titleCell_;
 @synthesize textCell = textCell_;
 @synthesize licenseCell = licenseCell_;
-@synthesize emptyLocalisationCell = emptyLocalisationCell_;
-@synthesize mapLocalisationCell = mapLocalisationCell_;
 @synthesize publishCell = publishCell_;
 @synthesize titleInput = titleInput_;
+@synthesize cityInput = cityInput_;
+@synthesize zipcodeInput = zipcodeInput_;;
+@synthesize countryInput = countryInput_;
 @synthesize textInput = textInput_;
-@synthesize mapView = mapView_;
 @synthesize publishSwitch = publishSwitch_;
 @synthesize shareButton = shareButton_;
 
@@ -99,6 +125,7 @@
 }
 
 - (void)dealloc {
+    [reverseGeocoder_ release];
     [rowsInSection_ release];
     [cellForIndexPath_ release];
     [mediaImage_ release];
@@ -112,6 +139,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [center addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
     self.navigationItem.title = TRANSLATE(@"media_upload_view_title");
     
     shareButton_.tintColor = kLightGreenColor;
@@ -137,6 +168,8 @@
     } else {
         licenseCell_.detailTextLabel.text = TRANSLATE(@"media_upload_no_license_text");
     }
+    
+    reverseGeocoder_ = [CLGeocoder new];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -152,15 +185,11 @@
 {
     self.tableView = nil;
     self.mediaSnapshotView = nil;
-    self.titleCell = nil;
     self.textCell = nil;
     self.licenseCell = nil;
-    self.emptyLocalisationCell = nil;
-    self.mapLocalisationCell= nil;
     self.publishCell = nil;
     self.titleInput = nil;
     self.textInput = nil;
-    self.mapView = nil;
     self.publishSwitch = nil;
     self.shareButton = nil;
     [super viewDidUnload];
@@ -251,9 +280,15 @@
 - (NSIndexPath*)indexPathForInputView:(UIView*)view{
     
     if (view == titleInput_) {
-        return [NSIndexPath indexPathForRow:0 inSection:0];
+        return kTitleCellIndexPath;
     } else if (view == textInput_) {
-        return [NSIndexPath indexPathForRow:0 inSection:1];
+        return kTexteCellIndexPath;
+    } else if (view == cityInput_) {
+        return kCityCellIndexPath;
+    } else if (view == zipcodeInput_) {
+        return kZipcodeIndexPath;
+    } else if (view == countryInput_) {
+        return kCountryCellIndexPath;
     }
     
     return nil;
@@ -275,69 +310,178 @@
     [[self formFirstResponder] resignFirstResponder];
 }
 
-- (void)refreshMapView {
-    MKPlacemark* annotation = [[[MKPlacemark alloc] initWithCoordinate:gis_.coordinate addressDictionary:nil] autorelease];
-    [mapView_ addAnnotation:annotation];
-    [mapView_ setRegion:MKCoordinateRegionMake(gis_.coordinate, MKCoordinateSpanMake(0.1, 0.1))];
-}
-
 - (void)refreshForm {
-    UITableViewCell* localisationCell = nil;
-    if (gis_) {
-        localisationCell = mapLocalisationCell_;
-        [self refreshMapView];
-    } else {
-        localisationCell = emptyLocalisationCell_;
+   NSMutableDictionary* tmpCellsDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                                            textCell_, kTexteCellIndexPath,
+                                            licenseCell_, kLicenseCellIndexPath,
+                                            publishCell_, kPublishCellIndexPath,
+                                            nil];
+    // Title cell
+    SingleLineInputCell* titleCell = [tableView_ dequeueReusableCellWithIdentifier:[SingleLineInputCell reuseIdentifier]];
+    if (!titleCell) {
+        titleCell = [SingleLineInputCell singleLineInputCellWithTitle:TRANSLATE(@"common.title")];
     }
+    [titleInput_ release];
+    titleInput_ = [titleCell.input retain];
+    [titleInput_ setDelegate:self];
+    [tmpCellsDict addEntriesFromDictionary:[NSDictionary dictionaryWithObject:titleCell 
+                                                                       forKey:kTitleCellIndexPath]];
+    // Location picker cell
+    UITableViewCell* localisationPickerCell = [tableView_ dequeueReusableCellWithIdentifier:kLocalisationPickerCellId];
+    if (!localisationPickerCell) {
+        localisationPickerCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault 
+                                                         reuseIdentifier:kLocalisationPickerCellId] autorelease];
+        [localisationPickerCell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        [localisationPickerCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        localisationPickerCell.textLabel.text = TRANSLATE(@"media_upload.location_picker_cell.text");
+    }
+    [tmpCellsDict addEntriesFromDictionary:[NSDictionary dictionaryWithObject:localisationPickerCell forKey:kLocationPickerCellIndexPath]];
+    
+    // Map cell
+    MapCell* mapCell = [tableView_ dequeueReusableCellWithIdentifier:[MapCell reuseIdentifier]];
+    if (!mapCell) {
+        mapCell = [MapCell mapCell];
+    }
+    if (gis_) {
+        MKPlacemark* annotation = [[[MKPlacemark alloc] initWithCoordinate:gis_.coordinate addressDictionary:nil] autorelease];
+        [mapCell.mapView removeAnnotations:mapCell.mapView.annotations];
+        [mapCell.mapView addAnnotation:annotation];
+        [mapCell.mapView setRegion:MKCoordinateRegionMake(gis_.coordinate, MKCoordinateSpanMake(0.1, 0.1))];
+    }
+    [tmpCellsDict addEntriesFromDictionary:[NSDictionary dictionaryWithObject:mapCell forKey:kMapCellIndexPath]];
+    
+    // City cell
+    SingleLineInputCell* cityCell = [tableView_ dequeueReusableCellWithIdentifier:[SingleLineInputCell reuseIdentifier]];
+    if (!cityCell) {
+        cityCell = [SingleLineInputCell singleLineInputCell];
+    }
+    [cityCell setTitle:TRANSLATE(@"common.city")];
+    [cityInput_ release];
+    cityInput_ = [cityCell.input retain];
+    [cityCell.input setDelegate:self];
+    [tmpCellsDict addEntriesFromDictionary:[NSDictionary dictionaryWithObject:cityCell
+                                                                       forKey:kCityCellIndexPath]];
+    
+    // Zipcode cell
+    SingleLineInputCell* zipcodeCell = [tableView_ dequeueReusableCellWithIdentifier:[SingleLineInputCell reuseIdentifier]];
+    if (!zipcodeCell ) {
+        zipcodeCell  = [SingleLineInputCell singleLineInputCell];
+    }
+    [zipcodeCell setTitle:TRANSLATE(@"common.zipcode")];
+    [zipcodeInput_ release];
+    zipcodeInput_ = [zipcodeCell.input retain];
+    [zipcodeCell.input setDelegate:self];
+    [tmpCellsDict addEntriesFromDictionary:[NSDictionary dictionaryWithObject:zipcodeCell
+                                                                       forKey:kZipcodeIndexPath]];
+    
+    // Title cell
+    SingleLineInputCell* countryCell = [tableView_ dequeueReusableCellWithIdentifier:[SingleLineInputCell reuseIdentifier]];
+    if (!countryCell) {
+        countryCell = [SingleLineInputCell singleLineInputCell];
+    }
+    [countryCell setTitle:TRANSLATE(@"common.country")];
+    [countryInput_ release];
+    countryInput_ = [countryCell.input retain];
+    [countryCell.input setDelegate:self];
+    [tmpCellsDict addEntriesFromDictionary:[NSDictionary dictionaryWithObject:countryCell
+                                                                       forKey:kCountryCellIndexPath]];
     
     [cellForIndexPath_ release];
-    cellForIndexPath_ = [[NSDictionary alloc] initWithObjectsAndKeys:   
-                         titleCell_,
-                         [NSIndexPath indexPathForRow:0 inSection:0],
-                         textCell_,
-                         [NSIndexPath indexPathForRow:0 inSection:1],
-                         licenseCell_,
-                         [NSIndexPath indexPathForRow:0 inSection:2],
-                         localisationCell,
-                         [NSIndexPath indexPathForRow:0 inSection:3],
-                         publishCell_,
-                         [NSIndexPath indexPathForRow:0 inSection:4],
-                         nil];
+    cellForIndexPath_ = [[NSDictionary dictionaryWithDictionary:tmpCellsDict] retain];
     [tableView_ reloadData];
 }
+
+- (void)updateMediaLocation:(CLLocation *)location {
+    if (location
+        && (location.coordinate.latitude || location.coordinate.longitude)) {
+        [gis_ release];
+        gis_ = [location retain];
+        [reverseGeocoder_ reverseGeocodeLocation:gis_ completionHandler:^(NSArray *placemarks, NSError *error) {
+            CLPlacemark* placemark = [placemarks objectAtIndex:0];
+            if (placemark) {
+                cityInput_.text = placemark.locality;
+                zipcodeInput_.text = placemark.postalCode;
+                countryInput_.text = placemark.country;
+            }
+        }];
+        [self refreshForm];
+    }
+}
+
+
+
+#pragma mark UIKeyboard notification
+
+- (void)keyboardDidShow:(NSNotification *)n {
+    [UIView animateWithDuration:0.25 animations:^(void){
+        self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, 
+                                          self.tableView.frame.size.width, self.tableView.frame.size.height - 215 + 50); //resize
+    }];
+}
+
+- (void)keyboardWillHide:(NSNotification *)n {
+    [UIView animateWithDuration:0.25 animations:^(void){
+        self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, 
+                                          self.tableView.frame.size.width, self.tableView.frame.size.height + 215 - 50); //resize
+    }];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 4;
+    return kSectionsNumber;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSNumber *rows = (NSNumber*)[rowsInSection_ objectAtIndex:section];
-    return [rows intValue];
+    NSEnumerator* enumerator = [cellForIndexPath_ keyEnumerator];
+    NSIndexPath* key;
+    int rowCounter = 0;
+    while ((key = (NSIndexPath *)[enumerator nextObject])) {
+        if (key.section == section) {
+            rowCounter ++;
+        }
+    }
+    return rowCounter;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = (UITableViewCell*)[cellForIndexPath_ objectForKey:indexPath];
+    UITableViewCell* cell = (UITableViewCell *)[cellForIndexPath_ objectForKey:indexPath];
     return cell.frame.size.height;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (UITableViewCell*)[cellForIndexPath_ objectForKey:indexPath];
+    return (UITableViewCell *)[cellForIndexPath_ objectForKey:indexPath];
 }
 
 #pragma mark UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([[tableView cellForRowAtIndexPath:indexPath] isEqual:licenseCell_]) {
-        MediaLicenseChooserViewController * mediaChooserVC = [[MediaLicenseChooserViewController alloc] init];
-        mediaChooserVC.delegate = self;
-        mediaChooserVC.currentLicense = license_;
-        [self.navigationController pushViewController:mediaChooserVC animated:YES];
+    if ([indexPath isEqual:kLicenseCellIndexPath]) {
+        MediaLicenseChooserViewController* mediaLicenseChooserVC = [[MediaLicenseChooserViewController alloc] init];
+        mediaLicenseChooserVC.delegate = self;
+        mediaLicenseChooserVC.currentLicense = license_;
+        [self.navigationController pushViewController:mediaLicenseChooserVC animated:YES];
+        [mediaLicenseChooserVC release];
+    } else if ([indexPath isEqual:kLocationPickerCellIndexPath]){
+        MediaLocalisationPickerViewController* mediaLocationPickerVC = [[MediaLocalisationPickerViewController alloc] init];
+        [mediaLocationPickerVC setDelegate:self];
+        [self.navigationController pushViewController:mediaLocationPickerVC animated:YES];
+        [mediaLocationPickerVC release];
     }
+}
+
+#pragma mark UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    [textInput_ resignFirstResponder];
+//    [titleInput_ resignFirstResponder];
+//    [cityInput_ resignFirstResponder];
+//    [zipcodeInput_ resignFirstResponder];
+//    [countryInput_ resignFirstResponder];
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -357,11 +501,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         if (asset) {
             ALAssetRepresentation *representation = [asset defaultRepresentation];
             NSMutableDictionary *imageMetadata = [NSMutableDictionary dictionaryWithDictionary:[representation metadata]];
-            [gis_ release];
-            gis_ = [[imageMetadata location] retain];
-            if (gis_) {
-                [self refreshForm];
-            }
+            CLLocation* mediaLocation = [imageMetadata location];
+            [self updateMediaLocation:mediaLocation];
             
         }
     } failureBlock:^(NSError *error) {
@@ -384,20 +525,12 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     return YES;
 }
 
--(void)textFieldDidBeginEditing:(UITextField *)textField { //Keyboard becomes visible
-    [UIView animateWithDuration:0.25 animations:^(void){
-        self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, 
-                                          self.tableView.frame.size.width, self.tableView.frame.size.height - 215 + 50); //resize
-    } completion:^(BOOL finished){
-        [tableView_ scrollToRowAtIndexPath:[self indexPathForInputView: textField] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-    }];
+-(void)textFieldDidBeginEditing:(UITextField *)textField {
+    [tableView_ scrollToRowAtIndexPath:[self indexPathForInputView: textField] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
 }
 
--(void)textFieldDidEndEditing:(UITextField *)textField { //keyboard will hide
-    [UIView animateWithDuration:0.25 animations:^(void){
-        self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, 
-                                          self.tableView.frame.size.width, self.tableView.frame.size.height + 215 - 50); //resize
-    }];
+-(void)textFieldDidEndEditing:(UITextField *)textField {
+    
 }
 
 #pragma mark - UITextViewdDelegate
@@ -446,6 +579,12 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [alert release];
     [self hideLoader];
     //[self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark MediaLocationPickerDelegate
+
+- (void)mediaLocationPicker:(MediaLocalisationPickerViewController *)mediaLocationPicker didPickLocation:(CLLocation *)location {
+    [self updateMediaLocation:location];
 }
 
 @end

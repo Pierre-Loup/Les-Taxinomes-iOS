@@ -397,6 +397,9 @@ static LTConnectionManager *instance = nil;
 }
 
 - (BOOL)isAuthenticated {
+#warning delete the folowing line
+    //return YES;
+    
     BOOL returnValue = NO;
     if (authenticatedUser_ == nil) {
         return returnValue;

@@ -10,6 +10,10 @@
 "common_OK" = "OK";
 "common_logout" = "Logout";
 "common_signin" = "Sign In";
+"common.title" = "Title";
+"common.city" = "City";
+"common.zipcode" = "Zipcode";
+"common.country" = "Country";
 
 /* ALERTS */
 "alert_auth_failed_title" = "Authentication failed";
@@ -30,6 +34,10 @@
 "media_upload_view_title" = "Share";
 "media_upload_no_title" = "No title";
 "media_upload_no_license_text" = "No license";
+"media_upload.location_picker_cell.text" = "Localize a media";
+
+/* MEDIA LOCATION PICKER */
+"media_location_picker.drag_me" = "Drag me !";
 
 /* ERROR MESSAGES */
 "error_auth_failed" = "Authentication failed. Checkout your login and your password";

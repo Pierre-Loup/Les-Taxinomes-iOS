@@ -34,6 +34,7 @@
 
 @synthesize window = window_; 
 @synthesize tabBarController = tabBarController_;
+@synthesize launchScreenView = launchScreenView_;
 
 /*- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     

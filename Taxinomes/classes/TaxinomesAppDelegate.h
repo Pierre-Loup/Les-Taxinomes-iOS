@@ -31,7 +31,6 @@
 
 @interface TaxinomesAppDelegate : NSObject <UIApplicationDelegate>{
     SystemSoundID launchSoundID_;
-    UIImageView* launchScreenView_;
     
 }
 

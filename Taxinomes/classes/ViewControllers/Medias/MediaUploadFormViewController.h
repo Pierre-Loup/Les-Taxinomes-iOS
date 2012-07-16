@@ -29,12 +29,14 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <CoreLocation/CoreLocation.h>
 #import "LTConnectionManager.h"
-#import "LTPhotoPickerViewController.h"
+#import "LTViewController.h"
 #import "AuthenticationSheetViewController.h"
 #import "MediaLicenseChooserViewController.h"
+#import "MediaLocalisationPickerViewController.h"
 #import "UIGlossyButton.h"
 
-@interface MediaUploadFormViewController : LTPhotoPickerViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate,LTConnectionManagerDelegate, AuthenticationSheetViewControllerDelegate, MediaLicenseChooserDelegate> {
+@interface MediaUploadFormViewController : LTViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, LTConnectionManagerDelegate, AuthenticationSheetViewControllerDelegate, MediaLicenseChooserDelegate, MediaLocationPickerDelegate> {
+    CLGeocoder* reverseGeocoder_;
     
     NSArray* rowsInSection_;
     NSDictionary* cellForIndexPath_;
@@ -47,15 +49,14 @@
 @property (retain, nonatomic) IBOutlet UITableView* tableView;
 @property (nonatomic, retain) IBOutlet UIImageView* mediaSnapshotView;
 @property (nonatomic, retain) IBOutlet UIImage* mediaImage;
-@property (nonatomic, retain) IBOutlet UITableViewCell* titleCell;
 @property (nonatomic, retain) IBOutlet UITableViewCell* textCell;
 @property (nonatomic, retain) IBOutlet UITableViewCell* licenseCell;
-@property (nonatomic, retain) IBOutlet UITableViewCell* emptyLocalisationCell;
-@property (nonatomic, retain) IBOutlet UITableViewCell* mapLocalisationCell;
 @property (nonatomic, retain) IBOutlet UITableViewCell* publishCell;
 @property (nonatomic, retain) IBOutlet UITextField* titleInput;
 @property (nonatomic, retain) IBOutlet UITextView* textInput;
-@property (nonatomic, retain) IBOutlet MKMapView* mapView;
+@property (nonatomic, retain) IBOutlet UITextField* cityInput;
+@property (nonatomic, retain) IBOutlet UITextField* zipcodeInput;
+@property (nonatomic, retain) IBOutlet UITextField* countryInput;
 @property (nonatomic, retain) IBOutlet UISwitch* publishSwitch;
 @property (nonatomic, retain) IBOutlet UIGlossyButton* shareButton;
 
