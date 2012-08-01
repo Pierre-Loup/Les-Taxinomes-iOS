@@ -52,8 +52,7 @@
 }
 
 - (void)setTitle:(NSString *)title {
-    CGFloat titleLabelWidth = MIN(0.75*self.frame.size.width, [title sizeWithFont:self.titleLabel.font].width);
-    NSLog(@"titleLabelWidth:%f",titleLabelWidth);
+    CGFloat titleLabelWidth = [title sizeWithFont:self.titleLabel.font].width;
     [self.titleLabel setFrame:CGRectMake(self.titleLabel.frame.origin.x, 
                                        self.titleLabel.frame.origin.y, 
                                        titleLabelWidth, 
@@ -61,8 +60,7 @@
     self.titleLabel.text = title;
     
     CGFloat inputOriginX = 2*self.titleLabel.frame.origin.x + titleLabelWidth;
-    CGFloat inputWidth = self.frame.size.width - self.titleLabel.frame.origin.x - inputOriginX;
-    NSLog(@"%@ - inputOriginX:%f inputWidth:%f",title, inputOriginX, inputWidth);
+    CGFloat inputWidth = self.contentView.bounds.size.width - self.titleLabel.frame.origin.x - inputOriginX;
     [self.input setFrame:CGRectMake(inputOriginX, 
                                   self.input.frame.origin.y, 
                                   inputWidth,

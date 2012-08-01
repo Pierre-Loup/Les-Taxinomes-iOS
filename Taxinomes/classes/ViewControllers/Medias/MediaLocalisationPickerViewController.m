@@ -10,12 +10,15 @@
 #import "Annotation.h"
 
 @interface MediaLocalisationPickerViewController ()
+@property (nonatomic, retain) IBOutlet MKMapView* mapView;
 
+- (void)refreshMap;
 @end
 
 @implementation MediaLocalisationPickerViewController
 @synthesize delegate = delegate_;
 @synthesize mapView = mapView_;
+@synthesize location = location_;
 
 - (id)init {
     self = [super initWithNibName:NSStringFromClass([self class]) bundle:nil];
@@ -30,20 +33,20 @@
     [super viewDidLoad];
     rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common_OK") style:UIBarButtonItemStylePlain target:self action:@selector(okButtonButtonPressed:)];
     [self.navigationItem setRightBarButtonItem:rightBarButton_ animated:NO];
-    
-    Annotation* annotation = [[Annotation alloc] init];
-    annotation.coordinate = CLLocationCoordinate2DMake(0.0, 0.0);
-    annotation.title = TRANSLATE(@"media_location_picker.drag_me");
-    [mapView_ addAnnotation:annotation];
-    [mapView_ selectAnnotation:annotation animated:NO];
-    [annotation release];
+    if (location_) {
+        [self refreshMap];
+    } else {
+        self.location = [[CLLocation alloc] initWithLatitude:0.0 longitude:0.0];
+        [mapView_ setRegion:MKCoordinateRegionMake(location_.coordinate, MKCoordinateSpanMake(180.0, 180.0))];
+    }
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     [rightBarButton_ release];
-    [mapView_ release];
+    rightBarButton_ = nil;
+    self.mapView = nil;
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
@@ -64,6 +67,28 @@
         [delegate_ mediaLocationPicker:self didPickLocation:location_];
     }
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)setLocation:(CLLocation *)location {
+    [location_ release];
+    location_ = [location copy];
+    
+    [self refreshMap];
+}
+
+- (void)refreshMap {
+    if (mapView_) {
+        [mapView_ removeAnnotations:mapView_.annotations];
+        
+        Annotation* annotation = [[Annotation alloc] init];
+        annotation.coordinate = location_.coordinate;
+        annotation.title = TRANSLATE(@"media_location_picker.drag_me");
+        mapView_.showsUserLocation = YES;
+        [mapView_ addAnnotation:annotation];
+        [mapView_ selectAnnotation:annotation animated:YES];
+        [mapView_ setRegion:MKCoordinateRegionMake(location_.coordinate, MKCoordinateSpanMake(18.0, 18.0))];
+        [annotation release];
+    }
 }
 
 #pragma mark MKMapViewDelegate

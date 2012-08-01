@@ -49,7 +49,6 @@
 		A539D1FB154AF6B60048CDF1 /* tabbar_medias.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1EB154AF6B60048CDF1 /* tabbar_medias.png */; };
 		A539D1FC154AF6B60048CDF1 /* tabbar_navigate.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1EC154AF6B60048CDF1 /* tabbar_navigate.png */; };
 		A539D1FD154AF6B60048CDF1 /* thumbnail_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1ED154AF6B60048CDF1 /* thumbnail_placeholder.png */; };
-		A539D3E4154AFA1A0048CDF1 /* GridCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D3E2154AFA1A0048CDF1 /* GridCellView.xib */; };
 		A539D435154AFBB10048CDF1 /* LTConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D3F9154AFA930048CDF1 /* LTConnectionManager.m */; };
 		A539D436154AFBB10048CDF1 /* LTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D3FB154AFA930048CDF1 /* LTDataManager.m */; };
 		A539D437154AFBB60048CDF1 /* LTTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D3DF154AFA140048CDF1 /* LTTitleView.m */; };
@@ -59,7 +58,6 @@
 		A539D443154AFBF70048CDF1 /* AuthenticationSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D441154AFBF70048CDF1 /* AuthenticationSheetViewController.m */; };
 		A539D444154AFBF70048CDF1 /* AuthenticationSheetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D442154AFBF70048CDF1 /* AuthenticationSheetViewController.xib */; };
 		A539D445154AFC0D0048CDF1 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D407154AFB8B0048CDF1 /* HomeViewController.m */; };
-		A539D446154AFC0D0048CDF1 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D408154AFB8B0048CDF1 /* HomeViewController.xib */; };
 		A539D447154AFC0D0048CDF1 /* LegalInformationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D40A154AFB8B0048CDF1 /* LegalInformationsViewController.m */; };
 		A539D448154AFC0D0048CDF1 /* LegalInformationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D40B154AFB8B0048CDF1 /* LegalInformationsViewController.xib */; };
 		A539D449154AFC120048CDF1 /* LTPhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D40E154AFB8B0048CDF1 /* LTPhotoPickerViewController.m */; };
@@ -70,8 +68,6 @@
 		A539D44E154AFC200048CDF1 /* MediaFullSizeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D417154AFB8B0048CDF1 /* MediaFullSizeViewController.xib */; };
 		A539D44F154AFC200048CDF1 /* MediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D419154AFB8B0048CDF1 /* MediasListViewController.m */; };
 		A539D450154AFC200048CDF1 /* MediasListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D41A154AFB8B0048CDF1 /* MediasListViewController.xib */; };
-		A539D451154AFC200048CDF1 /* MediaUploadFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D41C154AFB8B0048CDF1 /* MediaUploadFormViewController.m */; };
-		A539D452154AFC200048CDF1 /* MediaUploadFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D41D154AFB8B0048CDF1 /* MediaUploadFormViewController.xib */; };
 		A539D453154AFC270048CDF1 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D420154AFB8B0048CDF1 /* MapViewController.m */; };
 		A539D454154AFC270048CDF1 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D421154AFB8B0048CDF1 /* MapViewController.xib */; };
 		A539D4C1154AFC5F0048CDF1 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D457154AFC5F0048CDF1 /* ASIAuthenticationDialog.m */; };
@@ -129,11 +125,21 @@
 		A539D4FF154B004D0048CDF1 /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D4FE154B004D0048CDF1 /* Author.m */; };
 		A539D513154B03210048CDF1 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D510154B00840048CDF1 /* Annotation.m */; };
 		A53E292815A63289006D6B07 /* Brest.gpx in Resources */ = {isa = PBXBuildFile; fileRef = A53E292715A63289006D6B07 /* Brest.gpx */; };
+		A5402B6E15C98CB5002489E4 /* MediaUploadFormCells.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5402B6D15C98CB5002489E4 /* MediaUploadFormCells.xib */; };
+		A5402B7815C99EF9002489E4 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5402B7715C99EF9002489E4 /* HomeViewController.xib */; };
+		A5402B8415C9DC61002489E4 /* UIImageView+PhotoFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = A5402B8315C9DC61002489E4 /* UIImageView+PhotoFrame.m */; };
+		A5402B8815C9E146002489E4 /* MediaUploadFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5402B8615C9E145002489E4 /* MediaUploadFormViewController.m */; };
+		A5402B8915C9E146002489E4 /* MediaUploadFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5402B8715C9E145002489E4 /* MediaUploadFormViewController.xib */; };
 		A5568F1015AF5942008A9C8B /* SingleLineInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5568F0F15AF5942008A9C8B /* SingleLineInputCell.m */; };
 		A5568F1215AF599B008A9C8B /* SingleLineInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5568F1115AF599B008A9C8B /* SingleLineInputCell.xib */; };
 		A5582F4D15A4D9D1008F2F93 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */; };
 		A5582F5315A4DF47008F2F93 /* UIGlossyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A5582F5215A4DF47008F2F93 /* UIGlossyButton.m */; };
 		A5597486155D83CF0072D082 /* MediaSynchGap.m in Sources */ = {isa = PBXBuildFile; fileRef = A5597485155D83CF0072D082 /* MediaSynchGap.m */; };
+		A55E6EF515C7FCC3009B60A0 /* DCCrossHairView.m in Sources */ = {isa = PBXBuildFile; fileRef = A55E6EED15C7FCC3009B60A0 /* DCCrossHairView.m */; };
+		A55E6EF615C7FCC3009B60A0 /* DCFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = A55E6EEF15C7FCC3009B60A0 /* DCFrameView.m */; };
+		A55E6EF715C7FCC3009B60A0 /* DCIntrospect.m in Sources */ = {isa = PBXBuildFile; fileRef = A55E6EF115C7FCC3009B60A0 /* DCIntrospect.m */; };
+		A55E6EF815C7FCC3009B60A0 /* DCStatusBarOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = A55E6EF415C7FCC3009B60A0 /* DCStatusBarOverlay.m */; };
+		A58DFF9F15C8829600D4EF42 /* LTTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A58DFF9E15C8829600D4EF42 /* LTTableViewController.m */; };
 		A591B7B3150D57F000CE89BA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A591B7B2150D57F000CE89BA /* CoreData.framework */; };
 		A5986FD115B4B53D00154F87 /* MediaLocalisationPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5986FCF15B4B53D00154F87 /* MediaLocalisationPickerViewController.m */; };
 		A5986FD215B4B53D00154F87 /* MediaLocalisationPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5986FD015B4B53D00154F87 /* MediaLocalisationPickerViewController.xib */; };
@@ -230,7 +236,6 @@
 		A539D1ED154AF6B60048CDF1 /* thumbnail_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = thumbnail_placeholder.png; path = Taxinomes/Ressources/Images/thumbnail_placeholder.png; sourceTree = SOURCE_ROOT; };
 		A539D3DE154AFA140048CDF1 /* LTTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTTitleView.h; path = Taxinomes/Classes/Views/LTTitleView.h; sourceTree = SOURCE_ROOT; };
 		A539D3DF154AFA140048CDF1 /* LTTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTTitleView.m; path = Taxinomes/Classes/Views/LTTitleView.m; sourceTree = SOURCE_ROOT; };
-		A539D3E2154AFA1A0048CDF1 /* GridCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GridCellView.xib; sourceTree = "<group>"; };
 		A539D3E3154AFA1A0048CDF1 /* MediaListCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaListCellView.xib; sourceTree = "<group>"; };
 		A539D3ED154AFA3E0048CDF1 /* LTDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LTDataModel.xcdatamodel; sourceTree = "<group>"; };
 		A539D3F8154AFA930048CDF1 /* LTConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTConnectionManager.h; path = Taxinomes/Classes/Core/LTConnectionManager.h; sourceTree = SOURCE_ROOT; };
@@ -243,7 +248,6 @@
 		A539D403154AFB8B0048CDF1 /* AccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountViewController.xib; sourceTree = "<group>"; };
 		A539D406154AFB8B0048CDF1 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		A539D407154AFB8B0048CDF1 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
-		A539D408154AFB8B0048CDF1 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		A539D409154AFB8B0048CDF1 /* LegalInformationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LegalInformationsViewController.h; sourceTree = "<group>"; };
 		A539D40A154AFB8B0048CDF1 /* LegalInformationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LegalInformationsViewController.m; sourceTree = "<group>"; };
 		A539D40B154AFB8B0048CDF1 /* LegalInformationsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LegalInformationsViewController.xib; sourceTree = "<group>"; };
@@ -260,9 +264,6 @@
 		A539D418154AFB8B0048CDF1 /* MediasListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediasListViewController.h; sourceTree = "<group>"; };
 		A539D419154AFB8B0048CDF1 /* MediasListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediasListViewController.m; sourceTree = "<group>"; };
 		A539D41A154AFB8B0048CDF1 /* MediasListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediasListViewController.xib; sourceTree = "<group>"; };
-		A539D41B154AFB8B0048CDF1 /* MediaUploadFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaUploadFormViewController.h; sourceTree = "<group>"; };
-		A539D41C154AFB8B0048CDF1 /* MediaUploadFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaUploadFormViewController.m; sourceTree = "<group>"; };
-		A539D41D154AFB8B0048CDF1 /* MediaUploadFormViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaUploadFormViewController.xib; sourceTree = "<group>"; };
 		A539D41F154AFB8B0048CDF1 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		A539D420154AFB8B0048CDF1 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		A539D421154AFB8B0048CDF1 /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
@@ -381,6 +382,13 @@
 		A539D50F154B00840048CDF1 /* Annotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Annotation.h; path = Taxinomes/Classes/Models/Annotation.h; sourceTree = SOURCE_ROOT; };
 		A539D510154B00840048CDF1 /* Annotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Annotation.m; path = Taxinomes/Classes/Models/Annotation.m; sourceTree = SOURCE_ROOT; };
 		A53E292715A63289006D6B07 /* Brest.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Brest.gpx; path = Ressources/Brest.gpx; sourceTree = "<group>"; };
+		A5402B6D15C98CB5002489E4 /* MediaUploadFormCells.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MediaUploadFormCells.xib; path = ../../Views/Cells/MediaUploadFormCells.xib; sourceTree = "<group>"; };
+		A5402B7715C99EF9002489E4 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		A5402B8215C9DC61002489E4 /* UIImageView+PhotoFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+PhotoFrame.h"; sourceTree = "<group>"; };
+		A5402B8315C9DC61002489E4 /* UIImageView+PhotoFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+PhotoFrame.m"; sourceTree = "<group>"; };
+		A5402B8515C9E145002489E4 /* MediaUploadFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaUploadFormViewController.h; path = MediaUploadForm/MediaUploadFormViewController.h; sourceTree = "<group>"; };
+		A5402B8615C9E145002489E4 /* MediaUploadFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaUploadFormViewController.m; path = MediaUploadForm/MediaUploadFormViewController.m; sourceTree = "<group>"; };
+		A5402B8715C9E145002489E4 /* MediaUploadFormViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MediaUploadFormViewController.xib; path = MediaUploadForm/MediaUploadFormViewController.xib; sourceTree = "<group>"; };
 		A5568F0E15AF5942008A9C8B /* SingleLineInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleLineInputCell.h; sourceTree = "<group>"; };
 		A5568F0F15AF5942008A9C8B /* SingleLineInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleLineInputCell.m; sourceTree = "<group>"; };
 		A5568F1115AF599B008A9C8B /* SingleLineInputCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleLineInputCell.xib; sourceTree = "<group>"; };
@@ -389,6 +397,17 @@
 		A5582F5215A4DF47008F2F93 /* UIGlossyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIGlossyButton.m; path = Taxinomes/Classes/ExternalSources/UIGlossyButton.m; sourceTree = SOURCE_ROOT; };
 		A5597484155D83CF0072D082 /* MediaSynchGap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaSynchGap.h; path = Taxinomes/Classes/Models/MediaSynchGap.h; sourceTree = SOURCE_ROOT; };
 		A5597485155D83CF0072D082 /* MediaSynchGap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaSynchGap.m; path = Taxinomes/Classes/Models/MediaSynchGap.m; sourceTree = SOURCE_ROOT; };
+		A55E6EEC15C7FCC3009B60A0 /* DCCrossHairView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCCrossHairView.h; sourceTree = "<group>"; };
+		A55E6EED15C7FCC3009B60A0 /* DCCrossHairView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCCrossHairView.m; sourceTree = "<group>"; };
+		A55E6EEE15C7FCC3009B60A0 /* DCFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCFrameView.h; sourceTree = "<group>"; };
+		A55E6EEF15C7FCC3009B60A0 /* DCFrameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCFrameView.m; sourceTree = "<group>"; };
+		A55E6EF015C7FCC3009B60A0 /* DCIntrospect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCIntrospect.h; sourceTree = "<group>"; };
+		A55E6EF115C7FCC3009B60A0 /* DCIntrospect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCIntrospect.m; sourceTree = "<group>"; };
+		A55E6EF215C7FCC3009B60A0 /* DCIntrospectSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCIntrospectSettings.h; sourceTree = "<group>"; };
+		A55E6EF315C7FCC3009B60A0 /* DCStatusBarOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCStatusBarOverlay.h; sourceTree = "<group>"; };
+		A55E6EF415C7FCC3009B60A0 /* DCStatusBarOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCStatusBarOverlay.m; sourceTree = "<group>"; };
+		A58DFF9D15C8829600D4EF42 /* LTTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTTableViewController.h; sourceTree = "<group>"; };
+		A58DFF9E15C8829600D4EF42 /* LTTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTTableViewController.m; sourceTree = "<group>"; };
 		A591B7B2150D57F000CE89BA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		A5986FCE15B4B53D00154F87 /* MediaLocalisationPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaLocalisationPickerViewController.h; sourceTree = "<group>"; };
 		A5986FCF15B4B53D00154F87 /* MediaLocalisationPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaLocalisationPickerViewController.m; sourceTree = "<group>"; };
@@ -588,7 +607,6 @@
 		A539D3E1154AFA1A0048CDF1 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				A539D3E2154AFA1A0048CDF1 /* GridCellView.xib */,
 				A539D3E3154AFA1A0048CDF1 /* MediaListCellView.xib */,
 				A52CF5EB15ADE2AB00FD0D66 /* MapCell.h */,
 				A52CF5EC15ADE2AB00FD0D66 /* MapCell.m */,
@@ -628,7 +646,7 @@
 			children = (
 				A539D406154AFB8B0048CDF1 /* HomeViewController.h */,
 				A539D407154AFB8B0048CDF1 /* HomeViewController.m */,
-				A539D408154AFB8B0048CDF1 /* HomeViewController.xib */,
+				A5402B7715C99EF9002489E4 /* HomeViewController.xib */,
 				A539D409154AFB8B0048CDF1 /* LegalInformationsViewController.h */,
 				A539D40A154AFB8B0048CDF1 /* LegalInformationsViewController.m */,
 				A539D40B154AFB8B0048CDF1 /* LegalInformationsViewController.xib */,
@@ -644,6 +662,8 @@
 				A539D40E154AFB8B0048CDF1 /* LTPhotoPickerViewController.m */,
 				A539D40F154AFB8B0048CDF1 /* LTViewController.h */,
 				A539D410154AFB8B0048CDF1 /* LTViewController.m */,
+				A58DFF9D15C8829600D4EF42 /* LTTableViewController.h */,
+				A58DFF9E15C8829600D4EF42 /* LTTableViewController.m */,
 			);
 			name = LTControllers;
 			path = Taxinomes/Classes/ViewControllers/LTControllers;
@@ -652,6 +672,7 @@
 		A539D411154AFB8B0048CDF1 /* Medias */ = {
 			isa = PBXGroup;
 			children = (
+				A5402B7015C98D60002489E4 /* MediaUploadForm */,
 				A539D418154AFB8B0048CDF1 /* MediasListViewController.h */,
 				A539D419154AFB8B0048CDF1 /* MediasListViewController.m */,
 				A539D41A154AFB8B0048CDF1 /* MediasListViewController.xib */,
@@ -661,9 +682,6 @@
 				A539D415154AFB8B0048CDF1 /* MediaFullSizeViewContoller.h */,
 				A539D416154AFB8B0048CDF1 /* MediaFullSizeViewContoller.m */,
 				A539D417154AFB8B0048CDF1 /* MediaFullSizeViewController.xib */,
-				A539D41B154AFB8B0048CDF1 /* MediaUploadFormViewController.h */,
-				A539D41C154AFB8B0048CDF1 /* MediaUploadFormViewController.m */,
-				A539D41D154AFB8B0048CDF1 /* MediaUploadFormViewController.xib */,
 				A50D5D071572164900BF9DF0 /* MediaLicenseChooserViewController.h */,
 				A50D5D081572164900BF9DF0 /* MediaLicenseChooserViewController.m */,
 				A50D5D091572164900BF9DF0 /* MediaLicenseChooserViewController.xib */,
@@ -817,6 +835,34 @@
 			path = "Taxinomes/Classes/ExternalSources/XML-RPC";
 			sourceTree = SOURCE_ROOT;
 		};
+		A5402B7015C98D60002489E4 /* MediaUploadForm */ = {
+			isa = PBXGroup;
+			children = (
+				A5402B8515C9E145002489E4 /* MediaUploadFormViewController.h */,
+				A5402B8615C9E145002489E4 /* MediaUploadFormViewController.m */,
+				A5402B8715C9E145002489E4 /* MediaUploadFormViewController.xib */,
+				A5402B6D15C98CB5002489E4 /* MediaUploadFormCells.xib */,
+			);
+			name = MediaUploadForm;
+			sourceTree = "<group>";
+		};
+		A55E6EEB15C7FCC3009B60A0 /* DCIntrospect */ = {
+			isa = PBXGroup;
+			children = (
+				A55E6EEC15C7FCC3009B60A0 /* DCCrossHairView.h */,
+				A55E6EED15C7FCC3009B60A0 /* DCCrossHairView.m */,
+				A55E6EEE15C7FCC3009B60A0 /* DCFrameView.h */,
+				A55E6EEF15C7FCC3009B60A0 /* DCFrameView.m */,
+				A55E6EF015C7FCC3009B60A0 /* DCIntrospect.h */,
+				A55E6EF115C7FCC3009B60A0 /* DCIntrospect.m */,
+				A55E6EF215C7FCC3009B60A0 /* DCIntrospectSettings.h */,
+				A55E6EF315C7FCC3009B60A0 /* DCStatusBarOverlay.h */,
+				A55E6EF415C7FCC3009B60A0 /* DCStatusBarOverlay.m */,
+			);
+			name = DCIntrospect;
+			path = "../../../../Developer/les-taxinomes-iphone/Taxinomes/classes/ExternalSources/DCIntrospect";
+			sourceTree = "<group>";
+		};
 		A5E35C721543149D00C9660E /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -887,6 +933,7 @@
 				A539D46A154AFC5F0048CDF1 /* c_tidy */,
 				A539D49F154AFC5F0048CDF1 /* CTidy.h */,
 				A539D4A0154AFC5F0048CDF1 /* CTidy.m */,
+				A55E6EEB15C7FCC3009B60A0 /* DCIntrospect */,
 				A519587F15AAA60300417641 /* ELC Image Picker */,
 				A539D4A1154AFC5F0048CDF1 /* GusUtils */,
 				A539D4A5154AFC5F0048CDF1 /* MBProgressHUD.h */,
@@ -900,6 +947,8 @@
 				A539D4AF154AFC5F0048CDF1 /* TCImageView.m */,
 				A539D4B0154AFC5F0048CDF1 /* UIImage+Resize.h */,
 				A539D4B1154AFC5F0048CDF1 /* UIImage+Resize.m */,
+				A5402B8215C9DC61002489E4 /* UIImageView+PhotoFrame.h */,
+				A5402B8315C9DC61002489E4 /* UIImageView+PhotoFrame.m */,
 				A5582F5115A4DF47008F2F93 /* UIGlossyButton.h */,
 				A5582F5215A4DF47008F2F93 /* UIGlossyButton.m */,
 				A539D4B2154AFC5F0048CDF1 /* XML-RPC */,
@@ -997,7 +1046,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0430;
-				ORGANIZATIONNAME = "Les petits débrouillards Bretagne";
+				ORGANIZATIONNAME = " Les Petits Débrouillards Bretagne";
 			};
 			buildConfigurationList = 37D2E7D3144709ED0044EC3A /* Build configuration list for PBXProject "Taxinomes" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1044,12 +1093,10 @@
 				A539D1FD154AF6B60048CDF1 /* thumbnail_placeholder.png in Resources */,
 				A539D43F154AFBD60048CDF1 /* AccountViewController.xib in Resources */,
 				A539D444154AFBF70048CDF1 /* AuthenticationSheetViewController.xib in Resources */,
-				A539D446154AFC0D0048CDF1 /* HomeViewController.xib in Resources */,
 				A539D448154AFC0D0048CDF1 /* LegalInformationsViewController.xib in Resources */,
 				A539D44C154AFC200048CDF1 /* MediaDetailViewController.xib in Resources */,
 				A539D44E154AFC200048CDF1 /* MediaFullSizeViewController.xib in Resources */,
 				A539D450154AFC200048CDF1 /* MediasListViewController.xib in Resources */,
-				A539D452154AFC200048CDF1 /* MediaUploadFormViewController.xib in Resources */,
 				A539D454154AFC270048CDF1 /* MapViewController.xib in Resources */,
 				A539D4E4154AFC600048CDF1 /* LICENSE in Resources */,
 				A5CA5F24154D8C2800C3EB2E /* MainWindow.xib in Resources */,
@@ -1073,6 +1120,9 @@
 				A52CF5F015ADE2C400FD0D66 /* MapCell.xib in Resources */,
 				A5568F1215AF599B008A9C8B /* SingleLineInputCell.xib in Resources */,
 				A5986FD215B4B53D00154F87 /* MediaLocalisationPickerViewController.xib in Resources */,
+				A5402B6E15C98CB5002489E4 /* MediaUploadFormCells.xib in Resources */,
+				A5402B7815C99EF9002489E4 /* HomeViewController.xib in Resources */,
+				A5402B8915C9E146002489E4 /* MediaUploadFormViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1081,7 +1131,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				37D2E806144709EE0044EC3A /* TaxinomesTests.h in Resources */,
-				A539D3E4154AFA1A0048CDF1 /* GridCellView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1123,7 +1172,6 @@
 				A539D44B154AFC200048CDF1 /* MediaDetailViewController.m in Sources */,
 				A539D44D154AFC200048CDF1 /* MediaFullSizeViewContoller.m in Sources */,
 				A539D44F154AFC200048CDF1 /* MediasListViewController.m in Sources */,
-				A539D451154AFC200048CDF1 /* MediaUploadFormViewController.m in Sources */,
 				A539D453154AFC270048CDF1 /* MapViewController.m in Sources */,
 				A539D4C1154AFC5F0048CDF1 /* ASIAuthenticationDialog.m in Sources */,
 				A539D4C2154AFC5F0048CDF1 /* ASIDataCompressor.m in Sources */,
@@ -1190,6 +1238,13 @@
 				A52CF5ED15ADE2AB00FD0D66 /* MapCell.m in Sources */,
 				A5568F1015AF5942008A9C8B /* SingleLineInputCell.m in Sources */,
 				A5986FD115B4B53D00154F87 /* MediaLocalisationPickerViewController.m in Sources */,
+				A55E6EF515C7FCC3009B60A0 /* DCCrossHairView.m in Sources */,
+				A55E6EF615C7FCC3009B60A0 /* DCFrameView.m in Sources */,
+				A55E6EF715C7FCC3009B60A0 /* DCIntrospect.m in Sources */,
+				A55E6EF815C7FCC3009B60A0 /* DCStatusBarOverlay.m in Sources */,
+				A58DFF9F15C8829600D4EF42 /* LTTableViewController.m in Sources */,
+				A5402B8415C9DC61002489E4 /* UIImageView+PhotoFrame.m in Sources */,
+				A5402B8815C9E146002489E4 /* MediaUploadFormViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

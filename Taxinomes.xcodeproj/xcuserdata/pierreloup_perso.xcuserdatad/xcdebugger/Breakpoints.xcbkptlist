@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Taxinomes/Classes/ViewControllers/LTControllers/LTPhotoPickerViewController.m"
-         timestampString = "364160777.110339"
+         timestampString = "365535054.233977"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "48"
-         endingLineNumber = "48"
+         startingLineNumber = "49"
+         endingLineNumber = "49"
          landmarkName = "-cameraButtonAction:"
          landmarkType = "5">
       </FileBreakpoint>

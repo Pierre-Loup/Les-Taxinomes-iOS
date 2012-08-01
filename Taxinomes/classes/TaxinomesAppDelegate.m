@@ -29,6 +29,7 @@
 #import "LTDataManager.h"
 #import "Constants.h"
 #import "License.h"
+#import "DCIntrospect.h"
 
 @implementation TaxinomesAppDelegate
 
@@ -36,22 +37,21 @@
 @synthesize tabBarController = tabBarController_;
 @synthesize launchScreenView = launchScreenView_;
 
-/*- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
-    
-    return YES;
-}*/
-
 - (void)applicationDidFinishLaunching:(UIApplication *)application{
     LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
     if ([[License allLicenses] count] == 0) {
         [connectionManager getLicenses];
     }
-    //[connectionManager getSectionWithIdentifier:[NSNumber numberWithInt:12]];
     
     UINavigationBar *bar = [self.tabBarController.navigationController navigationBar];
     [bar setTintColor:[UIColor colorWithRed:(95.0/255.0) green:(130.0/255) blue:(55.0/255.0) alpha:1.0]];
     [self.window addSubview: self.tabBarController.view];
     [self.window makeKeyAndVisible];
+    
+    // Press space in the simulator to start UI Introspection
+    #if TARGET_IPHONE_SIMULATOR
+        [[DCIntrospect sharedIntrospector] start];
+    #endif
     
     NSString * launchSoundPath = [[NSBundle mainBundle] pathForResource:@"oiseau" ofType:@"aif"];
     if (launchSoundPath) {

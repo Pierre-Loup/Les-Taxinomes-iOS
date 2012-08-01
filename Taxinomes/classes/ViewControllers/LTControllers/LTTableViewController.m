@@ -1,32 +1,18 @@
 //
-//  LTViewController.m
+//  LTTableViewController.m
 //  Taxinomes
 //
-//  Created by Pierre-Loup on 07/03/12.
-//  Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
+//  Created by Pierre-Loup Tristant on 31/07/12.
+//  Copyright (c) 2012 Les petits débrouillards Bretagne. All rights reserved.
 //
 
-/*
- 
- Les Taxinomes iPhone is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
- 
- Les Taxinomes iPhone is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>
- 
- */
+#import "LTTableViewController.h"
 
-#import "LTViewController.h"
+@interface LTTableViewController ()
 
-@implementation LTViewController
-@synthesize loaderView = loaderView_;
+@end
+
+@implementation LTTableViewController@synthesize loaderView = loaderView_;
 
 #pragma mark - Loader
 
@@ -100,6 +86,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    loaderView_ = nil;
+    
     [self.navigationController.navigationBar setTintColor:kStandardGreenColor];
 }
 
@@ -109,6 +97,8 @@
     [loaderView_ removeFromSuperview];
     [loaderView_ release];
     loaderView_ = nil;
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -128,7 +118,10 @@
 }
 
 - (void)dealloc {
+    // Remove HUD from screen when the HUD was hidden
+	[loaderView_ removeFromSuperview];
 	[loaderView_ release];
+    loaderView_ = nil;
     [super dealloc];
 }
 

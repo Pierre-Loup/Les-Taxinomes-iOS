@@ -28,6 +28,7 @@
 #pragma mark View lifecycle
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
         UIBarButtonItem* cameraBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(cameraButtonAction:)];
         [self.navigationItem setRightBarButtonItem:cameraBarButton animated:YES];

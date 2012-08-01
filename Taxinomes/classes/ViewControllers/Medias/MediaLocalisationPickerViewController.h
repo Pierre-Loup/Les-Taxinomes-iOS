@@ -20,12 +20,10 @@
 @end
 
 @interface MediaLocalisationPickerViewController : LTViewController {
-    CLLocation* location_;
     UIBarButtonItem* rightBarButton_;
 }
 
-@property (nonatomic, assign) IBOutlet 
-id<MediaLocationPickerDelegate> delegate;
-@property (nonatomic, retain) IBOutlet MKMapView* mapView;
+@property (nonatomic, assign) IBOutlet id<MediaLocationPickerDelegate> delegate;
+@property (nonatomic, retain) CLLocation* location;
 
 @end

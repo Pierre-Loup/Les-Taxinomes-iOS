@@ -1,8 +1,8 @@
 //
-//  LTViewController.h
+//  LTTableViewController.h
 //  Taxinomes
 //
-//  Created by Pierre-Loup on 07/03/12.
+//  Created by Pierre-Loup Tristant on 31/07/12.
 //  Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
@@ -27,8 +27,8 @@
 #import "MBProgressHUD.h"
 #import "ASIProgressDelegate.h"
 
-@interface LTViewController : UIViewController <MBProgressHUDDelegate, ASIProgressDelegate> {
-    MBProgressHUD* loaderView_;
+@interface LTTableViewController : UITableViewController <MBProgressHUDDelegate, ASIProgressDelegate> {
+    MBProgressHUD *loaderView_;
 }
 
 @property (nonatomic, retain) MBProgressHUD* loaderView;
@@ -36,5 +36,4 @@
 - (void) displayLoaderViewWithDetermination;
 - (void) displayLoader;
 - (void) hideLoader;
-
 @end

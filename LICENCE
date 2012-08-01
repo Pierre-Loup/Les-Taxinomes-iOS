@@ -25,6 +25,7 @@ including :
 - Trevor Harmon's UIImage+Resize class (Taxinomes/classes/ExternalSources/)
 - Matej Bukovinski's MBProgressHUD class (Taxinomes/classes/ExternalSources/)
 - First Water Tech Ltd's UIGlossyButton class (Taxinomes/classes/ExternalSources/)
+- Seymour Cakes's UIImageView+PhotoFrame category (Taxinomes/classes/ExternalSources/)
 
 Please consult their respective headers for the terms of their individual licenses.
 

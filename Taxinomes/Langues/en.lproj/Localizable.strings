@@ -8,9 +8,11 @@
 
 "common_cancel" = "Cancel";
 "common_OK" = "OK";
+"common.loading" = "Loading";
 "common_logout" = "Logout";
 "common_signin" = "Sign In";
 "common.title" = "Title";
+"common.texte" = "Text";
 "common.city" = "City";
 "common.zipcode" = "Zipcode";
 "common.country" = "Country";
