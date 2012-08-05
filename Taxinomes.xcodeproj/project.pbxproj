@@ -10,7 +10,6 @@
 		37D2E7DE144709ED0044EC3A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7DD144709ED0044EC3A /* UIKit.framework */; };
 		37D2E7E0144709ED0044EC3A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7DF144709ED0044EC3A /* Foundation.framework */; };
 		37D2E7E2144709ED0044EC3A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7E1144709ED0044EC3A /* CoreGraphics.framework */; };
-		37D2E7EA144709ED0044EC3A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 37D2E7E9144709ED0044EC3A /* main.m */; };
 		37D2E7F9144709EE0044EC3A /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7F8144709EE0044EC3A /* SenTestingKit.framework */; };
 		37D2E7FA144709EE0044EC3A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7DD144709ED0044EC3A /* UIKit.framework */; };
 		37D2E7FB144709EE0044EC3A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7DF144709ED0044EC3A /* Foundation.framework */; };
@@ -74,8 +73,6 @@
 		A5597486155D83CF0072D082 /* MediaSynchGap.m in Sources */ = {isa = PBXBuildFile; fileRef = A5597485155D83CF0072D082 /* MediaSynchGap.m */; };
 		A58DFF9F15C8829600D4EF42 /* LTTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A58DFF9E15C8829600D4EF42 /* LTTableViewController.m */; };
 		A591B7B3150D57F000CE89BA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A591B7B2150D57F000CE89BA /* CoreData.framework */; };
-		A5933CCF15CD0E2400AD6D10 /* tabbar_radar.png in Resources */ = {isa = PBXBuildFile; fileRef = A5933CCE15CD0E2400AD6D10 /* tabbar_radar.png */; };
-		A5933CD215CD0E3C00AD6D10 /* tabbar_bug.png in Resources */ = {isa = PBXBuildFile; fileRef = A5933CD115CD0E3C00AD6D10 /* tabbar_bug.png */; };
 		A5933D6715CD0FFA00AD6D10 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = A5933CDB15CD0FFA00AD6D10 /* ASIAuthenticationDialog.m */; };
 		A5933D6815CD0FFA00AD6D10 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = A5933CDE15CD0FFA00AD6D10 /* ASIDataCompressor.m */; };
 		A5933D6915CD0FFA00AD6D10 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = A5933CE015CD0FFA00AD6D10 /* ASIDataDecompressor.m */; };
@@ -144,6 +141,10 @@
 		A5933DA815CD0FFA00AD6D10 /* XMLRPCRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = A5933D6215CD0FFA00AD6D10 /* XMLRPCRequest.m */; };
 		A5933DA915CD0FFA00AD6D10 /* XMLRPCResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = A5933D6415CD0FFA00AD6D10 /* XMLRPCResponse.m */; };
 		A5933DAA15CD0FFA00AD6D10 /* XMLValueDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = A5933D6615CD0FFA00AD6D10 /* XMLValueDecoder.m */; };
+		A5933DB415CD5E0E00AD6D10 /* tabbar_bug.png in Resources */ = {isa = PBXBuildFile; fileRef = A5933DB215CD5E0E00AD6D10 /* tabbar_bug.png */; };
+		A5933DB515CD5E0E00AD6D10 /* tabbar_radar.png in Resources */ = {isa = PBXBuildFile; fileRef = A5933DB315CD5E0E00AD6D10 /* tabbar_radar.png */; };
+		A5933DBB15CD5FD500AD6D10 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A5933DB815CD5FD500AD6D10 /* main.m */; };
+		A5933DBC15CD5FD500AD6D10 /* Taxinomes-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A5933DB915CD5FD500AD6D10 /* Taxinomes-Info.plist */; };
 		A5986FD115B4B53D00154F87 /* MediaLocalisationPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5986FCF15B4B53D00154F87 /* MediaLocalisationPickerViewController.m */; };
 		A5986FD215B4B53D00154F87 /* MediaLocalisationPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5986FD015B4B53D00154F87 /* MediaLocalisationPickerViewController.xib */; };
 		A59CEAA215507FB800754A8E /* default_avatar_medium.png in Resources */ = {isa = PBXBuildFile; fileRef = A59CEAA015507FB800754A8E /* default_avatar_medium.png */; };
@@ -190,9 +191,6 @@
 		37D2E7DD144709ED0044EC3A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		37D2E7DF144709ED0044EC3A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		37D2E7E1144709ED0044EC3A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		37D2E7E5144709ED0044EC3A /* Taxinomes-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Taxinomes-Info.plist"; sourceTree = "<group>"; };
-		37D2E7E9144709ED0044EC3A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		37D2E7EB144709ED0044EC3A /* Taxinomes-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Taxinomes-Prefix.pch"; sourceTree = "<group>"; };
 		37D2E7F7144709EE0044EC3A /* TaxinomesTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TaxinomesTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		37D2E7F8144709EE0044EC3A /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		37D2E801144709EE0044EC3A /* TaxinomesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TaxinomesTests-Info.plist"; sourceTree = "<group>"; };
@@ -280,8 +278,6 @@
 		A58DFF9D15C8829600D4EF42 /* LTTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTTableViewController.h; sourceTree = "<group>"; };
 		A58DFF9E15C8829600D4EF42 /* LTTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTTableViewController.m; sourceTree = "<group>"; };
 		A591B7B2150D57F000CE89BA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		A5933CCE15CD0E2400AD6D10 /* tabbar_radar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbar_radar.png; sourceTree = "<group>"; };
-		A5933CD115CD0E3C00AD6D10 /* tabbar_bug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbar_bug.png; sourceTree = "<group>"; };
 		A5933CDA15CD0FFA00AD6D10 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		A5933CDB15CD0FFA00AD6D10 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		A5933CDC15CD0FFA00AD6D10 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -416,6 +412,13 @@
 		A5933D6415CD0FFA00AD6D10 /* XMLRPCResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLRPCResponse.m; sourceTree = "<group>"; };
 		A5933D6515CD0FFA00AD6D10 /* XMLValueDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLValueDecoder.h; sourceTree = "<group>"; };
 		A5933D6615CD0FFA00AD6D10 /* XMLValueDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLValueDecoder.m; sourceTree = "<group>"; };
+		A5933DB215CD5E0E00AD6D10 /* tabbar_bug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tabbar_bug.png; path = Taxinomes/Ressources/Images/tabbar_bug.png; sourceTree = SOURCE_ROOT; };
+		A5933DB315CD5E0E00AD6D10 /* tabbar_radar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tabbar_radar.png; path = Taxinomes/Ressources/Images/tabbar_radar.png; sourceTree = SOURCE_ROOT; };
+		A5933DB615CD5FD500AD6D10 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		A5933DB715CD5FD500AD6D10 /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
+		A5933DB815CD5FD500AD6D10 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A5933DB915CD5FD500AD6D10 /* Taxinomes-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Taxinomes-Info.plist"; sourceTree = "<group>"; };
+		A5933DBA15CD5FD500AD6D10 /* Taxinomes-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Taxinomes-Prefix.pch"; sourceTree = "<group>"; };
 		A5986FCE15B4B53D00154F87 /* MediaLocalisationPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaLocalisationPickerViewController.h; sourceTree = "<group>"; };
 		A5986FCF15B4B53D00154F87 /* MediaLocalisationPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaLocalisationPickerViewController.m; sourceTree = "<group>"; };
 		A5986FD015B4B53D00154F87 /* MediaLocalisationPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaLocalisationPickerViewController.xib; sourceTree = "<group>"; };
@@ -436,7 +439,6 @@
 		C8339C2914ED6393000A4E37 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		C87C6798147440B500A055F1 /* TaxinomesAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TaxinomesAppDelegate.h; path = classes/TaxinomesAppDelegate.h; sourceTree = "<group>"; };
 		C87C6799147440B500A055F1 /* TaxinomesAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TaxinomesAppDelegate.m; path = classes/TaxinomesAppDelegate.m; sourceTree = "<group>"; };
-		C87C67A9147440B500A055F1 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		C87C680A147440B500A055F1 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		C87C680C147440B500A055F1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C87C6812147440B500A055F1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -554,10 +556,11 @@
 		37D2E7E4144709ED0044EC3A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C87C67A9147440B500A055F1 /* Constants.h */,
-				37D2E7E5144709ED0044EC3A /* Taxinomes-Info.plist */,
-				37D2E7E9144709ED0044EC3A /* main.m */,
-				37D2E7EB144709ED0044EC3A /* Taxinomes-Prefix.pch */,
+				A5933DB615CD5FD500AD6D10 /* Constants.h */,
+				A5933DB715CD5FD500AD6D10 /* Macros.h */,
+				A5933DB815CD5FD500AD6D10 /* main.m */,
+				A5933DB915CD5FD500AD6D10 /* Taxinomes-Info.plist */,
+				A5933DBA15CD5FD500AD6D10 /* Taxinomes-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -949,8 +952,8 @@
 				A539D1E7154AF6B60048CDF1 /* Icon@AppStore.png */,
 				A539D1E8154AF6B60048CDF1 /* lpd_logo.png */,
 				A539D1E9154AF6B60048CDF1 /* tabbar_account.png */,
-				A5933CCE15CD0E2400AD6D10 /* tabbar_radar.png */,
-				A5933CD115CD0E3C00AD6D10 /* tabbar_bug.png */,
+				A5933DB215CD5E0E00AD6D10 /* tabbar_bug.png */,
+				A5933DB315CD5E0E00AD6D10 /* tabbar_radar.png */,
 				A539D1EA154AF6B60048CDF1 /* tabbar_home.png */,
 				A539D1EB154AF6B60048CDF1 /* tabbar_medias.png */,
 				A539D1EC154AF6B60048CDF1 /* tabbar_navigate.png */,
@@ -1120,8 +1123,6 @@
 				A5402B6E15C98CB5002489E4 /* MediaUploadFormCells.xib in Resources */,
 				A5402B7815C99EF9002489E4 /* HomeViewController.xib in Resources */,
 				A5402B8915C9E146002489E4 /* MediaUploadFormViewController.xib in Resources */,
-				A5933CCF15CD0E2400AD6D10 /* tabbar_radar.png in Resources */,
-				A5933CD215CD0E3C00AD6D10 /* tabbar_bug.png in Resources */,
 				A5933D8F15CD0FFA00AD6D10 /* ELCAlbumPickerController.xib in Resources */,
 				A5933D9215CD0FFA00AD6D10 /* ELCAssetPicker.xib in Resources */,
 				A5933D9415CD0FFA00AD6D10 /* ELCAssetTablePicker.xib in Resources */,
@@ -1129,6 +1130,9 @@
 				A5933D9715CD0FFA00AD6D10 /* Overlay.png in Resources */,
 				A5933D9815CD0FFA00AD6D10 /* Overlay@2x.png in Resources */,
 				A5933D9A15CD0FFA00AD6D10 /* LICENSE in Resources */,
+				A5933DB415CD5E0E00AD6D10 /* tabbar_bug.png in Resources */,
+				A5933DB515CD5E0E00AD6D10 /* tabbar_radar.png in Resources */,
+				A5933DBC15CD5FD500AD6D10 /* Taxinomes-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1163,7 +1167,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37D2E7EA144709ED0044EC3A /* main.m in Sources */,
 				C87C67CF147440B500A055F1 /* TaxinomesAppDelegate.m in Sources */,
 				A539D435154AFBB10048CDF1 /* LTConnectionManager.m in Sources */,
 				A539D436154AFBB10048CDF1 /* LTDataManager.m in Sources */,
@@ -1252,6 +1255,7 @@
 				A5933DA815CD0FFA00AD6D10 /* XMLRPCRequest.m in Sources */,
 				A5933DA915CD0FFA00AD6D10 /* XMLRPCResponse.m in Sources */,
 				A5933DAA15CD0FFA00AD6D10 /* XMLValueDecoder.m in Sources */,
+				A5933DBB15CD5FD500AD6D10 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -23,9 +23,6 @@
  
  */
 
-// Macros
-#define TRANSLATE(x) NSLocalizedString((x),@"")
-
 //CORE DATA
 //Entities
 #define kLicenseEntityName @"License"

@@ -183,6 +183,17 @@
         [self hideLoader];
         reloadBarButton_.enabled = YES;
         scanBarButton_.enabled = YES;
+        
+        
+        MKUserLocation* userLocation = mapView_.userLocation;
+        
+        Media* lastMedia = (Media *)[medias lastObject];
+        CGFloat latDelta = fabs(fabs(userLocation.coordinate.latitude) - fabs(lastMedia.coordinate.latitude));
+        CGFloat lonDelta = fabs(fabs(userLocation.coordinate.longitude) - fabs(lastMedia.coordinate.longitude));
+                
+        [mapView_ setRegion:MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(2*latDelta, 2*lonDelta)) animated:YES];
+        LogDebug(@"user lon:%f lastMedia lon:%f",userLocation.coordinate.longitude,lastMedia.coordinate.longitude);
+
     }
 }
 
