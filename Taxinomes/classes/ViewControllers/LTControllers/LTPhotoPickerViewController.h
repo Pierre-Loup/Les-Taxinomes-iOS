@@ -26,9 +26,10 @@
 #import <Foundation/Foundation.h>
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <CoreLocation/CoreLocation.h>
+#import "LTConnectionManager.h"
 #import "LTViewController.h"
 
-@interface LTPhotoPickerViewController : LTViewController <UINavigationControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate> {
+@interface LTPhotoPickerViewController : LTViewController <UINavigationControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate, LTConnectionManagerAuthDelegate> {
     CLLocationManager* _locationManager;
     CLLocation* _photoLocation;
     UIImage* _photo; 

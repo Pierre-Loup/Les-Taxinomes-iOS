@@ -189,15 +189,11 @@
     }
     
     reverseGeocoder_ = [CLGeocoder new];
+    [self updateMediaLocation:gis_];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    LTConnectionManager * cm = [LTConnectionManager sharedConnectionManager];
-    if (![cm isAuthenticated]) {
-        [self displayAuthenticationSheetAnimated:NO];
-    }
 }
 
 - (void)viewDidUnload
@@ -278,16 +274,6 @@
     LTConnectionManager* connectionManager = [LTConnectionManager sharedConnectionManager];
     connectionManager.uploadProgressDelegate = self;
     [connectionManager addMediaWithInformations:info delegate:self];
-}
-
-- (void)displayAuthenticationSheetAnimated:(BOOL)animated {
-    AuthenticationSheetViewController * authenticationSheetViewController = [[AuthenticationSheetViewController alloc] initWithNibName:@"AuthenticationSheetViewController" bundle:nil];
-    authenticationSheetViewController.delegate = self;
-    UINavigationController * navigationController = [[UINavigationController alloc] initWithRootViewController:authenticationSheetViewController];
-    self.hidesBottomBarWhenPushed = NO;
-    [self.navigationController presentModalViewController:navigationController animated:animated];
-    [authenticationSheetViewController release];
-    [navigationController release];
 }
 
 #pragma mark - Tools
@@ -379,6 +365,7 @@
     
     [cellForIndexPath_ release];
     cellForIndexPath_ = [[NSDictionary dictionaryWithDictionary:tmpCellsDict] retain];
+    [tmpCellsDict release];
     [self.tableView reloadData];
 }
 
@@ -506,10 +493,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     return YES;
 }
 
-- (void)didDismissAuthenticationSheet {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 #pragma mark - MediaLicenseChooserDelegate
 
 - (void)didChooseLicense:(License *)license {
@@ -522,6 +505,12 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         licenseCell_.detailTextLabel.text = TRANSLATE(@"media_upload_no_license_text");
     }
     
+}
+
+#pragma mark MediaLocationPickerDelegate
+
+- (void)mediaLocationPicker:(MediaLocalisationPickerViewController *)mediaLocationPicker didPickLocation:(CLLocation *)location {
+    [self updateMediaLocation:location];
 }
 
 #pragma mark - LTConnextionManagerDelegate
@@ -540,13 +529,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [alert show];
     [alert release];
     [self hideLoader];
-    //[self.navigationController popViewControllerAnimated:YES];
-}
-
-#pragma mark MediaLocationPickerDelegate
-
-- (void)mediaLocationPicker:(MediaLocalisationPickerViewController *)mediaLocationPicker didPickLocation:(CLLocation *)location {
-    [self updateMediaLocation:location];
 }
 
 @end

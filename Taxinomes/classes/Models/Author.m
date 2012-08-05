@@ -56,7 +56,8 @@
     if ([[response objectForKey:kAuthorIdTag] isKindOfClass:[NSString class]]) {
         NSString * strAuthorIdentifier = (NSString *)[response objectForKey:kAuthorIdTag];
         authorIdentifier = [NSNumber numberWithInt:[strAuthorIdentifier intValue]];
-        
+    } else  if ([[response objectForKey:kAuthorIdTag] isKindOfClass:[NSNumber class]]) {
+        authorIdentifier = [response objectForKey:kAuthorIdTag];
     } else {
         return nil;
     }

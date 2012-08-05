@@ -15,6 +15,11 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 
 
+@interface LTPhotoPickerViewController ()
+- (void)presentAuthenticationSheetAnimated;
+- (void)pushMediaUploadFormVCAnnimated:(BOOL)animated;
+@end
+
 @implementation LTPhotoPickerViewController
 
 
@@ -55,6 +60,26 @@
     
 }
 
+- (void)pushMediaUploadFormVCAnnimated:(BOOL)animated {
+    MediaUploadFormViewController *mediaUploadFormViewController = [MediaUploadFormViewController new];
+    mediaUploadFormViewController.gis = _photoLocation;
+    mediaUploadFormViewController.mediaImage = _photo;
+    [self.navigationController pushViewController:mediaUploadFormViewController animated:animated];
+    [_photo release];
+    [_photoLocation release];
+    [mediaUploadFormViewController release];
+}
+
+- (void)presentAuthenticationSheetAnimated {
+    AuthenticationSheetViewController * authenticationSheetViewController = [[AuthenticationSheetViewController alloc] initWithNibName:@"AuthenticationSheetViewController" bundle:nil];
+    authenticationSheetViewController.authDelegate = self;
+    UINavigationController * navigationController = [[UINavigationController alloc] initWithRootViewController:authenticationSheetViewController];
+    authenticationSheetViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentModalViewController:navigationController animated:YES];
+    [authenticationSheetViewController release];
+    [navigationController release];
+}
+
 #pragma mark - UIImagePikerControllerDelegate
 
 -(void)imagePickerController:(UIImagePickerController *)picker
@@ -83,24 +108,54 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [self dismissModalViewControllerAnimated:YES];
 }
 
-#pragma mark - CLLocationManagerDelegate
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    //NSLog(@"Lat:%f Lon:%f Hacc:%f Vacc:%f",newLocation.coordinate.latitude ,newLocation.coordinate.longitude, newLocation.horizontalAccuracy, newLocation.verticalAccuracy);
-}
-
 #pragma mark - UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self dismissModalViewControllerAnimated:YES];
     if (buttonIndex == 0) {
-        MediaUploadFormViewController *mediaUploadFormViewController = [MediaUploadFormViewController new];
-        mediaUploadFormViewController.gis = _photoLocation;
-        mediaUploadFormViewController.mediaImage = _photo;
-        [self.navigationController pushViewController:mediaUploadFormViewController animated:YES];
-        [_photo release];
-        [_photoLocation release];
-        [mediaUploadFormViewController release];
+        
+        LTConnectionManager * cm = [LTConnectionManager sharedConnectionManager];
+        if (!cm.authenticatedUser) {
+            [cm checkUserAuthStatusWithDelegate:self];
+            [self displayLoader];
+        } else {
+            [self pushMediaUploadFormVCAnnimated:NO];
+        }
+    }
+}
+
+#pragma mark - LTConnectionManagerAuthDelegate
+
+- (void)authDidEndWithLogin:(NSString *)login
+                   password:(NSString *)password
+                     author:(Author *)author
+                      error:(NSError *)error {
+    
+    [self hideLoader];
+    if ([self.modalViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController* navigationController = (UINavigationController *)self.modalViewController;
+        if ([navigationController.topViewController isKindOfClass:[AuthenticationSheetViewController class]]) {
+            [(AuthenticationSheetViewController *)navigationController.topViewController hideLoader];
+        }
+    }
+    
+    if (author) {
+        [self dismissModalViewControllerAnimated:YES];
+        [self pushMediaUploadFormVCAnnimated:YES];
+    } else if (error && login && password) {
+        UIAlertView *authFailedAlert = nil;
+        if ([error.domain isEqualToString:kNetworkRequestErrorDomain]) {
+            authFailedAlert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_network_unreachable_title") message:TRANSLATE(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:TRANSLATE(@"common_OK") otherButtonTitles:nil];
+        } else if ([error.domain isEqualToString:kLTAuthenticationFailedError]) {
+            authFailedAlert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_auth_failed_title") message:TRANSLATE(@"alert_auth_failed_text") delegate:self cancelButtonTitle:TRANSLATE(@"common_OK") otherButtonTitles:nil];
+        }
+        
+        
+        [authFailedAlert show];
+        [authFailedAlert release];
+    } else {
+        [self performSelector:@selector(presentAuthenticationSheetAnimated)
+                   withObject:self afterDelay:0.5];
     }
 }
 

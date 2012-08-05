@@ -41,10 +41,10 @@
     connectionManager_ =  [LTConnectionManager sharedConnectionManager];
     
     reloadBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonAction:)];
-    UIBarButtonItem* spaceItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil] autorelease];
+    [self.navigationItem setRightBarButtonItem:reloadBarButton_];
     scanBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(scanButtonAction:)];
-    NSArray* rightBarButtonItems = [NSArray arrayWithObjects:reloadBarButton_, spaceItem, scanBarButton_, nil];
-    [self.navigationItem setRightBarButtonItems:rightBarButtonItems];
+    [self.navigationItem setLeftBarButtonItem:scanBarButton_];
+    
     
     shouldZoomToUserLocation_ = YES;
     searchStarIndex_ = 0;
@@ -61,8 +61,10 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    [reloadBarButton_ release];
+    reloadBarButton_ = nil;
+    [scanBarButton_ release];
+    scanBarButton_ = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

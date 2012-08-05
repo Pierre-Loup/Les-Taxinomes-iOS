@@ -30,7 +30,7 @@
 @end
 
 @implementation AuthenticationSheetViewController
-@synthesize delegate = delegate_;
+@synthesize authDelegate = authDelegate_;
 @synthesize loginTextField = loginTextField_;
 @synthesize passwordTextField = passwordTextField_;
 @synthesize signinButton = signinButton_;
@@ -77,25 +77,26 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
                                                                                                                                                                 
-#pragma mark Actions
-                                                                                                                                                                
-- (IBAction)dismissAuthenticationSheet:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
-    if ([delegate_ respondsToSelector:@selector(didDismissAuthenticationSheet)]) {
-        [delegate_ didDismissAuthenticationSheet];
-    }
-    
-}
+#pragma mark Actions                                                                                                                                                            
 
 - (IBAction)submitAuthentication:(id)sender {
-    [self displayLoader];
-    connectionManager_ = [LTConnectionManager sharedConnectionManager];
-    connectionManager_.authDelegate = self;
+    
+    if (authDelegate_) {
+        [self displayLoader];
+        connectionManager_ = [LTConnectionManager sharedConnectionManager];
 #if DEBUG
-    [connectionManager_ authWithLogin:@"pierre" password:@"crLu2Vzi" delegate:self];
+        
+        [connectionManager_ authWithLogin:@"pierre"
+                                 password:@"crLu2Vzi"
+                                 delegate:authDelegate_];
 #else
-    [connectionManager_ authWithLogin:self.loginTextField.text password:self.passwordTextField.text delegate:self];
+        [connectionManager_ authWithLogin:self.loginTextField.text
+                                 password:self.passwordTextField.text
+                                 delegate:authDelegate_];
 #endif
+    } else {
+        [self dismissModalViewControllerAnimated:YES];
+    }
 }
 
 - (IBAction)forgottenPasswordButtonTouched:(id)sender {
@@ -108,27 +109,8 @@
     [[UIApplication sharedApplication] openURL:signupURL];
 }
 
-#pragma mark - LTConnectionManagerDelegate
-
-- (void)didAuthenticateWithAuthor:(Author *)author {
-    [self hideLoader];
-    if ([delegate_ respondsToSelector:@selector(didAuthenticateWithAuthor:)]) {
-        [delegate_ didAuthenticateWithAuthor:author];
-    }
+- (IBAction)dismissAuthenticationSheet:(id)sender {
     [self dismissModalViewControllerAnimated:YES];
-}
-
-- (void)didFailToAuthenticateWithError:(NSError *)error {
-    [self hideLoader];
-    UIAlertView *authFailedAlert = nil;
-    if ([error.domain isEqualToString:kNetworkRequestErrorDomain]) {
-        authFailedAlert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_network_unreachable_title") message:TRANSLATE(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:TRANSLATE(@"common_OK") otherButtonTitles:nil];
-    } else if ([error.domain isEqualToString:kLTAuthenticationFailedError]) {
-        authFailedAlert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_auth_failed_title") message:TRANSLATE(@"alert_auth_failed_text") delegate:self cancelButtonTitle:TRANSLATE(@"common_OK") otherButtonTitles:nil];
-    }
-    
-    [authFailedAlert show];
-    [authFailedAlert release];
 }
 
 #pragma mark - Text field delegate

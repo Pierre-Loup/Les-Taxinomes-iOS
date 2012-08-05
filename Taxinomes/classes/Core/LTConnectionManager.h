@@ -40,16 +40,19 @@ typedef enum {
 
 @protocol LTConnectionManagerDelegate <NSObject>
 @optional
-- (void)didRetrievedShortMedias:(NSArray *)mediass;
+- (void)didRetrievedShortMedias:(NSArray *)medias;
 - (void)didRetrievedMedia:(Media *)media;
 - (void)didRetrievedAuthor:(Author *)author;
 - (void)didSuccessfullyUploadMedia:(Media *)media;
 - (void)didFailWithError:(NSError *)error;
 @end
 
-@protocol LTConnectionManagerAuthDelegate
-- (void)didAuthenticateWithAuthor:(Author *)author;
-- (void)didFailToAuthenticateWithError:(NSError *)error;
+@protocol LTConnectionManagerAuthDelegate <NSObject>
+@required
+- (void)authDidEndWithLogin:(NSString *)login
+                   password:(NSString *)password
+                     author:(Author *)author
+                      error:(NSError *)error;
 @end
 
 @interface LTConnectionManager : NSObject {
@@ -87,14 +90,14 @@ typedef enum {
                      delegate:(id<LTConnectionManagerDelegate>)delegate;
 - (void)getLicenses;
 
-- (void)authWithLogin:(NSString *)login 
-                   password:(NSString *)password 
-                   delegate:(id<LTConnectionManagerAuthDelegate>)delegate;
-
 - (void)addMediaWithInformations: (NSDictionary *)info 
-                              delegate:(id<LTConnectionManagerDelegate>)delegate;
+                        delegate:(id<LTConnectionManagerDelegate>)delegate;
 
-- (BOOL)isAuthenticated;
+- (void)authWithLogin:(NSString *)login
+             password:(NSString *)password
+             delegate:(id<LTConnectionManagerAuthDelegate>)delegate;
+
+- (void)checkUserAuthStatusWithDelegate:(id<LTConnectionManagerAuthDelegate>)delegate;
 - (void)unAuthenticate; 
 - (id)executeXMLRPCRequest:(XMLRPCRequest *)req authenticated:(BOOL) auth;
 

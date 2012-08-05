@@ -28,14 +28,13 @@
 #import "License.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <CoreLocation/CoreLocation.h>
-#import "LTConnectionManager.h"
 #import "LTTableViewController.h"
 #import "AuthenticationSheetViewController.h"
 #import "MediaLicenseChooserViewController.h"
 #import "MediaLocalisationPickerViewController.h"
 #import "UIGlossyButton.h"
 
-@interface MediaUploadFormViewController : LTTableViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, LTConnectionManagerDelegate, AuthenticationSheetViewControllerDelegate, MediaLicenseChooserDelegate, MediaLocationPickerDelegate> {
+@interface MediaUploadFormViewController : LTTableViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, LTConnectionManagerDelegate, MediaLicenseChooserDelegate, MediaLocationPickerDelegate> {
     CLGeocoder* reverseGeocoder_;
     
     NSArray* rowsInSection_;

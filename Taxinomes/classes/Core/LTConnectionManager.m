@@ -303,54 +303,12 @@ static LTConnectionManager *instance = nil;
             [xmlrpcRequest release];
             if([response isKindOfClass:[NSDictionary class]]) {
                 NSDictionary* responseDict = (NSDictionary*)response;
-                NSMutableArray* licenses = [[NSMutableArray alloc] initWithCapacity:[responseDict count]];
                 for(NSString *key in response){
                     if ([[responseDict objectForKey:key] isKindOfClass:[NSDictionary class]]) {
                         NSDictionary *xmlLicenseDict = [responseDict objectForKey:key];
-                        License* license = nil;
-                        license = [License licenseWithXMLRPCResponse:xmlLicenseDict];
-                        if (license != nil) {
-                            [licenses addObject:license];
-                        }
+                        [License licenseWithXMLRPCResponse:xmlLicenseDict];
                     }
                     
-                }
-            }
-            [response release];
-        });
-    });
-}
-
-- (void)authWithLogin:(NSString *)login password:(NSString *)password delegate:(id<LTConnectionManagerAuthDelegate>)delegate{
-    self.authStatus = AUTH_PENDING;
-    XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
-    NSDictionary *args = [NSArray arrayWithObjects:login, password, nil];
-    [xmlrpcRequest setMethod:@"spip.auth" withObject:args];
-    
-    
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-    
-    dispatch_async(queue, ^{
-         NSAutoreleasePool* pool = [NSAutoreleasePool new];
-        id response = [self executeXMLRPCRequest:xmlrpcRequest authenticated:YES];
-        [response retain];
-        [pool release];
-        
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            [xmlrpcRequest release];
-            if([response isKindOfClass:[NSDictionary class]]){
-                self.authStatus = AUTHENTICATED;
-                self.authenticatedUser = [Author authorWithXMLRPCResponse:response];
-                [authDelegate_ didAuthenticateWithAuthor:self.authenticatedUser];
-            } else {
-                self.authStatus = AUTH_FAILED;
-                //TODO: LOCAL ERROR LABELS
-                if ([response isKindOfClass:[NSError class]]) {
-                    NSError * error = (NSError *)response;
-                    [authDelegate_ didFailToAuthenticateWithError:error];
-                } else {
-                    NSError * error = [NSError errorWithDomain:kLTAuthenticationFailedError code:0 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:TRANSLATE(@"error_auth_failed"), NSLocalizedDescriptionKey, nil]];
-                    [authDelegate_ didFailToAuthenticateWithError:error];
                 }
             }
             [response release];
@@ -396,17 +354,59 @@ static LTConnectionManager *instance = nil;
     });
 }
 
-- (BOOL)isAuthenticated {
-#warning delete the folowing line
-#if DEBUG
-    //return YES;
-#endif
+- (void)authWithLogin:(NSString *)login password:(NSString *)password delegate:(id<LTConnectionManagerAuthDelegate>)delegate{
+    self.authStatus = AUTH_PENDING;
+    XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
     
-    
-    BOOL returnValue = NO;
-    if (authenticatedUser_ == nil) {
-        return returnValue;
+    NSMutableArray *args = [NSMutableArray array];
+    if (login) {
+        [args addObject:login];
     }
+    if (password) {
+        [args addObject:password];
+    }
+    [xmlrpcRequest setMethod:@"spip.auth" withObject:args];
+    
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    
+    dispatch_async(queue, ^{
+        NSAutoreleasePool* pool = [NSAutoreleasePool new];
+        id response = [self executeXMLRPCRequest:xmlrpcRequest authenticated:YES];
+        [response retain];
+        [pool release];
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [xmlrpcRequest release];
+            if([response isKindOfClass:[NSDictionary class]]){
+                self.authStatus = AUTHENTICATED;
+                self.authenticatedUser = [Author authorWithXMLRPCResponse:response];
+                [delegate authDidEndWithLogin:login
+                                     password:password
+                                       author:self.authenticatedUser
+                                        error:nil];
+            } else {
+                self.authStatus = AUTH_FAILED;
+                if ([response isKindOfClass:[NSError class]]) {
+                    NSError * error = (NSError *)response;
+                    [delegate authDidEndWithLogin:login
+                                         password:password
+                                           author:nil
+                                            error:error];
+                } else {
+                    NSError * error = [NSError errorWithDomain:kLTAuthenticationFailedError code:0 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:TRANSLATE(@"error_auth_failed"), NSLocalizedDescriptionKey, nil]];
+                    [delegate authDidEndWithLogin:login
+                                         password:password
+                                           author:nil
+                                            error:error];
+                }
+            }
+            [response release];
+        });
+    });
+}
+
+- (void)checkUserAuthStatusWithDelegate:(id<LTConnectionManagerAuthDelegate>)delegate {
+    NSHTTPCookie* authCookie = nil;
     
     NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[[NSURL URLWithString:kHTTPHost] absoluteURL]];
     for (NSHTTPCookie * cookie in cookies) {
@@ -414,10 +414,25 @@ static LTConnectionManager *instance = nil;
            && cookie.value != nil
            && ![cookie.value isEqualToString:@""]
            && [cookie.expiresDate timeIntervalSinceNow] > 0.0) {
-            returnValue = YES;
+            authCookie = cookie;
         }
     }
-    return returnValue;
+    
+    if (authenticatedUser_) {
+            [delegate authDidEndWithLogin:nil
+                                 password:nil
+                                   author:authenticatedUser_
+                                    error:nil];
+    } else if (authCookie) {
+        [self authWithLogin:nil password:nil delegate:delegate];
+    } else {
+        [delegate authDidEndWithLogin:nil
+                             password:nil
+                               author:nil
+                                error:nil];
+    }
+    
+    
 }
 
 - (void)unAuthenticate {
@@ -441,7 +456,7 @@ static LTConnectionManager *instance = nil;
     [request appendPostData:[[req source] dataUsingEncoding:NSUTF8StringEncoding]];
 #if DEBUG
     NSLog(@"executeXMLRPCRequest host: %@",[req host]);
-    //NSLog(@"executeXMLRPCRequest request: %@",[req source]);
+    NSLog(@"executeXMLRPCRequest request: %@",[req source]);
 #endif  
 	[request startSynchronous];
 	request.uploadProgressDelegate = nil;
