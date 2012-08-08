@@ -80,7 +80,7 @@ static LTDataManager *instance = nil;
     
     Media * media = [Media mediaWithIdentifier:mediaIdentifier];
     LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
-    NSLog(@"media.text %@",media.text);
+    LogDebug(@"media.text %@",media.text);
     if( media == nil
        || media.mediaMediumURL == nil
        || [[NSDate date] timeIntervalSinceDate:media.localUpdateDate] > kMediaCacheTime){

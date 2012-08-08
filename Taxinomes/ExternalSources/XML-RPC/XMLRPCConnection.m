@@ -84,7 +84,7 @@ NSString *XMLRPCReceivedResponseNotification = @"XML-RPC Successfully Received R
 	//NSHTTPURLResponse *urlres;
 	
 	//NSString *requestString = [[NSString alloc] initWithData:[[request request] HTTPBody] encoding:NSASCIIStringEncoding];
-	//NSLog(@"request headers: %@", [[request request] allHTTPHeaderFields]);
+	//LogDebug(@"request headers: %@", [[request request] allHTTPHeaderFields]);
 	
 	NSError *err = NULL;
 	NSData *data = [NSURLConnection sendSynchronousRequest: [request request] 
@@ -92,7 +92,7 @@ NSString *XMLRPCReceivedResponseNotification = @"XML-RPC Successfully Received R
 	
 	
 	if ([urlres isKindOfClass:[NSHTTPURLResponse class]]) {
-		//NSLog(@"Received status code: %d %@", [(NSHTTPURLResponse *) urlres statusCode], 
+		//LogDebug(@"Received status code: %d %@", [(NSHTTPURLResponse *) urlres statusCode], 
 		//	  [NSHTTPURLResponse localizedStringForStatusCode:[(NSHTTPURLResponse *) urlres statusCode]]) ;
 	}
 	
@@ -106,7 +106,7 @@ NSString *XMLRPCReceivedResponseNotification = @"XML-RPC Successfully Received R
  	if (data != nil)
 	{
 		NSString  *str = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-		//NSLog(@"response: %@", str);
+		//LogDebug(@"response: %@", str);
 		if ( ! str ) {
 			str = [[[NSString alloc] initWithData:data encoding:[NSString defaultCStringEncoding]] autorelease];
 			data = [str dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
@@ -117,7 +117,7 @@ NSString *XMLRPCReceivedResponseNotification = @"XML-RPC Successfully Received R
 				
 				if ([(NSHTTPURLResponse *) urlres statusCode] >= 400) {
 				
-					NSLog(@"Received status code: %d %@", [(NSHTTPURLResponse *) urlres statusCode], 
+					LogDebug(@"Received status code: %d %@", [(NSHTTPURLResponse *) urlres statusCode], 
 						  [NSHTTPURLResponse localizedStringForStatusCode:[(NSHTTPURLResponse *) urlres statusCode]]) ;
 					   
 					NSString *errorIntString = [NSString stringWithFormat:@"%d", [(NSHTTPURLResponse *) urlres statusCode]];

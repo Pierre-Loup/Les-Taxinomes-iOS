@@ -71,7 +71,7 @@
 				<object class="IBUINavigationController" key="IBUISelectedViewController" id="1010609312">
 					<string key="IBUITitle">Naviguer</string>
 					<object class="IBUITabBarItem" key="IBUITabBarItem" id="819701281">
-						<string key="IBUITitle">Naviguer</string>
+						<string key="IBUITitle">Explorer</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">tabbar_radar.png</string>
@@ -104,7 +104,7 @@
 					<array class="NSMutableArray" key="IBUIViewControllers">
 						<object class="IBUIViewController" id="462276387">
 							<object class="IBUINavigationItem" key="IBUINavigationItem" id="327944318">
-								<string key="IBUITitle">Naviguer</string>
+								<string key="IBUITitle">Explorer</string>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 							<reference key="IBUIParentViewController" ref="1010609312"/>

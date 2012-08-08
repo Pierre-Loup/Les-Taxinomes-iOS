@@ -16,18 +16,21 @@
 @end
 
 @implementation MapViewController
+@synthesize referenceAnnotation = referenceAnnotation_;
 @synthesize mapView = mapView_;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+# pragma mark - View Lifecycle
+
+- (id)initWithAnnotation:(id<MKAnnotation>)annotation {
+    self = [super initWithNibName:NSStringFromClass([self class]) bundle:nil];
     if (self) {
-        // Custom initialization
+        referenceAnnotation_ = [annotation retain];
     }
     return self;
 }
 
 - (void)dealloc {
+    [referenceAnnotation_ release];
     [mapView_ release];
     [locationManager_ release];
     [reloadBarButton_ release];
@@ -35,22 +38,32 @@
     [super dealloc];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    connectionManager_ =  [LTConnectionManager sharedConnectionManager];
     
+    // Navigation bar buttons
     reloadBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonAction:)];
     UIBarButtonItem* spaceItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil] autorelease];
     scanBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(scanButtonAction:)];
     NSArray* rightBarButtonItems = [NSArray arrayWithObjects:reloadBarButton_, spaceItem, scanBarButton_, nil];
     [self.navigationItem setRightBarButtonItems:rightBarButtonItems];
     
-    shouldZoomToUserLocation_ = YES;
-    searchStarIndex_ = 0;
+    searchStartIndex_ = 0;
     mapView_.delegate = self;
+    
+    // Always show user location
     mapView_.showsUserLocation = YES;
-    if ([CLLocationManager locationServicesEnabled]
+    // Display the reference location of the map if already set
+    if (referenceAnnotation_) {
+        [mapView_ addAnnotation:referenceAnnotation_];
+        [mapView_ setRegion:MKCoordinateRegionMake(referenceAnnotation_.coordinate, MKCoordinateSpanMake(1, 1)) animated:YES];
+    } else {
+        [self displayLoader];
+    }
+    
+    // Start monitoring the user location changes
+    if (!locationManager_
+        && [CLLocationManager locationServicesEnabled]
         && [CLLocationManager significantLocationChangeMonitoringAvailable]) {
         locationManager_ = [[CLLocationManager alloc] init];
         [locationManager_ setDelegate:self];
@@ -60,30 +73,22 @@
 
 - (void)viewDidUnload
 {
+    [reloadBarButton_ release];
+    reloadBarButton_ = nil;
+    [scanBarButton_ release];
+    scanBarButton_ = nil;
+    self.mapView = nil;
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (void)didReceiveMemoryWarning {
-    [mapView_ removeAnnotations:mapView_.annotations];
-    searchStarIndex_ = 0;
-    mapView_.showsUserLocation = YES;
 }
 
 #pragma mark - Actions
 
 - (IBAction)refreshButtonAction:(id)sender {
-    shouldZoomToUserLocation_ = YES;
-    searchStarIndex_ = 0;
+    searchStartIndex_ = 0;
     [mapView_ removeAnnotations:mapView_.annotations];
-    mapView_.showsUserLocation = NO;
-    mapView_.showsUserLocation = YES;
+    [mapView_ addAnnotation:referenceAnnotation_];
+    [mapView_ setRegion:MKCoordinateRegionMake(referenceAnnotation_.coordinate, MKCoordinateSpanMake(1, 1)) animated:YES];
+    [self loadMoreCloseMedias];
 }
 
 - (IBAction)scanButtonAction:(id)sender {
@@ -91,40 +96,41 @@
 }
 
 - (void)loadMoreCloseMedias {
-    if (mapView_.showsUserLocation) {
+    if (referenceAnnotation_) {
         reloadBarButton_.enabled = NO;
         scanBarButton_.enabled = NO;
         [self displayLoader];
-        [connectionManager_ getShortMediasNearLocation:mapView_.userLocation.coordinate forAuthor:nil withLimit:kNbMediasStep startingAtRecord:searchStarIndex_ delegate:self];
+        [[LTConnectionManager sharedConnectionManager] getShortMediasNearLocation:referenceAnnotation_.coordinate
+                                                                        forAuthor:nil
+                                                                        withLimit:kNbMediasStep
+                                                                 startingAtRecord:searchStartIndex_
+                                                                         delegate:self];
     }
-    
 }
 
 #pragma mark - MKMapViewDelegate
-     
-- (void)mapViewWillStartLocatingUser:(MKMapView *)mapView {
-    
- }
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
-    if (mapView_.showsUserLocation 
+    if (!referenceAnnotation_
+        && mapView_.showsUserLocation
         && CLLocationCoordinate2DIsValid(userLocation.coordinate)) {
-        if (shouldZoomToUserLocation_) {
-            [mapView setRegion:MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(0.5, 0.5)) animated:YES];
-            [self loadMoreCloseMedias];
-            shouldZoomToUserLocation_ = NO;
-        }
+        referenceAnnotation_ = [mapView_.userLocation retain];
+        [mapView_ setRegion:MKCoordinateRegionMake(referenceAnnotation_.coordinate, MKCoordinateSpanMake(1, 1)) animated:YES];
+        [self loadMoreCloseMedias];
     }
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id < MKAnnotation >)annotation {
-    if ([annotation isEqual:mapView_.userLocation]) {
+    // Display the default annotation view for the reference annotation and the user location
+    if ([annotation isEqual:referenceAnnotation_]
+        || [annotation isEqual:mapView.userLocation]) {
         return nil;
     }
     
     MKPinAnnotationView * annotationView = (MKPinAnnotationView *)[mapView_ dequeueReusableAnnotationViewWithIdentifier:kPinAnnotationIdentifier];
     if (!annotationView) {
         annotationView = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:kPinAnnotationIdentifier] autorelease];
+        annotationView.pinColor = MKPinAnnotationColorGreen;
     }
     [annotationView setRightCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeDetailDisclosure]];
     [annotationView setAnimatesDrop:YES];
@@ -138,8 +144,8 @@
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
     if ([view.annotation isKindOfClass:[Media class]]) {
         Media * media = (Media *)view.annotation;
-        MediaDetailViewController * mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailViewController" 
-                                                                                                            bundle:nil 
+        MediaDetailViewController * mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailViewController"
+                                                                                                            bundle:nil
                                                                                                            mediaId:media.identifier];
         [self.navigationController pushViewController:mediaDetailViewController animated:YES];
         [mediaDetailViewController release];
@@ -149,7 +155,7 @@
 #pragma mark CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    searchStarIndex_ = 0;
+    searchStartIndex_ = 0;
 }
 
 #pragma mark - LTConnectionManagerDelegate
@@ -171,11 +177,11 @@
         if (mediaFoundIndex == NSNotFound) {
             shouldLoadMoreMedias = NO;
         } else {
-            NSLog(@"Media already displayed");
+            LogDebug(@"Media already displayed");
         }
     }
     
-    searchStarIndex_ += [medias count];
+    searchStartIndex_ += [medias count];
     if (shouldLoadMoreMedias) {
         [self loadMoreCloseMedias];
     } else {
@@ -184,16 +190,13 @@
         reloadBarButton_.enabled = YES;
         scanBarButton_.enabled = YES;
         
-        
-        MKUserLocation* userLocation = mapView_.userLocation;
-        
         Media* lastMedia = (Media *)[medias lastObject];
-        CGFloat latDelta = fabs(fabs(userLocation.coordinate.latitude) - fabs(lastMedia.coordinate.latitude));
-        CGFloat lonDelta = fabs(fabs(userLocation.coordinate.longitude) - fabs(lastMedia.coordinate.longitude));
-                
-        [mapView_ setRegion:MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(2*latDelta, 2*lonDelta)) animated:YES];
-        LogDebug(@"user lon:%f lastMedia lon:%f",userLocation.coordinate.longitude,lastMedia.coordinate.longitude);
-
+        CGFloat latDelta = fabs(fabs(referenceAnnotation_.coordinate.latitude) - fabs(lastMedia.coordinate.latitude));
+        CGFloat lonDelta = fabs(fabs(referenceAnnotation_.coordinate.longitude) - fabs(lastMedia.coordinate.longitude));
+        CGFloat span = 2*MAX(latDelta, lonDelta);
+        
+        // Display the closest region with all the medias displayed
+        [mapView_ setRegion:MKCoordinateRegionMake(referenceAnnotation_.coordinate, MKCoordinateSpanMake(span, span)) animated:YES];
     }
 }
 

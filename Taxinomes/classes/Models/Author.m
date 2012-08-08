@@ -68,7 +68,7 @@
         author = (Author *)[NSEntityDescription insertNewObjectForEntityForName:kAuthorEntityName inManagedObjectContext:context];
         author.identifier = authorIdentifier;
         if (author == nil) {
-            NSLog(@"[ERROR] author = nil !!!");
+            LogDebug(@"[ERROR] author = nil !!!");
         }
         if (![context save:nil]) {
             return nil;

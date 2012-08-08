@@ -53,7 +53,7 @@
 
 - (void)loadImage
 {
-	//NSLog(@"TCImage loadImage; delegate retain");
+	//LogDebug(@"TCImage loadImage; delegate retain");
     if (self.caching){
         NSFileManager *fileManager = [NSFileManager defaultManager];
         if ([fileManager fileExistsAtPath:[[TCImageView cacheDirectoryAddress] stringByAppendingPathComponent:[self cachedImageSystemName]]])
@@ -161,7 +161,7 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)theConnection 
 {
-	//NSLog(@"connectionDidFinishLoading");
+	//LogDebug(@"connectionDidFinishLoading");
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     NSFileManager *fileManager = [NSFileManager defaultManager];
 	
@@ -209,7 +209,7 @@
     }     
     
     
-	//NSLog(@"TCImage connectionDidFinishLoading; delegate release");
+	//LogDebug(@"TCImage connectionDidFinishLoading; delegate release");
 }
 
 
@@ -242,7 +242,7 @@
 		return @"";
 	}
 	else {
-		//NSLog(@"%@", url);
+		//LogDebug(@"%@", url);
 	}
     
 	

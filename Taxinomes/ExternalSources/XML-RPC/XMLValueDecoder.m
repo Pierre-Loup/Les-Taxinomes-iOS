@@ -251,7 +251,7 @@
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
 	//TODO: JB did this, take it out later
-	//NSLog(@"String from XMLVauueDecoder: parser :: %@", string);
+	//LogDebug(@"String from XMLVauueDecoder: parser :: %@", string);
 	
 	if( !curElementName || !string )
 	{

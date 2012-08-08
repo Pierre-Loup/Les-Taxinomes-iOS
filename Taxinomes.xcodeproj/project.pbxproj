@@ -144,7 +144,6 @@
 		A5933DB415CD5E0E00AD6D10 /* tabbar_bug.png in Resources */ = {isa = PBXBuildFile; fileRef = A5933DB215CD5E0E00AD6D10 /* tabbar_bug.png */; };
 		A5933DB515CD5E0E00AD6D10 /* tabbar_radar.png in Resources */ = {isa = PBXBuildFile; fileRef = A5933DB315CD5E0E00AD6D10 /* tabbar_radar.png */; };
 		A5933DBB15CD5FD500AD6D10 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A5933DB815CD5FD500AD6D10 /* main.m */; };
-		A5933DBC15CD5FD500AD6D10 /* Taxinomes-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A5933DB915CD5FD500AD6D10 /* Taxinomes-Info.plist */; };
 		A5986FD115B4B53D00154F87 /* MediaLocalisationPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5986FCF15B4B53D00154F87 /* MediaLocalisationPickerViewController.m */; };
 		A5986FD215B4B53D00154F87 /* MediaLocalisationPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5986FD015B4B53D00154F87 /* MediaLocalisationPickerViewController.xib */; };
 		A59CEAA215507FB800754A8E /* default_avatar_medium.png in Resources */ = {isa = PBXBuildFile; fileRef = A59CEAA015507FB800754A8E /* default_avatar_medium.png */; };
@@ -155,7 +154,6 @@
 		A5CA5F24154D8C2800C3EB2E /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D3FE154AFAAE0048CDF1 /* MainWindow.xib */; };
 		A5CA5F25154D8CCD00C3EB2E /* MediaListCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D3E3154AFA1A0048CDF1 /* MediaListCellView.xib */; };
 		A5CA5F2E154E82BB00C3EB2E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5CA5F2C154E82BB00C3EB2E /* Localizable.strings */; };
-		A5CA5F30154E82C600C3EB2E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5CA5F2C154E82BB00C3EB2E /* Localizable.strings */; };
 		A5DDDBB215908EA800B91FFB /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = A5DDDBB015908EA800B91FFB /* background.png */; };
 		A5DDDBB315908EA800B91FFB /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5DDDBB115908EA800B91FFB /* background@2x.png */; };
 		A5F92EEF1556C76100C1F622 /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F92EEE1556C76100C1F622 /* Media.m */; };
@@ -1052,7 +1050,7 @@
 		37D2E7D0144709ED0044EC3A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = " Les Petits Débrouillards Bretagne";
 			};
 			buildConfigurationList = 37D2E7D3144709ED0044EC3A /* Build configuration list for PBXProject "Taxinomes" */;
@@ -1108,7 +1106,6 @@
 				A5CA5F24154D8C2800C3EB2E /* MainWindow.xib in Resources */,
 				A5CA5F25154D8CCD00C3EB2E /* MediaListCellView.xib in Resources */,
 				A5CA5F2E154E82BB00C3EB2E /* Localizable.strings in Resources */,
-				A5CA5F30154E82C600C3EB2E /* Localizable.strings in Resources */,
 				A59CEAA215507FB800754A8E /* default_avatar_medium.png in Resources */,
 				A59CEAA315507FB800754A8E /* default_avatar_medium@2x.png in Resources */,
 				A50D5D0B1572164900BF9DF0 /* MediaLicenseChooserViewController.xib in Resources */,
@@ -1132,7 +1129,6 @@
 				A5933D9A15CD0FFA00AD6D10 /* LICENSE in Resources */,
 				A5933DB415CD5E0E00AD6D10 /* tabbar_bug.png in Resources */,
 				A5933DB515CD5E0E00AD6D10 /* tabbar_radar.png in Resources */,
-				A5933DBC15CD5FD500AD6D10 /* Taxinomes-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1309,6 +1305,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1331,6 +1328,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1359,6 +1357,7 @@
 					TOUCHXMLUSETIDY,
 					"DEBUG=1",
 				);
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Taxinomes/Taxinomes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
@@ -1384,6 +1383,7 @@
 					TAXINOMES_DEV,
 					TOUCHXMLUSETIDY,
 				);
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Taxinomes/Taxinomes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
@@ -1404,6 +1404,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Taxinomes/Taxinomes-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "TaxinomesTests/TaxinomesTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1422,6 +1423,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Taxinomes/Taxinomes-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "TaxinomesTests/TaxinomesTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";

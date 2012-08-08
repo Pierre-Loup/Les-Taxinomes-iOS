@@ -229,7 +229,7 @@
         || [mutableFetchResults count] == 0) {
         return nil;
     } else if ([mutableFetchResults count] > 1) {
-        NSLog(@"[WARNING] multiple records (%d) in database for id %d",[mutableFetchResults count],[identifier intValue]);
+        LogDebug(@"[WARNING] multiple records (%d) in database for id %d",[mutableFetchResults count],[identifier intValue]);
         return [mutableFetchResults objectAtIndex:0];
     } else {
         return [mutableFetchResults objectAtIndex:0];
@@ -276,7 +276,7 @@
     
     if (author) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K.%K == %d",kMediaEntityAuthorsField, kAuthorEntityIdentifierField,[author.identifier intValue]];
-        NSLog(@"%@",predicate.predicateFormat);
+        LogDebug(@"%@",predicate.predicateFormat);
         [request setPredicate:predicate];
     }
     

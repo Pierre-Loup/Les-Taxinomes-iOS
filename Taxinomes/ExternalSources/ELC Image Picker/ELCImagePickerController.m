@@ -50,7 +50,7 @@
 #pragma mark Memory management
 
 - (void)didReceiveMemoryWarning {    
-    NSLog(@"ELC Image Picker received memory warning.");
+    LogDebug(@"ELC Image Picker received memory warning.");
     
     [super didReceiveMemoryWarning];
 }
@@ -61,7 +61,7 @@
 
 
 - (void)dealloc {
-    NSLog(@"deallocing ELCImagePickerController");
+    LogDebug(@"deallocing ELCImagePickerController");
     [super dealloc];
 }
 

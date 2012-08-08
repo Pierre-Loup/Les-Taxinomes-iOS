@@ -440,8 +440,8 @@ static LTConnectionManager *instance = nil;
 	[request setTimeOutSeconds:30];
     [request appendPostData:[[req source] dataUsingEncoding:NSUTF8StringEncoding]];
 #if DEBUG
-    NSLog(@"executeXMLRPCRequest host: %@",[req host]);
-    //NSLog(@"executeXMLRPCRequest request: %@",[req source]);
+    LogDebug(@"executeXMLRPCRequest host: %@",[req host]);
+    //LogDebug(@"executeXMLRPCRequest request: %@",[req source]);
 #endif  
 	[request startSynchronous];
 	request.uploadProgressDelegate = nil;
@@ -453,7 +453,7 @@ static LTConnectionManager *instance = nil;
     if (err) {
         //TODO ERROR
 #if DEBUG
-        NSLog(@"executeXMLRPCRequest error: %@", err);
+        LogDebug(@"executeXMLRPCRequest error: %@", err);
 #endif
         return err;
     }
@@ -467,7 +467,7 @@ static LTConnectionManager *instance = nil;
     }
     
 #if DEBUG
-	NSLog(@"executeXMLRPCRequest response: %@", [request responseString]);
+	LogDebug(@"executeXMLRPCRequest response: %@", [request responseString]);
 #endif
 	XMLRPCResponse *userInfoResponse = [[[XMLRPCResponse alloc] initWithData:[request responseData]] autorelease];
     if([userInfoResponse isKindOfClass:[NSError class]]){

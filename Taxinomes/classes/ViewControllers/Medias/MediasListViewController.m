@@ -133,7 +133,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    //NSLog(@"Rows : %d",[medias count]);
+    //LogDebug(@"Rows : %d",[medias count]);
     switch (mediaLoadingStatus_) {
         case FAILED:
         case NOMORETOLOAD:

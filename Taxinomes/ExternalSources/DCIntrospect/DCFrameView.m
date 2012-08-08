@@ -106,7 +106,7 @@
 	if (showAntialiasingWarning)
 	{
 		[[UIColor redColor] set];
-		NSLog(@"DCIntrospect: *** WARNING: One or more values of this view's frame are non-integer values. This view will likely look blurry. ***");
+		LogDebug(@"DCIntrospect: *** WARNING: One or more values of this view's frame are non-integer values. This view will likely look blurry. ***");
 	}
 	else
 	{

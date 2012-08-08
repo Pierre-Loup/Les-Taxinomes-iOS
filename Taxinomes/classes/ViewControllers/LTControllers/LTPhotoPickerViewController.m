@@ -86,7 +86,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 #pragma mark - CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    //NSLog(@"Lat:%f Lon:%f Hacc:%f Vacc:%f",newLocation.coordinate.latitude ,newLocation.coordinate.longitude, newLocation.horizontalAccuracy, newLocation.verticalAccuracy);
+    //LogDebug(@"Lat:%f Lon:%f Hacc:%f Vacc:%f",newLocation.coordinate.latitude ,newLocation.coordinate.longitude, newLocation.horizontalAccuracy, newLocation.verticalAccuracy);
 }
 
 #pragma mark - UIActionSheetDelegate

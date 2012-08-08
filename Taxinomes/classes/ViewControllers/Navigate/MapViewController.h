@@ -13,16 +13,18 @@
 #import "LTViewController.h"
 
 @interface MapViewController : LTViewController <MKMapViewDelegate, CLLocationManagerDelegate, LTConnectionManagerDelegate> {
-    LTConnectionManager* connectionManager_;
-    CLLocationManager* locationManager_;
-    BOOL shouldZoomToUserLocation_;
-    NSInteger searchStarIndex_;
     
+    CLLocationManager* locationManager_;    
+    NSInteger searchStartIndex_;
+    
+    //UI
     UIBarButtonItem* reloadBarButton_;
     UIBarButtonItem* scanBarButton_;
 }
 
-
+@property (retain, readonly) id<MKAnnotation> referenceAnnotation;
 @property (retain, nonatomic) IBOutlet MKMapView * mapView;
+
+- (id)initWithAnnotation:(id<MKAnnotation>)annotation;
 
 @end

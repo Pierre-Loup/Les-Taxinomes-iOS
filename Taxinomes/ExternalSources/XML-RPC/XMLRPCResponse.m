@@ -43,7 +43,7 @@
 	char *outbuf = malloc(sizeof(char) * data.length);
 	char *outptr = outbuf;
 	if (iconv(cd, &inbuf, &inbytesleft, &outptr, &outbytesleft) == (size_t)-1) {
-		NSLog(@"this should not happen, seriously");
+		LogDebug(@"this should not happen, seriously");
 		return nil;
 	}
 	NSData *result = [NSData dataWithBytes:outbuf length:data.length - outbytesleft];
@@ -78,16 +78,16 @@
 				
 		//2. get rid of weird characters before the xml preamble
 		int responseLenght = [str length];
-		//NSLog (@"String length is %i", responseLenght);
+		//LogDebug (@"String length is %i", responseLenght);
 		int charIndex = 0;
 		
 		for( ; charIndex < responseLenght; charIndex++) {
 			unichar testChar = [str characterAtIndex:charIndex];
 			if(testChar == 60) {
-				//NSLog (@"found the correct start char at index %i", charIndex);
+				//LogDebug (@"found the correct start char at index %i", charIndex);
 				break;
 			} else {
-				//NSLog (@"invalid response char at index %i", charIndex );
+				//LogDebug (@"invalid response char at index %i", charIndex );
 			}
 		} //end for
 		
@@ -107,9 +107,9 @@
 			   ((testChar >= 0x20) && (testChar <= 0xD7FF)) ||
 			   ((testChar >= 0xE000) && (testChar <= 0xFFFD))
 			   ) {
-				//NSLog(@"valid char%C", testChar);
+				//LogDebug(@"valid char%C", testChar);
 			} else {
-				//NSLog(@"invalid chararactes found %C", testChar);
+				//LogDebug(@"invalid chararactes found %C", testChar);
 				presenceOfInvalidCharacters = YES;
 				break;
 			}
@@ -166,7 +166,7 @@
 		else if( [_object isKindOfClass:[NSError class]] )
 		{
 			//If there's a parse error, clean the response with CTidy and try again
-			//NSLog (@"--begin tidy process");
+			//LogDebug (@"--begin tidy process");
 			NSError *theError = NULL;
 			NSString *cleanedString = [[CTidy tidy] tidyString:str inputFormat:TidyFormat_XML outputFormat:TidyFormat_XML diagnostics:NULL error:&theError];
 			if( theError != NULL )
@@ -174,8 +174,8 @@
 				//TODO: we may need to create a XMLRPCResponse with the error. and return
 				return (id) [theError retain];
 			}
-			//NSLog (@"cleaned response msg: %@", cleanedString);
-			//NSLog (@"--end tidy process");			data = nil;
+			//LogDebug (@"cleaned response msg: %@", cleanedString);
+			//LogDebug (@"--end tidy process");			data = nil;
 			data = [NSData dataWithData:[cleanedString dataUsingEncoding: NSUTF8StringEncoding]];
 			
 			decoder = nil;

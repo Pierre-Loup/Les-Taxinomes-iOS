@@ -23,10 +23,12 @@
  
  */
 
-#import "MediaDetailViewController.h"
-#import "MediaFullSizeViewContoller.h"
 #import "Constants.h"
 #import "Annotation.h"
+//VC
+#import "MapViewController.h"
+#import "MediaDetailViewController.h"
+#import "MediaFullSizeViewContoller.h"
 
 #define kCommonWidth 310.0
 
@@ -260,7 +262,9 @@
 }
 
 - (void)mapTouched:(MKMapView *)sender {
-    NSLog(@"mapTouched:");
+    MapViewController* mapVC = [[MapViewController alloc] initWithAnnotation:media_];
+    [self.navigationController pushViewController:mapVC animated:YES];
+    [mapVC release];
 }
 
 #pragma mark - TCImageViewDelegate
@@ -289,7 +293,7 @@
 
 - (void)didFailWithError:(NSError *)error {
 #if TAXINOMES_DEV
-    NSLog(@"%@",error.localizedDescription);
+    LogDebug(@"%@",error.localizedDescription);
 #endif
     asynchLoadCounter_ = asynchLoadCounter_ - 1;
     [self displayContentIfNeeded];

@@ -104,7 +104,7 @@
 
 - (void)didFailWithError:(NSError *)error {
 #if TAXINOMES_DEV
-    NSLog(@"%@",error.localizedDescription);
+    LogDebug(@"%@",error.localizedDescription);
 #endif
     [self hideLoader];
 }

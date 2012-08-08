@@ -129,7 +129,7 @@
 
 - (void)setProgress:(float)newProgress {
 #if DEBUG
-    NSLog(@"%f",newProgress);
+    LogDebug(@"%f",newProgress);
 #endif
     loaderView_.progress = newProgress;
 }
