@@ -42,10 +42,10 @@
     [super viewDidLoad];
     
     // Navigation bar buttons
-    reloadBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonAction:)];
-    [self.navigationItem setRightBarButtonItem:reloadBarButton_];
+    //reloadBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonAction:)];
+    //[self.navigationItem setLeftBarButtonItem:reloadBarButton_];
     scanBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(scanButtonAction:)];
-    [self.navigationItem setLeftBarButtonItem:scanBarButton_];
+    [self.navigationItem setRightBarButtonItem:scanBarButton_];
     
     
     searchStartIndex_ = 0;
@@ -79,24 +79,6 @@
     scanBarButton_ = nil;
     self.mapView = nil;
     [super viewDidUnload];
-<<<<<<< HEAD
-=======
-    [reloadBarButton_ release];
-    reloadBarButton_ = nil;
-    [scanBarButton_ release];
-    scanBarButton_ = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (void)didReceiveMemoryWarning {
-    [mapView_ removeAnnotations:mapView_.annotations];
-    searchStarIndex_ = 0;
-    mapView_.showsUserLocation = YES;
->>>>>>> 4233cdd6da6e0b88eeb4e1e515a043bed919dbf7
 }
 
 #pragma mark - Actions
@@ -209,12 +191,12 @@
         scanBarButton_.enabled = YES;
         
         Media* lastMedia = (Media *)[medias lastObject];
-        CGFloat latDelta = fabs(fabs(referenceAnnotation_.coordinate.latitude) - fabs(lastMedia.coordinate.latitude));
-        CGFloat lonDelta = fabs(fabs(referenceAnnotation_.coordinate.longitude) - fabs(lastMedia.coordinate.longitude));
-        CGFloat span = 2*MAX(latDelta, lonDelta);
-        
+        CGFloat latDif = fabs(fabs(referenceAnnotation_.coordinate.latitude) - fabs(lastMedia.coordinate.latitude));
+        CGFloat lonDif = fabs(fabs(referenceAnnotation_.coordinate.longitude) - fabs(lastMedia.coordinate.longitude));
+        CGFloat lonDelta = MIN(2*MAX(latDif, lonDif), 360.0);
+        CGFloat latDelta = MIN(2*MAX(latDif, lonDif), 180.0);
         // Display the closest region with all the medias displayed
-        [mapView_ setRegion:MKCoordinateRegionMake(referenceAnnotation_.coordinate, MKCoordinateSpanMake(span, span)) animated:YES];
+        [mapView_ setRegion:MKCoordinateRegionMake(referenceAnnotation_.coordinate, MKCoordinateSpanMake(latDelta, lonDelta)) animated:YES];
     }
 }
 

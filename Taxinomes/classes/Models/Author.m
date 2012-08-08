@@ -27,14 +27,6 @@
 #import "Media.h"
 #import "LTDataManager.h"
 
-#define kAuthorIdTag @"id_auteur"
-#define kNameTag @"nom"
-#define kBiographyTag @"bio"
-#define kSignupDateTag @"date_inscription"
-#define kAvatarURLTag @"logo"
-#define kStatusTag @"statut"
-#define kAuthorIdTag @"id_auteur"
-
 @implementation Author
 
 @dynamic avatarURL;
@@ -53,11 +45,11 @@
     }
     
     NSNumber * authorIdentifier = nil;
-    if ([[response objectForKey:kAuthorIdTag] isKindOfClass:[NSString class]]) {
-        NSString * strAuthorIdentifier = (NSString *)[response objectForKey:kAuthorIdTag];
+    if ([[response objectForKey:@"id_auteur"] isKindOfClass:[NSString class]]) {
+        NSString * strAuthorIdentifier = (NSString *)[response objectForKey:@"id_auteur"];
         authorIdentifier = [NSNumber numberWithInt:[strAuthorIdentifier intValue]];
-    } else  if ([[response objectForKey:kAuthorIdTag] isKindOfClass:[NSNumber class]]) {
-        authorIdentifier = [response objectForKey:kAuthorIdTag];
+    } else  if ([[response objectForKey:@"id_auteur"] isKindOfClass:[NSNumber class]]) {
+        authorIdentifier = [response objectForKey:@"id_auteur"];
     } else {
         return nil;
     }
@@ -75,20 +67,20 @@
             return nil;
         }
     }
-    NSString * authorName = (NSString *)[response objectForKey:kNameTag];
+    NSString * authorName = (NSString *)[response objectForKey:@"nom"];
     
     if (authorName && ![authorName isEqualToString:@""]) {
-        author.name = [response objectForKey:kNameTag];
+        author.name = [response objectForKey:@"nom"];
     } else {
         author.name = kNoAuthorName;
     }
     
-    if ([response objectForKey:kBiographyTag]) {
-        author.biography = [response objectForKey:kBiographyTag];
+    if ([response objectForKey:@"bio"]) {
+        author.biography = [response objectForKey:@"bio"];
     }
 
-    if ([response objectForKey:kSignupDateTag]) {
-        NSString *strSignupDate = [NSString stringWithFormat:@"%@ +0000",[response objectForKey:kSignupDateTag]];
+    if ([response objectForKey:@"date_inscription"]) {
+        NSString *strSignupDate = [NSString stringWithFormat:@"%@ +0000",[response objectForKey:@"date_inscription"]];
         NSDate *signupDate = [[[NSDate alloc] initWithString:strSignupDate] autorelease];
         if(signupDate != nil)
             author.signupDate = signupDate;
@@ -96,12 +88,12 @@
             author.signupDate = [NSDate dateWithTimeIntervalSince1970:0];
     }
     
-    if ([response objectForKey:kAvatarURLTag]) {
-        author.avatarURL = [response objectForKey:kAvatarURLTag];
+    if ([response objectForKey:@"logo"]) {
+        author.avatarURL = [response objectForKey:@"logo"];
     }
 
-    if ([response objectForKey:kStatusTag]) {
-        author.status = [response objectForKey:kStatusTag];
+    if ([response objectForKey:@"statut"]) {
+        author.status = [response objectForKey:@"statut"];
     }
     
     author.localUpdateDate = [NSDate date];

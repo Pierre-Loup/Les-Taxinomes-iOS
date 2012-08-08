@@ -29,23 +29,6 @@
 #import "Section.h"
 #import "LTDataManager.h"
 
-#define kMediaIdTag @"id_article"
-#define kTitleTag @"titre"
-#define kTextTag @"texte"
-#define kStatusTag @"statut"
-#define kDateTag @"date"
-#define kVisitsTag @"visites"
-#define kPopularityTag @"popularite"
-#define kModifyDateTag @"date_modif"
-#define kMediaThumbnailTag @"vignette"
-#define kMediaImageURLTag @"document"
-#define kLicenseTag @"id_licence"
-#define kAuthorsTag @"auteurs"
-#define kAuthorIdTag @"id_auteur"
-#define kGisTag @"gis"
-#define kGisLongitudeTag @"lon"
-#define kGisLatitudeTag @"lat"
-
 @implementation Media
 
 @dynamic date;
@@ -77,9 +60,9 @@
     }
     
     NSNumber * mediaIdentifier = nil;
-    if ([[response objectForKey:kMediaIdTag] isKindOfClass:[NSString class]]
-        && [[response objectForKey:kStatusTag] isEqualToString:@"publie"]) {
-        NSString * strMediaIdentifier = (NSString *)[response objectForKey:kMediaIdTag];
+    if ([[response objectForKey:@"id_article"] isKindOfClass:[NSString class]]
+        && [[response objectForKey:@"statut"] isEqualToString:@"publie"]) {
+        NSString * strMediaIdentifier = (NSString *)[response objectForKey:@"id_article"];
         mediaIdentifier = [NSNumber numberWithInt:[strMediaIdentifier intValue]];
     } else {
         return nil;
@@ -97,19 +80,19 @@
         
     }
     
-    if ([response objectForKey:kTitleTag]) {
-        media.title = [response objectForKey:kTitleTag];
+    if ([response objectForKey:@"titre"]) {
+        media.title = [response objectForKey:@"titre"];
     }
     
-    if ([response objectForKey:kTextTag]) {
-        media.text = [response objectForKey:kTextTag];
+    if ([response objectForKey:@"texte"]) {
+        media.text = [response objectForKey:@"texte"];
     }
     
-    if ([response objectForKey:kStatusTag]) {
-        media.status = [response objectForKey:kStatusTag];
+    if ([response objectForKey:@"statut"]) {
+        media.status = [response objectForKey:@"statut"];
     }
-    if ([response objectForKey:kDateTag]) {
-        NSString *strDateDesc = [NSString stringWithFormat:@"%@ +0000",[response objectForKey:kDateTag]];
+    if ([response objectForKey:@"date"]) {
+        NSString *strDateDesc = [NSString stringWithFormat:@"%@ +0000",[response objectForKey:@"date"]];
         NSDate *date = [[[NSDate alloc] initWithString:strDateDesc] autorelease];
         if(date != nil)
             media.date = date;
@@ -117,18 +100,18 @@
             media.date = [NSDate dateWithTimeIntervalSince1970:0];
     }
     
-    if ([response objectForKey:kVisitsTag]) {
-        NSString * visits = [response objectForKey:kVisitsTag];
+    if ([response objectForKey:@"visites"]) {
+        NSString * visits = [response objectForKey:@"visites"];
         media.visits = [NSNumber numberWithInteger:[visits integerValue]];
     }
     
-    if ([response objectForKey:kPopularityTag]) {
-        NSString * popularity = [response objectForKey:kPopularityTag];
+    if ([response objectForKey:@"popularite"]) {
+        NSString * popularity = [response objectForKey:@"popularite"];
         media.popularity = [NSNumber numberWithFloat:[popularity floatValue]];
     }
     
-    if ([response objectForKey:kModifyDateTag]) {
-        NSString *strUpdateDateDesc = [NSString stringWithFormat:@"%@ +0000",[response objectForKey:kModifyDateTag]];
+    if ([response objectForKey:@"date_modif"]) {
+        NSString *strUpdateDateDesc = [NSString stringWithFormat:@"%@ +0000",[response objectForKey:@"date_modif"]];
         NSDate *updateDate = [[[NSDate alloc] initWithString:strUpdateDateDesc] autorelease];
         if(updateDate != nil)
             media.updateDate = updateDate;
@@ -137,33 +120,33 @@
     }
     
     // Thumbnail image
-    if ([response objectForKey:kMediaThumbnailTag]) {
-        media.mediaThumbnailUrl = [response objectForKey:kMediaThumbnailTag];
+    if ([response objectForKey:@"vignette"]) {
+        media.mediaThumbnailUrl = [response objectForKey:@"vignette"];
     }
     media.mediaThumbnailLocalFile = @"";
     // Medium image
     media.mediaMediumLocalFile = @"";
-    if ([response objectForKey:kMediaImageURLTag]) {
-        media.mediaMediumURL = [response objectForKey:kMediaImageURLTag];
+    if ([response objectForKey:@"document"]) {
+        media.mediaMediumURL = [response objectForKey:@"document"];
     }
     // Large image
     media.mediaLargeURL = @"";
     media.mediaLargeLocalFile = @"";
     
-    if ([response objectForKey:kLicenseTag]) {
-        NSInteger licenceId = [[response objectForKey:kLicenseTag] intValue];
+    if ([response objectForKey: @"id_licence"]) {
+        NSInteger licenceId = [[response objectForKey: @"id_licence"] intValue];
         media.license = [License licenseWithIdentifier:[NSNumber numberWithInt:licenceId]];
     }
     
-    if([[response objectForKey:kAuthorsTag] isKindOfClass:[NSArray class]]){
-        NSDictionary * authorDict = [[response objectForKey:kAuthorsTag] objectAtIndex:0];
+    if([[response objectForKey:@"auteurs"] isKindOfClass:[NSArray class]]){
+        NSDictionary * authorDict = [[response objectForKey:@"auteurs"] objectAtIndex:0];
         media.author = [Author authorWithXMLRPCResponse:authorDict];
     }
     
-    if ([[response objectForKey:kGisTag] isKindOfClass:[NSArray class]]) {
-        NSDictionary * gisDict = [[response objectForKey:kGisTag] objectAtIndex:0];
-        NSString *strLatitude = [gisDict objectForKey:kGisLatitudeTag];
-        NSString *strLongitude = [gisDict objectForKey:kGisLongitudeTag];
+    if ([[response objectForKey:@"gis"] isKindOfClass:[NSArray class]]) {
+        NSDictionary * gisDict = [[response objectForKey:@"gis"] objectAtIndex:0];
+        NSString *strLatitude = [gisDict objectForKey:@"lat"];
+        NSString *strLongitude = [gisDict objectForKey:@"lon"];
         media.longitude = [NSNumber numberWithFloat:[strLongitude floatValue]];
         media.latitude = [NSNumber numberWithFloat:[strLatitude floatValue]];
     }
@@ -186,8 +169,8 @@
     }
     
     NSNumber * mediaIdentifier = nil;
-    if ([[response objectForKey:kMediaIdTag] isKindOfClass:[NSString class]]) {
-        NSString * strMediaIdentifier = (NSString *)[response objectForKey:kMediaIdTag];
+    if ([[response objectForKey:@"id_article"] isKindOfClass:[NSString class]]) {
+        NSString * strMediaIdentifier = (NSString *)[response objectForKey:@"id_article"];
         mediaIdentifier = [NSNumber numberWithInt:[strMediaIdentifier intValue]];
     } else {
         return nil;
@@ -200,8 +183,8 @@
     }
     
     media.mediaMediumLocalFile = @"";
-    if ([response objectForKey:kMediaImageURLTag]) {
-        media.mediaLargeURL = [response objectForKey:kMediaImageURLTag];
+    if ([response objectForKey:@"document"]) {
+        media.mediaLargeURL = [response objectForKey:@"document"];
     }
     return media;
 }

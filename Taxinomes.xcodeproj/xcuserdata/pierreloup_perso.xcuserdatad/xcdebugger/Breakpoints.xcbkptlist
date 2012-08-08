@@ -17,17 +17,17 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "No"
+         shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Taxinomes/Classes/Models/Author.m"
-         timestampString = "366141011.036984"
+         filePath = "Taxinomes/Classes/Views/LTTitleView.h"
+         timestampString = "366151880.404669"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "71"
-         endingLineNumber = "71"
-         landmarkName = "+authorWithXMLRPCResponse:"
-         landmarkType = "5">
+         startingLineNumber = "37"
+         endingLineNumber = "37"
+         landmarkName = "@interface LTTitleView"
+         landmarkType = "2">
       </FileBreakpoint>
    </FileBreakpoints>
    <ExceptionBreakpoints>

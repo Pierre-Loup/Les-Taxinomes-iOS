@@ -28,13 +28,7 @@
 #import "Author.h"
 #import "Media.h"
 
-@interface LTDataManager : NSObject <LTConnectionManagerDelegate> {
-    NSManagedObjectContext * mainManagedObjectContext_;
-    NSManagedObjectModel * managedObjectModel_;
-    NSPersistentStoreCoordinator * persistentStoreCoordinator_;
-    
-    NSInteger synchLimit_;
-}
+@interface LTDataManager : NSObject <LTConnectionManagerDelegate>
 
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, retain, readonly) NSManagedObjectContext *mainManagedObjectContext;
@@ -52,10 +46,5 @@
 
 // Core Data
 - (IBAction)saveAction:sender;
-- (NSManagedObjectContext *) mainManagedObjectContext;
-- (NSManagedObjectModel *)managedObjectModel;
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator;
-- (NSString *)applicationDocumentsDirectory;
-
 
 @end

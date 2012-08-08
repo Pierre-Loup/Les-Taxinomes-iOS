@@ -24,7 +24,6 @@
  */
 
 #import "TaxinomesAppDelegate.h"
-#import "MediasListViewController.h"
 #import "LTConnectionManager.h"
 #import "LTDataManager.h"
 #import "Constants.h"
@@ -38,9 +37,9 @@
 @synthesize launchScreenView = launchScreenView_;
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application{
-    LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
+    // Get the licenses list if not present
     if ([[License allLicenses] count] == 0) {
-        [connectionManager getLicenses];
+        [[LTConnectionManager sharedConnectionManager] getLicenses];
     }
     
     UINavigationBar *bar = [self.tabBarController.navigationController navigationBar];
@@ -53,52 +52,34 @@
         [[DCIntrospect sharedIntrospector] start];
     #endif
     
+    // Setup launch sound and play it
     NSString * launchSoundPath = [[NSBundle mainBundle] pathForResource:@"oiseau" ofType:@"aif"];
     if (launchSoundPath) {
         AudioServicesCreateSystemSoundID((CFURLRef)[NSURL fileURLWithPath: launchSoundPath], &launchSoundID_);
     }
     [self playLaunchSound];
-    
+    // Setup fack spash screen
     launchScreenView_ = [[UIImageView alloc] initWithFrame: self.tabBarController.view.frame];
     launchScreenView_.image = [UIImage imageNamed:@"Default.png"];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-    /*
-     Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-     Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-     */
     [launchScreenView_ removeFromSuperview];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    /*
-     Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-     If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-     */
+    // Prepare fake splash screen to be displayed when application enter foreground
     [self.window addSubview:launchScreenView_];
     
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    /*
-    UIImageView *launchScreenView = [[UIImageView alloc] initWithFrame:navigationController.view.frame];
-    launchScreenView.image = [UIImage imageNamed:@"Default.png"];
-    [navigationController.view addSubview:launchScreenView];
-     */
+    // Display splash screen, and dismiss it 2 sec later
     [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(dismissLaunchScreenView:) userInfo:nil repeats:NO];
-    
     [self playLaunchSound];
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    /*
-     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-     */
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -116,8 +97,8 @@
 {
     AudioServicesDisposeSystemSoundID(launchSoundID_);
     [launchScreenView_ release];
-    self.tabBarController = nil;
-    self.window = nil;
+    [tabBarController_ release];
+    [window_ release];
     [super dealloc];
 }
 

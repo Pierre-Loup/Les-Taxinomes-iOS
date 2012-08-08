@@ -27,13 +27,14 @@
 #import "Constants.h"
 #import "Media.h"
 
-static LTDataManager *instance = nil;
-
 @interface LTDataManager (Private)
 
 @end
 
 @implementation LTDataManager
+@synthesize persistentStoreCoordinator = persistentStoreCoordinator_;
+@synthesize mainManagedObjectContext = mainManagedObjectContext_;
+@synthesize managedObjectModel = managedObjectModel_;
 @synthesize synchLimit = synchLimit_;
 
 - (id)init
@@ -53,10 +54,14 @@ static LTDataManager *instance = nil;
 }	
 
 + (LTDataManager *)sharedDataManager {
-	if(instance == nil) {
-		instance = [[LTDataManager alloc] init];
-	}	
-	return instance;
+	static LTDataManager* dataManager = nil;
+    static dispatch_once_t  dataManagerOnceToken;
+    
+    dispatch_once(&dataManagerOnceToken, ^{
+        dataManager = [[LTDataManager alloc] init];
+    });
+    
+    return dataManager;
 }
 
 - (BOOL)getAuthorAsychIfNeededWithId:(NSNumber *)authorIdentifier 

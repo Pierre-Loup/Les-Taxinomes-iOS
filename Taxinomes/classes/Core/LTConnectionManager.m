@@ -33,17 +33,14 @@
 #import "Author.h"
 #import "License.h"
 
-static LTConnectionManager *instance = nil;
-
 @implementation LTConnectionManager
 @synthesize authenticatedUser = authenticatedUser_;
 @synthesize downloadProgressDelegate = downloadProgressDelegate_;
 @synthesize uploadProgressDelegate = uploadProgressDelegate_;
 @synthesize authDelegate = authDelegate_;
-@synthesize authStatus;
+@synthesize authStatus = authStatus_;
 
 - (void)dealloc {
-	[instance release];
     self.authenticatedUser = nil;
     self.authDelegate = nil;
     self.downloadProgressDelegate = nil;
@@ -52,11 +49,14 @@ static LTConnectionManager *instance = nil;
 }
 
 + (LTConnectionManager *)sharedConnectionManager {
-	if(instance == nil) {
-		instance = [[LTConnectionManager alloc] init];
-	}
-	
-	return instance;
+    static LTConnectionManager* connectionManager = nil;
+    static dispatch_once_t  connectionManagerOnceToken;
+    
+    dispatch_once(&connectionManagerOnceToken, ^{
+        connectionManager = [[LTConnectionManager alloc] init];
+    });
+    
+    return connectionManager;
 }
 
 - (id)init {

@@ -55,13 +55,9 @@ typedef enum {
                       error:(NSError *)error;
 @end
 
-@interface LTConnectionManager : NSObject {
-    id <LTConnectionManagerAuthDelegate> authDelegate_;
-    Author * authenticatedUser_;
-    AuthenticationStatus authStatus;
-}
+@interface LTConnectionManager : NSObject
 
-@property (nonatomic, assign) id authDelegate;
+@property (nonatomic, assign) id<LTConnectionManagerAuthDelegate> authDelegate;
 @property (nonatomic, assign) id<ASIProgressDelegate> downloadProgressDelegate;
 @property (nonatomic, assign) id<ASIProgressDelegate> uploadProgressDelegate;
 @property (nonatomic, retain) Author * authenticatedUser;

@@ -108,17 +108,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [self dismissModalViewControllerAnimated:YES];
 }
 
-<<<<<<< HEAD
-#pragma mark - CLLocationManagerDelegate
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    //LogDebug(@"Lat:%f Lon:%f Hacc:%f Vacc:%f",newLocation.coordinate.latitude ,newLocation.coordinate.longitude, newLocation.horizontalAccuracy, newLocation.verticalAccuracy);
-}
-
-=======
->>>>>>> 4233cdd6da6e0b88eeb4e1e515a043bed919dbf7
-#pragma mark - UIActionSheetDelegate
-
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self dismissModalViewControllerAnimated:YES];
     if (buttonIndex == 0) {

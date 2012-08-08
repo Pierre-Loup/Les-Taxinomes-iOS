@@ -8,6 +8,10 @@
 
 #import "SingleLineInputCell.h"
 
+@interface SingleLineInputCell ()
+@property (nonatomic, retain) IBOutlet UILabel* titleLabel;
+@end
+
 @implementation SingleLineInputCell
 @synthesize titleLabel = titleLabel_;
 @synthesize input = input_;

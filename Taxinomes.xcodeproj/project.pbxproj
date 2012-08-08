@@ -70,7 +70,6 @@
 		A5568F1015AF5942008A9C8B /* SingleLineInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5568F0F15AF5942008A9C8B /* SingleLineInputCell.m */; };
 		A5568F1215AF599B008A9C8B /* SingleLineInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5568F1115AF599B008A9C8B /* SingleLineInputCell.xib */; };
 		A5582F4D15A4D9D1008F2F93 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */; };
-		A5597486155D83CF0072D082 /* MediaSynchGap.m in Sources */ = {isa = PBXBuildFile; fileRef = A5597485155D83CF0072D082 /* MediaSynchGap.m */; };
 		A58DFF9F15C8829600D4EF42 /* LTTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A58DFF9E15C8829600D4EF42 /* LTTableViewController.m */; };
 		A591B7B3150D57F000CE89BA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A591B7B2150D57F000CE89BA /* CoreData.framework */; };
 		A5933D6715CD0FFA00AD6D10 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = A5933CDB15CD0FFA00AD6D10 /* ASIAuthenticationDialog.m */; };
@@ -271,8 +270,6 @@
 		A5568F0F15AF5942008A9C8B /* SingleLineInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleLineInputCell.m; sourceTree = "<group>"; };
 		A5568F1115AF599B008A9C8B /* SingleLineInputCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleLineInputCell.xib; sourceTree = "<group>"; };
 		A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		A5597484155D83CF0072D082 /* MediaSynchGap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaSynchGap.h; path = Taxinomes/Classes/Models/MediaSynchGap.h; sourceTree = SOURCE_ROOT; };
-		A5597485155D83CF0072D082 /* MediaSynchGap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaSynchGap.m; path = Taxinomes/Classes/Models/MediaSynchGap.m; sourceTree = SOURCE_ROOT; };
 		A58DFF9D15C8829600D4EF42 /* LTTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTTableViewController.h; sourceTree = "<group>"; };
 		A58DFF9E15C8829600D4EF42 /* LTTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTTableViewController.m; sourceTree = "<group>"; };
 		A591B7B2150D57F000CE89BA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -999,8 +996,6 @@
 				A539D3EC154AFA3E0048CDF1 /* LTDataModel.xcdatamodeld */,
 				A5F92EED1556C76100C1F622 /* Media.h */,
 				A5F92EEE1556C76100C1F622 /* Media.m */,
-				A5597484155D83CF0072D082 /* MediaSynchGap.h */,
-				A5597485155D83CF0072D082 /* MediaSynchGap.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1183,7 +1178,6 @@
 				A539D4FF154B004D0048CDF1 /* Author.m in Sources */,
 				A539D513154B03210048CDF1 /* Annotation.m in Sources */,
 				A5F92EEF1556C76100C1F622 /* Media.m in Sources */,
-				A5597486155D83CF0072D082 /* MediaSynchGap.m in Sources */,
 				A50D5D0A1572164900BF9DF0 /* MediaLicenseChooserViewController.m in Sources */,
 				A52CF5ED15ADE2AB00FD0D66 /* MapCell.m in Sources */,
 				A5568F1015AF5942008A9C8B /* SingleLineInputCell.m in Sources */,

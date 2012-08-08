@@ -26,15 +26,10 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 
-@interface Annotation : NSObject <MKAnnotation> {
-    NSString *_title;
-    NSString *_subtitle;
-    
-    CLLocationCoordinate2D _coordinate;
-}
+@interface Annotation : NSObject <MKAnnotation>
 
-// Getters and setters
-- (void)setTitle:(NSString *)title;
-- (void)setSubtitle:(NSString *)subtitle;
+@property (nonatomic, retain) NSString* title;
+@property (nonatomic, retain) NSString* subtitle;
+@property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 
 @end
