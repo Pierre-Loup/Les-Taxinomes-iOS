@@ -157,7 +157,7 @@
 }
 
 - (void)refreshView {
-    CGFloat imageHeight;
+    CGFloat imageHeight = 0;
     CGFloat descHeight;
     
     if (media_.title && ![media_.title isEqualToString:@""]) {

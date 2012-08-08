@@ -36,7 +36,7 @@
     if (location_) {
         [self refreshMap];
     } else {
-        self.location = [[CLLocation alloc] initWithLatitude:0.0 longitude:0.0];
+        self.location = [[[CLLocation alloc] initWithLatitude:0.0 longitude:0.0] autorelease];
         [mapView_ setRegion:MKCoordinateRegionMake(location_.coordinate, MKCoordinateSpanMake(180.0, 180.0))];
     }
 }
@@ -103,7 +103,7 @@
     [pinView setDraggable:YES];
     [pinView setAnimatesDrop:YES];
     [pinView setPinColor:MKPinAnnotationColorGreen];
-    return pinView;
+    return [pinView autorelease];
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)annotationView didChangeDragState:(MKAnnotationViewDragState)newState fromOldState:(MKAnnotationViewDragState)oldState {

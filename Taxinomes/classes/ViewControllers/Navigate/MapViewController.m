@@ -43,10 +43,10 @@
     
     // Navigation bar buttons
     reloadBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonAction:)];
-    UIBarButtonItem* spaceItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil] autorelease];
+    [self.navigationItem setRightBarButtonItem:reloadBarButton_];
     scanBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(scanButtonAction:)];
-    NSArray* rightBarButtonItems = [NSArray arrayWithObjects:reloadBarButton_, spaceItem, scanBarButton_, nil];
-    [self.navigationItem setRightBarButtonItems:rightBarButtonItems];
+    [self.navigationItem setLeftBarButtonItem:scanBarButton_];
+    
     
     searchStartIndex_ = 0;
     mapView_.delegate = self;
@@ -79,6 +79,24 @@
     scanBarButton_ = nil;
     self.mapView = nil;
     [super viewDidUnload];
+<<<<<<< HEAD
+=======
+    [reloadBarButton_ release];
+    reloadBarButton_ = nil;
+    [scanBarButton_ release];
+    scanBarButton_ = nil;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)didReceiveMemoryWarning {
+    [mapView_ removeAnnotations:mapView_.annotations];
+    searchStarIndex_ = 0;
+    mapView_.showsUserLocation = YES;
+>>>>>>> 4233cdd6da6e0b88eeb4e1e515a043bed919dbf7
 }
 
 #pragma mark - Actions

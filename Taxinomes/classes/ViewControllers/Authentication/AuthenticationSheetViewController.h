@@ -28,19 +28,11 @@
 #import "LTConnectionManager.h"
 #import "UIGlossyButton.h"
 
-@protocol AuthenticationSheetViewControllerDelegate <NSObject>
-@optional
-- (void)didAuthenticateWithAuthor:(Author *)author;
-- (void)willDismissAuthenticationSheet;
-- (void)didDismissAuthenticationSheet;
-@end
-
-@interface AuthenticationSheetViewController :LTViewController <LTConnectionManagerAuthDelegate> {
-    id<AuthenticationSheetViewControllerDelegate> delegate_;
+@interface AuthenticationSheetViewController :LTViewController {
     LTConnectionManager* connectionManager_;
 }
 
-@property (nonatomic, assign) id<AuthenticationSheetViewControllerDelegate> delegate;
+@property (nonatomic, assign) id<LTConnectionManagerAuthDelegate> authDelegate;
 @property (nonatomic, retain) IBOutlet UITextField* loginTextField;
 @property (nonatomic, retain) IBOutlet UITextField* passwordTextField;
 @property (nonatomic, retain) IBOutlet UIGlossyButton* signinButton;

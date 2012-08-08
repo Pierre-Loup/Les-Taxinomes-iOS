@@ -30,7 +30,7 @@
 #import "Author.h"
 #import "TCImageView.h"
 
-@interface AccountViewController : LTPhotoPickerViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, AuthenticationSheetViewControllerDelegate, LTConnectionManagerAuthDelegate> {
+@interface AccountViewController : LTPhotoPickerViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, LTConnectionManagerAuthDelegate> {
     Author * authenticatedUser_;
     
     UIBarButtonItem * rightBarButton_;
