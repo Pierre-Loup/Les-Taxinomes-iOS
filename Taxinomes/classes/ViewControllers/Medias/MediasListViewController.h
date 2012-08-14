@@ -25,7 +25,7 @@
 
 #import <UIKit/UIKit.h>
 #import "LTDataManager.h"
-#import "LTViewController.h"
+#import "LTTableViewController.h"
 #import "TCImageView.h"
 
 typedef enum {
@@ -35,25 +35,16 @@ typedef enum {
     NOMORETOLOAD,
 } MediaLoadingStatus;
 
-@interface MediasListViewController : LTViewController <UITableViewDataSource, UITableViewDelegate, TCImageViewDelegate, LTConnectionManagerDelegate> {
-    Author * currentUser_;
-    
-    LTDataManager * dataManager_;
-    LTConnectionManager * connectionManger_;
+@interface MediasListViewController : LTTableViewController <TCImageViewDelegate, LTConnectionManagerDelegate> {
+
     MediaLoadingStatus mediaLoadingStatus_;
+    NSMutableDictionary* mediaAtIndexPath_;
     
     // UI
-    UIBarButtonItem * reloadBarButton_;
+    UIBarButtonItem* reloadBarButton_;
 }
 
-@property (nonatomic, retain) Author * currentUser;
-@property (nonatomic, retain) IBOutlet UITableView * tableView;
-@property (nonatomic, retain) NSMutableDictionary * mediaForIndexPath;
-@property (nonatomic, retain) IBOutlet UITableViewCell * spinnerCell;
-@property (nonatomic, retain) IBOutlet UITableViewCell * mediaTableViewCell;
-
-- (IBAction)loadSynchMedias:(id)sender;
-- (IBAction)refreshButtonAction:(id)sender;
+@property (nonatomic, retain) Author* currentUser;
 
 @end
 

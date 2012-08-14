@@ -27,6 +27,14 @@
 
 @interface AuthenticationSheetViewController ()
 
+@property (nonatomic, retain) IBOutlet UITextField* loginTextField;
+@property (nonatomic, retain) IBOutlet UITextField* passwordTextField;
+@property (nonatomic, retain) IBOutlet UIGlossyButton* signinButton;
+
+- (IBAction)dismissAuthenticationSheet:(id)sender;
+- (IBAction)submitAuthentication:(id)sender;
+- (IBAction)forgottenPasswordButtonTouched:(id)sender;
+- (IBAction)signupButtonTouched:(id)sender;
 @end
 
 @implementation AuthenticationSheetViewController
@@ -34,19 +42,19 @@
 @synthesize loginTextField = loginTextField_;
 @synthesize passwordTextField = passwordTextField_;
 @synthesize signinButton = signinButton_;
-@synthesize shouldDisplayCancelButton = shouldDisplayCancelButton_;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        shouldDisplayCancelButton_ = YES;
     }
     return self;
 }
 
 - (void)dealloc {
-    connectionManager_.authDelegate = nil;
+    [loginTextField_ release];
+    [passwordTextField_ release];
+    [signinButton_ release];
     [super dealloc];
 }
 
@@ -54,11 +62,9 @@
 {
     [super viewDidLoad];
     self.title = @"Connexion";
-    if (shouldDisplayCancelButton_) {
         UIBarButtonItem * cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common_cancel") style:UIBarButtonSystemItemCancel target:self action:@selector(dismissAuthenticationSheet:)];
         [self.navigationItem setRightBarButtonItem:cancelBarButton];
         [cancelBarButton release];
-    }
 
     signinButton_.tintColor = kLightGreenColor;
     signinButton_.buttonCornerRadius = 10.0;
@@ -68,8 +74,9 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    self.loginTextField = nil;
+    self.passwordTextField = nil;
+    self.signinButton = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -83,17 +90,9 @@
     
     if (authDelegate_) {
         [self displayLoader];
-        connectionManager_ = [LTConnectionManager sharedConnectionManager];
-#if DEBUG
-        
-        [connectionManager_ authWithLogin:@"pierre"
-                                 password:@"crLu2Vzi"
-                                 delegate:authDelegate_];
-#else
-        [connectionManager_ authWithLogin:self.loginTextField.text
+        [[LTConnectionManager sharedConnectionManager] authWithLogin:self.loginTextField.text
                                  password:self.passwordTextField.text
                                  delegate:authDelegate_];
-#endif
     } else {
         [self dismissModalViewControllerAnimated:YES];
     }

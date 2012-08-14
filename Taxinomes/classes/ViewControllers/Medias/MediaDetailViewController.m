@@ -32,25 +32,33 @@
 
 #define kCommonWidth 310.0
 
+@interface MediaDetailViewController ()
+
+@property (nonatomic, retain) Media * media;
+@property (nonatomic, retain) IBOutlet UIScrollView * scrollView;
+
+- (void)refreshView;
+- (void)mediaImageTouched:(UIImage *)sender;
+- (void)displayContentIfNeeded;
+
+@end
+
 @implementation MediaDetailViewController
-@synthesize mediaIdentifier = mediaIdentifier_;
 @synthesize media = media_;
 @synthesize scrollView = scrollView_;
-@synthesize mediaImageView = mediaImageView_;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil mediaId:(NSNumber *)mediaIdentifier {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.mediaIdentifier = mediaIdentifier;
+        mediaIdentifier_ = [mediaIdentifier retain];
     }
     return self;
 }
 
 - (void) dealloc {
-    self.mediaIdentifier = nil;
-    self.media = nil;
-    self.scrollView = nil;
-    
+    [mediaIdentifier_ release];
+    [media_ release];
+    [scrollView_ release];
     [mediaTitleView_ release];
     [mediaImageView_ release];
     [authorTitleView_ release];
@@ -60,13 +68,7 @@
     [descTextView_ release];
     [mapTitleView_ release];
     [mapView_ release];
-
     [super dealloc];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
 }
 
 #pragma mark - View lifecycle
@@ -74,7 +76,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     asynchLoadCounter_ = 0;
-    self.title = @"Média";
     [self.scrollView setHidden:YES];
     self.scrollView.backgroundColor = [UIColor clearColor];
     self.scrollView.opaque = NO;
@@ -123,7 +124,7 @@
     [self.scrollView addSubview:descTextView_];
     
     mapTitleView_ = [[LTTitleView titleViewWithOrigin:CGPointMake(5, 5)] retain];
-    mapTitleView_.titleLabel.text = @"Carte";
+    mapTitleView_.titleLabel.text = TRANSLATE(@"common.map");
     [self.scrollView addSubview:mapTitleView_];
     [mapTitleView_ setHidden:YES];
     
@@ -138,15 +139,39 @@
     [mapView_ addGestureRecognizer:tapGestureRecognizer];
     [tapGestureRecognizer release];
     [self.scrollView addSubview:mapView_];
+    
     [self.scrollView setHidden:YES];
+}
+
+- (void) viewDidUnload {
+    [super viewDidUnload];
+    self.scrollView = nil;
+    [mediaTitleView_ release];
+    mediaTitleView_ = nil;
+    [mediaImageView_ release];
+    mediaImageView_ = nil;
+    [authorTitleView_ release];
+    mediaImageView_ = nil;
+    [authorAvatarView_ release];
+    authorAvatarView_ = nil;
+    [authorNameLabel_ release];
+    authorNameLabel_ = nil;
+    [descTitleView_ release];
+    descTitleView_ = nil;
+    [descTextView_ release];
+    descTextView_ = nil;
+    [mapTitleView_ release];
+    mapTitleView_ = nil;
+    [mapView_ release];
+    mapView_ = nil;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     LTDataManager *dm = [LTDataManager sharedDataManager];
-    self.media = [Media mediaWithIdentifier: 
-                  self.mediaIdentifier];
-    if([dm getMediaAsychIfNeededWithId:self.mediaIdentifier withDelegate:self])
+    self.media = [Media mediaWithIdentifier:
+                  mediaIdentifier_];
+    if([dm getMediaAsychIfNeededWithId:mediaIdentifier_ withDelegate:self])
         asynchLoadCounter_ = asynchLoadCounter_ + 1;
     if([dm getAuthorAsychIfNeededWithId:self.media.author.identifier withDelegate:self])
         asynchLoadCounter_ = asynchLoadCounter_ + 1;
@@ -157,6 +182,8 @@
 }
 
 - (void)refreshView {
+    CGFloat contentHeight = 0;
+    
     CGFloat imageHeight = 0;
     CGFloat descHeight;
     
@@ -214,27 +241,39 @@
     descTextView_.frame = CGRectMake(0.0, 170.0+imageHeight, 320.0, descHeight);
     [descTextView_ setBackgroundColor:[UIColor clearColor]];
     
-    mapTitleView_.frame = CGRectMake(5.0, 175.0+imageHeight+descHeight, mapTitleView_.frame.size.width, mapTitleView_.frame.size.height);
-    [mapTitleView_ setHidden:NO];
     
-    CGRect mapViewFrame = CGRectMake(5.0, 210.0+imageHeight+descHeight, 310.0, 310.0);
-    [mapView_ setFrame:mapViewFrame];
-    if ([[mapView_ annotations] count]) {
-        [mapView_ removeAnnotations:[mapView_ annotations]];
-    }
-    Annotation * mediaPinAnnotation = [[Annotation new] autorelease];
-    mediaPinAnnotation.title = media_.title;
-    mediaPinAnnotation.subtitle = [NSString stringWithFormat:@"Par %@",media_.author.name];
-    mediaPinAnnotation.coordinate = CLLocationCoordinate2DMake([media_.latitude floatValue], [media_.longitude floatValue]);
-    if (mediaPinAnnotation.coordinate.longitude != 0.0
-        && mediaPinAnnotation.coordinate.latitude != 0.0) {
-        [mapView_ addAnnotation:mediaPinAnnotation];
-        mapView_.region = MKCoordinateRegionMake(mediaPinAnnotation.coordinate, MKCoordinateSpanMake(20.0, 20.0));
+    if (media_.coordinate.latitude
+        && media_.coordinate.longitude) {
+        mapTitleView_.frame = CGRectMake(5.0, 175.0+imageHeight+descHeight, mapTitleView_.frame.size.width, mapTitleView_.frame.size.height);
+        [mapTitleView_ setHidden:NO];
+        
+        CGRect mapViewFrame = CGRectMake(5.0, 210.0+imageHeight+descHeight, 310.0, 310.0);
+        [mapView_ setFrame:mapViewFrame];
+        if ([[mapView_ annotations] count]) {
+            [mapView_ removeAnnotations:[mapView_ annotations]];
+        }
+        Annotation * mediaPinAnnotation = [[Annotation new] autorelease];
+        mediaPinAnnotation.title = media_.title;
+        mediaPinAnnotation.subtitle = [NSString stringWithFormat:@"Par %@",media_.author.name];
+        mediaPinAnnotation.coordinate = CLLocationCoordinate2DMake([media_.latitude floatValue], [media_.longitude floatValue]);
+        if (mediaPinAnnotation.coordinate.longitude != 0.0
+            && mediaPinAnnotation.coordinate.latitude != 0.0) {
+            [mapView_ addAnnotation:mediaPinAnnotation];
+            mapView_.region = MKCoordinateRegionMake(mediaPinAnnotation.coordinate, MKCoordinateSpanMake(20.0, 20.0));
+        } else {
+            mapView_.region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(20.0, 0.0), MKCoordinateSpanMake(150.0, 180.0));
+        }
+        contentHeight += 355.0;
+        mapTitleView_.hidden = NO;
+        mapView_.hidden = NO;
     } else {
-        mapView_.region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(20.0, 0.0), MKCoordinateSpanMake(150.0, 180.0));
+        mapTitleView_.hidden = YES;
+        mapView_.hidden = YES;
     }
     
-    [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, 525.0+imageHeight+descHeight)];
+    contentHeight += 170.0;
+    
+    [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, contentHeight+imageHeight+descHeight)];
     if (asynchLoadCounter_ > 0) {
         [self displayLoader];
     }
@@ -249,7 +288,9 @@
 - (void)mediaImageTouched:(UIImage *)sender {
     MediaFullSizeViewContoller * mediaFullSizeViewController = [[MediaFullSizeViewContoller alloc] initWithNibName:@"MediaFullSizeViewController" bundle:nil];
     mediaFullSizeViewController.media = media_;
-    [self.navigationController pushViewController:mediaFullSizeViewController animated:YES];
+    UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:mediaFullSizeViewController];
+    [self presentModalViewController:navigationController animated:YES];
+    [navigationController release];
     [mediaFullSizeViewController release];
 }
 
@@ -264,6 +305,7 @@
 - (void)mapTouched:(MKMapView *)sender {
     MapViewController* mapVC = [[MapViewController alloc] initWithAnnotation:media_];
     [self.navigationController pushViewController:mapVC animated:YES];
+    mapVC.title = TRANSLATE(@"common.map");
     [mapVC release];
 }
 
@@ -292,9 +334,7 @@
 }
 
 - (void)didFailWithError:(NSError *)error {
-#if TAXINOMES_DEV
     LogDebug(@"%@",error.localizedDescription);
-#endif
     asynchLoadCounter_ = asynchLoadCounter_ - 1;
     [self displayContentIfNeeded];
 }

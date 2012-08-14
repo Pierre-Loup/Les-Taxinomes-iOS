@@ -454,10 +454,8 @@
 	[request setRequestMethod:@"POST"];
 	[request setTimeOutSeconds:30];
     [request appendPostData:[[req source] dataUsingEncoding:NSUTF8StringEncoding]];
-#if DEBUG
     LogDebug(@"executeXMLRPCRequest host: %@",[req host]);
-    //LogDebug(@"executeXMLRPCRequest request: %@",[req source]);
-#endif  
+    //LogDebug(@"executeXMLRPCRequest request: %@",[req source]); 
 	[request startSynchronous];
 	request.uploadProgressDelegate = nil;
     self.uploadProgressDelegate = nil;
@@ -467,9 +465,7 @@
 	NSError *err = [request error];
     if (err) {
         //TODO ERROR
-#if DEBUG
         LogDebug(@"executeXMLRPCRequest error: %@", err);
-#endif
         return err;
     }
     
@@ -481,9 +477,7 @@
         return error;
     }
     
-#if DEBUG
 	LogDebug(@"executeXMLRPCRequest response: %@", [request responseString]);
-#endif
 	XMLRPCResponse *userInfoResponse = [[[XMLRPCResponse alloc] initWithData:[request responseData]] autorelease];
     if([userInfoResponse isKindOfClass:[NSError class]]){
         return userInfoResponse;

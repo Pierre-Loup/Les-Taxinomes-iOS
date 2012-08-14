@@ -31,23 +31,12 @@
 #import "TCImageView.h"
 
 @interface AccountViewController : LTPhotoPickerViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, LTConnectionManagerAuthDelegate> {
+    
+    NSArray* accountMenuLabels_;
     Author * authenticatedUser_;
     
-    UIBarButtonItem * rightBarButton_;
-    UITableView *_tableView;
-    UIImageView * defaultAvatarView_;
-    TCImageView * avatarView_;
-    UILabel * userNameLabel_;
-    
-    NSArray *_accountMenuLabels;
+    UIBarButtonItem* rightBarButton_;
+    TCImageView* avatarView_;
 }
-
-@property (retain, nonatomic) IBOutlet UITableView * tableView;
-@property (retain, nonatomic) IBOutlet UIImageView * defaultAvatarView;
-@property (retain, nonatomic) IBOutlet UILabel * userNameLabel;
-@property (retain, nonatomic) NSArray * accountMenuLabels;
-
-- (void)displayAuthenticationSheetAnimated:(BOOL)animated;
-- (IBAction)logoutButtonPressed:(id)sender;
 
 @end

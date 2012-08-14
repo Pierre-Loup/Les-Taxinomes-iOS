@@ -88,6 +88,22 @@
     [super viewDidLoad];
     loaderView_ = nil;
     
+    CGRect tableViewFrame = self.tableView.frame;
+    CGRect winFrame = [[UIApplication sharedApplication] keyWindow].frame;
+    CGRect bgFrame = CGRectMake(0, -self.navigationController.navigationBar.frame.size.height,
+                                winFrame.size.width,
+                                winFrame.size.height);
+    UIImageView* bgImageView = [[UIImageView alloc] initWithFrame:bgFrame];
+    bgImageView.image = [UIImage imageNamed:@"background"];
+    bgImageView.contentMode = UIViewContentModeTop;
+    bgImageView.clipsToBounds = YES;
+    bgImageView.alpha = 0.3;
+    UIView* bgView = [[UIView alloc] initWithFrame:tableViewFrame];
+    [bgView addSubview:bgImageView];
+    [self.tableView setBackgroundView:bgView];
+    [bgImageView release];
+    [bgView release];
+    
     [self.navigationController.navigationBar setTintColor:kStandardGreenColor];
 }
 
@@ -128,9 +144,7 @@
 #pragma mark - ASIProgressDelegate
 
 - (void)setProgress:(float)newProgress {
-#if DEBUG
     LogDebug(@"%f",newProgress);
-#endif
     loaderView_.progress = newProgress;
 }
 

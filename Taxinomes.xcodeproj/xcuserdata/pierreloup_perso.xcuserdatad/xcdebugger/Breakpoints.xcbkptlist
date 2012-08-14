@@ -7,19 +7,6 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Taxinomes/Classes/ViewControllers/LTControllers/LTPhotoPickerViewController.m"
-         timestampString = "365535054.233977"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "49"
-         endingLineNumber = "49"
-         landmarkName = "-cameraButtonAction:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "Taxinomes/Classes/Views/LTTitleView.h"
          timestampString = "366151880.404669"
          startingColumnNumber = "9223372036854775807"

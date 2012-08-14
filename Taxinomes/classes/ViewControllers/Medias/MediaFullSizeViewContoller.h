@@ -30,13 +30,8 @@
 #import "LTConnectionManager.h"
 #import "TCImageView.h"
 
-@interface MediaFullSizeViewContoller : LTViewController <UIScrollViewDelegate, LTConnectionManagerDelegate, TCImageViewDelegate>{
-    UIScrollView * scrollView_;
-    TCImageView * mediaView_;
-    Media * media_;
-}
+@interface MediaFullSizeViewContoller : LTViewController
 
-@property(retain,nonatomic) IBOutlet UIScrollView * scrollView;
-@property(retain,nonatomic) Media * media;
+@property(retain,nonatomic) Media* media;
 
 @end

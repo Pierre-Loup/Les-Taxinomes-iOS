@@ -25,7 +25,7 @@
 
 #import <UIKit/UIKit.h>
 #import "License.h"
-#import "LTViewController.h"
+#import "LTTableViewController.h"
 
 @protocol MediaLicenseChooserDelegate <NSObject>
 
@@ -33,22 +33,14 @@
 
 @end
 
-@interface MediaLicenseChooserViewController : LTViewController <UITableViewDataSource, UITableViewDelegate> {
-    
-    id<MediaLicenseChooserDelegate> delegate_;
-    
-    UITableView * tableView_;
-    NSMutableArray * licenses_;
-    License * currentLicense_;
+@interface MediaLicenseChooserViewController : LTTableViewController {
+    NSArray * licenses_;
     NSIndexPath * currentLicenseIndexPath_;
-    
     UIBarButtonItem * rightBarButton_;
     
 }
 
 @property (nonatomic, assign) id<MediaLicenseChooserDelegate> delegate;
-@property (nonatomic, retain) IBOutlet UITableView * tableView;
-@property (nonatomic, retain) NSMutableArray * licenses;
 @property (nonatomic, retain) License * currentLicense;
 
 @end

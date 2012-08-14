@@ -30,9 +30,9 @@
 #import "LTViewController.h"
 
 @interface LTPhotoPickerViewController : LTViewController <UINavigationControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate, LTConnectionManagerAuthDelegate> {
-    CLLocationManager* _locationManager;
-    CLLocation* _photoLocation;
-    UIImage* _photo; 
+    CLLocationManager* locationManager_;
+    CLLocation* photoLocation_;
+    UIImage* photo_;
 }
 
 @end

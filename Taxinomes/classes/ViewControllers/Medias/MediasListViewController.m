@@ -29,17 +29,21 @@
 #import "MediaDetailViewController.h"
 #import "Reachability.h"
 
+@interface MediasListViewController ()
+@property (nonatomic, retain) IBOutlet UITableViewCell * spinnerCell;
+@property (nonatomic, retain) IBOutlet UITableViewCell * mediaTableViewCell;
+- (void)loadSynchMedias:(id)sender;
+- (void)refreshButtonAction:(id)sender;
+@end
+
 @implementation MediasListViewController
 @synthesize currentUser = currentUser_;
-@synthesize mediaForIndexPath = mediaForIndexPath_;
-@synthesize tableView = tableView_;
 @synthesize spinnerCell = spinnerCell_;
 @synthesize mediaTableViewCell = mediaTableViewCell_;
+
 - (void)dealloc {
     [currentUser_ release];
-    [dataManager_ release];
-    [connectionManger_ release];
-    [mediaForIndexPath_ release];
+    [mediaAtIndexPath_ release];
     [super dealloc];
 }
 
@@ -47,7 +51,7 @@
 - (void)didReceiveMemoryWarning
 {
     [TCImageView resetGlobalCache];
-    [mediaForIndexPath_ removeAllObjects];
+    [mediaAtIndexPath_ removeAllObjects];
     [self.tableView reloadData];
     
 }
@@ -61,19 +65,11 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
-    if (currentUser_) {
-        self.title = TRANSLATE(@"account_my_medias");
-    }
-    
-    
-    mediaForIndexPath_ = [NSMutableDictionary new];
+
+    mediaAtIndexPath_ = [NSMutableDictionary new];
     mediaLoadingStatus_ = PENDING;
-    dataManager_ = [[LTDataManager sharedDataManager] retain];
-    connectionManger_ = [[LTConnectionManager sharedConnectionManager] retain];
     
     reloadBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonAction:)];
     [self.navigationItem setRightBarButtonItem:reloadBarButton_ animated:YES];
@@ -82,44 +78,13 @@
     [self reloadDatas];
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
     self.tableView = nil;
     [reloadBarButton_ release];
     reloadBarButton_ = nil;
-    [mediaTableViewCell_ release];
-    mediaTableViewCell_ = nil;
-    [spinnerCell_ release];
-    spinnerCell_ = nil;
+    self.mediaTableViewCell = nil;
+    self.spinnerCell = nil;
     [super viewDidUnload];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-}
-
-
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - Table view data source
@@ -137,10 +102,10 @@
     switch (mediaLoadingStatus_) {
         case FAILED:
         case NOMORETOLOAD:
-            return [mediaForIndexPath_ count];
+            return [mediaAtIndexPath_ count];
             break;
         default:
-            return ([mediaForIndexPath_ count]+1);
+            return ([mediaAtIndexPath_ count]+1);
             break;
     } 
     
@@ -150,7 +115,7 @@
 {
     static NSString *medialListCellIdentifier = @"mediasListCell";
     
-    if([indexPath row] == ([mediaForIndexPath_ count])) {        
+    if([indexPath row] == ([mediaAtIndexPath_ count])) {        
         if ( mediaLoadingStatus_ == SUCCEED) {
             [self performSelectorInBackground:@selector(loadSynchMedias:) withObject:nil];
             mediaLoadingStatus_ = PENDING;
@@ -160,7 +125,7 @@
         }
     }
     
-    Media *media = [mediaForIndexPath_ objectForKey:indexPath];
+    Media *media = [mediaAtIndexPath_ objectForKey:indexPath];
     UITableViewCell *cell = nil;
     
     cell = [aTableView dequeueReusableCellWithIdentifier:medialListCellIdentifier];
@@ -206,9 +171,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    Media *media = [[mediaForIndexPath_ objectForKey:indexPath] retain];
+    Media *media = [[mediaAtIndexPath_ objectForKey:indexPath] retain];
     if(media != nil){
-        MediaDetailViewController *mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailViewController" bundle:nil mediaId:media.identifier];
+        MediaDetailViewController* mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailViewController" bundle:nil mediaId:media.identifier];
+        mediaDetailViewController.title = TRANSLATE(@"common.media");
         [self.navigationController pushViewController:mediaDetailViewController animated:YES];
         [mediaDetailViewController release];
         [media release];
@@ -216,16 +182,16 @@
     
 }
 
-- (IBAction)loadSynchMedias:(id)sender {
-    [connectionManger_ getShortMediasByDateForAuthor:currentUser_ withLimit:kNbMediasStep startingAtRecord:dataManager_.synchLimit delegate:self];
+- (void)loadSynchMedias:(id)sender {
+    [[LTConnectionManager sharedConnectionManager] getShortMediasByDateForAuthor:currentUser_ withLimit:kNbMediasStep startingAtRecord:[LTDataManager sharedDataManager].synchLimit delegate:self];
 }
 
-- (IBAction)refreshButtonAction:(id)sender {
+- (void)refreshButtonAction:(id)sender {
     mediaLoadingStatus_ = PENDING;
     reloadBarButton_.enabled = NO;
     [self displayLoader];
-    dataManager_.synchLimit = 0;
-    [mediaForIndexPath_ removeAllObjects];
+    [LTDataManager sharedDataManager].synchLimit = 0;
+    [mediaAtIndexPath_ removeAllObjects];
     [self performSelectorInBackground:@selector(loadSynchMedias:) withObject:nil];
 }
 
@@ -238,7 +204,7 @@
     }
     NSInteger row = 0;
     for (Media *media in medias) {
-        [mediaForIndexPath_ setObject:media forKey:[NSIndexPath indexPathForRow:row inSection:0]];
+        [mediaAtIndexPath_ setObject:media forKey:[NSIndexPath indexPathForRow:row inSection:0]];
         row++;
     }
     [self.tableView reloadData];
@@ -248,7 +214,6 @@
 #pragma mark - TCImageViewDelegate
 
 -(void)TCImageView:(TCImageView *)view WillUpdateImage:(UIImage *)image {
-    
     [view setHidden:NO];
 }
 
@@ -258,7 +223,7 @@
     if ([medias count] == 0) {
         mediaLoadingStatus_ = NOMORETOLOAD;
     }
-    dataManager_.synchLimit += [medias count];
+    [LTDataManager sharedDataManager].synchLimit += [medias count];
     [self reloadDatas];
     [self hideLoader];
     reloadBarButton_.enabled = YES;

@@ -26,5 +26,4 @@
 #import <UIKit/UIKit.h>
 
 @interface LegalInformationsViewController : UIViewController
-
 @end

@@ -11,11 +11,15 @@
 "common.loading" = "Chargement";
 "common_logout" = "Déconnexion";
 "common_signin" = "Connexion";
+"common.finish" = "Terminer";
+"common.share" = "Partager";
 "common.title" = "Titre";
 "common.texte" = "Texte";
 "common.city" = "Ville";
 "common.zipcode" = "Code postal";
 "common.country" = "Pays";
+"common.media" = "Média";
+"common.map" = "Carte";
 
 /* ALERTS */
 "alert_auth_failed_title" = "L'authentification à échouée";
@@ -27,6 +31,9 @@
 
 /* HOME */
 "home.welcom_text" = "Bienvenue sur les Taxinomes !\n\nVous êtes curieux de nature ?\n\nVous allez pouvoir partager votre goût pour la nature !\n\nGrâce au site \"Les Taxinomes\", vous participez à l’inventaire de la biodiversité.";
+
+/* LEGAL INFORMATIONS*/
+"legal_informations.title" = "Mentions Légales";
 
 /* ACCOUNT */
 "account_uploas_media" = "Publier un média";

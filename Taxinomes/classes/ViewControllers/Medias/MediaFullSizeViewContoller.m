@@ -25,6 +25,15 @@
 
 #import "MediaFullSizeViewContoller.h"
 
+@interface MediaFullSizeViewContoller () <UIScrollViewDelegate, LTConnectionManagerDelegate, TCImageViewDelegate>{
+    UIScrollView* scrollView_;
+    TCImageView* mediaView_;
+    Media* media_;
+}
+@property(retain,nonatomic) IBOutlet UIScrollView* scrollView;
+- (void)cancelButtonTouched:(UIBarButtonItem *)cancelButton;
+@end
+
 @implementation MediaFullSizeViewContoller
 @synthesize scrollView = scrollView_;
 @synthesize media = media_;
@@ -37,23 +46,18 @@
     return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
 #pragma mark - View lifecycle
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancelButtonTouched:)];
+    [self.navigationItem setLeftBarButtonItem:cancelButton];
+    [cancelButton release];
+    
     [self displayLoader];
-    
     self.title = media_.title;
-    
     mediaView_ = [[TCImageView alloc] initWithURL:@"" placeholderView:nil];
     mediaView_.delegate = self;
     mediaView_.downloadProgressDelegate = self;
@@ -65,27 +69,26 @@
 
 
 - (void)viewDidUnload {
+    [super viewDidUnload];
     [mediaView_ release];
     mediaView_ = nil;
     [scrollView_ release];
     scrollView_ = nil;
-    
-    self.media = nil;
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    /*
-    
-    */
+- (void)dealloc {
+    [media_ release];
+    [super dealloc];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark - Private methods
+
+- (void)cancelButtonTouched:(UIBarButtonItem *)cancelButton {
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -103,9 +106,7 @@
 }
 
 - (void)didFailWithError:(NSError *)error {
-#if TAXINOMES_DEV
     LogDebug(@"%@",error.localizedDescription);
-#endif
     [self hideLoader];
 }
 
@@ -130,7 +131,6 @@
     
     mediaView_.frame = CGRectMake(mediaView_.frame.origin.x, mediaView_.frame.origin.y, mediaWidth, mediaHeight);
     
-    self.navigationController.tabBarItem.title = @"Media";
     self.scrollView.delegate = self;
     
     CGRect frame = CGRectMake(0, 0, maxWidth, maxHeight*2);

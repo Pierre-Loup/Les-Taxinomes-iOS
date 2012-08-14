@@ -27,6 +27,10 @@
 #import "LegalInformationsViewController.h"
 #import "MediaUploadFormViewController.h"
 
+@interface HomeViewController ()
+@property (nonatomic, retain) IBOutlet UILabel * welcomLabel;
+- (IBAction)infoButtonAction:(id) sender;
+@end
 
 @implementation HomeViewController
 @synthesize welcomLabel = welcomLabel_;
@@ -46,6 +50,11 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
+}
+
+- (void)dealloc {
+    [welcomLabel_ release];
+    [super dealloc];
 }
 
 #pragma mark - View lifecycle
@@ -78,10 +87,7 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    [welcomLabel_ release];
-    welcomLabel_ = nil;
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    self.welcomLabel = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

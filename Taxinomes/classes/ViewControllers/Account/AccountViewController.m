@@ -27,25 +27,39 @@
 #import "MediaUploadFormViewController.h"
 #import "MediasListViewController.h"
 
-@interface AccountViewController (Private)
+@interface AccountViewController ()
+@property (retain, nonatomic) IBOutlet UITableView * tableView;
+@property (retain, nonatomic) IBOutlet UIImageView * defaultAvatarView;
+@property (retain, nonatomic) IBOutlet UILabel * userNameLabel;
+
+- (void)commonInit;
+- (void)displayAuthenticationSheetAnimated:(BOOL)animated;
+- (IBAction)logoutButtonPressed:(id)sender;
 - (void)switchToAuthenticatedMode:(BOOL)animated;
 - (void)switchToUnauthenticatedMode:(BOOL)animated;
 @end
 
 @implementation AccountViewController
-@synthesize tableView = _tableView;
+@synthesize tableView = tableView_;
 @synthesize defaultAvatarView = defaultAvatarView_;
 @synthesize userNameLabel = userNameLabel_;
-@synthesize accountMenuLabels = _accountMenuLabels;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        rightBarButton_ = nil;
-        authenticatedUser_ = nil;
+        [self commonInit];
     }
     return self;
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self commonInit];
+}
+
+- (void)commonInit {
+    accountMenuLabels_ = [[NSArray arrayWithObjects:TRANSLATE(@"account_uploas_media"), TRANSLATE(@"account_my_medias"), nil] retain];
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,7 +73,7 @@
 - (void) dealloc {
     [authenticatedUser_ release];
     [rightBarButton_ release];
-    self.accountMenuLabels = nil;
+    [accountMenuLabels_ release];
     [avatarView_ release];
     [super dealloc];
 }
@@ -68,9 +82,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.accountMenuLabels = [NSArray arrayWithObjects:TRANSLATE(@"account_uploas_media"), TRANSLATE(@"account_my_medias"), nil];
     [self.tableView setHidden:YES];
-    
     avatarView_ = [[TCImageView alloc] initWithURL:nil placeholderView:nil];
     avatarView_.frame = defaultAvatarView_.frame;
     [self.view addSubview:avatarView_];
@@ -79,7 +91,6 @@
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
     if (!cm.authenticatedUser) {
         [cm checkUserAuthStatusWithDelegate:self];
-        [self displayLoader];
     }
 }
 
@@ -141,7 +152,7 @@
 {
     // Return the number of rows in the section.
     if(section == 0)
-        return [self.accountMenuLabels count];
+        return [accountMenuLabels_ count];
     else
         return 0;
 }
@@ -157,7 +168,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: @"accountMenuCell"] autorelease];
     }
     if ([indexPath section] == 0) {
-        cell.textLabel.text = [self.accountMenuLabels objectAtIndex:[indexPath row]];
+        cell.textLabel.text = [accountMenuLabels_ objectAtIndex:[indexPath row]];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
@@ -178,6 +189,7 @@
         MediasListViewController * mediasListViewController = [[MediasListViewController alloc] initWithNibName:@"MediasListViewController" bundle:nil];
         mediasListViewController.currentUser = authenticatedUser_;
         [self.navigationController pushViewController:mediasListViewController animated:YES];
+        mediasListViewController.title = TRANSLATE(@"account_my_medias");
         [mediasListViewController release];
     }
 }

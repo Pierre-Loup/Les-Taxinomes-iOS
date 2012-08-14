@@ -24,9 +24,9 @@
 
 
 - (void) dealloc {
-    [_locationManager release];
-    [_photoLocation release];
-    [_photo release];
+    [locationManager_ release];
+    [photoLocation_ release];
+    [photo_ release];
     [super dealloc];
 }
 
@@ -53,20 +53,19 @@
     [self presentModalViewController:imagePicker animated:YES];
     if([CLLocationManager locationServicesEnabled]){
         // Create the location manager
-        _locationManager = [[CLLocationManager alloc] init];
-        _locationManager.delegate = self;
-        [_locationManager startUpdatingLocation];
+        locationManager_ = [[CLLocationManager alloc] init];
+        locationManager_.delegate = self;
+        [locationManager_ startUpdatingLocation];
     }
+    [imagePicker release];
     
 }
 
 - (void)pushMediaUploadFormVCAnnimated:(BOOL)animated {
     MediaUploadFormViewController *mediaUploadFormViewController = [MediaUploadFormViewController new];
-    mediaUploadFormViewController.gis = _photoLocation;
-    mediaUploadFormViewController.mediaImage = _photo;
+    mediaUploadFormViewController.gis = photoLocation_;
+    mediaUploadFormViewController.mediaImage = photo_;
     [self.navigationController pushViewController:mediaUploadFormViewController animated:animated];
-    [_photo release];
-    [_photoLocation release];
     [mediaUploadFormViewController release];
 }
 
@@ -87,18 +86,22 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     if(picker.sourceType == UIImagePickerControllerSourceTypeCamera){
         NSMutableDictionary *metadata = [NSMutableDictionary dictionaryWithDictionary:[info objectForKey:UIImagePickerControllerMediaMetadata]];
-        if(_locationManager.location != nil){
-            [metadata setLocation:_locationManager.location];
-            _photoLocation = [_locationManager.location retain];
+        if(locationManager_.location != nil){
+            [metadata setLocation:locationManager_.location];
+            [photo_ release];
+            photoLocation_ = [locationManager_.location retain];
         }
         ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
-        _photo = [(UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage] retain];
-        [assetsLibrary writeImageToSavedPhotosAlbum:_photo.CGImage metadata:metadata completionBlock:nil];
+        [photo_ release];
+        photo_ = [(UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage] retain];
+        [assetsLibrary writeImageToSavedPhotosAlbum:photo_.CGImage metadata:metadata completionBlock:nil];
         [assetsLibrary release];
     }
-    [_locationManager stopUpdatingLocation];
+    [locationManager_ stopUpdatingLocation];
      
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Terminer" destructiveButtonTitle:@"Partager la photo" otherButtonTitles: nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:TRANSLATE(@"common.finish") destructiveButtonTitle:TRANSLATE(@"common.share") otherButtonTitles: nil];
     [actionSheet showInView:self.view];
     [actionSheet release];
 }
@@ -115,7 +118,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         LTConnectionManager * cm = [LTConnectionManager sharedConnectionManager];
         if (!cm.authenticatedUser) {
             [cm checkUserAuthStatusWithDelegate:self];
-            [self displayLoader];
         } else {
             [self pushMediaUploadFormVCAnnimated:NO];
         }

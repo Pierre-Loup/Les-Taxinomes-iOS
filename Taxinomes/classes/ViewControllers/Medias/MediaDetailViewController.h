@@ -34,10 +34,8 @@
 
 @interface MediaDetailViewController : LTViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, TCImageViewDelegate,  LTConnectionManagerDelegate, MKMapViewDelegate>{
     NSNumber * mediaIdentifier_;
-    Media * media_;
     int asynchLoadCounter_;
     
-    UIScrollView * scrollView_;
     LTTitleView * mediaTitleView_;
     TCImageView * mediaImageView_;
     LTTitleView * authorTitleView_;
@@ -49,14 +47,6 @@
     MKMapView * mapView_;
 }
 
-@property (nonatomic, retain) Media * media;
-@property (nonatomic, retain) NSNumber * mediaIdentifier;
-@property (nonatomic, retain) IBOutlet UIScrollView * scrollView;
-@property (nonatomic, retain) TCImageView * mediaImageView;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil mediaId:(NSNumber *)mediaIdentifier;
-- (void)refreshView;
-- (void)mediaImageTouched:(UIImage *)sender;
-- (void)displayContentIfNeeded;
 
 @end

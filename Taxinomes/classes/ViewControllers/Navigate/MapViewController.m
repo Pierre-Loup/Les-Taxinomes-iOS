@@ -51,13 +51,12 @@
     searchStartIndex_ = 0;
     mapView_.delegate = self;
     
-    // Always show user location
-    mapView_.showsUserLocation = YES;
     // Display the reference location of the map if already set
     if (referenceAnnotation_) {
         [mapView_ addAnnotation:referenceAnnotation_];
         [mapView_ setRegion:MKCoordinateRegionMake(referenceAnnotation_.coordinate, MKCoordinateSpanMake(1, 1)) animated:YES];
     } else {
+        mapView_.showsUserLocation = YES;
         [self displayLoader];
     }
     
@@ -79,6 +78,18 @@
     scanBarButton_ = nil;
     self.mapView = nil;
     [super viewDidUnload];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if ([referenceAnnotation_ isKindOfClass:[MKUserLocation class]]) {
+        mapView_.showsUserLocation = YES;
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    mapView_.showsUserLocation = NO;
 }
 
 #pragma mark - Actions
@@ -147,6 +158,7 @@
         MediaDetailViewController * mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailViewController"
                                                                                                             bundle:nil
                                                                                                            mediaId:media.identifier];
+        mediaDetailViewController.title = TRANSLATE(@"common.media");
         [self.navigationController pushViewController:mediaDetailViewController animated:YES];
         [mediaDetailViewController release];
     }

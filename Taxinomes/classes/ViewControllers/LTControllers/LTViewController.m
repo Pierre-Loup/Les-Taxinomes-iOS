@@ -135,9 +135,7 @@
 #pragma mark - ASIProgressDelegate
 
 - (void)setProgress:(float)newProgress {
-#if DEBUG
     LogDebug(@"%f",newProgress);
-#endif
     loaderView_.progress = newProgress;
 }
 

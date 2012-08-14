@@ -35,8 +35,6 @@
 @end
 
 @implementation MediaLicenseChooserViewController
-@synthesize tableView = tableView_;
-@synthesize licenses = licenses_;
 @synthesize delegate = delegate_;
 @synthesize currentLicense = currentLicense_;
 
@@ -53,7 +51,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        licenses_ = [NSMutableArray new];
+        licenses_ = [[License allLicenses] retain];
+        currentLicenseIndexPath_ = [[self indexPathForCurrentLicense] retain];
     }
     return self;
 }
@@ -61,9 +60,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [licenses_ removeAllObjects];
-    [licenses_ addObjectsFromArray:[License allLicenses]];
-    currentLicenseIndexPath_ = [[self indexPathForCurrentLicense] retain];
     
     rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common_OK") style:UIBarButtonItemStylePlain target:self action:@selector(oKButtonButtonPressed:)];
     [self.navigationItem setRightBarButtonItem:rightBarButton_ animated:NO];
@@ -72,16 +68,15 @@
 
 - (void)viewDidUnload
 {
-    self.tableView = nil;
-    [currentLicenseIndexPath_ release];
-    currentLicenseIndexPath_ = nil;
     [rightBarButton_ release];
     rightBarButton_ = nil;
     [super viewDidUnload];
 }
 
 - (void)dealloc {
-    [licenses_ dealloc];
+    
+    [rightBarButton_ release];
+    [licenses_ release];
     [currentLicense_ release];
     [super dealloc];
 }
