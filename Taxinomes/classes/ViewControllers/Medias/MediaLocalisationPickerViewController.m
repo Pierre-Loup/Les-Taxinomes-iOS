@@ -31,7 +31,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common_OK") style:UIBarButtonItemStylePlain target:self action:@selector(okButtonButtonPressed:)];
+    rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common.ok") style:UIBarButtonItemStylePlain target:self action:@selector(okButtonButtonPressed:)];
     [self.navigationItem setRightBarButtonItem:rightBarButton_ animated:NO];
     if (location_) {
         [self refreshMap];

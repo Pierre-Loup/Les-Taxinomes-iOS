@@ -243,9 +243,9 @@
     // Text
     if (self.textInput.text 
         && self.textInput.text != nil) {
-        [info setValue:[NSString stringWithFormat:@"%@\n\n%@",self.textInput.text,kUploadMediaTextSignature] forKey:@"texte"];
+        [info setValue:[NSString stringWithFormat:@"%@\n\n%@",self.textInput.text,TRANSLATE(@"media_upload.text_prefix")] forKey:@"texte"];
     } else {
-        [info setValue:[NSString stringWithFormat:@"%@",kUploadMediaTextSignature] forKey:@"texte"];
+        [info setValue:[NSString stringWithFormat:@"%@",TRANSLATE(@"media_upload.text_prefix")] forKey:@"texte"];
     }
     
     // Publish
@@ -516,7 +516,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 #pragma mark - LTConnextionManagerDelegate
 
 - (void)didSuccessfullyUploadMedia:(Media *)media {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"media_upload_view_title") message:TRANSLATE(@"alert_upload_succeded") delegate:nil cancelButtonTitle:TRANSLATE(@"common_OK") otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"media_upload_view_title") message:TRANSLATE(@"alert_upload_succeded") delegate:nil cancelButtonTitle:TRANSLATE(@"common.ok") otherButtonTitles:nil];
     [alert show];
     [alert release];
     [self hideLoader];
@@ -525,7 +525,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 }
 
 - (void)didFailWithError:(NSError *)error {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"media_upload_view_title") message:TRANSLATE(@"alert_upload_failed") delegate:nil cancelButtonTitle:TRANSLATE(@"common_OK") otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"media_upload_view_title") message:TRANSLATE(@"alert_upload_failed") delegate:nil cancelButtonTitle:TRANSLATE(@"common.ok") otherButtonTitles:nil];
     [alert show];
     [alert release];
     [self hideLoader];

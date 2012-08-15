@@ -6,11 +6,11 @@
   Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
 */
 
-"common_cancel" = "Cancel";
-"common_OK" = "OK";
+"common.cancel" = "Cancel";
+"common.ok" = "OK";
 "common.loading" = "Loading";
-"common_logout" = "Logout";
-"common_signin" = "Sign In";
+"common.logout" = "Logout";
+"common.signin" = "Sign In";
 "common.finish" = "Finish";
 "common.share" = "Share";
 "common.title" = "Title";
@@ -19,7 +19,11 @@
 "common.zipcode" = "Zipcode";
 "common.country" = "Country";
 "common.media" = "Media";
+"common.author" = "Author";
+"common.description" = "Description";
 "common.map" = "Map";
+"common.anonymous" = "Anonymous";
+"common.by" = "By";
 
 /* ALERTS */
 "alert_auth_failed_title" = "Authentication failed";
@@ -30,13 +34,17 @@
 "alert_upload_succeded" = "Media sharing succeded.";
 
 /* HOME */
-"home.welcom_text" = "Bienvenue sur les Taxinomes !\n\nVous êtes curieux de nature ?\n\nVous allez pouvoir partager votre goût pour la nature !\n\nGrâce au site \"Les Taxinomes\", vous participez à l’inventaire de la biodiversité.";
+"home.welcom_text" = "Welcome to Les Taxinomes !\n\nYou are curious by nature?\n\nHere, you will be able to share your love of nature!\n\n With the site and the iPhone application \"Les Taxinomes\", you are participating in the inventory of biodiversity.";
 
 /* LEGAL INFORMATIONS*/
 "legal_informations.title" = "Legal notes";
 
+/* MEDIA DETAIL VC*/
+"media_detail.no_text" = "No description";
+"media_detail.publish_info_patern" = "Shared by %@ the %@\n%d looks";
+
 /* ACCOUNT */
-"account_uploas_media" = "Upload a media";
+"account_uploas_media" = "Share a média";
 "account_my_medias" = "My medias";
 
 /* MEDIA UPLOAD FORM */
@@ -44,6 +52,7 @@
 "media_upload_no_title" = "No title";
 "media_upload_no_license_text" = "No license";
 "media_upload.location_picker_cell.text" = "Localize a media";
+"media_upload.text_prefix" = "Media shared with Les Taxinomes iPhone app";
 
 /* MEDIA LOCATION PICKER */
 "media_location_picker.drag_me" = "Drag me !";

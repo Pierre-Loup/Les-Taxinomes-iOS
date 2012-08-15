@@ -72,7 +72,7 @@
     if (authorName && ![authorName isEqualToString:@""]) {
         author.name = [response objectForKey:@"nom"];
     } else {
-        author.name = kNoAuthorName;
+        author.name = TRANSLATE(@"common.anonymous");
     }
     
     if ([response objectForKey:@"bio"]) {

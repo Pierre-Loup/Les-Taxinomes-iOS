@@ -570,7 +570,7 @@
 		A5933DB615CD5FD500AD6D10 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		A5933DB715CD5FD500AD6D10 /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
 		A5933DB815CD5FD500AD6D10 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		A5933DB915CD5FD500AD6D10 /* Taxinomes-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Taxinomes-Info.plist"; sourceTree = "<group>"; };
+		A5933DB915CD5FD500AD6D10 /* LesTaxinomes-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "LesTaxinomes-Info.plist"; sourceTree = "<group>"; };
 		A5933DBA15CD5FD500AD6D10 /* Taxinomes-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Taxinomes-Prefix.pch"; sourceTree = "<group>"; };
 		A5986FCE15B4B53D00154F87 /* MediaLocalisationPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaLocalisationPickerViewController.h; sourceTree = "<group>"; };
 		A5986FCF15B4B53D00154F87 /* MediaLocalisationPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaLocalisationPickerViewController.m; sourceTree = "<group>"; };
@@ -741,7 +741,7 @@
 				A5933DB615CD5FD500AD6D10 /* Constants.h */,
 				A5933DB715CD5FD500AD6D10 /* Macros.h */,
 				A5933DB815CD5FD500AD6D10 /* main.m */,
-				A5933DB915CD5FD500AD6D10 /* Taxinomes-Info.plist */,
+				A5933DB915CD5FD500AD6D10 /* LesTaxinomes-Info.plist */,
 				A5933DBA15CD5FD500AD6D10 /* Taxinomes-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -1714,7 +1714,7 @@
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "Taxinomes/Taxinomes-Info.plist";
+				INFOPLIST_FILE = "Taxinomes/LesTaxinomes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1740,7 +1740,7 @@
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "Taxinomes/Taxinomes-Info.plist";
+				INFOPLIST_FILE = "Taxinomes/LesTaxinomes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1805,7 +1805,7 @@
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "LesTaxinomes Info.plist";
+				INFOPLIST_FILE = "Taxinomes/LesTaxinomes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = LesTaxinomes;
 				PROVISIONING_PROFILE = "";
@@ -1831,7 +1831,7 @@
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "LesTaxinomes Info.plist";
+				INFOPLIST_FILE = "Taxinomes/LesTaxinomes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = LesTaxinomes;
 				PROVISIONING_PROFILE = "";

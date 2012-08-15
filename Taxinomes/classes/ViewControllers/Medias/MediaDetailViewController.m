@@ -99,7 +99,7 @@
     
     
     authorTitleView_ = [[LTTitleView titleViewWithOrigin:CGPointMake(5, 5)] retain];
-    authorTitleView_.titleLabel.text = @"Auteur";
+    authorTitleView_.titleLabel.text = TRANSLATE(@"common.author");
     [self.scrollView addSubview:authorTitleView_];
     [authorTitleView_ setHidden:YES];
     
@@ -114,7 +114,7 @@
     [self.scrollView addSubview:authorNameLabel_];
     
     descTitleView_ = [[LTTitleView titleViewWithOrigin:CGPointMake(5, 5)] retain];
-    descTitleView_.titleLabel.text = @"Description";
+    descTitleView_.titleLabel.text = TRANSLATE(@"common.description");
     [self.scrollView addSubview:descTitleView_];
     [descTitleView_ setHidden:YES];
     
@@ -191,7 +191,7 @@
         mediaTitleView_.titleLabel.text = media_.title;
         
     } else {
-        mediaTitleView_.titleLabel.text = kNoTitle;
+        mediaTitleView_.titleLabel.text = TRANSLATE(@"media_upload_no_title");
     }
     [mediaTitleView_ setHidden:NO];
     
@@ -225,7 +225,7 @@
     authorNameLabel_.lineBreakMode = UILineBreakModeTailTruncation;
     authorNameLabel_.numberOfLines = 0;
     authorNameLabel_.font = [UIFont systemFontOfSize:14.0];
-    authorNameLabel_.text = [NSString stringWithFormat:@"Publié par %@ le %@\n%d vues", media_.author.name, [df stringFromDate:self.media.date],[self.media.visits integerValue]];
+    authorNameLabel_.text = [NSString stringWithFormat:TRANSLATE(@"media_detail.publish_info_patern"), media_.author.name, [df stringFromDate:self.media.date],[self.media.visits integerValue]];
     [authorNameLabel_ setBackgroundColor:[UIColor clearColor]];
     
     descTitleView_.frame = CGRectMake(5.0, 135.0+imageHeight, descTitleView_.frame.size.width, descTitleView_.frame.size.height);
@@ -235,7 +235,7 @@
        && ![self.media.text isEqualToString:@""]){
         descTextView_.text = self.media.text;
     } else {
-        descTextView_.text = kNoDescription;
+        descTextView_.text = TRANSLATE(@"media_detail.no_text");
     }
     descHeight = (CGFloat)descTextView_.contentSize.height;
     descTextView_.frame = CGRectMake(0.0, 170.0+imageHeight, 320.0, descHeight);
@@ -254,7 +254,7 @@
         }
         Annotation * mediaPinAnnotation = [[Annotation new] autorelease];
         mediaPinAnnotation.title = media_.title;
-        mediaPinAnnotation.subtitle = [NSString stringWithFormat:@"Par %@",media_.author.name];
+        mediaPinAnnotation.subtitle = [NSString stringWithFormat:@"%@ %@",TRANSLATE(@"common.by"),media_.author.name];
         mediaPinAnnotation.coordinate = CLLocationCoordinate2DMake([media_.latitude floatValue], [media_.longitude floatValue]);
         if (mediaPinAnnotation.coordinate.longitude != 0.0
             && mediaPinAnnotation.coordinate.latitude != 0.0) {

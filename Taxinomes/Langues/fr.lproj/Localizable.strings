@@ -6,11 +6,11 @@
   Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
 */
 
-"common_cancel" = "Annuler";
-"common_OK" = "OK";
+"common.cancel" = "Annuler";
+"common.ok" = "OK";
 "common.loading" = "Chargement";
-"common_logout" = "Déconnexion";
-"common_signin" = "Connexion";
+"common.logout" = "Déconnexion";
+"common.signin" = "Connexion";
 "common.finish" = "Terminer";
 "common.share" = "Partager";
 "common.title" = "Titre";
@@ -19,7 +19,11 @@
 "common.zipcode" = "Code postal";
 "common.country" = "Pays";
 "common.media" = "Média";
+"common.author" = "Auteur";
+"common.description" = "Description";
 "common.map" = "Carte";
+"common.anonymous" = "Anonyme";
+"common.by" = "Par";
 
 /* ALERTS */
 "alert_auth_failed_title" = "L'authentification à échouée";
@@ -30,10 +34,14 @@
 "alert_upload_succeded" = "Le média a bien été partagé.";
 
 /* HOME */
-"home.welcom_text" = "Bienvenue sur les Taxinomes !\n\nVous êtes curieux de nature ?\n\nVous allez pouvoir partager votre goût pour la nature !\n\nGrâce au site \"Les Taxinomes\", vous participez à l’inventaire de la biodiversité.";
+"home.welcom_text" = "Bienvenue sur Les Taxinomes !\n\nVous êtes curieux de nature ?\n\nVous allez pouvoir partager votre goût pour la nature !\n\nGrâce au site et à l'application iPhone \"Les Taxinomes\", vous participez à l’inventaire de la biodiversité.";
 
 /* LEGAL INFORMATIONS*/
 "legal_informations.title" = "Mentions Légales";
+
+/* MEDIA DETAIL VC*/
+"media_detail.no_text" = "Pas de description";
+"media_detail.publish_info_patern" = "Publié par %@ le %@\n%d vues";
 
 /* ACCOUNT */
 "account_uploas_media" = "Publier un média";
@@ -44,6 +52,7 @@
 "media_upload_no_title" = "Sans titre";
 "media_upload_no_license_text" = "Aucune licence";
 "media_upload.location_picker_cell.text" = "Localisation du média";
+"media_upload.text_prefix" = "Média partagé avec l'application des Taxinomes pour iPhone";
 
 /* MEDIA LOCATION PICKER */
 "media_location_picker.drag_me" = "Deplacez moi !";

@@ -149,7 +149,7 @@
         titleLabel.text = media.title;
         
     } else {
-        titleLabel.text = kNoTitle;
+        titleLabel.text = TRANSLATE(@"media_upload_no_title");
     }
     
     ((UILabel *)[cell viewWithTag:3]).text = media.author.name;
@@ -230,7 +230,7 @@
 }
 
 - (void)didFailWithError:(NSError *)error {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_network_unreachable_title") message:TRANSLATE(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:TRANSLATE(@"common_OK") otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_network_unreachable_title") message:TRANSLATE(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:TRANSLATE(@"common.ok") otherButtonTitles:nil];
     [alert show];
     [alert release];
     mediaLoadingStatus_ = FAILED;

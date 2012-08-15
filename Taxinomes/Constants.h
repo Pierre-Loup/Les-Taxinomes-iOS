@@ -72,12 +72,7 @@
 #define MEDIA_MAX_WIDHT_LARGE 1024.0
 
 // Texts
-#define kHelloWorld @"Hello, World"
-#define kNoDescription @"Pas de description"
-#define kNoTitle @"Sans titre"
-#define kNoAuthorName @"Anonyme"
-#define kPhotoGroupName @"Les Taxinomes"
-#define kUploadMediaTextSignature @"Média mis en ligne depuis l'application des Taxinomes pour iPhone"
+#define kPhotoGroupName @"LesTaxinomes"
 
 // Times
 #define kMediaCacheTime 3600.0

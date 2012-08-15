@@ -216,7 +216,7 @@
     [self.tableView setHidden:NO];
     [rightBarButton_ release];
     rightBarButton_ = nil;
-    rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common_logout") style:UIBarButtonItemStylePlain target:self action:@selector(logoutButtonPressed:)];
+    rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common.logout") style:UIBarButtonItemStylePlain target:self action:@selector(logoutButtonPressed:)];
     [self.navigationItem setRightBarButtonItem:rightBarButton_ animated:YES];
     
     [self dismissModalViewControllerAnimated:animated];
@@ -225,7 +225,7 @@
 - (void)switchToUnauthenticatedMode:(BOOL)animated {
     [rightBarButton_ release];
     rightBarButton_ = nil;
-    rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common_signin") style:UIBarButtonItemStylePlain target:self action:@selector(signInButtonPressed:)];
+    rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common.signin") style:UIBarButtonItemStylePlain target:self action:@selector(signInButtonPressed:)];
     [self.navigationItem setRightBarButtonItem:rightBarButton_ animated:YES];
     [self.tableView setHidden:YES];
     [avatarView_ setHidden:YES];
@@ -260,9 +260,9 @@
     if (error && login && password) {
         UIAlertView *authFailedAlert = nil;
         if ([error.domain isEqualToString:kNetworkRequestErrorDomain]) {
-            authFailedAlert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_network_unreachable_title") message:TRANSLATE(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:TRANSLATE(@"common_OK") otherButtonTitles:nil];
+            authFailedAlert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_network_unreachable_title") message:TRANSLATE(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:TRANSLATE(@"common.ok") otherButtonTitles:nil];
         } else if ([error.domain isEqualToString:kLTAuthenticationFailedError]) {
-            authFailedAlert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_auth_failed_title") message:TRANSLATE(@"alert_auth_failed_text") delegate:self cancelButtonTitle:TRANSLATE(@"common_OK") otherButtonTitles:nil];
+            authFailedAlert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_auth_failed_title") message:TRANSLATE(@"alert_auth_failed_text") delegate:self cancelButtonTitle:TRANSLATE(@"common.ok") otherButtonTitles:nil];
         }
         
         [authFailedAlert show];

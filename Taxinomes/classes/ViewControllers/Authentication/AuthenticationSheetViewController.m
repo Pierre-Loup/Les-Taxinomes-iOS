@@ -61,8 +61,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"Connexion";
-        UIBarButtonItem * cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common_cancel") style:UIBarButtonSystemItemCancel target:self action:@selector(dismissAuthenticationSheet:)];
+    self.title = TRANSLATE(@"common.signin");
+        UIBarButtonItem * cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common.cancel") style:UIBarButtonSystemItemCancel target:self action:@selector(dismissAuthenticationSheet:)];
         [self.navigationItem setRightBarButtonItem:cancelBarButton];
         [cancelBarButton release];
 
