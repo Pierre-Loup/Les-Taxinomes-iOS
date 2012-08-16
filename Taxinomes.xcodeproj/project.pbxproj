@@ -42,10 +42,8 @@
 		A539D43E154AFBD60048CDF1 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D402154AFB8B0048CDF1 /* AccountViewController.m */; };
 		A539D43F154AFBD60048CDF1 /* AccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D403154AFB8B0048CDF1 /* AccountViewController.xib */; };
 		A539D443154AFBF70048CDF1 /* AuthenticationSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D441154AFBF70048CDF1 /* AuthenticationSheetViewController.m */; };
-		A539D444154AFBF70048CDF1 /* AuthenticationSheetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D442154AFBF70048CDF1 /* AuthenticationSheetViewController.xib */; };
 		A539D445154AFC0D0048CDF1 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D407154AFB8B0048CDF1 /* HomeViewController.m */; };
 		A539D447154AFC0D0048CDF1 /* LegalInformationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D40A154AFB8B0048CDF1 /* LegalInformationsViewController.m */; };
-		A539D448154AFC0D0048CDF1 /* LegalInformationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D40B154AFB8B0048CDF1 /* LegalInformationsViewController.xib */; };
 		A539D449154AFC120048CDF1 /* LTPhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D40E154AFB8B0048CDF1 /* LTPhotoPickerViewController.m */; };
 		A539D44A154AFC120048CDF1 /* LTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D410154AFB8B0048CDF1 /* LTViewController.m */; };
 		A539D44B154AFC200048CDF1 /* MediaDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D413154AFB8B0048CDF1 /* MediaDetailViewController.m */; };
@@ -61,10 +59,8 @@
 		A539D4FF154B004D0048CDF1 /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D4FE154B004D0048CDF1 /* Author.m */; };
 		A539D513154B03210048CDF1 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D510154B00840048CDF1 /* Annotation.m */; };
 		A53E292815A63289006D6B07 /* Brest.gpx in Resources */ = {isa = PBXBuildFile; fileRef = A53E292715A63289006D6B07 /* Brest.gpx */; };
-		A5402B6E15C98CB5002489E4 /* MediaUploadFormCells.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5402B6D15C98CB5002489E4 /* MediaUploadFormCells.xib */; };
 		A5402B7815C99EF9002489E4 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5402B7715C99EF9002489E4 /* HomeViewController.xib */; };
 		A5402B8815C9E146002489E4 /* MediaUploadFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5402B8615C9E145002489E4 /* MediaUploadFormViewController.m */; };
-		A5402B8915C9E146002489E4 /* MediaUploadFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5402B8715C9E145002489E4 /* MediaUploadFormViewController.xib */; };
 		A5568F1015AF5942008A9C8B /* SingleLineInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5568F0F15AF5942008A9C8B /* SingleLineInputCell.m */; };
 		A5568F1215AF599B008A9C8B /* SingleLineInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5568F1115AF599B008A9C8B /* SingleLineInputCell.xib */; };
 		A5582F4D15A4D9D1008F2F93 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */; };
@@ -273,13 +269,10 @@
 		A5AC0A6415DABF31000F9311 /* tabbar_navigate.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1EC154AF6B60048CDF1 /* tabbar_navigate.png */; };
 		A5AC0A6515DABF31000F9311 /* thumbnail_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1ED154AF6B60048CDF1 /* thumbnail_placeholder.png */; };
 		A5AC0A6615DABF31000F9311 /* AccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D403154AFB8B0048CDF1 /* AccountViewController.xib */; };
-		A5AC0A6715DABF31000F9311 /* AuthenticationSheetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D442154AFBF70048CDF1 /* AuthenticationSheetViewController.xib */; };
-		A5AC0A6815DABF31000F9311 /* LegalInformationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D40B154AFB8B0048CDF1 /* LegalInformationsViewController.xib */; };
 		A5AC0A6915DABF31000F9311 /* MediaDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D414154AFB8B0048CDF1 /* MediaDetailViewController.xib */; };
 		A5AC0A6A15DABF31000F9311 /* MediaFullSizeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D417154AFB8B0048CDF1 /* MediaFullSizeViewController.xib */; };
 		A5AC0A6B15DABF31000F9311 /* MediasListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D41A154AFB8B0048CDF1 /* MediasListViewController.xib */; };
 		A5AC0A6C15DABF31000F9311 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D421154AFB8B0048CDF1 /* MapViewController.xib */; };
-		A5AC0A6D15DABF31000F9311 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D3FE154AFAAE0048CDF1 /* MainWindow.xib */; };
 		A5AC0A6E15DABF31000F9311 /* MediaListCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D3E3154AFA1A0048CDF1 /* MediaListCellView.xib */; };
 		A5AC0A6F15DABF31000F9311 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5CA5F2C154E82BB00C3EB2E /* Localizable.strings */; };
 		A5AC0A7015DABF31000F9311 /* default_avatar_medium.png in Resources */ = {isa = PBXBuildFile; fileRef = A59CEAA015507FB800754A8E /* default_avatar_medium.png */; };
@@ -293,9 +286,7 @@
 		A5AC0A7815DABF31000F9311 /* MapCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A52CF5EF15ADE2C400FD0D66 /* MapCell.xib */; };
 		A5AC0A7915DABF31000F9311 /* SingleLineInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5568F1115AF599B008A9C8B /* SingleLineInputCell.xib */; };
 		A5AC0A7A15DABF31000F9311 /* MediaLocalisationPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5986FD015B4B53D00154F87 /* MediaLocalisationPickerViewController.xib */; };
-		A5AC0A7B15DABF31000F9311 /* MediaUploadFormCells.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5402B6D15C98CB5002489E4 /* MediaUploadFormCells.xib */; };
 		A5AC0A7C15DABF31000F9311 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5402B7715C99EF9002489E4 /* HomeViewController.xib */; };
-		A5AC0A7D15DABF31000F9311 /* MediaUploadFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5402B8715C9E145002489E4 /* MediaUploadFormViewController.xib */; };
 		A5AC0A7E15DABF31000F9311 /* ELCAlbumPickerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5933D3215CD0FFA00AD6D10 /* ELCAlbumPickerController.xib */; };
 		A5AC0A7F15DABF31000F9311 /* ELCAssetPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5933D3715CD0FFA00AD6D10 /* ELCAssetPicker.xib */; };
 		A5AC0A8015DABF31000F9311 /* ELCAssetTablePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5933D3A15CD0FFA00AD6D10 /* ELCAssetTablePicker.xib */; };
@@ -307,8 +298,17 @@
 		A5AC0A8615DABF31000F9311 /* tabbar_radar.png in Resources */ = {isa = PBXBuildFile; fileRef = A5933DB315CD5E0E00AD6D10 /* tabbar_radar.png */; };
 		A5AC0A9015DAC3DF000F9311 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AC0A8E15DAC3DF000F9311 /* Icon.png */; };
 		A5AC0A9115DAC3DF000F9311 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5AC0A8F15DAC3DF000F9311 /* Icon@2x.png */; };
+		A5AD497915DC0E8900759374 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5AD497C15DC0E8900759374 /* MainWindow.xib */; };
+		A5AD497A15DC0E8900759374 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5AD497C15DC0E8900759374 /* MainWindow.xib */; };
+		A5AD497E15DC0FA000759374 /* AuthenticationSheetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5AD498115DC0FA000759374 /* AuthenticationSheetViewController.xib */; };
+		A5AD497F15DC0FA000759374 /* AuthenticationSheetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5AD498115DC0FA000759374 /* AuthenticationSheetViewController.xib */; };
+		A5AD498215DC0FB400759374 /* LegalInformationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5AD498515DC0FB400759374 /* LegalInformationsViewController.xib */; };
+		A5AD498315DC0FB400759374 /* LegalInformationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5AD498515DC0FB400759374 /* LegalInformationsViewController.xib */; };
+		A5AD498815DC104400759374 /* MediaUploadFormCells.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5AD498B15DC104400759374 /* MediaUploadFormCells.xib */; };
+		A5AD498915DC104400759374 /* MediaUploadFormCells.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5AD498B15DC104400759374 /* MediaUploadFormCells.xib */; };
+		A5AD498D15DC108800759374 /* MediaUploadFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5AD499015DC108800759374 /* MediaUploadFormViewController.xib */; };
+		A5AD498E15DC108800759374 /* MediaUploadFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5AD499015DC108800759374 /* MediaUploadFormViewController.xib */; };
 		A5AF0EC3154888CF007F65DD /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5AF0EC2154888CF007F65DD /* MapKit.framework */; };
-		A5CA5F24154D8C2800C3EB2E /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D3FE154AFAAE0048CDF1 /* MainWindow.xib */; };
 		A5CA5F25154D8CCD00C3EB2E /* MediaListCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D3E3154AFA1A0048CDF1 /* MediaListCellView.xib */; };
 		A5CA5F2E154E82BB00C3EB2E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5CA5F2C154E82BB00C3EB2E /* Localizable.strings */; };
 		A5DDDBB215908EA800B91FFB /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = A5DDDBB015908EA800B91FFB /* background.png */; };
@@ -382,7 +382,6 @@
 		A539D3F9154AFA930048CDF1 /* LTConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTConnectionManager.m; path = Taxinomes/Classes/Core/LTConnectionManager.m; sourceTree = SOURCE_ROOT; };
 		A539D3FA154AFA930048CDF1 /* LTDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTDataManager.h; path = Taxinomes/Classes/Core/LTDataManager.h; sourceTree = SOURCE_ROOT; };
 		A539D3FB154AFA930048CDF1 /* LTDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTDataManager.m; path = Taxinomes/Classes/Core/LTDataManager.m; sourceTree = SOURCE_ROOT; };
-		A539D3FE154AFAAE0048CDF1 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainWindow.xib; path = Classes/MainWindow.xib; sourceTree = "<group>"; };
 		A539D401154AFB8B0048CDF1 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		A539D402154AFB8B0048CDF1 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
 		A539D403154AFB8B0048CDF1 /* AccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountViewController.xib; sourceTree = "<group>"; };
@@ -390,7 +389,6 @@
 		A539D407154AFB8B0048CDF1 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		A539D409154AFB8B0048CDF1 /* LegalInformationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LegalInformationsViewController.h; sourceTree = "<group>"; };
 		A539D40A154AFB8B0048CDF1 /* LegalInformationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LegalInformationsViewController.m; sourceTree = "<group>"; };
-		A539D40B154AFB8B0048CDF1 /* LegalInformationsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LegalInformationsViewController.xib; sourceTree = "<group>"; };
 		A539D40D154AFB8B0048CDF1 /* LTPhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTPhotoPickerViewController.h; sourceTree = "<group>"; };
 		A539D40E154AFB8B0048CDF1 /* LTPhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTPhotoPickerViewController.m; sourceTree = "<group>"; };
 		A539D40F154AFB8B0048CDF1 /* LTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTViewController.h; sourceTree = "<group>"; };
@@ -409,7 +407,6 @@
 		A539D421154AFB8B0048CDF1 /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
 		A539D440154AFBF70048CDF1 /* AuthenticationSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationSheetViewController.h; sourceTree = "<group>"; };
 		A539D441154AFBF70048CDF1 /* AuthenticationSheetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationSheetViewController.m; sourceTree = "<group>"; };
-		A539D442154AFBF70048CDF1 /* AuthenticationSheetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthenticationSheetViewController.xib; sourceTree = "<group>"; };
 		A539D4F4154B004D0048CDF1 /* License.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = License.h; path = Taxinomes/Classes/Models/License.h; sourceTree = SOURCE_ROOT; };
 		A539D4F5154B004D0048CDF1 /* License.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = License.m; path = Taxinomes/Classes/Models/License.m; sourceTree = SOURCE_ROOT; };
 		A539D4FA154B004D0048CDF1 /* Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Section.h; path = Taxinomes/Classes/Models/Section.h; sourceTree = SOURCE_ROOT; };
@@ -419,11 +416,9 @@
 		A539D50F154B00840048CDF1 /* Annotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Annotation.h; path = Taxinomes/Classes/Models/Annotation.h; sourceTree = SOURCE_ROOT; };
 		A539D510154B00840048CDF1 /* Annotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Annotation.m; path = Taxinomes/Classes/Models/Annotation.m; sourceTree = SOURCE_ROOT; };
 		A53E292715A63289006D6B07 /* Brest.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Brest.gpx; path = Ressources/Brest.gpx; sourceTree = "<group>"; };
-		A5402B6D15C98CB5002489E4 /* MediaUploadFormCells.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MediaUploadFormCells.xib; path = ../../Views/Cells/MediaUploadFormCells.xib; sourceTree = "<group>"; };
 		A5402B7715C99EF9002489E4 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		A5402B8515C9E145002489E4 /* MediaUploadFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaUploadFormViewController.h; path = MediaUploadForm/MediaUploadFormViewController.h; sourceTree = "<group>"; };
 		A5402B8615C9E145002489E4 /* MediaUploadFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaUploadFormViewController.m; path = MediaUploadForm/MediaUploadFormViewController.m; sourceTree = "<group>"; };
-		A5402B8715C9E145002489E4 /* MediaUploadFormViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MediaUploadFormViewController.xib; path = MediaUploadForm/MediaUploadFormViewController.xib; sourceTree = "<group>"; };
 		A5568F0E15AF5942008A9C8B /* SingleLineInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleLineInputCell.h; sourceTree = "<group>"; };
 		A5568F0F15AF5942008A9C8B /* SingleLineInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleLineInputCell.m; sourceTree = "<group>"; };
 		A5568F1115AF599B008A9C8B /* SingleLineInputCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleLineInputCell.xib; sourceTree = "<group>"; };
@@ -582,6 +577,16 @@
 		A5AC0A8A15DABF31000F9311 /* LesTaxinomes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LesTaxinomes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5AC0A8E15DAC3DF000F9311 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Taxinomes/Ressources/Images/dev/Icon.png; sourceTree = SOURCE_ROOT; };
 		A5AC0A8F15DAC3DF000F9311 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Taxinomes/Ressources/Images/dev/Icon@2x.png"; sourceTree = SOURCE_ROOT; };
+		A5AD497B15DC0E8900759374 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		A5AD497D15DC0E9200759374 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		A5AD498015DC0FA000759374 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/AuthenticationSheetViewController.xib; sourceTree = "<group>"; };
+		A5AD498415DC0FB400759374 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/LegalInformationsViewController.xib; sourceTree = "<group>"; };
+		A5AD498615DC0FC000759374 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/AuthenticationSheetViewController.xib; sourceTree = "<group>"; };
+		A5AD498715DC0FC600759374 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LegalInformationsViewController.xib; sourceTree = "<group>"; };
+		A5AD498A15DC104400759374 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/MediaUploadFormCells.xib; sourceTree = "<group>"; };
+		A5AD498C15DC104700759374 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MediaUploadFormCells.xib; sourceTree = "<group>"; };
+		A5AD498F15DC108800759374 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/MediaUploadFormViewController.xib; sourceTree = "<group>"; };
+		A5AD499115DC108B00759374 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MediaUploadFormViewController.xib; sourceTree = "<group>"; };
 		A5AF0EC2154888CF007F65DD /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		A5CA5F2D154E82BB00C3EB2E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = Langues/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A5CA5F2F154E82C600C3EB2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Langues/en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -726,7 +731,7 @@
 			children = (
 				C87C6798147440B500A055F1 /* TaxinomesAppDelegate.h */,
 				C87C6799147440B500A055F1 /* TaxinomesAppDelegate.m */,
-				A539D3FE154AFAAE0048CDF1 /* MainWindow.xib */,
+				A5AD497C15DC0E8900759374 /* MainWindow.xib */,
 				C87C674C147440B500A055F1 /* Classes */,
 				A5933CD815CD0FFA00AD6D10 /* ExternalSources */,
 				37D2E7E4144709ED0044EC3A /* Supporting Files */,
@@ -796,7 +801,7 @@
 			children = (
 				A539D440154AFBF70048CDF1 /* AuthenticationSheetViewController.h */,
 				A539D441154AFBF70048CDF1 /* AuthenticationSheetViewController.m */,
-				A539D442154AFBF70048CDF1 /* AuthenticationSheetViewController.xib */,
+				A5AD498115DC0FA000759374 /* AuthenticationSheetViewController.xib */,
 			);
 			name = Authentication;
 			path = Taxinomes/Classes/ViewControllers/Authentication;
@@ -810,7 +815,7 @@
 				A5402B7715C99EF9002489E4 /* HomeViewController.xib */,
 				A539D409154AFB8B0048CDF1 /* LegalInformationsViewController.h */,
 				A539D40A154AFB8B0048CDF1 /* LegalInformationsViewController.m */,
-				A539D40B154AFB8B0048CDF1 /* LegalInformationsViewController.xib */,
+				A5AD498515DC0FB400759374 /* LegalInformationsViewController.xib */,
 			);
 			name = Home;
 			path = Taxinomes/Classes/ViewControllers/Home;
@@ -870,8 +875,8 @@
 			children = (
 				A5402B8515C9E145002489E4 /* MediaUploadFormViewController.h */,
 				A5402B8615C9E145002489E4 /* MediaUploadFormViewController.m */,
-				A5402B8715C9E145002489E4 /* MediaUploadFormViewController.xib */,
-				A5402B6D15C98CB5002489E4 /* MediaUploadFormCells.xib */,
+				A5AD499015DC108800759374 /* MediaUploadFormViewController.xib */,
+				A5AD498B15DC104400759374 /* MediaUploadFormCells.xib */,
 			);
 			name = MediaUploadForm;
 			sourceTree = "<group>";
@@ -1297,13 +1302,13 @@
 				A539D1FC154AF6B60048CDF1 /* tabbar_navigate.png in Resources */,
 				A539D1FD154AF6B60048CDF1 /* thumbnail_placeholder.png in Resources */,
 				A539D43F154AFBD60048CDF1 /* AccountViewController.xib in Resources */,
-				A539D444154AFBF70048CDF1 /* AuthenticationSheetViewController.xib in Resources */,
-				A539D448154AFC0D0048CDF1 /* LegalInformationsViewController.xib in Resources */,
+				A5AD497E15DC0FA000759374 /* AuthenticationSheetViewController.xib in Resources */,
+				A5AD498215DC0FB400759374 /* LegalInformationsViewController.xib in Resources */,
 				A539D44C154AFC200048CDF1 /* MediaDetailViewController.xib in Resources */,
 				A539D44E154AFC200048CDF1 /* MediaFullSizeViewController.xib in Resources */,
 				A539D450154AFC200048CDF1 /* MediasListViewController.xib in Resources */,
 				A539D454154AFC270048CDF1 /* MapViewController.xib in Resources */,
-				A5CA5F24154D8C2800C3EB2E /* MainWindow.xib in Resources */,
+				A5AD497915DC0E8900759374 /* MainWindow.xib in Resources */,
 				A5CA5F25154D8CCD00C3EB2E /* MediaListCellView.xib in Resources */,
 				A5CA5F2E154E82BB00C3EB2E /* Localizable.strings in Resources */,
 				A59CEAA215507FB800754A8E /* default_avatar_medium.png in Resources */,
@@ -1317,9 +1322,9 @@
 				A52CF5F015ADE2C400FD0D66 /* MapCell.xib in Resources */,
 				A5568F1215AF599B008A9C8B /* SingleLineInputCell.xib in Resources */,
 				A5986FD215B4B53D00154F87 /* MediaLocalisationPickerViewController.xib in Resources */,
-				A5402B6E15C98CB5002489E4 /* MediaUploadFormCells.xib in Resources */,
+				A5AD498815DC104400759374 /* MediaUploadFormCells.xib in Resources */,
 				A5402B7815C99EF9002489E4 /* HomeViewController.xib in Resources */,
-				A5402B8915C9E146002489E4 /* MediaUploadFormViewController.xib in Resources */,
+				A5AD498D15DC108800759374 /* MediaUploadFormViewController.xib in Resources */,
 				A5933D8F15CD0FFA00AD6D10 /* ELCAlbumPickerController.xib in Resources */,
 				A5933D9215CD0FFA00AD6D10 /* ELCAssetPicker.xib in Resources */,
 				A5933D9415CD0FFA00AD6D10 /* ELCAssetTablePicker.xib in Resources */,
@@ -1366,13 +1371,13 @@
 				A5AC0A6415DABF31000F9311 /* tabbar_navigate.png in Resources */,
 				A5AC0A6515DABF31000F9311 /* thumbnail_placeholder.png in Resources */,
 				A5AC0A6615DABF31000F9311 /* AccountViewController.xib in Resources */,
-				A5AC0A6715DABF31000F9311 /* AuthenticationSheetViewController.xib in Resources */,
-				A5AC0A6815DABF31000F9311 /* LegalInformationsViewController.xib in Resources */,
+				A5AD497F15DC0FA000759374 /* AuthenticationSheetViewController.xib in Resources */,
+				A5AD498315DC0FB400759374 /* LegalInformationsViewController.xib in Resources */,
 				A5AC0A6915DABF31000F9311 /* MediaDetailViewController.xib in Resources */,
 				A5AC0A6A15DABF31000F9311 /* MediaFullSizeViewController.xib in Resources */,
 				A5AC0A6B15DABF31000F9311 /* MediasListViewController.xib in Resources */,
 				A5AC0A6C15DABF31000F9311 /* MapViewController.xib in Resources */,
-				A5AC0A6D15DABF31000F9311 /* MainWindow.xib in Resources */,
+				A5AD497A15DC0E8900759374 /* MainWindow.xib in Resources */,
 				A5AC0A6E15DABF31000F9311 /* MediaListCellView.xib in Resources */,
 				A5AC0A6F15DABF31000F9311 /* Localizable.strings in Resources */,
 				A5AC0A7015DABF31000F9311 /* default_avatar_medium.png in Resources */,
@@ -1386,9 +1391,9 @@
 				A5AC0A7815DABF31000F9311 /* MapCell.xib in Resources */,
 				A5AC0A7915DABF31000F9311 /* SingleLineInputCell.xib in Resources */,
 				A5AC0A7A15DABF31000F9311 /* MediaLocalisationPickerViewController.xib in Resources */,
-				A5AC0A7B15DABF31000F9311 /* MediaUploadFormCells.xib in Resources */,
+				A5AD498915DC104400759374 /* MediaUploadFormCells.xib in Resources */,
 				A5AC0A7C15DABF31000F9311 /* HomeViewController.xib in Resources */,
-				A5AC0A7D15DABF31000F9311 /* MediaUploadFormViewController.xib in Resources */,
+				A5AD498E15DC108800759374 /* MediaUploadFormViewController.xib in Resources */,
 				A5AC0A7E15DABF31000F9311 /* ELCAlbumPickerController.xib in Resources */,
 				A5AC0A7F15DABF31000F9311 /* ELCAssetPicker.xib in Resources */,
 				A5AC0A8015DABF31000F9311 /* ELCAssetTablePicker.xib in Resources */,
@@ -1629,6 +1634,54 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		A5AD497C15DC0E8900759374 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A5AD497B15DC0E8900759374 /* fr */,
+				A5AD497D15DC0E9200759374 /* en */,
+			);
+			name = MainWindow.xib;
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		A5AD498115DC0FA000759374 /* AuthenticationSheetViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A5AD498015DC0FA000759374 /* fr */,
+				A5AD498615DC0FC000759374 /* en */,
+			);
+			name = AuthenticationSheetViewController.xib;
+			sourceTree = "<group>";
+		};
+		A5AD498515DC0FB400759374 /* LegalInformationsViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A5AD498415DC0FB400759374 /* fr */,
+				A5AD498715DC0FC600759374 /* en */,
+			);
+			name = LegalInformationsViewController.xib;
+			sourceTree = "<group>";
+		};
+		A5AD498B15DC104400759374 /* MediaUploadFormCells.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A5AD498A15DC104400759374 /* fr */,
+				A5AD498C15DC104700759374 /* en */,
+			);
+			name = MediaUploadFormCells.xib;
+			path = ../../Views/Cells;
+			sourceTree = "<group>";
+		};
+		A5AD499015DC108800759374 /* MediaUploadFormViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A5AD498F15DC108800759374 /* fr */,
+				A5AD499115DC108B00759374 /* en */,
+			);
+			name = MediaUploadFormViewController.xib;
+			path = MediaUploadForm;
+			sourceTree = "<group>";
+		};
 		A5CA5F2C154E82BB00C3EB2E /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1665,7 +1718,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 			};
@@ -1688,7 +1741,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;

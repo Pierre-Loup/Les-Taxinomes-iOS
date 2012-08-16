@@ -82,7 +82,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if ([referenceAnnotation_ isKindOfClass:[MKUserLocation class]]) {
+    if ([referenceAnnotation_ isKindOfClass:[MKUserLocation class]]
+        || !referenceAnnotation_) {
         mapView_.showsUserLocation = YES;
     }
 }
