@@ -50,7 +50,6 @@
 		A539D44D154AFC200048CDF1 /* MediaFullSizeViewContoller.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D416154AFB8B0048CDF1 /* MediaFullSizeViewContoller.m */; };
 		A539D44E154AFC200048CDF1 /* MediaFullSizeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D417154AFB8B0048CDF1 /* MediaFullSizeViewController.xib */; };
 		A539D44F154AFC200048CDF1 /* MediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D419154AFB8B0048CDF1 /* MediasListViewController.m */; };
-		A539D450154AFC200048CDF1 /* MediasListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D41A154AFB8B0048CDF1 /* MediasListViewController.xib */; };
 		A539D453154AFC270048CDF1 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D420154AFB8B0048CDF1 /* MapViewController.m */; };
 		A539D454154AFC270048CDF1 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D421154AFB8B0048CDF1 /* MapViewController.xib */; };
 		A539D4F6154B004D0048CDF1 /* License.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D4F5154B004D0048CDF1 /* License.m */; };
@@ -242,7 +241,6 @@
 		A5AC0A6615DABF31000F9311 /* AccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D403154AFB8B0048CDF1 /* AccountViewController.xib */; };
 		A5AC0A6915DABF31000F9311 /* MediaDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D414154AFB8B0048CDF1 /* MediaDetailViewController.xib */; };
 		A5AC0A6A15DABF31000F9311 /* MediaFullSizeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D417154AFB8B0048CDF1 /* MediaFullSizeViewController.xib */; };
-		A5AC0A6B15DABF31000F9311 /* MediasListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D41A154AFB8B0048CDF1 /* MediasListViewController.xib */; };
 		A5AC0A6C15DABF31000F9311 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D421154AFB8B0048CDF1 /* MapViewController.xib */; };
 		A5AC0A6E15DABF31000F9311 /* MediaListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D3E3154AFA1A0048CDF1 /* MediaListCell.xib */; };
 		A5AC0A6F15DABF31000F9311 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5CA5F2C154E82BB00C3EB2E /* Localizable.strings */; };
@@ -334,6 +332,16 @@
 		C87C6813147440B500A055F1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C87C6812147440B500A055F1 /* CFNetwork.framework */; };
 		C87F28E11476EFA800CD82B7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C87F28E01476EFA800CD82B7 /* libz.dylib */; };
 		C87F28E41476EFE100CD82B7 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C87F28E31476EFE100CD82B7 /* MobileCoreServices.framework */; };
+		C8822AB115E1332100869CA2 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8822AB015E1332100869CA2 /* MainStoryboard.storyboard */; };
+		C8822AB215E1332100869CA2 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8822AB015E1332100869CA2 /* MainStoryboard.storyboard */; };
+		C8822B5515E16E2800869CA2 /* SpinnerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8822B5415E16E2800869CA2 /* SpinnerCell.xib */; };
+		C8822B5615E16E2800869CA2 /* SpinnerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8822B5415E16E2800869CA2 /* SpinnerCell.xib */; };
+		C8822B5815E16E4F00869CA2 /* MediasListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8822B5715E16E4F00869CA2 /* MediasListViewController.xib */; };
+		C8822B5915E16E4F00869CA2 /* MediasListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8822B5715E16E4F00869CA2 /* MediasListViewController.xib */; };
+		C8822B5C15E16E6900869CA2 /* SpinnerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8822B5B15E16E6900869CA2 /* SpinnerCell.m */; };
+		C8822B5D15E16E6900869CA2 /* SpinnerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8822B5B15E16E6900869CA2 /* SpinnerCell.m */; };
+		C8822B5F15E18D9E00869CA2 /* LTTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8822B5E15E18D9D00869CA2 /* LTTitleView.xib */; };
+		C8822B6015E18D9E00869CA2 /* LTTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8822B5E15E18D9D00869CA2 /* LTTitleView.xib */; };
 		C8852A46147944E000F54543 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C8852A45147944E000F54543 /* libsqlite3.0.dylib */; };
 		C8DB667F15DFCC2B0042A946 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DB666B15DFCC2B0042A946 /* AFHTTPClient.m */; };
 		C8DB668015DFCC2B0042A946 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DB666B15DFCC2B0042A946 /* AFHTTPClient.m */; };
@@ -432,7 +440,6 @@
 		A539D417154AFB8B0048CDF1 /* MediaFullSizeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaFullSizeViewController.xib; sourceTree = "<group>"; };
 		A539D418154AFB8B0048CDF1 /* MediasListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediasListViewController.h; sourceTree = "<group>"; };
 		A539D419154AFB8B0048CDF1 /* MediasListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediasListViewController.m; sourceTree = "<group>"; };
-		A539D41A154AFB8B0048CDF1 /* MediasListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediasListViewController.xib; sourceTree = "<group>"; };
 		A539D41F154AFB8B0048CDF1 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		A539D420154AFB8B0048CDF1 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		A539D421154AFB8B0048CDF1 /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
@@ -651,6 +658,12 @@
 		C87C6812147440B500A055F1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C87F28E01476EFA800CD82B7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		C87F28E31476EFE100CD82B7 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		C8822AB015E1332100869CA2 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainStoryboard.storyboard; path = Classes/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		C8822B5415E16E2800869CA2 /* SpinnerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpinnerCell.xib; sourceTree = "<group>"; };
+		C8822B5715E16E4F00869CA2 /* MediasListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediasListViewController.xib; sourceTree = "<group>"; };
+		C8822B5A15E16E6900869CA2 /* SpinnerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpinnerCell.h; sourceTree = "<group>"; };
+		C8822B5B15E16E6900869CA2 /* SpinnerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpinnerCell.m; sourceTree = "<group>"; };
+		C8822B5E15E18D9D00869CA2 /* LTTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LTTitleView.xib; path = Taxinomes/Classes/Views/LTTitleView.xib; sourceTree = SOURCE_ROOT; };
 		C8852A45147944E000F54543 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		C8DB666A15DFCC2B0042A946 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		C8DB666B15DFCC2B0042A946 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
@@ -801,6 +814,7 @@
 				C87C6798147440B500A055F1 /* TaxinomesAppDelegate.h */,
 				C87C6799147440B500A055F1 /* TaxinomesAppDelegate.m */,
 				A5AD497C15DC0E8900759374 /* MainWindow.xib */,
+				C8822AB015E1332100869CA2 /* MainStoryboard.storyboard */,
 				C87C674C147440B500A055F1 /* Classes */,
 				A5933CD815CD0FFA00AD6D10 /* ExternalSources */,
 				37D2E7E4144709ED0044EC3A /* Supporting Files */,
@@ -851,6 +865,9 @@
 				A5568F0E15AF5942008A9C8B /* SingleLineInputCell.h */,
 				A5568F0F15AF5942008A9C8B /* SingleLineInputCell.m */,
 				A5568F1115AF599B008A9C8B /* SingleLineInputCell.xib */,
+				C8822B5A15E16E6900869CA2 /* SpinnerCell.h */,
+				C8822B5B15E16E6900869CA2 /* SpinnerCell.m */,
+				C8822B5415E16E2800869CA2 /* SpinnerCell.xib */,
 			);
 			name = Cells;
 			path = Taxinomes/Classes/Views/Cells;
@@ -912,7 +929,7 @@
 				A5402B7015C98D60002489E4 /* MediaUploadForm */,
 				A539D418154AFB8B0048CDF1 /* MediasListViewController.h */,
 				A539D419154AFB8B0048CDF1 /* MediasListViewController.m */,
-				A539D41A154AFB8B0048CDF1 /* MediasListViewController.xib */,
+				C8822B5715E16E4F00869CA2 /* MediasListViewController.xib */,
 				A539D412154AFB8B0048CDF1 /* MediaDetailViewController.h */,
 				A539D413154AFB8B0048CDF1 /* MediaDetailViewController.m */,
 				A539D414154AFB8B0048CDF1 /* MediaDetailViewController.xib */,
@@ -1112,6 +1129,7 @@
 				A539D3E1154AFA1A0048CDF1 /* Cells */,
 				A539D3DE154AFA140048CDF1 /* LTTitleView.h */,
 				A539D3DF154AFA140048CDF1 /* LTTitleView.m */,
+				C8822B5E15E18D9D00869CA2 /* LTTitleView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1435,7 +1453,6 @@
 				A5AD498215DC0FB400759374 /* LegalInformationsViewController.xib in Resources */,
 				A539D44C154AFC200048CDF1 /* MediaDetailViewController.xib in Resources */,
 				A539D44E154AFC200048CDF1 /* MediaFullSizeViewController.xib in Resources */,
-				A539D450154AFC200048CDF1 /* MediasListViewController.xib in Resources */,
 				A539D454154AFC270048CDF1 /* MapViewController.xib in Resources */,
 				A5AD497915DC0E8900759374 /* MainWindow.xib in Resources */,
 				A5CA5F25154D8CCD00C3EB2E /* MediaListCell.xib in Resources */,
@@ -1464,6 +1481,10 @@
 				A5E7B0DA15E11DCC00ED8C55 /* LICENSE in Resources */,
 				A5E7B0E915E11E2500ED8C55 /* LICENSE in Resources */,
 				A5E7B0F615E11E6700ED8C55 /* license.txt in Resources */,
+				C8822AB115E1332100869CA2 /* MainStoryboard.storyboard in Resources */,
+				C8822B5515E16E2800869CA2 /* SpinnerCell.xib in Resources */,
+				C8822B5815E16E4F00869CA2 /* MediasListViewController.xib in Resources */,
+				C8822B5F15E18D9E00869CA2 /* LTTitleView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1502,7 +1523,6 @@
 				A5AD498315DC0FB400759374 /* LegalInformationsViewController.xib in Resources */,
 				A5AC0A6915DABF31000F9311 /* MediaDetailViewController.xib in Resources */,
 				A5AC0A6A15DABF31000F9311 /* MediaFullSizeViewController.xib in Resources */,
-				A5AC0A6B15DABF31000F9311 /* MediasListViewController.xib in Resources */,
 				A5AC0A6C15DABF31000F9311 /* MapViewController.xib in Resources */,
 				A5AD497A15DC0E8900759374 /* MainWindow.xib in Resources */,
 				A5AC0A6E15DABF31000F9311 /* MediaListCell.xib in Resources */,
@@ -1529,6 +1549,10 @@
 				A5E7B0DB15E11DCC00ED8C55 /* LICENSE in Resources */,
 				A5E7B0EA15E11E2500ED8C55 /* LICENSE in Resources */,
 				A5E7B0F715E11E6700ED8C55 /* license.txt in Resources */,
+				C8822AB215E1332100869CA2 /* MainStoryboard.storyboard in Resources */,
+				C8822B5615E16E2800869CA2 /* SpinnerCell.xib in Resources */,
+				C8822B5915E16E4F00869CA2 /* MediasListViewController.xib in Resources */,
+				C8822B6015E18D9E00869CA2 /* LTTitleView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1661,6 +1685,7 @@
 				A5E7B0EF15E11E2500ED8C55 /* NSString+XMLExtensions.m in Sources */,
 				A5E7B0F115E11E2500ED8C55 /* UIImage+Resize.m in Sources */,
 				A5E7B0F315E11E2500ED8C55 /* UIImageView+PhotoFrame.m in Sources */,
+				C8822B5C15E16E6900869CA2 /* SpinnerCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1782,6 +1807,7 @@
 				A5E7B0F015E11E2500ED8C55 /* NSString+XMLExtensions.m in Sources */,
 				A5E7B0F215E11E2500ED8C55 /* UIImage+Resize.m in Sources */,
 				A5E7B0F415E11E2500ED8C55 /* UIImageView+PhotoFrame.m in Sources */,
+				C8822B5D15E16E6900869CA2 /* SpinnerCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1930,10 +1956,11 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Taxinomes/LesTaxinomes-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1956,10 +1983,11 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Taxinomes/LesTaxinomes-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -2021,10 +2049,11 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Taxinomes/LesTaxinomes-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = LesTaxinomes;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2047,10 +2076,11 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Taxinomes/LesTaxinomes-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = LesTaxinomes;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

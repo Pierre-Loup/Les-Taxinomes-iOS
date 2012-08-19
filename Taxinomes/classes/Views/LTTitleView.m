@@ -25,47 +25,42 @@
 
 #import "LTTitleView.h"
 
+@interface LTTitleView ()
+@property (nonatomic, retain) IBOutlet UILabel* titleLabel;
+@property (nonatomic, retain) IBOutlet UIImageView* backgroundImageView;
+@end
+
 @implementation LTTitleView
 @synthesize titleLabel = titleLabel_;
+@synthesize backgroundImageView = backgroundImageView_;
 
-+ (LTTitleView *)titleViewWithOrigin:(CGPoint)origin {
-    return [[[LTTitleView alloc] initWithOrigin:origin] autorelease];
-}
-
-- (id)init {
-    return [self initWithOrigin:CGPointMake(0.0, 0.0)];
++ (LTTitleView *)titleViewWithFrame:(CGRect)frame {
+    return [[[self alloc] initWithFrame:frame] autorelease];
 }
 
 - (id)initWithFrame:(CGRect)frame {
-    return [self initWithOrigin:frame.origin];
-}
-
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    return [self initWithOrigin:CGPointMake(0.0, 0.0)];
-}
-
-- (id)initWithOrigin:(CGPoint)origin {
-    CGRect frame = CGRectMake(origin.x, origin.y, 310, 30);
-    self = [super initWithFrame:frame];
-    if (self) {
-        CGRect backgroundFrame = CGRectMake(0, 0, frame.size.width, frame.size.height);
-        UIImageView *backgroundView = [[UIImageView alloc] initWithFrame:backgroundFrame];
-        backgroundView.image = [UIImage imageNamed:@"bg_titre_left.png"];
-        [self addSubview:backgroundView];
-        [backgroundView release];
-        CGFloat marginLeft = 5.0;
-        CGFloat marginRight = 60.0;
-        CGRect titleLabelFrame = CGRectMake(marginLeft, 0, frame.size.width -marginLeft -marginRight, frame.size.height);
-        titleLabel_ = [[UILabel alloc] initWithFrame:titleLabelFrame];
-        titleLabel_.lineBreakMode = UILineBreakModeTailTruncation;
-        titleLabel_.textColor = [UIColor whiteColor];
-        titleLabel_.font = [UIFont boldSystemFontOfSize:20];
-        titleLabel_.opaque = NO;
-        titleLabel_.backgroundColor = [UIColor clearColor];
-        
-        [self addSubview:titleLabel_];
+    NSArray* views = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class]) owner:self options:nil];
+    UIView* view = [views objectAtIndex:0];
+    if ([view isKindOfClass:[self class]]) {
+        self = (LTTitleView *)[view retain];
+        CGRect backgroundFrame = CGRectMake(frame.origin.x,
+                                            frame.origin.y,
+                                            frame.size.width,
+                                            30);
+        self.frame = backgroundFrame;
+        [backgroundImageView_.image resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 60.0)];
+        return self;
+    } else {
+        return nil;
     }
-    return self;
+}
+
+- (void)setTitle:(NSString *)title {
+    titleLabel_.text = title;
+}
+
+- (NSString *)title {
+    return titleLabel_.text;
 }
 
 - (void)dealloc {

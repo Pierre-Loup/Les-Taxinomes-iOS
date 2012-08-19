@@ -26,15 +26,12 @@
 #import <UIKit/UIKit.h>
 #import <AudioToolbox/AudioToolbox.h>
 
-@class MediaViewController;
-@class SiteTaxinomes;
-
-@interface TaxinomesAppDelegate : NSObject <UIApplicationDelegate>{
+@interface TaxinomesAppDelegate : UIResponder <UIApplicationDelegate>{
     SystemSoundID launchSoundID_;
     
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow* window;
+@property (nonatomic, retain) IBOutlet IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet UITabBarController* tabBarController;
 @property (nonatomic, retain) UIImageView *launchScreenView;
 

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface MediaListCell : UITableViewCell
++ (MediaListCell *)mediaListCell;
 @property (nonatomic, retain) IBOutlet UIImageView* image;
 @property (nonatomic, retain) IBOutlet UILabel* title;
 @property (nonatomic, retain) IBOutlet UILabel* author;

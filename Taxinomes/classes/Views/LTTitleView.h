@@ -25,13 +25,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LTTitleView : UIView {
-    UILabel * titleLabel_;
-}
+@interface LTTitleView : UIView
 
-@property (nonatomic, retain) UILabel * titleLabel;
+@property (nonatomic) NSString* title;
 
-+ (LTTitleView *)titleViewWithOrigin:(CGPoint)origin;
-- (id)initWithOrigin:(CGPoint)origin;
++ (LTTitleView *)titleViewWithFrame:(CGRect)frame;
+- (id)initWithFrame:(CGRect)frame;
 
 @end

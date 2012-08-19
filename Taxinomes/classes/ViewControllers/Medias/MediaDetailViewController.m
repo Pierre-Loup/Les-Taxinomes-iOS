@@ -31,8 +31,6 @@
 #import "MediaDetailViewController.h"
 #import "MediaFullSizeViewContoller.h"
 
-#define kCommonWidth 310.0
-
 @interface MediaDetailViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate, LTConnectionManagerDelegate, MKMapViewDelegate>{
     int asynchLoadCounter_;
     
@@ -49,6 +47,7 @@
 }
 
 @property (nonatomic, retain) IBOutlet UIScrollView * scrollView;
+- (void)configureView;
 - (void)refreshView;
 - (void)mediaImageTouched:(UIImage *)sender;
 - (void)displayContentIfNeeded;
@@ -93,7 +92,7 @@
     self.scrollView.opaque = NO;
     self.scrollView.delegate = self;
     
-    mediaTitleView_ = [[LTTitleView titleViewWithOrigin:CGPointMake(5, 5)] retain];
+    mediaTitleView_ = [LTTitleView new];
     [self.scrollView addSubview:mediaTitleView_];
     [mediaTitleView_ setHidden:YES];
     
@@ -102,8 +101,6 @@
     [mediaImageView_ setContentMode:UIViewContentModeScaleAspectFill];
     [placeholderAIView_ = [UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [placeholderAIView_ startAnimating];
-    [mediaImageView_ addSubview:placeholderAIView_];
-    [self loadMediaView];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mediaImageTouched:)];
     [tapGestureRecognizer setNumberOfTouchesRequired:1];
@@ -116,8 +113,8 @@
     [self.scrollView addSubview:mediaImageView_];
     
     
-    authorTitleView_ = [[LTTitleView titleViewWithOrigin:CGPointMake(5, 5)] retain];
-    authorTitleView_.titleLabel.text = TRANSLATE(@"common.author");
+    authorTitleView_ = [LTTitleView new];
+    authorTitleView_.title = TRANSLATE(@"common.author");
     [self.scrollView addSubview:authorTitleView_];
     [authorTitleView_ setHidden:YES];
     
@@ -129,8 +126,8 @@
     authorNameLabel_ = [[UILabel alloc] init];
     [self.scrollView addSubview:authorNameLabel_];
     
-    descTitleView_ = [[LTTitleView titleViewWithOrigin:CGPointMake(5, 5)] retain];
-    descTitleView_.titleLabel.text = TRANSLATE(@"common.description");
+    descTitleView_ = [LTTitleView new];
+    descTitleView_.title = TRANSLATE(@"common.description");
     [self.scrollView addSubview:descTitleView_];
     [descTitleView_ setHidden:YES];
     
@@ -139,8 +136,8 @@
     [descTextView_ setDataDetectorTypes:UIDataDetectorTypeAll];
     [self.scrollView addSubview:descTextView_];
     
-    mapTitleView_ = [[LTTitleView titleViewWithOrigin:CGPointMake(5, 5)] retain];
-    mapTitleView_.titleLabel.text = TRANSLATE(@"common.map");
+    mapTitleView_ = [LTTitleView new];
+    mapTitleView_.title = TRANSLATE(@"common.map");
     [self.scrollView addSubview:mapTitleView_];
     [mapTitleView_ setHidden:YES];
     
@@ -186,9 +183,33 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    if (media_) {
+        [self configureView];
+    }
+}
+
+#pragma mark - Properties
+
+- (void)setMedia:(Media *)media {
+    if(media != media_) {
+        [media_ release];
+        media_ = [media retain];
+        [self configureView];
+    }
+}
+
+#pragma mark - Private methodes
+
+- (void)configureView {
+    [self displayLoader];
+    scrollView_.hidden = YES;
     LTDataManager *dm = [LTDataManager sharedDataManager];
-    if([dm getMediaAsychIfNeededWithId:media_.identifier withDelegate:self])
+    if([dm getMediaAsychIfNeededWithId:media_.identifier withDelegate:self]) {
         asynchLoadCounter_ = asynchLoadCounter_ + 1;
+    } else {
+        [self loadMediaView];
+        [self refreshView];
+    }
     if([dm getAuthorAsychIfNeededWithId:self.media.author.identifier withDelegate:self])
         asynchLoadCounter_ = asynchLoadCounter_ + 1;
     if (asynchLoadCounter_ > 0) {
@@ -205,16 +226,20 @@
     CGFloat imageHeight = 0;
     CGFloat descHeight;
     
+    CGFloat commonWidth = self.view.frame.size.width - 10.0;
+    CGRect viewFrame = self.view.frame;
+    
+    mediaTitleView_.frame = CGRectMake(5.0, 5.0, viewFrame.size.width, 30.0);
     if (media_.title && ![media_.title isEqualToString:@""]) {
-        mediaTitleView_.titleLabel.text = media_.title;
+        mediaTitleView_.title = media_.title;
         
     } else {
-        mediaTitleView_.titleLabel.text = TRANSLATE(@"media_upload_no_title");
+        mediaTitleView_.title = TRANSLATE(@"media_upload_no_title");
     }
     [mediaTitleView_ setHidden:NO];
     
     if (mediaImageView_.image) {
-        imageHeight =  (kCommonWidth/mediaImageView_.image.size.width)*mediaImageView_.image.size.height;
+        imageHeight =  (commonWidth/mediaImageView_.image.size.width)*mediaImageView_.image.size.height;
         mediaImageView_.frame = CGRectMake(5, 40, 310.0, imageHeight);
         placeholderAIView_.center = CGPointMake(mediaImageView_.bounds.size.width/2, mediaImageView_.bounds.size.height/2);
     }
@@ -289,8 +314,12 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    } else {
+        return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+                interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+    }
 }
 
 - (void)mediaImageTouched:(UIImage *)sender {
@@ -311,6 +340,8 @@
 }
 
 - (void)loadMediaView {
+    
+    [mediaImageView_ addSubview:placeholderAIView_];
     [mediaImageView_ setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:media_.mediaMediumURL]]
                            placeholderImage:[UIImage imageNamed:@"medium_placeholder"]
                                     success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {

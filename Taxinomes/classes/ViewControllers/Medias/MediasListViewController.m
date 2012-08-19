@@ -30,9 +30,11 @@
 #import "MediaDetailViewController.h"
 #import "MediaListCell.h"
 #import "Reachability.h"
+#import "SpinnerCell.h"
 #import "UIImageView+AFNetworking.h"
 
 #define kMediaListCellIdentifier  @"MediasListCell"
+#define kSpinnerCellIdentifier  @"SpinnerCell"
 
 @interface MediasListViewController () <LTConnectionManagerDelegate> {
     
@@ -42,18 +44,21 @@
     // UI
     UIBarButtonItem* reloadBarButton_;
 }
-@property (nonatomic, retain) IBOutlet UITableViewCell * spinnerCell;
+@property (nonatomic, retain) IBOutlet MediaDetailViewController *mediaDetailViewController;
+
 - (void)loadSynchMedias;
 - (void)refreshButtonAction:(id)sender;
 @end
 
 @implementation MediasListViewController
 @synthesize currentUser = currentUser_;
-@synthesize spinnerCell = spinnerCell_;
+@synthesize mediaDetailViewController = mediaDetailViewController_;
 
 - (void)dealloc {
     [currentUser_ release];
     [mediaAtIndexPath_ release];
+    [mediaDetailViewController_ release];
+    [reloadBarButton_ release];
     [super dealloc];
 }
 
@@ -74,7 +79,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     mediaAtIndexPath_ = [NSMutableDictionary new];
     mediaLoadingStatus_ = PENDING;
     
@@ -82,15 +87,16 @@
     [self.navigationItem setRightBarButtonItem:reloadBarButton_ animated:YES];
     [reloadBarButton_ release];
     
+    mediaDetailViewController_ = (MediaDetailViewController *)[[[self.splitViewController.viewControllers lastObject] topViewController] retain];
+    
     [self reloadDatas];
 }
 
 - (void)viewDidUnload {
-    self.tableView = nil;
+    [super viewDidUnload];
+    self.mediaDetailViewController = nil;
     [reloadBarButton_ release];
     reloadBarButton_ = nil;
-    self.spinnerCell = nil;
-    [super viewDidUnload];
 }
 
 #pragma mark - Table view data source
@@ -113,20 +119,23 @@
         default:
             return ([mediaAtIndexPath_ count]+1);
             break;
-    } 
+    }
     
 }
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if([indexPath row] == ([mediaAtIndexPath_ count])) {        
+    if([indexPath row] == ([mediaAtIndexPath_ count])) {
+        SpinnerCell* spinnerCell = [self.tableView dequeueReusableCellWithIdentifier:kSpinnerCellIdentifier];
+        if (!spinnerCell) {
+            spinnerCell =  [SpinnerCell spinnerCell];
+        }
+        
         if ( mediaLoadingStatus_ == SUCCEED) {
             [self loadSynchMedias];
             mediaLoadingStatus_ = PENDING;
-            return spinnerCell_;
-        } else if (mediaLoadingStatus_ == PENDING) {
-            return spinnerCell_;
         }
+        return spinnerCell;
     }
     
     Media* media = [mediaAtIndexPath_ objectForKey:indexPath];
@@ -134,7 +143,7 @@
     
     cell = [aTableView dequeueReusableCellWithIdentifier:kMediaListCellIdentifier];
     if (!cell) {
-        cell = [[MediaListCell new] autorelease];
+        cell = [MediaListCell mediaListCell];
     }
     
     if (media.title && ![media.title isEqualToString:@""]) {
@@ -154,23 +163,33 @@
 
 #pragma mark Table view delegate
 
-/*
- - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
- return 68.0;
- }
- */
-
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Media *media = [mediaAtIndexPath_ objectForKey:indexPath];
-    if(media != nil){
-        MediaDetailViewController* mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailViewController" bundle:nil];
-        mediaDetailViewController.media = media;
-        mediaDetailViewController.title = TRANSLATE(@"common.media");
-        [self.navigationController pushViewController:mediaDetailViewController animated:YES];
-        [mediaDetailViewController release];
+    if (mediaDetailViewController_) {
+        [mediaDetailViewController_.navigationController popToRootViewControllerAnimated:YES];
+        mediaDetailViewController_.media = media;
+        mediaDetailViewController_.title = media.title;
+    } else {
+        if(media != nil){
+            MediaDetailViewController* mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailViewController" bundle:nil];
+            mediaDetailViewController.media = media;
+            mediaDetailViewController.title = TRANSLATE(@"common.media");
+            [self.navigationController pushViewController:mediaDetailViewController animated:YES];
+            [mediaDetailViewController release];
+        }
     }
-    
+}
+
+#pragma mark - Private methods
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    } else {
+        return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+                interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+    }
 }
 
 - (void)loadSynchMedias {
