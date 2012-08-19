@@ -26,7 +26,6 @@
 #import <UIKit/UIKit.h>
 #import "LTDataManager.h"
 #import "LTTableViewController.h"
-#import "TCImageView.h"
 
 typedef enum {
     FAILED = 0,
@@ -35,14 +34,7 @@ typedef enum {
     NOMORETOLOAD,
 } MediaLoadingStatus;
 
-@interface MediasListViewController : LTTableViewController <TCImageViewDelegate, LTConnectionManagerDelegate> {
-
-    MediaLoadingStatus mediaLoadingStatus_;
-    NSMutableDictionary* mediaAtIndexPath_;
-    
-    // UI
-    UIBarButtonItem* reloadBarButton_;
-}
+@interface MediasListViewController : LTTableViewController
 
 @property (nonatomic, retain) Author* currentUser;
 

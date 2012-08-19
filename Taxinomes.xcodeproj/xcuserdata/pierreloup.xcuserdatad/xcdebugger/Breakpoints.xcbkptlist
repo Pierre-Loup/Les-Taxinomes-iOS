@@ -26,32 +26,6 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "31"
          endingLineNumber = "31">
-         <Locations>
-            <Location
-               shouldBeEnabled = "Yes"
-               ignoreCount = "0"
-               continueAfterRunningActions = "No"
-               symbolName = "-[MediasListViewController currentUser]"
-               urlString = "file://localhost/MediasListViewController.h"
-               timestampString = "365882128.446118"
-               startingColumnNumber = "9223372036854775807"
-               endingColumnNumber = "9223372036854775807"
-               startingLineNumber = "49"
-               endingLineNumber = "49">
-            </Location>
-            <Location
-               shouldBeEnabled = "Yes"
-               ignoreCount = "0"
-               continueAfterRunningActions = "No"
-               symbolName = "-[MediasListViewController setCurrentUser:]"
-               urlString = "file://localhost/MediasListViewController.h"
-               timestampString = "365882128.446937"
-               startingColumnNumber = "9223372036854775807"
-               endingColumnNumber = "9223372036854775807"
-               startingLineNumber = "49"
-               endingLineNumber = "49">
-            </Location>
-         </Locations>
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -65,19 +39,6 @@
          startingLineNumber = "53"
          endingLineNumber = "53"
          landmarkName = "-imagePickerController:didFinishPickingMediaWithInfo:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Taxinomes/ExternalSources/TCImageView.m"
-         timestampString = "365871836.468258"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "133"
-         endingLineNumber = "133"
-         landmarkName = "-connection:didFailWithError:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

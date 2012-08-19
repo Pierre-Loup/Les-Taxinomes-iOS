@@ -24,14 +24,25 @@
  */
 
 #import "MediasListViewController.h"
+
 #import "Author.h"
 #import "Constants.h"
 #import "MediaDetailViewController.h"
+#import "MediaListCell.h"
 #import "Reachability.h"
+#import "UIImageView+AFNetworking.h"
 
-@interface MediasListViewController ()
+#define kMediaListCellIdentifier  @"MediasListCell"
+
+@interface MediasListViewController () <LTConnectionManagerDelegate> {
+    
+    MediaLoadingStatus mediaLoadingStatus_;
+    NSMutableDictionary* mediaAtIndexPath_;
+    
+    // UI
+    UIBarButtonItem* reloadBarButton_;
+}
 @property (nonatomic, retain) IBOutlet UITableViewCell * spinnerCell;
-@property (nonatomic, retain) IBOutlet UITableViewCell * mediaTableViewCell;
 - (void)loadSynchMedias:(id)sender;
 - (void)refreshButtonAction:(id)sender;
 @end
@@ -39,7 +50,6 @@
 @implementation MediasListViewController
 @synthesize currentUser = currentUser_;
 @synthesize spinnerCell = spinnerCell_;
-@synthesize mediaTableViewCell = mediaTableViewCell_;
 
 - (void)dealloc {
     [currentUser_ release];
@@ -82,7 +92,6 @@
     self.tableView = nil;
     [reloadBarButton_ release];
     reloadBarButton_ = nil;
-    self.mediaTableViewCell = nil;
     self.spinnerCell = nil;
     [super viewDidUnload];
 }
@@ -111,9 +120,7 @@
     
 }
 
-- (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *medialListCellIdentifier = @"mediasListCell";
+- (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if([indexPath row] == ([mediaAtIndexPath_ count])) {        
         if ( mediaLoadingStatus_ == SUCCEED) {
@@ -125,38 +132,26 @@
         }
     }
     
-    Media *media = [mediaAtIndexPath_ objectForKey:indexPath];
-    UITableViewCell *cell = nil;
+    Media* media = [mediaAtIndexPath_ objectForKey:indexPath];
+    MediaListCell* cell = nil;
     
-    cell = [aTableView dequeueReusableCellWithIdentifier:medialListCellIdentifier];
-    if (cell == nil) {
-        [[NSBundle mainBundle] loadNibNamed:@"MediaListCellView" owner:self options:nil];
-        cell = self.mediaTableViewCell;
-        self.mediaTableViewCell = nil;
-        
+    cell = [aTableView dequeueReusableCellWithIdentifier:kMediaListCellIdentifier];
+    if (!cell) {
+        cell = [[MediaListCell new] autorelease];
     }
     
-    TCImageView * mediaImageView = (TCImageView *)[cell viewWithTag:1];    
-    if (![mediaImageView.url isEqualToString:media.mediaThumbnailUrl]) {
-        [mediaImageView setHidden:YES];
-        mediaImageView.caching = YES;
-        mediaImageView.delegate = self;
-        [mediaImageView reloadWithUrl:media.mediaThumbnailUrl];
-    }
-    
-    UILabel * titleLabel = ((UILabel *)[cell viewWithTag:2]);
     if (media.title && ![media.title isEqualToString:@""]) {
-        titleLabel.text = media.title;
+        cell.title.text = media.title;
         
     } else {
-        titleLabel.text = TRANSLATE(@"media_upload_no_title");
+        cell.title.text = TRANSLATE(@"media_upload_no_title");
     }
     
-    ((UILabel *)[cell viewWithTag:3]).text = media.author.name;
+    cell.author.text = media.author.name;
     
-    cell.opaque = YES;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell.image setImageWithURL:[NSURL URLWithString:media.mediaThumbnailUrl]
+               placeholderImage:[UIImage imageNamed:@"thumbnail_placeholder"]];
+    
     return cell;
 }
 
@@ -209,12 +204,6 @@
     }
     [self.tableView reloadData];
     mediaLoadingStatus_ = SUCCEED;
-}
-
-#pragma mark - TCImageViewDelegate
-
--(void)TCImageView:(TCImageView *)view WillUpdateImage:(UIImage *)image {
-    [view setHidden:NO];
 }
 
 #pragma mark - LTConnectionManagerDelegate

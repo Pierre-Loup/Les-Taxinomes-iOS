@@ -316,7 +316,7 @@
     [self displayContentIfNeeded];
 }
 
--(void) TCImageView:(TCImageView *) view failedWithError:(NSError *)error {
+- (void) TCImageView:(TCImageView *) view failedWithError:(NSError *)error {
     asynchLoadCounter_ = asynchLoadCounter_ - 1;
     [self displayContentIfNeeded];
 }
