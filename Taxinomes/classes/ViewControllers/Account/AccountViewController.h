@@ -28,15 +28,7 @@
 #import "AuthenticationSheetViewController.h"
 #import "LTPhotoPickerViewController.h"
 #import "Author.h"
-#import "TCImageView.h"
 
-@interface AccountViewController : LTPhotoPickerViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, LTConnectionManagerAuthDelegate> {
-    
-    NSArray* accountMenuLabels_;
-    Author * authenticatedUser_;
-    
-    UIBarButtonItem* rightBarButton_;
-    TCImageView* avatarView_;
-}
+@interface AccountViewController : LTPhotoPickerViewController
 
 @end

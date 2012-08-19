@@ -26,7 +26,6 @@
 #import <UIKit/UIKit.h>
 #import "LTDataManager.h"
 #import "LTTableViewController.h"
-#import "TCImageView.h"
 
 typedef enum {
     FAILED = 0,

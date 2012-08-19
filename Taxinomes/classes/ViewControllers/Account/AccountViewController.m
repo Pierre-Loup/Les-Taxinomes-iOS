@@ -26,11 +26,19 @@
 #import "AccountViewController.h"
 #import "MediaUploadFormViewController.h"
 #import "MediasListViewController.h"
+#import "UIImageView+AFNetworking.h"
 
-@interface AccountViewController ()
-@property (retain, nonatomic) IBOutlet UITableView * tableView;
-@property (retain, nonatomic) IBOutlet UIImageView * defaultAvatarView;
-@property (retain, nonatomic) IBOutlet UILabel * userNameLabel;
+@interface AccountViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, LTConnectionManagerAuthDelegate> {
+    
+    NSArray* accountMenuLabels_;
+    Author * authenticatedUser_;
+    
+    UIBarButtonItem* rightBarButton_;
+}
+@property (retain, nonatomic) IBOutlet UITableView* tableView;
+@property (retain, nonatomic) IBOutlet UIImageView* defaultAvatarView;
+@property (retain, nonatomic) IBOutlet UILabel* userNameLabel;
+@property (retain, nonatomic) IBOutlet UIImageView* avatarView;
 
 - (void)commonInit;
 - (void)displayAuthenticationSheetAnimated:(BOOL)animated;
@@ -43,6 +51,7 @@
 @synthesize tableView = tableView_;
 @synthesize defaultAvatarView = defaultAvatarView_;
 @synthesize userNameLabel = userNameLabel_;
+@synthesize avatarView = avatarView_;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -83,7 +92,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.tableView setHidden:YES];
-    avatarView_ = [[TCImageView alloc] initWithURL:nil placeholderView:nil];
+    avatarView_ set;
     avatarView_.frame = defaultAvatarView_.frame;
     [self.view addSubview:avatarView_];
     
