@@ -33,7 +33,21 @@
 
 #define kCommonWidth 310.0
 
-@interface MediaDetailViewController ()
+@interface MediaDetailViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate, LTConnectionManagerDelegate, MKMapViewDelegate>{
+    int asynchLoadCounter_;
+    
+    LTTitleView * mediaTitleView_;
+    UIImageView * mediaImageView_;
+    LTTitleView * authorTitleView_;
+    UIImageView * authorAvatarView_;
+    UILabel * authorNameLabel_;
+    LTTitleView * descTitleView_;
+    UITextView * descTextView_;
+    LTTitleView * mapTitleView_;
+    MKMapView * mapView_;
+    UIActivityIndicatorView* placeholderAIView_;
+}
+
 @property (nonatomic, retain) IBOutlet UIScrollView * scrollView;
 - (void)refreshView;
 - (void)mediaImageTouched:(UIImage *)sender;
@@ -58,6 +72,7 @@
     [scrollView_ release];
     [mediaTitleView_ release];
     [mediaImageView_ release];
+    [placeholderAIView_ release];
     [authorTitleView_ release];
     [authorAvatarView_ release];
     [authorNameLabel_ release];
@@ -85,12 +100,16 @@
     mediaImageView_ = [UIImageView new];
     [mediaImageView_ setClipsToBounds:YES];
     [mediaImageView_ setContentMode:UIViewContentModeScaleAspectFill];
+    [placeholderAIView_ = [UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [placeholderAIView_ startAnimating];
+    [mediaImageView_ addSubview:placeholderAIView_];
     [self loadMediaView];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mediaImageTouched:)];
     [tapGestureRecognizer setNumberOfTouchesRequired:1];
     [tapGestureRecognizer setDelegate:self];
-    //Don't forget to set the userInteractionEnabled to YES, by default It's NO.
+    
+    //Don't forget to set the userInteractionEnabled UIView property to YES, default is NO.
     mediaImageView_.userInteractionEnabled = YES;
     [mediaImageView_ addGestureRecognizer:tapGestureRecognizer];
     [tapGestureRecognizer release];
@@ -147,6 +166,8 @@
     mediaTitleView_ = nil;
     [mediaImageView_ release];
     mediaImageView_ = nil;
+    [placeholderAIView_ release];
+    placeholderAIView_ = nil;
     [authorTitleView_ release];
     mediaImageView_ = nil;
     [authorAvatarView_ release];
@@ -195,6 +216,7 @@
     if (mediaImageView_.image) {
         imageHeight =  (kCommonWidth/mediaImageView_.image.size.width)*mediaImageView_.image.size.height;
         mediaImageView_.frame = CGRectMake(5, 40, 310.0, imageHeight);
+        placeholderAIView_.center = CGPointMake(mediaImageView_.bounds.size.width/2, mediaImageView_.bounds.size.height/2);
     }
     
     authorTitleView_.frame = CGRectMake(5.0, 45.0+imageHeight, authorTitleView_.frame.size.width, authorTitleView_.frame.size.height);
@@ -293,6 +315,7 @@
                            placeholderImage:[UIImage imageNamed:@"medium_placeholder"]
                                     success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                                         [self hideLoader];
+                                        [placeholderAIView_ removeFromSuperview];
                                         [self refreshView];
                                     }
                                     failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {

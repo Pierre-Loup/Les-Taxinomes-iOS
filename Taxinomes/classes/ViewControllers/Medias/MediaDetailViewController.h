@@ -31,19 +31,7 @@
 #import "LTViewController.h"
 #import "LTTitleView.h"
 
-@interface MediaDetailViewController : LTViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, LTConnectionManagerDelegate, MKMapViewDelegate>{
-    int asynchLoadCounter_;
-    
-    LTTitleView * mediaTitleView_;
-    UIImageView * mediaImageView_;
-    LTTitleView * authorTitleView_;
-    UIImageView * authorAvatarView_;
-    UILabel * authorNameLabel_;
-    LTTitleView * descTitleView_;
-    UITextView * descTextView_;
-    LTTitleView * mapTitleView_;
-    MKMapView * mapView_;
-}
+@interface MediaDetailViewController : LTViewController
 @property (nonatomic, retain) Media* media;
 
 @end
