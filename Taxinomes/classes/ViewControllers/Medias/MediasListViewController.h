@@ -34,14 +34,7 @@ typedef enum {
     NOMORETOLOAD,
 } MediaLoadingStatus;
 
-@interface MediasListViewController : LTTableViewController <TCImageViewDelegate, LTConnectionManagerDelegate> {
-
-    MediaLoadingStatus mediaLoadingStatus_;
-    NSMutableDictionary* mediaAtIndexPath_;
-    
-    // UI
-    UIBarButtonItem* reloadBarButton_;
-}
+@interface MediasListViewController : LTTableViewController
 
 @property (nonatomic, retain) Author* currentUser;
 

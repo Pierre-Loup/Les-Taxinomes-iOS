@@ -92,7 +92,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.tableView setHidden:YES];
-    avatarView_ set;
+    [avatarView_ setImageWithURL:[NSURL URLWithString:authenticatedUser_.avatarURL]
+                placeholderImage:[UIImage imageNamed:@"default_avatar_medium"]];
     avatarView_.frame = defaultAvatarView_.frame;
     [self.view addSubview:avatarView_];
     
@@ -219,7 +220,8 @@
 - (void)switchToAuthenticatedMode:(BOOL)animated {
     if (authenticatedUser_) {
         self.userNameLabel.text = authenticatedUser_.name;
-        [avatarView_ reloadWithUrl:authenticatedUser_.avatarURL];
+        [avatarView_ setImageWithURL:[NSURL URLWithString:authenticatedUser_.avatarURL]
+                    placeholderImage:[UIImage imageNamed:@"default_avatar_medium"]];
     }
     [avatarView_ setHidden:NO];
     [self.tableView setHidden:NO];
@@ -258,7 +260,8 @@
         [authenticatedUser_ release];
         authenticatedUser_ = [author retain];
         self.userNameLabel.text = authenticatedUser_.name;
-        [avatarView_ reloadWithUrl:authenticatedUser_.avatarURL];
+        [avatarView_ setImageWithURL:[NSURL URLWithString:authenticatedUser_.avatarURL]
+                    placeholderImage:[UIImage imageNamed:@"default_avatar_medium"]];
         [self switchToAuthenticatedMode:YES];
         [self dismissModalViewControllerAnimated:YES];
     } else {

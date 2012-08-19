@@ -60,5 +60,6 @@
 + (NSArray *)allMedias;
 + (NSArray *)allSynchMedias;
 + (NSArray *)allSynchMediasForAuthor:(Author *)author;
++ (void)deleteAllMedias;
 
 @end

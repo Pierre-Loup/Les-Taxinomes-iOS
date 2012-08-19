@@ -279,6 +279,13 @@
     return [mutableFetchResults autorelease];
 }
 
++ (void)deleteAllMedias {
+    NSArray* allMedias = [self allMedias];
+    for (Media* media in allMedias) {
+        [[[LTDataManager sharedDataManager] mainManagedObjectContext] deleteObject:media];
+    }
+}
+
 #pragma mark - MKAnnotation protocol
 
 - (CLLocationCoordinate2D)coordinate {

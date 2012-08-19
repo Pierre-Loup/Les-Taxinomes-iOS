@@ -23,8 +23,9 @@
  
  */
 
-#import "Constants.h"
 #import "Annotation.h"
+#import "UIImageView+AFNetworking.h"
+#import "UIImageView+PhotoFrame.h"
 //VC
 #import "MapViewController.h"
 #import "MediaDetailViewController.h"
@@ -33,30 +34,26 @@
 #define kCommonWidth 310.0
 
 @interface MediaDetailViewController ()
-
-@property (nonatomic, retain) Media * media;
 @property (nonatomic, retain) IBOutlet UIScrollView * scrollView;
-
 - (void)refreshView;
 - (void)mediaImageTouched:(UIImage *)sender;
 - (void)displayContentIfNeeded;
-
+- (void)loadMediaView;
 @end
 
 @implementation MediaDetailViewController
 @synthesize media = media_;
 @synthesize scrollView = scrollView_;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil mediaId:(NSNumber *)mediaIdentifier {
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        mediaIdentifier_ = [mediaIdentifier retain];
+
     }
     return self;
 }
 
 - (void) dealloc {
-    [mediaIdentifier_ release];
     [media_ release];
     [scrollView_ release];
     [mediaTitleView_ release];
@@ -85,9 +82,11 @@
     [self.scrollView addSubview:mediaTitleView_];
     [mediaTitleView_ setHidden:YES];
     
-    mediaImageView_ = [[TCImageView alloc] initWithURL:@"" placeholderView:nil];
-    mediaImageView_.caching = YES;
-    mediaImageView_.delegate = self;
+    mediaImageView_ = [UIImageView new];
+    [mediaImageView_ setClipsToBounds:YES];
+    [mediaImageView_ setContentMode:UIViewContentModeScaleAspectFill];
+    [self loadMediaView];
+    
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mediaImageTouched:)];
     [tapGestureRecognizer setNumberOfTouchesRequired:1];
     [tapGestureRecognizer setDelegate:self];
@@ -103,9 +102,7 @@
     [self.scrollView addSubview:authorTitleView_];
     [authorTitleView_ setHidden:YES];
     
-    authorAvatarView_ = [[TCImageView alloc] initWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
-    authorAvatarView_.caching = YES;
-    authorAvatarView_.delegate = self;
+    authorAvatarView_ = [UIImageView new];
     [authorNameLabel_ setClipsToBounds:YES];
     [authorNameLabel_ setContentMode:UIViewContentModeScaleAspectFill];
     [self.scrollView addSubview:authorAvatarView_];
@@ -169,16 +166,16 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     LTDataManager *dm = [LTDataManager sharedDataManager];
-    self.media = [Media mediaWithIdentifier:
-                  mediaIdentifier_];
-    if([dm getMediaAsychIfNeededWithId:mediaIdentifier_ withDelegate:self])
+    if([dm getMediaAsychIfNeededWithId:media_.identifier withDelegate:self])
         asynchLoadCounter_ = asynchLoadCounter_ + 1;
     if([dm getAuthorAsychIfNeededWithId:self.media.author.identifier withDelegate:self])
         asynchLoadCounter_ = asynchLoadCounter_ + 1;
     if (asynchLoadCounter_ > 0) {
         [self displayLoader];
+    } else {
+        [self refreshView];
+        [self.scrollView setHidden:NO];
     }
-    [self refreshView];
 }
 
 - (void)refreshView {
@@ -195,13 +192,6 @@
     }
     [mediaTitleView_ setHidden:NO];
     
-    NSString * mediaImageUrl = media_.mediaMediumURL?media_.mediaMediumURL:@"";
-    if (![mediaImageView_.url isEqualToString:mediaImageUrl]
-        && ![mediaImageUrl isEqualToString:@""]) {
-        asynchLoadCounter_ = asynchLoadCounter_ + 1;
-        [mediaImageView_ reloadWithUrl:mediaImageUrl];
-    }
-    
     if (mediaImageView_.image) {
         imageHeight =  (kCommonWidth/mediaImageView_.image.size.width)*mediaImageView_.image.size.height;
         mediaImageView_.frame = CGRectMake(5, 40, 310.0, imageHeight);
@@ -210,12 +200,8 @@
     authorTitleView_.frame = CGRectMake(5.0, 45.0+imageHeight, authorTitleView_.frame.size.width, authorTitleView_.frame.size.height);
     [authorTitleView_ setHidden:NO];
     
-    NSString * authorAvatarUrl = media_.author.avatarURL?media_.author.avatarURL:@"";
-    if (![authorAvatarView_.url isEqualToString:authorAvatarUrl]
-        && ![authorAvatarUrl isEqualToString:@""]) {
-        asynchLoadCounter_ = asynchLoadCounter_ + 1;
-        [authorAvatarView_ reloadWithUrl:authorAvatarUrl];
-    }
+    [authorAvatarView_ setImageWithURL:[NSURL URLWithString:media_.author.avatarURL]
+                      placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
     authorAvatarView_.frame = CGRectMake(5.0, 80.0+imageHeight, 50.0, 50.0);
     
     NSDateFormatter *df = [[[NSDateFormatter alloc] init] autorelease];
@@ -295,11 +281,23 @@
 }
 
 - (void)displayContentIfNeeded {
-    [self refreshView];
     if (asynchLoadCounter_ <= 0) {
         [self hideLoader];
+        [self refreshView];
         [self.scrollView setHidden:NO];
     }
+}
+
+- (void)loadMediaView {
+    [mediaImageView_ setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:media_.mediaMediumURL]]
+                           placeholderImage:[UIImage imageNamed:@"medium_placeholder"]
+                                    success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                        [self hideLoader];
+                                        [self refreshView];
+                                    }
+                                    failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                        [self hideLoader];
+                                    }];
 }
 
 - (void)mapTouched:(MKMapView *)sender {
@@ -309,22 +307,11 @@
     [mapVC release];
 }
 
-#pragma mark - TCImageViewDelegate
-
-- (void)TCImageView:(TCImageView *) view FinisehdImage:(UIImage *)image {
-    asynchLoadCounter_ = asynchLoadCounter_ - 1;
-    [self displayContentIfNeeded];
-}
-
--(void) TCImageView:(TCImageView *) view failedWithError:(NSError *)error {
-    asynchLoadCounter_ = asynchLoadCounter_ - 1;
-    [self displayContentIfNeeded];
-}
-
 #pragma mark - LTConnectionManagerDelegate
 
 - (void)didRetrievedMedia:(Media *)media {
     asynchLoadCounter_ = asynchLoadCounter_ - 1;
+    [self loadMediaView];
     [self displayContentIfNeeded];
 }
 

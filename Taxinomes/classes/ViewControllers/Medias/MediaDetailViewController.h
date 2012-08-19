@@ -30,23 +30,20 @@
 
 #import "LTViewController.h"
 #import "LTTitleView.h"
-#import "TCImageView.h"
 
-@interface MediaDetailViewController : LTViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, TCImageViewDelegate,  LTConnectionManagerDelegate, MKMapViewDelegate>{
-    NSNumber * mediaIdentifier_;
+@interface MediaDetailViewController : LTViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, LTConnectionManagerDelegate, MKMapViewDelegate>{
     int asynchLoadCounter_;
     
     LTTitleView * mediaTitleView_;
-    TCImageView * mediaImageView_;
+    UIImageView * mediaImageView_;
     LTTitleView * authorTitleView_;
-    TCImageView * authorAvatarView_;
+    UIImageView * authorAvatarView_;
     UILabel * authorNameLabel_;
     LTTitleView * descTitleView_;
     UITextView * descTextView_;
     LTTitleView * mapTitleView_;
     MKMapView * mapView_;
 }
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil mediaId:(NSNumber *)mediaIdentifier;
+@property (nonatomic, retain) Media* media;
 
 @end
