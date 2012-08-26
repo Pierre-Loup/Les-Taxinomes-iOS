@@ -46,14 +46,14 @@
 	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
+	<key>NSMainNibFile~ipad</key>
+	<string>MainWindow_iPad</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>JesayaFree.ttf</string>
 	</array>
 	<key>UILaunchImageFile</key>
 	<string>Default.png</string>
-	<key>UIMainStoryboardFile~ipad</key>
-	<string>MainStoryboard</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

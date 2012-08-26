@@ -42,9 +42,17 @@
         [[LTConnectionManager sharedConnectionManager] getLicenses];
     }
     
-    UINavigationBar *bar = [self.tabBarController.navigationController navigationBar];
-    [bar setTintColor:[UIColor colorWithRed:(95.0/255.0) green:(130.0/255) blue:(55.0/255.0) alpha:1.0]];
-    [self.window addSubview: self.tabBarController.view];
+    
+    // iPad
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        [self.window addSubview:self.splitViewController.view];
+    } else { // iPhone
+        UINavigationBar *bar = [self.tabBarController.navigationController navigationBar];
+        [bar setTintColor:[UIColor colorWithRed:(95.0/255.0) green:(130.0/255) blue:(55.0/255.0) alpha:1.0]];
+        [self.window addSubview: self.tabBarController.view];
+    }
+    
+    
     
     [self.window makeKeyAndVisible];
     

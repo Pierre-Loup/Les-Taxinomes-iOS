@@ -26,9 +26,11 @@
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
 #import "ASIProgressDelegate.h"
+#import "LTiPhoneBackgroundView.h"
 
 @interface LTViewController : UIViewController <MBProgressHUDDelegate, ASIProgressDelegate> {
     MBProgressHUD* loaderView_;
+    LTiPhoneBackgroundView* bgView_;
 }
 
 @property (nonatomic, retain) MBProgressHUD* loaderView;

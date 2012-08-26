@@ -25,9 +25,13 @@
 
 #import "LTTitleView.h"
 
+#define kTitleLabelMarginLeft 5.0
+#define kTitleLabelMarginRight 60.0
+
 @interface LTTitleView ()
 @property (nonatomic, retain) IBOutlet UILabel* titleLabel;
 @property (nonatomic, retain) IBOutlet UIImageView* backgroundImageView;
+- (void)setupWithFrame:(CGRect)frame;
 @end
 
 @implementation LTTitleView
@@ -39,21 +43,25 @@
 }
 
 - (id)initWithFrame:(CGRect)frame {
-    NSArray* views = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class]) owner:self options:nil];
-    UIView* view = [views objectAtIndex:0];
-    if ([view isKindOfClass:[self class]]) {
-        self = (LTTitleView *)[view retain];
-        CGRect backgroundFrame = CGRectMake(frame.origin.x,
-                                            frame.origin.y,
-                                            frame.size.width,
-                                            30);
-        self.frame = backgroundFrame;
-        [backgroundImageView_.image resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 60.0)];
-        return self;
-    } else {
-        return nil;
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setupWithFrame:frame];
     }
+    return self;
 }
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self setupWithFrame:self.bounds];
+}
+
+- (void)dealloc {
+    [titleLabel_ release];
+    [backgroundImageView_ release];
+    [super dealloc];
+}
+
+#pragma mark - Properties
 
 - (void)setTitle:(NSString *)title {
     titleLabel_.text = title;
@@ -63,9 +71,25 @@
     return titleLabel_.text;
 }
 
-- (void)dealloc {
-    [titleLabel_ release];
-    [super dealloc];
+#pragma mark Private methodes
+
+- (void)setupWithFrame:(CGRect)frame {
+    backgroundImageView_ = [[UIImageView alloc] initWithFrame:frame];
+    backgroundImageView_.image = [[UIImage imageNamed:@"bg_title"] stretchableImageWithLeftCapWidth:1 topCapHeight:0];
+    backgroundImageView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    backgroundImageView_.opaque = NO;
+    backgroundImageView_.backgroundColor = [UIColor clearColor];
+    [self addSubview:backgroundImageView_];
+    
+    CGRect titleLabelFrame = CGRectMake(kTitleLabelMarginLeft, 0, frame.size.width-kTitleLabelMarginLeft-kTitleLabelMarginRight, frame.size.height);
+    titleLabel_ = [[UILabel alloc] initWithFrame:titleLabelFrame];
+    titleLabel_.font = [UIFont boldSystemFontOfSize:20.0];
+    titleLabel_.minimumFontSize = 10.0;
+    titleLabel_.textColor = [UIColor whiteColor];
+    titleLabel_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    titleLabel_.opaque = NO;
+    titleLabel_.backgroundColor = [UIColor clearColor];
+    [self addSubview:titleLabel_];
 }
 
 @end

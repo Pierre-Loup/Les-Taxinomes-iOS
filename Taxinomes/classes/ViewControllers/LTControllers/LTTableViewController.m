@@ -7,8 +7,11 @@
 //
 
 #import "LTTableViewController.h"
+#import "LTiPhoneBackgroundView.h"
 
-@interface LTTableViewController ()
+@interface LTTableViewController () {
+    LTiPhoneBackgroundView* bgView_;
+}
 
 @end
 
@@ -84,26 +87,26 @@
     return self;
 }
 
+- (void)dealloc {
+    [loaderView_ release];
+    [bgView_ release];
+    [super dealloc];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     loaderView_ = nil;
     
-    if (!self.splitViewController) {
-        CGRect tableViewFrame = self.tableView.frame;
+    
+    // background for iPhone screen
+    if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         CGRect winFrame = [[UIApplication sharedApplication] keyWindow].frame;
         CGRect bgFrame = CGRectMake(0, -self.navigationController.navigationBar.frame.size.height,
                                     winFrame.size.width,
                                     winFrame.size.height);
-        UIImageView* bgImageView = [[UIImageView alloc] initWithFrame:bgFrame];
-        bgImageView.image = [UIImage imageNamed:@"background"];
-        bgImageView.contentMode = UIViewContentModeTop;
-        bgImageView.clipsToBounds = YES;
-        bgImageView.alpha = 0.3;
-        UIView* bgView = [[UIView alloc] initWithFrame:tableViewFrame];
-        [bgView addSubview:bgImageView];
-        [self.tableView setBackgroundView:bgView];
-        [bgImageView release];
-        [bgView release];
+        bgView_ = [[LTiPhoneBackgroundView alloc] initWithFrame:bgFrame];
+        bgView_.light = YES;
+        [self.tableView setBackgroundView:bgView_];
     }
     
     [self.navigationController.navigationBar setTintColor:kStandardGreenColor];
@@ -115,8 +118,8 @@
     [loaderView_ removeFromSuperview];
     [loaderView_ release];
     loaderView_ = nil;
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    [bgView_ release];
+    bgView_ = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -133,14 +136,6 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
-}
-
-- (void)dealloc {
-    // Remove HUD from screen when the HUD was hidden
-	[loaderView_ removeFromSuperview];
-	[loaderView_ release];
-    loaderView_ = nil;
-    [super dealloc];
 }
 
 #pragma mark - ASIProgressDelegate

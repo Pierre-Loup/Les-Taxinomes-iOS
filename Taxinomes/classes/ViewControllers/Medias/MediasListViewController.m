@@ -173,7 +173,7 @@
         if(media != nil){
             MediaDetailViewController* mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailViewController" bundle:nil];
             mediaDetailViewController.media = media;
-            mediaDetailViewController.title = TRANSLATE(@"common.media");
+            mediaDetailViewController.title = media.title;
             [self.navigationController pushViewController:mediaDetailViewController animated:YES];
             [mediaDetailViewController release];
         }

@@ -107,7 +107,7 @@
                           float progress = (float)((double)totalBytesRead/(double)totalBytesExpectedToRead);
                           [self setProgress:progress];
                         } success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                            [self resizeImage];
+                            //[self resizeImage];
                             [self hideLoader];
                         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
                             [self hideLoader];
@@ -120,28 +120,25 @@
     double mediaWidth;
     double mediaHeight;
     
-    if((mediaImageView_.image.size.height/mediaImageView_.image.size.width) > (maxHeight/maxWidth) ){
-        mediaWidth = maxWidth;
-        mediaHeight = (maxWidth/mediaImageView_.image.size.width)*mediaImageView_.image.size.height;
-        self.scrollView.maximumZoomScale = (mediaImageView_.image.size.width/maxWidth)*5;
-    } else {
+    if(mediaImageView_.image.size.height/mediaImageView_.image.size.width > maxHeight/mediaWidth){
         mediaHeight = maxHeight;
         mediaWidth = (maxHeight/mediaImageView_.image.size.height)*mediaImageView_.image.size.width;
         self.scrollView.maximumZoomScale = (mediaImageView_.image.size.height/maxHeight)*5;
+    } else {
+        mediaWidth = maxWidth;
+        mediaHeight = (maxWidth/mediaImageView_.image.size.width)*mediaImageView_.image.size.height;
+        self.scrollView.maximumZoomScale = (mediaImageView_.image.size.width/maxWidth)*5;
     }
     
     
-    mediaImageView_.frame = CGRectMake(mediaImageView_.frame.origin.x, mediaImageView_.frame.origin.y, mediaWidth, mediaHeight);
+    mediaImageView_.frame = CGRectMake(0, 0, mediaWidth, mediaHeight);
+    CGSize scrollViewBoundsSize = self.scrollView.bounds.size;
+    mediaImageView_.center = CGPointMake(scrollViewBoundsSize.width/2, scrollViewBoundsSize.height/2);
     
     self.scrollView.delegate = self;
     
-    CGRect frame = CGRectMake(0, 0, maxWidth, maxHeight*2);
-    self.scrollView.contentSize = frame.size;
-    
-    [self.scrollView addSubview:mediaImageView_];
     self.scrollView.maximumZoomScale = 5.0;
     self.scrollView.minimumZoomScale = 1.0;
-    self.scrollView.bouncesZoom = NO;
     
     self.scrollView.contentSize = mediaImageView_.frame.size;
 }

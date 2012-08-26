@@ -91,6 +91,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    bgView_.light = NO;
     [self.tableView setHidden:YES];
     [avatarView_ setImageWithURL:[NSURL URLWithString:authenticatedUser_.avatarURL]
                 placeholderImage:[UIImage imageNamed:@"default_avatar_medium"]];

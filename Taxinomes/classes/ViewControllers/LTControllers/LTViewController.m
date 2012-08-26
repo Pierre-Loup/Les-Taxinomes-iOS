@@ -100,6 +100,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // background for iPhone screen
+    if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        CGRect winFrame = [[UIApplication sharedApplication] keyWindow].frame;
+        CGRect bgFrame = CGRectMake(0, -self.navigationController.navigationBar.frame.size.height,
+                                    winFrame.size.width,
+                                    winFrame.size.height);
+        bgView_ = [[LTiPhoneBackgroundView alloc] initWithFrame:bgFrame];
+        bgView_.light = YES;
+        [self.view addSubview:bgView_];
+        [self.view sendSubviewToBack:bgView_];
+    }
     [self.navigationController.navigationBar setTintColor:kStandardGreenColor];
 }
 
