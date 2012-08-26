@@ -23,8 +23,6 @@
 		A52CF5F015ADE2C400FD0D66 /* MapCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A52CF5EF15ADE2C400FD0D66 /* MapCell.xib */; };
 		A539D1F0154AF6B60048CDF1 /* default_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E0154AF6B60048CDF1 /* default_avatar.png */; };
 		A539D1F1154AF6B60048CDF1 /* default_avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E1154AF6B60048CDF1 /* default_avatar@2x.png */; };
-		A539D1F2154AF6B60048CDF1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E2154AF6B60048CDF1 /* Default.png */; };
-		A539D1F3154AF6B60048CDF1 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E3154AF6B60048CDF1 /* Default@2x.png */; };
 		A539D1F4154AF6B60048CDF1 /* fond.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E4154AF6B60048CDF1 /* fond.png */; };
 		A539D1F7154AF6B60048CDF1 /* Icon@AppStore.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E7154AF6B60048CDF1 /* Icon@AppStore.png */; };
 		A539D1F8154AF6B60048CDF1 /* lpd_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E8154AF6B60048CDF1 /* lpd_logo.png */; };
@@ -224,8 +222,6 @@
 		A5AC0A5515DABF31000F9311 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = C8F7A51114E30CDA00425104 /* COPYING */; };
 		A5AC0A5815DABF31000F9311 /* default_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E0154AF6B60048CDF1 /* default_avatar.png */; };
 		A5AC0A5915DABF31000F9311 /* default_avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E1154AF6B60048CDF1 /* default_avatar@2x.png */; };
-		A5AC0A5A15DABF31000F9311 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E2154AF6B60048CDF1 /* Default.png */; };
-		A5AC0A5B15DABF31000F9311 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E3154AF6B60048CDF1 /* Default@2x.png */; };
 		A5AC0A5C15DABF31000F9311 /* fond.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E4154AF6B60048CDF1 /* fond.png */; };
 		A5AC0A5D15DABF31000F9311 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E5154AF6B60048CDF1 /* Icon.png */; };
 		A5AC0A5E15DABF31000F9311 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E6154AF6B60048CDF1 /* Icon@2x.png */; };
@@ -1447,8 +1443,6 @@
 				C8F7A51214E30CDB00425104 /* COPYING in Resources */,
 				A539D1F0154AF6B60048CDF1 /* default_avatar.png in Resources */,
 				A539D1F1154AF6B60048CDF1 /* default_avatar@2x.png in Resources */,
-				A539D1F2154AF6B60048CDF1 /* Default.png in Resources */,
-				A539D1F3154AF6B60048CDF1 /* Default@2x.png in Resources */,
 				A539D1F4154AF6B60048CDF1 /* fond.png in Resources */,
 				A539D1F7154AF6B60048CDF1 /* Icon@AppStore.png in Resources */,
 				A539D1F8154AF6B60048CDF1 /* lpd_logo.png in Resources */,
@@ -1516,8 +1510,6 @@
 				A5AC0A5515DABF31000F9311 /* COPYING in Resources */,
 				A5AC0A5815DABF31000F9311 /* default_avatar.png in Resources */,
 				A5AC0A5915DABF31000F9311 /* default_avatar@2x.png in Resources */,
-				A5AC0A5A15DABF31000F9311 /* Default.png in Resources */,
-				A5AC0A5B15DABF31000F9311 /* Default@2x.png in Resources */,
 				A5AC0A5C15DABF31000F9311 /* fond.png in Resources */,
 				A5AC0A5D15DABF31000F9311 /* Icon.png in Resources */,
 				A5AC0A5E15DABF31000F9311 /* Icon@2x.png in Resources */,
