@@ -54,7 +54,7 @@
         return nil;
     }
     
-    NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
+    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
     
     Author *author = [Author authorWithIdentifier:authorIdentifier];
     if (!author) {
@@ -106,7 +106,7 @@
 }
 
 + (Author *)authorWithIdentifier: (NSNumber *)identifier {
-    NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
+    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     
     NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];

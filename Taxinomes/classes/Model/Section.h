@@ -1,8 +1,8 @@
 //
-//  LTTitleView.h
+//  Section.h
 //  Taxinomes
 //
-//  Created by Pierre-Loup Tristant on 21/04/12.
+//  Created by Pierre-Loup Tristant on 27/04/12.
 //  Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
@@ -23,13 +23,18 @@
  
  */
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface LTTitleView : UIView
+@class Media, Section;
 
-@property (nonatomic, assign) NSString* title;
+@interface Section : NSManagedObject
 
-+ (LTTitleView *)titleViewWithFrame:(CGRect)frame;
-- (id)initWithFrame:(CGRect)frame;
+@property (nonatomic, retain) NSString * desc;
+@property (nonatomic, retain) NSNumber * identifier;
+@property (nonatomic, retain) NSString * imageURL;
+@property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) Section *parent;
+@property (nonatomic, retain) Media *medias;
 
 @end

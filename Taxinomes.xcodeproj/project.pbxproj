@@ -30,7 +30,6 @@
 		A539D435154AFBB10048CDF1 /* LTConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D3F9154AFA930048CDF1 /* LTConnectionManager.m */; };
 		A539D436154AFBB10048CDF1 /* LTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D3FB154AFA930048CDF1 /* LTDataManager.m */; };
 		A539D437154AFBB60048CDF1 /* LTTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D3DF154AFA140048CDF1 /* LTTitleView.m */; };
-		A539D43D154AFBC70048CDF1 /* LTDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A539D3EC154AFA3E0048CDF1 /* LTDataModel.xcdatamodeld */; };
 		A539D43E154AFBD60048CDF1 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D402154AFB8B0048CDF1 /* AccountViewController.m */; };
 		A539D43F154AFBD60048CDF1 /* AccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D403154AFB8B0048CDF1 /* AccountViewController.xib */; };
 		A539D443154AFBF70048CDF1 /* AuthenticationSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D441154AFBF70048CDF1 /* AuthenticationSheetViewController.m */; };
@@ -45,16 +44,24 @@
 		A539D44F154AFC200048CDF1 /* MediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D419154AFB8B0048CDF1 /* MediasListViewController.m */; };
 		A539D453154AFC270048CDF1 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D420154AFB8B0048CDF1 /* MapViewController.m */; };
 		A539D454154AFC270048CDF1 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D421154AFB8B0048CDF1 /* MapViewController.xib */; };
-		A539D4F6154B004D0048CDF1 /* License.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D4F5154B004D0048CDF1 /* License.m */; };
-		A539D4FC154B004D0048CDF1 /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D4FB154B004D0048CDF1 /* Section.m */; };
-		A539D4FF154B004D0048CDF1 /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D4FE154B004D0048CDF1 /* Author.m */; };
-		A539D513154B03210048CDF1 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D510154B00840048CDF1 /* Annotation.m */; };
 		A53E292815A63289006D6B07 /* Brest.gpx in Resources */ = {isa = PBXBuildFile; fileRef = A53E292715A63289006D6B07 /* Brest.gpx */; };
 		A5402B7815C99EF9002489E4 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5402B7715C99EF9002489E4 /* HomeViewController.xib */; };
 		A5402B8815C9E146002489E4 /* MediaUploadFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5402B8615C9E145002489E4 /* MediaUploadFormViewController.m */; };
 		A5568F1015AF5942008A9C8B /* SingleLineInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5568F0F15AF5942008A9C8B /* SingleLineInputCell.m */; };
 		A5568F1215AF599B008A9C8B /* SingleLineInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5568F1115AF599B008A9C8B /* SingleLineInputCell.xib */; };
 		A5582F4D15A4D9D1008F2F93 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */; };
+		A571E79F15EAACAB0028C9B6 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A571E79415EAACAB0028C9B6 /* Annotation.m */; };
+		A571E7A015EAACAB0028C9B6 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A571E79415EAACAB0028C9B6 /* Annotation.m */; };
+		A571E7A115EAACAB0028C9B6 /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = A571E79615EAACAB0028C9B6 /* Author.m */; };
+		A571E7A215EAACAB0028C9B6 /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = A571E79615EAACAB0028C9B6 /* Author.m */; };
+		A571E7A315EAACAB0028C9B6 /* License.m in Sources */ = {isa = PBXBuildFile; fileRef = A571E79815EAACAB0028C9B6 /* License.m */; };
+		A571E7A415EAACAB0028C9B6 /* License.m in Sources */ = {isa = PBXBuildFile; fileRef = A571E79815EAACAB0028C9B6 /* License.m */; };
+		A571E7A515EAACAB0028C9B6 /* LTDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A571E79915EAACAB0028C9B6 /* LTDataModel.xcdatamodeld */; };
+		A571E7A615EAACAB0028C9B6 /* LTDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A571E79915EAACAB0028C9B6 /* LTDataModel.xcdatamodeld */; };
+		A571E7A715EAACAB0028C9B6 /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = A571E79C15EAACAB0028C9B6 /* Media.m */; };
+		A571E7A815EAACAB0028C9B6 /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = A571E79C15EAACAB0028C9B6 /* Media.m */; };
+		A571E7A915EAACAB0028C9B6 /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = A571E79E15EAACAB0028C9B6 /* Section.m */; };
+		A571E7AA15EAACAB0028C9B6 /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = A571E79E15EAACAB0028C9B6 /* Section.m */; };
 		A58DFF9F15C8829600D4EF42 /* LTTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A58DFF9E15C8829600D4EF42 /* LTTableViewController.m */; };
 		A591B7B3150D57F000CE89BA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A591B7B2150D57F000CE89BA /* CoreData.framework */; };
 		A5933D6715CD0FFA00AD6D10 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = A5933CDB15CD0FFA00AD6D10 /* ASIAuthenticationDialog.m */; };
@@ -123,7 +130,6 @@
 		A5AC09E815DABF31000F9311 /* LTConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D3F9154AFA930048CDF1 /* LTConnectionManager.m */; };
 		A5AC09E915DABF31000F9311 /* LTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D3FB154AFA930048CDF1 /* LTDataManager.m */; };
 		A5AC09EA15DABF31000F9311 /* LTTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D3DF154AFA140048CDF1 /* LTTitleView.m */; };
-		A5AC09EB15DABF31000F9311 /* LTDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A539D3EC154AFA3E0048CDF1 /* LTDataModel.xcdatamodeld */; };
 		A5AC09EC15DABF31000F9311 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D402154AFB8B0048CDF1 /* AccountViewController.m */; };
 		A5AC09ED15DABF31000F9311 /* AuthenticationSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D441154AFBF70048CDF1 /* AuthenticationSheetViewController.m */; };
 		A5AC09EE15DABF31000F9311 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D407154AFB8B0048CDF1 /* HomeViewController.m */; };
@@ -134,11 +140,6 @@
 		A5AC09F315DABF31000F9311 /* MediaFullSizeViewContoller.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D416154AFB8B0048CDF1 /* MediaFullSizeViewContoller.m */; };
 		A5AC09F415DABF31000F9311 /* MediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D419154AFB8B0048CDF1 /* MediasListViewController.m */; };
 		A5AC09F515DABF31000F9311 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D420154AFB8B0048CDF1 /* MapViewController.m */; };
-		A5AC09F615DABF31000F9311 /* License.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D4F5154B004D0048CDF1 /* License.m */; };
-		A5AC09F715DABF31000F9311 /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D4FB154B004D0048CDF1 /* Section.m */; };
-		A5AC09F815DABF31000F9311 /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D4FE154B004D0048CDF1 /* Author.m */; };
-		A5AC09F915DABF31000F9311 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D510154B00840048CDF1 /* Annotation.m */; };
-		A5AC09FA15DABF31000F9311 /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F92EEE1556C76100C1F622 /* Media.m */; };
 		A5AC09FB15DABF31000F9311 /* MediaLicenseChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A50D5D081572164900BF9DF0 /* MediaLicenseChooserViewController.m */; };
 		A5AC09FC15DABF31000F9311 /* MapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A52CF5EC15ADE2AB00FD0D66 /* MapCell.m */; };
 		A5AC09FD15DABF31000F9311 /* SingleLineInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5568F0F15AF5942008A9C8B /* SingleLineInputCell.m */; };
@@ -307,7 +308,6 @@
 		A5E7B0F415E11E2500ED8C55 /* UIImageView+PhotoFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B0E815E11E2500ED8C55 /* UIImageView+PhotoFrame.m */; };
 		A5E7B0F615E11E6700ED8C55 /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = A5E7B0F515E11E6700ED8C55 /* license.txt */; };
 		A5E7B0F715E11E6700ED8C55 /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = A5E7B0F515E11E6700ED8C55 /* license.txt */; };
-		A5F92EEF1556C76100C1F622 /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F92EEE1556C76100C1F622 /* Media.m */; };
 		C8339C1514ED4F93000A4E37 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8339C1414ED4F93000A4E37 /* CoreLocation.framework */; };
 		C8339C2614ED6356000A4E37 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8339C2514ED6355000A4E37 /* CoreMedia.framework */; };
 		C8339C2814ED6366000A4E37 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8339C2714ED6365000A4E37 /* AssetsLibrary.framework */; };
@@ -405,7 +405,6 @@
 		A539D3DE154AFA140048CDF1 /* LTTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTTitleView.h; path = Taxinomes/Classes/Views/LTTitleView.h; sourceTree = SOURCE_ROOT; };
 		A539D3DF154AFA140048CDF1 /* LTTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTTitleView.m; path = Taxinomes/Classes/Views/LTTitleView.m; sourceTree = SOURCE_ROOT; };
 		A539D3E3154AFA1A0048CDF1 /* MediaListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaListCell.xib; sourceTree = "<group>"; };
-		A539D3ED154AFA3E0048CDF1 /* LTDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LTDataModel.xcdatamodel; sourceTree = "<group>"; };
 		A539D3F8154AFA930048CDF1 /* LTConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTConnectionManager.h; path = Taxinomes/Classes/Core/LTConnectionManager.h; sourceTree = SOURCE_ROOT; };
 		A539D3F9154AFA930048CDF1 /* LTConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTConnectionManager.m; path = Taxinomes/Classes/Core/LTConnectionManager.m; sourceTree = SOURCE_ROOT; };
 		A539D3FA154AFA930048CDF1 /* LTDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTDataManager.h; path = Taxinomes/Classes/Core/LTDataManager.h; sourceTree = SOURCE_ROOT; };
@@ -434,14 +433,6 @@
 		A539D421154AFB8B0048CDF1 /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
 		A539D440154AFBF70048CDF1 /* AuthenticationSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationSheetViewController.h; sourceTree = "<group>"; };
 		A539D441154AFBF70048CDF1 /* AuthenticationSheetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationSheetViewController.m; sourceTree = "<group>"; };
-		A539D4F4154B004D0048CDF1 /* License.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = License.h; path = Taxinomes/Classes/Models/License.h; sourceTree = SOURCE_ROOT; };
-		A539D4F5154B004D0048CDF1 /* License.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = License.m; path = Taxinomes/Classes/Models/License.m; sourceTree = SOURCE_ROOT; };
-		A539D4FA154B004D0048CDF1 /* Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Section.h; path = Taxinomes/Classes/Models/Section.h; sourceTree = SOURCE_ROOT; };
-		A539D4FB154B004D0048CDF1 /* Section.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Section.m; path = Taxinomes/Classes/Models/Section.m; sourceTree = SOURCE_ROOT; };
-		A539D4FD154B004D0048CDF1 /* Author.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Author.h; path = Taxinomes/Classes/Models/Author.h; sourceTree = SOURCE_ROOT; };
-		A539D4FE154B004D0048CDF1 /* Author.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Author.m; path = Taxinomes/Classes/Models/Author.m; sourceTree = SOURCE_ROOT; };
-		A539D50F154B00840048CDF1 /* Annotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Annotation.h; path = Taxinomes/Classes/Models/Annotation.h; sourceTree = SOURCE_ROOT; };
-		A539D510154B00840048CDF1 /* Annotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Annotation.m; path = Taxinomes/Classes/Models/Annotation.m; sourceTree = SOURCE_ROOT; };
 		A53E292715A63289006D6B07 /* Brest.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Brest.gpx; path = Ressources/Brest.gpx; sourceTree = "<group>"; };
 		A5402B7715C99EF9002489E4 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		A5402B8515C9E145002489E4 /* MediaUploadFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaUploadFormViewController.h; path = MediaUploadForm/MediaUploadFormViewController.h; sourceTree = "<group>"; };
@@ -450,6 +441,17 @@
 		A5568F0F15AF5942008A9C8B /* SingleLineInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleLineInputCell.m; sourceTree = "<group>"; };
 		A5568F1115AF599B008A9C8B /* SingleLineInputCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleLineInputCell.xib; sourceTree = "<group>"; };
 		A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		A571E79315EAACAB0028C9B6 /* Annotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Annotation.h; sourceTree = "<group>"; };
+		A571E79415EAACAB0028C9B6 /* Annotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Annotation.m; sourceTree = "<group>"; };
+		A571E79515EAACAB0028C9B6 /* Author.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Author.h; sourceTree = "<group>"; };
+		A571E79615EAACAB0028C9B6 /* Author.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Author.m; sourceTree = "<group>"; };
+		A571E79715EAACAB0028C9B6 /* License.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = License.h; sourceTree = "<group>"; };
+		A571E79815EAACAB0028C9B6 /* License.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = License.m; sourceTree = "<group>"; };
+		A571E79A15EAACAB0028C9B6 /* LTDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LTDataModel.xcdatamodel; sourceTree = "<group>"; };
+		A571E79B15EAACAB0028C9B6 /* Media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Media.h; sourceTree = "<group>"; };
+		A571E79C15EAACAB0028C9B6 /* Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Media.m; sourceTree = "<group>"; };
+		A571E79D15EAACAB0028C9B6 /* Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Section.h; sourceTree = "<group>"; };
+		A571E79E15EAACAB0028C9B6 /* Section.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Section.m; sourceTree = "<group>"; };
 		A58DFF9D15C8829600D4EF42 /* LTTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTTableViewController.h; sourceTree = "<group>"; };
 		A58DFF9E15C8829600D4EF42 /* LTTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTTableViewController.m; sourceTree = "<group>"; };
 		A591B7B2150D57F000CE89BA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -634,8 +636,6 @@
 		A5E7B0E715E11E2500ED8C55 /* UIImageView+PhotoFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+PhotoFrame.h"; sourceTree = "<group>"; };
 		A5E7B0E815E11E2500ED8C55 /* UIImageView+PhotoFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+PhotoFrame.m"; sourceTree = "<group>"; };
 		A5E7B0F515E11E6700ED8C55 /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.txt; sourceTree = "<group>"; };
-		A5F92EED1556C76100C1F622 /* Media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Media.h; path = Taxinomes/Classes/Models/Media.h; sourceTree = SOURCE_ROOT; };
-		A5F92EEE1556C76100C1F622 /* Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Media.m; path = Taxinomes/Classes/Models/Media.m; sourceTree = SOURCE_ROOT; };
 		C8339C1414ED4F93000A4E37 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		C8339C2514ED6355000A4E37 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		C8339C2714ED6365000A4E37 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -1214,7 +1214,7 @@
 			isa = PBXGroup;
 			children = (
 				A5E35C721543149D00C9660E /* Views */,
-				C8821D781477BFF5003DBE60 /* Models */,
+				C8821D781477BFF5003DBE60 /* Model */,
 				C87C6810147440B500A055F1 /* Core */,
 				C87C680F147440B500A055F1 /* ViewControllers */,
 			);
@@ -1289,22 +1289,22 @@
 			name = Core;
 			sourceTree = "<group>";
 		};
-		C8821D781477BFF5003DBE60 /* Models */ = {
+		C8821D781477BFF5003DBE60 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A539D50F154B00840048CDF1 /* Annotation.h */,
-				A539D510154B00840048CDF1 /* Annotation.m */,
-				A539D4FD154B004D0048CDF1 /* Author.h */,
-				A539D4FE154B004D0048CDF1 /* Author.m */,
-				A539D4FA154B004D0048CDF1 /* Section.h */,
-				A539D4FB154B004D0048CDF1 /* Section.m */,
-				A539D4F4154B004D0048CDF1 /* License.h */,
-				A539D4F5154B004D0048CDF1 /* License.m */,
-				A539D3EC154AFA3E0048CDF1 /* LTDataModel.xcdatamodeld */,
-				A5F92EED1556C76100C1F622 /* Media.h */,
-				A5F92EEE1556C76100C1F622 /* Media.m */,
+				A571E79315EAACAB0028C9B6 /* Annotation.h */,
+				A571E79415EAACAB0028C9B6 /* Annotation.m */,
+				A571E79515EAACAB0028C9B6 /* Author.h */,
+				A571E79615EAACAB0028C9B6 /* Author.m */,
+				A571E79715EAACAB0028C9B6 /* License.h */,
+				A571E79815EAACAB0028C9B6 /* License.m */,
+				A571E79915EAACAB0028C9B6 /* LTDataModel.xcdatamodeld */,
+				A571E79B15EAACAB0028C9B6 /* Media.h */,
+				A571E79C15EAACAB0028C9B6 /* Media.m */,
+				A571E79D15EAACAB0028C9B6 /* Section.h */,
+				A571E79E15EAACAB0028C9B6 /* Section.m */,
 			);
-			name = Models;
+			name = Model;
 			sourceTree = "<group>";
 		};
 		C8DB666915DFCC2B0042A946 /* AFNetworking */ = {
@@ -1569,7 +1569,6 @@
 				A539D435154AFBB10048CDF1 /* LTConnectionManager.m in Sources */,
 				A539D436154AFBB10048CDF1 /* LTDataManager.m in Sources */,
 				A539D437154AFBB60048CDF1 /* LTTitleView.m in Sources */,
-				A539D43D154AFBC70048CDF1 /* LTDataModel.xcdatamodeld in Sources */,
 				A539D43E154AFBD60048CDF1 /* AccountViewController.m in Sources */,
 				A539D443154AFBF70048CDF1 /* AuthenticationSheetViewController.m in Sources */,
 				A539D445154AFC0D0048CDF1 /* HomeViewController.m in Sources */,
@@ -1580,11 +1579,6 @@
 				A539D44D154AFC200048CDF1 /* MediaFullSizeViewContoller.m in Sources */,
 				A539D44F154AFC200048CDF1 /* MediasListViewController.m in Sources */,
 				A539D453154AFC270048CDF1 /* MapViewController.m in Sources */,
-				A539D4F6154B004D0048CDF1 /* License.m in Sources */,
-				A539D4FC154B004D0048CDF1 /* Section.m in Sources */,
-				A539D4FF154B004D0048CDF1 /* Author.m in Sources */,
-				A539D513154B03210048CDF1 /* Annotation.m in Sources */,
-				A5F92EEF1556C76100C1F622 /* Media.m in Sources */,
 				A50D5D0A1572164900BF9DF0 /* MediaLicenseChooserViewController.m in Sources */,
 				A52CF5ED15ADE2AB00FD0D66 /* MapCell.m in Sources */,
 				A5568F1015AF5942008A9C8B /* SingleLineInputCell.m in Sources */,
@@ -1673,6 +1667,12 @@
 				A5E7B0F315E11E2500ED8C55 /* UIImageView+PhotoFrame.m in Sources */,
 				C8822B5C15E16E6900869CA2 /* SpinnerCell.m in Sources */,
 				C887AAE815E917EF00013A72 /* LTiPhoneBackgroundView.m in Sources */,
+				A571E79F15EAACAB0028C9B6 /* Annotation.m in Sources */,
+				A571E7A115EAACAB0028C9B6 /* Author.m in Sources */,
+				A571E7A315EAACAB0028C9B6 /* License.m in Sources */,
+				A571E7A515EAACAB0028C9B6 /* LTDataModel.xcdatamodeld in Sources */,
+				A571E7A715EAACAB0028C9B6 /* Media.m in Sources */,
+				A571E7A915EAACAB0028C9B6 /* Section.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1692,7 +1692,6 @@
 				A5AC09E815DABF31000F9311 /* LTConnectionManager.m in Sources */,
 				A5AC09E915DABF31000F9311 /* LTDataManager.m in Sources */,
 				A5AC09EA15DABF31000F9311 /* LTTitleView.m in Sources */,
-				A5AC09EB15DABF31000F9311 /* LTDataModel.xcdatamodeld in Sources */,
 				A5AC09EC15DABF31000F9311 /* AccountViewController.m in Sources */,
 				A5AC09ED15DABF31000F9311 /* AuthenticationSheetViewController.m in Sources */,
 				A5AC09EE15DABF31000F9311 /* HomeViewController.m in Sources */,
@@ -1703,11 +1702,6 @@
 				A5AC09F315DABF31000F9311 /* MediaFullSizeViewContoller.m in Sources */,
 				A5AC09F415DABF31000F9311 /* MediasListViewController.m in Sources */,
 				A5AC09F515DABF31000F9311 /* MapViewController.m in Sources */,
-				A5AC09F615DABF31000F9311 /* License.m in Sources */,
-				A5AC09F715DABF31000F9311 /* Section.m in Sources */,
-				A5AC09F815DABF31000F9311 /* Author.m in Sources */,
-				A5AC09F915DABF31000F9311 /* Annotation.m in Sources */,
-				A5AC09FA15DABF31000F9311 /* Media.m in Sources */,
 				A5AC09FB15DABF31000F9311 /* MediaLicenseChooserViewController.m in Sources */,
 				A5AC09FC15DABF31000F9311 /* MapCell.m in Sources */,
 				A5AC09FD15DABF31000F9311 /* SingleLineInputCell.m in Sources */,
@@ -1796,6 +1790,12 @@
 				A5E7B0F415E11E2500ED8C55 /* UIImageView+PhotoFrame.m in Sources */,
 				C8822B5D15E16E6900869CA2 /* SpinnerCell.m in Sources */,
 				C887AAE915E917EF00013A72 /* LTiPhoneBackgroundView.m in Sources */,
+				A571E7A015EAACAB0028C9B6 /* Annotation.m in Sources */,
+				A571E7A215EAACAB0028C9B6 /* Author.m in Sources */,
+				A571E7A415EAACAB0028C9B6 /* License.m in Sources */,
+				A571E7A615EAACAB0028C9B6 /* LTDataModel.xcdatamodeld in Sources */,
+				A571E7A815EAACAB0028C9B6 /* Media.m in Sources */,
+				A571E7AA15EAACAB0028C9B6 /* Section.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2115,14 +2115,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		A539D3EC154AFA3E0048CDF1 /* LTDataModel.xcdatamodeld */ = {
+		A571E79915EAACAB0028C9B6 /* LTDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				A539D3ED154AFA3E0048CDF1 /* LTDataModel.xcdatamodel */,
+				A571E79A15EAACAB0028C9B6 /* LTDataModel.xcdatamodel */,
 			);
-			currentVersion = A539D3ED154AFA3E0048CDF1 /* LTDataModel.xcdatamodel */;
-			name = LTDataModel.xcdatamodeld;
-			path = ../Classes/Models/LTDataModel.xcdatamodeld;
+			currentVersion = A571E79A15EAACAB0028C9B6 /* LTDataModel.xcdatamodel */;
+			path = LTDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

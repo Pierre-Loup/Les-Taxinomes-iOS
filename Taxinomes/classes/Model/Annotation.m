@@ -1,8 +1,8 @@
 //
-//  LTTitleView.h
+//  Annotation.m
 //  Taxinomes
 //
-//  Created by Pierre-Loup Tristant on 21/04/12.
+//  Created by Pierre-Loup Tristant on 25/04/12.
 //  Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
@@ -23,13 +23,17 @@
  
  */
 
-#import <UIKit/UIKit.h>
+#import "Annotation.h"
 
-@interface LTTitleView : UIView
+@implementation Annotation
+@synthesize title = title_;
+@synthesize subtitle = subtitle_;
+#pragma mark Memory management
 
-@property (nonatomic, assign) NSString* title;
-
-+ (LTTitleView *)titleViewWithFrame:(CGRect)frame;
-- (id)initWithFrame:(CGRect)frame;
+- (void)dealloc {
+    [title_ release];
+    [subtitle_ release];
+    [super dealloc];
+}
 
 @end

@@ -37,11 +37,12 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application{
     
+    [MagicalRecordHelpers setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"Taxinomes.sqlite"];
+    
     // Get the licenses list if not present
     if ([[License allLicenses] count] == 0) {
         [[LTConnectionManager sharedConnectionManager] getLicenses];
     }
-    
     
     // iPad
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
@@ -94,7 +95,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
 	
     NSError *error;
-    NSManagedObjectContext *managedObjectContext = [[LTDataManager sharedDataManager] mainManagedObjectContext];
+    NSManagedObjectContext *managedObjectContext = [NSManagedObjectContext MR_contextForCurrentThread];
     if (managedObjectContext != nil) {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
 			// Handle the error.

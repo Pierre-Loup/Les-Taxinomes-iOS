@@ -42,7 +42,7 @@
         return nil;
     }
     
-    NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
+    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
     
     License *license = [License licenseWithIdentifier:[NSNumber numberWithInt:[(NSString*)[response objectForKey:@"id"] intValue]]];
     
@@ -65,7 +65,7 @@
 }
 
 + (License *)licenseWithIdentifier: (NSNumber *)identifier {
-    NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
+    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     
     NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
@@ -98,7 +98,7 @@
 }
 
 + (NSArray *)allLicenses {
-    NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
+    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
     [request setEntity:entity];

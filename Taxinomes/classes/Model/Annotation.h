@@ -1,8 +1,8 @@
 //
-//  LTTitleView.h
+//  Annotation.h
 //  Taxinomes
 //
-//  Created by Pierre-Loup Tristant on 21/04/12.
+//  Created by Pierre-Loup Tristant on 25/04/12.
 //  Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
@@ -23,13 +23,13 @@
  
  */
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
 
-@interface LTTitleView : UIView
+@interface Annotation : NSObject <MKAnnotation>
 
-@property (nonatomic, assign) NSString* title;
-
-+ (LTTitleView *)titleViewWithFrame:(CGRect)frame;
-- (id)initWithFrame:(CGRect)frame;
+@property (nonatomic, retain) NSString* title;
+@property (nonatomic, retain) NSString* subtitle;
+@property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 
 @end
