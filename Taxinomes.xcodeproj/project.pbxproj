@@ -23,13 +23,9 @@
 		A52CF5F015ADE2C400FD0D66 /* MapCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A52CF5EF15ADE2C400FD0D66 /* MapCell.xib */; };
 		A539D1F0154AF6B60048CDF1 /* default_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E0154AF6B60048CDF1 /* default_avatar.png */; };
 		A539D1F1154AF6B60048CDF1 /* default_avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E1154AF6B60048CDF1 /* default_avatar@2x.png */; };
-		A539D1F4154AF6B60048CDF1 /* fond.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E4154AF6B60048CDF1 /* fond.png */; };
 		A539D1F7154AF6B60048CDF1 /* Icon@AppStore.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E7154AF6B60048CDF1 /* Icon@AppStore.png */; };
-		A539D1F8154AF6B60048CDF1 /* lpd_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E8154AF6B60048CDF1 /* lpd_logo.png */; };
 		A539D1F9154AF6B60048CDF1 /* tabbar_account.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E9154AF6B60048CDF1 /* tabbar_account.png */; };
 		A539D1FA154AF6B60048CDF1 /* tabbar_home.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1EA154AF6B60048CDF1 /* tabbar_home.png */; };
-		A539D1FB154AF6B60048CDF1 /* tabbar_medias.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1EB154AF6B60048CDF1 /* tabbar_medias.png */; };
-		A539D1FC154AF6B60048CDF1 /* tabbar_navigate.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1EC154AF6B60048CDF1 /* tabbar_navigate.png */; };
 		A539D1FD154AF6B60048CDF1 /* thumbnail_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1ED154AF6B60048CDF1 /* thumbnail_placeholder.png */; };
 		A539D435154AFBB10048CDF1 /* LTConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D3F9154AFA930048CDF1 /* LTConnectionManager.m */; };
 		A539D436154AFBB10048CDF1 /* LTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A539D3FB154AFA930048CDF1 /* LTDataManager.m */; };
@@ -222,15 +218,11 @@
 		A5AC0A5515DABF31000F9311 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = C8F7A51114E30CDA00425104 /* COPYING */; };
 		A5AC0A5815DABF31000F9311 /* default_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E0154AF6B60048CDF1 /* default_avatar.png */; };
 		A5AC0A5915DABF31000F9311 /* default_avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E1154AF6B60048CDF1 /* default_avatar@2x.png */; };
-		A5AC0A5C15DABF31000F9311 /* fond.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E4154AF6B60048CDF1 /* fond.png */; };
 		A5AC0A5D15DABF31000F9311 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E5154AF6B60048CDF1 /* Icon.png */; };
 		A5AC0A5E15DABF31000F9311 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E6154AF6B60048CDF1 /* Icon@2x.png */; };
 		A5AC0A5F15DABF31000F9311 /* Icon@AppStore.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E7154AF6B60048CDF1 /* Icon@AppStore.png */; };
-		A5AC0A6015DABF31000F9311 /* lpd_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E8154AF6B60048CDF1 /* lpd_logo.png */; };
 		A5AC0A6115DABF31000F9311 /* tabbar_account.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1E9154AF6B60048CDF1 /* tabbar_account.png */; };
 		A5AC0A6215DABF31000F9311 /* tabbar_home.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1EA154AF6B60048CDF1 /* tabbar_home.png */; };
-		A5AC0A6315DABF31000F9311 /* tabbar_medias.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1EB154AF6B60048CDF1 /* tabbar_medias.png */; };
-		A5AC0A6415DABF31000F9311 /* tabbar_navigate.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1EC154AF6B60048CDF1 /* tabbar_navigate.png */; };
 		A5AC0A6515DABF31000F9311 /* thumbnail_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = A539D1ED154AF6B60048CDF1 /* thumbnail_placeholder.png */; };
 		A5AC0A6615DABF31000F9311 /* AccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D403154AFB8B0048CDF1 /* AccountViewController.xib */; };
 		A5AC0A6915DABF31000F9311 /* MediaDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A539D414154AFB8B0048CDF1 /* MediaDetailViewController.xib */; };
@@ -324,6 +316,8 @@
 		C83A1A9315EA1CD300B2066D /* bg_title.png in Resources */ = {isa = PBXBuildFile; fileRef = C83A1A9015EA1CD300B2066D /* bg_title.png */; };
 		C83A1A9415EA1CD300B2066D /* bg_title@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83A1A9115EA1CD300B2066D /* bg_title@2x.png */; };
 		C83A1A9515EA1CD300B2066D /* bg_title@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83A1A9115EA1CD300B2066D /* bg_title@2x.png */; };
+		C83A1AAD15EAA08800B2066D /* thumbnail_placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83A1AAC15EAA08800B2066D /* thumbnail_placeholder@2x.png */; };
+		C83A1AAE15EAA08800B2066D /* thumbnail_placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83A1AAC15EAA08800B2066D /* thumbnail_placeholder@2x.png */; };
 		C87C67CF147440B500A055F1 /* TaxinomesAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C87C6799147440B500A055F1 /* TaxinomesAppDelegate.m */; };
 		C87C680B147440B500A055F1 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C87C680A147440B500A055F1 /* libiconv.dylib */; };
 		C87C680D147440B500A055F1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C87C680C147440B500A055F1 /* SystemConfiguration.framework */; };
@@ -402,15 +396,11 @@
 		A539D1E1154AF6B60048CDF1 /* default_avatar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "default_avatar@2x.png"; path = "Taxinomes/Ressources/Images/default_avatar@2x.png"; sourceTree = SOURCE_ROOT; };
 		A539D1E2154AF6B60048CDF1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Taxinomes/Ressources/Images/Default.png; sourceTree = SOURCE_ROOT; };
 		A539D1E3154AF6B60048CDF1 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Taxinomes/Ressources/Images/Default@2x.png"; sourceTree = SOURCE_ROOT; };
-		A539D1E4154AF6B60048CDF1 /* fond.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fond.png; path = Taxinomes/Ressources/Images/fond.png; sourceTree = SOURCE_ROOT; };
 		A539D1E5154AF6B60048CDF1 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Taxinomes/Ressources/Images/Icon.png; sourceTree = SOURCE_ROOT; };
 		A539D1E6154AF6B60048CDF1 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Taxinomes/Ressources/Images/Icon@2x.png"; sourceTree = SOURCE_ROOT; };
 		A539D1E7154AF6B60048CDF1 /* Icon@AppStore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@AppStore.png"; path = "Taxinomes/Ressources/Images/Icon@AppStore.png"; sourceTree = SOURCE_ROOT; };
-		A539D1E8154AF6B60048CDF1 /* lpd_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lpd_logo.png; path = Taxinomes/Ressources/Images/lpd_logo.png; sourceTree = SOURCE_ROOT; };
 		A539D1E9154AF6B60048CDF1 /* tabbar_account.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tabbar_account.png; path = Taxinomes/Ressources/Images/tabbar_account.png; sourceTree = SOURCE_ROOT; };
 		A539D1EA154AF6B60048CDF1 /* tabbar_home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tabbar_home.png; path = Taxinomes/Ressources/Images/tabbar_home.png; sourceTree = SOURCE_ROOT; };
-		A539D1EB154AF6B60048CDF1 /* tabbar_medias.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tabbar_medias.png; path = Taxinomes/Ressources/Images/tabbar_medias.png; sourceTree = SOURCE_ROOT; };
-		A539D1EC154AF6B60048CDF1 /* tabbar_navigate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tabbar_navigate.png; path = Taxinomes/Ressources/Images/tabbar_navigate.png; sourceTree = SOURCE_ROOT; };
 		A539D1ED154AF6B60048CDF1 /* thumbnail_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = thumbnail_placeholder.png; path = Taxinomes/Ressources/Images/thumbnail_placeholder.png; sourceTree = SOURCE_ROOT; };
 		A539D3DE154AFA140048CDF1 /* LTTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTTitleView.h; path = Taxinomes/Classes/Views/LTTitleView.h; sourceTree = SOURCE_ROOT; };
 		A539D3DF154AFA140048CDF1 /* LTTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTTitleView.m; path = Taxinomes/Classes/Views/LTTitleView.m; sourceTree = SOURCE_ROOT; };
@@ -652,6 +642,7 @@
 		C8339C2914ED6393000A4E37 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		C83A1A9015EA1CD300B2066D /* bg_title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg_title.png; path = Taxinomes/Ressources/Images/bg_title.png; sourceTree = SOURCE_ROOT; };
 		C83A1A9115EA1CD300B2066D /* bg_title@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg_title@2x.png"; path = "Taxinomes/Ressources/Images/bg_title@2x.png"; sourceTree = SOURCE_ROOT; };
+		C83A1AAC15EAA08800B2066D /* thumbnail_placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "thumbnail_placeholder@2x.png"; path = "Taxinomes/Ressources/Images/thumbnail_placeholder@2x.png"; sourceTree = SOURCE_ROOT; };
 		C87C6798147440B500A055F1 /* TaxinomesAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TaxinomesAppDelegate.h; path = classes/TaxinomesAppDelegate.h; sourceTree = "<group>"; };
 		C87C6799147440B500A055F1 /* TaxinomesAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TaxinomesAppDelegate.m; path = classes/TaxinomesAppDelegate.m; sourceTree = "<group>"; };
 		C87C680A147440B500A055F1 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
@@ -1258,20 +1249,17 @@
 				A539D1E1154AF6B60048CDF1 /* default_avatar@2x.png */,
 				A539D1E2154AF6B60048CDF1 /* Default.png */,
 				A539D1E3154AF6B60048CDF1 /* Default@2x.png */,
-				A539D1E4154AF6B60048CDF1 /* fond.png */,
 				A5AC0A8E15DAC3DF000F9311 /* Icon.png */,
 				A5AC0A8F15DAC3DF000F9311 /* Icon@2x.png */,
 				A539D1E5154AF6B60048CDF1 /* Icon.png */,
 				A539D1E6154AF6B60048CDF1 /* Icon@2x.png */,
 				A539D1E7154AF6B60048CDF1 /* Icon@AppStore.png */,
-				A539D1E8154AF6B60048CDF1 /* lpd_logo.png */,
 				A539D1E9154AF6B60048CDF1 /* tabbar_account.png */,
 				A5933DB215CD5E0E00AD6D10 /* tabbar_bug.png */,
 				A5933DB315CD5E0E00AD6D10 /* tabbar_radar.png */,
 				A539D1EA154AF6B60048CDF1 /* tabbar_home.png */,
-				A539D1EB154AF6B60048CDF1 /* tabbar_medias.png */,
-				A539D1EC154AF6B60048CDF1 /* tabbar_navigate.png */,
 				A539D1ED154AF6B60048CDF1 /* thumbnail_placeholder.png */,
+				C83A1AAC15EAA08800B2066D /* thumbnail_placeholder@2x.png */,
 			);
 			name = Images;
 			path = images;
@@ -1443,13 +1431,9 @@
 				C8F7A51214E30CDB00425104 /* COPYING in Resources */,
 				A539D1F0154AF6B60048CDF1 /* default_avatar.png in Resources */,
 				A539D1F1154AF6B60048CDF1 /* default_avatar@2x.png in Resources */,
-				A539D1F4154AF6B60048CDF1 /* fond.png in Resources */,
 				A539D1F7154AF6B60048CDF1 /* Icon@AppStore.png in Resources */,
-				A539D1F8154AF6B60048CDF1 /* lpd_logo.png in Resources */,
 				A539D1F9154AF6B60048CDF1 /* tabbar_account.png in Resources */,
 				A539D1FA154AF6B60048CDF1 /* tabbar_home.png in Resources */,
-				A539D1FB154AF6B60048CDF1 /* tabbar_medias.png in Resources */,
-				A539D1FC154AF6B60048CDF1 /* tabbar_navigate.png in Resources */,
 				A539D1FD154AF6B60048CDF1 /* thumbnail_placeholder.png in Resources */,
 				A539D43F154AFBD60048CDF1 /* AccountViewController.xib in Resources */,
 				A5AD497E15DC0FA000759374 /* AuthenticationSheetViewController.xib in Resources */,
@@ -1490,6 +1474,7 @@
 				C887AADB15E9133700013A72 /* MainWindow_iPad.xib in Resources */,
 				C83A1A9215EA1CD300B2066D /* bg_title.png in Resources */,
 				C83A1A9415EA1CD300B2066D /* bg_title@2x.png in Resources */,
+				C83A1AAD15EAA08800B2066D /* thumbnail_placeholder@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1510,15 +1495,11 @@
 				A5AC0A5515DABF31000F9311 /* COPYING in Resources */,
 				A5AC0A5815DABF31000F9311 /* default_avatar.png in Resources */,
 				A5AC0A5915DABF31000F9311 /* default_avatar@2x.png in Resources */,
-				A5AC0A5C15DABF31000F9311 /* fond.png in Resources */,
 				A5AC0A5D15DABF31000F9311 /* Icon.png in Resources */,
 				A5AC0A5E15DABF31000F9311 /* Icon@2x.png in Resources */,
 				A5AC0A5F15DABF31000F9311 /* Icon@AppStore.png in Resources */,
-				A5AC0A6015DABF31000F9311 /* lpd_logo.png in Resources */,
 				A5AC0A6115DABF31000F9311 /* tabbar_account.png in Resources */,
 				A5AC0A6215DABF31000F9311 /* tabbar_home.png in Resources */,
-				A5AC0A6315DABF31000F9311 /* tabbar_medias.png in Resources */,
-				A5AC0A6415DABF31000F9311 /* tabbar_navigate.png in Resources */,
 				A5AC0A6515DABF31000F9311 /* thumbnail_placeholder.png in Resources */,
 				A5AC0A6615DABF31000F9311 /* AccountViewController.xib in Resources */,
 				A5AD497F15DC0FA000759374 /* AuthenticationSheetViewController.xib in Resources */,
@@ -1557,6 +1538,7 @@
 				C887AADC15E9133700013A72 /* MainWindow_iPad.xib in Resources */,
 				C83A1A9315EA1CD300B2066D /* bg_title.png in Resources */,
 				C83A1A9515EA1CD300B2066D /* bg_title@2x.png in Resources */,
+				C83A1AAE15EAA08800B2066D /* thumbnail_placeholder@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
