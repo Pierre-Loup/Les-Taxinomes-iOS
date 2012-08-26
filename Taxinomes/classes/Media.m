@@ -68,7 +68,7 @@
         return nil;
     }
     
-    NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
+    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
     
     Media *media = [Media mediaWithIdentifier:mediaIdentifier];
     
@@ -190,7 +190,7 @@
 }
 
 + (Media *)mediaWithIdentifier:(NSNumber *)identifier {
-    NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
+    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     
     NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
@@ -221,7 +221,7 @@
 }
 
 + (NSArray *)allMedias {
-    NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
+    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
     [request setEntity:entity];
@@ -251,7 +251,7 @@
         return [NSArray array];
     }
     
-    NSManagedObjectContext* context = [[LTDataManager sharedDataManager] mainManagedObjectContext];
+    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     request.fetchLimit = dataManager.synchLimit;
     NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
@@ -282,7 +282,7 @@
 + (void)deleteAllMedias {
     NSArray* allMedias = [self allMedias];
     for (Media* media in allMedias) {
-        [[[LTDataManager sharedDataManager] mainManagedObjectContext] deleteObject:media];
+        [[NSManagedObjectContext MR_contextForCurrentThread] deleteObject:media];
     }
 }
 
