@@ -32,6 +32,7 @@
 #import "Media.h"
 #import "Author.h"
 #import "License.h"
+#import "LTXMLRPCClient.h"
 
 @implementation LTConnectionManager
 @synthesize authenticatedUser = authenticatedUser_;
@@ -292,25 +293,25 @@
 }
 
 - (void)getLicenses {
-    XMLRPCRequest* xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
-    [xmlrpcRequest setMethod:@"spip.liste_licences" withObject:[NSDictionary dictionary]];
-    
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-    
-    dispatch_async(queue, ^{
-        id response = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
-        [xmlrpcRequest release];
-        if([response isKindOfClass:[NSDictionary class]]) {
-            NSDictionary* responseDict = (NSDictionary*)response;
-            for(NSString *key in response){
-                if ([[responseDict objectForKey:key] isKindOfClass:[NSDictionary class]]) {
-                    NSDictionary *xmlLicenseDict = [responseDict objectForKey:key];
-                    [License licenseWithXMLRPCResponse:xmlLicenseDict];
-                }
-                
-            }
-        }
-    });
+    LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
+    [xmlrpcClient executeMethod:@"spip.liste_licences"
+                 withParameters:nil
+                        success:^(AFHTTPRequestOperation *operation, XMLRPCResponse *response) {
+                            if([response isKindOfClass:[NSDictionary class]]) {
+                                NSDictionary* responseDict = (NSDictionary*)response;
+                                for(NSString *key in responseDict){
+                                    if ([[responseDict objectForKey:key] isKindOfClass:[NSDictionary class]]) {
+                                        NSDictionary *xmlLicenseDict = [responseDict objectForKey:key];
+                                        [License licenseWithXMLRPCResponse:xmlLicenseDict];
+                                    }
+                                    
+                                }
+                            }
+                        }
+                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                            LogDebug(@"");
+                        }];
+
 }
 
 - (void)addMediaWithInformations: (NSDictionary *)info delegate:(id<LTConnectionManagerDelegate>)delegate {
