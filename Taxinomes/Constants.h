@@ -101,6 +101,7 @@
 #define kSessionCookieName @"spip_session"
 
 // Errors
+#define kLTWebServiceResponseErrorDomain @"LTWebServiceResponseErrorDomain"
 #define kLTDefaultErrorDomain @"LTDefaultErrorDomain"
 #define kLTConnectionManagerInternalError @"LTConnectionManagerInternalError"
 #define kLTAuthenticationFailedError @"LTAuthenticationFailedError"

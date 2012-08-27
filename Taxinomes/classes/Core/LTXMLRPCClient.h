@@ -13,6 +13,7 @@
 + (LTXMLRPCClient *)sharedClient;
 - (void)executeMethod:(NSString *)method
        withParameters:(NSDictionary *)parameters
+     authCookieEnable:(BOOL)authCookieEnable
               success:(void (^)(AFHTTPRequestOperation *operation, id response))success
               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 @end

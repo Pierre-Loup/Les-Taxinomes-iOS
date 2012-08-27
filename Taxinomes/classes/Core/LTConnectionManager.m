@@ -296,7 +296,8 @@
     LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
     [xmlrpcClient executeMethod:@"spip.liste_licences"
                  withParameters:nil
-                        success:^(AFHTTPRequestOperation *operation, XMLRPCResponse *response) {
+               authCookieEnable:NO
+    success:^(AFHTTPRequestOperation *operation, XMLRPCResponse *response) {
                             if([response isKindOfClass:[NSDictionary class]]) {
                                 NSDictionary* responseDict = (NSDictionary*)response;
                                 for(NSString *key in responseDict){
@@ -308,9 +309,9 @@
                                 }
                             }
                         }
-                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                            LogDebug(@"");
-                        }];
+    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        LogDebug(@"");
+    }];
 
 }
 
