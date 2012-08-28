@@ -9,9 +9,10 @@
 #import "MediaLocalisationPickerViewController.h"
 #import "Annotation.h"
 
-@interface MediaLocalisationPickerViewController ()
+@interface MediaLocalisationPickerViewController () <MKMapViewDelegate> {
+    UIBarButtonItem* rightBarButton_;
+}
 @property (nonatomic, retain) IBOutlet MKMapView* mapView;
-
 - (void)refreshMap;
 @end
 
@@ -28,8 +29,7 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common.ok") style:UIBarButtonItemStylePlain target:self action:@selector(okButtonButtonPressed:)];
     [self.navigationItem setRightBarButtonItem:rightBarButton_ animated:NO];
@@ -41,8 +41,7 @@
     }
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
     [super viewDidUnload];
     [rightBarButton_ release];
     rightBarButton_ = nil;
@@ -53,6 +52,8 @@
 
 - (void)dealloc {
     [location_ release];
+    [mapView_ release];
+    [rightBarButton_ release];
     [super dealloc];
 }
 
@@ -71,12 +72,13 @@
 
 - (void)setLocation:(CLLocation *)location {
     [location_ release];
-    location_ = [location copy];
+    location_ = [location retain];
     
     [self refreshMap];
 }
 
 - (void)refreshMap {
+    
     if (mapView_) {
         [mapView_ removeAnnotations:mapView_.annotations];
         
