@@ -19,11 +19,9 @@
 
 @end
 
-@interface MediaLocalisationPickerViewController : LTViewController {
-    UIBarButtonItem* rightBarButton_;
-}
+@interface MediaLocalisationPickerViewController : LTViewController
 
-@property (nonatomic, assign) IBOutlet id<MediaLocationPickerDelegate> delegate;
+@property (nonatomic, assign) id<MediaLocationPickerDelegate> delegate;
 @property (nonatomic, retain) CLLocation* location;
 
 @end

@@ -15,7 +15,11 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 
 
-@interface LTPhotoPickerViewController ()
+@interface LTPhotoPickerViewController () <UINavigationControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate, LTConnectionManagerAuthDelegate> {
+    CLLocationManager* locationManager_;
+    CLLocation* photoLocation_;
+    UIImage* photo_;
+}
 - (void)presentAuthenticationSheetAnimated;
 - (void)pushMediaUploadFormVCAnnimated:(BOOL)animated;
 @end
@@ -88,7 +92,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         NSMutableDictionary *metadata = [NSMutableDictionary dictionaryWithDictionary:[info objectForKey:UIImagePickerControllerMediaMetadata]];
         if(locationManager_.location != nil){
             [metadata setLocation:locationManager_.location];
-            [photo_ release];
             photoLocation_ = [locationManager_.location retain];
         }
         ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];

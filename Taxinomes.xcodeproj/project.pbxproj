@@ -10,12 +10,6 @@
 		37D2E7DE144709ED0044EC3A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7DD144709ED0044EC3A /* UIKit.framework */; };
 		37D2E7E0144709ED0044EC3A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7DF144709ED0044EC3A /* Foundation.framework */; };
 		37D2E7E2144709ED0044EC3A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7E1144709ED0044EC3A /* CoreGraphics.framework */; };
-		37D2E7F9144709EE0044EC3A /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7F8144709EE0044EC3A /* SenTestingKit.framework */; };
-		37D2E7FA144709EE0044EC3A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7DD144709ED0044EC3A /* UIKit.framework */; };
-		37D2E7FB144709EE0044EC3A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7DF144709ED0044EC3A /* Foundation.framework */; };
-		37D2E7FC144709EE0044EC3A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7E1144709ED0044EC3A /* CoreGraphics.framework */; };
-		37D2E806144709EE0044EC3A /* TaxinomesTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 37D2E805144709EE0044EC3A /* TaxinomesTests.h */; };
-		37D2E808144709EE0044EC3A /* TaxinomesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 37D2E807144709EE0044EC3A /* TaxinomesTests.m */; };
 		A502F333157D63D5001EDE44 /* JesayaFree.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A502F332157D63D5001EDE44 /* JesayaFree.ttf */; };
 		A50D5D0A1572164900BF9DF0 /* MediaLicenseChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A50D5D081572164900BF9DF0 /* MediaLicenseChooserViewController.m */; };
 		A50D5D0B1572164900BF9DF0 /* MediaLicenseChooserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A50D5D091572164900BF9DF0 /* MediaLicenseChooserViewController.xib */; };
@@ -320,6 +314,12 @@
 		C83A1A9515EA1CD300B2066D /* bg_title@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83A1A9115EA1CD300B2066D /* bg_title@2x.png */; };
 		C83A1AAD15EAA08800B2066D /* thumbnail_placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83A1AAC15EAA08800B2066D /* thumbnail_placeholder@2x.png */; };
 		C83A1AAE15EAA08800B2066D /* thumbnail_placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C83A1AAC15EAA08800B2066D /* thumbnail_placeholder@2x.png */; };
+		C83D43C115ED468400148CD2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7DD144709ED0044EC3A /* UIKit.framework */; };
+		C83D43C215ED468400148CD2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7DF144709ED0044EC3A /* Foundation.framework */; };
+		C83D43C315ED468400148CD2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7E1144709ED0044EC3A /* CoreGraphics.framework */; };
+		C83D43C915ED468500148CD2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C83D43C715ED468500148CD2 /* InfoPlist.strings */; };
+		C83D43CB15ED468500148CD2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C83D43CA15ED468500148CD2 /* main.m */; };
+		C83D43D515ED471700148CD2 /* GHUnitIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C83D43D415ED471700148CD2 /* GHUnitIOS.framework */; };
 		C87C67CF147440B500A055F1 /* TaxinomesAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C87C6799147440B500A055F1 /* TaxinomesAppDelegate.m */; };
 		C87C680B147440B500A055F1 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C87C680A147440B500A055F1 /* libiconv.dylib */; };
 		C87C680D147440B500A055F1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C87C680C147440B500A055F1 /* SystemConfiguration.framework */; };
@@ -367,26 +367,12 @@
 		C8F7A51214E30CDB00425104 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = C8F7A51114E30CDA00425104 /* COPYING */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		37D2E7FD144709EE0044EC3A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 37D2E7D0144709ED0044EC3A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 37D2E7D8144709ED0044EC3A;
-			remoteInfo = Taxinomes;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		37D2E7D9144709ED0044EC3A /* LesTaxinomes Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LesTaxinomes Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		37D2E7DD144709ED0044EC3A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		37D2E7DF144709ED0044EC3A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		37D2E7E1144709ED0044EC3A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		37D2E7F7144709EE0044EC3A /* TaxinomesTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TaxinomesTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		37D2E7F8144709EE0044EC3A /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		37D2E801144709EE0044EC3A /* TaxinomesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TaxinomesTests-Info.plist"; sourceTree = "<group>"; };
-		37D2E805144709EE0044EC3A /* TaxinomesTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaxinomesTests.h; sourceTree = "<group>"; };
-		37D2E807144709EE0044EC3A /* TaxinomesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaxinomesTests.m; sourceTree = "<group>"; };
 		A502F332157D63D5001EDE44 /* JesayaFree.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = JesayaFree.ttf; path = Ressources/JesayaFree.ttf; sourceTree = "<group>"; };
 		A50D5D071572164900BF9DF0 /* MediaLicenseChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaLicenseChooserViewController.h; sourceTree = "<group>"; };
 		A50D5D081572164900BF9DF0 /* MediaLicenseChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaLicenseChooserViewController.m; sourceTree = "<group>"; };
@@ -647,6 +633,12 @@
 		C83A1A9015EA1CD300B2066D /* bg_title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg_title.png; path = Taxinomes/Ressources/Images/bg_title.png; sourceTree = SOURCE_ROOT; };
 		C83A1A9115EA1CD300B2066D /* bg_title@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg_title@2x.png"; path = "Taxinomes/Ressources/Images/bg_title@2x.png"; sourceTree = SOURCE_ROOT; };
 		C83A1AAC15EAA08800B2066D /* thumbnail_placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "thumbnail_placeholder@2x.png"; path = "Taxinomes/Ressources/Images/thumbnail_placeholder@2x.png"; sourceTree = SOURCE_ROOT; };
+		C83D43BF15ED468400148CD2 /* LesTaxinomesTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LesTaxinomesTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C83D43C615ED468500148CD2 /* LesTaxinomesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LesTaxinomesTests-Info.plist"; sourceTree = "<group>"; };
+		C83D43C815ED468500148CD2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C83D43CA15ED468500148CD2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C83D43CC15ED468500148CD2 /* LesTaxinomesTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LesTaxinomesTests-Prefix.pch"; sourceTree = "<group>"; };
+		C83D43D415ED471700148CD2 /* GHUnitIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHUnitIOS.framework; path = LesTaxinomesTests/GHUnitIOS.framework; sourceTree = "<group>"; };
 		C87C6798147440B500A055F1 /* TaxinomesAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TaxinomesAppDelegate.h; path = classes/TaxinomesAppDelegate.h; sourceTree = "<group>"; };
 		C87C6799147440B500A055F1 /* TaxinomesAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TaxinomesAppDelegate.m; path = classes/TaxinomesAppDelegate.m; sourceTree = "<group>"; };
 		C87C680A147440B500A055F1 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
@@ -718,17 +710,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		37D2E7F3144709EE0044EC3A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				37D2E7F9144709EE0044EC3A /* SenTestingKit.framework in Frameworks */,
-				37D2E7FA144709EE0044EC3A /* UIKit.framework in Frameworks */,
-				37D2E7FB144709EE0044EC3A /* Foundation.framework in Frameworks */,
-				37D2E7FC144709EE0044EC3A /* CoreGraphics.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A5AC0A3F15DABF31000F9311 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -754,6 +735,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C83D43BC15ED468400148CD2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C83D43C115ED468400148CD2 /* UIKit.framework in Frameworks */,
+				C83D43C215ED468400148CD2 /* Foundation.framework in Frameworks */,
+				C83D43C315ED468400148CD2 /* CoreGraphics.framework in Frameworks */,
+				C83D43D515ED471700148CD2 /* GHUnitIOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -764,7 +756,7 @@
 				C8F7A50F14E3070300425104 /* README */,
 				C8F7A50D14E306DF00425104 /* LICENCE */,
 				37D2E7E3144709ED0044EC3A /* Taxinomes */,
-				37D2E7FF144709EE0044EC3A /* TaxinomesTests */,
+				C83D43C415ED468400148CD2 /* LesTaxinomesTests */,
 				37D2E7DC144709ED0044EC3A /* Frameworks */,
 				37D2E7DA144709ED0044EC3A /* Products */,
 			);
@@ -774,8 +766,8 @@
 			isa = PBXGroup;
 			children = (
 				37D2E7D9144709ED0044EC3A /* LesTaxinomes Dev.app */,
-				37D2E7F7144709EE0044EC3A /* TaxinomesTests.octest */,
 				A5AC0A8A15DABF31000F9311 /* LesTaxinomes.app */,
+				C83D43BF15ED468400148CD2 /* LesTaxinomesTests.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -783,6 +775,7 @@
 		37D2E7DC144709ED0044EC3A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C83D43D415ED471700148CD2 /* GHUnitIOS.framework */,
 				A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */,
 				A59F1B8B15778E8E00F3B6A9 /* AudioToolbox.framework */,
 				A5AF0EC2154888CF007F65DD /* MapKit.framework */,
@@ -829,24 +822,6 @@
 				A5933DB815CD5FD500AD6D10 /* main.m */,
 				A5933DB915CD5FD500AD6D10 /* LesTaxinomes-Info.plist */,
 				A5933DBA15CD5FD500AD6D10 /* Taxinomes-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		37D2E7FF144709EE0044EC3A /* TaxinomesTests */ = {
-			isa = PBXGroup;
-			children = (
-				37D2E805144709EE0044EC3A /* TaxinomesTests.h */,
-				37D2E807144709EE0044EC3A /* TaxinomesTests.m */,
-				37D2E800144709EE0044EC3A /* Supporting Files */,
-			);
-			path = TaxinomesTests;
-			sourceTree = "<group>";
-		};
-		37D2E800144709EE0044EC3A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				37D2E801144709EE0044EC3A /* TaxinomesTests-Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1214,6 +1189,25 @@
 			path = GusUtils;
 			sourceTree = "<group>";
 		};
+		C83D43C415ED468400148CD2 /* LesTaxinomesTests */ = {
+			isa = PBXGroup;
+			children = (
+				C83D43C515ED468500148CD2 /* Supporting Files */,
+			);
+			path = LesTaxinomesTests;
+			sourceTree = "<group>";
+		};
+		C83D43C515ED468500148CD2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C83D43C615ED468500148CD2 /* LesTaxinomesTests-Info.plist */,
+				C83D43C715ED468500148CD2 /* InfoPlist.strings */,
+				C83D43CA15ED468500148CD2 /* main.m */,
+				C83D43CC15ED468500148CD2 /* LesTaxinomesTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		C87C674C147440B500A055F1 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1362,25 +1356,6 @@
 			productReference = 37D2E7D9144709ED0044EC3A /* LesTaxinomes Dev.app */;
 			productType = "com.apple.product-type.application";
 		};
-		37D2E7F6144709EE0044EC3A /* TaxinomesTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 37D2E80E144709EE0044EC3A /* Build configuration list for PBXNativeTarget "TaxinomesTests" */;
-			buildPhases = (
-				37D2E7F2144709EE0044EC3A /* Sources */,
-				37D2E7F3144709EE0044EC3A /* Frameworks */,
-				37D2E7F4144709EE0044EC3A /* Resources */,
-				37D2E7F5144709EE0044EC3A /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				37D2E7FE144709EE0044EC3A /* PBXTargetDependency */,
-			);
-			name = TaxinomesTests;
-			productName = TaxinomesTests;
-			productReference = 37D2E7F7144709EE0044EC3A /* TaxinomesTests.octest */;
-			productType = "com.apple.product-type.bundle";
-		};
 		A5AC09E515DABF31000F9311 /* LesTaxinomes Prod */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A5AC0A8715DABF31000F9311 /* Build configuration list for PBXNativeTarget "LesTaxinomes Prod" */;
@@ -1396,6 +1371,23 @@
 			name = "LesTaxinomes Prod";
 			productName = Taxinomes;
 			productReference = A5AC0A8A15DABF31000F9311 /* LesTaxinomes.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C83D43BE15ED468400148CD2 /* LesTaxinomesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C83D43D015ED468500148CD2 /* Build configuration list for PBXNativeTarget "LesTaxinomesTests" */;
+			buildPhases = (
+				C83D43BB15ED468400148CD2 /* Sources */,
+				C83D43BC15ED468400148CD2 /* Frameworks */,
+				C83D43BD15ED468400148CD2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LesTaxinomesTests;
+			productName = LesTaxinomesTests;
+			productReference = C83D43BF15ED468400148CD2 /* LesTaxinomesTests.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1422,7 +1414,7 @@
 			targets = (
 				37D2E7D8144709ED0044EC3A /* LesTaxinomes Dev */,
 				A5AC09E515DABF31000F9311 /* LesTaxinomes Prod */,
-				37D2E7F6144709EE0044EC3A /* TaxinomesTests */,
+				C83D43BE15ED468400148CD2 /* LesTaxinomesTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1484,14 +1476,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		37D2E7F4144709EE0044EC3A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				37D2E806144709EE0044EC3A /* TaxinomesTests.h in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A5AC0A5215DABF31000F9311 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1548,23 +1532,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		37D2E7F5144709EE0044EC3A /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
+		C83D43BD15ED468400148CD2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
+				C83D43C915ED468500148CD2 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
-/* End PBXShellScriptBuildPhase section */
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		37D2E7D5144709ED0044EC3A /* Sources */ = {
@@ -1680,14 +1656,6 @@
 				A571E7A715EAACAB0028C9B6 /* Media.m in Sources */,
 				A571E7A915EAACAB0028C9B6 /* Section.m in Sources */,
 				A571E7D415EABDAB0028C9B6 /* LTXMLRPCClient.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		37D2E7F2144709EE0044EC3A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				37D2E808144709EE0044EC3A /* TaxinomesTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1807,15 +1775,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		37D2E7FE144709EE0044EC3A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 37D2E7D8144709ED0044EC3A /* LesTaxinomes Dev */;
-			targetProxy = 37D2E7FD144709EE0044EC3A /* PBXContainerItemProxy */;
+		C83D43BB15ED468400148CD2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C83D43CB15ED468500148CD2 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXTargetDependency section */
+/* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
 		A5AD497C15DC0E8900759374 /* MainWindow.xib */ = {
@@ -1873,6 +1841,14 @@
 				A5CA5F2F154E82C600C3EB2E /* en */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		C83D43C715ED468500148CD2 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C83D43C815ED468500148CD2 /* en */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1942,6 +1918,10 @@
 				);
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/TaxinomesTests\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Taxinomes/Taxinomes-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1970,6 +1950,10 @@
 				);
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/TaxinomesTests\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Taxinomes/Taxinomes-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1988,44 +1972,6 @@
 			};
 			name = Release;
 		};
-		37D2E80F144709EE0044EC3A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Taxinomes.app/Taxinomes";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Taxinomes/Taxinomes-Prefix.pch";
-				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "TaxinomesTests/TaxinomesTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		37D2E810144709EE0044EC3A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Taxinomes.app/Taxinomes";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Taxinomes/Taxinomes-Prefix.pch";
-				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "TaxinomesTests/TaxinomesTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Release;
-		};
 		A5AC0A8815DABF31000F9311 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2035,6 +1981,10 @@
 				);
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/TaxinomesTests\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Taxinomes/Taxinomes-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2063,6 +2013,10 @@
 				);
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/TaxinomesTests\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Taxinomes/Taxinomes-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2076,6 +2030,64 @@
 				PRODUCT_NAME = LesTaxinomes;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C83D43D115ED468500148CD2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/TaxinomesTests\"",
+					"\"$(SRCROOT)/LesTaxinomesTests\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LesTaxinomesTests/LesTaxinomesTests-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "LesTaxinomesTests/LesTaxinomesTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		C83D43D215ED468500148CD2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/TaxinomesTests\"",
+					"\"$(SRCROOT)/LesTaxinomesTests\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LesTaxinomesTests/LesTaxinomesTests-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "LesTaxinomesTests/LesTaxinomesTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2102,15 +2114,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		37D2E80E144709EE0044EC3A /* Build configuration list for PBXNativeTarget "TaxinomesTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				37D2E80F144709EE0044EC3A /* Debug */,
-				37D2E810144709EE0044EC3A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		A5AC0A8715DABF31000F9311 /* Build configuration list for PBXNativeTarget "LesTaxinomes Prod" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2119,6 +2122,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		C83D43D015ED468500148CD2 /* Build configuration list for PBXNativeTarget "LesTaxinomesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C83D43D115ED468500148CD2 /* Debug */,
+				C83D43D215ED468500148CD2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 
