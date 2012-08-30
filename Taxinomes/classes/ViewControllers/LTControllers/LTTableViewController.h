@@ -27,9 +27,7 @@
 #import "MBProgressHUD.h"
 #import "ASIProgressDelegate.h"
 
-@interface LTTableViewController : UITableViewController <MBProgressHUDDelegate, ASIProgressDelegate> {
-    MBProgressHUD *loaderView_;
-}
+@interface LTTableViewController : UITableViewController <MBProgressHUDDelegate, ASIProgressDelegate>
 
 @property (nonatomic, retain) MBProgressHUD* loaderView;
 

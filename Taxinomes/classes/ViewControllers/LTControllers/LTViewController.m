@@ -25,6 +25,12 @@
 
 #import "LTViewController.h"
 
+@interface LTViewController () {
+    MBProgressHUD* loaderView_;
+    LTiPhoneBackgroundView* bgView_;
+}
+@end
+
 @implementation LTViewController
 @synthesize loaderView = loaderView_;
 
@@ -93,7 +99,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        loaderView_ = nil;
     }
     return self;
 }
@@ -117,7 +122,6 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    [loaderView_ removeFromSuperview];
     [loaderView_ release];
     loaderView_ = nil;
 }

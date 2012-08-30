@@ -10,6 +10,7 @@
 #import "LTiPhoneBackgroundView.h"
 
 @interface LTTableViewController () {
+    MBProgressHUD *loaderView_;
     LTiPhoneBackgroundView* bgView_;
 }
 
@@ -82,7 +83,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        loaderView_ = nil;
     }
     return self;
 }
@@ -95,8 +95,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    loaderView_ = nil;
-    
     
     // background for iPhone screen
     if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
@@ -115,7 +113,6 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    [loaderView_ removeFromSuperview];
     [loaderView_ release];
     loaderView_ = nil;
     [bgView_ release];

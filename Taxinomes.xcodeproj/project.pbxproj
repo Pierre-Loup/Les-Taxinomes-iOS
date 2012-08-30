@@ -304,6 +304,7 @@
 		A5E7B0F415E11E2500ED8C55 /* UIImageView+PhotoFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B0E815E11E2500ED8C55 /* UIImageView+PhotoFrame.m */; };
 		A5E7B0F615E11E6700ED8C55 /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = A5E7B0F515E11E6700ED8C55 /* license.txt */; };
 		A5E7B0F715E11E6700ED8C55 /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = A5E7B0F515E11E6700ED8C55 /* license.txt */; };
+		C82BB41715EFAC4600DDF7DB /* LTConnectionManager_tests.m in Sources */ = {isa = PBXBuildFile; fileRef = C82BB41615EFAC4600DDF7DB /* LTConnectionManager_tests.m */; };
 		C8339C1514ED4F93000A4E37 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8339C1414ED4F93000A4E37 /* CoreLocation.framework */; };
 		C8339C2614ED6356000A4E37 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8339C2514ED6355000A4E37 /* CoreMedia.framework */; };
 		C8339C2814ED6366000A4E37 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8339C2714ED6365000A4E37 /* AssetsLibrary.framework */; };
@@ -626,6 +627,7 @@
 		A5E7B0E715E11E2500ED8C55 /* UIImageView+PhotoFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+PhotoFrame.h"; sourceTree = "<group>"; };
 		A5E7B0E815E11E2500ED8C55 /* UIImageView+PhotoFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+PhotoFrame.m"; sourceTree = "<group>"; };
 		A5E7B0F515E11E6700ED8C55 /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.txt; sourceTree = "<group>"; };
+		C82BB41615EFAC4600DDF7DB /* LTConnectionManager_tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTConnectionManager_tests.m; sourceTree = "<group>"; };
 		C8339C1414ED4F93000A4E37 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		C8339C2514ED6355000A4E37 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		C8339C2714ED6365000A4E37 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -1193,6 +1195,7 @@
 			isa = PBXGroup;
 			children = (
 				C83D43C515ED468500148CD2 /* Supporting Files */,
+				C82BB41615EFAC4600DDF7DB /* LTConnectionManager_tests.m */,
 			);
 			path = LesTaxinomesTests;
 			sourceTree = "<group>";
@@ -1780,6 +1783,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C83D43CB15ED468500148CD2 /* main.m in Sources */,
+				C82BB41715EFAC4600DDF7DB /* LTConnectionManager_tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2130,6 +2134,7 @@
 				C83D43D215ED468500148CD2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

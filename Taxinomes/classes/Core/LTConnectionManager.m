@@ -35,17 +35,22 @@
 #import "LTXMLRPCClient.h"
 
 @implementation LTConnectionManager
-@synthesize authenticatedUser = authenticatedUser_;
 @synthesize downloadProgressDelegate = downloadProgressDelegate_;
 @synthesize uploadProgressDelegate = uploadProgressDelegate_;
 @synthesize authDelegate = authDelegate_;
 @synthesize authStatus = authStatus_;
 
+
+
+- (id)init {
+	if (self = [super init]) {
+        self.authStatus = UNAUTHENTICATED;
+	}
+	return self;
+}
+
 - (void)dealloc {
-    self.authenticatedUser = nil;
-    self.authDelegate = nil;
-    self.downloadProgressDelegate = nil;
-    self.uploadProgressDelegate = nil;
+    [_authenticatedUser release];
 	[super dealloc];
 }
 
@@ -60,11 +65,29 @@
     return connectionManager;
 }
 
-- (id)init {
-	if (self = [super init]) {
-        self.authStatus = UNAUTHENTICATED;
-	}
-	return self;
+- (void)getLicensesWithResponseBlock:(void (^)(NSArray* license, NSError *error))responseBlock {
+    LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
+    [xmlrpcClient executeMethod:@"spip.liste_licences"
+                 withParameters:nil
+               authCookieEnable:NO
+                        success:^(AFHTTPRequestOperation *operation, XMLRPCResponse *response) {
+                            if([response isKindOfClass:[NSDictionary class]]) {
+                                NSDictionary* responseDict = (NSDictionary*)response;
+                                NSMutableArray* licenses = [NSMutableArray array];
+                                for(NSString *key in (NSDictionary*)response){
+                                    if ([[responseDict objectForKey:key] isKindOfClass:[NSDictionary class]]) {
+                                        NSDictionary *xmlLicenseDict = [responseDict objectForKey:key];
+                                        [licenses addObject:[License licenseWithXMLRPCResponse:xmlLicenseDict]];
+                                    }
+                                    
+                                }
+                                responseBlock(licenses, nil);
+                            }
+                        }
+                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                            responseBlock(nil, error);
+                        }];
+    
 }
 
 - (void)getShortMediasByDateForAuthor:(Author *)author
@@ -290,29 +313,6 @@
             });
         }
     });
-}
-
-- (void)getLicenses {
-    LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
-    [xmlrpcClient executeMethod:@"spip.liste_licences"
-                 withParameters:nil
-               authCookieEnable:NO
-    success:^(AFHTTPRequestOperation *operation, XMLRPCResponse *response) {
-                            if([response isKindOfClass:[NSDictionary class]]) {
-                                NSDictionary* responseDict = (NSDictionary*)response;
-                                for(NSString *key in responseDict){
-                                    if ([[responseDict objectForKey:key] isKindOfClass:[NSDictionary class]]) {
-                                        NSDictionary *xmlLicenseDict = [responseDict objectForKey:key];
-                                        [License licenseWithXMLRPCResponse:xmlLicenseDict];
-                                    }
-                                    
-                                }
-                            }
-                        }
-    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        LogDebug(@"");
-    }];
-
 }
 
 - (void)addMediaWithInformations: (NSDictionary *)info delegate:(id<LTConnectionManagerDelegate>)delegate {
