@@ -69,85 +69,66 @@
     [xmlrpcClient executeMethod:@"spip.liste_licences"
                  withParameters:nil
                authCookieEnable:NO
-                        success:^(AFHTTPRequestOperation *operation, XMLRPCResponse *response) {
-                            if([response isKindOfClass:[NSDictionary class]]) {
-                                NSDictionary* responseDict = (NSDictionary*)response;
-                                NSMutableArray* licenses = [NSMutableArray array];
-                                for(NSString *key in (NSDictionary*)response){
-                                    if ([[responseDict objectForKey:key] isKindOfClass:[NSDictionary class]]) {
-                                        NSDictionary *xmlLicenseDict = [responseDict objectForKey:key];
-                                        [licenses addObject:[License licenseWithXMLRPCResponse:xmlLicenseDict]];
-                                    }
-                                    
-                                }
-                                responseBlock(licenses, nil);
-                            }
-                        }
-                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                            responseBlock(nil, error);
-                        }];
+    success:^(AFHTTPRequestOperation *operation, XMLRPCResponse *response) {
+        if([response isKindOfClass:[NSDictionary class]]) {
+            NSDictionary* responseDict = (NSDictionary*)response;
+            NSMutableArray* licenses = [NSMutableArray array];
+            for(NSString *key in (NSDictionary*)response){
+                if ([[responseDict objectForKey:key] isKindOfClass:[NSDictionary class]]) {
+                    NSDictionary *xmlLicenseDict = [responseDict objectForKey:key];
+                    [licenses addObject:[License licenseWithXMLRPCResponse:xmlLicenseDict]];
+                }
+                
+            }
+            responseBlock(licenses, nil);
+        }
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         responseBlock(nil, error);
+     }];
     
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
 - (void)getShortMediasByDateForAuthor:(Author *)author
-                            withLimit:(NSInteger)limit
-                     startingAtRecord:(NSInteger)start
-                             delegate:(id<LTConnectionManagerDelegate>)delegate{
+                            withRange:(NSRange)range
+                        responseBlock:(void (^)(Author* author, NSRange range, NSArray* medias, NSError *error))responseBlock {
     
-    if(limit == 0 || limit > kDefaultLimit)
-        limit = kDefaultLimit;
-    
-    XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
+    if(range.length == 0 || range.length > kDefaultLimit)
+        range.length = kDefaultLimit;
+    NSString* limite = [NSString stringWithFormat:@"%d,%d", range.location, range.length];
     NSArray *requestedFields = [NSArray arrayWithObjects:@"id_media", @"titre", @"date", @"statut", @"vignette", @"auteurs", nil];
-    NSArray *argsKeys = [NSArray arrayWithObjects:@"limite", @"champs_demandes", @"tri", @"vignette_format", @"vignette_largeur", @"vignette_hauteur",@"statut", nil];
+    NSNumber* thumbnailWidth = [NSNumber numberWithDouble:(THUMBNAIL_MAX_WIDHT)];
+    NSNumber* thumbnailHeight = [NSNumber numberWithDouble:(THUMBNAIL_MAX_HEIGHT)];
+    NSDictionary* parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                limite,                                   @"limite",
+                                requestedFields,                          @"champs_demandes",
+                                [NSArray arrayWithObject:@"date DESC"],   @"tri",
+                                @"carre",                                 @"vignette_format",
+                                thumbnailWidth,                           @"vignette_largeur",
+                                thumbnailHeight,                          @"vignette_hauteur",
+                                @"publie",                              @"statut",            
+                                nil];
     
-    BOOL authenticated = NO;
-    if (author) {
-        authenticated = YES;
-    }
-    NSNumber *thumbnailWidth = [NSNumber numberWithDouble:(THUMBNAIL_MAX_WIDHT)];
-    NSNumber *thumbnailHeight = [NSNumber numberWithDouble:(THUMBNAIL_MAX_HEIGHT)];
-    NSArray *argsObjects = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d,%d", start, limit], requestedFields, [NSArray arrayWithObject:@"date DESC"], @"carre", thumbnailWidth, thumbnailHeight, @"publie", nil];
-    NSDictionary *args = [NSDictionary dictionaryWithObjects:argsObjects forKeys:argsKeys];
-    [xmlrpcRequest setMethod:@"geodiv.liste_medias" withObject:args];
-    
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-    
-    dispatch_async(queue, ^{
-        id response = [self executeXMLRPCRequest:xmlrpcRequest authenticated:authenticated];
-        
-        
-        [xmlrpcRequest release];
+    LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
+    [xmlrpcClient executeMethod:@"geodiv.liste_medias"
+                 withParameters:parameters
+               authCookieEnable:author?YES:NO
+    success:^(AFHTTPRequestOperation *operation, XMLRPCResponse *response) {
         if([response isKindOfClass:[NSArray  class]]) {
-            NSMutableArray *medias = [NSMutableArray arrayWithCapacity:limit];
-            for(NSDictionary *mediaXML in response){
+            NSMutableArray *medias = [NSMutableArray array];
+            for(NSDictionary *mediaXML in (NSArray *)response){
                 Media * mediaObject = [Media mediaWithXMLRPCResponse:mediaXML];
                 if (mediaObject) {
                     [medias addObject:mediaObject];
                 }
             }
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                [delegate didRetrievedShortMedias:medias];
-            });
-        } else if ([response isKindOfClass:[NSError class]]){
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                [delegate didFailWithError:response];
-            });
-        } else {
-            NSString * localizedErrorString = [NSString stringWithFormat:@"%@ Failed retrieving Medias",kLTConnectionManagerInternalError];
-            NSDictionary * userInfo = [NSDictionary dictionaryWithObject:localizedErrorString forKey:NSLocalizedDescriptionKey];
-            NSError * error = [NSError errorWithDomain:kLTConnectionManagerInternalError
-                                                  code:0
-                                              userInfo:userInfo];
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                [delegate didFailWithError:error];
-            });
-            
+            responseBlock(author, range, medias, nil);
         }
-    });
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        responseBlock(author, range, nil, error);
+    }];
 }
+
+///////////////////////////////////////////////////////////////////////////////
 
 - (void)getShortMediasNearLocation:(CLLocationCoordinate2D)location
                          forAuthor:(Author *)author

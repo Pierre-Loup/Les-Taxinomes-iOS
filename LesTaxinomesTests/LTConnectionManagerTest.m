@@ -11,10 +11,10 @@
 
 #define kDefaultTestTimeout 5.0
 
-@interface LTConnectionManager_tests : GHAsyncTestCase { }
+@interface LTConnectionManagerTest : GHAsyncTestCase { }
 @end
 
-@implementation LTConnectionManager_tests
+@implementation LTConnectionManagerTest
 
 - (void)setUpClass {
      [MagicalRecordHelpers setupCoreDataStackWithInMemoryStore];

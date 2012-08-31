@@ -193,7 +193,31 @@
 }
 
 - (void)loadSynchMedias {
-    [[LTConnectionManager sharedConnectionManager] getShortMediasByDateForAuthor:currentUser_ withLimit:kNbMediasStep startingAtRecord:[LTDataManager sharedDataManager].synchLimit delegate:self];
+    NSRange mediasRange;
+    mediasRange.location = [LTDataManager sharedDataManager].synchLimit;
+    mediasRange.length = kNbMediasStep;
+    
+    [[LTConnectionManager sharedConnectionManager] getShortMediasByDateForAuthor:currentUser_
+                                                                       withRange:mediasRange
+    responseBlock:^(Author *author, NSRange range, NSArray *medias, NSError *error) {
+        if (error) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_network_unreachable_title") message:TRANSLATE(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:TRANSLATE(@"common.ok") otherButtonTitles:nil];
+            [alert show];
+            [alert release];
+            mediaLoadingStatus_ = FAILED;
+            [self.tableView reloadData];
+            [self hideLoader];
+            reloadBarButton_.enabled = YES;
+        } else if (medias) {
+            if ([medias count] == 0) {
+                mediaLoadingStatus_ = NOMORETOLOAD;
+            }
+            [LTDataManager sharedDataManager].synchLimit += [medias count];
+            [self reloadDatas];
+            [self hideLoader];
+            reloadBarButton_.enabled = YES;
+        }
+    }];
 }
 
 - (void)refreshButtonAction:(id)sender {
@@ -224,30 +248,8 @@
         [mediaAtIndexPath_ setObject:media forKey:[NSIndexPath indexPathForRow:row inSection:0]];
         row++;
     }
-    [self.tableView reloadData];
     mediaLoadingStatus_ = SUCCEED;
-}
-
-#pragma mark - LTConnectionManagerDelegate
-
-- (void)didRetrievedShortMedias:(NSArray *)medias {
-    if ([medias count] == 0) {
-        mediaLoadingStatus_ = NOMORETOLOAD;
-    }
-    [LTDataManager sharedDataManager].synchLimit += [medias count];
-    [self reloadDatas];
-    [self hideLoader];
-    reloadBarButton_.enabled = YES;
-}
-
-- (void)didFailWithError:(NSError *)error {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_network_unreachable_title") message:TRANSLATE(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:TRANSLATE(@"common.ok") otherButtonTitles:nil];
-    [alert show];
-    [alert release];
-    mediaLoadingStatus_ = FAILED;
     [self.tableView reloadData];
-    [self hideLoader];
-    reloadBarButton_.enabled = YES;
 }
 
 @end

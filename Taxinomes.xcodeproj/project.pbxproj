@@ -451,7 +451,7 @@
 		C8DF857015EFDE82002464DB /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8339C2914ED6393000A4E37 /* ImageIO.framework */; };
 		C8DF857115EFDF2F002464DB /* NSString+XMLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B0E415E11E2500ED8C55 /* NSString+XMLExtensions.m */; };
 		C8DF857215EFDF5F002464DB /* LTDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A571E79915EAACAB0028C9B6 /* LTDataModel.xcdatamodeld */; };
-		C8DF857A15EFEB8E002464DB /* ExampleAsyncTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DF857915EFEB8D002464DB /* ExampleAsyncTest.m */; };
+		C8DF85DA15F0BBBA002464DB /* LTConnectionManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C82BB41615EFAC4600DDF7DB /* LTConnectionManagerTest.m */; };
 		C8DFCFC214EE60F1005D9101 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8DFCFC114EE60F1005D9101 /* AVFoundation.framework */; };
 		C8F7A50E14E306DF00425104 /* LICENCE in Resources */ = {isa = PBXBuildFile; fileRef = C8F7A50D14E306DF00425104 /* LICENCE */; };
 		C8F7A51014E3070300425104 /* README in Resources */ = {isa = PBXBuildFile; fileRef = C8F7A50F14E3070300425104 /* README */; };
@@ -717,7 +717,7 @@
 		A5E7B0E715E11E2500ED8C55 /* UIImageView+PhotoFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+PhotoFrame.h"; sourceTree = "<group>"; };
 		A5E7B0E815E11E2500ED8C55 /* UIImageView+PhotoFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+PhotoFrame.m"; sourceTree = "<group>"; };
 		A5E7B0F515E11E6700ED8C55 /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.txt; sourceTree = "<group>"; };
-		C82BB41615EFAC4600DDF7DB /* LTConnectionManager_tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTConnectionManager_tests.m; sourceTree = "<group>"; };
+		C82BB41615EFAC4600DDF7DB /* LTConnectionManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTConnectionManagerTest.m; sourceTree = "<group>"; };
 		C8339C1414ED4F93000A4E37 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		C8339C2514ED6355000A4E37 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		C8339C2714ED6365000A4E37 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -725,7 +725,7 @@
 		C83A1A9015EA1CD300B2066D /* bg_title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg_title.png; path = Taxinomes/Ressources/Images/bg_title.png; sourceTree = SOURCE_ROOT; };
 		C83A1A9115EA1CD300B2066D /* bg_title@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg_title@2x.png"; path = "Taxinomes/Ressources/Images/bg_title@2x.png"; sourceTree = SOURCE_ROOT; };
 		C83A1AAC15EAA08800B2066D /* thumbnail_placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "thumbnail_placeholder@2x.png"; path = "Taxinomes/Ressources/Images/thumbnail_placeholder@2x.png"; sourceTree = SOURCE_ROOT; };
-		C83D43BF15ED468400148CD2 /* LesTaxinomesTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LesTaxinomesTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C83D43BF15ED468400148CD2 /* LesTaxinomes Tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LesTaxinomes Tests.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C83D43C615ED468500148CD2 /* LesTaxinomesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LesTaxinomesTests-Info.plist"; sourceTree = "<group>"; };
 		C83D43C815ED468500148CD2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C83D43CA15ED468500148CD2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -770,7 +770,6 @@
 		C8DB667E15DFCC2B0042A946 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		C8DB669415DFD2970042A946 /* MediaListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaListCell.h; sourceTree = "<group>"; };
 		C8DB669515DFD2970042A946 /* MediaListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaListCell.m; sourceTree = "<group>"; };
-		C8DF857915EFEB8D002464DB /* ExampleAsyncTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleAsyncTest.m; sourceTree = "<group>"; };
 		C8DFCFC114EE60F1005D9101 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C8F7A50D14E306DF00425104 /* LICENCE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENCE; sourceTree = "<group>"; };
 		C8F7A50F14E3070300425104 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
@@ -870,7 +869,7 @@
 			children = (
 				37D2E7D9144709ED0044EC3A /* LesTaxinomes Dev.app */,
 				A5AC0A8A15DABF31000F9311 /* LesTaxinomes.app */,
-				C83D43BF15ED468400148CD2 /* LesTaxinomesTests.app */,
+				C83D43BF15ED468400148CD2 /* LesTaxinomes Tests.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1296,8 +1295,7 @@
 			isa = PBXGroup;
 			children = (
 				C83D43C515ED468500148CD2 /* Supporting Files */,
-				C82BB41615EFAC4600DDF7DB /* LTConnectionManager_tests.m */,
-				C8DF857915EFEB8D002464DB /* ExampleAsyncTest.m */,
+				C82BB41615EFAC4600DDF7DB /* LTConnectionManagerTest.m */,
 			);
 			path = LesTaxinomesTests;
 			sourceTree = "<group>";
@@ -1478,9 +1476,9 @@
 			productReference = A5AC0A8A15DABF31000F9311 /* LesTaxinomes.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C83D43BE15ED468400148CD2 /* LesTaxinomesTests */ = {
+		C83D43BE15ED468400148CD2 /* LesTaxinomes Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C83D43D015ED468500148CD2 /* Build configuration list for PBXNativeTarget "LesTaxinomesTests" */;
+			buildConfigurationList = C83D43D015ED468500148CD2 /* Build configuration list for PBXNativeTarget "LesTaxinomes Tests" */;
 			buildPhases = (
 				C83D43BB15ED468400148CD2 /* Sources */,
 				C83D43BC15ED468400148CD2 /* Frameworks */,
@@ -1490,9 +1488,9 @@
 			);
 			dependencies = (
 			);
-			name = LesTaxinomesTests;
+			name = "LesTaxinomes Tests";
 			productName = LesTaxinomesTests;
-			productReference = C83D43BF15ED468400148CD2 /* LesTaxinomesTests.app */;
+			productReference = C83D43BF15ED468400148CD2 /* LesTaxinomes Tests.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1519,7 +1517,7 @@
 			targets = (
 				37D2E7D8144709ED0044EC3A /* LesTaxinomes Dev */,
 				A5AC09E515DABF31000F9311 /* LesTaxinomes Prod */,
-				C83D43BE15ED468400148CD2 /* LesTaxinomesTests */,
+				C83D43BE15ED468400148CD2 /* LesTaxinomes Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -1965,7 +1963,7 @@
 				C8DF856A15EFDD15002464DB /* LTDataManager.m in Sources */,
 				C8DF857115EFDF2F002464DB /* NSString+XMLExtensions.m in Sources */,
 				C8DF857215EFDF5F002464DB /* LTDataModel.xcdatamodeld in Sources */,
-				C8DF857A15EFEB8E002464DB /* ExampleAsyncTest.m in Sources */,
+				C8DF85DA15F0BBBA002464DB /* LTConnectionManagerTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2055,8 +2053,8 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					TOUCHXMLUSETIDY,
 					"DEBUG=1",
-					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
@@ -2082,6 +2080,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = TOUCHXMLUSETIDY;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
@@ -2109,8 +2108,7 @@
 				GCC_PREFIX_HEADER = "Taxinomes/Taxinomes-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					DEV,
-					TOUCHXMLUSETIDY,
-					"DEBUG=1",
+					"$(inherited)",
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -2138,7 +2136,7 @@
 				GCC_PREFIX_HEADER = "Taxinomes/Taxinomes-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					DEV,
-					TOUCHXMLUSETIDY,
+					"$(inherited)",
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -2166,8 +2164,7 @@
 				GCC_PREFIX_HEADER = "Taxinomes/Taxinomes-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					PROD,
-					TOUCHXMLUSETIDY,
-					"DEBUG=1",
+					"$(inherited)",
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -2195,7 +2192,7 @@
 				GCC_PREFIX_HEADER = "Taxinomes/Taxinomes-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					PROD,
-					TOUCHXMLUSETIDY,
+					"$(inherited)",
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -2225,9 +2222,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LesTaxinomesTests/LesTaxinomesTests-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					DEV,
-					TOUCHXMLUSETIDY,
-					"DEBUG=1",
+					TESTS,
+					"$(inherited)",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2259,8 +2255,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LesTaxinomesTests/LesTaxinomesTests-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					PROD,
-					TOUCHXMLUSETIDY,
+					TESTS,
+					"$(inherited)",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2306,7 +2302,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C83D43D015ED468500148CD2 /* Build configuration list for PBXNativeTarget "LesTaxinomesTests" */ = {
+		C83D43D015ED468500148CD2 /* Build configuration list for PBXNativeTarget "LesTaxinomes Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C83D43D115ED468500148CD2 /* Debug */,
