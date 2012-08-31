@@ -39,10 +39,10 @@
     
     [MagicalRecordHelpers setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"Taxinomes.sqlite"];
     
-    // Get the licenses list if not present
-    //if ([[License allLicenses] count] == 0) {
-        [[LTConnectionManager sharedConnectionManager] getLicenses];
-    //}
+    // Retreive licenses
+    [[LTConnectionManager sharedConnectionManager] getLicensesWithResponseBlock:^(NSArray *licenses, NSError *error) {
+        LogDebug(@"licences: %d",[licenses count]);
+    }];
     
     // iPad
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {

@@ -11,7 +11,6 @@
 
 @interface LTTableViewController () {
     MBProgressHUD *loaderView_;
-    LTiPhoneBackgroundView* bgView_;
 }
 
 @end

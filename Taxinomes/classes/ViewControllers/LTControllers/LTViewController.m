@@ -27,7 +27,6 @@
 
 @interface LTViewController () {
     MBProgressHUD* loaderView_;
-    LTiPhoneBackgroundView* bgView_;
 }
 @end
 

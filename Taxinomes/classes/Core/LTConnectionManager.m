@@ -27,7 +27,6 @@
 #import <CoreLocation/CoreLocation.h>
 #import "LTConnectionManager.h"
 #import "XMLRPCResponse.h"
-#import "Constants.h"
 #import "ASIHTTPRequest.h"
 #import "Media.h"
 #import "Author.h"
@@ -65,7 +64,7 @@
     return connectionManager;
 }
 
-- (void)getLicensesWithResponseBlock:(void (^)(NSArray* license, NSError *error))responseBlock {
+- (void)getLicensesWithResponseBlock:(void (^)(NSArray* licenses, NSError *error))responseBlock {
     LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
     [xmlrpcClient executeMethod:@"spip.liste_licences"
                  withParameters:nil
@@ -89,6 +88,8 @@
                         }];
     
 }
+
+///////////////////////////////////////////////////////////////////////////////
 
 - (void)getShortMediasByDateForAuthor:(Author *)author
                             withLimit:(NSInteger)limit
@@ -425,10 +426,10 @@
         }
     }
     
-    if (authenticatedUser_) {
+    if (self.authenticatedUser) {
             [delegate authDidEndWithLogin:nil
                                  password:nil
-                                   author:authenticatedUser_
+                                   author:self.authenticatedUser
                                     error:nil];
             
     } else if (authCookie) {

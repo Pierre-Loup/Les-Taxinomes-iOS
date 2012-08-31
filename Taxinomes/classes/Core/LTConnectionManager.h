@@ -64,7 +64,7 @@ typedef enum {
 @property (nonatomic, assign) AuthenticationStatus authStatus;
 
 + (LTConnectionManager *)sharedConnectionManager;
-- (void)getLicensesWithResponseBlock:(void (^)(NSArray* license, NSError *error))responseBlock;
+- (void)getLicensesWithResponseBlock:(void (^)(NSArray* licenses, NSError *error))responseBlock;
 
 - (void)getShortMediasByDateForAuthor:(Author *)author 
                                  withLimit:(NSInteger)limit 

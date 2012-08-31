@@ -14,57 +14,46 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "37D2E7D8144709ED0044EC3A"
-               BuildableName = "LesTaxinomes Dev.app"
-               BlueprintName = "LesTaxinomes Dev"
+               BlueprintIdentifier = "C83D43BE15ED468400148CD2"
+               BuildableName = "LesTaxinomesTests.app"
+               BlueprintName = "LesTaxinomesTests"
                ReferencedContainer = "container:Taxinomes.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.GDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.GDB"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "37D2E7F6144709EE0044EC3A"
-               BuildableName = "TaxinomesTests.octest"
-               BlueprintName = "TaxinomesTests"
-               ReferencedContainer = "container:Taxinomes.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "37D2E7D8144709ED0044EC3A"
-            BuildableName = "LesTaxinomes Dev.app"
-            BlueprintName = "LesTaxinomes Dev"
+            BlueprintIdentifier = "C83D43BE15ED468400148CD2"
+            BuildableName = "LesTaxinomesTests.app"
+            BlueprintName = "LesTaxinomesTests"
             ReferencedContainer = "container:Taxinomes.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.GDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
-      enableOpenGLFrameCaptureMode = "0"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "37D2E7D8144709ED0044EC3A"
-            BuildableName = "LesTaxinomes Dev.app"
-            BlueprintName = "LesTaxinomes Dev"
+            BlueprintIdentifier = "C83D43BE15ED468400148CD2"
+            BuildableName = "LesTaxinomesTests.app"
+            BlueprintName = "LesTaxinomesTests"
             ReferencedContainer = "container:Taxinomes.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -80,9 +69,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "37D2E7D8144709ED0044EC3A"
-            BuildableName = "LesTaxinomes Dev.app"
-            BlueprintName = "LesTaxinomes Dev"
+            BlueprintIdentifier = "C83D43BE15ED468400148CD2"
+            BuildableName = "LesTaxinomesTests.app"
+            BlueprintName = "LesTaxinomesTests"
             ReferencedContainer = "container:Taxinomes.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

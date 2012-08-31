@@ -7,22 +7,35 @@
 //
 
 #import <GHUnitIOS/GHUnit.h>
+#import "LTConnectionManager.h"
 
-@interface LTConnectionManager_tests : GHTestCase { }
+#define kDefaultTestTimeout 5.0
+
+@interface LTConnectionManager_tests : GHAsyncTestCase { }
 @end
 
 @implementation LTConnectionManager_tests
 
-- (void)testStrings {
-    NSString *string1 = @"a string";
-    GHTestLog(@"I can log to the GHUnit test console: %@", string1);
+- (void)setUpClass {
+     [MagicalRecordHelpers setupCoreDataStackWithInMemoryStore];
+}
+
+- (void)test_get_licenses {
     
-    // Assert string1 is not NULL, with no custom error description
-    GHAssertNotNil(string1, nil);
+    [self prepare];
     
-    // Assert equal objects, add custom error description
-    NSString *string2 = @"a string";
-    GHAssertEqualObjects(string1, string2, @"A custom error message. string1 should be equal to: %@.", string2);
+    [[LTConnectionManager sharedConnectionManager] getLicensesWithResponseBlock:^(NSArray *licenses, NSError *error) {
+        if (licenses &&
+            [licenses count] > 0 &&
+            !error) {
+            [self notify:kGHUnitWaitStatusSuccess];
+        } else {
+            
+            [self notify:kGHUnitWaitStatusFailure];
+        }
+    }];
+    
+    [self waitForStatus:kGHUnitWaitStatusSuccess timeout:kDefaultTestTimeout];
 }
 
 @end
