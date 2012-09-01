@@ -94,18 +94,18 @@
     
     if(range.length == 0 || range.length > kDefaultLimit)
         range.length = kDefaultLimit;
-    NSString* limite = [NSString stringWithFormat:@"%d,%d", range.location, range.length];
+    NSString* limite = [NSString stringWithFormat:@"%d,%d", range.location,range.length];
     NSArray *requestedFields = [NSArray arrayWithObjects:@"id_media", @"titre", @"date", @"statut", @"vignette", @"auteurs", nil];
     NSNumber* thumbnailWidth = [NSNumber numberWithDouble:(THUMBNAIL_MAX_WIDHT)];
     NSNumber* thumbnailHeight = [NSNumber numberWithDouble:(THUMBNAIL_MAX_HEIGHT)];
     NSDictionary* parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-                                limite,                                   @"limite",
-                                requestedFields,                          @"champs_demandes",
-                                [NSArray arrayWithObject:@"date DESC"],   @"tri",
-                                @"carre",                                 @"vignette_format",
-                                thumbnailWidth,                           @"vignette_largeur",
-                                thumbnailHeight,                          @"vignette_hauteur",
-                                @"publie",                              @"statut",            
+                                limite,                                     @"limite",
+                                requestedFields,                            @"champs_demandes",
+                                [NSArray arrayWithObject:@"date DESC"],     @"tri",
+                                @"carre",                                   @"vignette_format",
+                                thumbnailWidth,                             @"vignette_largeur",
+                                thumbnailHeight,                            @"vignette_hauteur",
+                                @"publie",                                  @"statut",
                                 nil];
     
     LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];

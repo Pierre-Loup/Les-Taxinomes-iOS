@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C83D43BE15ED468400148CD2"
-               BuildableName = "LesTaxinomesTests.app"
+               BuildableName = "LesTaxinomes Tests.app"
                BlueprintName = "LesTaxinomes Tests"
                ReferencedContainer = "container:Taxinomes.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C83D43BE15ED468400148CD2"
-            BuildableName = "LesTaxinomesTests.app"
+            BuildableName = "LesTaxinomes Tests.app"
             BlueprintName = "LesTaxinomes Tests"
             ReferencedContainer = "container:Taxinomes.xcodeproj">
          </BuildableReference>
@@ -52,7 +52,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C83D43BE15ED468400148CD2"
-            BuildableName = "LesTaxinomesTests.app"
+            BuildableName = "LesTaxinomes Tests.app"
             BlueprintName = "LesTaxinomes Tests"
             ReferencedContainer = "container:Taxinomes.xcodeproj">
          </BuildableReference>
@@ -70,7 +70,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C83D43BE15ED468400148CD2"
-            BuildableName = "LesTaxinomesTests.app"
+            BuildableName = "LesTaxinomes Tests.app"
             BlueprintName = "LesTaxinomes Tests"
             ReferencedContainer = "container:Taxinomes.xcodeproj">
          </BuildableReference>
