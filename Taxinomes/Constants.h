@@ -100,8 +100,8 @@
 #endif
 
 
-// WS XML-RPC
-#define kDefaultLimit 50
+// WS
+#define kDefaultLimit 20
 #define kNbMediasStep 10
 #define kLimitParamName @"limite"
 #define kSortParamName @"tri"
@@ -110,6 +110,3 @@
 // Errors
 #define kLTWebServiceResponseErrorDomain @"LTWebServiceResponseErrorDomain"
 #define kLTDefaultErrorDomain @"LTDefaultErrorDomain"
-#define kLTConnectionManagerInternalError @"LTConnectionManagerInternalError"
-#define kLTAuthenticationFailedError @"LTAuthenticationFailedError"
-#define kNetworkRequestErrorDomain @"ASIHTTPRequestErrorDomain"
