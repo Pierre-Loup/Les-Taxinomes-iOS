@@ -41,7 +41,7 @@
 
 + (Author *)authorWithXMLRPCResponse:(NSDictionary*)response;
 + (Author *)authorWithIdentifier: (NSNumber *)identifier;
-
++ (NSArray *)allAuthors;
 @end
 
 @interface Author (CoreDataGeneratedAccessors)

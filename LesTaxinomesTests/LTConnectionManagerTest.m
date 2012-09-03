@@ -38,4 +38,76 @@
     [self waitForStatus:kGHUnitWaitStatusSuccess timeout:kDefaultTestTimeout];
 }
 
+- (void)test_getShortMediasByDate {
+    
+    [self prepare];
+    NSRange mediasRange;
+    mediasRange.location = 0;
+    mediasRange.length = 10;
+    [[LTConnectionManager sharedConnectionManager] getShortMediasByDateForAuthor:nil
+                                                                    nearLocation:nil
+                                                                       withRange:mediasRange
+    responseBlock:^(Author *author, NSRange range, NSArray *medias, NSError *error) {
+        if (medias &&
+            [medias count] &&
+            !error) {
+            [self notify:kGHUnitWaitStatusSuccess];
+        } else {
+            
+            [self notify:kGHUnitWaitStatusFailure];
+        }
+    }];
+    
+    [self waitForStatus:kGHUnitWaitStatusSuccess timeout:kDefaultTestTimeout];
+}
+
+- (void)test_getShortMediasByDate_forAuthor {
+    
+    [self prepare];
+    NSRange mediasRange;
+    mediasRange.location = 0;
+    mediasRange.length = 10;
+    [[LTConnectionManager sharedConnectionManager] getShortMediasByDateForAuthor:[[Author allAuthors] objectAtIndex:0]
+                                                                    nearLocation:nil
+                                                                       withRange:mediasRange
+    responseBlock:^(Author *author, NSRange range, NSArray *medias, NSError *error) {
+        if (medias &&
+            [medias count] &&
+            !error) {
+            [self notify:kGHUnitWaitStatusSuccess];
+        } else {
+            
+            [self notify:kGHUnitWaitStatusFailure];
+        }
+   }];
+    
+    [self waitForStatus:kGHUnitWaitStatusSuccess timeout:kDefaultTestTimeout];
+}
+
+- (void)test_getShortMediasByDate_nearLocation{
+    
+    [self prepare];
+    NSRange mediasRange;
+    mediasRange.location = 0;
+    mediasRange.length = 10;
+    
+    CLLocation* location = [[CLLocation alloc] initWithLatitude:0.0 longitude:0.0];
+    
+    [[LTConnectionManager sharedConnectionManager] getShortMediasByDateForAuthor:nil
+                                                                    nearLocation:location
+                                                                       withRange:mediasRange
+    responseBlock:^(Author *author, NSRange range, NSArray *medias, NSError *error) {
+        if (medias &&
+            [medias count] &&
+            !error) {
+            [self notify:kGHUnitWaitStatusSuccess];
+        } else {
+            
+            [self notify:kGHUnitWaitStatusFailure];
+        }
+    }];
+    
+    [self waitForStatus:kGHUnitWaitStatusSuccess timeout:kDefaultTestTimeout];
+}
+
 @end

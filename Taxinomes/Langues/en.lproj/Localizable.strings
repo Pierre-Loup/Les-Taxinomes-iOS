@@ -58,6 +58,8 @@
 /* MEDIA LOCATION PICKER */
 "media_location_picker.drag_me" = "Drag me !";
 
-/* ERROR MESSAGES */
-"error_auth_failed" = "Authentication failed. Checkout your login and your password";
-"error_network_unreachable" = "Network unreachable. Checkout your wifi or your mobile internet connection";
+/* ERRORS */
+"error.auth_failed.title" = "Authentication failed";
+"error.auth_failed.text" = "Checkout your login and your password";
+"error.network.title" = "Network unreachable";
+"error.network.text" = "Checkout your wifi or your mobile internet connection";

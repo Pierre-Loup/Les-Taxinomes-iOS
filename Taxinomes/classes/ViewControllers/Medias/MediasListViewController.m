@@ -27,6 +27,7 @@
 
 #import "Author.h"
 #import "Constants.h"
+#import "LTErrorManager.h"
 #import "MediaDetailViewController.h"
 #import "MediaListCell.h"
 #import "Reachability.h"
@@ -198,25 +199,22 @@
     mediasRange.length = kNbMediasStep;
     
     [[LTConnectionManager sharedConnectionManager] getShortMediasByDateForAuthor:currentUser_
+                                                                    nearLocation:nil
                                                                        withRange:mediasRange
     responseBlock:^(Author *author, NSRange range, NSArray *medias, NSError *error) {
         if (error) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_network_unreachable_title") message:TRANSLATE(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:TRANSLATE(@"common.ok") otherButtonTitles:nil];
-            [alert show];
-            [alert release];
+            [[LTErrorManager sharedErrorManager] manageError:error];
             mediaLoadingStatus_ = FAILED;
             [self.tableView reloadData];
-            [self hideLoader];
-            reloadBarButton_.enabled = YES;
         } else if (medias) {
             if ([medias count] == 0) {
                 mediaLoadingStatus_ = NOMORETOLOAD;
             }
             [LTDataManager sharedDataManager].synchLimit += [medias count];
             [self reloadDatas];
-            [self hideLoader];
-            reloadBarButton_.enabled = YES;
         }
+        [self hideLoader];
+        reloadBarButton_.enabled = YES;
     }];
 }
 

@@ -134,4 +134,25 @@
     return nil;
 }
 
++ (NSArray *)allAuthors {
+    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
+    [request setEntity:entity];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kAuthorEntityIdentifierField ascending:NO];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [request setSortDescriptors:sortDescriptors];
+    [sortDescriptors release];
+    [sortDescriptor release];
+    
+    NSError *error = nil;
+    NSMutableArray *mutableFetchResults = [[context executeFetchRequest:request error:&error] mutableCopy];
+    [request release];
+    if (mutableFetchResults == nil) {
+        return nil;
+    }
+    
+    return [mutableFetchResults autorelease];
+}
+
 @end

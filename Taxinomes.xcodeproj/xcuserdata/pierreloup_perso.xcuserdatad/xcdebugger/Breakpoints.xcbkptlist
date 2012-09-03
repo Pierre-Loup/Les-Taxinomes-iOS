@@ -24,13 +24,26 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "300"
          endingLineNumber = "300"
-         landmarkName = "-addMediaWithInformations:delegate:"
+         landmarkName = "-authWithLogin:password:delegate:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Taxinomes/Classes/ViewControllers/Navigate/MapViewController.m"
+         timestampString = "368311698.868574"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "127"
+         endingLineNumber = "127"
+         landmarkName = "-loadMoreCloseMedias"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
    <ExceptionBreakpoints>
       <ExceptionBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          scope = "0"

@@ -41,11 +41,11 @@
 		A53E292815A63289006D6B07 /* Brest.gpx in Resources */ = {isa = PBXBuildFile; fileRef = A53E292715A63289006D6B07 /* Brest.gpx */; };
 		A5402B7815C99EF9002489E4 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5402B7715C99EF9002489E4 /* HomeViewController.xib */; };
 		A5402B8815C9E146002489E4 /* MediaUploadFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5402B8615C9E145002489E4 /* MediaUploadFormViewController.m */; };
-		A54E6E7215F1507600E7FE82 /* LTErrorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A54E6E7115F1507600E7FE82 /* LTErrorManager.m */; };
-		A54E6E7315F1507600E7FE82 /* LTErrorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A54E6E7115F1507600E7FE82 /* LTErrorManager.m */; };
 		A5568F1015AF5942008A9C8B /* SingleLineInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5568F0F15AF5942008A9C8B /* SingleLineInputCell.m */; };
 		A5568F1215AF599B008A9C8B /* SingleLineInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5568F1115AF599B008A9C8B /* SingleLineInputCell.xib */; };
 		A5582F4D15A4D9D1008F2F93 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */; };
+		A566836015F4A9B400979055 /* LTErrorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A566835F15F4A9B400979055 /* LTErrorManager.m */; };
+		A566836115F4A9B400979055 /* LTErrorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A566835F15F4A9B400979055 /* LTErrorManager.m */; };
 		A571E79F15EAACAB0028C9B6 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A571E79415EAACAB0028C9B6 /* Annotation.m */; };
 		A571E7A015EAACAB0028C9B6 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A571E79415EAACAB0028C9B6 /* Annotation.m */; };
 		A571E7A115EAACAB0028C9B6 /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = A571E79615EAACAB0028C9B6 /* Author.m */; };
@@ -518,12 +518,12 @@
 		A5402B7715C99EF9002489E4 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		A5402B8515C9E145002489E4 /* MediaUploadFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaUploadFormViewController.h; path = MediaUploadForm/MediaUploadFormViewController.h; sourceTree = "<group>"; };
 		A5402B8615C9E145002489E4 /* MediaUploadFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaUploadFormViewController.m; path = MediaUploadForm/MediaUploadFormViewController.m; sourceTree = "<group>"; };
-		A54E6E7015F1507600E7FE82 /* LTErrorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTErrorManager.h; path = Taxinomes/Classes/LTErrorManager.h; sourceTree = SOURCE_ROOT; };
-		A54E6E7115F1507600E7FE82 /* LTErrorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTErrorManager.m; path = Taxinomes/Classes/LTErrorManager.m; sourceTree = SOURCE_ROOT; };
 		A5568F0E15AF5942008A9C8B /* SingleLineInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleLineInputCell.h; sourceTree = "<group>"; };
 		A5568F0F15AF5942008A9C8B /* SingleLineInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleLineInputCell.m; sourceTree = "<group>"; };
 		A5568F1115AF599B008A9C8B /* SingleLineInputCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleLineInputCell.xib; sourceTree = "<group>"; };
 		A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		A566835E15F4A9B400979055 /* LTErrorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTErrorManager.h; sourceTree = "<group>"; };
+		A566835F15F4A9B400979055 /* LTErrorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTErrorManager.m; sourceTree = "<group>"; };
 		A571E79315EAACAB0028C9B6 /* Annotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Annotation.h; sourceTree = "<group>"; };
 		A571E79415EAACAB0028C9B6 /* Annotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Annotation.m; sourceTree = "<group>"; };
 		A571E79515EAACAB0028C9B6 /* Author.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Author.h; sourceTree = "<group>"; };
@@ -1392,8 +1392,8 @@
 				A539D3FB154AFA930048CDF1 /* LTDataManager.m */,
 				A571E7D215EABDAB0028C9B6 /* LTXMLRPCClient.h */,
 				A571E7D315EABDAB0028C9B6 /* LTXMLRPCClient.m */,
-				A54E6E7015F1507600E7FE82 /* LTErrorManager.h */,
-				A54E6E7115F1507600E7FE82 /* LTErrorManager.m */,
+				A566835E15F4A9B400979055 /* LTErrorManager.h */,
+				A566835F15F4A9B400979055 /* LTErrorManager.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1765,7 +1765,7 @@
 				A571E7A715EAACAB0028C9B6 /* Media.m in Sources */,
 				A571E7A915EAACAB0028C9B6 /* Section.m in Sources */,
 				A571E7D415EABDAB0028C9B6 /* LTXMLRPCClient.m in Sources */,
-				A54E6E7215F1507600E7FE82 /* LTErrorManager.m in Sources */,
+				A566836015F4A9B400979055 /* LTErrorManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1882,7 +1882,7 @@
 				A571E7A815EAACAB0028C9B6 /* Media.m in Sources */,
 				A571E7AA15EAACAB0028C9B6 /* Section.m in Sources */,
 				A571E7D515EABDAB0028C9B6 /* LTXMLRPCClient.m in Sources */,
-				A54E6E7315F1507600E7FE82 /* LTErrorManager.m in Sources */,
+				A566836115F4A9B400979055 /* LTErrorManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

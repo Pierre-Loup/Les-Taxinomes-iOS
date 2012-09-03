@@ -58,6 +58,8 @@
 /* MEDIA LOCATION PICKER */
 "media_location_picker.drag_me" = "Deplacez moi !";
 
-/* ERROR MESSAGES */
-"error_auth_failed" = "L'authentification à échouée. Vérifiez votre que votre login et votre mot de passe";
-"error_network_unreachable" = "Réseau indisponible. Vérifiez que vous êtes connecté au wifi ou au réseau internet mobile";
+/* ERRORS */
+"error.auth_failed.title" = "L'authentification à échouée";
+"error.auth_failed.text" = "Vérifiez votre que votre login et votre mot de passe";
+"error.network.title" = "Réseau indisponible";
+"error.network.text" = "Vérifiez que vous êtes connecté au wifi ou au réseau internet mobile";

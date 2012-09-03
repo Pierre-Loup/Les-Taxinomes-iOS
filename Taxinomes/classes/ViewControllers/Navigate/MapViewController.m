@@ -112,11 +112,60 @@
         reloadBarButton_.enabled = NO;
         scanBarButton_.enabled = NO;
         [self displayLoader];
-        [[LTConnectionManager sharedConnectionManager] getShortMediasNearLocation:referenceAnnotation_.coordinate
-                                                                        forAuthor:nil
-                                                                        withLimit:kNbMediasStep
-                                                                 startingAtRecord:searchStartIndex_
-                                                                         delegate:self];
+        
+        NSRange range;
+        range.location = searchStartIndex_;
+        range.length = kNbMediasStep;
+        
+        CLLocation* searchLocation = [[[CLLocation alloc] initWithLatitude:self.referenceAnnotation.coordinate.latitude
+                                                                longitude:self.referenceAnnotation.coordinate.longitude] autorelease];
+        
+        [[LTConnectionManager sharedConnectionManager] getShortMediasByDateForAuthor:nil
+                                                                        nearLocation:searchLocation
+                                                                           withRange:range
+        responseBlock:^(Author *author, NSRange range, NSArray *medias, NSError *error) {
+            if (medias &&
+                [medias count] &&
+                !error) {
+                BOOL shouldLoadMoreMedias = YES;
+                for (Media* newMedia in medias) {
+                    __block Media* blockNewMedia = newMedia;
+                    NSInteger mediaFoundIndex = [mapView_.annotations indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                        if ([obj isKindOfClass:[Media class]]) {
+                            Media* displayedMedia = (Media *)obj;
+                            if ([blockNewMedia.identifier intValue] == [displayedMedia.identifier intValue]) {
+                                *stop = YES;
+                                return YES;
+                            }
+                        }
+                        return NO;
+                    }];
+                    if (mediaFoundIndex == NSNotFound) {
+                        shouldLoadMoreMedias = NO;
+                    } else {
+                        LogDebug(@"Media already displayed");
+                    }
+                }
+                
+                searchStartIndex_ += [medias count];
+                if (shouldLoadMoreMedias) {
+                    [self loadMoreCloseMedias];
+                } else {
+                    [mapView_ addAnnotations:medias];
+                    [self hideLoader];
+                    reloadBarButton_.enabled = YES;
+                    scanBarButton_.enabled = YES;
+                    
+                    Media* lastMedia = (Media *)[medias lastObject];
+                    CGFloat latDif = fabs(fabs(referenceAnnotation_.coordinate.latitude) - fabs(lastMedia.coordinate.latitude));
+                    CGFloat lonDif = fabs(fabs(referenceAnnotation_.coordinate.longitude) - fabs(lastMedia.coordinate.longitude));
+                    CGFloat lonDelta = MIN(2*MAX(latDif, lonDif), 360.0);
+                    CGFloat latDelta = MIN(2*MAX(latDif, lonDif), 180.0);
+                    // Display the closest region with all the medias displayed
+                    [mapView_ setRegion:MKCoordinateRegionMake(referenceAnnotation_.coordinate, MKCoordinateSpanMake(latDelta, lonDelta)) animated:YES];
+                }
+            }
+        }];
     }
 }
 
