@@ -36,7 +36,7 @@
               success:(void (^)(AFHTTPRequestOperation *operation, id response))success
               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     
-    [self setSMDefaultHeader];
+    [self setDefaultHeader];
     
     LogDebug(@"WS url: %@", self.baseURL);
     LogDebug(@"WS method: %@", method);
@@ -113,7 +113,7 @@
 	return request;
 }
 
-- (void)setSMDefaultHeader
+- (void)setDefaultHeader
 {
     [self setDefaultHeader:@"Content-Type" value:@"text/xml"];
     [self setDefaultHeader:@"Accept" value:@"text/xml"];
