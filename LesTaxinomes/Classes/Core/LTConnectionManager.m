@@ -96,19 +96,19 @@
     if(range.length == 0 || range.length > kDefaultLimit)
         range.length = kDefaultLimit;
     NSString* limite = [NSString stringWithFormat:@"%d,%d", range.location,range.length];
-    NSArray *requestedFields = [NSArray arrayWithObjects:@"id_media", @"titre", @"date", @"statut", @"vignette", @"auteurs", nil];
+    NSArray *requestedFields = @[@"id_media", @"titre", @"date", @"statut", @"vignette", @"auteurs"];
     NSNumber* thumbnailWidth = [NSNumber numberWithDouble:(THUMBNAIL_MAX_WIDHT)];
     NSNumber* thumbnailHeight = [NSNumber numberWithDouble:(THUMBNAIL_MAX_HEIGHT)];
-    
-    NSMutableDictionary* parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       limite,                                     @"limite",
-                                       requestedFields,                            @"champs_demandes",
-                                       [NSArray arrayWithObject:@"date DESC"],     @"tri",
-                                       @"carre",                                   @"vignette_format",
-                                       thumbnailWidth,                             @"vignette_largeur",
-                                       thumbnailHeight,                            @"vignette_hauteur",
-                                       @"publie",                                  @"statut",
-                                       nil];
+    NSMutableDictionary* parameters = [NSMutableDictionary dictionaryWithDictionary:
+                                       @{
+                                            limite:             @"limite",
+                                            requestedFields:    @"champs_demandes",
+                                            @[@"date DESC"]:    @"tri",
+                                            @"carre":           @"vignette_format",
+                                            thumbnailWidth:     @"vignette_largeur",
+                                            thumbnailHeight:    @"vignette_hauteur",
+                                            @"publie":          @"statut"
+                                       }];
     // Optional
     if (location) {
         [parameters setValue:[NSString stringWithFormat:@"%f",location.coordinate.latitude]
@@ -137,43 +137,37 @@
     }];
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
-- (void)getMediaWithId:(NSNumber *)mediaIdentifier delegate:(id<LTConnectionManagerDelegate>)delegate {
+#warning TODO unit test
+- (void)getMediaWithId:(NSNumber *)mediaIdentifier
+         responseBlock:(void (^)(NSNumber* mediaIdentifier, Media* medias, NSError *error))responseBlock {
     if (!mediaIdentifier) {
         return;
     }
-    XMLRPCRequest* xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
+    
     NSNumber* mediaMaxHeight = [NSNumber numberWithDouble:MEDIA_MAX_WIDHT];
     NSNumber* mediaMaxWidth = [NSNumber numberWithDouble:MEDIA_MAX_WIDHT];
-    NSDictionary* args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:mediaIdentifier, mediaMaxWidth, mediaMaxHeight, nil] forKeys:[NSArray arrayWithObjects:@"id_article", @"document_largeur", @"document_hauteur", nil]];
-    [xmlrpcRequest setMethod:@"geodiv.lire_media" withObject:args];
+    NSDictionary* parameters =  @{
+                                    @"id_article"       : mediaIdentifier,
+                                    @"document_largeur" : mediaMaxWidth,
+                                    @"document_hauteur" : mediaMaxHeight
+                                };
     
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-    
-    dispatch_async(queue, ^{
-        id response = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
-        
-        [xmlrpcRequest release];
-        if([response isKindOfClass:[NSDictionary class]]) {
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                [delegate didRetrievedMedia:[Media mediaWithXMLRPCResponse:response]];
-            });
-        } else if ([response isKindOfClass:[NSError class]]){
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                [delegate didFailWithError:response];
-            });
-        } else {
-            NSString* localizedErrorString = [NSString stringWithFormat:@"%@ Failed retrieving Media with id: %d",kLTConnectionManagerInternalError, [mediaIdentifier intValue]];
-            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:localizedErrorString forKey:NSLocalizedDescriptionKey];
-            NSError* error = [NSError errorWithDomain:kLTConnectionManagerInternalError code:0 userInfo:userInfo];
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                [delegate didFailWithError:error];
-            });
-            
-        }
-    });
+    LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
+    [xmlrpcClient executeMethod:@"geodiv.lire_media"
+                 withParameters:parameters
+               authCookieEnable:NO
+                        success:^(AFHTTPRequestOperation *operation, XMLRPCResponse *response) {
+                            if([response isKindOfClass:[NSDictionary class]]) {
+                                Media * mediaObject = [Media mediaWithXMLRPCResponse:(NSDictionary *)response];
+                                responseBlock(mediaIdentifier, mediaObject, nil);
+                            }
+                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                            responseBlock(mediaIdentifier, nil, error);
+                        }];
 }
+
+///////////////////////////////////////////////////////////////////////////////
+
 
 - (void)getMediaLargeURLWithId:(NSNumber *)mediaIdentifier delegate:(id<LTConnectionManagerDelegate>)delegate {
     if (!mediaIdentifier) {

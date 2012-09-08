@@ -292,15 +292,7 @@
 						<reference key="source" ref="841351856"/>
 						<reference key="destination" ref="987256611"/>
 					</object>
-					<int key="connectionID">5</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">window</string>
-						<reference key="source" ref="987256611"/>
-						<reference key="destination" ref="380026005"/>
-					</object>
-					<int key="connectionID">10</int>
+					<int key="connectionID">38</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -308,7 +300,15 @@
 						<reference key="source" ref="987256611"/>
 						<reference key="destination" ref="155050025"/>
 					</object>
-					<int key="connectionID">35</int>
+					<int key="connectionID">36</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">window</string>
+						<reference key="source" ref="987256611"/>
+						<reference key="destination" ref="380026005"/>
+					</object>
+					<int key="connectionID">37</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -532,7 +532,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">35</int>
+			<int key="maxID">38</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>

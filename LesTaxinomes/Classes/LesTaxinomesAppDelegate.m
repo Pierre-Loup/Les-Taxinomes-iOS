@@ -41,7 +41,6 @@
     
     // Retreive licenses
     [[LTConnectionManager sharedConnectionManager] getLicensesWithResponseBlock:^(NSArray *licenses, NSError *error) {
-        LogDebug(@"licences: %d",[licenses count]);
     }];
     
     // iPad

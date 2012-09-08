@@ -65,15 +65,16 @@ typedef enum {
 
 + (LTConnectionManager *)sharedConnectionManager;
 - (void)getLicensesWithResponseBlock:(void (^)(NSArray* licenses, NSError *error))responseBlock;
+
 - (void)getShortMediasByDateForAuthor:(Author *)author
                          nearLocation:(CLLocation *)location
                             withRange:(NSRange)range
                         responseBlock:(void (^)(Author* author, NSRange range, NSArray* medias, NSError *error))responseBlock;
 
-///////////////////////////////////////////////////////////////////////////////
+- (void)getMediaWithId:(NSNumber *)mediaIdentifier
+         responseBlock:(void (^)(NSNumber* mediaIdentifier, Media* medias, NSError *error))responseBlock;
 
-- (void)getMediaWithId:(NSNumber *)mediaIdentifier 
-                    delegate:(id<LTConnectionManagerDelegate>)delegate;
+///////////////////////////////////////////////////////////////////////////////
 
 - (void)getMediaLargeURLWithId:(NSNumber *)mediaIdentifier 
                             delegate:(id<LTConnectionManagerDelegate>)delegate;

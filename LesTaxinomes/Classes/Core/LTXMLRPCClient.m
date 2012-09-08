@@ -15,7 +15,13 @@
 #define kFaultCodeKey @"faultCode"
 #define kFaultStringKey @"faultString"
 
+@interface LTXMLRPCClient ()
+- (void)setDefaultHeader;
+@end
+
 @implementation LTXMLRPCClient
+
+#pragma mark - Public
 
 + (LTXMLRPCClient *)sharedClient {
     static LTXMLRPCClient*    _sharedClient = nil;
@@ -41,22 +47,23 @@
     LogDebug(@"WS url: %@", self.baseURL);
     LogDebug(@"WS method: %@", method);
     
+    // Create XML-RPC body from parameters dict
     XMLRPCRequest* xmlrpcRequest = [[[XMLRPCRequest alloc] initWithHost:self.baseURL] autorelease];
-    [xmlrpcRequest setMethod:method withObject:parameters?parameters:[NSDictionary dictionary]];
+    [xmlrpcRequest setMethod:method withObject:parameters?parameters:@{}];
     LogDebug(@"REQUEST: %@",[xmlrpcRequest source]);
     
-
+    // Cookies management
     NSArray* cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[self.baseURL absoluteURL]];
     NSString* cookieHeaderValue = @"";
     for (NSHTTPCookie * cookie in cookies) {
-        if(cookie.value != nil &&
-           ![cookie.value isEqualToString:@""] &&
-           ![cookie.name isEqualToString: kSessionCookieName]) {
+        //Add cookies other than session cookie
+        if(![cookie.name isEqualToString: kSessionCookieName]) {
             if ([cookieHeaderValue isEqualToString:@""]) {
 				cookieHeaderValue = [NSString stringWithFormat: @"%@=%@",cookie.name,cookie.value];
 			} else {
 				cookieHeaderValue = [NSString stringWithFormat: @"%@; %@=%@",cookieHeaderValue,cookie.name,cookie.value];
 			}
+            // Add session cookie only if authCookieEnable is YES
         } else if ([cookie.name isEqualToString: kSessionCookieName] &&
                    authCookieEnable) {
             if ([cookieHeaderValue isEqualToString:@""]) {
@@ -66,10 +73,12 @@
 			}
         }
     }
+    // Add cookies to the request header
     [self setDefaultHeader:@"Cookie" value:cookieHeaderValue];
     
+    // Execute POST request with blocks
     [super postPath:@""
-         parameters:[NSDictionary dictionaryWithObject:[[xmlrpcRequest source] dataUsingEncoding:self.stringEncoding] forKey:kDataParamKey]
+         parameters:@{[[xmlrpcRequest source] dataUsingEncoding:self.stringEncoding]:kDataParamKey}
             success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 id response = [[[[XMLRPCResponse alloc] initWithData:responseObject] autorelease] object];
                 LogDebug(@"RESPONSE: %@",response);
@@ -81,7 +90,7 @@
                         if (faultCode && faultString) {
                             wsResponseError = [NSError errorWithDomain:kLTWebServiceResponseErrorDomain
                                                                   code:[faultCode integerValue]
-                                                              userInfo:[NSDictionary dictionaryWithObject:faultString forKey:NSLocalizedDescriptionKey]];
+                                                              userInfo:@{faultString:NSLocalizedDescriptionKey}];
                         }
                     }
                     
@@ -99,6 +108,15 @@
             }];
 }
 
+#pragma mark - Private
+
+- (void)setDefaultHeader {
+    [self setDefaultHeader:@"Content-Type" value:@"text/xml"];
+    [self setDefaultHeader:@"Accept" value:@"text/xml"];
+}
+
+#pragma mark - Overwride
+
 - (NSMutableURLRequest *)requestWithMethod:(NSString *)method
                                       path:(NSString *)path
                                 parameters:(NSDictionary *)parameters {
@@ -111,12 +129,6 @@
     }
     
 	return request;
-}
-
-- (void)setDefaultHeader
-{
-    [self setDefaultHeader:@"Content-Type" value:@"text/xml"];
-    [self setDefaultHeader:@"Accept" value:@"text/xml"];
 }
 
 @end

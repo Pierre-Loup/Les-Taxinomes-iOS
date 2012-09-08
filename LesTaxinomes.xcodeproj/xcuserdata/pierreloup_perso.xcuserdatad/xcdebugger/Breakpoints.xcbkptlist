@@ -43,7 +43,7 @@
    </FileBreakpoints>
    <ExceptionBreakpoints>
       <ExceptionBreakpoint
-         shouldBeEnabled = "No"
+         shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          scope = "0"

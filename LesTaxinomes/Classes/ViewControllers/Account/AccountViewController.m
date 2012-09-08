@@ -68,7 +68,7 @@
 }
 
 - (void)commonInit {
-    accountMenuLabels_ = [[NSArray arrayWithObjects:TRANSLATE(@"account_uploas_media"), TRANSLATE(@"account_my_medias"), nil] retain];
+    accountMenuLabels_ = [@[TRANSLATE(@"account_uploas_media"), TRANSLATE(@"account_my_medias")] retain];
 }
 
 - (void)didReceiveMemoryWarning

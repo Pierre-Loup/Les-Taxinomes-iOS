@@ -94,12 +94,12 @@
     self = [super initWithNibName:@"MediaUploadFormViewController" bundle:nil];
     if (self) {
         
-        _rowsInSection = [[NSArray arrayWithObjects:[NSNumber numberWithInt:1],
+        _rowsInSection = [@[[NSNumber numberWithInt:1],
                            [NSNumber numberWithInt:1],
                            [NSNumber numberWithInt:1],
                            [NSNumber numberWithInt:1],
-                           [NSNumber numberWithInt:1],
-                           nil] retain];
+                           [NSNumber numberWithInt:1]]
+                          retain];
         _license = [[License defaultLicense] retain];
     }
     return self;

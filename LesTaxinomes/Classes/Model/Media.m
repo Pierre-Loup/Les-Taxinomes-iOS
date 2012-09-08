@@ -221,7 +221,7 @@
 }
 
 + (NSArray *)allMedias {
-    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
+    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
     [request setEntity:entity];
@@ -248,7 +248,7 @@
 + (NSArray *)allSynchMediasForAuthor:(Author *)author {
     LTDataManager * dataManager = [LTDataManager sharedDataManager];
     if (dataManager.synchLimit == 0) {
-        return [NSArray array];
+        return @[];
     }
     
     NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
