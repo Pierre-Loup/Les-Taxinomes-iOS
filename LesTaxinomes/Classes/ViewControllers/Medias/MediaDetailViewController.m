@@ -31,7 +31,7 @@
 #import "MediaDetailViewController.h"
 #import "MediaFullSizeViewContoller.h"
 
-@interface MediaDetailViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate, LTConnectionManagerDelegate>{
+@interface MediaDetailViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>{
     int asynchLoadCounter_;
 }
 
@@ -45,12 +45,6 @@
 @property (nonatomic, retain) IBOutlet UITextView * descTextView;
 @property (nonatomic, retain) IBOutlet LTTitleView * mapTitleView;
 @property (nonatomic, retain) IBOutlet MKMapView * mapView;
-
-- (void)configureView;
-- (void)refreshView;
-- (void)mediaImageTouched:(UIImage *)sender;
-- (void)displayContentIfNeeded;
-- (void)loadMediaView;
 
 @end
 
@@ -145,7 +139,7 @@
         [self configureView];
     }
 }
-
+#warning
 #pragma mark - Properties
 
 - (void)setMedia:(Media *)media {
@@ -160,7 +154,7 @@
 #pragma mark - Private methodes
 
 - (void)configureView {
-    [self displayLoader];
+    [self startLoadingAnimation];
     LTDataManager *dm = [LTDataManager sharedDataManager];
     if([dm getMediaAsychIfNeededWithId:media_.identifier withDelegate:self]) {
         asynchLoadCounter_ = asynchLoadCounter_ + 1;
@@ -172,7 +166,7 @@
         asynchLoadCounter_ = asynchLoadCounter_ + 1;
     
     if (asynchLoadCounter_ > 0) {
-        [self displayLoader];
+        [self startLoadingAnimation];
     } else {
         [self refreshView];
     }
@@ -267,7 +261,7 @@
     
     [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, currentContentHeight)];
     if (asynchLoadCounter_ > 0) {
-        [self displayLoader];
+        [self startLoadingAnimation];
     } else {
         self.scrollView.hidden = NO;
     }
@@ -294,7 +288,7 @@
 
 - (void)displayContentIfNeeded {
     if (asynchLoadCounter_ <= 0) {
-        [self hideLoader];
+        [self stopLoadingAnimation];
         [self refreshView];
         [self.scrollView setHidden:NO];
     }
@@ -306,12 +300,12 @@
     [self.mediaImageView setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:media_.mediaMediumURL]]
                            placeholderImage:[UIImage imageNamed:@"medium_placeholder"]
                                     success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                        [self hideLoader];
+                                        [self stopLoadingAnimation];
                                         [self.placeholderAIView stopAnimating];
                                         [self refreshView];
                                     }
                                     failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                        [self hideLoader];
+                                        [self stopLoadingAnimation];
                                     }];
 }
 

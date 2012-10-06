@@ -62,15 +62,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    bgView_.light = NO;
-    //welcomLabel_ = [[UILabel alloc] initWithFrame:self.view.frame];
     [welcomLabel_ setNumberOfLines:0];
     [welcomLabel_ setLineBreakMode:UILineBreakModeTailTruncation];
     [welcomLabel_ setContentMode:UIViewContentModeCenter];
     [welcomLabel_ setTextAlignment:UITextAlignmentCenter];
     [welcomLabel_ setFont:[UIFont fontWithName:@"Jesaya Free" size:17.0]];
     welcomLabel_.text = TRANSLATE(@"home.welcom_text");
-    //[self.view addSubview:welcomLabel_];
     
     UIButton* infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
     [infoButton addTarget:self action:@selector(infoButtonAction:) forControlEvents:UIControlEventTouchUpInside];

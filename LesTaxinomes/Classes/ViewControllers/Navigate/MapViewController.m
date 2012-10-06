@@ -41,9 +41,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Navigation bar buttons
-    //reloadBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonAction:)];
-    //[self.navigationItem setLeftBarButtonItem:reloadBarButton_];
     scanBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(scanButtonAction:)];
     [self.navigationItem setRightBarButtonItem:scanBarButton_];
     
@@ -57,7 +54,7 @@
         [mapView_ setRegion:MKCoordinateRegionMake(referenceAnnotation_.coordinate, MKCoordinateSpanMake(1, 1)) animated:YES];
     } else {
         mapView_.showsUserLocation = YES;
-        [self displayLoader];
+        [self startLoadingAnimation];
     }
     
     // Start monitoring the user location changes
@@ -111,7 +108,7 @@
     if (referenceAnnotation_) {
         reloadBarButton_.enabled = NO;
         scanBarButton_.enabled = NO;
-        [self displayLoader];
+        [self startLoadingAnimation];
         
         NSRange range;
         range.location = searchStartIndex_;
@@ -152,7 +149,7 @@
                     [self loadMoreCloseMedias];
                 } else {
                     [mapView_ addAnnotations:medias];
-                    [self hideLoader];
+                    [self stopLoadingAnimation];
                     reloadBarButton_.enabled = YES;
                     scanBarButton_.enabled = YES;
                     
@@ -248,7 +245,7 @@
         [self loadMoreCloseMedias];
     } else {
         [mapView_ addAnnotations:medias];
-        [self hideLoader];
+        [self stopLoadingAnimation];
         reloadBarButton_.enabled = YES;
         scanBarButton_.enabled = YES;
         
@@ -263,7 +260,7 @@
 }
 
 - (void)didFailWithError:(NSError *)error {
-    [self hideLoader];
+    [self stopLoadingAnimation];
     reloadBarButton_.enabled = YES;
     scanBarButton_.enabled = YES;
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_network_unreachable_title") message:TRANSLATE(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:TRANSLATE(@"common.ok") otherButtonTitles:nil];

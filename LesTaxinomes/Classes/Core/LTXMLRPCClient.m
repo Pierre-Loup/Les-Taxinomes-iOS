@@ -10,10 +10,13 @@
 
 #import "XMLRPCRequest.h"
 #import "AFXMLRequestOperation.h"
+#import "LTConnectionManager.h"
 
-#define kDataParamKey @"data"
+#define kBodyParamKey @"body"
 #define kFaultCodeKey @"faultCode"
 #define kFaultStringKey @"faultString"
+
+NSString* const LTXMLRPCServerErrorDomain = @"org.lestaxinomes.app.iphone.LesTaxinomes.LTXMLRPCServerError";
 
 @interface LTXMLRPCClient ()
 - (void)setDefaultHeader;
@@ -37,10 +40,17 @@
 }
 
 - (void)executeMethod:(NSString *)method
-       withParameters:(NSDictionary *)parameters
+           withObject:(id)object
      authCookieEnable:(BOOL)authCookieEnable
-              success:(void (^)(AFHTTPRequestOperation *operation, id response))success
-              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+              success:(void (^)(id response))success
+              failure:(void (^)(NSError *error))failure {
+    
+    if (!method) {
+        NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                             code:LTConnectionManagerInternalError
+                                         userInfo:nil];
+        failure(error);
+    }
     
     [self setDefaultHeader];
     
@@ -48,9 +58,12 @@
     LogDebug(@"WS method: %@", method);
     
     // Create XML-RPC body from parameters dict
-    XMLRPCRequest* xmlrpcRequest = [[[XMLRPCRequest alloc] initWithHost:self.baseURL] autorelease];
-    [xmlrpcRequest setMethod:method withObject:parameters?parameters:@{}];
-    LogDebug(@"REQUEST: %@",[xmlrpcRequest source]);
+    NSDictionary* parameters = nil;
+    
+    XMLRPCRequest* xmlrpcRequest = [[[XMLRPCRequest alloc] initWithURL:self.baseURL] autorelease];
+    [xmlrpcRequest setMethod:method withParameter:object?object:@{}];
+    LogDebug(@"REQUEST: %@",[xmlrpcRequest body]);
+    parameters = @{kBodyParamKey :  [[xmlrpcRequest body] dataUsingEncoding:self.stringEncoding]};
     
     // Cookies management
     NSArray* cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[self.baseURL absoluteURL]];
@@ -78,7 +91,7 @@
     
     // Execute POST request with blocks
     [super postPath:@""
-         parameters:@{[[xmlrpcRequest source] dataUsingEncoding:self.stringEncoding]:kDataParamKey}
+         parameters:parameters
             success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 id response = [[[[XMLRPCResponse alloc] initWithData:responseObject] autorelease] object];
                 LogDebug(@"RESPONSE: %@",response);
@@ -88,23 +101,23 @@
                         NSString* faultCode = [(NSDictionary *)response objectForKey:kFaultCodeKey];
                         NSString* faultString = [(NSDictionary *)response objectForKey:kFaultStringKey];
                         if (faultCode && faultString) {
-                            wsResponseError = [NSError errorWithDomain:kLTWebServiceResponseErrorDomain
+                            wsResponseError = [NSError errorWithDomain:LTXMLRPCServerErrorDomain
                                                                   code:[faultCode integerValue]
-                                                              userInfo:@{faultString:NSLocalizedDescriptionKey}];
+                                                              userInfo:@{NSLocalizedDescriptionKey:faultString,@"method":method}];
                         }
                     }
                     
                     if (!wsResponseError) {
-                        success(operation,response);
+                        success(response);
                     } else {
-                        failure(operation, wsResponseError);
+                        failure(wsResponseError);
                     }
                 } else {
-                    failure(operation, (NSError *)response);
+                    failure((NSError *)response);
                 }
             }
             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                failure(operation,error);
+                failure(error);
             }];
 }
 
@@ -125,7 +138,7 @@
     if ([method isEqualToString:@"POST"]) {
         NSString *charset = (NSString *)CFStringConvertEncodingToIANACharSetName(CFStringConvertNSStringEncodingToEncoding(self.stringEncoding));
         [request setValue:[NSString stringWithFormat:@"text/xml; charset=%@", charset] forHTTPHeaderField:@"Content-Type"];
-        [request setHTTPBody:[parameters objectForKey:kDataParamKey]];
+        [request setHTTPBody:[parameters objectForKey:kBodyParamKey]];
     }
     
 	return request;

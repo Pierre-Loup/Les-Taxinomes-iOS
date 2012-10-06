@@ -25,23 +25,17 @@
 
 #import "AuthenticationSheetViewController.h"
 
+#import "LTErrorManager.h"
+
 @interface AuthenticationSheetViewController ()
 
 @property (nonatomic, retain) IBOutlet UITextField* loginTextField;
 @property (nonatomic, retain) IBOutlet UITextField* passwordTextField;
 @property (nonatomic, retain) IBOutlet UIGlossyButton* signinButton;
 
-- (IBAction)dismissAuthenticationSheet:(id)sender;
-- (IBAction)submitAuthentication:(id)sender;
-- (IBAction)forgottenPasswordButtonTouched:(id)sender;
-- (IBAction)signupButtonTouched:(id)sender;
 @end
 
 @implementation AuthenticationSheetViewController
-@synthesize authDelegate = authDelegate_;
-@synthesize loginTextField = loginTextField_;
-@synthesize passwordTextField = passwordTextField_;
-@synthesize signinButton = signinButton_;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -52,35 +46,35 @@
 }
 
 - (void)dealloc {
-    [loginTextField_ release];
-    [passwordTextField_ release];
-    [signinButton_ release];
+    [_loginTextField release];
+    [_passwordTextField release];
+    [_signinButton release];
     [super dealloc];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
+    
     [super viewDidLoad];
     self.title = TRANSLATE(@"common.signin");
-        UIBarButtonItem * cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common.cancel") style:UIBarButtonSystemItemCancel target:self action:@selector(dismissAuthenticationSheet:)];
+        UIBarButtonItem * cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common.cancel") style:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTouched:)];
         [self.navigationItem setRightBarButtonItem:cancelBarButton];
         [cancelBarButton release];
 
-    signinButton_.tintColor = kLightGreenColor;
-    signinButton_.buttonCornerRadius = 10.0;
-    [signinButton_ setGradientType:kUIGlossyButtonGradientTypeLinearGlossyStandard];
+    self.signinButton.tintColor = kLightGreenColor;
+    self.signinButton.buttonCornerRadius = 10.0;
+    [self.signinButton setGradientType:kUIGlossyButtonGradientTypeLinearGlossyStandard];
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
+    
     [super viewDidUnload];
     self.loginTextField = nil;
     self.passwordTextField = nil;
     self.signinButton = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
                                                                                                                                                                 
@@ -88,37 +82,41 @@
 
 - (IBAction)submitAuthentication:(id)sender {
     
-    if (authDelegate_) {
-        [self displayLoader];
-        [[LTConnectionManager sharedConnectionManager] authWithLogin:self.loginTextField.text
-                                 password:self.passwordTextField.text
-                                 delegate:authDelegate_];
-    } else {
-        [self dismissModalViewControllerAnimated:YES];
-    }
+    [self startLoadingAnimation];
+    LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
+        [cm authWithLogin:self.loginTextField.text
+                 password:self.passwordTextField.text
+            responseBlock:^(NSString *login, NSString *password, Author *authenticatedUser, NSError *error) {
+                [self stopLoadingAnimation];
+                if (authenticatedUser && !error) {
+                    [self.delegate authenticationDidFinishWithSuccess:YES];
+                } else {
+                    [[LTErrorManager sharedErrorManager] manageError:error];
+                }
+            }];
 }
 
-- (IBAction)forgottenPasswordButtonTouched:(id)sender {
+- (IBAction)forgottenPasswordButtonTouched:(UIButton *)button {
     NSURL* forgottenPasswordURL = [NSURL URLWithString:kForgottenPasswordURL];
     [[UIApplication sharedApplication] openURL:forgottenPasswordURL];
 }
 
-- (IBAction)signupButtonTouched:(id)sender {
+- (IBAction)signupButtonTouched:(UIButton *)button {
     NSURL* signupURL = [NSURL URLWithString:kSignupURL];
     [[UIApplication sharedApplication] openURL:signupURL];
 }
 
-- (IBAction)dismissAuthenticationSheet:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
+- (IBAction)cancelButtonTouched:(UIBarButtonItem *)barButton {
+    [self.delegate authenticationDidFinishWithSuccess:NO];
 }
 
 #pragma mark - Text field delegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (textField == loginTextField_) {
-        [passwordTextField_ becomeFirstResponder];
-    } else if (textField == passwordTextField_) {
-        [passwordTextField_ resignFirstResponder];
+    if (textField == self.loginTextField) {
+        [self.passwordTextField becomeFirstResponder];
+    } else if (textField == self.passwordTextField) {
+        [self.passwordTextField resignFirstResponder];
     }
     return YES;
 }

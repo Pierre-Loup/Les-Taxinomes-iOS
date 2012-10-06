@@ -50,7 +50,8 @@
 
 #define kSectionsNumber 4
 
-@interface MediaUploadFormViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, LTConnectionManagerDelegate, MediaLicenseChooserDelegate, MediaLocationPickerDelegate> {
+@interface MediaUploadFormViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, MediaLicenseChooserDelegate, MediaLocationPickerDelegate> {
+    NSURL* mediaAssetURL;
     License* _license;
 }
 
@@ -80,7 +81,7 @@
 
 #pragma mark - Super methodes override
 
-- (id)init
+- (id)initWithAssetURL:(NSURL*)assetURL
 {
     self = [self initWithNibName:@"MediaUploadFormViewController" bundle:nil];
     if (self) {
@@ -91,7 +92,7 @@
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     
-    self = [super initWithNibName:@"MediaUploadFormViewController" bundle:nil];
+    self = [super initWithNibName:nibNameOrNil bundle:nil];
     if (self) {
         
         _rowsInSection = [@[[NSNumber numberWithInt:1],
@@ -230,62 +231,17 @@
 
 - (IBAction)uploadMedia:(id)sender {
     
-    [self displayLoaderViewWithDetermination];
-    UIImage * imageToUpload;
-    if (self.mediaImage.size.width > MEDIA_MAX_WIDHT) {
-        CGFloat imageHeight = (MEDIA_MAX_WIDHT/self.mediaImage.size.width)*self.mediaImage.size.height;
-        CGSize newSize = CGSizeMake(MEDIA_MAX_WIDHT, imageHeight);
-        UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
-        [self.mediaImage drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
-        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();    
-        UIGraphicsEndImageContext();
-        imageToUpload = newImage;
-    } else {
-        imageToUpload = self.mediaImage;
-    }
+    [self startLoadingAnimationViewWithDetermination];
+#warning should implement progress delegate
     
-	NSData *imageData = [NSData dataWithData:UIImageJPEGRepresentation(imageToUpload, 1.0f)];//1.0f = 100% quality
-    
-    
-    NSMutableDictionary *info = [NSMutableDictionary dictionary];
-    // Title
-    if (![self.titleInput.text isEqualToString:@""]
-        && self.titleInput.text != nil) {
-        [info setValue:self.titleInput.text forKey:@"titre"];
-    } else {
-        [info setValue:TRANSLATE(@"media_upload_no_title") forKey:@"titre"];
-    }
-    // Text
-    if (self.textInput.text 
-        && self.textInput.text != nil) {
-        [info setValue:[NSString stringWithFormat:@"%@\n\n%@",self.textInput.text,TRANSLATE(@"media_upload.text_prefix")] forKey:@"texte"];
-    } else {
-        [info setValue:[NSString stringWithFormat:@"%@",TRANSLATE(@"media_upload.text_prefix")] forKey:@"texte"];
-    }
-    
-
-    [info setValue:@"publie" forKey:@"statut"];
-
-    
-    // License
-    if (_license) {
-        [info setValue:[NSString stringWithFormat:@"%@",[_license.identifier stringValue]] forKey:@"id_licence"];
-    }
-    
-    // Media
-    NSDictionary *document = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects: [NSString stringWithFormat:@"%@.jpg",[info objectForKey:@"title"]], @"image/jpeg", imageData, nil] forKeys:[NSArray arrayWithObjects:@"name", @"type", @"bits", nil]];
-    [info setValue:document forKey:@"document"];
-    
-    // Media location (GIS)
-    NSString* latitudeStr = [NSString stringWithFormat:@"%f", self.gis.coordinate.latitude];
-    NSString* longitudeStr = [NSString stringWithFormat:@"%f", self.gis.coordinate.longitude];
-    NSDictionary *gis = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:latitudeStr, longitudeStr, nil] forKeys:[NSArray arrayWithObjects:@"lat", @"lon",nil]];
-    [info setValue:gis forKey:@"gis"];
-    
-    
+#warning assetURL is nil
     LTConnectionManager* connectionManager = [LTConnectionManager sharedConnectionManager];
-    connectionManager.uploadProgressDelegate = self;
-    [connectionManager addMediaWithInformations:info delegate:self];
+    [connectionManager addMediaWithTitle:self.titleInput.text
+                                    text:self.textInput.text
+                                 license:_license
+                                assetURL:nil
+                           responseBlock:^(NSString *title, NSString *text, License *license, NSURL *assetURL, Media *media, NSError *error) {
+                           }];
 }
 
 #pragma mark - Tools
@@ -505,7 +461,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"media_upload_view_title") message:TRANSLATE(@"alert_upload_succeded") delegate:nil cancelButtonTitle:TRANSLATE(@"common.ok") otherButtonTitles:nil];
     [alert show];
     [alert release];
-    [self hideLoader];
+    [self stopLoadingAnimation];
     [self.navigationController popViewControllerAnimated:YES];
     
 }
@@ -514,7 +470,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"media_upload_view_title") message:TRANSLATE(@"alert_upload_failed") delegate:nil cancelButtonTitle:TRANSLATE(@"common.ok") otherButtonTitles:nil];
     [alert show];
     [alert release];
-    [self hideLoader];
+    [self stopLoadingAnimation];
 }
 
 @end

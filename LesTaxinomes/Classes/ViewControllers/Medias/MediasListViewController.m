@@ -37,7 +37,7 @@
 #define kMediaListCellIdentifier  @"MediasListCell"
 #define kSpinnerCellIdentifier  @"SpinnerCell"
 
-@interface MediasListViewController () <LTConnectionManagerDelegate> {
+@interface MediasListViewController () {
     
     MediaLoadingStatus mediaLoadingStatus_;
     NSMutableDictionary* mediaAtIndexPath_;
@@ -213,7 +213,7 @@
             [LTDataManager sharedDataManager].synchLimit += [medias count];
             [self reloadDatas];
         }
-        [self hideLoader];
+        [self stopLoadingAnimation];
         reloadBarButton_.enabled = YES;
     }];
 }
@@ -221,7 +221,7 @@
 - (void)refreshButtonAction:(id)sender {
     mediaLoadingStatus_ = PENDING;
     reloadBarButton_.enabled = NO;
-    [self displayLoader];
+    [self startLoadingAnimation];
     [LTDataManager sharedDataManager].synchLimit = 0;
     [mediaAtIndexPath_ removeAllObjects];
     [self.tableView reloadData];

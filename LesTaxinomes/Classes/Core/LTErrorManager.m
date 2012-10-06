@@ -10,14 +10,6 @@
 #import "AFNetworking.h"
 
 NSString* const LTServerErrorDomain = @"org.lestaxinomes.app.iphone.LesTaxinomes.ws_error";
-NSString* const LTDefaultErrorDomain = @"org.lestaxinomes.app.iphone.LesTaxinomes.error";
-
-@interface LTErrorManager ()
-- (void)manageNSURLError:(NSError *)error;
-- (void)manageAFNetworkingError:(NSError *)error;
-- (void)manageLTServerError:(NSError *)error;
-- (void)manageLTDefaultError:(NSError *)error;
-@end
 
 @implementation LTErrorManager
 
@@ -39,8 +31,6 @@ NSString* const LTDefaultErrorDomain = @"org.lestaxinomes.app.iphone.LesTaxinome
         [self manageAFNetworkingError:error];
     } else if (error.domain == LTServerErrorDomain) {
         [self manageLTServerError:error];
-    } else if (error.domain == LTDefaultErrorDomain) {
-        [self manageLTDefaultError:error];
     } else {
         // Do nothing
     }
@@ -65,10 +55,6 @@ NSString* const LTDefaultErrorDomain = @"org.lestaxinomes.app.iphone.LesTaxinome
 }
 
 - (void)manageLTServerError:(NSError *)error {
-    // Do nothing
-}
-
-- (void)manageLTDefaultError:(NSError *)error {
     // Do nothing
 }
 

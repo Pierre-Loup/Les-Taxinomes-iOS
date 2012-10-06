@@ -25,43 +25,24 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import "media.h"
+#import "Media.h"
 #import "Author.h"
 #import "License.h"
 #import "XMLRPCRequest.h"
-#import "ASIProgressDelegate.h"
 
-typedef enum {
-    UNAUTHENTICATED = 0,
-    AUTH_PENDING,
-    AUTH_FAILED,
-    AUTHENTICATED
-} AuthenticationStatus;
+/**
+ Indicates an error occured in LTConnectionManager.
+ */
+extern NSString* const LTConnectionManagerErrorDomain;
 
-@protocol LTConnectionManagerDelegate <NSObject>
-@optional
-- (void)didRetrievedShortMedias:(NSArray *)medias;
-- (void)didRetrievedMedia:(Media *)media;
-- (void)didRetrievedAuthor:(Author *)author;
-- (void)didSuccessfullyUploadMedia:(Media *)media;
-- (void)didFailWithError:(NSError *)error;
-@end
-
-@protocol LTConnectionManagerAuthDelegate <NSObject>
-@required
-- (void)authDidEndWithLogin:(NSString *)login
-                   password:(NSString *)password
-                     author:(Author *)author
-                      error:(NSError *)error;
-@end
+typedef enum LTConnectionManagerError {
+    LTConnectionManagerBadArgsError = 77001,
+    LTConnectionManagerInternalError = 77002
+} LTConnectionManagerError;
 
 @interface LTConnectionManager : NSObject
 
-@property (nonatomic, assign) id<LTConnectionManagerAuthDelegate> authDelegate;
-@property (nonatomic, assign) id<ASIProgressDelegate> downloadProgressDelegate;
-@property (nonatomic, assign) id<ASIProgressDelegate> uploadProgressDelegate;
 @property (nonatomic, retain) Author * authenticatedUser;
-@property (nonatomic, assign) AuthenticationStatus authStatus;
 
 + (LTConnectionManager *)sharedConnectionManager;
 - (void)getLicensesWithResponseBlock:(void (^)(NSArray* licenses, NSError *error))responseBlock;
@@ -72,25 +53,24 @@ typedef enum {
                         responseBlock:(void (^)(Author* author, NSRange range, NSArray* medias, NSError *error))responseBlock;
 
 - (void)getMediaWithId:(NSNumber *)mediaIdentifier
-         responseBlock:(void (^)(NSNumber* mediaIdentifier, Media* medias, NSError *error))responseBlock;
+         responseBlock:(void (^)(NSNumber* mediaIdentifier, Media* media, NSError *error))responseBlock;
 
-///////////////////////////////////////////////////////////////////////////////
+- (void)getMediaLargeURLWithId:(NSNumber *)mediaIdentifier
+                 responseBlock:(void (^)(NSNumber* mediaIdentifier, Media* media, NSError *error))responseBlock;
 
-- (void)getMediaLargeURLWithId:(NSNumber *)mediaIdentifier 
-                            delegate:(id<LTConnectionManagerDelegate>)delegate;
+- (void)getAuthorWithId:(NSNumber *)authorIdentifier
+          responseBlock:(void (^)(NSNumber* authorIdentifier, Author* author, NSError *error))responseBlock;
 
-- (void)getAuthorWithId:(NSNumber *)authorIdentifier 
-                     delegate:(id<LTConnectionManagerDelegate>)delegate;
-
-- (void)addMediaWithInformations: (NSDictionary *)info 
-                        delegate:(id<LTConnectionManagerDelegate>)delegate;
+- (void)addMediaWithTitle:(NSString *)title
+                     text:(NSString *)text
+                  license:(License *)license
+                 assetURL:(NSURL *)assetURL
+            responseBlock:(void (^)(NSString* title, NSString* text, License* license, NSURL* assetURL, Media* media, NSError *error))responseBlock;
 
 - (void)authWithLogin:(NSString *)login
              password:(NSString *)password
-             delegate:(id<LTConnectionManagerAuthDelegate>)delegate;
+        responseBlock:(void (^)(NSString* login, NSString* password, Author* authenticatedUser, NSError *error))responseBlock;
 
-- (void)checkUserAuthStatusWithDelegate:(id<LTConnectionManagerAuthDelegate>)delegate;
-- (void)unAuthenticate; 
-- (id)executeXMLRPCRequest:(XMLRPCRequest *)req authenticated:(BOOL) auth;
+- (void)unAuthenticate;
 
 @end

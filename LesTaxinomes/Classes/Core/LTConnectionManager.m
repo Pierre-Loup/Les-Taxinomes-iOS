@@ -23,30 +23,23 @@
  
  */
 
+#import "LTConnectionManager.h"
+
+#import <AssetsLibrary/ALAsset.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <CoreLocation/CoreLocation.h>
-#import "LTConnectionManager.h"
+
 #import "XMLRPCResponse.h"
-#import "ASIHTTPRequest.h"
+#import "NSMutableDictionary+ImageMetadata.h"
 #import "Media.h"
 #import "Author.h"
 #import "License.h"
 #import "LTXMLRPCClient.h"
 
+
+NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.LesTaxinomes.LTConnectionManagerError";
+
 @implementation LTConnectionManager
-@synthesize downloadProgressDelegate = downloadProgressDelegate_;
-@synthesize uploadProgressDelegate = uploadProgressDelegate_;
-@synthesize authDelegate = authDelegate_;
-@synthesize authStatus = authStatus_;
-
-
-
-- (id)init {
-	if (self = [super init]) {
-        self.authStatus = UNAUTHENTICATED;
-	}
-	return self;
-}
 
 - (void)dealloc {
     [_authenticatedUser release];
@@ -67,9 +60,9 @@
 - (void)getLicensesWithResponseBlock:(void (^)(NSArray* licenses, NSError *error))responseBlock {
     LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
     [xmlrpcClient executeMethod:@"spip.liste_licences"
-                 withParameters:nil
+                     withObject:nil
                authCookieEnable:NO
-    success:^(AFHTTPRequestOperation *operation, XMLRPCResponse *response) {
+    success:^(XMLRPCResponse *response) {
         if([response isKindOfClass:[NSDictionary class]]) {
             NSDictionary* responseDict = (NSDictionary*)response;
             NSMutableArray* licenses = [NSMutableArray array];
@@ -81,8 +74,13 @@
                 
             }
             responseBlock(licenses, nil);
+        } else {
+            NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                                 code:LTConnectionManagerInternalError
+                                             userInfo:@{@"method":@"spip.liste_licences"}];
+            responseBlock(nil, error);
         }
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSError *error) {
          responseBlock(nil, error);
      }];
     
@@ -96,18 +94,17 @@
     if(range.length == 0 || range.length > kDefaultLimit)
         range.length = kDefaultLimit;
     NSString* limite = [NSString stringWithFormat:@"%d,%d", range.location,range.length];
-    NSArray *requestedFields = @[@"id_media", @"titre", @"date", @"statut", @"vignette", @"auteurs"];
+    NSArray *requestedFields = @[@"id_media", @"titre", @"date", @"statut", @"vignette", @"auteurs", @"gis"];
     NSNumber* thumbnailWidth = [NSNumber numberWithDouble:(THUMBNAIL_MAX_WIDHT)];
     NSNumber* thumbnailHeight = [NSNumber numberWithDouble:(THUMBNAIL_MAX_HEIGHT)];
     NSMutableDictionary* parameters = [NSMutableDictionary dictionaryWithDictionary:
                                        @{
-                                            limite:             @"limite",
-                                            requestedFields:    @"champs_demandes",
-                                            @[@"date DESC"]:    @"tri",
-                                            @"carre":           @"vignette_format",
-                                            thumbnailWidth:     @"vignette_largeur",
-                                            thumbnailHeight:    @"vignette_hauteur",
-                                            @"publie":          @"statut"
+                                            @"limite":              limite,
+                                            @"champs_demandes":     requestedFields,
+                                            @"vignette_format":     @"carre",
+                                            @"vignette_largeur":    thumbnailWidth,
+                                            @"vignette_hauteur":    thumbnailHeight,
+                                            @"statut":              @"publie"
                                        }];
     // Optional
     if (location) {
@@ -115,13 +112,16 @@
                       forKey:@"lat"];
         [parameters setValue:[NSString stringWithFormat:@"%f",location.coordinate.longitude]
                       forKey:@"lon"];
+        [parameters setValue:@[@"distance"] forKey:@"tri"];
+    } else {
+        [parameters setValue:@[@"date DESC"] forKey:@"tri"];
     }
     
     LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
     [xmlrpcClient executeMethod:@"geodiv.liste_medias"
-                 withParameters:parameters
+                     withObject:parameters
                authCookieEnable:author?YES:NO
-    success:^(AFHTTPRequestOperation *operation, XMLRPCResponse *response) {
+    success:^(id response) {
         if([response isKindOfClass:[NSArray  class]]) {
             NSMutableArray *medias = [NSMutableArray array];
             for(NSDictionary *mediaXML in (NSArray *)response){
@@ -131,17 +131,26 @@
                 }
             }
             responseBlock(author, range, medias, nil);
+        } else {
+            NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                                 code:LTConnectionManagerInternalError
+                                             userInfo:@{@"method":@"geodiv.liste_medias"}];
+            responseBlock(author, range, nil, error);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSError *error) {
         responseBlock(author, range, nil, error);
     }];
 }
 
-#warning TODO unit test
 - (void)getMediaWithId:(NSNumber *)mediaIdentifier
-         responseBlock:(void (^)(NSNumber* mediaIdentifier, Media* medias, NSError *error))responseBlock {
+         responseBlock:(void (^)(NSNumber* mediaIdentifier, Media* media, NSError *error))responseBlock {
+    
     if (!mediaIdentifier) {
-        return;
+        
+        NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                             code:LTConnectionManagerBadArgsError
+                                         userInfo:nil];
+        responseBlock(mediaIdentifier, nil, error);
     }
     
     NSNumber* mediaMaxHeight = [NSNumber numberWithDouble:MEDIA_MAX_WIDHT];
@@ -154,219 +163,237 @@
     
     LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
     [xmlrpcClient executeMethod:@"geodiv.lire_media"
-                 withParameters:parameters
+                     withObject:parameters
                authCookieEnable:NO
-                        success:^(AFHTTPRequestOperation *operation, XMLRPCResponse *response) {
+                        success:^(id response) {
+                            
                             if([response isKindOfClass:[NSDictionary class]]) {
+                                
                                 Media * mediaObject = [Media mediaWithXMLRPCResponse:(NSDictionary *)response];
                                 responseBlock(mediaIdentifier, mediaObject, nil);
+                                
+                            } else {
+                                NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                                                     code:LTConnectionManagerInternalError
+                                                                 userInfo:@{@"method":@"geodiv.lire_media"}];
+                                responseBlock(mediaIdentifier, nil, error);
                             }
-                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        } failure:^(NSError* error) {
+                            
                             responseBlock(mediaIdentifier, nil, error);
                         }];
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
-
-- (void)getMediaLargeURLWithId:(NSNumber *)mediaIdentifier delegate:(id<LTConnectionManagerDelegate>)delegate {
+- (void)getMediaLargeURLWithId:(NSNumber *)mediaIdentifier
+                 responseBlock:(void (^)(NSNumber* mediaIdentifier, Media* media, NSError *error))responseBlock {
     if (!mediaIdentifier) {
+        
+        NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                             code:LTConnectionManagerBadArgsError
+                                         userInfo:nil];
+        responseBlock(mediaIdentifier, nil, error);
         return;
     }
-    XMLRPCRequest* xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
     NSNumber* mediaMaxHeight = [NSNumber numberWithDouble:MEDIA_MAX_WIDHT_LARGE];
     NSNumber* mediaMaxWidth = [NSNumber numberWithDouble:MEDIA_MAX_WIDHT_LARGE];
-    NSArray* values = [NSArray arrayWithObjects:mediaIdentifier, [NSArray arrayWithObjects:@"id_media", @"document", nil], mediaMaxWidth, mediaMaxHeight, nil];
-    NSArray* keys = [NSArray arrayWithObjects:@"id_article",@"champs_demandes", @"document_largeur", @"document_hauteur", nil];
-    NSDictionary* args = [NSDictionary dictionaryWithObjects:values forKeys:keys];
+    NSDictionary* parameters = @{   @"id_article"       : mediaIdentifier,
+                                    @"champs_demandes"  : @[ @"id_media", @"document" ],
+                                    @"document_largeur" : mediaMaxWidth,
+                                    @"document_hauteur" : mediaMaxHeight
+                                };
     
-    [xmlrpcRequest setMethod:@"geodiv.lire_media" withObject:args];
     
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
     
-    dispatch_async(queue, ^{
-        id response = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
-        
-        [xmlrpcRequest release];
-        if([response isKindOfClass:[NSDictionary class]]) {
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                [delegate didRetrievedMedia:[Media mediaLargeURLWithXMLRPCResponse:response]];
-            });
-        } else if ([response isKindOfClass:[NSError class]]){
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                [delegate didFailWithError:response];
-            });
-        } else {
-            NSString * localizedErrorString = [NSString stringWithFormat:@"%@ Failed retrieving Media with id: %d",kLTConnectionManagerInternalError, [mediaIdentifier intValue]];
-            NSDictionary * userInfo = [NSDictionary dictionaryWithObject:localizedErrorString forKey:NSLocalizedDescriptionKey];
-            NSError * error = [NSError errorWithDomain:kLTConnectionManagerInternalError code:0 userInfo:userInfo];
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                [delegate didFailWithError:error];
-            });
-        }
-    });
+    LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
+    [xmlrpcClient executeMethod:@"geodiv.lire_media"
+                     withObject:parameters
+               authCookieEnable:NO
+                        success:^(id response) {
+
+                            if([response isKindOfClass:[NSDictionary class]]) {
+                                
+                                Media * mediaObject = [Media mediaWithXMLRPCResponse:(NSDictionary *)response];
+                                responseBlock(mediaIdentifier, mediaObject, nil);
+                            } else {
+                                NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                                                     code:LTConnectionManagerInternalError
+                                                                 userInfo:@{@"method":@"geodiv.lire_media"}];
+                                responseBlock(mediaIdentifier, nil, error);
+                            }
+                        } failure:^(NSError* error) {
+                            
+                            responseBlock(mediaIdentifier, nil, error);
+                        }];
 }
 
-- (void)getAuthorWithId:(NSNumber *)authorIdentifier delegate:(id<LTConnectionManagerDelegate>)delegate {
+- (void)getAuthorWithId:(NSNumber *)authorIdentifier
+          responseBlock:(void (^)(NSNumber* authorIdentifier, Author* author, NSError *error))responseBlock {
     if (!authorIdentifier) {
+        NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                             code:LTConnectionManagerBadArgsError
+                                         userInfo:nil];
+        responseBlock(authorIdentifier, nil, error);
         return;
     }
-    XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
-    NSDictionary *args = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:authorIdentifier, nil] forKeys:[NSArray arrayWithObjects:@"id_auteur", nil]];
-    [xmlrpcRequest setMethod:@"spip.lire_auteur" withObject:args];
     
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    NSDictionary* parameters = @{ @"id_auteur" : authorIdentifier };
     
-    dispatch_async(queue, ^{
-        id response = [self executeXMLRPCRequest:xmlrpcRequest authenticated:NO];
-        
-        [xmlrpcRequest release];
-        if([response isKindOfClass:[NSDictionary class]]) {
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                [delegate didRetrievedAuthor:[Author authorWithXMLRPCResponse:response]];
-            });
-        } else if ([response isKindOfClass:[NSError class]]){
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                [delegate didFailWithError:response];
-            });
-        } else {
-            NSString * localizedErrorString = [NSString stringWithFormat:@"%@ Failed retrieving Author with id: %d",kLTConnectionManagerInternalError, [authorIdentifier intValue]];
-            NSDictionary * userInfo = [NSDictionary dictionaryWithObject:localizedErrorString forKey:NSLocalizedDescriptionKey];
-            NSError * error = [NSError errorWithDomain:kLTConnectionManagerInternalError code:0 userInfo:userInfo];
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                [delegate didFailWithError:error];
-            });
-        }
-    });
+    LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
+    [xmlrpcClient executeMethod:@"spip.lire_auteur"
+                     withObject:parameters
+               authCookieEnable:NO
+                        success:^(id response) {
+                            
+                            if([response isKindOfClass:[NSDictionary class]]) {
+                                
+                                Author* authorObject = [Author authorWithXMLRPCResponse:(NSDictionary *)response];
+                                responseBlock(authorIdentifier, authorObject, nil);
+                            } else {
+                                NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                                                     code:LTConnectionManagerInternalError
+                                                                 userInfo:@{@"method":@"spip.lire_auteur"}];
+                                responseBlock(authorIdentifier, nil, error);
+                            }
+                        } failure:^(NSError* error) {
+                            
+                            responseBlock(authorIdentifier, nil, error);
+                        }];
 }
 
-- (void)addMediaWithInformations: (NSDictionary *)info delegate:(id<LTConnectionManagerDelegate>)delegate {
-    XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
-    [xmlrpcRequest setMethod:@"geodiv.creer_media" withObject:info];
+- (void)addMediaWithTitle:(NSString *)title
+                     text:(NSString *)text
+                  license:(License *)license
+                 assetURL:(NSURL *)assetURL
+            responseBlock:(void (^)(NSString* title, NSString* text, License* license, NSURL* assetURL, Media* media, NSError *error))responseBlock {
     
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    if (!assetURL) {
+        NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                             code:LTConnectionManagerBadArgsError
+                                         userInfo:nil];
+        responseBlock(title, text, license, assetURL, nil, error);
+    }
     
-    dispatch_async(queue, ^{
-        id response = [self executeXMLRPCRequest:xmlrpcRequest authenticated:YES];
-        
-        [xmlrpcRequest release];
-        if([response isKindOfClass:[NSDictionary class]]) {
-            if ([response objectForKey:@"faultString"]
-                && [response objectForKey:@"faultCode"]) {
-                if ([delegate respondsToSelector:@selector(didFailWithError:)]) {
-                    dispatch_sync(dispatch_get_main_queue(), ^{
-                        [delegate didFailWithError:response];
-                    });
-                }
-            } else {
-                if ([delegate respondsToSelector:@selector(didSuccessfullyUploadMedia:)]) {
-                    dispatch_sync(dispatch_get_main_queue(), ^{
-                        [delegate didSuccessfullyUploadMedia:[Media mediaWithXMLRPCResponse:response]];
-                        
-                    });
-                }
+    NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
+    
+    // Title
+
+    if (title) {
+        [parameters setValue:title forKey:@"titre"];
+    } else {
+        [parameters setValue:TRANSLATE(@"media_upload_no_title") forKey:@"titre"];
+    }
+    
+    //Text
+    NSMutableString* fullText = [NSMutableString string];
+    if (text) {
+        [fullText appendString:text];
+    }
+    [fullText appendString:TRANSLATE(@"media_upload.text_prefix")];
+    [parameters setValue:fullText forKey:@"texte"];
+    
+    // License
+    if (license) {
+        [parameters setValue:[NSString stringWithFormat:@"%@",[license.identifier stringValue]] forKey:@"id_licence"];
+    }
+
+    ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
+    [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
+        if (asset) {
+            ALAssetRepresentation* assetRepresentation = [asset defaultRepresentation];
+
+            // Media location (GIS)
+            NSMutableDictionary* imageMetadata = [NSMutableDictionary dictionaryWithDictionary:[assetRepresentation metadata]];
+            NSString* latitudeStr = [NSString stringWithFormat:@"%f", [imageMetadata location].coordinate.latitude];
+            NSString* longitudeStr = [NSString stringWithFormat:@"%f", [imageMetadata location].coordinate.longitude];
+            [parameters setValue:@{@"lat" : latitudeStr, @"lon" : longitudeStr} forKey:@"gis"];
+            
+            // Retrieve the image orientation from the ALAsset
+            UIImageOrientation orientation = UIImageOrientationUp;
+            NSNumber* orientationValue = [asset valueForProperty:@"ALAssetPropertyOrientation"];
+            if (orientationValue != nil) {
+                orientation = [orientationValue intValue];
             }
-        } else if ([response isKindOfClass:[NSError class]]){
-            if ([delegate respondsToSelector:@selector(didFailWithError:)]) {
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    [delegate didFailWithError:response];
-                });
-            }
-        } else {
-            if ([delegate respondsToSelector:@selector(didFailWithError:)]) {
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    [delegate didFailWithError:nil];
-                    
-                });
+            
+            // Media
+            CGImageRef iref = [assetRepresentation fullResolutionImage];
+            if (iref) {
+                UIImage* mediaImage = [[UIImage imageWithCGImage:iref scale:1 orientation:orientation] retain];
+                if (mediaImage.size.width > MEDIA_MAX_WIDHT) {
+                    CGFloat imageHeight = (MEDIA_MAX_WIDHT/mediaImage.size.width)*mediaImage.size.height;
+                    CGSize newSize = CGSizeMake(MEDIA_MAX_WIDHT, imageHeight);
+                    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+                    [mediaImage drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+                    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+                    UIGraphicsEndImageContext();
+                    mediaImage = newImage;
+                }
+                
+                NSData* imageData = [NSData dataWithData:UIImageJPEGRepresentation(mediaImage, 1.0f)];
+                NSDictionary *document = @{
+                @"name" : [NSString stringWithFormat:@"%@.jpg",title],
+                @"type" : @"image/jpeg",
+                @"bits" : imageData,
+                };
+
+                [parameters setValue:document forKey:@"document"];
             }
         }
-    });
+    } failureBlock:^(NSError *error) {
+        responseBlock(title,text,license,assetURL,nil,error);
+    }];
+    [library release];
+    
+    [parameters setValue:@"publie" forKey:@"statut"];
+
+    LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
+    [xmlrpcClient executeMethod:@"geodiv.creer_media"
+                     withObject:parameters
+               authCookieEnable:NO
+                        success:^(id response) {
+                            if([response isKindOfClass:[NSDictionary class]]) {
+                                
+                                Media * mediaObject = [Media mediaWithXMLRPCResponse:(NSDictionary *)response];
+                                responseBlock(title, text, license, assetURL, mediaObject, nil);
+                            } else {
+                                NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                                                     code:LTConnectionManagerInternalError
+                                                                 userInfo:@{@"method":@"geodiv.creer_media"}];
+                                responseBlock(title, text, license, assetURL, nil, error);
+                            }
+                        } failure:^(NSError* error) {
+                            responseBlock(title,text,license,assetURL,nil,error);
+                        }];
 }
 
-- (void)authWithLogin:(NSString *)login password:(NSString *)password delegate:(id<LTConnectionManagerAuthDelegate>)delegate{
-    self.authStatus = AUTH_PENDING;
-    XMLRPCRequest *xmlrpcRequest = [[XMLRPCRequest alloc] initWithHost:[NSURL URLWithString:kXMLRCPWebServiceURL]];
+- (void)authWithLogin:(NSString *)login
+             password:(NSString *)password
+        responseBlock:(void (^)(NSString* login, NSString* password, Author* authenticatedUser, NSError *error))responseBlock {
     
-    NSMutableArray *args = [NSMutableArray array];
+    NSMutableArray* identifiers = [NSMutableArray array];
     if (login) {
-        [args addObject:login];
+        [identifiers addObject:login];
     }
     if (password) {
-        [args addObject:password];
-    }
-    [xmlrpcRequest setMethod:@"spip.auth" withObject:args];
-    
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-    
-    dispatch_async(queue, ^{
-        id response = [self executeXMLRPCRequest:xmlrpcRequest authenticated:YES];
-        
-        [xmlrpcRequest release];
-        if([response isKindOfClass:[NSDictionary class]]){
-            self.authStatus = AUTHENTICATED;
-            self.authenticatedUser = [Author authorWithXMLRPCResponse:response];
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                [delegate authDidEndWithLogin:login
-                                     password:password
-                                       author:self.authenticatedUser
-                                        error:nil];
-                
-            });
-        } else {
-            self.authStatus = AUTH_FAILED;
-            if ([response isKindOfClass:[NSError class]]) {
-                NSError * error = (NSError *)response;
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    [delegate authDidEndWithLogin:login
-                                         password:password
-                                           author:nil
-                                            error:error];
-                    
-                });
-            } else {
-                NSError * error = [NSError errorWithDomain:kLTAuthenticationFailedError code:0 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:TRANSLATE(@"error_auth_failed"), NSLocalizedDescriptionKey, nil]];
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    [delegate authDidEndWithLogin:login
-                                         password:password
-                                           author:nil
-                                            error:error];
-                    
-                });
-            }
-        }
-    });
-}
-
-- (void)checkUserAuthStatusWithDelegate:(id<LTConnectionManagerAuthDelegate>)delegate {
-    NSHTTPCookie* authCookie = nil;
-    
-    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[[NSURL URLWithString:kHTTPHost] absoluteURL]];
-    for (NSHTTPCookie * cookie in cookies) {
-        if([cookie.name isEqualToString:kSessionCookieName]
-           && cookie.value != nil
-           && ![cookie.value isEqualToString:@""]
-           && [cookie.expiresDate timeIntervalSinceNow] > 0.0) {
-            authCookie = cookie;
-        }
+        [identifiers addObject:password];
     }
     
-    if (self.authenticatedUser) {
-            [delegate authDidEndWithLogin:nil
-                                 password:nil
-                                   author:self.authenticatedUser
-                                    error:nil];
-            
-    } else if (authCookie) {
-        [self authWithLogin:nil password:nil delegate:delegate];
-    } else {
-            [delegate authDidEndWithLogin:nil
-                                 password:nil
-                                   author:nil
-                                    error:nil];
-            
-    }
-    
-    
+    LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
+    [xmlrpcClient executeMethod:@"spip.auth"
+                     withObject:identifiers
+               authCookieEnable:YES
+                        success:^(id response) {
+                            if([response isKindOfClass:[NSDictionary class]]){
+                                self.authenticatedUser = [Author authorWithXMLRPCResponse:(NSDictionary *)response];
+                                responseBlock(login, password, self.authenticatedUser, nil);
+                            } else {
+                                NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                                                     code:LTConnectionManagerInternalError
+                                                                 userInfo:@{@"method":@"spip.auth"}];
+                                responseBlock(login, password, nil, error);
+                            }
+                        } failure:^(NSError* error) {
+                            responseBlock(login, password, nil, error);
+                        }];
 }
 
 - (void)unAuthenticate {
@@ -377,47 +404,6 @@
         }
     }
     self.authenticatedUser = nil;
-}
-
-- (id)executeXMLRPCRequest:(XMLRPCRequest *)req  authenticated:(BOOL)auth{
-    
-    ASIHTTPRequest *request = [[[ASIHTTPRequest alloc] initWithURL:[req host]] autorelease];
-    request.downloadProgressDelegate = downloadProgressDelegate_;
-    request.uploadProgressDelegate = uploadProgressDelegate_;
-    [request setUseCookiePersistence:auth];
-    [request setRequestMethod:@"POST"];
-    [request setTimeOutSeconds:30];
-    [request appendPostData:[[req source] dataUsingEncoding:NSUTF8StringEncoding]];
-    LogDebug(@"executeXMLRPCRequest host: %@",[req host]);
-    //LogDebug(@"executeXMLRPCRequest request: %@",[req source]);
-    [request startSynchronous];
-    request.uploadProgressDelegate = nil;
-    self.uploadProgressDelegate = nil;
-    request.downloadProgressDelegate = nil;
-    self.downloadProgressDelegate = nil;
-    //generic error
-    NSError *err = [request error];
-    if (err) {
-        //TODO ERROR
-        LogDebug(@"executeXMLRPCRequest error: %@", err);
-        return err;
-    }
-    
-    
-    int statusCode = [request responseStatusCode];
-    if (statusCode >= 404) {
-        NSDictionary *usrInfo = [NSDictionary dictionaryWithObjectsAndKeys:[request responseStatusMessage], NSLocalizedDescriptionKey, nil];
-        NSError * error = [NSError errorWithDomain:kNetworkRequestErrorDomain code:statusCode userInfo:usrInfo];
-        return error;
-    }
-    
-    LogDebug(@"executeXMLRPCRequest response: %@", [request responseString]);
-    XMLRPCResponse *userInfoResponse = [[[XMLRPCResponse alloc] initWithData:[request responseData]] autorelease];
-    if([userInfoResponse isKindOfClass:[NSError class]]){
-        return userInfoResponse;
-    }
-    
-    return [userInfoResponse object];
 }
 
 @end

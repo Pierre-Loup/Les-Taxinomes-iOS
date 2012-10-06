@@ -30,5 +30,4 @@
 #import "Author.h"
 
 @interface AccountViewController : LTPhotoPickerViewController
-
 @end

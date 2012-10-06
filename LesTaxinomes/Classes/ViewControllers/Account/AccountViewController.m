@@ -24,11 +24,12 @@
  */
 
 #import "AccountViewController.h"
+#import "LTErrorManager.h"
 #import "MediaUploadFormViewController.h"
 #import "MediasListViewController.h"
 #import "UIImageView+AFNetworking.h"
 
-@interface AccountViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, LTConnectionManagerAuthDelegate> {
+@interface AccountViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, LTAuthenticationSheetDelegate> {
     
     NSArray* accountMenuLabels_;
     Author * authenticatedUser_;
@@ -43,8 +44,6 @@
 - (void)commonInit;
 - (void)displayAuthenticationSheetAnimated:(BOOL)animated;
 - (IBAction)logoutButtonPressed:(id)sender;
-- (void)switchToAuthenticatedMode:(BOOL)animated;
-- (void)switchToUnauthenticatedMode:(BOOL)animated;
 @end
 
 @implementation AccountViewController
@@ -91,41 +90,41 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    bgView_.light = NO;
     [self.tableView setHidden:YES];
     [avatarView_ setImageWithURL:[NSURL URLWithString:authenticatedUser_.avatarURL]
                 placeholderImage:[UIImage imageNamed:@"default_avatar_medium"]];
     avatarView_.frame = defaultAvatarView_.frame;
     [self.view addSubview:avatarView_];
-    
-    [self switchToUnauthenticatedMode:YES];
-    LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
-    if (!cm.authenticatedUser) {
-        [cm checkUserAuthStatusWithDelegate:self];
-    }
+    [self switchToUnauthenticatedModeAnimated:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
-    if (cm.authenticatedUser) {
-        [authenticatedUser_ release];
-        authenticatedUser_ = [cm.authenticatedUser retain];
-        [self switchToAuthenticatedMode:NO];
+    if (!cm.authenticatedUser) {
+        [self startLoadingAnimation];
+        [cm authWithLogin:nil
+                 password:nil
+            responseBlock:^(NSString *login, NSString *password, Author *authenticatedUser, NSError *error) {
+                [self stopLoadingAnimation];
+                if (authenticatedUser) {
+                    [self switchToAuthenticatedModeAnimated:YES];
+                } else {
+                    [self switchToUnauthenticatedModeAnimated:YES];
+                }
+            }];
+    } else {
+        [self switchToAuthenticatedModeAnimated:NO];
     }
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [self.view becomeFirstResponder];
 }
 
-- (void)viewDidUnload
-{
-    [authenticatedUser_ release];
-    authenticatedUser_ = nil;
+- (void)viewDidUnload {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -139,7 +138,7 @@
 
 - (void)displayAuthenticationSheetAnimated:(BOOL)animated {
     AuthenticationSheetViewController * authenticationSheetViewController = [[AuthenticationSheetViewController alloc] initWithNibName:@"AuthenticationSheetViewController" bundle:nil];
-    authenticationSheetViewController.authDelegate = self;
+    authenticationSheetViewController.delegate = self;
     UINavigationController * navigationController = [[UINavigationController alloc] initWithRootViewController:authenticationSheetViewController];
     authenticationSheetViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentModalViewController:navigationController animated:animated];
@@ -198,7 +197,7 @@
         [mediaUploadFormViewController release];
     } else if (indexPath.row == 1 && indexPath.section == 0) {
         MediasListViewController * mediasListViewController = [[MediasListViewController alloc] initWithNibName:@"MediasListViewController" bundle:nil];
-        mediasListViewController.currentUser = authenticatedUser_;
+        mediasListViewController.currentUser = [LTConnectionManager sharedConnectionManager].authenticatedUser;
         [self.navigationController pushViewController:mediasListViewController animated:YES];
         mediasListViewController.title = TRANSLATE(@"account_my_medias");
         [mediasListViewController release];
@@ -210,7 +209,7 @@
 - (IBAction)logoutButtonPressed:(id)sender {
     LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
     [connectionManager unAuthenticate];
-    [self switchToUnauthenticatedMode:YES];
+    [self switchToUnauthenticatedModeAnimated:YES];
 }
 
 - (IBAction)signInButtonPressed:(id)sender {
@@ -218,10 +217,11 @@
     
 }
 
-- (void)switchToAuthenticatedMode:(BOOL)animated {
-    if (authenticatedUser_) {
-        self.userNameLabel.text = authenticatedUser_.name;
-        [avatarView_ setImageWithURL:[NSURL URLWithString:authenticatedUser_.avatarURL]
+- (void)switchToAuthenticatedModeAnimated:(BOOL)animated {
+    if ([LTConnectionManager sharedConnectionManager].authenticatedUser) {
+        Author* authUser = [LTConnectionManager sharedConnectionManager].authenticatedUser;
+        self.userNameLabel.text = authUser.name;
+        [avatarView_ setImageWithURL:[NSURL URLWithString:authUser.avatarURL]
                     placeholderImage:[UIImage imageNamed:@"default_avatar_medium"]];
     }
     [avatarView_ setHidden:NO];
@@ -234,7 +234,7 @@
     [self dismissModalViewControllerAnimated:animated];
 }
 
-- (void)switchToUnauthenticatedMode:(BOOL)animated {
+- (void)switchToUnauthenticatedModeAnimated:(BOOL)animated {
     [rightBarButton_ release];
     rightBarButton_ = nil;
     rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common.signin") style:UIBarButtonItemStylePlain target:self action:@selector(signInButtonPressed:)];
@@ -243,44 +243,17 @@
     [avatarView_ setHidden:YES];
 }
 
-#pragma mark - LTConnectionManagerAuthDelegate
+#pragma mark - LTAuthenticationSheetDelegate
 
-- (void)authDidEndWithLogin:(NSString *)login
-                   password:(NSString *)password
-                     author:(Author *)author
-                      error:(NSError *)error {
-    
-    [self hideLoader];
-    if ([self.modalViewController isKindOfClass:[UINavigationController class]]) {
-        UINavigationController* navigationController = (UINavigationController *)self.modalViewController;
-        if ([navigationController.topViewController isKindOfClass:[AuthenticationSheetViewController class]]) {
-            [(AuthenticationSheetViewController *)navigationController.topViewController hideLoader];
-        }
+- (void)authenticationDidFinishWithSuccess:(BOOL)success {
+    Author* authenticatedUser = [LTConnectionManager sharedConnectionManager].authenticatedUser;
+    if (success && authenticatedUser) {
+        self.userNameLabel.text = authenticatedUser.name;
+        [self.avatarView setImageWithURL:[NSURL URLWithString:authenticatedUser.avatarURL]
+                        placeholderImage:[UIImage imageNamed:@"default_avatar_medium"]];
+        [self switchToAuthenticatedModeAnimated:YES];
     }
-    if (author) {
-        [authenticatedUser_ release];
-        authenticatedUser_ = [author retain];
-        self.userNameLabel.text = authenticatedUser_.name;
-        [avatarView_ setImageWithURL:[NSURL URLWithString:authenticatedUser_.avatarURL]
-                    placeholderImage:[UIImage imageNamed:@"default_avatar_medium"]];
-        [self switchToAuthenticatedMode:YES];
-        [self dismissModalViewControllerAnimated:YES];
-    } else {
-        [self switchToUnauthenticatedMode:YES];
-        [self displayAuthenticationSheetAnimated:YES];
-    }
-    
-    if (error && login && password) {
-        UIAlertView *authFailedAlert = nil;
-        if ([error.domain isEqualToString:kNetworkRequestErrorDomain]) {
-            authFailedAlert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_network_unreachable_title") message:TRANSLATE(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:TRANSLATE(@"common.ok") otherButtonTitles:nil];
-        } else if ([error.domain isEqualToString:kLTAuthenticationFailedError]) {
-            authFailedAlert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_auth_failed_title") message:TRANSLATE(@"alert_auth_failed_text") delegate:self cancelButtonTitle:TRANSLATE(@"common.ok") otherButtonTitles:nil];
-        }
-        
-        [authFailedAlert show];
-        [authFailedAlert release];
-    }
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

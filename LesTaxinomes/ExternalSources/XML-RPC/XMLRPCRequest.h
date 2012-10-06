@@ -1,77 +1,57 @@
-//
-//  Cocoa XML-RPC Client Framework
-//  XMLRPCRequest.h
-//
-//  Created by Eric Czarny on Wed Jan 14 2004.
-//  Copyright (c) 2004 Divisible by Zero.
-//
-
-//
-//  Permission is hereby granted, free of charge, to any person
-//  obtaining a copy of this software and associated documentation
-//  files (the "Software"), to deal in the Software without 
-//  restriction, including without limitation the rights to use,
-//  copy, modify, merge, publish, distribute, sublicense, and/or 
-//  sell copies of the Software, and to permit persons to whom the
-//  Software is furnished to do so, subject to the following
-//  conditions:
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-//  OTHER DEALINGS IN THE SOFTWARE.
-//
-
 #import <Foundation/Foundation.h>
 
-@class CTidy;
-@class XMLRPCEncoder;
+#import "XMLRPCEncoder.h"
 
 @interface XMLRPCRequest : NSObject {
-	NSMutableURLRequest *_request;
-	XMLRPCEncoder *_encoder;
+    NSMutableURLRequest *myRequest;
+    id<XMLRPCEncoder> myXMLEncoder;
+    NSTimeInterval myTimeoutInterval;
 }
 
-/* */
-- (id)initWithHost: (NSURL *)host;
+- (id)initWithURL: (NSURL *)URL;
 
 #pragma mark -
 
-- (void)setHost: (NSURL *)host;
-- (NSURL *)host;
+- (void)setURL: (NSURL *)URL;
+
+- (NSURL *)URL;
 
 #pragma mark -
 
-- (void)setUserAgent: (NSString *)agent;
+- (void)setUserAgent: (NSString *)userAgent;
+
 - (NSString *)userAgent;
 
 #pragma mark -
 
-- (void)setMethod: (NSString *)method withObject: (id)object;
+- (void)setEncoder: (id<XMLRPCEncoder>) encoder;
 
-#pragma mark -
+- (void)setMethod: (NSString *)method;
 
-- (void)setMethod: (NSString *)method withObjects: (NSArray *)objects;
+- (void)setMethod: (NSString *)method withParameter: (id)parameter;
 
-#pragma mark -
+- (void)setMethod: (NSString *)method withParameters: (NSArray *)parameters;
 
-- (void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)header;
+- (void)setTimeoutInterval: (NSTimeInterval)timeoutInterval;
 
 #pragma mark -
 
 - (NSString *)method;
-- (NSArray *)objects;
+
+- (NSArray *)parameters;
+
+- (NSTimeInterval)timeoutInterval;
 
 #pragma mark -
 
-- (NSString *)source;
+- (NSString *)body;
 
 #pragma mark -
 
 - (NSURLRequest *)request;
+
+#pragma mark -
+
+- (void)setValue: (NSString *)value forHTTPHeaderField: (NSString *)header;
 
 @end

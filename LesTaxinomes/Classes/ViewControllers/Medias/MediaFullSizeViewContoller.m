@@ -26,7 +26,7 @@
 #import "MediaFullSizeViewContoller.h"
 #import "UIImageView+AFNetworking.h"
 
-@interface MediaFullSizeViewContoller () <UIScrollViewDelegate, LTConnectionManagerDelegate>
+@interface MediaFullSizeViewContoller () <UIScrollViewDelegate>
 @property(retain,nonatomic) IBOutlet UIScrollView* scrollView;
 @property(retain,nonatomic) IBOutlet UIImageView* mediaImageView;
 - (void)cancelButtonTouched:(UIBarButtonItem *)cancelButton;
@@ -63,7 +63,7 @@
         ![media_.mediaLargeURL isEqualToString:@""]) {
         [self loadMediaImageAsych];
     } else {
-        [self displayLoader];
+        [self startLoadingAnimation];
         LTConnectionManager * connectionManager = [LTConnectionManager sharedConnectionManager];
         [connectionManager getMediaLargeURLWithId:media_.identifier delegate:self];
     }
@@ -99,7 +99,7 @@
 }
 
 - (void)loadMediaImageAsych {
-    [self displayLoaderViewWithDetermination];
+    [self startLoadingAnimationViewWithDetermination];
     [mediaImageView_ setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:media_.mediaLargeURL]]
                            placeholderImage:nil
                         uploadProgressBlock:nil
@@ -108,9 +108,9 @@
                           [self setProgress:progress];
                         } success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                             //[self resizeImage];
-                            [self hideLoader];
+                            [self stopLoadingAnimation];
                         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                            [self hideLoader];
+                            [self stopLoadingAnimation];
                         }];
 }
 
@@ -152,14 +152,14 @@
 #pragma mark - LTConnectionManagerDelegate
 
 - (void)didRetrievedMedia:(Media *)media {
-    [self hideLoader];
-    [self displayLoaderViewWithDetermination];
+    [self stopLoadingAnimation];
+    [self startLoadingAnimationViewWithDetermination];
     [self loadMediaImageAsych];
 }
 
 - (void)didFailWithError:(NSError *)error {
     LogDebug(@"%@",error.localizedDescription);
-    [self hideLoader];
+    [self stopLoadingAnimation];
 }
 
 @end

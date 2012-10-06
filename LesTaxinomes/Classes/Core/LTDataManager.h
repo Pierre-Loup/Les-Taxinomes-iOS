@@ -28,7 +28,7 @@
 #import "Author.h"
 #import "Media.h"
 
-@interface LTDataManager : NSObject <LTConnectionManagerDelegate>
+@interface LTDataManager : NSObject
 
 @property (nonatomic, retain, readonly) NSManagedObjectModel* managedObjectModel;
 @property (nonatomic, retain, readonly) NSManagedObjectContext* mainManagedObjectContext;
@@ -37,15 +37,12 @@
 @property (nonatomic, assign) NSInteger synchLimit;
 @property (nonatomic, readonly) NSString* applicationDocumentsDirectory;
 
-- (BOOL)getAuthorAsychIfNeededWithId:(NSNumber *)authorIdentifier 
-                        withDelegate:(id<LTConnectionManagerDelegate>)delegate;
-
-- (BOOL)getMediaAsychIfNeededWithId:(NSNumber *)mediaIdentifier 
-                       withDelegate:(id<LTConnectionManagerDelegate>)delegate;
-
 + (LTDataManager *)sharedDataManager;
 
-// Core Data
-- (IBAction)saveAction:sender;
+- (void)getMediaWithId:(NSNumber *)mediaIdentifier
+         responseBlock:(void (^)(NSNumber* mediaIdentifier, Media* media, NSError *error))responseBlock;
+
+- (void)getAuthorWithId:(NSNumber *)authorIdentifier
+          responseBlock:(void (^)(NSNumber* authorIdentifier, Author* author, NSError *error))responseBlock;
 
 @end

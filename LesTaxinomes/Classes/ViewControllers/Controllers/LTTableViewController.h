@@ -1,8 +1,8 @@
 //
-//  AuthenticationSheetViewController.h
+//  LTTableViewController.h
 //  LesTaxinomes
 //
-//  Created by Pierre-Loup Tristant on 27/04/12.
+//  Created by Pierre-Loup Tristant on 31/07/12.
 //  Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
@@ -24,16 +24,14 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "LTViewController.h"
-#import "LTConnectionManager.h"
-#import "UIGlossyButton.h"
+#import "MBProgressHUD.h"
+#import "LTiPhoneBackgroundView.h"
 
-@protocol LTAuthenticationSheetDelegate <NSObject>
-@required
-- (void)authenticationDidFinishWithSuccess:(BOOL)success;
+@interface LTTableViewController : UITableViewController <MBProgressHUDDelegate>
 
-@end
+@property (nonatomic, retain) MBProgressHUD* loaderView;
 
-@interface AuthenticationSheetViewController :LTViewController
-@property (nonatomic, assign) id<LTAuthenticationSheetDelegate> delegate;
+- (void) startLoadingAnimationViewWithDetermination;
+- (void) startLoadingAnimation;
+- (void) stopLoadingAnimation;
 @end

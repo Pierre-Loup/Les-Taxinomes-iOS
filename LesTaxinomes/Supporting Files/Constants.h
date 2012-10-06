@@ -77,12 +77,12 @@
 // Times
 #define kMediaCacheTime 3600.0
 
-#ifdef DEV 
-    #define kHost @"taxinomes.arscenic.org/"
-    #define kXMLRCPWebServiceURL @"http://taxinomes.arscenic.org//spip.php?action=xmlrpc_serveur"
-    #define kHTTPHost @"http://taxinomes.arscenic.org/"
-    #define kForgottenPasswordURL @"http://taxinomes.arscenic.org/spip.php?page=spip_pass"
-    #define kSignupURL @"http:/t/axinomes.arscenic.org/spip.php?page=inscription"
+#ifdef DEV
+    #define kHost @"www.lestaxinomes.org"
+    #define kXMLRCPWebServiceURL @"http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur"
+    #define kHTTPHost @"http://www.lestaxinomes.org"
+    #define kForgottenPasswordURL @"http://www.lestaxinomes.org/spip.php?page=spip_pass"
+    #define kSignupURL @"http://www.lestaxinomes.org/spip.php?page=inscription"
 #endif
 #ifdef PROD
     #define kHost @"www.lestaxinomes.org"
@@ -106,10 +106,3 @@
 #define kLimitParamName @"limite"
 #define kSortParamName @"tri"
 #define kSessionCookieName @"spip_session"
-
-// Errors
-#define kLTWebServiceResponseErrorDomain @"LTWebServiceResponseErrorDomain"
-#define kLTDefaultErrorDomain @"LTDefaultErrorDomain"
-#define kLTConnectionManagerInternalError @"LTConnectionManagerInternalError"
-#define kLTAuthenticationFailedError @"LTAuthenticationFailedError"
-#define kNetworkRequestErrorDomain @"ASIHTTPRequestErrorDomain"

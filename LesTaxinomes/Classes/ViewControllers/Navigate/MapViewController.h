@@ -12,7 +12,7 @@
 #import "LTConnectionManager.h"
 #import "LTViewController.h"
 
-@interface MapViewController : LTViewController <MKMapViewDelegate, CLLocationManagerDelegate, LTConnectionManagerDelegate> {
+@interface MapViewController : LTViewController <MKMapViewDelegate, CLLocationManagerDelegate> {
     
     CLLocationManager* locationManager_;    
     NSInteger searchStartIndex_;

@@ -5,11 +5,20 @@
 //  Created by Matt Gallagher on 2009/06/03.
 //  Copyright 2009 Matt Gallagher. All rights reserved.
 //
-//  Permission is given to use this source code file, free of charge, in any
-//  project, commercial or otherwise, entirely at your risk, with the condition
-//  that any redistribution (in part or whole) of source code must retain
-//  this copyright and permission notice. Attribution in compiled projects is
-//  appreciated but not required.
+//  This software is provided 'as-is', without any express or implied
+//  warranty. In no event will the authors be held liable for any damages
+//  arising from the use of this software. Permission is granted to anyone to
+//  use this software for any purpose, including commercial applications, and to
+//  alter it and redistribute it freely, subject to the following restrictions:
+//
+//  1. The origin of this software must not be misrepresented; you must not
+//     claim that you wrote the original software. If you use this software
+//     in a product, an acknowledgment in the product documentation would be
+//     appreciated but is not required.
+//  2. Altered source versions must be plainly marked as such, and must not be
+//     misrepresented as being the original software.
+//  3. This notice may not be removed or altered from any source
+//     distribution.
 //
 
 #import "NSData+Base64.h"
@@ -77,7 +86,8 @@ void *NewBase64Decode(
 		length = strlen(inputBuffer);
 	}
 	
-	size_t outputBufferSize = (length / BASE64_UNIT_SIZE) * BINARY_UNIT_SIZE;
+	size_t outputBufferSize =
+		((length+BASE64_UNIT_SIZE-1) / BASE64_UNIT_SIZE) * BINARY_UNIT_SIZE;
 	unsigned char *outputBuffer = (unsigned char *)malloc(outputBufferSize);
 	
 	size_t i = 0;
@@ -107,9 +117,14 @@ void *NewBase64Decode(
 		//
 		// Store the 6 bits from each of the 4 characters as 3 bytes
 		//
-		outputBuffer[j] = (accumulated[0] << 2) | (accumulated[1] >> 4);
-		outputBuffer[j + 1] = (accumulated[1] << 4) | (accumulated[2] >> 2);
-		outputBuffer[j + 2] = (accumulated[2] << 6) | accumulated[3];
+		// (Uses improved bounds checking suggested by Alexandre Colucci)
+		//
+		if(accumulateIndex >= 2)  
+			outputBuffer[j] = (accumulated[0] << 2) | (accumulated[1] >> 4);  
+		if(accumulateIndex >= 3)  
+			outputBuffer[j + 1] = (accumulated[1] << 4) | (accumulated[2] >> 2);  
+		if(accumulateIndex >= 4)  
+			outputBuffer[j + 2] = (accumulated[2] << 6) | accumulated[3];
 		j += accumulateIndex - 1;
 	}
 	
@@ -121,7 +136,7 @@ void *NewBase64Decode(
 }
 
 //
-// NewBase64Decode
+// NewBase64Encode
 //
 // Encodes the arbitrary data in the inputBuffer as base64 into a newly malloced
 // output buffer.
@@ -281,16 +296,16 @@ char *NewBase64Encode(
 //
 - (NSString *)base64EncodedString
 {
-	size_t outputLength;
+	size_t outputLength = 0;
 	char *outputBuffer =
 		NewBase64Encode([self bytes], [self length], true, &outputLength);
 	
-	NSString *result =
-		[[[NSString alloc]
-			initWithBytes:outputBuffer
-			length:outputLength
-			encoding:NSASCIIStringEncoding]
-		autorelease];
+	NSString *result =[[NSString alloc] initWithBytes:outputBuffer
+											   length:outputLength
+											 encoding:NSASCIIStringEncoding];
+#if ! __has_feature(objc_arc)
+	[result autorelease];
+#endif
 	free(outputBuffer);
 	return result;
 }

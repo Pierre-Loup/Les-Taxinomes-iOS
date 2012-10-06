@@ -51,7 +51,7 @@
     [managedObjectModel_ release];
     [persistentStoreCoordinator_ release];
 	[super dealloc];
-}	
+}
 
 + (LTDataManager *)sharedDataManager {
 	static LTDataManager* dataManager = nil;
@@ -64,117 +64,40 @@
     return dataManager;
 }
 
-- (BOOL)getAuthorAsychIfNeededWithId:(NSNumber *)authorIdentifier 
-                        withDelegate:(id<LTConnectionManagerDelegate>)delegate {
+- (void)getMediaWithId:(NSNumber *)mediaIdentifier
+         responseBlock:(void (^)(NSNumber* mediaIdentifier, Media* media, NSError *error))responseBlock {
     
-    Author * author = [Author authorWithIdentifier:authorIdentifier];
+    Media * localMedia = [Media mediaWithIdentifier:mediaIdentifier];
     LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
     
-    if(author == nil
-       || author.avatarURL == nil
-       || ([[NSDate date] timeIntervalSinceDate:author.localUpdateDate] > kMediaCacheTime)){
+    if(  localMedia == nil
+       ||  localMedia.mediaMediumURL == nil
+       || [[NSDate date] timeIntervalSinceDate: localMedia.localUpdateDate] > kMediaCacheTime){
         
-        [connectionManager getAuthorWithId:authorIdentifier delegate:delegate];
-        return YES;
+        [connectionManager getMediaWithId:mediaIdentifier
+                            responseBlock:responseBlock];
+    } else {
+        responseBlock(mediaIdentifier, localMedia, nil);
     }
-    return NO;
 }
 
-- (BOOL)getMediaAsychIfNeededWithId:(NSNumber *)mediaIdentifier 
-                       withDelegate:(id<LTConnectionManagerDelegate>)delegate {
+
+
+- (void)getAuthorWithId:(NSNumber *)authorIdentifier
+          responseBlock:(void (^)(NSNumber* authorIdentifier, Author* author, NSError *error))responseBlock {
     
-    Media * media = [Media mediaWithIdentifier:mediaIdentifier];
+    Author * localAuthor = [Author authorWithIdentifier:authorIdentifier];
     LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
-    LogDebug(@"media.text %@",media.text);
-    if( media == nil
-       || media.mediaMediumURL == nil
-       || [[NSDate date] timeIntervalSinceDate:media.localUpdateDate] > kMediaCacheTime){
-        [connectionManager getMediaWithId:mediaIdentifier delegate:delegate];
-        return YES;
+    
+    if(localAuthor == nil
+       || localAuthor.avatarURL == nil
+       || ([[NSDate date] timeIntervalSinceDate:localAuthor.localUpdateDate] > kMediaCacheTime)){
+        
+        [connectionManager getAuthorWithId:authorIdentifier
+                             responseBlock:responseBlock];
+    } else {
+        responseBlock(authorIdentifier, localAuthor, nil);
     }
-    return NO;
-}
-
-#pragma mark - Core Data
-
-/**
- Performs the save action for the application, which is to send the save:
- message to the application's managed object context.
- */
-- (IBAction)saveAction:(id)sender {
-	
-    NSError *error;
-    if (![[self mainManagedObjectContext] save:&error]) {
-		// Handle error
-    }
-}
-
-/**
- Returns the managed object context for the application.
- If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
- */
-- (NSManagedObjectContext *) mainManagedObjectContext {
-	
-    if (mainManagedObjectContext_ != nil) {
-        return mainManagedObjectContext_;
-    }
-	
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil) {
-        mainManagedObjectContext_ = [[NSManagedObjectContext alloc] init];
-        [mainManagedObjectContext_ setPersistentStoreCoordinator: coordinator];
-    }
-    return mainManagedObjectContext_;
-}
-
-
-/**
- Returns the managed object model for the application.
- If the model doesn't already exist, it is created by merging all of the models found in the application bundle.
- */
-- (NSManagedObjectModel *)managedObjectModel {
-	
-    if (managedObjectModel_ != nil) {
-        return managedObjectModel_;
-    }
-    managedObjectModel_ = [[NSManagedObjectModel mergedModelFromBundles:nil] retain];    
-    return managedObjectModel_;
-}
-
-
-/**
- Returns the persistent store coordinator for the application.
- If the coordinator doesn't already exist, it is created and the application's store added to it.
- */
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
-	
-    if (persistentStoreCoordinator_ != nil) {
-        return persistentStoreCoordinator_;
-    }
-	
-    NSURL *storeUrl = [NSURL fileURLWithPath: [[self applicationDocumentsDirectory] stringByAppendingPathComponent: @"Taxinomes.sqlite"]];
-	
-	NSError *error;
-    persistentStoreCoordinator_ = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel: [self managedObjectModel]];
-    if (![persistentStoreCoordinator_ addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:nil error:&error]) {
-        // Handle the error.
-    }    
-	
-    return persistentStoreCoordinator_;
-}
-
-
-#pragma mark -
-#pragma mark Application's documents directory
-
-/**
- Returns the path to the application's documents directory.
- */
-- (NSString *)applicationDocumentsDirectory {
-	
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
-    return basePath;
 }
 
 @end
