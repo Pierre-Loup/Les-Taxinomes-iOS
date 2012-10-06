@@ -23,7 +23,7 @@ including :
 - Gustavo Pelosi Ambrozio's NSMutableDictionary+ImageMetadata class
 - Matt Gallagher's NSData+Base64 category
 - Janakiram's NSString+XMLExtensions category
-- Trevor Harmon's UIImage+Resize category
+- Olivier Halligon's UIImage+Resize category
 - Seymour Cakes's UIImageView+PhotoFrame category
 - Matej Bukovinski's MBProgressHUD class
 - First Water Tech Ltd's UIGlossyButton class

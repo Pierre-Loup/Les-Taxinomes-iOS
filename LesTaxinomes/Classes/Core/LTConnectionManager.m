@@ -29,12 +29,13 @@
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <CoreLocation/CoreLocation.h>
 
-#import "XMLRPCResponse.h"
-#import "NSMutableDictionary+ImageMetadata.h"
-#import "Media.h"
 #import "Author.h"
 #import "License.h"
 #import "LTXMLRPCClient.h"
+#import "Media.h"
+#import "NSMutableDictionary+ImageMetadata.h"
+#import "UIImage+Resize.h"
+#import "XMLRPCResponse.h"
 
 
 NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.LesTaxinomes.LTConnectionManagerError";
@@ -321,11 +322,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                 if (mediaImage.size.width > MEDIA_MAX_WIDHT) {
                     CGFloat imageHeight = (MEDIA_MAX_WIDHT/mediaImage.size.width)*mediaImage.size.height;
                     CGSize newSize = CGSizeMake(MEDIA_MAX_WIDHT, imageHeight);
-                    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
-                    [mediaImage drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
-                    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-                    UIGraphicsEndImageContext();
-                    mediaImage = newImage;
+                    [mediaImage resizedImageToSize:newSize];
                 }
                 
                 NSData* imageData = [NSData dataWithData:UIImageJPEGRepresentation(mediaImage, 1.0f)];
