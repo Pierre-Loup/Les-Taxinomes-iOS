@@ -31,30 +31,20 @@
 #import "DCIntrospect.h"
 
 @implementation TaxinomesAppDelegate
-@synthesize window = window_;
+
+@synthesize window = window_; 
 @synthesize tabBarController = tabBarController_;
 @synthesize launchScreenView = launchScreenView_;
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application{
-    
-    [MagicalRecordHelpers setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"Taxinomes.sqlite"];
-    
     // Get the licenses list if not present
     if ([[License allLicenses] count] == 0) {
         [[LTConnectionManager sharedConnectionManager] getLicenses];
     }
     
-    // iPad
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        [self.window addSubview:self.splitViewController.view];
-    } else { // iPhone
-        UINavigationBar *bar = [self.tabBarController.navigationController navigationBar];
-        [bar setTintColor:[UIColor colorWithRed:(95.0/255.0) green:(130.0/255) blue:(55.0/255.0) alpha:1.0]];
-        [self.window addSubview: self.tabBarController.view];
-    }
-    
-    
-    
+    UINavigationBar *bar = [self.tabBarController.navigationController navigationBar];
+    [bar setTintColor:[UIColor colorWithRed:(95.0/255.0) green:(130.0/255) blue:(55.0/255.0) alpha:1.0]];
+    [self.window addSubview: self.tabBarController.view];
     [self.window makeKeyAndVisible];
     
     // Press space in the simulator to start UI Introspection
@@ -95,7 +85,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
 	
     NSError *error;
-    NSManagedObjectContext *managedObjectContext = [NSManagedObjectContext MR_contextForCurrentThread];
+    NSManagedObjectContext *managedObjectContext = [[LTDataManager sharedDataManager] mainManagedObjectContext];
     if (managedObjectContext != nil) {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
 			// Handle the error.
@@ -106,9 +96,9 @@
 - (void)dealloc
 {
     AudioServicesDisposeSystemSoundID(launchSoundID_);
-    [window_ release];
     [launchScreenView_ release];
     [tabBarController_ release];
+    [window_ release];
     [super dealloc];
 }
 

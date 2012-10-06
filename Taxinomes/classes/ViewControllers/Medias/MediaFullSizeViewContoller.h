@@ -26,7 +26,9 @@
 #import <UIKit/UIKit.h>
 #import "Media.h"
 #import "LTViewController.h"
+#import "TCImageView.h"
 #import "LTConnectionManager.h"
+#import "TCImageView.h"
 
 @interface MediaFullSizeViewContoller : LTViewController
 

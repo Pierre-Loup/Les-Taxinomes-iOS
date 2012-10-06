@@ -12,20 +12,9 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "37"
-         endingLineNumber = "37">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Taxinomes/Classes/Core/LTConnectionManager.m"
-         timestampString = "367710003.998742"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "300"
-         endingLineNumber = "300"
-         landmarkName = "-getLicenses"
-         landmarkType = "5">
+         endingLineNumber = "37"
+         landmarkName = "@interface LTTitleView"
+         landmarkType = "2">
       </FileBreakpoint>
    </FileBreakpoints>
    <ExceptionBreakpoints>

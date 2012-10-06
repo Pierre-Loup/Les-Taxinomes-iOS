@@ -334,6 +334,7 @@
 						<int key="objectID">4</int>
 						<reference key="object" ref="987256611"/>
 						<reference key="parent" ref="0"/>
+						<string key="objectName">App Delegate</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">-2</int>

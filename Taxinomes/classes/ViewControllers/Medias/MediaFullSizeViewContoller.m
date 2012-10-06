@@ -24,20 +24,19 @@
  */
 
 #import "MediaFullSizeViewContoller.h"
-#import "UIImageView+AFNetworking.h"
 
-@interface MediaFullSizeViewContoller () <UIScrollViewDelegate, LTConnectionManagerDelegate>
+@interface MediaFullSizeViewContoller () <UIScrollViewDelegate, LTConnectionManagerDelegate, TCImageViewDelegate>{
+    UIScrollView* scrollView_;
+    TCImageView* mediaView_;
+    Media* media_;
+}
 @property(retain,nonatomic) IBOutlet UIScrollView* scrollView;
-@property(retain,nonatomic) IBOutlet UIImageView* mediaImageView;
 - (void)cancelButtonTouched:(UIBarButtonItem *)cancelButton;
-- (void)loadMediaImageAsych;
-- (void)resizeImage;
 @end
 
 @implementation MediaFullSizeViewContoller
 @synthesize scrollView = scrollView_;
 @synthesize media = media_;
-@synthesize mediaImageView = mediaImageView_;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil mediaURL:(NSString *)mediaURL {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -57,24 +56,24 @@
     [self.navigationItem setLeftBarButtonItem:cancelButton];
     [cancelButton release];
     
-    
+    [self displayLoader];
     self.title = media_.title;
-    if (media_.mediaLargeURL &&
-        ![media_.mediaLargeURL isEqualToString:@""]) {
-        [self loadMediaImageAsych];
-    } else {
-        [self displayLoader];
-        LTConnectionManager * connectionManager = [LTConnectionManager sharedConnectionManager];
-        [connectionManager getMediaLargeURLWithId:media_.identifier delegate:self];
-    }
-    [scrollView_ addSubview:mediaImageView_];
+    mediaView_ = [[TCImageView alloc] initWithURL:@"" placeholderView:nil];
+    mediaView_.delegate = self;
+    mediaView_.downloadProgressDelegate = self;
+    [scrollView_ addSubview:mediaView_];
+    
+    LTConnectionManager * connectionManager = [LTConnectionManager sharedConnectionManager];
+    [connectionManager getMediaLargeURLWithId:media_.identifier delegate:self];
 }
 
 
 - (void)viewDidUnload {
     [super viewDidUnload];
-    self.mediaImageView = nil;
-    self.scrollView = nil;
+    [mediaView_ release];
+    mediaView_ = nil;
+    [scrollView_ release];
+    scrollView_ = nil;
 }
 
 - (void)dealloc {
@@ -82,14 +81,8 @@
     [super dealloc];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return (interfaceOrientation == UIInterfaceOrientationPortrait);
-    } else {
-        return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-                interfaceOrientation == UIInterfaceOrientationLandscapeRight);
-    }
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - Private methods
@@ -98,55 +91,10 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
-- (void)loadMediaImageAsych {
-    [self displayLoaderViewWithDetermination];
-    [mediaImageView_ setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:media_.mediaLargeURL]]
-                           placeholderImage:nil
-                        uploadProgressBlock:nil
-                      downloadProgressBlock:^(NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-                          float progress = (float)((double)totalBytesRead/(double)totalBytesExpectedToRead);
-                          [self setProgress:progress];
-                        } success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                            //[self resizeImage];
-                            [self hideLoader];
-                        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                            [self hideLoader];
-                        }];
-}
-
-- (void)resizeImage {
-    double maxWidth = self.view.frame.size.width;
-    double maxHeight = self.view.frame.size.height;
-    double mediaWidth;
-    double mediaHeight;
-    
-    if(mediaImageView_.image.size.height/mediaImageView_.image.size.width > maxHeight/mediaWidth){
-        mediaHeight = maxHeight;
-        mediaWidth = (maxHeight/mediaImageView_.image.size.height)*mediaImageView_.image.size.width;
-        self.scrollView.maximumZoomScale = (mediaImageView_.image.size.height/maxHeight)*5;
-    } else {
-        mediaWidth = maxWidth;
-        mediaHeight = (maxWidth/mediaImageView_.image.size.width)*mediaImageView_.image.size.height;
-        self.scrollView.maximumZoomScale = (mediaImageView_.image.size.width/maxWidth)*5;
-    }
-    
-    
-    mediaImageView_.frame = CGRectMake(0, 0, mediaWidth, mediaHeight);
-    CGSize scrollViewBoundsSize = self.scrollView.bounds.size;
-    mediaImageView_.center = CGPointMake(scrollViewBoundsSize.width/2, scrollViewBoundsSize.height/2);
-    
-    self.scrollView.delegate = self;
-    
-    self.scrollView.maximumZoomScale = 5.0;
-    self.scrollView.minimumZoomScale = 1.0;
-    
-    self.scrollView.contentSize = mediaImageView_.frame.size;
-}
-
 #pragma mark - UIScrollViewDelegate
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
-    return mediaImageView_;
+    return mediaView_;
 }
 
 #pragma mark - LTConnectionManagerDelegate
@@ -154,11 +102,53 @@
 - (void)didRetrievedMedia:(Media *)media {
     [self hideLoader];
     [self displayLoaderViewWithDetermination];
-    [self loadMediaImageAsych];
+    [mediaView_ reloadWithUrl:media.mediaLargeURL];
 }
 
 - (void)didFailWithError:(NSError *)error {
     LogDebug(@"%@",error.localizedDescription);
+    [self hideLoader];
+}
+
+#pragma mark - TCImageViewDelegate
+
+- (void)TCImageView:(TCImageView *) view FinisehdImage:(UIImage *)image {
+    double maxWidth = self.view.frame.size.width;
+    double maxHeight = self.view.frame.size.height;
+    double mediaWidth;
+    double mediaHeight;
+    
+    if((mediaView_.image.size.height/mediaView_.image.size.width) > (maxHeight/maxWidth) ){
+        mediaWidth = maxWidth;
+        mediaHeight = (maxWidth/mediaView_.image.size.width)*mediaView_.image.size.height;
+        self.scrollView.maximumZoomScale = (mediaView_.image.size.width/maxWidth)*5;
+    } else {
+        mediaHeight = maxHeight;
+        mediaWidth = (maxHeight/mediaView_.image.size.height)*mediaView_.image.size.width;
+        self.scrollView.maximumZoomScale = (mediaView_.image.size.height/maxHeight)*5;
+    }
+    
+    
+    mediaView_.frame = CGRectMake(mediaView_.frame.origin.x, mediaView_.frame.origin.y, mediaWidth, mediaHeight);
+    
+    self.scrollView.delegate = self;
+    
+    CGRect frame = CGRectMake(0, 0, maxWidth, maxHeight*2);
+    self.scrollView.contentSize = frame.size;
+    
+    [self.scrollView addSubview:mediaView_];
+    self.scrollView.maximumZoomScale = 5.0;
+    self.scrollView.minimumZoomScale = 1.0;
+    self.scrollView.bouncesZoom = NO;
+    
+    self.scrollView.contentSize = mediaView_.frame.size;
+    
+    view.downloadProgressDelegate = nil;
+    [self hideLoader];
+}
+
+-(void) TCImageView:(TCImageView *) view failedWithError:(NSError *)error {
+    view.downloadProgressDelegate = nil;
     [self hideLoader];
 }
 

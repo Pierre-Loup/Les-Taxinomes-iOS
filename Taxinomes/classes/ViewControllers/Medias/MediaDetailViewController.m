@@ -23,104 +23,122 @@
  
  */
 
+#import "Constants.h"
 #import "Annotation.h"
-#import "UIImageView+AFNetworking.h"
-#import "UIImageView+PhotoFrame.h"
 //VC
 #import "MapViewController.h"
 #import "MediaDetailViewController.h"
 #import "MediaFullSizeViewContoller.h"
 
-@interface MediaDetailViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate, LTConnectionManagerDelegate>{
-    int asynchLoadCounter_;
-}
+#define kCommonWidth 310.0
 
+@interface MediaDetailViewController ()
+
+@property (nonatomic, retain) Media * media;
 @property (nonatomic, retain) IBOutlet UIScrollView * scrollView;
-@property (nonatomic, retain) IBOutlet UIImageView * mediaImageView;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView* placeholderAIView;
-@property (nonatomic, retain) IBOutlet LTTitleView * authorTitleView;
-@property (nonatomic, retain) IBOutlet UIImageView * authorAvatarView;
-@property (nonatomic, retain) IBOutlet UILabel * authorNameLabel;
-@property (nonatomic, retain) IBOutlet LTTitleView * descTitleView;
-@property (nonatomic, retain) IBOutlet UITextView * descTextView;
-@property (nonatomic, retain) IBOutlet LTTitleView * mapTitleView;
-@property (nonatomic, retain) IBOutlet MKMapView * mapView;
 
-- (void)configureView;
 - (void)refreshView;
 - (void)mediaImageTouched:(UIImage *)sender;
 - (void)displayContentIfNeeded;
-- (void)loadMediaView;
 
 @end
 
 @implementation MediaDetailViewController
 @synthesize media = media_;
+@synthesize scrollView = scrollView_;
 
-#pragma mark - Overrides
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil mediaId:(NSNumber *)mediaIdentifier {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-
+        mediaIdentifier_ = [mediaIdentifier retain];
     }
     return self;
 }
 
 - (void) dealloc {
+    [mediaIdentifier_ release];
     [media_ release];
-    [_scrollView release];
-    [_mediaImageView release];
-    [_placeholderAIView release];
-    [_authorTitleView release];
-    [_authorAvatarView release];
-    [_authorNameLabel release];
-    [_descTitleView release];
-    [_descTextView release];
-    [_mapTitleView release];
-    [_mapView release];
+    [scrollView_ release];
+    [mediaTitleView_ release];
+    [mediaImageView_ release];
+    [authorTitleView_ release];
+    [authorAvatarView_ release];
+    [authorNameLabel_ release];
+    [descTitleView_ release];
+    [descTextView_ release];
+    [mapTitleView_ release];
+    [mapView_ release];
     [super dealloc];
 }
 
+#pragma mark - View lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = media_.title;
-    
-    UIBarButtonItem* backButtonItem = [[[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common.back")
-                                                                       style:UIBarButtonItemStyleBordered
-                                                                      target:nil action:nil] autorelease];
-    self.navigationItem.backBarButtonItem = backButtonItem;
-    
     asynchLoadCounter_ = 0;
+    [self.scrollView setHidden:YES];
     self.scrollView.backgroundColor = [UIColor clearColor];
     self.scrollView.opaque = NO;
     self.scrollView.delegate = self;
     
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                           action:@selector(mediaImageTouched:)];
-    [tapGestureRecognizer autorelease];
+    mediaTitleView_ = [[LTTitleView titleViewWithOrigin:CGPointMake(5, 5)] retain];
+    [self.scrollView addSubview:mediaTitleView_];
+    [mediaTitleView_ setHidden:YES];
+    
+    mediaImageView_ = [[TCImageView alloc] initWithURL:@"" placeholderView:nil];
+    mediaImageView_.caching = YES;
+    mediaImageView_.delegate = self;
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mediaImageTouched:)];
     [tapGestureRecognizer setNumberOfTouchesRequired:1];
     [tapGestureRecognizer setDelegate:self];
+    //Don't forget to set the userInteractionEnabled to YES, by default It's NO.
+    mediaImageView_.userInteractionEnabled = YES;
+    [mediaImageView_ addGestureRecognizer:tapGestureRecognizer];
+    [tapGestureRecognizer release];
+    [self.scrollView addSubview:mediaImageView_];
     
-    //Don't forget to set the userInteractionEnabled UIView property to YES, default is NO.
-    self.mediaImageView.userInteractionEnabled = YES;
-    [self.mediaImageView addGestureRecognizer:tapGestureRecognizer];
     
-    self.authorTitleView.title = TRANSLATE(@"common.author");
+    authorTitleView_ = [[LTTitleView titleViewWithOrigin:CGPointMake(5, 5)] retain];
+    authorTitleView_.titleLabel.text = TRANSLATE(@"common.author");
+    [self.scrollView addSubview:authorTitleView_];
+    [authorTitleView_ setHidden:YES];
     
-    [self.authorAvatarView setImageWithURL:[NSURL URLWithString:media_.author.avatarURL]
-                          placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
+    authorAvatarView_ = [[TCImageView alloc] initWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
+    authorAvatarView_.caching = YES;
+    authorAvatarView_.delegate = self;
+    [authorNameLabel_ setClipsToBounds:YES];
+    [authorNameLabel_ setContentMode:UIViewContentModeScaleAspectFill];
+    [self.scrollView addSubview:authorAvatarView_];
     
-
-    self.descTitleView.title = TRANSLATE(@"common.description");
-    self.mapTitleView.title = TRANSLATE(@"common.map");
-
-    tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                   action:@selector(mapTouched:)];
-    [tapGestureRecognizer autorelease];
+    authorNameLabel_ = [[UILabel alloc] init];
+    [self.scrollView addSubview:authorNameLabel_];
+    
+    descTitleView_ = [[LTTitleView titleViewWithOrigin:CGPointMake(5, 5)] retain];
+    descTitleView_.titleLabel.text = TRANSLATE(@"common.description");
+    [self.scrollView addSubview:descTitleView_];
+    [descTitleView_ setHidden:YES];
+    
+    descTextView_ = [[UITextView alloc] init];
+    descTextView_.editable = NO;
+    [descTextView_ setDataDetectorTypes:UIDataDetectorTypeAll];
+    [self.scrollView addSubview:descTextView_];
+    
+    mapTitleView_ = [[LTTitleView titleViewWithOrigin:CGPointMake(5, 5)] retain];
+    mapTitleView_.titleLabel.text = TRANSLATE(@"common.map");
+    [self.scrollView addSubview:mapTitleView_];
+    [mapTitleView_ setHidden:YES];
+    
+    mapView_ = [[MKMapView alloc] initWithFrame:CGRectMake(0.0, 0.0, 0.0, 0.0)];
+    mapView_.mapType = MKMapTypeStandard;
+    mapView_.scrollEnabled = NO;
+    mapView_.zoomEnabled = NO;
+    mapView_.delegate = self;
+    tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mapTouched:)];
     [tapGestureRecognizer setNumberOfTouchesRequired:1];
     [tapGestureRecognizer setDelegate:self];
-    [self.mapView addGestureRecognizer:tapGestureRecognizer];
+    [mapView_ addGestureRecognizer:tapGestureRecognizer];
+    [tapGestureRecognizer release];
+    [self.scrollView addSubview:mapView_];
     
     [self.scrollView setHidden:YES];
 }
@@ -128,159 +146,143 @@
 - (void) viewDidUnload {
     [super viewDidUnload];
     self.scrollView = nil;
-    self.mediaImageView = nil;
-    self.placeholderAIView = nil;
-    self.mediaImageView = nil;
-    self.authorAvatarView = nil;
-    self.authorNameLabel = nil;
-    self.descTitleView = nil;
-    self.descTextView = nil;
-    self.mapTitleView = nil;
-    self.mapView = nil;
+    [mediaTitleView_ release];
+    mediaTitleView_ = nil;
+    [mediaImageView_ release];
+    mediaImageView_ = nil;
+    [authorTitleView_ release];
+    mediaImageView_ = nil;
+    [authorAvatarView_ release];
+    authorAvatarView_ = nil;
+    [authorNameLabel_ release];
+    authorNameLabel_ = nil;
+    [descTitleView_ release];
+    descTitleView_ = nil;
+    [descTextView_ release];
+    descTextView_ = nil;
+    [mapTitleView_ release];
+    mapTitleView_ = nil;
+    [mapView_ release];
+    mapView_ = nil;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (media_) {
-        [self configureView];
-    }
-}
-
-#pragma mark - Properties
-
-- (void)setMedia:(Media *)media {
-    if(media != media_) {
-        [media_ release];
-        media_ = [media retain];
-        [self.scrollView scrollsToTop];
-        [self configureView];
-    }
-}
-
-#pragma mark - Private methodes
-
-- (void)configureView {
-    [self displayLoader];
     LTDataManager *dm = [LTDataManager sharedDataManager];
-    if([dm getMediaAsychIfNeededWithId:media_.identifier withDelegate:self]) {
+    self.media = [Media mediaWithIdentifier:
+                  mediaIdentifier_];
+    if([dm getMediaAsychIfNeededWithId:mediaIdentifier_ withDelegate:self])
         asynchLoadCounter_ = asynchLoadCounter_ + 1;
-    } else {
-        [self loadMediaView];
-        [self refreshView];
-    }
     if([dm getAuthorAsychIfNeededWithId:self.media.author.identifier withDelegate:self])
         asynchLoadCounter_ = asynchLoadCounter_ + 1;
-    
     if (asynchLoadCounter_ > 0) {
         [self displayLoader];
-    } else {
-        [self refreshView];
     }
+    [self refreshView];
 }
 
 - (void)refreshView {
-    CGFloat currentContentHeight = 0;
-    CGFloat commonMargin = 10.0;
+    CGFloat contentHeight = 0;
     
-    if (self.mediaImageView.image) {
-        self.mediaImageView.frame = CGRectMake(self.mediaImageView.frame.origin.x,
-                                               self.mediaImageView.frame.origin.y,
-                                               self.mediaImageView.frame.size.width,
-                                               self.mediaImageView.frame.size.width);
-        self.placeholderAIView.center = CGPointMake(self.mediaImageView.bounds.size.width/2, self.mediaImageView.bounds.size.height/2);
+    CGFloat imageHeight = 0;
+    CGFloat descHeight;
+    
+    if (media_.title && ![media_.title isEqualToString:@""]) {
+        mediaTitleView_.titleLabel.text = media_.title;
+        
+    } else {
+        mediaTitleView_.titleLabel.text = TRANSLATE(@"media_upload_no_title");
     }
-    currentContentHeight += self.mediaImageView.frame.origin.y + self.mediaImageView.frame.size.height + commonMargin;
-     
-    // Author section
-    self.authorTitleView.frame = CGRectMake(self.authorTitleView.frame.origin.x,
-                                            currentContentHeight,
-                                            self.authorTitleView.frame.size.width,
-                                            self.authorTitleView.frame.size.height);
-    currentContentHeight += self.authorTitleView.frame.size.height + commonMargin;
+    [mediaTitleView_ setHidden:NO];
     
-    [self.authorAvatarView setImageWithURL:[NSURL URLWithString:media_.author.avatarURL]
-                           placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
-    self.authorAvatarView.frame = CGRectMake(self.authorAvatarView.frame.origin.x,
-                                             currentContentHeight,
-                                             self.authorAvatarView.frame.size.width,
-                                             self.authorAvatarView.frame.size.height);
-    self.authorNameLabel.frame = CGRectMake(self.authorNameLabel.frame.origin.x,
-                                            currentContentHeight,
-                                            self.authorNameLabel.frame.size.width,
-                                            self.authorNameLabel.frame.size.height);
-    NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-    [dateFormatter setDateFormat:@"dd/MM/yyyy"];
-    self.authorNameLabel.text = [NSString stringWithFormat:TRANSLATE(@"media_detail.publish_info_patern"),
-                                 media_.author.name,
-                                 [dateFormatter stringFromDate:self.media.date],
-                                 [self.media.visits integerValue]];
-    currentContentHeight += self.authorAvatarView.frame.size.height + commonMargin;
+    NSString * mediaImageUrl = media_.mediaMediumURL?media_.mediaMediumURL:@"";
+    if (![mediaImageView_.url isEqualToString:mediaImageUrl]
+        && ![mediaImageUrl isEqualToString:@""]) {
+        asynchLoadCounter_ = asynchLoadCounter_ + 1;
+        [mediaImageView_ reloadWithUrl:mediaImageUrl];
+    }
     
+    if (mediaImageView_.image) {
+        imageHeight =  (kCommonWidth/mediaImageView_.image.size.width)*mediaImageView_.image.size.height;
+        mediaImageView_.frame = CGRectMake(5, 40, 310.0, imageHeight);
+    }
     
-    // Description section
-    self.descTitleView.frame = CGRectMake(self.descTitleView.frame.origin.x,
-                                          currentContentHeight,
-                                          self.descTitleView.frame.size.width,
-                                          self.descTitleView.frame.size.height);
-    currentContentHeight += self.descTitleView.frame.size.height + commonMargin;
+    authorTitleView_.frame = CGRectMake(5.0, 45.0+imageHeight, authorTitleView_.frame.size.width, authorTitleView_.frame.size.height);
+    [authorTitleView_ setHidden:NO];
+    
+    NSString * authorAvatarUrl = media_.author.avatarURL?media_.author.avatarURL:@"";
+    if (![authorAvatarView_.url isEqualToString:authorAvatarUrl]
+        && ![authorAvatarUrl isEqualToString:@""]) {
+        asynchLoadCounter_ = asynchLoadCounter_ + 1;
+        [authorAvatarView_ reloadWithUrl:authorAvatarUrl];
+    }
+    authorAvatarView_.frame = CGRectMake(5.0, 80.0+imageHeight, 50.0, 50.0);
+    
+    NSDateFormatter *df = [[[NSDateFormatter alloc] init] autorelease];
+    [df setDateFormat:@"dd/MM/yyyy"];
+    
+    authorNameLabel_.frame = CGRectMake(65.0, 80.0+imageHeight, 250.0, 50.0);
+    authorNameLabel_.lineBreakMode = UILineBreakModeTailTruncation;
+    authorNameLabel_.numberOfLines = 0;
+    authorNameLabel_.font = [UIFont systemFontOfSize:14.0];
+    authorNameLabel_.text = [NSString stringWithFormat:TRANSLATE(@"media_detail.publish_info_patern"), media_.author.name, [df stringFromDate:self.media.date],[self.media.visits integerValue]];
+    [authorNameLabel_ setBackgroundColor:[UIColor clearColor]];
+    
+    descTitleView_.frame = CGRectMake(5.0, 135.0+imageHeight, descTitleView_.frame.size.width, descTitleView_.frame.size.height);
+    [descTitleView_ setHidden:NO];
     
     if(self.media.text
        && ![self.media.text isEqualToString:@""]){
-        self.descTextView.text = self.media.text;
+        descTextView_.text = self.media.text;
     } else {
-        self.descTextView.text = TRANSLATE(@"media_detail.no_text");
+        descTextView_.text = TRANSLATE(@"media_detail.no_text");
     }
-    self.descTextView.frame = CGRectMake(self.descTextView.frame.origin.x,
-                                         currentContentHeight,
-                                         self.descTextView.frame.size.width,
-                                         self.descTextView.contentSize.height);
-    currentContentHeight += self.descTextView.frame.size.height + commonMargin;
+    descHeight = (CGFloat)descTextView_.contentSize.height;
+    descTextView_.frame = CGRectMake(0.0, 170.0+imageHeight, 320.0, descHeight);
+    [descTextView_ setBackgroundColor:[UIColor clearColor]];
     
-    // Map section if media as coordinates
+    
     if (media_.coordinate.latitude
         && media_.coordinate.longitude) {
+        mapTitleView_.frame = CGRectMake(5.0, 175.0+imageHeight+descHeight, mapTitleView_.frame.size.width, mapTitleView_.frame.size.height);
+        [mapTitleView_ setHidden:NO];
         
-        self.mapTitleView.frame = CGRectMake(self.mapTitleView.frame.origin.x,
-                                             currentContentHeight,
-                                             self.mapTitleView.frame.size.width,
-                                             self.mapTitleView.frame.size.height);
-        currentContentHeight += self.mapTitleView.frame.size.height + commonMargin;
-        
-        self.mapView.frame = CGRectMake(self.mapView.frame.origin.x,
-                                        currentContentHeight,
-                                        self.mapView.frame.size.width,
-                                        self.mapView.frame.size.width);
-        if ([[self.mapView annotations] count]) {
-            [self.mapView removeAnnotations:[self.mapView annotations]];
+        CGRect mapViewFrame = CGRectMake(5.0, 210.0+imageHeight+descHeight, 310.0, 310.0);
+        [mapView_ setFrame:mapViewFrame];
+        if ([[mapView_ annotations] count]) {
+            [mapView_ removeAnnotations:[mapView_ annotations]];
         }
-        [self.mapView addAnnotation:media_];
-        self.mapView.region = MKCoordinateRegionMake(media_.coordinate, MKCoordinateSpanMake(20.0, 20.0));
-        self.mapTitleView.hidden = NO;
-        self.mapView.hidden = NO;
-        
-        
-        currentContentHeight += self.mapView.frame.size.height + commonMargin;
+        Annotation * mediaPinAnnotation = [[Annotation new] autorelease];
+        mediaPinAnnotation.title = media_.title;
+        mediaPinAnnotation.subtitle = [NSString stringWithFormat:@"%@ %@",TRANSLATE(@"common.by"),media_.author.name];
+        mediaPinAnnotation.coordinate = CLLocationCoordinate2DMake([media_.latitude floatValue], [media_.longitude floatValue]);
+        if (mediaPinAnnotation.coordinate.longitude != 0.0
+            && mediaPinAnnotation.coordinate.latitude != 0.0) {
+            [mapView_ addAnnotation:mediaPinAnnotation];
+            mapView_.region = MKCoordinateRegionMake(mediaPinAnnotation.coordinate, MKCoordinateSpanMake(20.0, 20.0));
+        } else {
+            mapView_.region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(20.0, 0.0), MKCoordinateSpanMake(150.0, 180.0));
+        }
+        contentHeight += 355.0;
+        mapTitleView_.hidden = NO;
+        mapView_.hidden = NO;
     } else {
-        self.mapTitleView.hidden = YES;
-        self.mapView.hidden = YES;
+        mapTitleView_.hidden = YES;
+        mapView_.hidden = YES;
     }
     
-    [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, currentContentHeight)];
+    contentHeight += 170.0;
+    
+    [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, contentHeight+imageHeight+descHeight)];
     if (asynchLoadCounter_ > 0) {
         [self displayLoader];
-    } else {
-        self.scrollView.hidden = NO;
     }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return (interfaceOrientation == UIInterfaceOrientationPortrait);
-    } else {
-        return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-                interfaceOrientation == UIInterfaceOrientationLandscapeRight);
-    }
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (void)mediaImageTouched:(UIImage *)sender {
@@ -293,26 +295,11 @@
 }
 
 - (void)displayContentIfNeeded {
+    [self refreshView];
     if (asynchLoadCounter_ <= 0) {
         [self hideLoader];
-        [self refreshView];
         [self.scrollView setHidden:NO];
     }
-}
-
-- (void)loadMediaView {
-    
-    [self.placeholderAIView startAnimating];
-    [self.mediaImageView setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:media_.mediaMediumURL]]
-                           placeholderImage:[UIImage imageNamed:@"medium_placeholder"]
-                                    success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                        [self hideLoader];
-                                        [self.placeholderAIView stopAnimating];
-                                        [self refreshView];
-                                    }
-                                    failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                        [self hideLoader];
-                                    }];
 }
 
 - (void)mapTouched:(MKMapView *)sender {
@@ -322,11 +309,22 @@
     [mapVC release];
 }
 
+#pragma mark - TCImageViewDelegate
+
+- (void)TCImageView:(TCImageView *) view FinisehdImage:(UIImage *)image {
+    asynchLoadCounter_ = asynchLoadCounter_ - 1;
+    [self displayContentIfNeeded];
+}
+
+-(void) TCImageView:(TCImageView *) view failedWithError:(NSError *)error {
+    asynchLoadCounter_ = asynchLoadCounter_ - 1;
+    [self displayContentIfNeeded];
+}
+
 #pragma mark - LTConnectionManagerDelegate
 
 - (void)didRetrievedMedia:(Media *)media {
     asynchLoadCounter_ = asynchLoadCounter_ - 1;
-    [self loadMediaView];
     [self displayContentIfNeeded];
 }
 

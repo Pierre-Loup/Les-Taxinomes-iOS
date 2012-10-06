@@ -157,8 +157,8 @@
     if ([view.annotation isKindOfClass:[Media class]]) {
         Media * media = (Media *)view.annotation;
         MediaDetailViewController * mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailViewController"
-                                                                                                            bundle:nil];
-        mediaDetailViewController.media = media;
+                                                                                                            bundle:nil
+                                                                                                           mediaId:media.identifier];
         mediaDetailViewController.title = TRANSLATE(@"common.media");
         [self.navigationController pushViewController:mediaDetailViewController animated:YES];
         [mediaDetailViewController release];

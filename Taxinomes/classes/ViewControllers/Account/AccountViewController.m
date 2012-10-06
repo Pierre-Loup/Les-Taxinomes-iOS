@@ -26,19 +26,11 @@
 #import "AccountViewController.h"
 #import "MediaUploadFormViewController.h"
 #import "MediasListViewController.h"
-#import "UIImageView+AFNetworking.h"
 
-@interface AccountViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, LTConnectionManagerAuthDelegate> {
-    
-    NSArray* accountMenuLabels_;
-    Author * authenticatedUser_;
-    
-    UIBarButtonItem* rightBarButton_;
-}
-@property (retain, nonatomic) IBOutlet UITableView* tableView;
-@property (retain, nonatomic) IBOutlet UIImageView* defaultAvatarView;
-@property (retain, nonatomic) IBOutlet UILabel* userNameLabel;
-@property (retain, nonatomic) IBOutlet UIImageView* avatarView;
+@interface AccountViewController ()
+@property (retain, nonatomic) IBOutlet UITableView * tableView;
+@property (retain, nonatomic) IBOutlet UIImageView * defaultAvatarView;
+@property (retain, nonatomic) IBOutlet UILabel * userNameLabel;
 
 - (void)commonInit;
 - (void)displayAuthenticationSheetAnimated:(BOOL)animated;
@@ -51,7 +43,6 @@
 @synthesize tableView = tableView_;
 @synthesize defaultAvatarView = defaultAvatarView_;
 @synthesize userNameLabel = userNameLabel_;
-@synthesize avatarView = avatarView_;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -91,10 +82,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    bgView_.light = NO;
     [self.tableView setHidden:YES];
-    [avatarView_ setImageWithURL:[NSURL URLWithString:authenticatedUser_.avatarURL]
-                placeholderImage:[UIImage imageNamed:@"default_avatar_medium"]];
+    avatarView_ = [[TCImageView alloc] initWithURL:nil placeholderView:nil];
     avatarView_.frame = defaultAvatarView_.frame;
     [self.view addSubview:avatarView_];
     
@@ -221,8 +210,7 @@
 - (void)switchToAuthenticatedMode:(BOOL)animated {
     if (authenticatedUser_) {
         self.userNameLabel.text = authenticatedUser_.name;
-        [avatarView_ setImageWithURL:[NSURL URLWithString:authenticatedUser_.avatarURL]
-                    placeholderImage:[UIImage imageNamed:@"default_avatar_medium"]];
+        [avatarView_ reloadWithUrl:authenticatedUser_.avatarURL];
     }
     [avatarView_ setHidden:NO];
     [self.tableView setHidden:NO];
@@ -261,8 +249,7 @@
         [authenticatedUser_ release];
         authenticatedUser_ = [author retain];
         self.userNameLabel.text = authenticatedUser_.name;
-        [avatarView_ setImageWithURL:[NSURL URLWithString:authenticatedUser_.avatarURL]
-                    placeholderImage:[UIImage imageNamed:@"default_avatar_medium"]];
+        [avatarView_ reloadWithUrl:authenticatedUser_.avatarURL];
         [self switchToAuthenticatedMode:YES];
         [self dismissModalViewControllerAnimated:YES];
     } else {

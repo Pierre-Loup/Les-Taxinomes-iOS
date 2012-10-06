@@ -62,7 +62,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    bgView_.light = NO;
+    
     //welcomLabel_ = [[UILabel alloc] initWithFrame:self.view.frame];
     [welcomLabel_ setNumberOfLines:0];
     [welcomLabel_ setLineBreakMode:UILineBreakModeTailTruncation];

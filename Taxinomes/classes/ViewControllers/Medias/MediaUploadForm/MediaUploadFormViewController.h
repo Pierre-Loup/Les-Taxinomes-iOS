@@ -34,18 +34,7 @@
 #import "MediaLocalisationPickerViewController.h"
 #import "UIGlossyButton.h"
 
-@interface MediaUploadFormViewController : LTTableViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, LTConnectionManagerDelegate, MediaLicenseChooserDelegate, MediaLocationPickerDelegate> {
-    CLGeocoder* reverseGeocoder_;
-    
-    NSArray* rowsInSection_;
-    NSDictionary* cellForIndexPath_;
-    NSDictionary* indexPathForInputView_;
-    License* license_;
-    
-}
-
-
+@interface MediaUploadFormViewController : LTTableViewController 
 @property (nonatomic, retain) UIImage* mediaImage;
 @property (nonatomic, retain) CLLocation* gis;
-
 @end

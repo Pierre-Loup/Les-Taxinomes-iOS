@@ -30,12 +30,11 @@
 
 @interface LTDataManager : NSObject <LTConnectionManagerDelegate>
 
-@property (nonatomic, retain, readonly) NSManagedObjectModel* managedObjectModel;
-@property (nonatomic, retain, readonly) NSManagedObjectContext* mainManagedObjectContext;
-@property (nonatomic, retain, readonly) NSManagedObjectContext* backgroundManagedObjectContext;
-@property (nonatomic, retain, readonly) NSPersistentStoreCoordinator* persistentStoreCoordinator;
+@property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
+@property (nonatomic, retain, readonly) NSManagedObjectContext *mainManagedObjectContext;
+@property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, assign) NSInteger synchLimit;
-@property (nonatomic, readonly) NSString* applicationDocumentsDirectory;
+@property (nonatomic, readonly) NSString * applicationDocumentsDirectory;
 
 - (BOOL)getAuthorAsychIfNeededWithId:(NSNumber *)authorIdentifier 
                         withDelegate:(id<LTConnectionManagerDelegate>)delegate;

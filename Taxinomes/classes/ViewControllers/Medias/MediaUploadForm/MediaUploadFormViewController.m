@@ -47,12 +47,12 @@
 //SECTION 3
 #define kLocationSection 3
 #define kLocationPickerCellIndexPath [NSIndexPath indexPathForRow:0 inSection:3]
-//SECTION 4
-#define kPublishCellIndexPath [NSIndexPath indexPathForRow:0 inSection:4]
 
 #define kSectionsNumber 4
 
-@interface MediaUploadFormViewController ()
+@interface MediaUploadFormViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, LTConnectionManagerDelegate, MediaLicenseChooserDelegate, MediaLocationPickerDelegate> {
+    License* _license;
+}
 
 @property (nonatomic, retain) IBOutlet UITableViewCell* textCell;
 @property (nonatomic, retain) IBOutlet UITableViewCell* licenseCell;
@@ -66,29 +66,19 @@
 @property (nonatomic, retain) IBOutlet UIGlossyButton* shareButton;
 @property (nonatomic, retain) IBOutlet UISwitch* publishSwitch;
 
-// Actions
+@property (nonatomic, readonly) NSArray* rowsInSection;
+@property (nonatomic, readonly) NSMutableDictionary* cellForIndexPath;
+@property (nonatomic, readonly) CLGeocoder* reverseGeocoder;
+
 - (IBAction)uploadMedia:(id)sender;
-// Tools
 - (void)refreshForm;
-- (void)updateMediaLocation:(CLLocation *)location;
 @end
 
 @implementation MediaUploadFormViewController
-@synthesize mediaSnapshotView = mediaSnapshotView_;
-@synthesize mediaImage = mediaImage_;
-@synthesize textCell = textCell_;
-@synthesize licenseCell = licenseCell_;
-@synthesize publishCell = publishCell_;
-@synthesize titleInput = titleInput_;
-@synthesize textInput = textInput_;
-@synthesize cityInput = cityInput_;
-@synthesize zipcodeInput = zipcodeInput_;
-@synthesize countryInput = countryInput_;
-@synthesize publishSwitch = publishSwitch_;
-@synthesize shareButton = shareButton_;
-@synthesize gis = gis_;
+@synthesize cellForIndexPath = _cellForIndexPath;
+@synthesize reverseGeocoder = _reverseGeocoder;
 
-#pragma mark -
+#pragma mark - Super methodes override
 
 - (id)init
 {
@@ -104,17 +94,13 @@
     self = [super initWithNibName:@"MediaUploadFormViewController" bundle:nil];
     if (self) {
         
-        rowsInSection_ = [[NSArray arrayWithObjects:[NSNumber numberWithInt:1],
+        _rowsInSection = [[NSArray arrayWithObjects:[NSNumber numberWithInt:1],
                            [NSNumber numberWithInt:1],
                            [NSNumber numberWithInt:1],
                            [NSNumber numberWithInt:1],
                            [NSNumber numberWithInt:1],
                            nil] retain];
-        cellForIndexPath_ = [NSDictionary new];
-        
-        mediaImage_ = nil;
-        gis_ = nil;
-        license_ = [[License defaultLicense] retain];
+        _license = [[License defaultLicense] retain];
     }
     return self;
 }
@@ -128,16 +114,24 @@
 }
 
 - (void)dealloc {
-    [reverseGeocoder_ release];
-    [rowsInSection_ release];
-    [cellForIndexPath_ release];
-    [mediaImage_ release];
-    [gis_ release];
-    [license_ release];
+    [_gis release];
+    [_license release];
+    [_textCell release];
+    [_licenseCell release];
+    [_publishCell release];
+    [_mediaSnapshotView release];
+    [_titleInput release];
+    [_textInput release];
+    [_cityInput release];
+    [_zipcodeInput release];
+    [_countryInput release];
+    [_shareButton release];
+    [_publishSwitch release];
+    [_rowsInSection release];
+    [_reverseGeocoder release];
+    [_cellForIndexPath release];
     [super dealloc];
 }
-
-#pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
@@ -145,34 +139,16 @@
     
     // Load textCell, licenseCell and
     [[NSBundle mainBundle] loadNibNamed:@"MediaUploadFormCells" owner:self options:nil];
-    CGRect tableViewFrame = self.tableView.frame;
-    CGRect winFrame = [[UIApplication sharedApplication] keyWindow].frame;
-    CGRect bgFrame = CGRectMake(0, -self.navigationController.navigationBar.frame.size.height,
-                                winFrame.size.width,
-                                winFrame.size.height);
-    UIImageView* bgImageView = [[UIImageView alloc] initWithFrame:bgFrame];
-    bgImageView.image = [UIImage imageNamed:@"background"];
-    bgImageView.contentMode = UIViewContentModeTop;
-    bgImageView.clipsToBounds = YES;
-    bgImageView.alpha = 0.3;
-    UIView* bgView = [[UIView alloc] initWithFrame:tableViewFrame];
-    [bgView addSubview:bgImageView];
-    [self.tableView setBackgroundView:bgView];
-    [bgImageView release];
-    [bgView release];
-    
     self.navigationItem.title = TRANSLATE(@"media_upload_view_title");
     
-    shareButton_.tintColor = kLightGreenColor;
-    shareButton_.buttonCornerRadius = 10.0;
-    [shareButton_ setGradientType:kUIGlossyButtonGradientTypeLinearGlossyStandard];
+    self.shareButton.tintColor = kLightGreenColor;
+    self.shareButton.buttonCornerRadius = 10.0;
+    [self.shareButton setGradientType:kUIGlossyButtonGradientTypeLinearGlossyStandard];
     
     [self refreshForm];
     
-    [mediaSnapshotView_ applyPhotoFrameEffect];
-    if(mediaImage_){
-        self.mediaSnapshotView.image = mediaImage_;       
-    } else {
+    [self.mediaSnapshotView applyPhotoFrameEffect];
+    if(!self.mediaImage) {
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
         imagePicker.delegate = self;    
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
@@ -182,29 +158,68 @@
         [imagePicker release]; 
     }
     
-    if (license_) {
-        licenseCell_.detailTextLabel.text = license_.name;
+    if (_license) {
+        self.licenseCell.detailTextLabel.text = _license.name;
     } else {
-        licenseCell_.detailTextLabel.text = TRANSLATE(@"media_upload_no_license_text");
+        self.licenseCell.detailTextLabel.text = TRANSLATE(@"media_upload_no_license_text");
     }
-    
-    reverseGeocoder_ = [CLGeocoder new];
-    [self updateMediaLocation:gis_];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
 }
 
 - (void)viewDidUnload
 {
-    self.tableView = nil;
-    self.mediaSnapshotView = nil;
+    [super viewDidUnload];
     self.textCell = nil;
     self.licenseCell = nil;
     self.publishCell = nil;
+    self.mediaSnapshotView = nil;
+    self.titleInput = nil;
+    self.textInput = nil;
+    self.cityInput = nil;
+    self.zipcodeInput = nil;
+    self.countryInput = nil;
     self.shareButton = nil;
-    [super viewDidUnload];
+    self.publishSwitch = nil;
+}
+
+#pragma mark - Properties
+
+- (NSMutableDictionary *)cellForIndexPath {
+    if (!_cellForIndexPath) {
+        _cellForIndexPath = [NSMutableDictionary new];
+    }
+    return _cellForIndexPath;
+}
+
+- (CLGeocoder *)reverseGeocoder {
+    if (!_reverseGeocoder) {
+        _reverseGeocoder = [[CLGeocoder alloc] init];
+    }    return _reverseGeocoder;
+}
+
+- (void)setGis:(CLLocation *)gis {
+    if (gis &&
+        ![_gis isEqual:gis] &&
+        (gis.coordinate.latitude || gis.coordinate.longitude)) {
+        [_gis release];
+        _gis = [gis retain];
+        [self.reverseGeocoder reverseGeocodeLocation:self.gis completionHandler:^(NSArray *placemarks, NSError *error) {
+            CLPlacemark* placemark = [placemarks objectAtIndex:0];
+            if (placemark) {
+                self.cityInput.text = placemark.locality;
+                self.zipcodeInput.text = placemark.postalCode;
+                self.countryInput.text = placemark.country;
+            }
+        }];
+        [self refreshForm];
+    }
+}
+
+- (UIImage *)mediaImage {
+    return self.mediaSnapshotView.image;
+}
+
+- (void)setMediaImage:(UIImage *)mediaImage {
+    self.mediaSnapshotView.image = mediaImage;
 }
 
 #pragma mark - IBActions
@@ -217,16 +232,16 @@
     
     [self displayLoaderViewWithDetermination];
     UIImage * imageToUpload;
-    if (mediaImage_.size.width > MEDIA_MAX_WIDHT) {
-        CGFloat imageHeight = (MEDIA_MAX_WIDHT/mediaImage_.size.width)*mediaImage_.size.height;
+    if (self.mediaImage.size.width > MEDIA_MAX_WIDHT) {
+        CGFloat imageHeight = (MEDIA_MAX_WIDHT/self.mediaImage.size.width)*self.mediaImage.size.height;
         CGSize newSize = CGSizeMake(MEDIA_MAX_WIDHT, imageHeight);
         UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
-        [mediaImage_ drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+        [self.mediaImage drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
         UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();    
         UIGraphicsEndImageContext();
         imageToUpload = newImage;
     } else {
-        imageToUpload = mediaImage_;
+        imageToUpload = self.mediaImage;
     }
     
 	NSData *imageData = [NSData dataWithData:UIImageJPEGRepresentation(imageToUpload, 1.0f)];//1.0f = 100% quality
@@ -248,16 +263,13 @@
         [info setValue:[NSString stringWithFormat:@"%@",TRANSLATE(@"media_upload.text_prefix")] forKey:@"texte"];
     }
     
-    // Publish
-    if (self.publishSwitch.on) {
-        [info setValue:@"publie" forKey:@"statut"];
-    } else {
-        [info setValue:@"prepa" forKey:@"statut"];
-    }
+
+    [info setValue:@"publie" forKey:@"statut"];
+
     
     // License
-    if (license_) {
-        [info setValue:[NSString stringWithFormat:@"%@",[license_.identifier stringValue]] forKey:@"id_licence"];
+    if (_license) {
+        [info setValue:[NSString stringWithFormat:@"%@",[_license.identifier stringValue]] forKey:@"id_licence"];
     }
     
     // Media
@@ -280,11 +292,13 @@
 
 
 - (void)refreshForm {
-   NSMutableDictionary* tmpCellsDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                            textCell_, kTexteCellIndexPath,
-                                            licenseCell_, kLicenseCellIndexPath,
-                                            publishCell_, kPublishCellIndexPath,
-                                            nil];
+    [self.cellForIndexPath removeAllObjects];
+    if (self.textCell)
+        [self.cellForIndexPath setObject:self.textCell forKey:kTexteCellIndexPath];
+    if (self.licenseCell) {
+        [self.cellForIndexPath setObject:self.licenseCell forKey:kLicenseCellIndexPath];
+    }
+    
     // Title cell
     SingleLineInputCell* titleCell = [self.tableView dequeueReusableCellWithIdentifier:[SingleLineInputCell reuseIdentifier]];
     if (!titleCell) {
@@ -292,9 +306,8 @@
     }
     [titleCell setTitle:TRANSLATE(@"common.title")];
     self.titleInput = titleCell.input;
-    [titleInput_ setDelegate:self];
-    [tmpCellsDict addEntriesFromDictionary:[NSDictionary dictionaryWithObject:titleCell 
-                                                                       forKey:kTitleCellIndexPath]];
+    [self.titleInput setDelegate:self];
+    [self.cellForIndexPath setObject:titleCell forKey:kTitleCellIndexPath];
     // Location picker cell
     UITableViewCell* localisationPickerCell = [self.tableView dequeueReusableCellWithIdentifier:kLocalisationPickerCellId];
     if (!localisationPickerCell) {
@@ -304,21 +317,21 @@
     [localisationPickerCell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     [localisationPickerCell setSelectionStyle:UITableViewCellSelectionStyleNone];
     localisationPickerCell.textLabel.text = TRANSLATE(@"media_upload.location_picker_cell.text");
-    [tmpCellsDict addEntriesFromDictionary:[NSDictionary dictionaryWithObject:localisationPickerCell forKey:kLocationPickerCellIndexPath]];
+    [self.cellForIndexPath setObject:localisationPickerCell forKey:kLocationPickerCellIndexPath];
     NSInteger rowNumberForSection = 1;
     
     // Map cell
-    if (gis_) {
+    if (self.gis) {
         MapCell* mapCell = [self.tableView dequeueReusableCellWithIdentifier:[MapCell reuseIdentifier]];
         if (!mapCell) {
             mapCell = [MapCell mapCell];
         }
-        MKPlacemark* annotation = [[[MKPlacemark alloc] initWithCoordinate:gis_.coordinate addressDictionary:nil] autorelease];
+        MKPlacemark* annotation = [[[MKPlacemark alloc] initWithCoordinate:self.gis.coordinate addressDictionary:nil] autorelease];
         [mapCell.mapView removeAnnotations:mapCell.mapView.annotations];
         [mapCell.mapView addAnnotation:annotation];
-        [mapCell.mapView setRegion:MKCoordinateRegionMake(gis_.coordinate, MKCoordinateSpanMake(0.1, 0.1))];
+        [mapCell.mapView setRegion:MKCoordinateRegionMake(self.gis.coordinate, MKCoordinateSpanMake(0.1, 0.1))];
         NSIndexPath* mapCellIndexPath = [NSIndexPath indexPathForRow:rowNumberForSection inSection:kLocationSection];
-        [tmpCellsDict addEntriesFromDictionary:[NSDictionary dictionaryWithObject:mapCell forKey:mapCellIndexPath]];
+        [self.cellForIndexPath setObject:mapCell forKey:mapCellIndexPath];
         rowNumberForSection++;
     }
     
@@ -331,8 +344,7 @@
     self.cityInput = cityCell.input;
     [cityCell.input setDelegate:self];
     NSIndexPath* cityCellIndexPath = [NSIndexPath indexPathForRow:rowNumberForSection inSection:kLocationSection];
-    [tmpCellsDict addEntriesFromDictionary:[NSDictionary dictionaryWithObject:cityCell
-                                                                       forKey:cityCellIndexPath]];
+    [self.cellForIndexPath setObject:cityCell forKey:cityCellIndexPath];
     rowNumberForSection++;
     
     // Zipcode cell
@@ -345,8 +357,7 @@
     [zipcodeCell.input setDelegate:self];
     
     NSIndexPath* zipcodeCellIndexPath = [NSIndexPath indexPathForRow:rowNumberForSection inSection:kLocationSection];
-    [tmpCellsDict addEntriesFromDictionary:[NSDictionary dictionaryWithObject:zipcodeCell
-                                                                       forKey:zipcodeCellIndexPath]];
+    [self.cellForIndexPath setObject:zipcodeCell forKey:zipcodeCellIndexPath];
     rowNumberForSection++;
     
     // Country cell
@@ -359,31 +370,10 @@
     [countryCell.input setDelegate:self];
     
     NSIndexPath* countryCellIndexPath = [NSIndexPath indexPathForRow:rowNumberForSection inSection:kLocationSection];
-    [tmpCellsDict addEntriesFromDictionary:[NSDictionary dictionaryWithObject:countryCell
-                                                                       forKey:countryCellIndexPath]];
+    [self.cellForIndexPath setObject:countryCell forKey:countryCellIndexPath];
     rowNumberForSection++;
     
-    [cellForIndexPath_ release];
-    cellForIndexPath_ = [[NSDictionary dictionaryWithDictionary:tmpCellsDict] retain];
-    [tmpCellsDict release];
     [self.tableView reloadData];
-}
-
-- (void)updateMediaLocation:(CLLocation *)location {
-    if (location
-        && (location.coordinate.latitude || location.coordinate.longitude)) {
-        [gis_ release];
-        gis_ = [location retain];
-        [reverseGeocoder_ reverseGeocodeLocation:gis_ completionHandler:^(NSArray *placemarks, NSError *error) {
-            CLPlacemark* placemark = [placemarks objectAtIndex:0];
-            if (placemark) {
-                cityInput_.text = placemark.locality;
-                zipcodeInput_.text = placemark.postalCode;
-                countryInput_.text = placemark.country;
-            }
-        }];
-        [self refreshForm];
-    }
 }
 
 #pragma mark - Table view data source
@@ -396,7 +386,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSEnumerator* enumerator = [cellForIndexPath_ keyEnumerator];
+    NSEnumerator* enumerator = [self.cellForIndexPath keyEnumerator];
     NSIndexPath* key;
     int rowCounter = 0;
     while ((key = (NSIndexPath *)[enumerator nextObject])) {
@@ -408,32 +398,30 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell* cell = (UITableViewCell *)[cellForIndexPath_ objectForKey:indexPath];
+    UITableViewCell* cell = (UITableViewCell *)[self.cellForIndexPath objectForKey:indexPath];
     return cell.frame.size.height;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (UITableViewCell *)[cellForIndexPath_ objectForKey:indexPath];
+    return (UITableViewCell *)[self.cellForIndexPath objectForKey:indexPath];
 }
 
 #pragma mark UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([indexPath isEqual:kLicenseCellIndexPath]) {
-        MediaLicenseChooserViewController* mediaLicenseChooserVC = [[MediaLicenseChooserViewController alloc] init];
+        MediaLicenseChooserViewController* mediaLicenseChooserVC = [[[MediaLicenseChooserViewController alloc] init] autorelease];
         mediaLicenseChooserVC.delegate = self;
-        mediaLicenseChooserVC.currentLicense = license_;
+        mediaLicenseChooserVC.currentLicense = _license;
         [self.navigationController pushViewController:mediaLicenseChooserVC animated:YES];
-        [mediaLicenseChooserVC release];
     } else if ([indexPath isEqual:kLocationPickerCellIndexPath]){
-        MediaLocalisationPickerViewController* mediaLocationPickerVC = [[MediaLocalisationPickerViewController alloc] init];
-        [mediaLocationPickerVC setDelegate:self];
-        if (gis_) {
-            mediaLocationPickerVC.location = gis_;
+        MediaLocalisationPickerViewController* mediaLocationPickerVC = [[[MediaLocalisationPickerViewController alloc] init] autorelease];
+        mediaLocationPickerVC.delegate = self;
+        if (self.gis) {
+            mediaLocationPickerVC.location = self.gis;
         }
         [self.navigationController pushViewController:mediaLocationPickerVC animated:YES];
-        [mediaLocationPickerVC release];
     }
 }
 
@@ -443,9 +431,7 @@
 didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [self dismissModalViewControllerAnimated:YES];
-    self.mediaImage = nil;
-    self.mediaImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
-    self.mediaSnapshotView.image = self.mediaImage;
+    self.mediaSnapshotView.image = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
     
     NSURL* asserURL = [info objectForKey:UIImagePickerControllerReferenceURL];
     // Get the assets library
@@ -455,7 +441,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
             ALAssetRepresentation *representation = [asset defaultRepresentation];
             NSMutableDictionary *imageMetadata = [NSMutableDictionary dictionaryWithDictionary:[representation metadata]];
             CLLocation* mediaLocation = [imageMetadata location];
-            [self updateMediaLocation:mediaLocation];
+            self.gis = mediaLocation;
             
         }
     } failureBlock:^(NSError *error) {
@@ -498,11 +484,11 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 - (void)didChooseLicense:(License *)license {
     [license release];
     if (license) {
-        license_ = [license retain];
-        licenseCell_.detailTextLabel.text = license.name;
+        _license = [license retain];
+        self.licenseCell.detailTextLabel.text = license.name;
     } else {
-        license = nil;
-        licenseCell_.detailTextLabel.text = TRANSLATE(@"media_upload_no_license_text");
+        _license = nil;
+        self.licenseCell.detailTextLabel.text = TRANSLATE(@"media_upload_no_license_text");
     }
     
 }
@@ -510,7 +496,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 #pragma mark MediaLocationPickerDelegate
 
 - (void)mediaLocationPicker:(MediaLocalisationPickerViewController *)mediaLocationPicker didPickLocation:(CLLocation *)location {
-    [self updateMediaLocation:location];
+   self.gis = location;
 }
 
 #pragma mark - LTConnextionManagerDelegate
