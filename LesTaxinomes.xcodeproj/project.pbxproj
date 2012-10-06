@@ -1093,12 +1093,12 @@
 		A585626115F90BAD00446653 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				A585626215F90BAD00446653 /* LegalInformationsViewController.xib */,
 				A585626515F90BAD00446653 /* HomeViewController.h */,
 				A585626615F90BAD00446653 /* HomeViewController.m */,
 				A585626715F90BAD00446653 /* HomeViewController.xib */,
 				A585626815F90BAD00446653 /* LegalInformationsViewController.h */,
 				A585626915F90BAD00446653 /* LegalInformationsViewController.m */,
+				A585626215F90BAD00446653 /* LegalInformationsViewController.xib */,
 			);
 			path = Home;
 			sourceTree = "<group>";

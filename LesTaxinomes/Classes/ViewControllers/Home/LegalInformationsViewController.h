@@ -24,6 +24,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "LTViewController.h"
 
-@interface LegalInformationsViewController : UIViewController
+@interface LegalInformationsViewController : LTViewController
 @end

@@ -29,6 +29,7 @@
 #import "Author.h"
 #import "License.h"
 #import "XMLRPCRequest.h"
+#import "LTErrorManager.h"
 
 /**
  Indicates an error occured in LTConnectionManager.

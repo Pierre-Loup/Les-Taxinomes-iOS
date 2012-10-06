@@ -31,14 +31,49 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Taxinomes/Classes/ViewControllers/Navigate/MapViewController.m"
-         timestampString = "368311698.868574"
+         filePath = "LesTaxinomes/Classes/ViewControllers/Medias/MediaFullSizeViewContoller.m"
+         timestampString = "371230055.530598"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "127"
-         endingLineNumber = "127"
-         landmarkName = "-loadMoreCloseMedias"
+         startingLineNumber = "118"
+         endingLineNumber = "118"
+         landmarkName = "-loadMediaImageAsych"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "LesTaxinomes/Classes/ViewControllers/Medias/MediaFullSizeViewContoller.m"
+         timestampString = "371230057.707047"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "120"
+         endingLineNumber = "120"
+         landmarkName = "-loadMediaImageAsych"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "LesTaxinomes/Classes/ViewControllers/Medias/MediaFullSizeViewContoller.m"
+         timestampString = "371230088.605891"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "111"
+         endingLineNumber = "111"
+         landmarkName = "-loadMediaImageAsych"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
+   <ExceptionBreakpoints>
+      <ExceptionBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         scope = "0"
+         stopOnStyle = "0">
+      </ExceptionBreakpoint>
+   </ExceptionBreakpoints>
 </Bucket>

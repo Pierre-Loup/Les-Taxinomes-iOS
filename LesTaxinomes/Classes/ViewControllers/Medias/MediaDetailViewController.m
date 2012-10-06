@@ -26,6 +26,7 @@
 #import "Annotation.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIImageView+PhotoFrame.h"
+#import "LTErrorManager.h"
 //VC
 #import "MapViewController.h"
 #import "MediaDetailViewController.h"
@@ -133,13 +134,6 @@
     self.mapView = nil;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    if (media_) {
-        [self configureView];
-    }
-}
-#warning
 #pragma mark - Properties
 
 - (void)setMedia:(Media *)media {
@@ -153,23 +147,34 @@
 
 #pragma mark - Private methodes
 
-- (void)configureView {
+- (void)configureView
+{
     [self startLoadingAnimation];
     LTDataManager *dm = [LTDataManager sharedDataManager];
-    if([dm getMediaAsychIfNeededWithId:media_.identifier withDelegate:self]) {
-        asynchLoadCounter_ = asynchLoadCounter_ + 1;
-    } else {
-        [self loadMediaView];
-        [self refreshView];
-    }
-    if([dm getAuthorAsychIfNeededWithId:self.media.author.identifier withDelegate:self])
-        asynchLoadCounter_ = asynchLoadCounter_ + 1;
-    
-    if (asynchLoadCounter_ > 0) {
-        [self startLoadingAnimation];
-    } else {
-        [self refreshView];
-    }
+    [dm getMediaWithId:self.media.identifier
+          responseBlock:^(NSNumber *authorIdentifier, Media* media, NSError *error) {
+              
+              if (error) {
+                  [[LTErrorManager sharedErrorManager] manageError:error];
+              }
+              
+              asynchLoadCounter_--;
+              [self loadMediaView];
+              [self displayContentIfNeeded];
+    }];
+    asynchLoadCounter_++;
+    [dm getAuthorWithId:self.media.author.identifier
+          responseBlock:^(NSNumber *authorIdentifier, Author *author, NSError *error) {
+              
+              if (error) {
+                  [[LTErrorManager sharedErrorManager] manageError:error];
+              }
+              
+              asynchLoadCounter_--;
+              [self displayContentIfNeeded];
+    }];
+    asynchLoadCounter_++;
+
 }
 
 - (void)refreshView {
@@ -314,25 +319,6 @@
     [self.navigationController pushViewController:mapVC animated:YES];
     mapVC.title = TRANSLATE(@"common.map");
     [mapVC release];
-}
-
-#pragma mark - LTConnectionManagerDelegate
-
-- (void)didRetrievedMedia:(Media *)media {
-    asynchLoadCounter_ = asynchLoadCounter_ - 1;
-    [self loadMediaView];
-    [self displayContentIfNeeded];
-}
-
-- (void)didRetrievedAuthor:(Author *)author {
-    asynchLoadCounter_ = asynchLoadCounter_ - 1;
-    [self displayContentIfNeeded];
-}
-
-- (void)didFailWithError:(NSError *)error {
-    LogDebug(@"%@",error.localizedDescription);
-    asynchLoadCounter_ = asynchLoadCounter_ - 1;
-    [self displayContentIfNeeded];
 }
 
 @end

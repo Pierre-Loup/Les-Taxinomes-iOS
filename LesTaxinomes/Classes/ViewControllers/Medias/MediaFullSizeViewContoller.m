@@ -65,7 +65,15 @@
     } else {
         [self startLoadingAnimation];
         LTConnectionManager * connectionManager = [LTConnectionManager sharedConnectionManager];
-        [connectionManager getMediaLargeURLWithId:media_.identifier delegate:self];
+        [connectionManager getMediaLargeURLWithId:media_.identifier
+                                    responseBlock:^(NSNumber *mediaIdentifier, Media *media, NSError *error) {
+                                        if (error) {
+                                            [[LTErrorManager sharedErrorManager] manageError:error];
+                                        }
+                                        [self stopLoadingAnimation];
+                                        [self startLoadingAnimationViewWithDetermination];
+                                        [self loadMediaImageAsych];
+                                    }];
     }
     [scrollView_ addSubview:mediaImageView_];
 }
@@ -107,7 +115,6 @@
                           float progress = (float)((double)totalBytesRead/(double)totalBytesExpectedToRead);
                           [self setProgress:progress];
                         } success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                            //[self resizeImage];
                             [self stopLoadingAnimation];
                         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
                             [self stopLoadingAnimation];
@@ -147,19 +154,6 @@
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
     return mediaImageView_;
-}
-
-#pragma mark - LTConnectionManagerDelegate
-
-- (void)didRetrievedMedia:(Media *)media {
-    [self stopLoadingAnimation];
-    [self startLoadingAnimationViewWithDetermination];
-    [self loadMediaImageAsych];
-}
-
-- (void)didFailWithError:(NSError *)error {
-    LogDebug(@"%@",error.localizedDescription);
-    [self stopLoadingAnimation];
 }
 
 @end

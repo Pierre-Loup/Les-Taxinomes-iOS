@@ -198,7 +198,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
     NSNumber* mediaMaxHeight = [NSNumber numberWithDouble:MEDIA_MAX_WIDHT_LARGE];
     NSNumber* mediaMaxWidth = [NSNumber numberWithDouble:MEDIA_MAX_WIDHT_LARGE];
     NSDictionary* parameters = @{   @"id_article"       : mediaIdentifier,
-                                    @"champs_demandes"  : @[ @"id_media", @"document" ],
+                                    @"champs_demandes"  : @[ @"id_media", @"document"],
                                     @"document_largeur" : mediaMaxWidth,
                                     @"document_hauteur" : mediaMaxHeight
                                 };
@@ -213,7 +213,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
 
                             if([response isKindOfClass:[NSDictionary class]]) {
                                 
-                                Media * mediaObject = [Media mediaWithXMLRPCResponse:(NSDictionary *)response];
+                                Media * mediaObject = [Media mediaLargeURLWithXMLRPCResponse:(NSDictionary *)response];
                                 responseBlock(mediaIdentifier, mediaObject, nil);
                             } else {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain

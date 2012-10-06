@@ -34,4 +34,5 @@
 - (void) startLoadingAnimationViewWithDetermination;
 - (void) startLoadingAnimation;
 - (void) stopLoadingAnimation;
+- (void)setProgress:(float)newProgress;
 @end
