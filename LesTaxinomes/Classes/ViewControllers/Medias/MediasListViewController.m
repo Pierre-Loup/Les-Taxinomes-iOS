@@ -55,7 +55,25 @@
 @synthesize currentUser = currentUser_;
 @synthesize mediaDetailViewController = mediaDetailViewController_;
 
-- (void)dealloc {
+#pragma mark - Super override
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        [self commonInit];
+    }
+    return self;
+}
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    [self commonInit];
+}
+
+- (void)dealloc
+{
     [currentUser_ release];
     [mediaAtIndexPath_ release];
     [mediaDetailViewController_ release];
@@ -63,30 +81,13 @@
     [super dealloc];
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [mediaAtIndexPath_ removeAllObjects];
-    [self.tableView reloadData];
-}
-
-#pragma mark - View lifecycle
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     mediaAtIndexPath_ = [NSMutableDictionary new];
-    mediaLoadingStatus_ = PENDING;
     
     reloadBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonAction:)];
     [self.navigationItem setRightBarButtonItem:reloadBarButton_ animated:YES];
-    [reloadBarButton_ release];
     
     mediaDetailViewController_ = (MediaDetailViewController *)[[[self.splitViewController.viewControllers lastObject] topViewController] retain];
     
@@ -98,6 +99,22 @@
     self.mediaDetailViewController = nil;
     [reloadBarButton_ release];
     reloadBarButton_ = nil;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [mediaAtIndexPath_ removeAllObjects];
+    [self.tableView reloadData];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    } else {
+        return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+                interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+    }
 }
 
 #pragma mark - Table view data source
@@ -183,14 +200,8 @@
 
 #pragma mark - Private methods
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return (interfaceOrientation == UIInterfaceOrientationPortrait);
-    } else {
-        return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-                interfaceOrientation == UIInterfaceOrientationLandscapeRight);
-    }
+- (void)commonInit {
+    mediaLoadingStatus_ = SUCCEED;
 }
 
 - (void)loadSynchMedias {
@@ -209,6 +220,8 @@
         } else if (medias) {
             if ([medias count] == 0) {
                 mediaLoadingStatus_ = NOMORETOLOAD;
+            } else {
+                mediaLoadingStatus_ = SUCCEED;
             }
             [LTDataManager sharedDataManager].synchLimit += [medias count];
             [self reloadDatas];
@@ -246,7 +259,6 @@
         [mediaAtIndexPath_ setObject:media forKey:[NSIndexPath indexPathForRow:row inSection:0]];
         row++;
     }
-    mediaLoadingStatus_ = SUCCEED;
     [self.tableView reloadData];
 }
 

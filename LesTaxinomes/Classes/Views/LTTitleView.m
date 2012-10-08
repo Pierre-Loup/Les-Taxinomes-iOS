@@ -74,6 +74,9 @@
 #pragma mark Private methodes
 
 - (void)setupWithFrame:(CGRect)frame {
+    self.backgroundColor = [UIColor clearColor];
+    self.opaque = NO;
+    
     backgroundImageView_ = [[UIImageView alloc] initWithFrame:frame];
     backgroundImageView_.image = [[UIImage imageNamed:@"bg_title"] stretchableImageWithLeftCapWidth:1 topCapHeight:0];
     backgroundImageView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

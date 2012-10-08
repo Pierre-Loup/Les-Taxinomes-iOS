@@ -28,6 +28,7 @@
 #import "MediaUploadFormViewController.h"
 #import "MediasListViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "LTTitleView.h"
 
 @interface AccountViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, LTAuthenticationSheetDelegate> {
     
@@ -37,8 +38,7 @@
     UIBarButtonItem* rightBarButton_;
 }
 @property (retain, nonatomic) IBOutlet UITableView* tableView;
-@property (retain, nonatomic) IBOutlet UIImageView* defaultAvatarView;
-@property (retain, nonatomic) IBOutlet UILabel* userNameLabel;
+@property (retain, nonatomic) IBOutlet LTTitleView* userNameView;
 @property (retain, nonatomic) IBOutlet UIImageView* avatarView;
 
 - (void)commonInit;
@@ -48,8 +48,6 @@
 
 @implementation AccountViewController
 @synthesize tableView = tableView_;
-@synthesize defaultAvatarView = defaultAvatarView_;
-@synthesize userNameLabel = userNameLabel_;
 @synthesize avatarView = avatarView_;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -67,7 +65,7 @@
 }
 
 - (void)commonInit {
-    accountMenuLabels_ = [@[TRANSLATE(@"account_uploas_media"), TRANSLATE(@"account_my_medias")] retain];
+    accountMenuLabels_ = [@[TRANSLATE(@"account_my_medias")] retain];
 }
 
 - (void)didReceiveMemoryWarning
@@ -93,7 +91,6 @@
     [self.tableView setHidden:YES];
     [avatarView_ setImageWithURL:[NSURL URLWithString:authenticatedUser_.avatarURL]
                 placeholderImage:[UIImage imageNamed:@"default_avatar_medium"]];
-    avatarView_.frame = defaultAvatarView_.frame;
     [self.view addSubview:avatarView_];
     [self switchToUnauthenticatedModeAnimated:NO];
 }
@@ -192,10 +189,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.row == 0 && indexPath.section == 0) {
-        MediaUploadFormViewController * mediaUploadFormViewController = [[MediaUploadFormViewController alloc] initWithNibName:@"MediaUploadFormViewController" bundle:nil];
-        [self.navigationController pushViewController:mediaUploadFormViewController animated:YES];
-        [mediaUploadFormViewController release];
-    } else if (indexPath.row == 1 && indexPath.section == 0) {
         MediasListViewController * mediasListViewController = [[MediasListViewController alloc] initWithNibName:@"MediasListViewController" bundle:nil];
         mediasListViewController.currentUser = [LTConnectionManager sharedConnectionManager].authenticatedUser;
         [self.navigationController pushViewController:mediasListViewController animated:YES];
@@ -220,7 +213,7 @@
 - (void)switchToAuthenticatedModeAnimated:(BOOL)animated {
     if ([LTConnectionManager sharedConnectionManager].authenticatedUser) {
         Author* authUser = [LTConnectionManager sharedConnectionManager].authenticatedUser;
-        self.userNameLabel.text = authUser.name;
+        self.userNameView.title = authUser.name;
         [avatarView_ setImageWithURL:[NSURL URLWithString:authUser.avatarURL]
                     placeholderImage:[UIImage imageNamed:@"default_avatar_medium"]];
     }
@@ -248,7 +241,7 @@
 - (void)authenticationDidFinishWithSuccess:(BOOL)success {
     Author* authenticatedUser = [LTConnectionManager sharedConnectionManager].authenticatedUser;
     if (success && authenticatedUser) {
-        self.userNameLabel.text = authenticatedUser.name;
+        self.userNameView.title = authenticatedUser.name;
         [self.avatarView setImageWithURL:[NSURL URLWithString:authenticatedUser.avatarURL]
                         placeholderImage:[UIImage imageNamed:@"default_avatar_medium"]];
         [self switchToAuthenticatedModeAnimated:YES];

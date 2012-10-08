@@ -31,39 +31,26 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "LesTaxinomes/Classes/ViewControllers/Medias/MediaFullSizeViewContoller.m"
-         timestampString = "371230055.530598"
+         filePath = "LesTaxinomes/Classes/ViewControllers/Medias/MediasListViewController.m"
+         timestampString = "371415137.008889"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "118"
-         endingLineNumber = "118"
-         landmarkName = "-loadMediaImageAsych"
+         startingLineNumber = "64"
+         endingLineNumber = "64"
+         landmarkName = "-initWithNibName:bundle:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "LesTaxinomes/Classes/ViewControllers/Medias/MediaFullSizeViewContoller.m"
-         timestampString = "371230057.707047"
+         filePath = "LesTaxinomes/Classes/ViewControllers/Medias/MediasListViewController.m"
+         timestampString = "371415138.024472"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "120"
-         endingLineNumber = "120"
-         landmarkName = "-loadMediaImageAsych"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "LesTaxinomes/Classes/ViewControllers/Medias/MediaFullSizeViewContoller.m"
-         timestampString = "371230088.605891"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "111"
-         endingLineNumber = "111"
-         landmarkName = "-loadMediaImageAsych"
+         startingLineNumber = "72"
+         endingLineNumber = "72"
+         landmarkName = "-awakeFromNib"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

@@ -305,8 +305,6 @@
 		A585632015F90BAD00446653 /* LTiPhoneBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562A915F90BAD00446653 /* LTiPhoneBackgroundView.m */; };
 		A585632115F90BAD00446653 /* LTTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562AB15F90BAD00446653 /* LTTitleView.m */; };
 		A585632215F90BAD00446653 /* LTTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562AB15F90BAD00446653 /* LTTitleView.m */; };
-		A585632315F90BAD00446653 /* LTTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A58562AC15F90BAD00446653 /* LTTitleView.xib */; };
-		A585632415F90BAD00446653 /* LTTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A58562AC15F90BAD00446653 /* LTTitleView.xib */; };
 		A585632515F90C6500446653 /* LTConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A585623915F90BAD00446653 /* LTConnectionManager.m */; };
 		A585632615F90C7000446653 /* LTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A585623B15F90BAD00446653 /* LTDataManager.m */; };
 		A585632715F90C7000446653 /* LTErrorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A585623D15F90BAD00446653 /* LTErrorManager.m */; };
@@ -607,7 +605,6 @@
 		A58562A915F90BAD00446653 /* LTiPhoneBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTiPhoneBackgroundView.m; sourceTree = "<group>"; };
 		A58562AA15F90BAD00446653 /* LTTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTTitleView.h; sourceTree = "<group>"; };
 		A58562AB15F90BAD00446653 /* LTTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTTitleView.m; sourceTree = "<group>"; };
-		A58562AC15F90BAD00446653 /* LTTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LTTitleView.xib; sourceTree = "<group>"; };
 		A591B7B2150D57F000CE89BA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		A59F1B8B15778E8E00F3B6A9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		A5AC0A8A15DABF31000F9311 /* LesTaxinomes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LesTaxinomes.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1182,7 +1179,6 @@
 				A58562A915F90BAD00446653 /* LTiPhoneBackgroundView.m */,
 				A58562AA15F90BAD00446653 /* LTTitleView.h */,
 				A58562AB15F90BAD00446653 /* LTTitleView.m */,
-				A58562AC15F90BAD00446653 /* LTTitleView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1380,7 +1376,6 @@
 				A585631315F90BAD00446653 /* MediaListCell.xib in Resources */,
 				A585631715F90BAD00446653 /* SingleLineInputCell.xib in Resources */,
 				A585631B15F90BAD00446653 /* SpinnerCell.xib in Resources */,
-				A585632315F90BAD00446653 /* LTTitleView.xib in Resources */,
 				A55AEB371620431E00225704 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1442,7 +1437,6 @@
 				A585631415F90BAD00446653 /* MediaListCell.xib in Resources */,
 				A585631815F90BAD00446653 /* SingleLineInputCell.xib in Resources */,
 				A585631C15F90BAD00446653 /* SpinnerCell.xib in Resources */,
-				A585632415F90BAD00446653 /* LTTitleView.xib in Resources */,
 				A55AEB381620431E00225704 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
