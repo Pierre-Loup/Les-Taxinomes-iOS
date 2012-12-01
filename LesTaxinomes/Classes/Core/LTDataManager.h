@@ -40,9 +40,9 @@
 + (LTDataManager *)sharedDataManager;
 
 - (void)getMediaWithId:(NSNumber *)mediaIdentifier
-         responseBlock:(void (^)(NSNumber* mediaIdentifier, Media* media, NSError *error))responseBlock;
+         responseBlock:(void (^)(Media* media, NSError *error))responseBlock;
 
 - (void)getAuthorWithId:(NSNumber *)authorIdentifier
-          responseBlock:(void (^)(NSNumber* authorIdentifier, Author* author, NSError *error))responseBlock;
+          responseBlock:(void (^)(Author* author, NSError *error))responseBlock;
 
 @end

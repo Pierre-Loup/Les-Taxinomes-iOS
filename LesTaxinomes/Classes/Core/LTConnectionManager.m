@@ -23,9 +23,14 @@
  
  */
 
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Imports
+
 #import "LTConnectionManager.h"
 
 #import <AssetsLibrary/ALAsset.h>
+#import <AssetsLibrary/ALAssetRepresentation.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <CoreLocation/CoreLocation.h>
 
@@ -37,15 +42,33 @@
 #import "UIImage+Resize.h"
 #import "XMLRPCResponse.h"
 
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Defines & contants
 
 NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.LesTaxinomes.LTConnectionManagerError";
 
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Private interface
+
+@interface LTConnectionManager ()
+@end
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Implementation
+
 @implementation LTConnectionManager
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Supermethods overrides
 
 - (void)dealloc {
     [_authenticatedUser release];
 	[super dealloc];
 }
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Public Methods
+#pragma mark Class Methods
 
 + (LTConnectionManager *)sharedConnectionManager {
     static LTConnectionManager* connectionManager = nil;
@@ -58,39 +81,41 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
     return connectionManager;
 }
 
+#pragma mark Instance Methods
+
 - (void)getLicensesWithResponseBlock:(void (^)(NSArray* licenses, NSError *error))responseBlock {
     LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
-    [xmlrpcClient executeMethod:@"spip.liste_licences"
+    [xmlrpcClient executeMethod:LTXMLRCPMethodSPIPListeLicences
                      withObject:nil
                authCookieEnable:NO
-    success:^(XMLRPCResponse *response) {
-        if([response isKindOfClass:[NSDictionary class]]) {
-            NSDictionary* responseDict = (NSDictionary*)response;
-            NSMutableArray* licenses = [NSMutableArray array];
-            for(NSString *key in (NSDictionary*)response){
-                if ([[responseDict objectForKey:key] isKindOfClass:[NSDictionary class]]) {
-                    NSDictionary *xmlLicenseDict = [responseDict objectForKey:key];
-                    [licenses addObject:[License licenseWithXMLRPCResponse:xmlLicenseDict]];
-                }
-                
-            }
-            responseBlock(licenses, nil);
-        } else {
-            NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
-                                                 code:LTConnectionManagerInternalError
-                                             userInfo:@{@"method":@"spip.liste_licences"}];
-            responseBlock(nil, error);
-        }
-     } failure:^(NSError *error) {
-         responseBlock(nil, error);
-     }];
+                        success:^(XMLRPCResponse *response) {
+                            if([response isKindOfClass:[NSDictionary class]]) {
+                                NSDictionary* responseDict = (NSDictionary*)response;
+                                NSMutableArray* licenses = [NSMutableArray array];
+                                for(NSString *key in (NSDictionary*)response){
+                                    if ([[responseDict objectForKey:key] isKindOfClass:[NSDictionary class]]) {
+                                        NSDictionary *xmlLicenseDict = [responseDict objectForKey:key];
+                                        [licenses addObject:[License licenseWithXMLRPCResponse:xmlLicenseDict]];
+                                    }
+                                    
+                                }
+                                if(responseBlock) responseBlock(licenses, nil);
+                            } else {
+                                NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                                                     code:LTConnectionManagerInternalError
+                                                                 userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodSPIPListeLicences}];
+                                if(responseBlock) responseBlock(nil, error);
+                            }
+                        } failure:^(NSError *error) {
+                            if(responseBlock) responseBlock(nil, error);
+                        }];
     
 }
 
 - (void)getShortMediasByDateForAuthor:(Author *)author
                          nearLocation:(CLLocation *)location
                             withRange:(NSRange)range
-                        responseBlock:(void (^)(Author* author, NSRange range, NSArray* medias, NSError *error))responseBlock {
+                        responseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock {
     
     if(range.length == 0 || range.length > kDefaultLimit)
         range.length = kDefaultLimit;
@@ -100,12 +125,12 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
     NSNumber* thumbnailHeight = [NSNumber numberWithDouble:(THUMBNAIL_MAX_HEIGHT)];
     NSMutableDictionary* parameters = [NSMutableDictionary dictionaryWithDictionary:
                                        @{
-                                            @"limite":              limite,
-                                            @"champs_demandes":     requestedFields,
-                                            @"vignette_format":     @"carre",
-                                            @"vignette_largeur":    thumbnailWidth,
-                                            @"vignette_hauteur":    thumbnailHeight,
-                                            @"statut":              @"publie"
+                                       @"limite":              limite,
+                                       @"champs_demandes":     requestedFields,
+                                       @"vignette_format":     @"carre",
+                                       @"vignette_largeur":    thumbnailWidth,
+                                       @"vignette_hauteur":    thumbnailHeight,
+                                       @"statut":              @"publie"
                                        }];
     // Optional
     if (location) {
@@ -119,51 +144,51 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
     }
     
     LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
-    [xmlrpcClient executeMethod:@"geodiv.liste_medias"
+    [xmlrpcClient executeMethod:LTXMLRCPMethodGeoDivListeMedias
                      withObject:parameters
                authCookieEnable:author?YES:NO
-    success:^(id response) {
-        if([response isKindOfClass:[NSArray  class]]) {
-            NSMutableArray *medias = [NSMutableArray array];
-            for(NSDictionary *mediaXML in (NSArray *)response){
-                Media * mediaObject = [Media mediaWithXMLRPCResponse:mediaXML];
-                if (mediaObject) {
-                    [medias addObject:mediaObject];
-                }
-            }
-            responseBlock(author, range, medias, nil);
-        } else {
-            NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
-                                                 code:LTConnectionManagerInternalError
-                                             userInfo:@{@"method":@"geodiv.liste_medias"}];
-            responseBlock(author, range, nil, error);
-        }
-    } failure:^(NSError *error) {
-        responseBlock(author, range, nil, error);
-    }];
+                        success:^(id response) {
+                            if([response isKindOfClass:[NSArray  class]]) {
+                                NSMutableArray *medias = [NSMutableArray array];
+                                for(NSDictionary *mediaXML in (NSArray *)response){
+                                    Media * mediaObject = [Media mediaWithXMLRPCResponse:mediaXML];
+                                    if (mediaObject) {
+                                        [medias addObject:mediaObject];
+                                    }
+                                }
+                                if(responseBlock) responseBlock(medias, nil);
+                            } else {
+                                NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                                                     code:LTConnectionManagerInternalError
+                                                                 userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodGeoDivListeMedias}];
+                                if(responseBlock) responseBlock(nil, error);
+                            }
+                        } failure:^(NSError *error) {
+                            if(responseBlock) responseBlock(nil, error);
+                        }];
 }
 
 - (void)getMediaWithId:(NSNumber *)mediaIdentifier
-         responseBlock:(void (^)(NSNumber* mediaIdentifier, Media* media, NSError *error))responseBlock {
+         responseBlock:(void (^)(Media* media, NSError *error))responseBlock {
     
     if (!mediaIdentifier) {
         
         NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                              code:LTConnectionManagerBadArgsError
                                          userInfo:nil];
-        responseBlock(mediaIdentifier, nil, error);
+        if(responseBlock) responseBlock(nil, error);
     }
     
     NSNumber* mediaMaxHeight = [NSNumber numberWithDouble:MEDIA_MAX_WIDHT];
     NSNumber* mediaMaxWidth = [NSNumber numberWithDouble:MEDIA_MAX_WIDHT];
     NSDictionary* parameters =  @{
-                                    @"id_article"       : mediaIdentifier,
-                                    @"document_largeur" : mediaMaxWidth,
-                                    @"document_hauteur" : mediaMaxHeight
-                                };
+    @"id_article"       : mediaIdentifier,
+    @"document_largeur" : mediaMaxWidth,
+    @"document_hauteur" : mediaMaxHeight
+    };
     
     LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
-    [xmlrpcClient executeMethod:@"geodiv.lire_media"
+    [xmlrpcClient executeMethod:LTXMLRCPMethodGeoDivLireMedia
                      withObject:parameters
                authCookieEnable:NO
                         success:^(id response) {
@@ -171,76 +196,76 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             if([response isKindOfClass:[NSDictionary class]]) {
                                 
                                 Media * mediaObject = [Media mediaWithXMLRPCResponse:(NSDictionary *)response];
-                                responseBlock(mediaIdentifier, mediaObject, nil);
+                                if(responseBlock) responseBlock(mediaObject, nil);
                                 
                             } else {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
-                                                                 userInfo:@{@"method":@"geodiv.lire_media"}];
-                                responseBlock(mediaIdentifier, nil, error);
+                                                                 userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodGeoDivLireMedia}];
+                                if(responseBlock) responseBlock(nil, error);
                             }
                         } failure:^(NSError* error) {
                             
-                            responseBlock(mediaIdentifier, nil, error);
+                            if(responseBlock) responseBlock(nil, error);
                         }];
 }
 
 - (void)getMediaLargeURLWithId:(NSNumber *)mediaIdentifier
-                 responseBlock:(void (^)(NSNumber* mediaIdentifier, Media* media, NSError *error))responseBlock {
+                 responseBlock:(void (^)(Media* media, NSError *error))responseBlock {
     if (!mediaIdentifier) {
         
         NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                              code:LTConnectionManagerBadArgsError
                                          userInfo:nil];
-        responseBlock(mediaIdentifier, nil, error);
+        if(responseBlock) responseBlock(nil, error);
         return;
     }
     NSNumber* mediaMaxHeight = [NSNumber numberWithDouble:MEDIA_MAX_WIDHT_LARGE];
     NSNumber* mediaMaxWidth = [NSNumber numberWithDouble:MEDIA_MAX_WIDHT_LARGE];
     NSDictionary* parameters = @{   @"id_article"       : mediaIdentifier,
-                                    @"champs_demandes"  : @[ @"id_media", @"document"],
-                                    @"document_largeur" : mediaMaxWidth,
-                                    @"document_hauteur" : mediaMaxHeight
-                                };
+    @"champs_demandes"  : @[ @"id_media", @"document"],
+    @"document_largeur" : mediaMaxWidth,
+    @"document_hauteur" : mediaMaxHeight
+    };
     
     
     
     LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
-    [xmlrpcClient executeMethod:@"geodiv.lire_media"
+    [xmlrpcClient executeMethod:LTXMLRCPMethodGeoDivLireMedia
                      withObject:parameters
                authCookieEnable:NO
                         success:^(id response) {
-
+                            
                             if([response isKindOfClass:[NSDictionary class]]) {
                                 
                                 Media * mediaObject = [Media mediaLargeURLWithXMLRPCResponse:(NSDictionary *)response];
-                                responseBlock(mediaIdentifier, mediaObject, nil);
+                                if(responseBlock) responseBlock(mediaObject, nil);
                             } else {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
-                                                                 userInfo:@{@"method":@"geodiv.lire_media"}];
-                                responseBlock(mediaIdentifier, nil, error);
+                                                                 userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodGeoDivLireMedia}];
+                                if(responseBlock) responseBlock(nil, error);
                             }
                         } failure:^(NSError* error) {
                             
-                            responseBlock(mediaIdentifier, nil, error);
+                            if(responseBlock) responseBlock(nil, error);
                         }];
 }
 
 - (void)getAuthorWithId:(NSNumber *)authorIdentifier
-          responseBlock:(void (^)(NSNumber* authorIdentifier, Author* author, NSError *error))responseBlock {
+          responseBlock:(void (^)(Author* author, NSError *error))responseBlock {
     if (!authorIdentifier) {
         NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                              code:LTConnectionManagerBadArgsError
                                          userInfo:nil];
-        responseBlock(authorIdentifier, nil, error);
+        if(responseBlock) responseBlock(nil, error);
         return;
     }
     
     NSDictionary* parameters = @{ @"id_auteur" : authorIdentifier };
     
     LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
-    [xmlrpcClient executeMethod:@"spip.lire_auteur"
+    [xmlrpcClient executeMethod:LTXMLRCPMethodSPIPLireAuteur
                      withObject:parameters
                authCookieEnable:NO
                         success:^(id response) {
@@ -248,16 +273,16 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             if([response isKindOfClass:[NSDictionary class]]) {
                                 
                                 Author* authorObject = [Author authorWithXMLRPCResponse:(NSDictionary *)response];
-                                responseBlock(authorIdentifier, authorObject, nil);
+                                if(responseBlock) responseBlock(authorObject, nil);
                             } else {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
-                                                                 userInfo:@{@"method":@"spip.lire_auteur"}];
-                                responseBlock(authorIdentifier, nil, error);
+                                                                 userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodSPIPLireAuteur}];
+                                if(responseBlock) responseBlock(nil, error);
                             }
                         } failure:^(NSError* error) {
                             
-                            responseBlock(authorIdentifier, nil, error);
+                            if(responseBlock) responseBlock(nil, error);
                         }];
 }
 
@@ -265,23 +290,23 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                      text:(NSString *)text
                   license:(License *)license
                  assetURL:(NSURL *)assetURL
-            responseBlock:(void (^)(NSString* title, NSString* text, License* license, NSURL* assetURL, Media* media, NSError *error))responseBlock {
+            responseBlock:(void (^)(Media* media, NSError *error))responseBlock {
     
     if (!assetURL) {
         NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                              code:LTConnectionManagerBadArgsError
                                          userInfo:nil];
-        responseBlock(title, text, license, assetURL, nil, error);
+        if(responseBlock) responseBlock(nil, error);
     }
     
     NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
     
     // Title
-
+    
     if (title) {
         [parameters setValue:title forKey:@"titre"];
     } else {
-        [parameters setValue:TRANSLATE(@"media_upload_no_title") forKey:@"titre"];
+        [parameters setValue:_T(@"media_upload_no_title") forKey:@"titre"];
     }
     
     //Text
@@ -289,82 +314,86 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
     if (text) {
         [fullText appendString:text];
     }
-    [fullText appendString:TRANSLATE(@"media_upload.text_prefix")];
+    [fullText appendString:_T(@"media_upload.text_prefix")];
     [parameters setValue:fullText forKey:@"texte"];
     
     // License
     if (license) {
         [parameters setValue:[NSString stringWithFormat:@"%@",[license.identifier stringValue]] forKey:@"id_licence"];
     }
-
-    ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
-    [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
-        if (asset) {
-            ALAssetRepresentation* assetRepresentation = [asset defaultRepresentation];
-
-            // Media location (GIS)
-            NSMutableDictionary* imageMetadata = [NSMutableDictionary dictionaryWithDictionary:[assetRepresentation metadata]];
-            NSString* latitudeStr = [NSString stringWithFormat:@"%f", [imageMetadata location].coordinate.latitude];
-            NSString* longitudeStr = [NSString stringWithFormat:@"%f", [imageMetadata location].coordinate.longitude];
-            [parameters setValue:@{@"lat" : latitudeStr, @"lon" : longitudeStr} forKey:@"gis"];
-            
-            // Retrieve the image orientation from the ALAsset
-            UIImageOrientation orientation = UIImageOrientationUp;
-            NSNumber* orientationValue = [asset valueForProperty:@"ALAssetPropertyOrientation"];
-            if (orientationValue != nil) {
-                orientation = [orientationValue intValue];
-            }
-            
-            // Media
-            CGImageRef iref = [assetRepresentation fullResolutionImage];
-            if (iref) {
-                UIImage* mediaImage = [[UIImage imageWithCGImage:iref scale:1 orientation:orientation] retain];
-                if (mediaImage.size.width > MEDIA_MAX_WIDHT) {
-                    CGFloat imageHeight = (MEDIA_MAX_WIDHT/mediaImage.size.width)*mediaImage.size.height;
-                    CGSize newSize = CGSizeMake(MEDIA_MAX_WIDHT, imageHeight);
-                    [mediaImage resizedImageToSize:newSize];
-                }
-                
-                NSData* imageData = [NSData dataWithData:UIImageJPEGRepresentation(mediaImage, 1.0f)];
-                NSDictionary *document = @{
-                @"name" : [NSString stringWithFormat:@"%@.jpg",title],
-                @"type" : @"image/jpeg",
-                @"bits" : imageData,
-                };
-
-                [parameters setValue:document forKey:@"document"];
-            }
-        }
-    } failureBlock:^(NSError *error) {
-        responseBlock(title,text,license,assetURL,nil,error);
-    }];
-    [library release];
     
     [parameters setValue:@"publie" forKey:@"statut"];
-
-    LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
-    [xmlrpcClient executeMethod:@"geodiv.creer_media"
-                     withObject:parameters
-               authCookieEnable:NO
-                        success:^(id response) {
-                            if([response isKindOfClass:[NSDictionary class]]) {
-                                
-                                Media * mediaObject = [Media mediaWithXMLRPCResponse:(NSDictionary *)response];
-                                responseBlock(title, text, license, assetURL, mediaObject, nil);
-                            } else {
-                                NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
-                                                                     code:LTConnectionManagerInternalError
-                                                                 userInfo:@{@"method":@"geodiv.creer_media"}];
-                                responseBlock(title, text, license, assetURL, nil, error);
-                            }
-                        } failure:^(NSError* error) {
-                            responseBlock(title,text,license,assetURL,nil,error);
-                        }];
+    
+    ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
+    [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
+        ALAssetRepresentation* assetRepresentation = [asset defaultRepresentation];
+        
+        // Media location (GIS)
+        NSMutableDictionary* imageMetadata = [NSMutableDictionary dictionaryWithDictionary:[assetRepresentation metadata]];
+        NSString* latitudeStr = [NSString stringWithFormat:@"%f", [imageMetadata location].coordinate.latitude];
+        NSString* longitudeStr = [NSString stringWithFormat:@"%f", [imageMetadata location].coordinate.longitude];
+        [parameters setValue:@{@"lat" : latitudeStr, @"lon" : longitudeStr} forKey:@"gis"];
+        
+        // Retrieve the image orientation from the ALAsset
+        UIImageOrientation orientation = UIImageOrientationUp;
+        NSNumber* orientationValue = [asset valueForProperty:@"ALAssetPropertyOrientation"];
+        if (orientationValue != nil) {
+            orientation = [orientationValue intValue];
+        }
+        
+        // Media
+        CGImageRef iref = [assetRepresentation fullResolutionImage];
+        if (iref) {
+            UIImage* mediaImage = [[UIImage imageWithCGImage:iref scale:1 orientation:orientation] retain];
+            if (mediaImage.size.width > MEDIA_MAX_WIDHT) {
+                CGFloat imageHeight = (MEDIA_MAX_WIDHT/mediaImage.size.width)*mediaImage.size.height;
+                CGSize newSize = CGSizeMake(MEDIA_MAX_WIDHT, imageHeight);
+                [mediaImage resizedImageToSize:newSize];
+            }
+            
+            NSData* imageData = [NSData dataWithData:UIImageJPEGRepresentation(mediaImage, 1.0f)];
+            NSDictionary *document = @{
+            @"name" : [NSString stringWithFormat:@"%@.jpg",title],
+            @"type" : @"image/jpeg",
+            @"bits" : imageData,
+            };
+            
+            [parameters setValue:document forKey:@"document"];
+            
+            LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
+            [xmlrpcClient executeMethod:LTXMLRCPMethodGeoDivCreerMedia
+                             withObject:parameters
+                       authCookieEnable:YES
+                    uploadProgressBlock:^(CGFloat progress) {
+                        if ([self.delegate respondsToSelector:@selector(uploadDeterminationDidUpdate:)]) {
+                            [self.delegate uploadDeterminationDidUpdate:progress];
+                        }
+                    }
+                  downloadProgressBlock:nil
+                                success:^(id response) {
+                                    if([response isKindOfClass:[NSDictionary class]]) {
+                                        
+                                        Media * mediaObject = [Media mediaWithXMLRPCResponse:(NSDictionary *)response];
+                                        if(responseBlock) responseBlock(mediaObject, nil);
+                                    } else {
+                                        NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                                                             code:LTConnectionManagerInternalError
+                                                                         userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodGeoDivCreerMedia}];
+                                        if(responseBlock) responseBlock(nil, error);
+                                    }
+                                } failure:^(NSError* error) {
+                                    if(responseBlock) responseBlock(nil,error);
+                                }];
+        }
+    } failureBlock:^(NSError *error) {
+        if(responseBlock) responseBlock(nil,error);
+    }];
+    [library release];
 }
 
 - (void)authWithLogin:(NSString *)login
              password:(NSString *)password
-        responseBlock:(void (^)(NSString* login, NSString* password, Author* authenticatedUser, NSError *error))responseBlock {
+        responseBlock:(void (^)(Author* authenticatedUser, NSError *error))responseBlock {
     
     NSMutableArray* identifiers = [NSMutableArray array];
     if (login) {
@@ -375,21 +404,21 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
     }
     
     LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
-    [xmlrpcClient executeMethod:@"spip.auth"
+    [xmlrpcClient executeMethod:LTXMLRCPMethodSPIPAuth
                      withObject:identifiers
                authCookieEnable:YES
                         success:^(id response) {
                             if([response isKindOfClass:[NSDictionary class]]){
                                 self.authenticatedUser = [Author authorWithXMLRPCResponse:(NSDictionary *)response];
-                                responseBlock(login, password, self.authenticatedUser, nil);
+                                if(responseBlock) responseBlock(self.authenticatedUser, nil);
                             } else {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
-                                                                 userInfo:@{@"method":@"spip.auth"}];
-                                responseBlock(login, password, nil, error);
+                                                                 userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodSPIPAuth}];
+                                if(responseBlock) responseBlock(nil, error);
                             }
                         } failure:^(NSError* error) {
-                            responseBlock(login, password, nil, error);
+                            if(responseBlock) responseBlock(nil, error);
                         }];
 }
 

@@ -31,27 +31,12 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "LesTaxinomes/Classes/ViewControllers/Medias/MediasListViewController.m"
-         timestampString = "371415137.008889"
+         filePath = "../../Downloads/MugunthKumar-UIKitCategoryAdditions-57bc879/MKAdditions/UIActionSheet+MKBlockAdditions.h"
+         timestampString = "372517155.936244"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "64"
-         endingLineNumber = "64"
-         landmarkName = "-initWithNibName:bundle:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "LesTaxinomes/Classes/ViewControllers/Medias/MediasListViewController.m"
-         timestampString = "371415138.024472"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "72"
-         endingLineNumber = "72"
-         landmarkName = "-awakeFromNib"
-         landmarkType = "5">
+         startingLineNumber = "3"
+         endingLineNumber = "3">
       </FileBreakpoint>
    </FileBreakpoints>
    <ExceptionBreakpoints>

@@ -25,8 +25,6 @@
 
 #import "AuthenticationSheetViewController.h"
 
-#import "LTErrorManager.h"
-
 @interface AuthenticationSheetViewController ()
 
 @property (nonatomic, retain) IBOutlet UITextField* loginTextField;
@@ -55,8 +53,8 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    self.title = TRANSLATE(@"common.signin");
-        UIBarButtonItem * cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common.cancel") style:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTouched:)];
+    self.title = _T(@"common.signin");
+        UIBarButtonItem * cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:_T(@"common.cancel") style:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTouched:)];
         [self.navigationItem setRightBarButtonItem:cancelBarButton];
         [cancelBarButton release];
 
@@ -82,16 +80,20 @@
 
 - (IBAction)submitAuthentication:(id)sender {
     
-    [self startLoadingAnimation];
+    [self showHudForLoading];
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
         [cm authWithLogin:self.loginTextField.text
                  password:self.passwordTextField.text
-            responseBlock:^(NSString *login, NSString *password, Author *authenticatedUser, NSError *error) {
-                [self stopLoadingAnimation];
+            responseBlock:^(Author *authenticatedUser, NSError *error) {
+                [self.hud hide:YES];
                 if (authenticatedUser && !error) {
                     [self.delegate authenticationDidFinishWithSuccess:YES];
+                    [self.hud hide:YES];
+                } else if ([error shouldBeDisplayed]) {
+                    [UIAlertView showWithError:error];
+                    [self.hud hide:NO];
                 } else {
-                    [[LTErrorManager sharedErrorManager] manageError:error];
+                    [self showErrorHudWithText:nil];
                 }
             }];
 }

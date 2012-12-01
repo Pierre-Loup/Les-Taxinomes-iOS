@@ -34,7 +34,6 @@
 #import "MediaLocalisationPickerViewController.h"
 #import "UIGlossyButton.h"
 
-@interface MediaUploadFormViewController : LTTableViewController 
-@property (nonatomic, retain) UIImage* mediaImage;
-@property (nonatomic, retain) CLLocation* gis;
+@interface MediaUploadFormViewController : LTTableViewController
+- (id)initWithAssetURL:(NSURL*)assetURL;
 @end

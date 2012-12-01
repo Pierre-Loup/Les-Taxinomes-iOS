@@ -26,8 +26,7 @@
 #import <UIKit/UIKit.h>
 #import "LTConnectionManager.h"
 #import "AuthenticationSheetViewController.h"
-#import "LTPhotoPickerViewController.h"
 #import "Author.h"
 
-@interface AccountViewController : LTPhotoPickerViewController
+@interface AccountViewController : LTViewController
 @end

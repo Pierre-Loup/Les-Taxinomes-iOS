@@ -65,7 +65,7 @@
 }
 
 - (void)getMediaWithId:(NSNumber *)mediaIdentifier
-         responseBlock:(void (^)(NSNumber* mediaIdentifier, Media* media, NSError *error))responseBlock {
+         responseBlock:(void (^)(Media* media, NSError *error))responseBlock {
     
     Media * localMedia = [Media mediaWithIdentifier:mediaIdentifier];
     LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
@@ -77,14 +77,14 @@
         [connectionManager getMediaWithId:mediaIdentifier
                             responseBlock:responseBlock];
     } else {
-        responseBlock(mediaIdentifier, localMedia, nil);
+        responseBlock(localMedia, nil);
     }
 }
 
 
 
 - (void)getAuthorWithId:(NSNumber *)authorIdentifier
-          responseBlock:(void (^)(NSNumber* authorIdentifier, Author* author, NSError *error))responseBlock {
+          responseBlock:(void (^)(Author* author, NSError *error))responseBlock {
     
     Author * localAuthor = [Author authorWithIdentifier:authorIdentifier];
     LTConnectionManager *connectionManager = [LTConnectionManager sharedConnectionManager];
@@ -96,7 +96,7 @@
         [connectionManager getAuthorWithId:authorIdentifier
                              responseBlock:responseBlock];
     } else {
-        responseBlock(authorIdentifier, localAuthor, nil);
+        responseBlock(localAuthor, nil);
     }
 }
 

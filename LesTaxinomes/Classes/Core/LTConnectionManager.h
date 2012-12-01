@@ -29,7 +29,6 @@
 #import "Author.h"
 #import "License.h"
 #import "XMLRPCRequest.h"
-#import "LTErrorManager.h"
 
 /**
  Indicates an error occured in LTConnectionManager.
@@ -38,12 +37,19 @@ extern NSString* const LTConnectionManagerErrorDomain;
 
 typedef enum LTConnectionManagerError {
     LTConnectionManagerBadArgsError = 77001,
-    LTConnectionManagerInternalError = 77002
+    LTConnectionManagerInternalError = 77002,
 } LTConnectionManagerError;
+
+@protocol LTConnectionManagerDelegate <NSObject>
+@optional
+- (void)uploadDeterminationDidUpdate:(CGFloat)determination;
+- (void)downloadDeterminationDidUpdate:(CGFloat)determination;
+@end
 
 @interface LTConnectionManager : NSObject
 
 @property (nonatomic, retain) Author * authenticatedUser;
+@property (nonatomic, assign) id<LTConnectionManagerDelegate> delegate;
 
 + (LTConnectionManager *)sharedConnectionManager;
 - (void)getLicensesWithResponseBlock:(void (^)(NSArray* licenses, NSError *error))responseBlock;
@@ -51,26 +57,26 @@ typedef enum LTConnectionManagerError {
 - (void)getShortMediasByDateForAuthor:(Author *)author
                          nearLocation:(CLLocation *)location
                             withRange:(NSRange)range
-                        responseBlock:(void (^)(Author* author, NSRange range, NSArray* medias, NSError *error))responseBlock;
+                        responseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock;
 
 - (void)getMediaWithId:(NSNumber *)mediaIdentifier
-         responseBlock:(void (^)(NSNumber* mediaIdentifier, Media* media, NSError *error))responseBlock;
+         responseBlock:(void (^)(Media* media, NSError *error))responseBlock;
 
 - (void)getMediaLargeURLWithId:(NSNumber *)mediaIdentifier
-                 responseBlock:(void (^)(NSNumber* mediaIdentifier, Media* media, NSError *error))responseBlock;
+                 responseBlock:(void (^)(Media* media, NSError *error))responseBlock;
 
 - (void)getAuthorWithId:(NSNumber *)authorIdentifier
-          responseBlock:(void (^)(NSNumber* authorIdentifier, Author* author, NSError *error))responseBlock;
+          responseBlock:(void (^)(Author* author, NSError *error))responseBlock;
 
 - (void)addMediaWithTitle:(NSString *)title
                      text:(NSString *)text
                   license:(License *)license
                  assetURL:(NSURL *)assetURL
-            responseBlock:(void (^)(NSString* title, NSString* text, License* license, NSURL* assetURL, Media* media, NSError *error))responseBlock;
+            responseBlock:(void (^)(Media* media, NSError *error))responseBlock;
 
 - (void)authWithLogin:(NSString *)login
              password:(NSString *)password
-        responseBlock:(void (^)(NSString* login, NSString* password, Author* authenticatedUser, NSError *error))responseBlock;
+        responseBlock:(void (^)(Author* authenticatedUser, NSError *error))responseBlock;
 
 - (void)unAuthenticate;
 

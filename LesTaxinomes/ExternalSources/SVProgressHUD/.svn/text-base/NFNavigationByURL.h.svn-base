@@ -1,0 +1,65 @@
+//
+//  NavigateByURL.h
+//  TestURLNavigation
+//
+//  Created by Aymeric DE ABREU on 25/01/12.
+//  Copyright (c) 2012 Niji - Dsquare. All rights reserved.
+//
+//  This class is meant to add navigation by URL
+//  Anywhere in your app you use this class to build your path
+//  to a view controller.
+//  Your controllers built with RGNavigationByURL must conform
+//  to the URLControllerNavigationDelegate.
+//  Warning : your controller must call the controllerFinishedInit:
+//  method to make sure the process goes smoothly
+//  You can add a URLNavigationDelegate to be notified when the process is 
+//  finished
+//  
+//  The URL must be like "app://YourAwesomeController?param1=value1&param2=value2/YourNextController"
+//  
+//  
+//  
+
+#import <Foundation/Foundation.h>
+
+
+
+
+@protocol URLControllerNavigationDelegate;
+@protocol URLNavigationDelegate;
+
+@interface NFNavigationByURL : NSObject
+{
+    NSMutableArray* viewControllers_;
+    NSMutableArray* arrayOfParameters_;
+    int indexViewController_;
+    
+    UIViewController* nextController_;
+    UIViewController* rootController_;
+    
+    id<URLNavigationDelegate> delegate_;
+}
+
+@property (nonatomic, assign) id<URLNavigationDelegate> delegate;
+
+- (id)initWithURL:(NSURL*)str;
+- (void)buildNavigationOnRootController:(UIViewController*)rootController;
+- (void)controllerFinishedInit:(UIViewController*)viewController;
+
+@end
+
+
+@protocol URLNavigationDelegate <NSObject>
+
+- (void)urlNavigationDidFinish:(NFNavigationByURL*)navURL;
+
+@end
+
+@protocol URLControllerNavigationDelegate <NSObject>
+
+- (id)initFromURLWithPreviousController:(UIViewController*)vc withParams:(NSDictionary*)params andNavigationURL:(NFNavigationByURL*)navURL;
+
+@optional
+- (void)navigationURL:(NFNavigationByURL*)navURL applyParams:(NSDictionary*)params;
+
+@end

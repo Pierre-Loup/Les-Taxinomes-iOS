@@ -61,7 +61,7 @@
 {
     [super viewDidLoad];
     
-    rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common.ok") style:UIBarButtonItemStylePlain target:self action:@selector(oKButtonButtonPressed:)];
+    rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:_T(@"common.ok") style:UIBarButtonItemStylePlain target:self action:@selector(oKButtonButtonPressed:)];
     [self.navigationItem setRightBarButtonItem:rightBarButton_ animated:NO];
 
 }

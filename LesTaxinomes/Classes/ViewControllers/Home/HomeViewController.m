@@ -26,14 +26,14 @@
 #import "HomeViewController.h"
 #import "LegalInformationsViewController.h"
 #import "MediaUploadFormViewController.h"
+#import "UIActionSheet+PhotoAssetPickerAddition.h"
 
 @interface HomeViewController ()
-@property (nonatomic, retain) IBOutlet UILabel * welcomLabel;
+@property (nonatomic, retain) IBOutlet UILabel* welcomLabel;
 - (IBAction)infoButtonAction:(id) sender;
 @end
 
 @implementation HomeViewController
-@synthesize welcomLabel = welcomLabel_;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -53,7 +53,7 @@
 }
 
 - (void)dealloc {
-    [welcomLabel_ release];
+    [_welcomLabel release];
     [super dealloc];
 }
 
@@ -62,23 +62,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [welcomLabel_ setNumberOfLines:0];
-    [welcomLabel_ setLineBreakMode:UILineBreakModeTailTruncation];
-    [welcomLabel_ setContentMode:UIViewContentModeCenter];
-    [welcomLabel_ setTextAlignment:UITextAlignmentCenter];
-    [welcomLabel_ setFont:[UIFont fontWithName:@"Jesaya Free" size:17.0]];
-    welcomLabel_.text = TRANSLATE(@"home.welcom_text");
+    [self.welcomLabel setNumberOfLines:0];
+    [self.welcomLabel setLineBreakMode:UILineBreakModeTailTruncation];
+    [self.welcomLabel setContentMode:UIViewContentModeCenter];
+    [self.welcomLabel setTextAlignment:UITextAlignmentCenter];
+    [self.welcomLabel setFont:[UIFont fontWithName:@"Jesaya Free" size:17.0]];
+    self.welcomLabel.text = _T(@"home.welcom_text");
     
     UIButton* infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
     [infoButton addTarget:self action:@selector(infoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
     [self.navigationItem setLeftBarButtonItem:leftButton animated:YES];
     [leftButton release];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    //[welcomLabel_ setFont:[UIFont fontWithName:@"jesaya_free" size:17.0]];
+    
+    UIBarButtonItem* cameraBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(cameraButtonAction:)];
+    [self.navigationItem setRightBarButtonItem:cameraBarButton animated:YES];
+    [cameraBarButton release];
 }
 
 - (void)viewDidUnload
@@ -97,8 +96,21 @@
 
 - (IBAction)infoButtonAction:(id) sender {
     LegalInformationsViewController *legalInformationsViewController = [[LegalInformationsViewController alloc] initWithNibName:@"LegalInformationsViewController" bundle:nil];
-    [self.navigationController pushViewController:legalInformationsViewController animated:YES];    
+    [self.navigationController pushViewController:legalInformationsViewController animated:YES];
     [legalInformationsViewController release];
+}
+
+- (void)cameraButtonAction:(id) sender {
+    [UIActionSheet photoAssetPickerWithTitle:nil
+                             showInView:self.view.window
+                              presentVC:self
+                          onPhotoPicked:^(NSURL* chosenImageAssetURL, NSError* error) {
+                              if (chosenImageAssetURL && !error) {
+                                  MediaUploadFormViewController* mediaUploadVC = [[MediaUploadFormViewController alloc] initWithAssetURL:chosenImageAssetURL];
+                                  [self.navigationController pushViewController:mediaUploadVC animated:YES];
+                                  [mediaUploadVC release];
+                              }
+                          } onCancel:^{}];
 }
 
 @end

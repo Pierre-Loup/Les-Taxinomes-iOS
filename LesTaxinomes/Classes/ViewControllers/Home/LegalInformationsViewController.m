@@ -32,7 +32,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.title = TRANSLATE(@"legal_informations.title");
+    self.navigationItem.title = _T(@"legal_informations.title");
 }
 
 @end

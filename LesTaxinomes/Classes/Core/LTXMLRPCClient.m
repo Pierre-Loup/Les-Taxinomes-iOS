@@ -18,6 +18,15 @@
 
 NSString* const LTXMLRPCServerErrorDomain = @"org.lestaxinomes.app.iphone.LesTaxinomes.LTXMLRPCServerError";
 
+NSString* const LTXMLRCPMethodSPIPListeLicences = @"spip.liste_licences";
+NSString* const LTXMLRCPMethodSPIPLireAuteur = @"spip.lire_auteur";
+NSString* const LTXMLRCPMethodSPIPAuth = @"spip.auth";
+NSString* const LTXMLRCPMethodGeoDivListeMedias = @"geodiv.liste_medias";
+NSString* const LTXMLRCPMethodGeoDivLireMedia = @"geodiv.lire_media";
+NSString* const LTXMLRCPMethodGeoDivCreerMedia = @"geodiv.creer_media";
+
+
+
 @interface LTXMLRPCClient ()
 - (void)setDefaultHeader;
 @end
@@ -43,13 +52,31 @@ NSString* const LTXMLRPCServerErrorDomain = @"org.lestaxinomes.app.iphone.LesTax
            withObject:(id)object
      authCookieEnable:(BOOL)authCookieEnable
               success:(void (^)(id response))success
-              failure:(void (^)(NSError *error))failure {
+              failure:(void (^)(NSError *error))failure
+{
+    [self executeMethod:method
+             withObject:object
+       authCookieEnable:authCookieEnable
+    uploadProgressBlock:nil
+  downloadProgressBlock:nil
+                success:success
+                failure:failure];
+}
+
+- (void)executeMethod:(NSString *)method
+           withObject:(id)object
+     authCookieEnable:(BOOL)authCookieEnable
+  uploadProgressBlock:(void (^)(CGFloat progress))uploadProgressBlock
+downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
+              success:(void (^)(id response))success
+              failure:(void (^)(NSError *error))failure
+{
     
     if (!method) {
         NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                              code:LTConnectionManagerInternalError
                                          userInfo:nil];
-        failure(error);
+        if(failure) failure(error);
     }
     
     [self setDefaultHeader];
@@ -57,12 +84,11 @@ NSString* const LTXMLRPCServerErrorDomain = @"org.lestaxinomes.app.iphone.LesTax
     LogDebug(@"WS url: %@", self.baseURL);
     LogDebug(@"WS method: %@", method);
     
-    // Create XML-RPC body from parameters dict
+    // Create XML-RPC body from array or dict object parameter
     NSDictionary* parameters = nil;
-    
     XMLRPCRequest* xmlrpcRequest = [[[XMLRPCRequest alloc] initWithURL:self.baseURL] autorelease];
     [xmlrpcRequest setMethod:method withParameter:object?object:@{}];
-    LogDebug(@"REQUEST: %@",[xmlrpcRequest body]);
+    if (method != LTXMLRCPMethodGeoDivCreerMedia) LogDebug(@"REQUEST: %@",[xmlrpcRequest body]);
     parameters = @{kBodyParamKey :  [[xmlrpcRequest body] dataUsingEncoding:self.stringEncoding]};
     
     // Cookies management
@@ -89,36 +115,50 @@ NSString* const LTXMLRPCServerErrorDomain = @"org.lestaxinomes.app.iphone.LesTax
     // Add cookies to the request header
     [self setDefaultHeader:@"Cookie" value:cookieHeaderValue];
     
-    // Execute POST request with blocks
-    [super postPath:@""
-         parameters:parameters
-            success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                id response = [[[[XMLRPCResponse alloc] initWithData:responseObject] autorelease] object];
-                LogDebug(@"RESPONSE: %@",response);
-                if (![response isKindOfClass:[NSError class]]) {
-                    NSError* wsResponseError = nil;
-                    if ([response isKindOfClass:[NSDictionary class]]) {
-                        NSString* faultCode = [(NSDictionary *)response objectForKey:kFaultCodeKey];
-                        NSString* faultString = [(NSDictionary *)response objectForKey:kFaultStringKey];
-                        if (faultCode && faultString) {
-                            wsResponseError = [NSError errorWithDomain:LTXMLRPCServerErrorDomain
-                                                                  code:[faultCode integerValue]
-                                                              userInfo:@{NSLocalizedDescriptionKey:faultString,@"method":method}];
-                        }
-                    }
-                    
-                    if (!wsResponseError) {
-                        success(response);
-                    } else {
-                        failure(wsResponseError);
-                    }
-                } else {
-                    failure((NSError *)response);
+    // Create success block
+    void (^successBlock)(AFHTTPRequestOperation *operation, id responseObject);
+    successBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        id response = [[[[XMLRPCResponse alloc] initWithData:responseObject] autorelease] object];
+        LogDebug(@"RESPONSE: %@",response);
+        if (![response isKindOfClass:[NSError class]]) {
+            NSError* wsResponseError = nil;
+            if ([response isKindOfClass:[NSDictionary class]]) {
+                NSString* faultCode = [(NSDictionary *)response objectForKey:kFaultCodeKey];
+                NSString* faultString = [(NSDictionary *)response objectForKey:kFaultStringKey];
+                if (faultCode && faultString) {
+                    wsResponseError = [NSError errorWithDomain:LTXMLRPCServerErrorDomain
+                                                          code:[faultCode integerValue]
+                                                      userInfo:@{NSLocalizedDescriptionKey:faultString,LTXMLRPCMethodKey:method}];
                 }
             }
-            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                failure(error);
-            }];
+            
+            // Succes block call
+            if (!wsResponseError && success) success(response);
+            // Failure block calls
+            else if (failure) failure(wsResponseError);
+        } else if (failure) failure((NSError *)response);
+    };
+    
+    void (^failureBlock)(AFHTTPRequestOperation *operation, NSError *error);
+    failureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    };
+    
+    NSURLRequest *request = [self requestWithMethod:@"POST" path:@"" parameters:parameters];
+	AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request
+                                                                      success:successBlock
+                                                                      failure:failureBlock];
+    if (downloadProgressBlock)
+        [operation setDownloadProgressBlock:^(NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+            downloadProgressBlock(((CGFloat)totalBytesRead)/((CGFloat)totalBytesExpectedToRead));
+        }];
+
+    if (uploadProgressBlock)
+        [operation setUploadProgressBlock:^(NSInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+            uploadProgressBlock(((CGFloat)totalBytesWritten)/((CGFloat)totalBytesExpectedToWrite));
+        }];
+        
+    [self enqueueHTTPRequestOperation:operation];
 }
 
 #pragma mark - Private

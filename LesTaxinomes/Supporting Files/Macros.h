@@ -23,7 +23,7 @@
  
  */
 
-#define TRANSLATE(x) NSLocalizedString((x),@"")
+#define _T(x) NSLocalizedString((x),@"")
 
 /*
  LEVELS
@@ -36,9 +36,6 @@
  */
 
 #define LOGS_LEVEL			4
-
-
-
 
 #ifdef DEBUG
 

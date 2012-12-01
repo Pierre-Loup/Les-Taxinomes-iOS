@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1296</int>
-		<string key="IBDocument.SystemVersion">11E53</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2549</string>
-		<string key="IBDocument.AppKitVersion">1138.47</string>
+		<int key="IBDocument.SystemTarget">1536</int>
+		<string key="IBDocument.SystemVersion">11G63b</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2843</string>
+		<string key="IBDocument.AppKitVersion">1138.51</string>
 		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1498</string>
+			<string key="NS.object.0">1929</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -32,7 +32,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUIView" id="191373211">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUITextView" id="649973607">
@@ -40,6 +40,8 @@
 						<int key="NSvFlags">274</int>
 						<string key="NSFrameSize">{320, 367}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:639</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -91,14 +93,14 @@ ZWt0aWMub3JnLwoJ4oGDCU1pc3Npb24gUGVsdWNoZcKgOiBodHRwOi8vd3d3LnBlbHVjaGUudW0yLmZy
 LwoJ4oGDCUNvcm5lcyBkZSBicnVtZcKgOiBodHRwOi8vY29ybmVzLmRlYnJ1Lm1lLwoKU291cmNlc8Kg
 OgpMJ2FwcGxpY2F0aW9uIHBvdXIgaVBob25lIMKrwqBMZXMgdGF4aW5vbWVzwqDCuyBlc3Qgc291cyBs
 aWNlbmNlIEdQTC4KTGVzIHNvdXJjZXMgc29udCBkaXNwb25pYmxlcyBzdXIgR2l0aHViwqA6IGh0dHBz
-Oi8vZ2l0aHViLmNvbS9QaWVycmUtTG91cC9sZXMtdGF4aW5vbWVzLWlwaG9uZQoKRWxsZSBpbXBsaXF1
-ZSBsJ3V0aWxpc2F0aW9uIGR1IHNxdWVsZXR0ZSBnw6lvZGl2ZXJzaXTDqSBkZSBTUElQwqA6IGh0dHA6
-Ly93d3cuZ2VvZGl2ZXJzaXRlLm5ldAoKZXQgbGVzIHBsdWdpbnMgc3VpdmFudCBkZSBTUElQwqA6Ckxl
-IHBsdWctaW4gWE1MLVJQQyBtw6l0YXdlYmxvZ8KgOiBodHRwOi8vcGx1Z2lucy5zcGlwLm5ldC94bWxy
-cGNfbXcuaHRtbApMZSBwbHVnLWluIFhNTC1SUEMgQVBJwqA6IGh0dHA6Ly9wbHVnaW5zLnNwaXAubmV0
-L3htbHJwYy5odG1sCgpIw6liZXJnZW1lbnQgZHUgc2l0ZSB3ZWIgbGVzdGF4aW5vbWVzLm9yZwpTb2Np
-w6l0w6kgT1ZIIAoyIHJ1ZSBrZWxsZXJtYW5uCkJQIDgwMTU3IDU5MDUzIFJPVUJBSVggQ0VERVggMQpG
-cmFuY2UKA</bytes>
+Oi8vZ2l0aHViLmNvbS9QaWVycmUtTG91cC9MZXMtVGF4aW5vbWVzLWlPUwoKRWxsZSBpbXBsaXF1ZSBs
+J3V0aWxpc2F0aW9uIGR1IHNxdWVsZXR0ZSBnw6lvZGl2ZXJzaXTDqSBkZSBTUElQwqA6IGh0dHA6Ly93
+d3cuZ2VvZGl2ZXJzaXRlLm5ldAoKZXQgbGVzIHBsdWdpbnMgc3VpdmFudCBkZSBTUElQwqA6CkxlIHBs
+dWctaW4gWE1MLVJQQyBtw6l0YXdlYmxvZ8KgOiBodHRwOi8vcGx1Z2lucy5zcGlwLm5ldC94bWxycGNf
+bXcuaHRtbApMZSBwbHVnLWluIFhNTC1SUEMgQVBJwqA6IGh0dHA6Ly9wbHVnaW5zLnNwaXAubmV0L3ht
+bHJwYy5odG1sCgpIw6liZXJnZW1lbnQgZHUgc2l0ZSB3ZWIgbGVzdGF4aW5vbWVzLm9yZwpTb2Npw6l0
+w6kgT1ZIIAoyIHJ1ZSBrZWxsZXJtYW5uCkJQIDgwMTU3IDU5MDUzIFJPVUJBSVggQ0VERVggMQpGcmFu
+Y2UKA</bytes>
 						</object>
 						<object class="IBUITextInputTraits" key="IBUITextInputTraits">
 							<int key="IBUIAutocapitalizationType">2</int>
@@ -117,6 +119,9 @@ cmFuY2UKA</bytes>
 					</object>
 				</array>
 				<string key="NSFrame">{{0, 64}, {320, 367}}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView" ref="649973607"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>
@@ -191,15 +196,34 @@ cmFuY2UKA</bytes>
 			<nil key="sourceID"/>
 			<int key="maxID">8</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">LTViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/LTViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">LegalInformationsViewController</string>
+					<string key="superclassName">LTViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/LegalInformationsViewController.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
-			<real value="1296" key="NS.object.0"/>
+			<real value="1536" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<string key="IBCocoaTouchPluginVersion">1498</string>
+		<string key="IBCocoaTouchPluginVersion">1929</string>
 	</data>
 </archive>

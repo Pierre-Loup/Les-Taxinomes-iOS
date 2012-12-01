@@ -26,7 +26,6 @@
 #import "Annotation.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIImageView+PhotoFrame.h"
-#import "LTErrorManager.h"
 //VC
 #import "MapViewController.h"
 #import "MediaDetailViewController.h"
@@ -44,6 +43,8 @@
 @property (nonatomic, retain) IBOutlet UILabel * authorNameLabel;
 @property (nonatomic, retain) IBOutlet LTTitleView * descTitleView;
 @property (nonatomic, retain) IBOutlet UITextView * descTextView;
+@property (nonatomic, retain) IBOutlet LTTitleView * licenseTitleView;
+@property (nonatomic, retain) IBOutlet UILabel * licenseNameLabel;
 @property (nonatomic, retain) IBOutlet LTTitleView * mapTitleView;
 @property (nonatomic, retain) IBOutlet MKMapView * mapView;
 
@@ -81,7 +82,7 @@
     [super viewDidLoad];
     self.title = media_.title;
     
-    UIBarButtonItem* backButtonItem = [[[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common.back")
+    UIBarButtonItem* backButtonItem = [[[UIBarButtonItem alloc] initWithTitle:_T(@"common.back")
                                                                        style:UIBarButtonItemStyleBordered
                                                                       target:nil action:nil] autorelease];
     self.navigationItem.backBarButtonItem = backButtonItem;
@@ -101,14 +102,15 @@
     self.mediaImageView.userInteractionEnabled = YES;
     [self.mediaImageView addGestureRecognizer:tapGestureRecognizer];
     
-    self.authorTitleView.title = TRANSLATE(@"common.author");
+    self.authorTitleView.title = _T(@"common.author");
     
     [self.authorAvatarView setImageWithURL:[NSURL URLWithString:media_.author.avatarURL]
                           placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
     
 
-    self.descTitleView.title = TRANSLATE(@"common.description");
-    self.mapTitleView.title = TRANSLATE(@"common.map");
+    self.descTitleView.title = _T(@"common.description");
+    self.licenseTitleView.title = _T(@"common.license");
+    self.mapTitleView.title = _T(@"common.map");
 
     tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                    action:@selector(mapTouched:)];
@@ -149,13 +151,14 @@
 
 - (void)configureView
 {
-    [self startLoadingAnimation];
+    [self showHudForLoading];
     LTDataManager *dm = [LTDataManager sharedDataManager];
     [dm getMediaWithId:self.media.identifier
-          responseBlock:^(NSNumber *authorIdentifier, Media* media, NSError *error) {
+          responseBlock:^(Media* media, NSError *error) {
               
-              if (error) {
-                  [[LTErrorManager sharedErrorManager] manageError:error];
+              if ([error shouldBeDisplayed]) {
+                  [UIAlertView showWithError:error];
+                  [self.hud hide:NO];
               }
               
               asynchLoadCounter_--;
@@ -164,10 +167,11 @@
     }];
     asynchLoadCounter_++;
     [dm getAuthorWithId:self.media.author.identifier
-          responseBlock:^(NSNumber *authorIdentifier, Author *author, NSError *error) {
+          responseBlock:^(Author *author, NSError *error) {
               
-              if (error) {
-                  [[LTErrorManager sharedErrorManager] manageError:error];
+              if ([error shouldBeDisplayed]) {
+                  [UIAlertView showWithError:error];
+                  [self.hud hide:NO];
               }
               
               asynchLoadCounter_--;
@@ -209,12 +213,11 @@
                                             self.authorNameLabel.frame.size.height);
     NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
     [dateFormatter setDateFormat:@"dd/MM/yyyy"];
-    self.authorNameLabel.text = [NSString stringWithFormat:TRANSLATE(@"media_detail.publish_info_patern"),
+    self.authorNameLabel.text = [NSString stringWithFormat:_T(@"media_detail.publish_info_patern"),
                                  media_.author.name,
                                  [dateFormatter stringFromDate:self.media.date],
                                  [self.media.visits integerValue]];
     currentContentHeight += self.authorAvatarView.frame.size.height + commonMargin;
-    
     
     // Description section
     self.descTitleView.frame = CGRectMake(self.descTitleView.frame.origin.x,
@@ -227,13 +230,30 @@
        && ![self.media.text isEqualToString:@""]){
         self.descTextView.text = self.media.text;
     } else {
-        self.descTextView.text = TRANSLATE(@"media_detail.no_text");
+        self.descTextView.text = _T(@"media_detail.no_text");
     }
     self.descTextView.frame = CGRectMake(self.descTextView.frame.origin.x,
                                          currentContentHeight,
                                          self.descTextView.frame.size.width,
                                          self.descTextView.contentSize.height);
     currentContentHeight += self.descTextView.frame.size.height + commonMargin;
+    
+    // License section
+    if ([self.media.license.name length]) {
+        self.licenseTitleView.frame = CGRectMake(self.licenseTitleView.frame.origin.x,
+                                                 currentContentHeight,
+                                                 self.licenseTitleView.frame.size.width,
+                                                 self.licenseTitleView.frame.size.height);
+        currentContentHeight += self.licenseTitleView.frame.size.height + commonMargin;
+        
+        self.licenseNameLabel.text = self.media.license.name;
+        
+        self.licenseNameLabel.frame = CGRectMake(self.licenseNameLabel.frame.origin.x,
+                                             currentContentHeight,
+                                             self.licenseNameLabel.frame.size.width,
+                                             self.licenseNameLabel.frame.size.height);
+        currentContentHeight += self.licenseNameLabel.frame.size.height + commonMargin;
+    }
     
     // Map section if media as coordinates
     if (media_.coordinate.latitude
@@ -266,7 +286,7 @@
     
     [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, currentContentHeight)];
     if (asynchLoadCounter_ > 0) {
-        [self startLoadingAnimation];
+        [self showHudForLoading];
     } else {
         self.scrollView.hidden = NO;
     }
@@ -293,7 +313,7 @@
 
 - (void)displayContentIfNeeded {
     if (asynchLoadCounter_ <= 0) {
-        [self stopLoadingAnimation];
+        [self.hud hide:YES];
         [self refreshView];
         [self.scrollView setHidden:NO];
     }
@@ -305,19 +325,19 @@
     [self.mediaImageView setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:media_.mediaMediumURL]]
                            placeholderImage:[UIImage imageNamed:@"medium_placeholder"]
                                     success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                        [self stopLoadingAnimation];
+                                        [self.hud hide:YES];
                                         [self.placeholderAIView stopAnimating];
                                         [self refreshView];
                                     }
                                     failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                        [self stopLoadingAnimation];
+                                        [self.hud hide:YES];
                                     }];
 }
 
 - (void)mapTouched:(MKMapView *)sender {
     MapViewController* mapVC = [[MapViewController alloc] initWithAnnotation:media_];
     [self.navigationController pushViewController:mapVC animated:YES];
-    mapVC.title = TRANSLATE(@"common.map");
+    mapVC.title = _T(@"common.map");
     [mapVC release];
 }
 

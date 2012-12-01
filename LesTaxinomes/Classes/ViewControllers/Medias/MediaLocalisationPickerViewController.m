@@ -31,7 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common.ok") style:UIBarButtonItemStylePlain target:self action:@selector(okButtonButtonPressed:)];
+    rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:_T(@"common.ok") style:UIBarButtonItemStylePlain target:self action:@selector(okButtonButtonPressed:)];
     [self.navigationItem setRightBarButtonItem:rightBarButton_ animated:NO];
     if (location_) {
         [self refreshMap];
@@ -84,7 +84,7 @@
         
         Annotation* annotation = [[Annotation alloc] init];
         annotation.coordinate = location_.coordinate;
-        annotation.title = TRANSLATE(@"media_location_picker.drag_me");
+        annotation.title = _T(@"media_location_picker.drag_me");
         mapView_.showsUserLocation = YES;
         [mapView_ addAnnotation:annotation];
         [mapView_ selectAnnotation:annotation animated:YES];

@@ -1,6 +1,6 @@
 /* 
   Localization.string.strings
-  Taxinomes
+  LesTaxinomes
 
   Created by Pierre-Loup Tristant on 30/04/12.
   Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
@@ -25,14 +25,7 @@
 "common.map" = "Carte";
 "common.anonymous" = "Anonyme";
 "common.by" = "Par";
-
-/* ALERTS */
-"alert_auth_failed_title" = "L'authentification à échouée";
-"alert_auth_failed_text" = "Vérifiez votre que votre login et votre mot de passe";
-"alert_network_unreachable_title" = "Réseau indisponible";
-"alert_network_unreachable_text" = "Vérifiez que vous êtes connecté au wifi ou au réseau internet mobile";
-"alert_upload_failed" = "Le partage du média a échoué. Réésayez plus tard";
-"alert_upload_succeded" = "Le média a bien été partagé.";
+"common.license" = "Licence";
 
 /* HOME */
 "home.welcom_text" = "Bienvenue sur Les Taxinomes !\n\nVous êtes curieux de nature ?\n\nVous allez pouvoir partager votre goût pour la nature !\n\nGrâce au site et à l'application iPhone \"Les Taxinomes\", vous participez à l’inventaire de la biodiversité.";
@@ -54,12 +47,22 @@
 "media_upload_no_license_text" = "Aucune licence";
 "media_upload.location_picker_cell.text" = "Localisation du média";
 "media_upload.text_prefix" = "Média partagé avec l'application des Taxinomes pour iPhone";
+"media_upload.confirm.title" = "Partage réussi";
+"media_upload.confirm.text" = "Le média a bien été partagé.";
 
 /* MEDIA LOCATION PICKER */
 "media_location_picker.drag_me" = "Deplacez moi !";
 
-/* ERRORS */
+/* PHOTO ACTION SHEET */
+"photo_action_sheet.camera" = "Appareil photo";
+"photo_action_sheet.photo_library" = "Bibliothèque";
+
+/* ERROR */
+"error.network.title" = "Problème réseau";
+"error.network.text" = "Vérifiez que vous êtes connecté au wifi ou au réseau internet mobile";
 "error.auth_failed.title" = "L'authentification à échouée";
 "error.auth_failed.text" = "Vérifiez votre que votre login et votre mot de passe";
-"error.network.title" = "Réseau indisponible";
-"error.network.text" = "Vérifiez que vous êtes connecté au wifi ou au réseau internet mobile";
+"error.upload_failed.title" = "Partage échoué";
+"error.upload_failed.text" = "Le partage du média a échoué. Réésayez plus tard";
+"error.internal.title" = "Erreur interne";
+"error.internal.text" = "Une erreur interne s'est produite. Si le problème persite, merci de nous envoyer une email à bretagne@lespetitsdebrouillards.org";

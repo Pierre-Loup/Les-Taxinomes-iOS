@@ -26,82 +26,75 @@
 #import "LTViewController.h"
 
 @interface LTViewController () {
-    MBProgressHUD* loaderView_;
-    LTiPhoneBackgroundView* bgView_;
+    LTiPhoneBackgroundView* _bgView;
 }
 @end
 
 @implementation LTViewController
-@synthesize loaderView = loaderView_;
+@synthesize hud = _hud;
 
-#pragma mark - Loader
+#pragma mark - Properties
 
-- (void) startLoadingAnimationViewWithDetermination{
-    if (loaderView_ != nil) {
-        return;
+- (MBProgressHUD *)hud {
+    if (!_hud) {
+        _hud = [[MBProgressHUD alloc] initWithView:self.view];
+        _hud.removeFromSuperViewOnHide = YES;
     }
-    
-    loaderView_ = [[MBProgressHUD alloc] initWithView:self.view];
-    
-	// Add HUD to screen
-	[self.view addSubview:loaderView_];
-    
-	// Register for HUD callbacks so we can remove it from the window at the right time
-	loaderView_.delegate = self;
-	loaderView_.labelText = TRANSLATE(@"common.loading");
-    
-    loaderView_.mode = MBProgressHUDModeDeterminate;
-    
-	// Show the HUD while the provided method executes in a new thread
-	[loaderView_ show:YES];
+    return _hud;
 }
 
-- (void) startLoadingAnimation {
-    if (loaderView_ != nil) {
-        return;
-    }
-    
-    loaderView_ = [[MBProgressHUD alloc] initWithView:self.view];
-    
-	// Add HUD to screen
-	[self.view addSubview:loaderView_];
-    
-	// Register for HUD callbacks so we can remove it from the window at the right time
-	loaderView_.delegate = self;
-	loaderView_.labelText = TRANSLATE(@"common.loading");
-    
-	// Show the HUD while the provided method executes in a new thread
-	[loaderView_ show:YES];
+#pragma mark - Public methods
+
+- (void)showHudForLoading {
+    [self.view addSubview:self.hud];
+    self.hud.mode = MBProgressHUDModeIndeterminate;
+	self.hud.labelText =  _T(@"common.loading");
+    [self.hud show:YES];
 }
 
-
-- (void) stopLoadingAnimation {
-    // Remove HUD from screen when the HUD was hidden
-    if(loaderView_) {
-        [loaderView_ removeFromSuperview];
-        [loaderView_ release];
-        loaderView_ = nil;
-    }
+- (void)showDeterminateHud {
+    [self.view addSubview:self.hud];
+	self.hud.mode = MBProgressHUDModeDeterminate;
+	self.hud.labelText =  _T(@"common.loading");
+    [self.hud show:YES];
 }
 
-- (void)hudWasHidden {
-	// Remove HUD from screen when the HUD was hidden
-    if (loaderView_) {
-        [loaderView_ removeFromSuperview];
-        [loaderView_ release];
-        loaderView_ = nil;
-    }
+- (void)showErrorHudWithText:(NSString *)text {
+    [self.view addSubview:self.hud];
+    self.hud.mode = MBProgressHUDModeCustomView;
+	self.hud.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cross_hudicon.png"]] autorelease];
+	if (text)
+        self.hud.labelText = text;
+	[self.hud show:YES];
+	[self.hud hide:YES afterDelay:3];
 }
 
-#pragma mark - View lifecycle
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-    }
-    return self;
+- (void)showConfirmHudWithText:(NSString *)text {
+    [self.view addSubview:self.hud];
+    self.hud.mode = MBProgressHUDModeCustomView;
+	self.hud.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark_hudicon.png"]] autorelease];
+	if (text)
+        self.hud.labelText = text;
+	[self.hud show:YES];
+	[self.hud hide:YES afterDelay:3];
 }
+
+- (void)showHudWithTextOnly:(NSString *)text {
+    [self.view addSubview:self.hud];
+	self.hud.mode = MBProgressHUDModeText;
+	self.hud.labelText = text;
+	self.hud.margin = 10.f;
+	self.hud.yOffset = 150.f;
+	[self.hud show:YES];
+	[self.hud hide:YES afterDelay:3];
+}
+
+- (void)updateProgress:(float)newProgress {
+    LogDebug(@"%f",newProgress);
+    self.hud.progress = newProgress;
+}
+
+#pragma mark - Super overrides
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -112,10 +105,10 @@
         CGRect bgFrame = CGRectMake(0, -self.navigationController.navigationBar.frame.size.height,
                                     winFrame.size.width,
                                     winFrame.size.height);
-        bgView_ = [[LTiPhoneBackgroundView alloc] initWithFrame:bgFrame];
-        bgView_.light = YES;
-        [self.view addSubview:bgView_];
-        [self.view sendSubviewToBack:bgView_];
+        _bgView = [[LTiPhoneBackgroundView alloc] initWithFrame:bgFrame];
+        _bgView.light = YES;
+        [self.view addSubview:_bgView];
+        [self.view sendSubviewToBack:_bgView];
     }
     
     [self.navigationController.navigationBar setTintColor:kStandardGreenColor];
@@ -124,8 +117,10 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    [loaderView_ release];
-    loaderView_ = nil;
+    [_hud release];
+    _hud = nil;
+    [_bgView release];
+    _bgView = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -134,24 +129,20 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark Memory management
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
 - (void)dealloc {
-	[loaderView_ release];
+	[_hud release];
+    [_bgView release];
     [super dealloc];
 }
 
-- (void)setProgress:(float)newProgress {
-    LogDebug(@"%f",newProgress);
-    loaderView_.progress = newProgress;
+#pragma mark -
+#pragma mark MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+	[self.hud removeFromSuperview];
+    [_hud release];
+    _hud = nil;
 }
 
 @end

@@ -24,7 +24,6 @@
  */
 
 #import "AccountViewController.h"
-#import "LTErrorManager.h"
 #import "MediaUploadFormViewController.h"
 #import "MediasListViewController.h"
 #import "UIImageView+AFNetworking.h"
@@ -65,7 +64,7 @@
 }
 
 - (void)commonInit {
-    accountMenuLabels_ = [@[TRANSLATE(@"account_my_medias")] retain];
+    accountMenuLabels_ = [@[_T(@"account_my_medias")] retain];
 }
 
 - (void)didReceiveMemoryWarning
@@ -99,11 +98,11 @@
     [super viewWillAppear:animated];
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
     if (!cm.authenticatedUser) {
-        [self startLoadingAnimation];
+        [self showHudForLoading];
         [cm authWithLogin:nil
                  password:nil
-            responseBlock:^(NSString *login, NSString *password, Author *authenticatedUser, NSError *error) {
-                [self stopLoadingAnimation];
+            responseBlock:^(Author *authenticatedUser, NSError *error) {
+                [self.hud hide:YES];
                 if (authenticatedUser) {
                     [self switchToAuthenticatedModeAnimated:YES];
                 } else {
@@ -192,7 +191,7 @@
         MediasListViewController * mediasListViewController = [[MediasListViewController alloc] initWithNibName:@"MediasListViewController" bundle:nil];
         mediasListViewController.currentUser = [LTConnectionManager sharedConnectionManager].authenticatedUser;
         [self.navigationController pushViewController:mediasListViewController animated:YES];
-        mediasListViewController.title = TRANSLATE(@"account_my_medias");
+        mediasListViewController.title = _T(@"account_my_medias");
         [mediasListViewController release];
     }
 }
@@ -221,7 +220,7 @@
     [self.tableView setHidden:NO];
     [rightBarButton_ release];
     rightBarButton_ = nil;
-    rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common.logout") style:UIBarButtonItemStylePlain target:self action:@selector(logoutButtonPressed:)];
+    rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:_T(@"common.logout") style:UIBarButtonItemStylePlain target:self action:@selector(logoutButtonPressed:)];
     [self.navigationItem setRightBarButtonItem:rightBarButton_ animated:YES];
     
     [self dismissModalViewControllerAnimated:animated];
@@ -230,7 +229,7 @@
 - (void)switchToUnauthenticatedModeAnimated:(BOOL)animated {
     [rightBarButton_ release];
     rightBarButton_ = nil;
-    rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:TRANSLATE(@"common.signin") style:UIBarButtonItemStylePlain target:self action:@selector(signInButtonPressed:)];
+    rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:_T(@"common.signin") style:UIBarButtonItemStylePlain target:self action:@selector(signInButtonPressed:)];
     [self.navigationItem setRightBarButtonItem:rightBarButton_ animated:YES];
     [self.tableView setHidden:YES];
     [avatarView_ setHidden:YES];

@@ -26,8 +26,6 @@
 #import "MediasListViewController.h"
 
 #import "Author.h"
-#import "Constants.h"
-#import "LTErrorManager.h"
 #import "MediaDetailViewController.h"
 #import "MediaListCell.h"
 #import "Reachability.h"
@@ -168,7 +166,7 @@
         cell.title.text = media.title;
         
     } else {
-        cell.title.text = TRANSLATE(@"media_upload_no_title");
+        cell.title.text = _T(@"media_upload_no_title");
     }
     
     cell.author.text = media.author.name;
@@ -212,21 +210,20 @@
     [[LTConnectionManager sharedConnectionManager] getShortMediasByDateForAuthor:currentUser_
                                                                     nearLocation:nil
                                                                        withRange:mediasRange
-    responseBlock:^(Author *author, NSRange range, NSArray *medias, NSError *error) {
-        if (error) {
-            [[LTErrorManager sharedErrorManager] manageError:error];
-            mediaLoadingStatus_ = FAILED;
-            [self.tableView reloadData];
-        } else if (medias) {
+    responseBlock:^(NSArray *medias, NSError *error) {
+        if (medias) {
             if ([medias count] == 0) {
                 mediaLoadingStatus_ = NOMORETOLOAD;
             } else {
                 mediaLoadingStatus_ = SUCCEED;
             }
+            [self.hud hide:YES];
             [LTDataManager sharedDataManager].synchLimit += [medias count];
             [self reloadDatas];
+        } else if ([error shouldBeDisplayed]) {
+            [UIAlertView showWithError:error];
+            [self.hud hide:NO];
         }
-        [self stopLoadingAnimation];
         reloadBarButton_.enabled = YES;
     }];
 }
@@ -234,17 +231,13 @@
 - (void)refreshButtonAction:(id)sender {
     mediaLoadingStatus_ = PENDING;
     reloadBarButton_.enabled = NO;
-    [self startLoadingAnimation];
+    [self showHudForLoading];
     [LTDataManager sharedDataManager].synchLimit = 0;
     [mediaAtIndexPath_ removeAllObjects];
     [self.tableView reloadData];
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-    dispatch_async(queue, ^{
-        [Media deleteAllMedias];
-        dispatch_sync(dispatch_get_main_queue(), ^{
+    
+    [Media deleteAllMedias];
             [self loadSynchMedias];
-        });
-    });
 }
 
 - (void)reloadDatas {

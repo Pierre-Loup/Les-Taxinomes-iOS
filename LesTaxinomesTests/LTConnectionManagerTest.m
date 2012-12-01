@@ -30,7 +30,7 @@
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
     [cm authWithLogin:@"test1"
              password:@"testtest"
-        responseBlock:^(NSString *login, NSString *password, Author *authenticatedUser, NSError *error) {
+        responseBlock:^(Author *authenticatedUser, NSError *error) {
             if (authenticatedUser && !error) {
                 [self notify:kGHUnitWaitStatusSuccess];
             } else {
@@ -46,7 +46,7 @@
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
     [cm authWithLogin:nil
              password:nil
-        responseBlock:^(NSString *login, NSString *password, Author *authenticatedUser, NSError *error) {
+        responseBlock:^(Author *authenticatedUser, NSError *error) {
             if (authenticatedUser && !error) {
                 [self notify:kGHUnitWaitStatusSuccess];
             } else {
@@ -83,7 +83,7 @@
     [cm getShortMediasByDateForAuthor:nil
                          nearLocation:nil
                             withRange:mediasRange
-                        responseBlock:^(Author *author, NSRange range, NSArray *medias, NSError *error) {
+                        responseBlock:^(NSArray *medias, NSError *error) {
                             if (medias &&
                                 [medias count] &&
                                 !error) {
@@ -106,7 +106,7 @@
     [cm getShortMediasByDateForAuthor:kDefaultAuthor
                          nearLocation:nil
                             withRange:mediasRange
-                        responseBlock:^(Author *author, NSRange range, NSArray *medias, NSError *error) {
+                        responseBlock:^(NSArray *medias, NSError *error) {
                             if (medias &&
                                 [medias count] &&
                                 !error) {
@@ -131,7 +131,7 @@
     [cm getShortMediasByDateForAuthor:nil
                          nearLocation:location
                             withRange:mediasRange
-                        responseBlock:^(Author *author, NSRange range, NSArray *medias, NSError *error) {
+                        responseBlock:^(NSArray *medias, NSError *error) {
                             if (medias &&
                                 [medias count] &&
                                 !error) {
@@ -151,7 +151,7 @@
     
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
     [cm getMediaWithId:kDefaultMedia.identifier
-         responseBlock:^(NSNumber *mediaIdentifier, Media *media, NSError *error) {
+         responseBlock:^(Media *media, NSError *error) {
              if (media && !error) {
                  [self notify:kGHUnitWaitStatusSuccess];
              } else {
@@ -169,7 +169,7 @@
     
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
     [cm getAuthorWithId:kDefaultAuthor.identifier
-         responseBlock:^(NSNumber *authorIdentifier, Author *author, NSError *error) {
+         responseBlock:^(Author *author, NSError *error) {
              if (author && !error) {
                  [self notify:kGHUnitWaitStatusSuccess];
              } else {

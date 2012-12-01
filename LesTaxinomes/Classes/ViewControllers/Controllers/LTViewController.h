@@ -28,12 +28,13 @@
 #import "LTiPhoneBackgroundView.h"
 
 @interface LTViewController : UIViewController <MBProgressHUDDelegate>
+@property (nonatomic, readonly) MBProgressHUD* hud;
 
-@property (nonatomic, retain) MBProgressHUD* loaderView;
-
-- (void) startLoadingAnimationViewWithDetermination;
-- (void) startLoadingAnimation;
-- (void) stopLoadingAnimation;
-- (void)setProgress:(float)newProgress;
+- (void)showHudForLoading;
+- (void)showDeterminateHud;
+- (void)showErrorHudWithText:(NSString *)text;
+- (void)showConfirmHudWithText:(NSString *)text;
+- (void)showHudWithTextOnly:(NSString *)text;
+- (void)updateProgress:(float)newProgress;
 
 @end

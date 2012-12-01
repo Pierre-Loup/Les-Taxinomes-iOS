@@ -54,16 +54,14 @@
         [mapView_ setRegion:MKCoordinateRegionMake(referenceAnnotation_.coordinate, MKCoordinateSpanMake(1, 1)) animated:YES];
     } else {
         mapView_.showsUserLocation = YES;
-        [self startLoadingAnimation];
+        [self showHudForLoading];
     }
     
     // Start monitoring the user location changes
     if (!locationManager_
-        && [CLLocationManager locationServicesEnabled]
-        && [CLLocationManager significantLocationChangeMonitoringAvailable]) {
+        && [CLLocationManager locationServicesEnabled]) {
         locationManager_ = [[CLLocationManager alloc] init];
         [locationManager_ setDelegate:self];
-        [locationManager_ startMonitoringSignificantLocationChanges];
     }
 }
 
@@ -108,7 +106,7 @@
     if (referenceAnnotation_) {
         reloadBarButton_.enabled = NO;
         scanBarButton_.enabled = NO;
-        [self startLoadingAnimation];
+        [self showHudForLoading];
         
         NSRange range;
         range.location = searchStartIndex_;
@@ -120,47 +118,25 @@
         [[LTConnectionManager sharedConnectionManager] getShortMediasByDateForAuthor:nil
                                                                         nearLocation:searchLocation
                                                                            withRange:range
-        responseBlock:^(Author *author, NSRange range, NSArray *medias, NSError *error) {
+        responseBlock:^(NSArray *medias, NSError *error) {
             if (medias &&
                 [medias count] &&
                 !error) {
-                BOOL shouldLoadMoreMedias = YES;
-                for (Media* newMedia in medias) {
-                    __block Media* blockNewMedia = newMedia;
-                    NSInteger mediaFoundIndex = [mapView_.annotations indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-                        if ([obj isKindOfClass:[Media class]]) {
-                            Media* displayedMedia = (Media *)obj;
-                            if ([blockNewMedia.identifier intValue] == [displayedMedia.identifier intValue]) {
-                                *stop = YES;
-                                return YES;
-                            }
-                        }
-                        return NO;
-                    }];
-                    if (mediaFoundIndex == NSNotFound) {
-                        shouldLoadMoreMedias = NO;
-                    } else {
-                        LogDebug(@"Media already displayed");
-                    }
-                }
-                
-                searchStartIndex_ += [medias count];
-                if (shouldLoadMoreMedias) {
-                    [self loadMoreCloseMedias];
-                } else {
-                    [mapView_ addAnnotations:medias];
-                    [self stopLoadingAnimation];
-                    reloadBarButton_.enabled = YES;
-                    scanBarButton_.enabled = YES;
-                    
-                    Media* lastMedia = (Media *)[medias lastObject];
-                    CGFloat latDif = fabs(fabs(referenceAnnotation_.coordinate.latitude) - fabs(lastMedia.coordinate.latitude));
-                    CGFloat lonDif = fabs(fabs(referenceAnnotation_.coordinate.longitude) - fabs(lastMedia.coordinate.longitude));
-                    CGFloat lonDelta = MIN(2*MAX(latDif, lonDif), 360.0);
-                    CGFloat latDelta = MIN(2*MAX(latDif, lonDif), 180.0);
-                    // Display the closest region with all the medias displayed
-                    [mapView_ setRegion:MKCoordinateRegionMake(referenceAnnotation_.coordinate, MKCoordinateSpanMake(latDelta, lonDelta)) animated:YES];
-                }
+
+                [mapView_ addAnnotations:medias];
+                [self.hud hide:YES];
+                reloadBarButton_.enabled = YES;
+                scanBarButton_.enabled = YES;
+                Media* lastMedia = (Media *)[medias lastObject];
+                CGFloat latDif = fabs(fabs(referenceAnnotation_.coordinate.latitude) - fabs(lastMedia.coordinate.latitude));
+                CGFloat lonDif = fabs(fabs(referenceAnnotation_.coordinate.longitude) - fabs(lastMedia.coordinate.longitude));
+                CGFloat lonDelta = MIN(2*MAX(latDif, lonDif), 360.0);
+                CGFloat latDelta = MIN(2*MAX(latDif, lonDif), 180.0);
+                // Display the closest region with all the medias displayed
+                [mapView_ setRegion:MKCoordinateRegionMake(referenceAnnotation_.coordinate, MKCoordinateSpanMake(latDelta, lonDelta)) animated:YES];
+            } else if ([error shouldBeDisplayed]) {
+                [UIAlertView showWithError:error];
+                [self.hud hide:NO];
             }
         }];
     }
@@ -205,7 +181,7 @@
         MediaDetailViewController * mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailViewController"
                                                                                                             bundle:nil];
         mediaDetailViewController.media = media;
-        mediaDetailViewController.title = TRANSLATE(@"common.media");
+        mediaDetailViewController.title = _T(@"common.media");
         [self.navigationController pushViewController:mediaDetailViewController animated:YES];
         [mediaDetailViewController release];
     }
@@ -245,7 +221,7 @@
         [self loadMoreCloseMedias];
     } else {
         [mapView_ addAnnotations:medias];
-        [self stopLoadingAnimation];
+        [self.hud hide:YES];
         reloadBarButton_.enabled = YES;
         scanBarButton_.enabled = YES;
         
@@ -260,10 +236,10 @@
 }
 
 - (void)didFailWithError:(NSError *)error {
-    [self stopLoadingAnimation];
+    [self.hud hide:YES];
     reloadBarButton_.enabled = YES;
     scanBarButton_.enabled = YES;
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"alert_network_unreachable_title") message:TRANSLATE(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:TRANSLATE(@"common.ok") otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:_T(@"alert_network_unreachable_title") message:_T(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:_T(@"common.ok") otherButtonTitles:nil];
     [alert show];
     [alert release];
 }

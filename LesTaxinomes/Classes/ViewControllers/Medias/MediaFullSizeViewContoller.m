@@ -63,16 +63,19 @@
         ![media_.mediaLargeURL isEqualToString:@""]) {
         [self loadMediaImageAsych];
     } else {
-        [self startLoadingAnimation];
+        [self showHudForLoading];
         LTConnectionManager * connectionManager = [LTConnectionManager sharedConnectionManager];
         [connectionManager getMediaLargeURLWithId:media_.identifier
-                                    responseBlock:^(NSNumber *mediaIdentifier, Media *media, NSError *error) {
-                                        if (error) {
-                                            [[LTErrorManager sharedErrorManager] manageError:error];
+                                    responseBlock:^(Media *media, NSError *error) {
+                                        if (media && !error) {
+                                            [self showDeterminateHud];
+                                            [self loadMediaImageAsych];
+                                        } else if ([error shouldBeDisplayed]) {
+                                            [UIAlertView showWithError:error];
+                                            [self.hud hide:NO];
+                                        } else {
+                                            [self showErrorHudWithText:nil];
                                         }
-                                        [self stopLoadingAnimation];
-                                        [self startLoadingAnimationViewWithDetermination];
-                                        [self loadMediaImageAsych];
                                     }];
     }
     [scrollView_ addSubview:mediaImageView_];
@@ -107,17 +110,17 @@
 }
 
 - (void)loadMediaImageAsych {
-    [self startLoadingAnimationViewWithDetermination];
+    [self showDeterminateHud];
     [mediaImageView_ setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:media_.mediaLargeURL]]
                            placeholderImage:nil
                         uploadProgressBlock:nil
                       downloadProgressBlock:^(NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
                           float progress = (float)((double)totalBytesRead/(double)totalBytesExpectedToRead);
-                          [self setProgress:progress];
+                          [self updateProgress:progress];
                         } success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                            [self stopLoadingAnimation];
+                            [self.hud hide:YES];
                         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                            [self stopLoadingAnimation];
+                            [self.hud hide:YES];
                         }];
 }
 

@@ -24,6 +24,7 @@
  */
 
 #import <AssetsLibrary/ALAsset.h>
+#import <AssetsLibrary/ALAssetRepresentation.h>
 #import "NSData+Base64.h"
 #import "NSMutableDictionary+ImageMetadata.h"
 #import "LTDataManager.h"
@@ -50,10 +51,14 @@
 
 #define kSectionsNumber 4
 
-@interface MediaUploadFormViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, MediaLicenseChooserDelegate, MediaLocationPickerDelegate> {
-    NSURL* mediaAssetURL;
-    License* _license;
-}
+@interface MediaUploadFormViewController ()<UITableViewDelegate,
+                                            UITableViewDataSource,
+                                            UITextFieldDelegate,
+                                            UITextViewDelegate,
+                                            UIImagePickerControllerDelegate,
+                                            MediaLicenseChooserDelegate,
+                                            MediaLocationPickerDelegate,
+                                            LTConnectionManagerDelegate>
 
 @property (nonatomic, retain) IBOutlet UITableViewCell* textCell;
 @property (nonatomic, retain) IBOutlet UITableViewCell* licenseCell;
@@ -67,6 +72,9 @@
 @property (nonatomic, retain) IBOutlet UIGlossyButton* shareButton;
 @property (nonatomic, retain) IBOutlet UISwitch* publishSwitch;
 
+@property (nonatomic, retain) NSURL* mediaAssetURL;
+@property (nonatomic, retain) License* license;
+@property (nonatomic, retain) CLLocation* mediaLocation;
 @property (nonatomic, readonly) NSArray* rowsInSection;
 @property (nonatomic, readonly) NSMutableDictionary* cellForIndexPath;
 @property (nonatomic, readonly) CLGeocoder* reverseGeocoder;
@@ -85,21 +93,12 @@
 {
     self = [self initWithNibName:@"MediaUploadFormViewController" bundle:nil];
     if (self) {
-        
-    }
-    return self;
-}
-
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    
-    self = [super initWithNibName:nibNameOrNil bundle:nil];
-    if (self) {
-        
+        self.mediaAssetURL = assetURL;
         _rowsInSection = [@[[NSNumber numberWithInt:1],
-                           [NSNumber numberWithInt:1],
-                           [NSNumber numberWithInt:1],
-                           [NSNumber numberWithInt:1],
-                           [NSNumber numberWithInt:1]]
+                          [NSNumber numberWithInt:1],
+                          [NSNumber numberWithInt:1],
+                          [NSNumber numberWithInt:1],
+                          [NSNumber numberWithInt:1]]
                           retain];
         _license = [[License defaultLicense] retain];
     }
@@ -115,7 +114,6 @@
 }
 
 - (void)dealloc {
-    [_gis release];
     [_license release];
     [_textCell release];
     [_licenseCell release];
@@ -128,6 +126,7 @@
     [_countryInput release];
     [_shareButton release];
     [_publishSwitch release];
+    [_mediaAssetURL release];
     [_rowsInSection release];
     [_reverseGeocoder release];
     [_cellForIndexPath release];
@@ -140,30 +139,48 @@
     
     // Load textCell, licenseCell and
     [[NSBundle mainBundle] loadNibNamed:@"MediaUploadFormCells" owner:self options:nil];
-    self.navigationItem.title = TRANSLATE(@"media_upload_view_title");
+    self.navigationItem.title = _T(@"media_upload_view_title");
     
     self.shareButton.tintColor = kLightGreenColor;
     self.shareButton.buttonCornerRadius = 10.0;
     [self.shareButton setGradientType:kUIGlossyButtonGradientTypeLinearGlossyStandard];
     
-    [self refreshForm];
+    ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
+    [library assetForURL:self.mediaAssetURL resultBlock:^(ALAsset *asset) {
+        ALAssetRepresentation* assetRepresentation = [asset defaultRepresentation];
+        
+        // Media location (GIS)
+        NSMutableDictionary* imageMetadata = [NSMutableDictionary dictionaryWithDictionary:[assetRepresentation metadata]];
+        self.mediaLocation = [imageMetadata location];
+        
+        // Retrieve the image orientation from the ALAsset
+        UIImageOrientation orientation = UIImageOrientationUp;
+        NSNumber* orientationValue = [asset valueForProperty:@"ALAssetPropertyOrientation"];
+        if (orientationValue != nil) {
+            orientation = [orientationValue intValue];
+        }
+        
+        // Media
+        CGImageRef iref = [assetRepresentation fullResolutionImage];
+        if (iref) {
+            self.mediaSnapshotView.image = [[UIImage imageWithCGImage:iref scale:1 orientation:orientation] retain];
+        }
+    } failureBlock:^(NSError *error) {
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+    [library release];
     
     [self.mediaSnapshotView applyPhotoFrameEffect];
-    if(!self.mediaImage) {
-        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-        imagePicker.delegate = self;    
-        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        imagePicker.mediaTypes = [[[NSArray alloc] initWithObjects: (NSString *) kUTTypeImage, nil] autorelease];
-        imagePicker.allowsEditing = NO;
-        [self presentModalViewController:imagePicker animated:YES];
-        [imagePicker release]; 
-    }
+    
     
     if (_license) {
         self.licenseCell.detailTextLabel.text = _license.name;
     } else {
-        self.licenseCell.detailTextLabel.text = TRANSLATE(@"media_upload_no_license_text");
+        self.licenseCell.detailTextLabel.text = _T(@"media_upload_no_license_text");
     }
+    
+    [self refreshForm];
 }
 
 - (void)viewDidUnload
@@ -182,6 +199,11 @@
     self.publishSwitch = nil;
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.hud hide:animated];
+}
+
 #pragma mark - Properties
 
 - (NSMutableDictionary *)cellForIndexPath {
@@ -197,50 +219,53 @@
     }    return _reverseGeocoder;
 }
 
-- (void)setGis:(CLLocation *)gis {
-    if (gis &&
-        ![_gis isEqual:gis] &&
-        (gis.coordinate.latitude || gis.coordinate.longitude)) {
-        [_gis release];
-        _gis = [gis retain];
-        [self.reverseGeocoder reverseGeocodeLocation:self.gis completionHandler:^(NSArray *placemarks, NSError *error) {
-            CLPlacemark* placemark = [placemarks objectAtIndex:0];
-            if (placemark) {
-                self.cityInput.text = placemark.locality;
-                self.zipcodeInput.text = placemark.postalCode;
-                self.countryInput.text = placemark.country;
-            }
-        }];
-        [self refreshForm];
-    }
-}
-
 - (UIImage *)mediaImage {
     return self.mediaSnapshotView.image;
 }
 
-- (void)setMediaImage:(UIImage *)mediaImage {
-    self.mediaSnapshotView.image = mediaImage;
+- (void)setMediaLocation:(CLLocation *)mediaLocation {
+    if (mediaLocation &&
+        ![self.mediaLocation isEqual:mediaLocation] &&
+        (mediaLocation.coordinate.latitude || mediaLocation.coordinate.longitude)) {
+        [_mediaLocation release];
+        _mediaLocation = [mediaLocation retain];
+        [self.reverseGeocoder reverseGeocodeLocation:self.mediaLocation
+                                   completionHandler:^(NSArray *placemarks, NSError *error) {
+                                       CLPlacemark* placemark = [placemarks objectAtIndex:0];
+                                       if (placemark) {
+                                           self.cityInput.text = placemark.locality;
+                                           self.zipcodeInput.text = placemark.postalCode;
+                                           self.countryInput.text = placemark.country;
+                                       }
+                                   }];
+        [self refreshForm];
+    }
 }
 
 #pragma mark - IBActions
 
-- (IBAction)shareButtonPressed:(id)sender {
-    [self uploadMedia:sender]; 
-}
-
 - (IBAction)uploadMedia:(id)sender {
     
-    [self startLoadingAnimationViewWithDetermination];
-#warning should implement progress delegate
+    [self showDeterminateHud];
     
-#warning assetURL is nil
     LTConnectionManager* connectionManager = [LTConnectionManager sharedConnectionManager];
+    connectionManager.delegate = self;
     [connectionManager addMediaWithTitle:self.titleInput.text
                                     text:self.textInput.text
                                  license:_license
-                                assetURL:nil
-                           responseBlock:^(NSString *title, NSString *text, License *license, NSURL *assetURL, Media *media, NSError *error) {
+                                assetURL:self.mediaAssetURL
+                           responseBlock:^(Media *media, NSError *error) {
+                               if (media && !error) {
+                                   [self showConfirmHudWithText:_T(@"media_upload.confirm.title")];
+                                   [self.navigationController popViewControllerAnimated:YES];
+                               }
+                               else if ([error shouldBeDisplayed]) {
+                                   [self.hud hide:NO];
+                                   [UIAlertView showWithError:error];
+                               }
+                               else {
+                                   [self showErrorHudWithText:_T(@"error.upload_failed.title")];
+                               }
                            }];
 }
 
@@ -260,32 +285,32 @@
     if (!titleCell) {
         titleCell = [SingleLineInputCell singleLineInputCell];
     }
-    [titleCell setTitle:TRANSLATE(@"common.title")];
+    [titleCell setTitle:_T(@"common.title")];
     self.titleInput = titleCell.input;
     [self.titleInput setDelegate:self];
     [self.cellForIndexPath setObject:titleCell forKey:kTitleCellIndexPath];
     // Location picker cell
     UITableViewCell* localisationPickerCell = [self.tableView dequeueReusableCellWithIdentifier:kLocalisationPickerCellId];
     if (!localisationPickerCell) {
-        localisationPickerCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault 
+        localisationPickerCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                          reuseIdentifier:kLocalisationPickerCellId] autorelease];
     }
     [localisationPickerCell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     [localisationPickerCell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    localisationPickerCell.textLabel.text = TRANSLATE(@"media_upload.location_picker_cell.text");
+    localisationPickerCell.textLabel.text = _T(@"media_upload.location_picker_cell.text");
     [self.cellForIndexPath setObject:localisationPickerCell forKey:kLocationPickerCellIndexPath];
     NSInteger rowNumberForSection = 1;
     
     // Map cell
-    if (self.gis) {
+    if (self.mediaLocation) {
         MapCell* mapCell = [self.tableView dequeueReusableCellWithIdentifier:[MapCell reuseIdentifier]];
         if (!mapCell) {
             mapCell = [MapCell mapCell];
         }
-        MKPlacemark* annotation = [[[MKPlacemark alloc] initWithCoordinate:self.gis.coordinate addressDictionary:nil] autorelease];
+        MKPlacemark* annotation = [[[MKPlacemark alloc] initWithCoordinate:self.mediaLocation.coordinate addressDictionary:nil] autorelease];
         [mapCell.mapView removeAnnotations:mapCell.mapView.annotations];
         [mapCell.mapView addAnnotation:annotation];
-        [mapCell.mapView setRegion:MKCoordinateRegionMake(self.gis.coordinate, MKCoordinateSpanMake(0.1, 0.1))];
+        [mapCell.mapView setRegion:MKCoordinateRegionMake(self.mediaLocation.coordinate, MKCoordinateSpanMake(0.1, 0.1))];
         NSIndexPath* mapCellIndexPath = [NSIndexPath indexPathForRow:rowNumberForSection inSection:kLocationSection];
         [self.cellForIndexPath setObject:mapCell forKey:mapCellIndexPath];
         rowNumberForSection++;
@@ -296,7 +321,7 @@
     if (!cityCell) {
         cityCell = [SingleLineInputCell singleLineInputCell];
     }
-    [cityCell setTitle:TRANSLATE(@"common.city")];
+    [cityCell setTitle:_T(@"common.city")];
     self.cityInput = cityCell.input;
     [cityCell.input setDelegate:self];
     NSIndexPath* cityCellIndexPath = [NSIndexPath indexPathForRow:rowNumberForSection inSection:kLocationSection];
@@ -308,7 +333,7 @@
     if (!zipcodeCell ) {
         zipcodeCell  = [SingleLineInputCell singleLineInputCell];
     }
-    [zipcodeCell setTitle:TRANSLATE(@"common.zipcode")];
+    [zipcodeCell setTitle:_T(@"common.zipcode")];
     self.zipcodeInput = zipcodeCell.input;
     [zipcodeCell.input setDelegate:self];
     
@@ -321,7 +346,7 @@
     if (!countryCell) {
         countryCell = [SingleLineInputCell singleLineInputCell];
     }
-    [countryCell setTitle:TRANSLATE(@"common.country")];
+    [countryCell setTitle:_T(@"common.country")];
     self.countryInput = countryCell.input;
     [countryCell.input setDelegate:self];
     
@@ -374,8 +399,8 @@
     } else if ([indexPath isEqual:kLocationPickerCellIndexPath]){
         MediaLocalisationPickerViewController* mediaLocationPickerVC = [[[MediaLocalisationPickerViewController alloc] init] autorelease];
         mediaLocationPickerVC.delegate = self;
-        if (self.gis) {
-            mediaLocationPickerVC.location = self.gis;
+        if (self.mediaLocation) {
+            mediaLocationPickerVC.location = self.mediaLocation;
         }
         [self.navigationController pushViewController:mediaLocationPickerVC animated:YES];
     }
@@ -397,7 +422,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
             ALAssetRepresentation *representation = [asset defaultRepresentation];
             NSMutableDictionary *imageMetadata = [NSMutableDictionary dictionaryWithDictionary:[representation metadata]];
             CLLocation* mediaLocation = [imageMetadata location];
-            self.gis = mediaLocation;
+            self.mediaLocation = mediaLocation;
             
         }
     } failureBlock:^(NSError *error) {
@@ -426,7 +451,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 
 #pragma mark - UITextViewdDelegate
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
     
     if([text isEqualToString:@"\n"]) {
         [textView resignFirstResponder];
@@ -437,40 +463,31 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 
 #pragma mark - MediaLicenseChooserDelegate
 
-- (void)didChooseLicense:(License *)license {
+- (void)didChooseLicense:(License *)license
+{
     [license release];
     if (license) {
         _license = [license retain];
         self.licenseCell.detailTextLabel.text = license.name;
     } else {
         _license = nil;
-        self.licenseCell.detailTextLabel.text = TRANSLATE(@"media_upload_no_license_text");
+        self.licenseCell.detailTextLabel.text = _T(@"media_upload_no_license_text");
     }
     
 }
 
-#pragma mark MediaLocationPickerDelegate
+#pragma mark -  MediaLocationPickerDelegate
 
-- (void)mediaLocationPicker:(MediaLocalisationPickerViewController *)mediaLocationPicker didPickLocation:(CLLocation *)location {
-   self.gis = location;
+- (void)mediaLocationPicker:(MediaLocalisationPickerViewController *)mediaLocationPicker didPickLocation:(CLLocation *)location
+{
+    self.mediaLocation = location;
+    [self refreshForm];
 }
 
-#pragma mark - LTConnextionManagerDelegate
+#pragma mark MediaLocationPickerDelegate 
 
-- (void)didSuccessfullyUploadMedia:(Media *)media {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"media_upload_view_title") message:TRANSLATE(@"alert_upload_succeded") delegate:nil cancelButtonTitle:TRANSLATE(@"common.ok") otherButtonTitles:nil];
-    [alert show];
-    [alert release];
-    [self stopLoadingAnimation];
-    [self.navigationController popViewControllerAnimated:YES];
-    
-}
-
-- (void)didFailWithError:(NSError *)error {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:TRANSLATE(@"media_upload_view_title") message:TRANSLATE(@"alert_upload_failed") delegate:nil cancelButtonTitle:TRANSLATE(@"common.ok") otherButtonTitles:nil];
-    [alert show];
-    [alert release];
-    [self stopLoadingAnimation];
+- (void)uploadDeterminationDidUpdate:(CGFloat)determination {
+    self.hud.progress = determination;
 }
 
 @end

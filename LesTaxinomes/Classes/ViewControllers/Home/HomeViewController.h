@@ -24,7 +24,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "LTPhotoPickerViewController.h"
+#import "LTViewController.h"
 
-@interface HomeViewController : LTPhotoPickerViewController
+@interface HomeViewController : LTViewController
 @end
