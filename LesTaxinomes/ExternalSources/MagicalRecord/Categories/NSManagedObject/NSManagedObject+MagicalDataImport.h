@@ -1,6 +1,5 @@
 //
 //  NSManagedObject+JSONHelpers.h
-//  Gathering
 //
 //  Created by Saul Mora on 6/28/11.
 //  Copyright 2011 Magical Panda Software LLC. All rights reserved.
@@ -14,21 +13,17 @@ extern NSString * const kMagicalRecordImportAttributeKeyMapKey;
 extern NSString * const kMagicalRecordImportAttributeValueClassNameKey;
 
 extern NSString * const kMagicalRecordImportRelationshipMapKey;
-extern NSString * const kMagicalRecordImportRelationshipPrimaryKey;
+extern NSString * const kMagicalRecordImportRelationshipLinkedByKey;
 extern NSString * const kMagicalRecordImportRelationshipTypeKey;
 
 @interface NSManagedObject (MagicalRecord_DataImport)
 
-- (void) MR_importValuesForKeysWithDictionary:(id)objectData;
-- (void) MR_updateValuesForKeysWithDictionary:(id)objectData;
+- (BOOL) MR_importValuesForKeysWithObject:(id)objectData;
 
-+ (id) MR_importFromDictionary:(id)data;
-+ (id) MR_importFromDictionary:(id)data inContext:(NSManagedObjectContext *)context;
++ (id) MR_importFromObject:(id)data;
++ (id) MR_importFromObject:(id)data inContext:(NSManagedObjectContext *)context;
 
 + (NSArray *) MR_importFromArray:(NSArray *)listOfObjectData;
 + (NSArray *) MR_importFromArray:(NSArray *)listOfObjectData inContext:(NSManagedObjectContext *)context;
-
-+ (id) MR_updateFromDictionary:(id)objectData;
-+ (id) MR_updateFromDictionary:(id)objectData inContext:(NSManagedObjectContext *)context;
 
 @end

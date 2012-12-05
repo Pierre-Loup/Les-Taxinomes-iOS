@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Media.h"
 
 @interface MediaListCell : UITableViewCell
+@property (nonatomic, assign) Media* media;
 + (MediaListCell *)mediaListCell;
-@property (nonatomic, retain) IBOutlet UIImageView* image;
-@property (nonatomic, retain) IBOutlet UILabel* title;
-@property (nonatomic, retain) IBOutlet UILabel* author;
 @end

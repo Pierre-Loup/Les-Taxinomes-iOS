@@ -1,76 +1,62 @@
 
-// enable to use caches for the fetchedResultsControllers (iOS only)
-// #define STORE_USE_CACHE
-
-#define kCreateNewCoordinatorOnBackgroundOperations     0
-
-#ifndef MR_ENABLE_ACTIVE_RECORD_LOGGING
-  #ifdef DEBUG
-    #define MR_ENABLE_ACTIVE_RECORD_LOGGING 1
-  #else
-    #define MR_ENABLE_ACTIVE_RECORD_LOGGING 0
-  #endif
+#ifndef NS_BLOCKS_AVAILABLE
+    #warning MagicalRecord requires blocks
 #endif
 
-#if MR_ENABLE_ACTIVE_RECORD_LOGGING
-#ifdef LOG_VERBOSE
-    #define MRLog(...)  DDLogVerbose(__VA_ARGS__)
+#ifdef __OBJC__
+//    #if !( __has_feature(objc_arc) && __has_feature(objc_arc_weak) )
+//        #error MagicalRecord now requires ARC to be enabled
+//    #endif
+
+    #import <CoreFoundation/CoreFoundation.h>
+    #import <CoreData/CoreData.h>
+
+    #ifdef MR_SHORTHAND
+    #import "MagicalRecordShorthand.h"
+    #endif
+
+    #import "MagicalRecord.h"
+    #import "MagicalRecord+Actions.h"
+    #import "MagicalRecord+ErrorHandling.h"
+    #import "MagicalRecord+Options.h"
+    #import "MagicalRecord+ShorthandSupport.h"
+    #import "MagicalRecord+Setup.h"
+    #import "MagicalRecord+iCloud.h"
+
+    #import "NSManagedObject+MagicalRecord.h"
+    #import "NSManagedObject+MagicalRequests.h"
+    #import "NSManagedObject+MagicalFinders.h"
+    #import "NSManagedObject+MagicalAggregation.h"
+    #import "NSManagedObjectContext+MagicalRecord.h"
+    #import "NSManagedObjectContext+MagicalObserving.h"
+    #import "NSManagedObjectContext+MagicalSaves.h"
+    #import "NSManagedObjectContext+MagicalThreading.h"
+    #import "NSPersistentStoreCoordinator+MagicalRecord.h"
+    #import "NSManagedObjectModel+MagicalRecord.h"
+    #import "NSPersistentStore+MagicalRecord.h"
+
+    #import "MagicalImportFunctions.h"
+    #import "NSManagedObject+MagicalDataImport.h"
+    #import "NSNumber+MagicalDataImport.h"
+    #import "NSObject+MagicalDataImport.h"
+    #import "NSString+MagicalDataImport.h"
+    #import "NSAttributeDescription+MagicalDataImport.h"
+    #import "NSRelationshipDescription+MagicalDataImport.h"
+    #import "NSEntityDescription+MagicalDataImport.h"
+
+#endif
+
+// @see https://github.com/ccgus/fmdb/commit/aef763eeb64e6fa654e7d121f1df4c16a98d9f4f
+#define MRDispatchQueueRelease(q) (dispatch_release(q))
+
+#if TARGET_OS_IPHONE
+    #if __IPHONE_OS_VERSION_MIN_REQUIRED >= 60000
+        #undef MRDispatchQueueRelease
+        #define MRDispatchQueueRelease(q)
+    #endif
 #else
-    #define MRLog(...) NSLog(@"%s(%p) %@", __PRETTY_FUNCTION__, self, [NSString stringWithFormat:__VA_ARGS__])
+    #if MAC_OS_X_VERSION_MIN_REQUIRED >= 1080
+        #undef MRDispatchQueueRelease
+        #define MRDispatchQueueRelease(q)
+    #endif
 #endif
-#else
-    #define MRLog(...) ((void)0)
-#endif
-
-#import <CoreData/CoreData.h>
-
-#ifndef MR_USE_ARC
-#define MR_USE_ARC __has_feature(objc_arc)
-#endif
-
-#ifndef kCFCoreFoundationVersionNumber_iPhoneOS_5_0
-#define kCFCoreFoundationVersionNumber_iPhoneOS_5_0 674.0
-#endif
-
-#define PRIVATE_QUEUES_ENABLED(...) \
-    if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iPhoneOS_5_0) \
-    { \
-        __VA_ARGS__ \
-    }
-
-#define THREAD_ISOLATION_ENABLED(...) \
-    if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iPhoneOS_5_0) \
-    { \
-        __VA_ARGS__ \
-    }
-
-#if MR_USE_ARC
-#define MR_RETAIN(xx)
-#define MR_RELEASE(xx)
-#define MR_AUTORELEASE(xx)
-#else
-#define MR_RETAIN(xx)           [xx retain];
-#define MR_RELEASE(xx)          [xx release];
-#define MR_AUTORELEASE(xx)      [xx autorelease];
-#endif
-
-#ifdef MR_SHORTHAND
-#import "MagicalRecordShorthand.h"
-#endif
-
-#import "MagicalRecordHelpers.h"
-#import "MRCoreDataAction.h"
-
-#import "NSManagedObject+MagicalRecord.h"
-#import "NSManagedObjectContext+MagicalRecord.h"
-#import "NSPersistentStoreCoordinator+MagicalRecord.h"
-#import "NSManagedObjectModel+MagicalRecord.h"
-#import "NSPersistentStore+MagicalRecord.h"
-
-#import "NSManagedObject+MagicalDataImport.h"
-#import "NSNumber+MagicalDataImport.h"
-#import "NSObject+MagicalDataImport.h"
-#import "NSString+MagicalDataImport.h"
-#import "NSAttributeDescription+MagicalDataImport.h"
-#import "NSRelationshipDescription+MagicalDataImport.h"
-#import "NSEntityDescription+MagicalDataImport.h"

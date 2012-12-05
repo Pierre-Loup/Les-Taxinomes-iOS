@@ -48,14 +48,12 @@
 - (void)showHudForLoading {
     [self.view addSubview:self.hud];
     self.hud.mode = MBProgressHUDModeIndeterminate;
-	self.hud.labelText =  _T(@"common.loading");
     [self.hud show:YES];
 }
 
 - (void)showDeterminateHud {
     [self.view addSubview:self.hud];
 	self.hud.mode = MBProgressHUDModeDeterminate;
-	self.hud.labelText =  _T(@"common.loading");
     [self.hud show:YES];
 }
 

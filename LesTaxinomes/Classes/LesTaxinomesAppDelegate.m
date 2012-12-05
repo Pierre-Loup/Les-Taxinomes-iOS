@@ -37,7 +37,7 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application{
     
-    [MagicalRecordHelpers setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"Taxinomes.sqlite"];
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"Taxinomes.sqlite"];
     
     // Retreive licenses
     [[LTConnectionManager sharedConnectionManager] getLicensesWithResponseBlock:^(NSArray *licenses, NSError *error) {

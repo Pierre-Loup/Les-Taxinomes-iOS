@@ -54,17 +54,15 @@
         return nil;
     }
     
-    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
+    NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
     
-    Author *author = [Author authorWithIdentifier:authorIdentifier];
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d", [authorIdentifier integerValue]];
+    Author *author = [Author findFirstWithPredicate:predicate inContext:context];
     if (!author) {
-        author = (Author *)[NSEntityDescription insertNewObjectForEntityForName:kAuthorEntityName inManagedObjectContext:context];
+        author = [Author createInContext:context];
         author.identifier = authorIdentifier;
         if (author == nil) {
             LogDebug(@"[ERROR] author = nil !!!");
-        }
-        if (![context save:nil]) {
-            return nil;
         }
     }
     NSString * authorName = (NSString *)[response objectForKey:@"nom"];
@@ -98,61 +96,19 @@
     
     author.localUpdateDate = [NSDate date];
     
-    if (![context save:nil]) {
-        return nil;
-    }
+    [context save];
     
     return author;
 }
 
 + (Author *)authorWithIdentifier: (NSNumber *)identifier {
-    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
-    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
-    [request setEntity:entity];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %d",kAuthorEntityIdentifierField,[identifier intValue]];
-    [request setPredicate:predicate];
-    
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kAuthorEntityIdentifierField ascending:YES];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-    [request setSortDescriptors:sortDescriptors];
-    [sortDescriptors release];
-    [sortDescriptor release];
-    
-    NSError *error = nil;
-    NSMutableArray *mutableFetchResults = [[[context executeFetchRequest:request error:&error] mutableCopy] autorelease];
-    [request release];
-    if ([mutableFetchResults count] == 0) {
-        return nil;
-    } else if ([mutableFetchResults count] > 1) {
-        return [mutableFetchResults objectAtIndex:0];
-    } else {
-        return [mutableFetchResults objectAtIndex:0];
-    }
-    return nil;
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d", [identifier integerValue]];
+    Author *author = [Author findFirstWithPredicate:predicate];
+    return  author;
 }
 
 + (NSArray *)allAuthors {
-    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
-    [request setEntity:entity];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kAuthorEntityIdentifierField ascending:NO];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-    [request setSortDescriptors:sortDescriptors];
-    [sortDescriptors release];
-    [sortDescriptor release];
-    
-    NSError *error = nil;
-    NSMutableArray *mutableFetchResults = [[context executeFetchRequest:request error:&error] mutableCopy];
-    [request release];
-    if (mutableFetchResults == nil) {
-        return nil;
-    }
-    
-    return [mutableFetchResults autorelease];
+    return [Author findAll];
 }
 
 @end

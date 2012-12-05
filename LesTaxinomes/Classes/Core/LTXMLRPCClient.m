@@ -133,10 +133,22 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
             }
             
             // Succes block call
-            if (!wsResponseError && success) success(response);
+            if (!wsResponseError && success) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    success(response);
+                });
+            }
             // Failure block calls
-            else if (failure) failure(wsResponseError);
-        } else if (failure) failure((NSError *)response);
+            else if (failure) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    failure(wsResponseError);
+                });
+            }
+        } else if (failure) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                failure((NSError *)response);
+            });
+        }
     };
     
     void (^failureBlock)(AFHTTPRequestOperation *operation, NSError *error);
@@ -157,7 +169,7 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
         [operation setUploadProgressBlock:^(NSInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
             uploadProgressBlock(((CGFloat)totalBytesWritten)/((CGFloat)totalBytesExpectedToWrite));
         }];
-        
+    operation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     [self enqueueHTTPRequestOperation:operation];
 }
 

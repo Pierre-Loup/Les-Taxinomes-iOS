@@ -78,11 +78,11 @@
 #define kMediaCacheTime 3600.0
 
 #ifdef DEV
-    #define kHost @"www.lestaxinomes.org"
-    #define kXMLRCPWebServiceURL @"http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur"
-    #define kHTTPHost @"http://www.lestaxinomes.org"
-    #define kForgottenPasswordURL @"http://www.lestaxinomes.org/spip.php?page=spip_pass"
-    #define kSignupURL @"http://www.lestaxinomes.org/spip.php?page=inscription"
+#define kHost @"taxinomes.arscenic.org/"
+#define kXMLRCPWebServiceURL @"http://taxinomes.arscenic.org//spip.php?action=xmlrpc_serveur"
+#define kHTTPHost @"http://taxinomes.arscenic.org/"
+#define kForgottenPasswordURL @"http://taxinomes.arscenic.org/spip.php?page=spip_pass"
+#define kSignupURL @"http://taxinomes.arscenic.org/spip.php?page=inscription"
 #endif
 #ifdef PROD
     #define kHost @"www.lestaxinomes.org"

@@ -119,10 +119,11 @@
                                                                         nearLocation:searchLocation
                                                                            withRange:range
         responseBlock:^(NSArray *medias, NSError *error) {
+            searchStartIndex_ += medias.count;
             if (medias &&
                 [medias count] &&
                 !error) {
-
+                
                 [mapView_ addAnnotations:medias];
                 [self.hud hide:YES];
                 reloadBarButton_.enabled = YES;

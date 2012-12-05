@@ -68,16 +68,15 @@
         return nil;
     }
     
-    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
+    NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
     
-    Media *media = [Media mediaWithIdentifier:mediaIdentifier];
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d",[mediaIdentifier integerValue]];
+    Media *media = [Media findFirstWithPredicate:predicate
+                                       inContext:context];
     
     if (!media) {
-        media = (Media *)[NSEntityDescription insertNewObjectForEntityForName:kMediaEntityName inManagedObjectContext:context];
+        media = [Media createInContext:context];
         media.identifier = mediaIdentifier;
-        
-        
-        
     }
     
     if ([response objectForKey:@"titre"]) {
@@ -135,7 +134,9 @@
     
     if ([response objectForKey: @"id_licence"]) {
         NSInteger licenceId = [[response objectForKey: @"id_licence"] intValue];
-        media.license = [License licenseWithIdentifier:[NSNumber numberWithInt:licenceId]];
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d",licenceId];
+        media.license = [License findFirstWithPredicate:predicate
+                                              inContext:context];
     }
     
     if([[response objectForKey:@"auteurs"] isKindOfClass:[NSArray class]]){
@@ -155,9 +156,7 @@
     
     media.localUpdateDate = [NSDate date];
     
-    if (![context save:nil]) {
-        return nil;
-    }
+    [context save];
     
     return media;
     
@@ -176,6 +175,7 @@
         return nil;
     }
     
+    NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
     Media *media = [Media mediaWithIdentifier:mediaIdentifier];
     
     if (!media) {
@@ -186,104 +186,31 @@
     if ([response objectForKey:@"document"]) {
         media.mediaLargeURL = [response objectForKey:@"document"];
     }
+    
+    [context save];
+    
     return media;
 }
 
 + (Media *)mediaWithIdentifier:(NSNumber *)identifier {
-    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
-    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
-    [request setEntity:entity];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %d",kMediaEntityIdentifierField,[identifier intValue]];
-    [request setPredicate:predicate];
-    
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kMediaEntityIdentifierField ascending:YES];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-    [request setSortDescriptors:sortDescriptors];
-    [sortDescriptors release];
-    [sortDescriptor release];
-    
-    NSError *error = nil;
-    NSMutableArray *mutableFetchResults = [[[context executeFetchRequest:request error:&error] mutableCopy] autorelease];
-    [request release];
-    if (mutableFetchResults == nil
-        || [mutableFetchResults count] == 0) {
-        return nil;
-    } else if ([mutableFetchResults count] > 1) {
-        LogDebug(@"[WARNING] multiple records (%d) in database for id %d",[mutableFetchResults count],[identifier intValue]);
-        return [mutableFetchResults objectAtIndex:0];
-    } else {
-        return [mutableFetchResults objectAtIndex:0];
-    }
-    return nil;
+    NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d",[identifier integerValue]];
+    Media *media = [Media findFirstWithPredicate:predicate inContext:context];
+    return media;
 }
 
 + (NSArray *)allMedias {
-    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
-    [request setEntity:entity];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kMediaEntityDateField ascending:NO];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-    [request setSortDescriptors:sortDescriptors];
-    [sortDescriptors release];
-    [sortDescriptor release];
-    
-    NSError *error = nil;
-    NSMutableArray *mutableFetchResults = [[context executeFetchRequest:request error:&error] mutableCopy];
-    [request release];
-    if (mutableFetchResults == nil) {
-        return nil;
-    }
-    
-    return [mutableFetchResults autorelease];
-}
-
-+ (NSArray *)allSynchMedias {
-    return [Media allSynchMediasForAuthor:nil];
-}
-
-+ (NSArray *)allSynchMediasForAuthor:(Author *)author {
-    LTDataManager * dataManager = [LTDataManager sharedDataManager];
-    if (dataManager.synchLimit == 0) {
-        return @[];
-    }
-    
-    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    request.fetchLimit = dataManager.synchLimit;
-    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
-    [request setEntity:entity];
-    
-    if (author) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K.%K == %d",kMediaEntityAuthorsField, kAuthorEntityIdentifierField,[author.identifier intValue]];
-        LogDebug(@"%@",predicate.predicateFormat);
-        [request setPredicate:predicate];
-    }
-    
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kMediaEntityDateField ascending:NO];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-    [request setSortDescriptors:sortDescriptors];
-    [sortDescriptors release];
-    [sortDescriptor release];
-    
-    NSError *error = nil;
-    NSMutableArray *mutableFetchResults = [[context executeFetchRequest:request error:&error] mutableCopy];
-    [request release];
-    if (mutableFetchResults == nil) {
-        return nil;
-    }
-    
-    return [mutableFetchResults autorelease];
+    NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
+    return [Media findAllInContext:context];
 }
 
 + (void)deleteAllMedias {
-    NSArray* allMedias = [self allMedias];
+    NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
+    NSArray* allMedias = [Media findAllInContext:context];
     for (Media* media in allMedias) {
-        [[NSManagedObjectContext MR_contextForCurrentThread] deleteObject:media];
+        [media deleteEntity];
     }
+    [context save];
 }
 
 #pragma mark - MKAnnotation protocol

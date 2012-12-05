@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface SpinnerCell : UITableViewCell
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView* spinner;
 + (SpinnerCell *)spinnerCell;
 @end

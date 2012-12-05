@@ -253,6 +253,9 @@
                                              self.licenseNameLabel.frame.size.width,
                                              self.licenseNameLabel.frame.size.height);
         currentContentHeight += self.licenseNameLabel.frame.size.height + commonMargin;
+    } else {
+        self.licenseTitleView.hidden = YES;
+        self.licenseNameLabel.hidden = YES;
     }
     
     // Map section if media as coordinates

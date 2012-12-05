@@ -19,10 +19,16 @@
     UIView* view = [views objectAtIndex:0];
     if ([view isKindOfClass:[self class]]) {
         self = (SpinnerCell *)[view retain];
+        [self.spinner startAnimating];
         return self;
     } else {
         return nil;
     }
+}
+
+- (void)dealloc {
+    [_spinner release];
+    [super dealloc];
 }
 
 @end

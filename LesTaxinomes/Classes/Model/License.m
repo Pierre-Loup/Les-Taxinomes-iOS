@@ -42,12 +42,13 @@
         return nil;
     }
     
-    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
+    NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
     
-    License *license = [License licenseWithIdentifier:[NSNumber numberWithInt:[(NSString*)[response objectForKey:@"id"] intValue]]];
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d", [(NSString*)[response objectForKey:@"id"] intValue]];
+    License* license = [License findFirstWithPredicate:predicate inContext:context];
     
     if (!license) {
-        license = (License *)[NSEntityDescription insertNewObjectForEntityForName:kLicenseEntityName inManagedObjectContext:context];
+        license = [License createInContext:context];
         license.identifier = [NSNumber numberWithInt:[(NSString*)[response objectForKey:@"id"] intValue]];
     }
     
@@ -57,40 +58,14 @@
     license.desc = [response objectForKey:@"description"];
     license.abbr = [response objectForKey:@"addr"];
     
-    if (![context save:nil]) {
-        return nil;
-    }
-    
     return license;
 }
 
 + (License *)licenseWithIdentifier: (NSNumber *)identifier {
-    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
-    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
-    [request setEntity:entity];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %d",kLicenseEntityIdentifierField,[identifier intValue]];
-    [request setPredicate:predicate];
-    
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kLicenseEntityIdentifierField ascending:YES];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-    [request setSortDescriptors:sortDescriptors];
-    [sortDescriptors release];
-    [sortDescriptor release];
-    
-    NSError *error = nil;
-    NSMutableArray *mutableFetchResults = [[[context executeFetchRequest:request error:&error] mutableCopy] autorelease];
-    [request release];
-    if ([mutableFetchResults count] == 0) {
-        return nil;
-    } else if ([mutableFetchResults count] > 1) {
-        return [mutableFetchResults objectAtIndex:0];
-    } else {
-        return [mutableFetchResults objectAtIndex:0];
-    }
-    return nil;
+    NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d", [identifier integerValue]];
+    License* license = [License findFirstWithPredicate:predicate inContext:context];
+    return  license;
 }
 
 + (License *)defaultLicense {
@@ -98,24 +73,8 @@
 }
 
 + (NSArray *)allLicenses {
-    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];;
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
-    [request setEntity:entity];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"identifier" ascending:YES];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-    [request setSortDescriptors:sortDescriptors];
-    [sortDescriptors release];
-    [sortDescriptor release];
-    
-    NSError *error = nil;
-    NSMutableArray *mutableFetchResults = [[context executeFetchRequest:request error:&error] mutableCopy];
-    [request release];
-    if (mutableFetchResults == nil) {
-        // Handle the error.
-    }
-    
-    return [mutableFetchResults autorelease];
+    NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
+    return [License findAllInContext:context];
 }
 
 @end
