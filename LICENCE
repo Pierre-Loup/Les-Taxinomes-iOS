@@ -14,26 +14,25 @@ LesTaxinomes is free software: you can redistribute it and/or modify
 A different license may apply to other software included in this package, 
 including :
 
-- Apple and Andrew Donoho's Reachability class
-- All-Seeing Interactive's ASIHTTPRequest framework
-- World Wide Web Consortium's tidy library
-- Divisible by Zero's Cocoa XML-RPC framework
+- Reachability class by Apple and Andrew Donoho's
+- Cocoa XML-RPC framework by Divisible by Zero's
 - toxicsoftware.com's CTidy class
-- Michael Waterfall and Danilo Ercoli's NSString+XMLExtensions class
-- Gustavo Pelosi Ambrozio's NSMutableDictionary+ImageMetadata class
-- Matt Gallagher's NSData+Base64 category
-- Janakiram's NSString+XMLExtensions category
-- Olivier Halligon's UIImage+Resize category
-- Seymour Cakes's UIImageView+PhotoFrame category
-- Matej Bukovinski's MBProgressHUD class
-- First Water Tech Ltd's UIGlossyButton class
-- Patrick Richards and Domestic Cat Software's DCIntrospect tool
-- Gowolla's AFNetworking framework
-- Magical Panda Software's MagicalRecord framework
+- NSString+XMLExtensions class by Michael Waterfall and Danilo Ercoli
+- NSMutableDictionary+ImageMetadata class by Gustavo Pelosi Ambrozio
+- NSData+Base64 category by Matt Gallagher
+- UIImage+Resize category by Olivier Halligon
+- UIImageView+PhotoFrame categorySeymour Cakes
+- MBProgressHUD classMatej Bukovinski
+- UIGlossyButton class by First Water Tech Ltd's
+- DCIntrospect tool by Patrick Richards and Domestic Cat Software
+- AFNetworking framework Gowolla
+- MagicalRecord framework by Magical Panda Software
+- EGOPhotoViewer by enormego
 
 Please consult their respective headers for the terms of their individual licenses in header files (Taxinomes/classes/ExternalSources/).
 
 The images files of the Taxinomes/images are copyrighted :
 
 Tab bar icons to Joseph Wain and Glyphish (http://glyphish.com)
+The image in EGOPhotoViewer's Ressources folder to enormego (http://developers.enormego.com)
 all other image files to Anthony Bossard and Les Petits Débrouillards Bretagne.

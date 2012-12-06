@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString* LTXMLRPCMethodKey;
-
 @interface NSError (LTErrorAdditions)
 - (BOOL)shouldBeDisplayed;
 @end

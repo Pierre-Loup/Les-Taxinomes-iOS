@@ -51,4 +51,5 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
      authCookieEnable:(BOOL)authCookieEnable
               success:(void (^)(id response))success
               failure:(void (^)(NSError *error))failure;
+
 @end

@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1536</int>
-		<string key="IBDocument.SystemVersion">12A269</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2843</string>
-		<string key="IBDocument.AppKitVersion">1187</string>
-		<string key="IBDocument.HIToolboxVersion">624.00</string>
+		<string key="IBDocument.SystemVersion">12C60</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
+		<string key="IBDocument.AppKitVersion">1187.34</string>
+		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1929</string>
+			<string key="NS.object.0">1930</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBMKMapView</string>
@@ -58,21 +58,20 @@
 								</object>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
-								<int key="IBUIContentMode">2</int>
+								<int key="IBUIContentMode">4</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 							<object class="IBUIActivityIndicatorView" id="531604388">
 								<reference key="NSNextResponder" ref="277414938"/>
 								<int key="NSvFlags">-2147483347</int>
-								<string key="NSFrame">{{142, 43}, {37, 37}}</string>
+								<string key="NSFrame">{{151, 51}, {20, 20}}</string>
 								<reference key="NSSuperview" ref="277414938"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="899418832"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<int key="IBUIStyle">0</int>
 							</object>
 							<object class="IBUIView" id="899418832">
 								<reference key="NSNextResponder" ref="277414938"/>
@@ -218,7 +217,6 @@
 								<string key="NSFrame">{{10, 238}, {300, 30}}</string>
 								<reference key="NSSuperview" ref="277414938"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<reference key="IBUIBackgroundColor" ref="414742325"/>
 								<bool key="IBUIOpaque">NO</bool>
@@ -554,6 +552,7 @@
 						<string key="authorTitleView">LTTitleView</string>
 						<string key="descTextView">UITextView</string>
 						<string key="descTitleView">LTTitleView</string>
+						<string key="downloadImageView">UIImageView</string>
 						<string key="licenseNameLabel">UILabel</string>
 						<string key="licenseTitleView">LTTitleView</string>
 						<string key="mapTitleView">LTTitleView</string>
@@ -582,6 +581,10 @@
 						<object class="IBToOneOutletInfo" key="descTitleView">
 							<string key="name">descTitleView</string>
 							<string key="candidateClassName">LTTitleView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="downloadImageView">
+							<string key="name">downloadImageView</string>
+							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="licenseNameLabel">
 							<string key="name">licenseNameLabel</string>
@@ -627,6 +630,6 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<string key="IBCocoaTouchPluginVersion">1929</string>
+		<string key="IBCocoaTouchPluginVersion">1930</string>
 	</data>
 </archive>

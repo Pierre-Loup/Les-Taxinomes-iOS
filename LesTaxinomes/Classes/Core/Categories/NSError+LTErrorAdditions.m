@@ -8,8 +8,6 @@
 
 #import "NSError+LTErrorAdditions.h"
 
-NSString* LTXMLRPCMethodKey = @"LTXMLRPCMethod";
-
 @implementation NSError (LTErrorAdditions)
 
 - (BOOL)shouldBeDisplayed {

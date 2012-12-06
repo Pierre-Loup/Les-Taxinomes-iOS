@@ -64,7 +64,7 @@
 	if (text)
         self.hud.labelText = text;
 	[self.hud show:YES];
-	[self.hud hide:YES afterDelay:3];
+	[self.hud hide:YES afterDelay:1.5];
 }
 
 - (void)showConfirmHudWithText:(NSString *)text {
@@ -74,7 +74,7 @@
 	if (text)
         self.hud.labelText = text;
 	[self.hud show:YES];
-	[self.hud hide:YES afterDelay:3];
+	[self.hud hide:YES afterDelay:1.5];
 }
 
 - (void)showHudWithTextOnly:(NSString *)text {

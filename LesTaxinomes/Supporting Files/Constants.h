@@ -106,3 +106,4 @@
 #define kLimitParamName @"limite"
 #define kSortParamName @"tri"
 #define kSessionCookieName @"spip_session"
+#define kLTXMLRPCMethodKey @"LTXMLRPCMethodKey"

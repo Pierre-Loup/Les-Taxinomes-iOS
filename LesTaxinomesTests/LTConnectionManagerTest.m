@@ -21,7 +21,7 @@
 @implementation LTConnectionManagerTest
 
 - (void)setUpClass {
-    [MagicalRecordHelpers setupCoreDataStackWithInMemoryStore];
+    [MagicalRecord setupCoreDataStackWithInMemoryStore];
 }
 
 - (void)test01_authWithLogin_password {

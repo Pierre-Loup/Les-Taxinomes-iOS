@@ -25,7 +25,14 @@ NSString* const LTXMLRCPMethodGeoDivListeMedias = @"geodiv.liste_medias";
 NSString* const LTXMLRCPMethodGeoDivLireMedia = @"geodiv.lire_media";
 NSString* const LTXMLRCPMethodGeoDivCreerMedia = @"geodiv.creer_media";
 
-
+static dispatch_queue_t lt_xmlrpc_request_operation_processing_queue;
+static dispatch_queue_t xmlrpc_request_operation_processing_queue() {
+    if (lt_xmlrpc_request_operation_processing_queue == NULL) {
+        lt_xmlrpc_request_operation_processing_queue = dispatch_queue_create("com.alamofire.networking.image-request.processing", 0);
+    }
+    
+    return lt_xmlrpc_request_operation_processing_queue;
+}
 
 @interface LTXMLRPCClient ()
 - (void)setDefaultHeader;
@@ -128,7 +135,7 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
                 if (faultCode && faultString) {
                     wsResponseError = [NSError errorWithDomain:LTXMLRPCServerErrorDomain
                                                           code:[faultCode integerValue]
-                                                      userInfo:@{NSLocalizedDescriptionKey:faultString,LTXMLRPCMethodKey:method}];
+                                                      userInfo:@{NSLocalizedDescriptionKey:faultString,kLTXMLRPCMethodKey:method}];
                 }
             }
             
@@ -169,7 +176,7 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
         [operation setUploadProgressBlock:^(NSInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
             uploadProgressBlock(((CGFloat)totalBytesWritten)/((CGFloat)totalBytesExpectedToWrite));
         }];
-    operation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    operation.successCallbackQueue = xmlrpc_request_operation_processing_queue();
     [self enqueueHTTPRequestOperation:operation];
 }
 

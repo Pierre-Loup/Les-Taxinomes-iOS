@@ -103,7 +103,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             } else {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
-                                                                 userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodSPIPListeLicences}];
+                                                                 userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodSPIPListeLicences}];
                                 if(responseBlock) responseBlock(nil, error);
                             }
                         } failure:^(NSError *error) {
@@ -164,7 +164,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             } else {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
-                                                                 userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodGeoDivListeMedias}];
+                                                                 userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodGeoDivListeMedias}];
                                 
                                 
                                 if(responseBlock) responseBlock(nil, error);
@@ -208,7 +208,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             } else {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
-                                                                 userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodGeoDivLireMedia}];
+                                                                 userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodGeoDivLireMedia}];
                                 
                                 if(responseBlock) responseBlock(nil, error);
                                 
@@ -253,7 +253,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             } else {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
-                                                                 userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodGeoDivLireMedia}];
+                                                                 userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodGeoDivLireMedia}];
                                 
                                 
                                 if(responseBlock) responseBlock(nil, error);
@@ -291,7 +291,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             } else {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
-                                                                 userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodSPIPLireAuteur}];
+                                                                 userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodSPIPLireAuteur}];
                                 
                                 
                                 if(responseBlock) responseBlock(nil, error);
@@ -396,7 +396,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                     } else {
                                         NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                              code:LTConnectionManagerInternalError
-                                                                         userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodGeoDivCreerMedia}];
+                                                                         userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodGeoDivCreerMedia}];
                                         
                                         
                                         if(responseBlock) responseBlock(nil, error);
@@ -435,7 +435,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             } else {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
-                                                                 userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodSPIPAuth}];
+                                                                 userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodSPIPAuth}];
                                 
                                 
                                 if(responseBlock) responseBlock(nil, error);

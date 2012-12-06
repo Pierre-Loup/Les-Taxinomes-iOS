@@ -37,7 +37,7 @@
     // Internal error domains
     } else if (error.domain == LTConnectionManagerErrorDomain ||
                error.domain == LTXMLRPCServerErrorDomain) {
-        NSString* method = error.userInfo[LTXMLRPCMethodKey];
+        NSString* method = error.userInfo[kLTXMLRPCMethodKey];
         if ([method isEqualToString:LTXMLRCPMethodSPIPAuth]) {
             title = _T(@"error.auth_failed.title");
             message = _T(@"error.auth_failed.text");

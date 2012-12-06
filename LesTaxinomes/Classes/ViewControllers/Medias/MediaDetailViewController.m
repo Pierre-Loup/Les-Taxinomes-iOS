@@ -22,8 +22,10 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>
  
  */
+#import <QuickLook/QuickLook.h>
 
 #import "Annotation.h"
+#import "EGOPhotoGlobal.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIImageView+PhotoFrame.h"
 //VC
@@ -47,18 +49,20 @@
 @property (nonatomic, retain) IBOutlet UILabel * licenseNameLabel;
 @property (nonatomic, retain) IBOutlet LTTitleView * mapTitleView;
 @property (nonatomic, retain) IBOutlet MKMapView * mapView;
+@property (nonatomic, readonly) IBOutlet UIImageView* downloadImageView;
 
 @end
 
 @implementation MediaDetailViewController
 @synthesize media = media_;
+@synthesize downloadImageView = _downloadImageView;
 
 #pragma mark - Overrides
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-
+        
     }
     return self;
 }
@@ -75,6 +79,7 @@
     [_descTextView release];
     [_mapTitleView release];
     [_mapView release];
+    [_downloadImageView release];
     [super dealloc];
 }
 
@@ -83,8 +88,8 @@
     self.title = media_.title;
     
     UIBarButtonItem* backButtonItem = [[[UIBarButtonItem alloc] initWithTitle:_T(@"common.back")
-                                                                       style:UIBarButtonItemStyleBordered
-                                                                      target:nil action:nil] autorelease];
+                                                                        style:UIBarButtonItemStyleBordered
+                                                                       target:nil action:nil] autorelease];
     self.navigationItem.backBarButtonItem = backButtonItem;
     
     asynchLoadCounter_ = 0;
@@ -107,11 +112,11 @@
     [self.authorAvatarView setImageWithURL:[NSURL URLWithString:media_.author.avatarURL]
                           placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
     
-
+    
     self.descTitleView.title = _T(@"common.description");
     self.licenseTitleView.title = _T(@"common.license");
     self.mapTitleView.title = _T(@"common.map");
-
+    
     tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                    action:@selector(mapTouched:)];
     [tapGestureRecognizer autorelease];
@@ -147,6 +152,14 @@
     }
 }
 
+- (UIImageView*)downloadImageView
+{
+    if (!_downloadImageView) {
+        _downloadImageView = [UIImageView new];
+    }
+    return _downloadImageView;
+}
+
 #pragma mark - Private methodes
 
 - (void)configureView
@@ -154,17 +167,17 @@
     [self showHudForLoading];
     LTDataManager *dm = [LTDataManager sharedDataManager];
     [dm getMediaWithId:self.media.identifier
-          responseBlock:^(Media* media, NSError *error) {
-              
-              if ([error shouldBeDisplayed]) {
-                  [UIAlertView showWithError:error];
-                  [self.hud hide:NO];
-              }
-              
-              asynchLoadCounter_--;
-              [self loadMediaView];
-              [self displayContentIfNeeded];
-    }];
+         responseBlock:^(Media* media, NSError *error) {
+             
+             if ([error shouldBeDisplayed]) {
+                 [UIAlertView showWithError:error];
+                 [self.hud hide:NO];
+             }
+             
+             asynchLoadCounter_--;
+             [self loadMediaView];
+             [self displayContentIfNeeded];
+         }];
     asynchLoadCounter_++;
     [dm getAuthorWithId:self.media.author.identifier
           responseBlock:^(Author *author, NSError *error) {
@@ -176,9 +189,9 @@
               
               asynchLoadCounter_--;
               [self displayContentIfNeeded];
-    }];
+          }];
     asynchLoadCounter_++;
-
+    
 }
 
 - (void)refreshView {
@@ -190,10 +203,10 @@
                                                self.mediaImageView.frame.origin.y,
                                                self.mediaImageView.frame.size.width,
                                                self.mediaImageView.frame.size.width);
-        self.placeholderAIView.center = CGPointMake(self.mediaImageView.bounds.size.width/2, self.mediaImageView.bounds.size.height/2);
+        self.placeholderAIView.center = CGPointMake(self.mediaImageView.bounds.size.width/2 + self.mediaImageView.frame.origin.x, (self.mediaImageView.bounds.size.height/2) + 100.0 + self.mediaImageView.frame.origin.y);
     }
     currentContentHeight += self.mediaImageView.frame.origin.y + self.mediaImageView.frame.size.height + commonMargin;
-     
+    
     // Author section
     self.authorTitleView.frame = CGRectMake(self.authorTitleView.frame.origin.x,
                                             currentContentHeight,
@@ -202,7 +215,7 @@
     currentContentHeight += self.authorTitleView.frame.size.height + commonMargin;
     
     [self.authorAvatarView setImageWithURL:[NSURL URLWithString:media_.author.avatarURL]
-                           placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
+                          placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
     self.authorAvatarView.frame = CGRectMake(self.authorAvatarView.frame.origin.x,
                                              currentContentHeight,
                                              self.authorAvatarView.frame.size.width,
@@ -249,9 +262,9 @@
         self.licenseNameLabel.text = self.media.license.name;
         
         self.licenseNameLabel.frame = CGRectMake(self.licenseNameLabel.frame.origin.x,
-                                             currentContentHeight,
-                                             self.licenseNameLabel.frame.size.width,
-                                             self.licenseNameLabel.frame.size.height);
+                                                 currentContentHeight,
+                                                 self.licenseNameLabel.frame.size.width,
+                                                 self.licenseNameLabel.frame.size.height);
         currentContentHeight += self.licenseNameLabel.frame.size.height + commonMargin;
     } else {
         self.licenseTitleView.hidden = YES;
@@ -305,16 +318,40 @@
     }
 }
 
-- (void)mediaImageTouched:(UIImage *)sender {
-    MediaFullSizeViewContoller * mediaFullSizeViewController = [[MediaFullSizeViewContoller alloc] initWithNibName:@"MediaFullSizeViewController" bundle:nil];
-    mediaFullSizeViewController.media = media_;
-    UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:mediaFullSizeViewController];
-    [self presentModalViewController:navigationController animated:YES];
-    [navigationController release];
-    [mediaFullSizeViewController release];
+- (void)mediaImageTouched:(UIImage *)sender
+{
+    
+    if (media_.mediaLargeURL.length) {
+        [self displayLargeMediaPhotoViewer];
+    } else {
+        [self showHudForLoading];
+        [[LTConnectionManager sharedConnectionManager] getMediaLargeURLWithId:media_.identifier responseBlock:^(Media *media, NSError *error) {
+            
+            if (!error) {
+                [self displayLargeMediaPhotoViewer];
+            } else {
+                [self showErrorHudWithText:nil];
+            }
+            
+        }];
+    }
+    
+    
 }
 
-- (void)displayContentIfNeeded {
+- (void)displayLargeMediaPhotoViewer
+{
+    if (media_.mediaLargeURL.length) {
+        NSURL* imageURL = [NSURL URLWithString:media_.mediaLargeURL];
+        EGOPhotoViewController* photoController = [[EGOPhotoViewController alloc] initWithImageURL:imageURL];
+        [self.navigationController pushViewController:photoController animated:YES];
+        [photoController release];
+        [self.hud hide:YES];
+    }
+}
+
+- (void)displayContentIfNeeded
+{
     if (asynchLoadCounter_ <= 0) {
         [self.hud hide:YES];
         [self refreshView];
@@ -326,15 +363,15 @@
     
     [self.placeholderAIView startAnimating];
     [self.mediaImageView setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:media_.mediaMediumURL]]
-                           placeholderImage:[UIImage imageNamed:@"medium_placeholder"]
-                                    success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                        [self.hud hide:YES];
-                                        [self.placeholderAIView stopAnimating];
-                                        [self refreshView];
-                                    }
-                                    failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                        [self.hud hide:YES];
-                                    }];
+                               placeholderImage:[UIImage imageNamed:@"egopv_photo_placeholder"]
+                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                            [self.hud hide:YES];
+                                            [self.placeholderAIView stopAnimating];
+                                            [self refreshView];
+                                        }
+                                        failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                            [self.hud hide:YES];
+                                        }];
 }
 
 - (void)mapTouched:(MKMapView *)sender {
