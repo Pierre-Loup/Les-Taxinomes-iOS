@@ -52,7 +52,7 @@
 
 - (void)setup {
     bgImageView_ = [[UIImageView alloc] initWithFrame:self.bounds];
-    bgImageView_.image = [UIImage imageNamed:@"background"];
+    bgImageView_.image = [UIImage imageNamed:@"background-568h"];
     bgImageView_.contentMode = UIViewContentModeTop;
     bgImageView_.clipsToBounds = YES;
     [bgImageView_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];

@@ -104,7 +104,7 @@
                                     initWithAnnotation:annotation reuseIdentifier:nil];
     [pinView setDraggable:YES];
     [pinView setAnimatesDrop:YES];
-    [pinView setPinColor:MKPinAnnotationColorGreen];
+    [pinView setPinColor:kPinColor];
     return [pinView autorelease];
 }
 

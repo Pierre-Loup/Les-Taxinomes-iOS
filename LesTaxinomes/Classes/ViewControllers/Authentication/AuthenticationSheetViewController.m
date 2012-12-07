@@ -26,8 +26,9 @@
 #import "AuthenticationSheetViewController.h"
 
 @interface AuthenticationSheetViewController ()
-
+@property (nonatomic, retain) IBOutlet UILabel* loginLabel;
 @property (nonatomic, retain) IBOutlet UITextField* loginTextField;
+@property (nonatomic, retain) IBOutlet UILabel* passwordLabel;
 @property (nonatomic, retain) IBOutlet UITextField* passwordTextField;
 @property (nonatomic, retain) IBOutlet UIGlossyButton* signinButton;
 
@@ -57,8 +58,11 @@
         UIBarButtonItem * cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:_T(@"common.cancel") style:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTouched:)];
         [self.navigationItem setRightBarButtonItem:cancelBarButton];
         [cancelBarButton release];
+    
+    self.loginLabel.textColor = kMainColor;
+    self.passwordLabel.textColor = kMainColor;
 
-    self.signinButton.tintColor = kLightGreenColor;
+    self.signinButton.tintColor = kSecondaryColor;
     self.signinButton.buttonCornerRadius = 10.0;
     [self.signinButton setGradientType:kUIGlossyButtonGradientTypeLinearGlossyStandard];
 }

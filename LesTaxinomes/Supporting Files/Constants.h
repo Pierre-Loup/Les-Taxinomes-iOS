@@ -61,10 +61,15 @@
 
 //Color
 //#5F8237
-
-#define kStandardGreenColor [UIColor colorWithRed:(95.0/255.0) green:(130.0/255.0) blue:(55.0/255.0) alpha:1.0]
-#define kLightGreenColor [UIColor colorWithRed:(132.0/255.0) green:(211.0/255.0) blue:(58.0/255.0) alpha:1.0] 
-
+#ifdef GEODIV
+#define kPinColor MKPinAnnotationColorRed
+#define kMainColor [UIColor colorWithRed:(29.0/255.0) green:(176.0/255.0) blue:(252.0/255.0) alpha:1.0]
+#define kSecondaryColor [UIColor colorWithRed:(0.0/255.0) green:(0.0/255.0) blue:(0.0/255.0) alpha:1.0]
+#else
+#define kPinColor MKPinAnnotationColorGreen
+#define kMainColor [UIColor colorWithRed:(95.0/255.0) green:(130.0/255.0) blue:(55.0/255.0) alpha:1.0]
+#define kSecondaryColor [UIColor colorWithRed:(132.0/255.0) green:(211.0/255.0) blue:(58.0/255.0) alpha:1.0]
+#endif
 // Sizes
 #define THUMBNAIL_MAX_HEIGHT 100.0
 #define THUMBNAIL_MAX_WIDHT 100.0
@@ -78,8 +83,8 @@
 #define kMediaCacheTime 3600.0
 
 #ifdef DEV
-#define kHost @"taxinomes.arscenic.org/"
-#define kXMLRCPWebServiceURL @"http://taxinomes.arscenic.org//spip.php?action=xmlrpc_serveur"
+#define kHost @"taxinomes.arscenic.org"
+#define kXMLRCPWebServiceURL @"http://taxinomes.arscenic.org/spip.php?action=xmlrpc_serveur"
 #define kHTTPHost @"http://taxinomes.arscenic.org/"
 #define kForgottenPasswordURL @"http://taxinomes.arscenic.org/spip.php?page=spip_pass"
 #define kSignupURL @"http://taxinomes.arscenic.org/spip.php?page=inscription"
@@ -91,12 +96,19 @@
     #define kForgottenPasswordURL @"http://www.lestaxinomes.org/spip.php?page=spip_pass"
     #define kSignupURL @"http://www.lestaxinomes.org/spip.php?page=inscription"
 #endif
+#ifdef GEODIV
+#define kHost @"http://www.geodiversite.net/"
+#define kXMLRCPWebServiceURL @"http://www.geodiversite.net/spip.php?action=xmlrpc_serveur"
+#define kHTTPHost @"http://www.geodiversite.net/"
+#define kForgottenPasswordURL @"http://www.geodiversite.net/spip.php?page=spip_pass"
+#define kSignupURL @"http://www.geodiversite.net/spip.php?page=inscription"
+#endif
 #ifdef TESTS
-    #define kHost @"taxinomes.arscenic.org/"
-    #define kXMLRCPWebServiceURL @"http://taxinomes.arscenic.org//spip.php?action=xmlrpc_serveur"
-    #define kHTTPHost @"http://taxinomes.arscenic.org/"
-    #define kForgottenPasswordURL @"http://taxinomes.arscenic.org/spip.php?page=spip_pass"
-    #define kSignupURL @"http://taxinomes.arscenic.org/spip.php?page=inscription"
+#define kHost @"taxinomes.arscenic.org/"
+#define kXMLRCPWebServiceURL @"http://taxinomes.arscenic.org//spip.php?action=xmlrpc_serveur"
+#define kHTTPHost @"http://taxinomes.arscenic.org/"
+#define kForgottenPasswordURL @"http://taxinomes.arscenic.org/spip.php?page=spip_pass"
+#define kSignupURL @"http://taxinomes.arscenic.org/spip.php?page=inscription"
 #endif
 
 

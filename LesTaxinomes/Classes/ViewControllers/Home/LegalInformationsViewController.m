@@ -25,6 +25,10 @@
 
 #import "LegalInformationsViewController.h"
 
+@interface LegalInformationsViewController ()
+@property (nonatomic, retain) IBOutlet UITextView* cguTextView;
+@end
+
 @implementation LegalInformationsViewController
 
 #pragma mark - View lifecycle
@@ -33,6 +37,7 @@
 {
     [super viewDidLoad];
     self.navigationItem.title = _T(@"legal_informations.title");
+    self.cguTextView.text = NSLocalizedStringFromTable(@"cgu.text", @"CGU", @"");
 }
 
 @end

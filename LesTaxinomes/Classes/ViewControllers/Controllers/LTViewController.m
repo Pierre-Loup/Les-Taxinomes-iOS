@@ -107,9 +107,10 @@
         _bgView.light = YES;
         [self.view addSubview:_bgView];
         [self.view sendSubviewToBack:_bgView];
+        _bgView.frame = bgFrame;
     }
     
-    [self.navigationController.navigationBar setTintColor:kStandardGreenColor];
+    [self.navigationController.navigationBar setTintColor:kMainColor];
 }
 
 - (void)viewDidUnload

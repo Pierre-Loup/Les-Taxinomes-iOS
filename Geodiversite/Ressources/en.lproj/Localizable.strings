@@ -1,0 +1,68 @@
+/* 
+  Localization.string.strings
+  Taxinomes
+
+  Created by Pierre-Loup Tristant on 30/04/12.
+  Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
+*/
+
+"common.cancel" = "Cancel";
+"common.ok" = "OK";
+"common.back" = "Back";
+"common.loading" = "Loading";
+"common.logout" = "Logout";
+"common.signin" = "Sign In";
+"common.finish" = "Finish";
+"common.share" = "Share";
+"common.title" = "Title";
+"common.texte" = "Text";
+"common.city" = "City";
+"common.zipcode" = "Zipcode";
+"common.country" = "Country";
+"common.media" = "Media";
+"common.author" = "Author";
+"common.description" = "Description";
+"common.map" = "Map";
+"common.anonymous" = "Anonymous";
+"common.by" = "By";
+"common.license" = "License";
+
+/* HOME */
+"home.welcom_text" = "Welcome to Geodiversite.NET !\n\nYou like rocks?\n\nHere, you will be able to share knowledge about geology of your country !\n\n With the site and the iPhone application \"Geodiversite.NET\", you are making one's contribution.";
+
+/* LEGAL INFORMATIONS*/
+"legal_informations.title" = "Legal notes";
+
+/* MEDIA DETAIL VC*/
+"media_detail.no_text" = "No description";
+"media_detail.publish_info_patern" = "Shared by %@ the %@\n%d looks";
+
+/* ACCOUNT */
+"account_uploas_media" = "Share a média";
+"account_my_medias" = "My medias";
+
+/* MEDIA UPLOAD FORM */
+"media_upload_view_title" = "Share";
+"media_upload_no_title" = "No title";
+"media_upload_no_license_text" = "No license";
+"media_upload.location_picker_cell.text" = "Localize a media";
+"media_upload.text_prefix" = "Media shared with Geodiversite.NET iPhone app";
+"media_upload.confirm.title" = "Sharing succeeded";
+"media_upload.confirm.text" = "The media has been shared with succes.";
+
+/* MEDIA LOCATION PICKER */
+"media_location_picker.drag_me" = "Drag me !";
+
+/* PHOTO ACTION SHEET */
+"photo_action_sheet.camera" = "Camera";
+"photo_action_sheet.photo_library" = "Photo library";
+
+/* ERROR */
+"error.network.title" = "Network problem";
+"error.network.text" = "Checkout your wifi or your mobile internet connection";
+"error.auth_failed.title" = "Authentication failed";
+"error.auth_failed.text" = "Checkout your login and your password";
+"error.upload_failed.title" = "Sharing failed";
+"error.upload_failed.text" = "Media sharing failed. Please retry later";
+"error.internal.title" = "Internal error";
+"error.internal.text" = "An internal error has occured. If the problem persists, please send use an email at contact@maison-des-mineraux.org";

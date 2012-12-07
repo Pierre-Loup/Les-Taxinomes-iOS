@@ -37,6 +37,8 @@
     UIView* view = [views objectAtIndex:0];
     if ([view isKindOfClass:[self class]]) {
         self = (MediaListCell *)[view retain];
+        self.title.textColor = kMainColor;
+        self.author.textColor = kSecondaryColor;
         return self;
     } else {
         return nil;
@@ -64,7 +66,7 @@
     self.author.text = media.author.name;
     
     [self.image setImageWithURL:[NSURL URLWithString:media.mediaThumbnailUrl]
-               placeholderImage:[UIImage imageNamed:@"thumbnail_placeholder"]];
+               placeholderImage:[UIImage imageNamed:@"Icon"]];
 }
 
 @end

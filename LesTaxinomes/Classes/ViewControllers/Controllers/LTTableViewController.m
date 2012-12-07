@@ -37,9 +37,11 @@
         bgView_ = [[LTiPhoneBackgroundView alloc] initWithFrame:bgFrame];
         bgView_.light = YES;
         [self.tableView setBackgroundView:bgView_];
+        bgView_.frame = bgFrame;
+        
     }
     
-    [self.navigationController.navigationBar setTintColor:kStandardGreenColor];
+    [self.navigationController.navigationBar setTintColor:kMainColor];
 }
 
 - (void)viewDidUnload {

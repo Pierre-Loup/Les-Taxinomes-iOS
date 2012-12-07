@@ -141,7 +141,7 @@
     [[NSBundle mainBundle] loadNibNamed:@"MediaUploadFormCells" owner:self options:nil];
     self.navigationItem.title = _T(@"media_upload_view_title");
     
-    self.shareButton.tintColor = kLightGreenColor;
+    self.shareButton.tintColor = kSecondaryColor;
     self.shareButton.buttonCornerRadius = 10.0;
     [self.shareButton setGradientType:kUIGlossyButtonGradientTypeLinearGlossyStandard];
     
