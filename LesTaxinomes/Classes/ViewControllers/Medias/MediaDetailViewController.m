@@ -31,7 +31,6 @@
 //VC
 #import "MapViewController.h"
 #import "MediaDetailViewController.h"
-#import "MediaFullSizeViewContoller.h"
 
 @interface MediaDetailViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>{
     int asynchLoadCounter_;
@@ -54,7 +53,6 @@
 @end
 
 @implementation MediaDetailViewController
-@synthesize media = media_;
 @synthesize downloadImageView = _downloadImageView;
 
 #pragma mark - Overrides
@@ -68,7 +66,7 @@
 }
 
 - (void) dealloc {
-    [media_ release];
+    [_media release];
     [_scrollView release];
     [_mediaImageView release];
     [_placeholderAIView release];
@@ -85,7 +83,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = media_.title;
+    self.title = self.media.title;
     
     UIBarButtonItem* backButtonItem = [[[UIBarButtonItem alloc] initWithTitle:_T(@"common.back")
                                                                         style:UIBarButtonItemStyleBordered
@@ -97,27 +95,7 @@
     self.scrollView.opaque = NO;
     self.scrollView.delegate = self;
     
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                           action:@selector(mediaImageTouched:)];
-    [tapGestureRecognizer autorelease];
-    [tapGestureRecognizer setNumberOfTouchesRequired:1];
-    [tapGestureRecognizer setDelegate:self];
-    
-    //Don't forget to set the userInteractionEnabled UIView property to YES, default is NO.
-    self.mediaImageView.userInteractionEnabled = YES;
-    [self.mediaImageView addGestureRecognizer:tapGestureRecognizer];
-    
-    self.authorTitleView.title = _T(@"common.author");
-    
-    [self.authorAvatarView setImageWithURL:[NSURL URLWithString:media_.author.avatarURL]
-                          placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
-    
-    
-    self.descTitleView.title = _T(@"common.description");
-    self.licenseTitleView.title = _T(@"common.license");
-    self.mapTitleView.title = _T(@"common.map");
-    
-    tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+    UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                    action:@selector(mapTouched:)];
     [tapGestureRecognizer autorelease];
     [tapGestureRecognizer setNumberOfTouchesRequired:1];
@@ -144,9 +122,9 @@
 #pragma mark - Properties
 
 - (void)setMedia:(Media *)media {
-    if(media != media_) {
-        [media_ release];
-        media_ = [media retain];
+    if(media != _media) {
+        [_media release];
+        _media = [media retain];
         [self.scrollView scrollsToTop];
         [self configureView];
     }
@@ -164,34 +142,53 @@
 
 - (void)configureView
 {
-    [self showHudForLoading];
-    LTDataManager *dm = [LTDataManager sharedDataManager];
-    [dm getMediaWithId:self.media.identifier
-         responseBlock:^(Media* media, NSError *error) {
-             
-             if ([error shouldBeDisplayed]) {
-                 [UIAlertView showWithError:error];
-                 [self.hud hide:NO];
-             }
-             
-             asynchLoadCounter_--;
-             [self loadMediaView];
-             [self displayContentIfNeeded];
-         }];
-    asynchLoadCounter_++;
-    [dm getAuthorWithId:self.media.author.identifier
-          responseBlock:^(Author *author, NSError *error) {
-              
-              if ([error shouldBeDisplayed]) {
-                  [UIAlertView showWithError:error];
-                  [self.hud hide:NO];
-              }
-              
-              asynchLoadCounter_--;
-              [self displayContentIfNeeded];
-          }];
-    asynchLoadCounter_++;
+    [self showDefaultHud];
+    LTConnectionManager *cm = [LTConnectionManager sharedConnectionManager];
     
+    // Load media datas if not present or not up to date
+    if( self.media == nil
+       ||  self.media.mediaMediumURL == nil
+       || [[NSDate date] timeIntervalSinceDate: self.media.localUpdateDate] > kMediaCacheTime) {
+        [cm getMediaWithId:self.media.identifier
+             responseBlock:^(Media* media, NSError *error) {
+                 if ([error shouldBeDisplayed]) {
+                     [UIAlertView showWithError:error];
+                     [self.hud hide:NO];
+                 } else {
+                     self.media = media;
+                 }
+                 
+                 asynchLoadCounter_--;
+                 [self updateMediaInformation];
+                 [self displayContentIfNeeded];
+             }];
+        asynchLoadCounter_++;
+    } else {
+        [self updateMediaInformation];
+    }
+    
+    // Load media datas if not present or not up to date
+    if( self.media.author == nil
+       ||  self.media.author.avatarURL == nil
+       || [[NSDate date] timeIntervalSinceDate: self.media.author.localUpdateDate] > kMediaCacheTime) {
+        [cm getAuthorWithId:self.media.author.identifier
+              responseBlock:^(Author *author, NSError *error) {
+                  
+                  if ([error shouldBeDisplayed]) {
+                      [UIAlertView showWithError:error];
+                      [self.hud hide:NO];
+                  }
+                  
+                  asynchLoadCounter_--;
+                  [self updateAuthorInformations];
+                  [self displayContentIfNeeded];
+              }];
+        asynchLoadCounter_++;
+    } else {
+        [self updateAuthorInformations];
+    }
+    
+    [self displayContentIfNeeded];
 }
 
 - (void)refreshView {
@@ -214,7 +211,7 @@
                                             self.authorTitleView.frame.size.height);
     currentContentHeight += self.authorTitleView.frame.size.height + commonMargin;
     
-    [self.authorAvatarView setImageWithURL:[NSURL URLWithString:media_.author.avatarURL]
+    [self.authorAvatarView setImageWithURL:[NSURL URLWithString:self.media.author.avatarURL]
                           placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
     self.authorAvatarView.frame = CGRectMake(self.authorAvatarView.frame.origin.x,
                                              currentContentHeight,
@@ -227,7 +224,7 @@
     NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
     [dateFormatter setDateFormat:@"dd/MM/yyyy"];
     self.authorNameLabel.text = [NSString stringWithFormat:_T(@"media_detail.publish_info_patern"),
-                                 media_.author.name,
+                                 self.media.author.name,
                                  [dateFormatter stringFromDate:self.media.date],
                                  [self.media.visits integerValue]];
     currentContentHeight += self.authorAvatarView.frame.size.height + commonMargin;
@@ -272,8 +269,8 @@
     }
     
     // Map section if media as coordinates
-    if (media_.coordinate.latitude
-        && media_.coordinate.longitude) {
+    if (self.media.coordinate.latitude
+        && self.media.coordinate.longitude) {
         
         self.mapTitleView.frame = CGRectMake(self.mapTitleView.frame.origin.x,
                                              currentContentHeight,
@@ -288,8 +285,8 @@
         if ([[self.mapView annotations] count]) {
             [self.mapView removeAnnotations:[self.mapView annotations]];
         }
-        [self.mapView addAnnotation:media_];
-        self.mapView.region = MKCoordinateRegionMake(media_.coordinate, MKCoordinateSpanMake(20.0, 20.0));
+        [self.mapView addAnnotation:self.media];
+        self.mapView.region = MKCoordinateRegionMake(self.media.coordinate, MKCoordinateSpanMake(20.0, 20.0));
         self.mapTitleView.hidden = NO;
         self.mapView.hidden = NO;
         
@@ -302,7 +299,7 @@
     
     [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, currentContentHeight)];
     if (asynchLoadCounter_ > 0) {
-        [self showHudForLoading];
+        [self showDefaultHud];
     } else {
         self.scrollView.hidden = NO;
     }
@@ -319,15 +316,15 @@
 }
 
 - (void)mediaImageTouched:(UIImage *)sender
-{
-    
-    if (media_.mediaLargeURL.length) {
+{    
+    if (self.media.mediaLargeURL.length) {
         [self displayLargeMediaPhotoViewer];
     } else {
-        [self showHudForLoading];
-        [[LTConnectionManager sharedConnectionManager] getMediaLargeURLWithId:media_.identifier responseBlock:^(Media *media, NSError *error) {
+        [self showDefaultHud];
+        [[LTConnectionManager sharedConnectionManager] getMediaLargeURLWithId:self.media.identifier responseBlock:^(Media *media, NSError *error) {
             
             if (!error) {
+                self.media = media;
                 [self displayLargeMediaPhotoViewer];
             } else {
                 [self showErrorHudWithText:nil];
@@ -335,18 +332,18 @@
             
         }];
     }
-    
-    
 }
 
 - (void)displayLargeMediaPhotoViewer
 {
-    if (media_.mediaLargeURL.length) {
-        NSURL* imageURL = [NSURL URLWithString:media_.mediaLargeURL];
+    if (self.media.mediaLargeURL.length) {
+        NSURL* imageURL = [NSURL URLWithString:self.media.mediaLargeURL];
         EGOPhotoViewController* photoController = [[EGOPhotoViewController alloc] initWithImageURL:imageURL];
         [self.navigationController pushViewController:photoController animated:YES];
         [photoController release];
         [self.hud hide:YES];
+    } else {
+        [self showErrorHudWithText:nil];
     }
 }
 
@@ -359,10 +356,22 @@
     }
 }
 
-- (void)loadMediaView {
+- (void)updateMediaInformation
+{
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                           action:@selector(mediaImageTouched:)];
+    [tapGestureRecognizer autorelease];
+    [tapGestureRecognizer setNumberOfTouchesRequired:1];
+    [tapGestureRecognizer setDelegate:self];
     
+    //Don't forget to set the userInteractionEnabled UIView property to YES, default is NO.
+    self.mediaImageView.userInteractionEnabled = YES;
+    [self.mediaImageView addGestureRecognizer:tapGestureRecognizer];
+    self.descTitleView.title = _T(@"common.description");
+    self.licenseTitleView.title = _T(@"common.license");
+    self.mapTitleView.title = _T(@"common.map");
     [self.placeholderAIView startAnimating];
-    [self.mediaImageView setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:media_.mediaMediumURL]]
+    [self.mediaImageView setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.media.mediaMediumURL]]
                                placeholderImage:[UIImage imageNamed:@"egopv_photo_placeholder"]
                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                                             [self.hud hide:YES];
@@ -370,12 +379,19 @@
                                             [self refreshView];
                                         }
                                         failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                            [self.hud hide:YES];
+                                            [self showErrorHudWithText:nil];
                                         }];
 }
 
+- (void)updateAuthorInformations
+{
+    self.authorTitleView.title = _T(@"common.author");
+    [self.authorAvatarView setImageWithURL:[NSURL URLWithString:self.media.author.avatarURL]
+                          placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
+}
+
 - (void)mapTouched:(MKMapView *)sender {
-    MapViewController* mapVC = [[MapViewController alloc] initWithAnnotation:media_];
+    MapViewController* mapVC = [[MapViewController alloc] initWithAnnotation:self.media];
     [self.navigationController pushViewController:mapVC animated:YES];
     mapVC.title = _T(@"common.map");
     [mapVC release];

@@ -25,7 +25,6 @@
 
 #import "License.h"
 #import "Media.h"
-#import "LTDataManager.h"
 
 @implementation License
 

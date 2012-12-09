@@ -70,9 +70,9 @@ static UIViewController *_presentVC;
 
 + (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    NSURL* asserURL = [info objectForKey:UIImagePickerControllerReferenceURL];
-    if (asserURL) {
-        _photoAssetPickedBlock(asserURL, nil);
+    NSURL* assertURL = [info objectForKey:UIImagePickerControllerReferenceURL];
+    if (assertURL) {
+        _photoAssetPickedBlock(assertURL, nil);
     } else {
         
         UIImage *editedImage = (UIImage*) [info valueForKey:UIImagePickerControllerEditedImage];
@@ -87,8 +87,8 @@ static UIViewController *_presentVC;
         
         [assetsLibrary writeImageToSavedPhotosAlbum:editedImage.CGImage
                                            metadata:metadata
-                                    completionBlock:^(NSURL *assetURL, NSError *error) {
-                                        _photoAssetPickedBlock(asserURL, error);
+                                    completionBlock:^(NSURL *recAssertURL, NSError *error) {
+                                        _photoAssetPickedBlock(recAssertURL, error);
                                     }];
     }
     [picker dismissModalViewControllerAnimated:YES];

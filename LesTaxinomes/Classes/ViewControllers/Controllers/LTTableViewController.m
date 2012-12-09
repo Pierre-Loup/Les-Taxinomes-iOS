@@ -9,15 +9,15 @@
 #import "LTTableViewController.h"
 #import "LTiPhoneBackgroundView.h"
 
-@interface LTTableViewController () {
-    LTiPhoneBackgroundView* bgView_;
-}
+@interface LTTableViewController ()
+@property (nonatomic, retain) LTiPhoneBackgroundView* bgView;
 @end
 
 @implementation LTTableViewController
 @synthesize hud = _hud;
 
-#pragma mark - View lifecycle
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Superclass Overrides
 
 - (void)dealloc {
     [_hud release];
@@ -34,11 +34,13 @@
         CGRect bgFrame = CGRectMake(0, -self.navigationController.navigationBar.frame.size.height,
                                     winFrame.size.width,
                                     winFrame.size.height);
-        bgView_ = [[LTiPhoneBackgroundView alloc] initWithFrame:bgFrame];
-        bgView_.light = YES;
-        [self.tableView setBackgroundView:bgView_];
-        bgView_.frame = bgFrame;
-        
+        self.bgView = [[[LTiPhoneBackgroundView alloc] initWithFrame:bgFrame] autorelease];
+        self.bgView.light = YES;
+        self.bgView.frame = bgFrame;
+        UIView* tableViewBackgroundView = [[UIView alloc] initWithFrame:self.tableView.frame];
+        [tableViewBackgroundView addSubview:self.bgView];
+        self.tableView.backgroundView = tableViewBackgroundView;
+        [tableViewBackgroundView release];
     }
     
     [self.navigationController.navigationBar setTintColor:kMainColor];
@@ -51,13 +53,9 @@
     _hud = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-#pragma mark - Properties
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Public methods
+#pragma mark Properties
 
 - (MBProgressHUD *)hud {
     if (!_hud) {
@@ -69,7 +67,7 @@
 
 #pragma mark - Public methods
 
-- (void)showHudForLoading {
+- (void)showDefaultHud {
     [self.view addSubview:self.hud];
     self.hud.mode = MBProgressHUDModeIndeterminate;
     [self.hud show:YES];
@@ -111,9 +109,13 @@
 	[self.hud hide:YES afterDelay:3];
 }
 
-- (void)updateProgress:(float)newProgress {
-    LogDebug(@"%f",newProgress);
-    self.hud.progress = newProgress;
+#pragma mark - MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+	[self.hud removeFromSuperview];
+    [_hud release];
+    _hud = nil;
 }
 
 @end

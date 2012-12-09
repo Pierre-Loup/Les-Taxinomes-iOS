@@ -25,7 +25,6 @@
 
 #import "Author.h"
 #import "Media.h"
-#import "LTDataManager.h"
 
 @implementation Author
 

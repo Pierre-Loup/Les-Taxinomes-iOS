@@ -29,6 +29,7 @@
 #import "MediasListViewController.h"
 
 #import "Author.h"
+#import "LTConnectionManager.h"
 #import "MediaDetailViewController.h"
 #import "MediaListCell.h"
 #import "Reachability.h"
@@ -86,7 +87,8 @@
     [super dealloc];
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     self.reloadBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonAction:)];
@@ -95,9 +97,23 @@
     self.mediaDetailViewController = (MediaDetailViewController *)[[[self.splitViewController.viewControllers lastObject] topViewController] retain];
 }
 
-- (void)viewDidUnload {
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.mediasListResultController.delegate = nil;
+    self.mediasListResultController = nil;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.mediasListResultController.delegate = nil;
+    self.mediasListResultController = nil;
+}
+
+- (void)viewDidUnload
+{
     [super viewDidUnload];
-    self.mediaDetailViewController = nil;
     self.reloadBarButton = nil;
 }
 
@@ -105,6 +121,7 @@
 {
     [super didReceiveMemoryWarning];
     [NSFetchedResultsController deleteCacheWithName:self.mediasListResultController.cacheName];
+    self.mediasListResultController = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -118,18 +135,15 @@
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-#pragma mark - Public Methods
-
-
-
-////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private Methods
 
-- (void)commonInit {
+- (void)commonInit
+{
     self.mediaLoadingStatus = SUCCEED;
 }
 
-- (void)loadSynchMedias {
+- (void)loadSynchMedias
+{
     NSRange mediasRange;
     mediasRange.location = [[self.mediasListResultController fetchedObjects] count];
     mediasRange.length = kNbMediasStep;
@@ -141,6 +155,7 @@
                                            if (medias) {
                                                if ([medias count] == 0) {
                                                    self.mediaLoadingStatus = NOMORETOLOAD;
+                                                   [self.tableView reloadData];
                                                } else {
                                                    self.mediaLoadingStatus = SUCCEED;
                                                }
@@ -148,6 +163,8 @@
                                            } else if ([error shouldBeDisplayed]) {
                                                [UIAlertView showWithError:error];
                                                [self.hud hide:NO];
+                                               self.mediaLoadingStatus = FAILED;
+                                               [self.tableView reloadData];
                                            }
                                            if (!self.reloadBarButton.enabled) {
                                                self.reloadBarButton.enabled = YES;
@@ -156,16 +173,17 @@
                                        }];
 }
 
-- (void)refreshButtonAction:(id)sender {
-    
+- (void)refreshButtonAction:(id)sender
+{    
     self.reloadBarButton.enabled = NO;
     self.mediaLoadingStatus = PENDING;
-    [self showHudForLoading];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    self.mediasListResultController.delegate = nil;
+    self.mediasListResultController = nil;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         [Media deleteAllMedias];
         dispatch_async(dispatch_get_main_queue(), ^{
+            self.mediaLoadingStatus = SUCCEED;
             [self.tableView reloadData];
-            [self loadSynchMedias];
         });
     });
 }
@@ -174,8 +192,19 @@
 
 - (NSFetchedResultsController*)mediasListResultController
 {
+    if (self.view.window == nil ||
+        self.reloadBarButton.enabled == NO) {
+        return nil;
+    }
+    
     if (!_mediasListResultController) {
-        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"status = %@",@"publie"];
+        NSPredicate* predicate = nil;
+        if (self.currentUser) {
+            predicate = [NSPredicate predicateWithFormat:@"status == %@ && author == %@",@"publie",self.currentUser];
+        } else {
+            predicate = [NSPredicate predicateWithFormat:@"status == %@",@"publie"];
+        }
+        
         _mediasListResultController = [[Media fetchAllSortedBy:@"date"
                                                      ascending:NO
                                                  withPredicate:predicate
@@ -210,7 +239,8 @@
     
 }
 
-- (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     NSInteger nbMedias = [[self.mediasListResultController fetchedObjects] count];
     if([indexPath row] == nbMedias) {
         SpinnerCell* spinnerCell = [self.tableView dequeueReusableCellWithIdentifier:kSpinnerCellIdentifier];
@@ -241,7 +271,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UITableViewDelegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     Media *media = [self.mediasListResultController objectAtIndexPath:indexPath];
     if (self.mediaDetailViewController) {
         [self.mediaDetailViewController.navigationController popToRootViewControllerAnimated:YES];
@@ -261,21 +292,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UITableViewDelegate
 
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-    if (!self.reloadBarButton.enabled) {
-        return;
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    if (controller == self.mediasListResultController) {
+        [self.tableView beginUpdates];
     }
-    [self.tableView beginUpdates];
 }
 
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
-           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
-    
-    if (!self.reloadBarButton.enabled) {
-        return;
-    }
-    
+           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+{
+    if (controller == self.mediasListResultController) {
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
@@ -287,17 +315,16 @@
                           withRowAnimation:kCommonRowAnnimation];
             break;
     }
+    }
 }
 
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-      newIndexPath:(NSIndexPath *)newIndexPath {
-    
-    if (!self.reloadBarButton.enabled) {
-        return;
-    }
-    
+      newIndexPath:(NSIndexPath *)newIndexPath
+{
+
+    if (controller == self.mediasListResultController) {
     UITableView *tableView = self.tableView;
     Media* media = [self.mediasListResultController objectAtIndexPath:indexPath];
     UITableViewCell* cell;
@@ -331,14 +358,15 @@
                              withRowAnimation:kCommonRowAnnimation];
             break;
     }
+    }
 }
 
 
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    if (!self.reloadBarButton.enabled) {
-        return;
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    if (controller == self.mediasListResultController) {
+        [self.tableView endUpdates];
     }
-    [self.tableView endUpdates];
 }
 
 @end

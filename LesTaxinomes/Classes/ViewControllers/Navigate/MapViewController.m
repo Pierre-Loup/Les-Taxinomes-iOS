@@ -12,89 +12,97 @@
 #define kPinAnnotationIdentifier @"pin"
 
 @interface MapViewController ()
-- (void)loadMoreCloseMedias;
+@property (nonatomic, retain) CLLocationManager* locationManager;
+@property (nonatomic, assign) NSInteger searchStartIndex;
+@property (nonatomic, retain) UIBarButtonItem* reloadBarButton;
+@property (nonatomic, retain) UIBarButtonItem* scanBarButton;
 @end
 
 @implementation MapViewController
-@synthesize referenceAnnotation = referenceAnnotation_;
-@synthesize mapView = mapView_;
 
-# pragma mark - View Lifecycle
+////////////////////////////////////////////////////////////////////////////////
+# pragma mark - Superclass overrides
 
 - (id)initWithAnnotation:(id<MKAnnotation>)annotation {
     self = [super initWithNibName:NSStringFromClass([self class]) bundle:nil];
     if (self) {
-        referenceAnnotation_ = [annotation retain];
+        _referenceAnnotation = [annotation retain];
     }
     return self;
 }
 
 - (void)dealloc {
-    [referenceAnnotation_ release];
-    [mapView_ release];
-    [locationManager_ release];
-    [reloadBarButton_ release];
-    [scanBarButton_ release];
+    [_referenceAnnotation release];
+    [_mapView release];
+    [_locationManager release];
+    [_reloadBarButton release];
+    [_scanBarButton release];
     [super dealloc];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    scanBarButton_ = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(scanButtonAction:)];
-    [self.navigationItem setRightBarButtonItem:scanBarButton_];
+    self.scanBarButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(scanButtonAction:)] autorelease];
+    [self.navigationItem setRightBarButtonItem:self.scanBarButton];
     
     
-    searchStartIndex_ = 0;
-    mapView_.delegate = self;
+    self.searchStartIndex = 0;
+    self.mapView.delegate = self;
     
     // Display the reference location of the map if already set
-    if (referenceAnnotation_) {
-        [mapView_ addAnnotation:referenceAnnotation_];
-        [mapView_ setRegion:MKCoordinateRegionMake(referenceAnnotation_.coordinate, MKCoordinateSpanMake(1, 1)) animated:YES];
+    if (self.referenceAnnotation) {
+        [self.mapView addAnnotation:self.referenceAnnotation];
+        [self.mapView setRegion:MKCoordinateRegionMake(self.referenceAnnotation.coordinate, MKCoordinateSpanMake(1, 1)) animated:YES];
     } else {
-        mapView_.showsUserLocation = YES;
-        [self showHudForLoading];
-    }
-    
-    // Start monitoring the user location changes
-    if (!locationManager_
-        && [CLLocationManager locationServicesEnabled]) {
-        locationManager_ = [[CLLocationManager alloc] init];
-        [locationManager_ setDelegate:self];
+        self.mapView.showsUserLocation = YES;
+        [self showDefaultHud];
     }
 }
 
 - (void)viewDidUnload
 {
-    [reloadBarButton_ release];
-    reloadBarButton_ = nil;
-    [scanBarButton_ release];
-    scanBarButton_ = nil;
+    self.reloadBarButton = nil;
+    self.scanBarButton = nil;
     self.mapView = nil;
     [super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if ([referenceAnnotation_ isKindOfClass:[MKUserLocation class]]
-        || !referenceAnnotation_) {
-        mapView_.showsUserLocation = YES;
+    if ([self.referenceAnnotation isKindOfClass:[MKUserLocation class]]
+        || !self.referenceAnnotation) {
+        self.mapView.showsUserLocation = YES;
     }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    mapView_.showsUserLocation = NO;
+    self.mapView.showsUserLocation = NO;
+    self.locationManager = nil;
+}
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Private methods
+#pragma mark Properties
+
+- (CLLocationManager*)locationManager
+{
+    if (!_locationManager) {
+        _locationManager = [[CLLocationManager alloc] init];
+        [_locationManager setDelegate:self];
+        // Start monitoring the user location changes
+        [_locationManager startMonitoringSignificantLocationChanges];
+    }
+    return _locationManager;
 }
 
-#pragma mark - Actions
+#pragma mark Actions
 
 - (IBAction)refreshButtonAction:(id)sender {
-    searchStartIndex_ = 0;
-    [mapView_ removeAnnotations:mapView_.annotations];
-    [mapView_ addAnnotation:referenceAnnotation_];
-    [mapView_ setRegion:MKCoordinateRegionMake(referenceAnnotation_.coordinate, MKCoordinateSpanMake(1, 1)) animated:YES];
+    self.searchStartIndex = 0;
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    [self.mapView addAnnotation:self.referenceAnnotation];
+    [self.mapView setRegion:MKCoordinateRegionMake(self.referenceAnnotation.coordinate, MKCoordinateSpanMake(1, 1)) animated:YES];
     [self loadMoreCloseMedias];
 }
 
@@ -103,13 +111,13 @@
 }
 
 - (void)loadMoreCloseMedias {
-    if (referenceAnnotation_) {
-        reloadBarButton_.enabled = NO;
-        scanBarButton_.enabled = NO;
-        [self showHudForLoading];
+    if (self.referenceAnnotation) {
+        self.reloadBarButton.enabled = NO;
+        self.scanBarButton.enabled = NO;
+        [self showDefaultHud];
         
         NSRange range;
-        range.location = searchStartIndex_;
+        range.location = self.searchStartIndex;
         range.length = kNbMediasStep;
         
         CLLocation* searchLocation = [[[CLLocation alloc] initWithLatitude:self.referenceAnnotation.coordinate.latitude
@@ -119,22 +127,42 @@
                                                                         nearLocation:searchLocation
                                                                            withRange:range
         responseBlock:^(NSArray *medias, NSError *error) {
-            searchStartIndex_ += medias.count;
+            self.searchStartIndex += medias.count;
             if (medias &&
                 [medias count] &&
                 !error) {
                 
-                [mapView_ addAnnotations:medias];
+                BOOL shouldLoadMoreMedias = YES;
+                for (Media* newMedia in medias) {
+                    __block Media* blockNewMedia = newMedia;
+                    NSInteger mediaFoundIndex = [self.mapView.annotations indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                        if ([obj isKindOfClass:[Media class]]) {
+                            Media* displayedMedia = (Media *)obj;
+                            if ([blockNewMedia.identifier intValue] == [displayedMedia.identifier intValue]) {
+                                *stop = YES;
+                                return YES;
+                            }
+                        }
+                        return NO;
+                    }];
+                    if (mediaFoundIndex == NSNotFound) {
+                        shouldLoadMoreMedias = NO;
+                    } else {
+                        LogDebug(@"Media already displayed");
+                    }
+                }
+                
+                [self.mapView addAnnotations:medias];
                 [self.hud hide:YES];
-                reloadBarButton_.enabled = YES;
-                scanBarButton_.enabled = YES;
+                self.reloadBarButton.enabled = YES;
+                self.scanBarButton.enabled = YES;
                 Media* lastMedia = (Media *)[medias lastObject];
-                CGFloat latDif = fabs(fabs(referenceAnnotation_.coordinate.latitude) - fabs(lastMedia.coordinate.latitude));
-                CGFloat lonDif = fabs(fabs(referenceAnnotation_.coordinate.longitude) - fabs(lastMedia.coordinate.longitude));
+                CGFloat latDif = fabs(fabs(self.referenceAnnotation.coordinate.latitude) - fabs(lastMedia.coordinate.latitude));
+                CGFloat lonDif = fabs(fabs(self.referenceAnnotation.coordinate.longitude) - fabs(lastMedia.coordinate.longitude));
                 CGFloat lonDelta = MIN(2*MAX(latDif, lonDif), 360.0);
                 CGFloat latDelta = MIN(2*MAX(latDif, lonDif), 180.0);
                 // Display the closest region with all the medias displayed
-                [mapView_ setRegion:MKCoordinateRegionMake(referenceAnnotation_.coordinate, MKCoordinateSpanMake(latDelta, lonDelta)) animated:YES];
+                [self.mapView setRegion:MKCoordinateRegionMake(self.referenceAnnotation.coordinate, MKCoordinateSpanMake(latDelta, lonDelta)) animated:YES];
             } else if ([error shouldBeDisplayed]) {
                 [UIAlertView showWithError:error];
                 [self.hud hide:NO];
@@ -146,23 +174,24 @@
 #pragma mark - MKMapViewDelegate
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
-    if (!referenceAnnotation_
-        && mapView_.showsUserLocation
+    if (!self.referenceAnnotation
+        && self.mapView.showsUserLocation
         && CLLocationCoordinate2DIsValid(userLocation.coordinate)) {
-        referenceAnnotation_ = [mapView_.userLocation retain];
-        [mapView_ setRegion:MKCoordinateRegionMake(referenceAnnotation_.coordinate, MKCoordinateSpanMake(1, 1)) animated:YES];
+        [_referenceAnnotation release];
+        _referenceAnnotation = [self.mapView.userLocation retain];
+        [self.mapView setRegion:MKCoordinateRegionMake(self.referenceAnnotation.coordinate, MKCoordinateSpanMake(1, 1)) animated:YES];
         [self loadMoreCloseMedias];
     }
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id < MKAnnotation >)annotation {
     // Display the default annotation view for the reference annotation and the user location
-    if ([annotation isEqual:referenceAnnotation_]
+    if ([annotation isEqual:self.referenceAnnotation]
         || [annotation isEqual:mapView.userLocation]) {
         return nil;
     }
     
-    MKPinAnnotationView * annotationView = (MKPinAnnotationView *)[mapView_ dequeueReusableAnnotationViewWithIdentifier:kPinAnnotationIdentifier];
+    MKPinAnnotationView * annotationView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:kPinAnnotationIdentifier];
     if (!annotationView) {
         annotationView = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:kPinAnnotationIdentifier] autorelease];
         annotationView.pinColor = MKPinAnnotationColorGreen;
@@ -191,7 +220,7 @@
 #pragma mark CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    searchStartIndex_ = 0;
+    self.searchStartIndex = 0;
 }
 
 #pragma mark - LTConnectionManagerDelegate
@@ -200,7 +229,7 @@
     BOOL shouldLoadMoreMedias = YES;
     for (Media* newMedia in medias) {
         __block Media* blockNewMedia = newMedia;
-        NSInteger mediaFoundIndex = [mapView_.annotations indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        NSInteger mediaFoundIndex = [self.mapView.annotations indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
             if ([obj isKindOfClass:[Media class]]) {
                 Media* displayedMedia = (Media *)obj;
                 if ([blockNewMedia.identifier intValue] == [displayedMedia.identifier intValue]) {
@@ -217,29 +246,29 @@
         }
     }
     
-    searchStartIndex_ += [medias count];
+    self.searchStartIndex += [medias count];
     if (shouldLoadMoreMedias) {
         [self loadMoreCloseMedias];
     } else {
-        [mapView_ addAnnotations:medias];
+        [self.mapView addAnnotations:medias];
         [self.hud hide:YES];
-        reloadBarButton_.enabled = YES;
-        scanBarButton_.enabled = YES;
+        self.reloadBarButton.enabled = YES;
+        self.scanBarButton.enabled = YES;
         
         Media* lastMedia = (Media *)[medias lastObject];
-        CGFloat latDif = fabs(fabs(referenceAnnotation_.coordinate.latitude) - fabs(lastMedia.coordinate.latitude));
-        CGFloat lonDif = fabs(fabs(referenceAnnotation_.coordinate.longitude) - fabs(lastMedia.coordinate.longitude));
+        CGFloat latDif = fabs(fabs(self.referenceAnnotation.coordinate.latitude) - fabs(lastMedia.coordinate.latitude));
+        CGFloat lonDif = fabs(fabs(self.referenceAnnotation.coordinate.longitude) - fabs(lastMedia.coordinate.longitude));
         CGFloat lonDelta = MIN(2*MAX(latDif, lonDif), 360.0);
         CGFloat latDelta = MIN(2*MAX(latDif, lonDif), 180.0);
         // Display the closest region with all the medias displayed
-        [mapView_ setRegion:MKCoordinateRegionMake(referenceAnnotation_.coordinate, MKCoordinateSpanMake(latDelta, lonDelta)) animated:YES];
+        [self.mapView setRegion:MKCoordinateRegionMake(self.referenceAnnotation.coordinate, MKCoordinateSpanMake(latDelta, lonDelta)) animated:YES];
     }
 }
 
 - (void)didFailWithError:(NSError *)error {
     [self.hud hide:YES];
-    reloadBarButton_.enabled = YES;
-    scanBarButton_.enabled = YES;
+    self.reloadBarButton.enabled = YES;
+    self.scanBarButton.enabled = YES;
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:_T(@"alert_network_unreachable_title") message:_T(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:_T(@"common.ok") otherButtonTitles:nil];
     [alert show];
     [alert release];

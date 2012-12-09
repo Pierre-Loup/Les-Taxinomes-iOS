@@ -24,7 +24,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "LTDataManager.h"
+#import "Author.h"
 #import "LTTableViewController.h"
 
 typedef enum {

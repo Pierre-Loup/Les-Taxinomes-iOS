@@ -30,11 +30,10 @@
 @interface LTTableViewController : UITableViewController <MBProgressHUDDelegate>
 @property (nonatomic, readonly) MBProgressHUD* hud;
 
-- (void)showHudForLoading;
+- (void)showDefaultHud;
 - (void)showDeterminateHud;
 - (void)showErrorHudWithText:(NSString *)text;
 - (void)showConfirmHudWithText:(NSString *)text;
 - (void)showHudWithTextOnly:(NSString *)text;
-- (void)updateProgress:(float)newProgress;
 
 @end

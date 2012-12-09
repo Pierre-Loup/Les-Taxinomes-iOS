@@ -12,7 +12,6 @@
 #import "AFXMLRequestOperation.h"
 #import "LTConnectionManager.h"
 
-#define kBodyParamKey @"body"
 #define kFaultCodeKey @"faultCode"
 #define kFaultStringKey @"faultString"
 
@@ -92,11 +91,9 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
     LogDebug(@"WS method: %@", method);
     
     // Create XML-RPC body from array or dict object parameter
-    NSDictionary* parameters = nil;
     XMLRPCRequest* xmlrpcRequest = [[[XMLRPCRequest alloc] initWithURL:self.baseURL] autorelease];
     [xmlrpcRequest setMethod:method withParameter:object?object:@{}];
     if (method != LTXMLRCPMethodGeoDivCreerMedia) LogDebug(@"REQUEST: %@",[xmlrpcRequest body]);
-    parameters = @{kBodyParamKey :  [[xmlrpcRequest body] dataUsingEncoding:self.stringEncoding]};
     
     // Cookies management
     NSArray* cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[self.baseURL absoluteURL]];
@@ -163,7 +160,8 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
         failure(error);
     };
     
-    NSURLRequest *request = [self requestWithMethod:@"POST" path:@"" parameters:parameters];
+    NSMutableURLRequest *request = [self requestWithMethod:@"POST" path:@"" parameters:nil];
+    [request setHTTPBody:[[xmlrpcRequest body] dataUsingEncoding:self.stringEncoding]];
 	AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request
                                                                       success:successBlock
                                                                       failure:failureBlock];
@@ -185,22 +183,6 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
 - (void)setDefaultHeader {
     [self setDefaultHeader:@"Content-Type" value:@"text/xml"];
     [self setDefaultHeader:@"Accept" value:@"text/xml"];
-}
-
-#pragma mark - Overwride
-
-- (NSMutableURLRequest *)requestWithMethod:(NSString *)method
-                                      path:(NSString *)path
-                                parameters:(NSDictionary *)parameters {
-	NSMutableURLRequest *request = [super requestWithMethod:method path:path parameters:parameters];
-    
-    if ([method isEqualToString:@"POST"]) {
-        NSString *charset = (NSString *)CFStringConvertEncodingToIANACharSetName(CFStringConvertNSStringEncodingToEncoding(self.stringEncoding));
-        [request setValue:[NSString stringWithFormat:@"text/xml; charset=%@", charset] forHTTPHeaderField:@"Content-Type"];
-        [request setHTTPBody:[parameters objectForKey:kBodyParamKey]];
-    }
-    
-	return request;
 }
 
 @end

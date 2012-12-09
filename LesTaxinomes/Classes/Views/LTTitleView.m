@@ -78,7 +78,6 @@
     self.opaque = NO;
     
     backgroundImageView_ = [[UIImageView alloc] initWithFrame:frame];
-    UIImage* prob = [UIImage imageNamed:@"bg_title.png"];
     backgroundImageView_.image = [[UIImage imageNamed:@"bg_title"] stretchableImageWithLeftCapWidth:1 topCapHeight:0];
     backgroundImageView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     backgroundImageView_.opaque = NO;

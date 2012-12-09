@@ -25,15 +25,45 @@
 
 #import "LTViewController.h"
 
-@interface LTViewController () {
-    LTiPhoneBackgroundView* _bgView;
-}
+@interface LTViewController ()
+@property (nonatomic, retain) LTiPhoneBackgroundView* bgView;
 @end
 
 @implementation LTViewController
 @synthesize hud = _hud;
 
-#pragma mark - Properties
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Superclass Overrides
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    // background for iPhone screen
+    if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        CGRect winFrame = [[UIApplication sharedApplication] keyWindow].frame;
+        CGRect bgFrame = CGRectMake(0, -self.navigationController.navigationBar.frame.size.height,
+                                    winFrame.size.width,
+                                    winFrame.size.height);
+        self.bgView = [[[LTiPhoneBackgroundView alloc] initWithFrame:bgFrame] autorelease];
+        self.bgView.light = YES;
+        [self.view addSubview:self.bgView];
+        [self.view sendSubviewToBack:self.bgView];
+        self.bgView.frame = bgFrame;
+    }
+    
+    [self.navigationController.navigationBar setTintColor:kMainColor];
+}
+
+- (void)viewDidUnload {
+    
+    [super viewDidUnload];
+    [_hud release];
+    _hud = nil;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Public methods
+#pragma mark Properties
 
 - (MBProgressHUD *)hud {
     if (!_hud) {
@@ -43,9 +73,7 @@
     return _hud;
 }
 
-#pragma mark - Public methods
-
-- (void)showHudForLoading {
+- (void)showDefaultHud {
     [self.view addSubview:self.hud];
     self.hud.mode = MBProgressHUDModeIndeterminate;
     [self.hud show:YES];
@@ -64,7 +92,7 @@
 	if (text)
         self.hud.labelText = text;
 	[self.hud show:YES];
-	[self.hud hide:YES afterDelay:1.5];
+	[self.hud hide:YES afterDelay:3];
 }
 
 - (void)showConfirmHudWithText:(NSString *)text {
@@ -74,7 +102,7 @@
 	if (text)
         self.hud.labelText = text;
 	[self.hud show:YES];
-	[self.hud hide:YES afterDelay:1.5];
+	[self.hud hide:YES afterDelay:3];
 }
 
 - (void)showHudWithTextOnly:(NSString *)text {
@@ -87,53 +115,6 @@
 	[self.hud hide:YES afterDelay:3];
 }
 
-- (void)updateProgress:(float)newProgress {
-    LogDebug(@"%f",newProgress);
-    self.hud.progress = newProgress;
-}
-
-#pragma mark - Super overrides
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    // background for iPhone screen
-    if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        CGRect winFrame = [[UIApplication sharedApplication] keyWindow].frame;
-        CGRect bgFrame = CGRectMake(0, -self.navigationController.navigationBar.frame.size.height,
-                                    winFrame.size.width,
-                                    winFrame.size.height);
-        _bgView = [[LTiPhoneBackgroundView alloc] initWithFrame:bgFrame];
-        _bgView.light = YES;
-        [self.view addSubview:_bgView];
-        [self.view sendSubviewToBack:_bgView];
-        _bgView.frame = bgFrame;
-    }
-    
-    [self.navigationController.navigationBar setTintColor:kMainColor];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    [_hud release];
-    _hud = nil;
-    [_bgView release];
-    _bgView = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (void)dealloc {
-	[_hud release];
-    [_bgView release];
-    [super dealloc];
-}
-
 #pragma mark -
 #pragma mark MBProgressHUDDelegate methods
 
@@ -143,5 +124,6 @@
     [_hud release];
     _hud = nil;
 }
+
 
 @end

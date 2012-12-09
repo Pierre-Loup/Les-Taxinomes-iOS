@@ -57,11 +57,6 @@
     [super dealloc];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 - (void)okButtonButtonPressed:(UIBarButtonItem *)sender {
     if ([delegate_ respondsToSelector:@selector(mediaLocationPicker:didPickLocation:)]
         && location_) {

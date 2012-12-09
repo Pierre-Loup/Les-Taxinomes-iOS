@@ -383,6 +383,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                        authCookieEnable:YES
                     uploadProgressBlock:^(CGFloat progress) {
                         if ([self.delegate respondsToSelector:@selector(uploadDeterminationDidUpdate:)]) {
+                            NSLog(@"progress: %f",progress);
                             [self.delegate uploadDeterminationDidUpdate:progress];
                         }
                     }

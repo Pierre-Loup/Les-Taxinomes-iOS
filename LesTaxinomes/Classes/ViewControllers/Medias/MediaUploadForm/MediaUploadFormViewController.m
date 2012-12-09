@@ -27,7 +27,6 @@
 #import <AssetsLibrary/ALAssetRepresentation.h>
 #import "NSData+Base64.h"
 #import "NSMutableDictionary+ImageMetadata.h"
-#import "LTDataManager.h"
 #import "LTConnectionManager.h"
 #import "MediaUploadFormViewController.h"
 #import "MapCell.h"
@@ -246,7 +245,7 @@
 
 - (IBAction)uploadMedia:(id)sender {
     
-    [self showDeterminateHud];
+    [self showDefaultHud];
     
     LTConnectionManager* connectionManager = [LTConnectionManager sharedConnectionManager];
     connectionManager.delegate = self;
@@ -487,6 +486,9 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 #pragma mark MediaLocationPickerDelegate 
 
 - (void)uploadDeterminationDidUpdate:(CGFloat)determination {
+    if (self.hud.mode != MBProgressHUDModeDeterminate) {
+        self.hud.mode = MBProgressHUDModeDeterminate;
+    }
     self.hud.progress = determination;
 }
 

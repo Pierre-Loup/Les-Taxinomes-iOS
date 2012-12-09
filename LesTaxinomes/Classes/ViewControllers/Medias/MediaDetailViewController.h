@@ -25,7 +25,6 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import "LTDataManager.h"
 #import "Media.h"
 
 #import "LTViewController.h"

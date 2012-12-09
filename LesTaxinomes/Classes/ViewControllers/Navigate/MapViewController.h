@@ -12,15 +12,7 @@
 #import "LTConnectionManager.h"
 #import "LTViewController.h"
 
-@interface MapViewController : LTViewController <MKMapViewDelegate, CLLocationManagerDelegate> {
-    
-    CLLocationManager* locationManager_;    
-    NSInteger searchStartIndex_;
-    
-    //UI
-    UIBarButtonItem* reloadBarButton_;
-    UIBarButtonItem* scanBarButton_;
-}
+@interface MapViewController : LTViewController <MKMapViewDelegate, CLLocationManagerDelegate>
 
 @property (retain, readonly) id<MKAnnotation> referenceAnnotation;
 @property (retain, nonatomic) IBOutlet MKMapView * mapView;

@@ -98,7 +98,7 @@
     [super viewWillAppear:animated];
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
     if (!cm.authenticatedUser) {
-        [self showHudForLoading];
+        [self showDefaultHud];
         [cm authWithLogin:nil
                  password:nil
             responseBlock:^(Author *authenticatedUser, NSError *error) {
@@ -121,12 +121,6 @@
 
 - (void)viewDidUnload {
     [super viewDidUnload];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 

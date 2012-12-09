@@ -86,12 +86,6 @@
     self.welcomLabel = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 #pragma mark - Actions
 
 - (IBAction)infoButtonAction:(id) sender {

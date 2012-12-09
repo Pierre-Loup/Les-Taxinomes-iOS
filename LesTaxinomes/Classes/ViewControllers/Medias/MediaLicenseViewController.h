@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LTViewController.h"
 
-@interface MediaLicenseViewController : UIViewController
+@interface MediaLicenseViewController : LTViewController
 
 @end

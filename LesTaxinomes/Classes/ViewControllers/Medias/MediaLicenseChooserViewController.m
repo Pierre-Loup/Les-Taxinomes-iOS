@@ -81,11 +81,6 @@
     [super dealloc];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 #pragma mark Tools
 
 - (NSIndexPath *)indexPathForCurrentLicense {

@@ -25,7 +25,6 @@
 
 #import "Section.h"
 #import "Media.h"
-#import "LTDataManager.h"
 
 
 @implementation Section

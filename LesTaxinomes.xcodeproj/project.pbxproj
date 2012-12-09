@@ -178,8 +178,6 @@
 		A585622015F90BA200446653 /* UIGlossyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A585613015F90BA200446653 /* UIGlossyButton.m */; };
 		A58562AD15F90BAD00446653 /* LTConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A585623915F90BAD00446653 /* LTConnectionManager.m */; };
 		A58562AE15F90BAD00446653 /* LTConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A585623915F90BAD00446653 /* LTConnectionManager.m */; };
-		A58562AF15F90BAD00446653 /* LTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A585623B15F90BAD00446653 /* LTDataManager.m */; };
-		A58562B015F90BAD00446653 /* LTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A585623B15F90BAD00446653 /* LTDataManager.m */; };
 		A58562B315F90BAD00446653 /* LTXMLRPCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A585623F15F90BAD00446653 /* LTXMLRPCClient.m */; };
 		A58562B415F90BAD00446653 /* LTXMLRPCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A585623F15F90BAD00446653 /* LTXMLRPCClient.m */; };
 		A58562B515F90BAD00446653 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585624015F90BAD00446653 /* MainWindow.xib */; };
@@ -218,10 +216,6 @@
 		A58562E215F90BAD00446653 /* MediaDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585627315F90BAD00446653 /* MediaDetailViewController.m */; };
 		A58562E315F90BAD00446653 /* MediaDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585627415F90BAD00446653 /* MediaDetailViewController.xib */; };
 		A58562E415F90BAD00446653 /* MediaDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585627415F90BAD00446653 /* MediaDetailViewController.xib */; };
-		A58562E515F90BAD00446653 /* MediaFullSizeViewContoller.m in Sources */ = {isa = PBXBuildFile; fileRef = A585627615F90BAD00446653 /* MediaFullSizeViewContoller.m */; };
-		A58562E615F90BAD00446653 /* MediaFullSizeViewContoller.m in Sources */ = {isa = PBXBuildFile; fileRef = A585627615F90BAD00446653 /* MediaFullSizeViewContoller.m */; };
-		A58562E715F90BAD00446653 /* MediaFullSizeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585627715F90BAD00446653 /* MediaFullSizeViewController.xib */; };
-		A58562E815F90BAD00446653 /* MediaFullSizeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585627715F90BAD00446653 /* MediaFullSizeViewController.xib */; };
 		A58562E915F90BAD00446653 /* MediaLicenseChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585627915F90BAD00446653 /* MediaLicenseChooserViewController.m */; };
 		A58562EA15F90BAD00446653 /* MediaLicenseChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585627915F90BAD00446653 /* MediaLicenseChooserViewController.m */; };
 		A58562EB15F90BAD00446653 /* MediaLicenseChooserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585627A15F90BAD00446653 /* MediaLicenseChooserViewController.xib */; };
@@ -277,7 +271,6 @@
 		A585632115F90BAD00446653 /* LTTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562AB15F90BAD00446653 /* LTTitleView.m */; };
 		A585632215F90BAD00446653 /* LTTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562AB15F90BAD00446653 /* LTTitleView.m */; };
 		A585632515F90C6500446653 /* LTConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A585623915F90BAD00446653 /* LTConnectionManager.m */; };
-		A585632615F90C7000446653 /* LTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A585623B15F90BAD00446653 /* LTDataManager.m */; };
 		A585632815F90C7000446653 /* LTXMLRPCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A585623F15F90BAD00446653 /* LTXMLRPCClient.m */; };
 		A585632915F90C7F00446653 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A585624815F90BAD00446653 /* Annotation.m */; };
 		A585632A15F90C7F00446653 /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = A585624A15F90BAD00446653 /* Author.m */; };
@@ -344,7 +337,6 @@
 		A5CCFEC11643CEBE00FA4ABF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = A585612E15F90BA200446653 /* Reachability.m */; };
 		A5CCFEC21643CEBE00FA4ABF /* UIGlossyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A585613015F90BA200446653 /* UIGlossyButton.m */; };
 		A5CCFEC31643CEBE00FA4ABF /* LTConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A585623915F90BAD00446653 /* LTConnectionManager.m */; };
-		A5CCFEC41643CEBE00FA4ABF /* LTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A585623B15F90BAD00446653 /* LTDataManager.m */; };
 		A5CCFEC61643CEBE00FA4ABF /* LTXMLRPCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A585623F15F90BAD00446653 /* LTXMLRPCClient.m */; };
 		A5CCFEC71643CEBE00FA4ABF /* LesTaxinomesAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A585624415F90BAD00446653 /* LesTaxinomesAppDelegate.m */; };
 		A5CCFEC81643CEBE00FA4ABF /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A585624815F90BAD00446653 /* Annotation.m */; };
@@ -358,7 +350,6 @@
 		A5CCFED01643CEBE00FA4ABF /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585626615F90BAD00446653 /* HomeViewController.m */; };
 		A5CCFED11643CEBE00FA4ABF /* LegalInformationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585626915F90BAD00446653 /* LegalInformationsViewController.m */; };
 		A5CCFED21643CEBE00FA4ABF /* MediaDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585627315F90BAD00446653 /* MediaDetailViewController.m */; };
-		A5CCFED31643CEBE00FA4ABF /* MediaFullSizeViewContoller.m in Sources */ = {isa = PBXBuildFile; fileRef = A585627615F90BAD00446653 /* MediaFullSizeViewContoller.m */; };
 		A5CCFED41643CEBE00FA4ABF /* MediaLicenseChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585627915F90BAD00446653 /* MediaLicenseChooserViewController.m */; };
 		A5CCFED51643CEBE00FA4ABF /* MediaLicenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585627C15F90BAD00446653 /* MediaLicenseViewController.m */; };
 		A5CCFED61643CEBE00FA4ABF /* MediaLocalisationPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585627F15F90BAD00446653 /* MediaLocalisationPickerViewController.m */; };
@@ -412,7 +403,6 @@
 		A5CCFF221643CEBE00FA4ABF /* AuthenticationSheetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585625E15F90BAD00446653 /* AuthenticationSheetViewController.xib */; };
 		A5CCFF241643CEBE00FA4ABF /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585626715F90BAD00446653 /* HomeViewController.xib */; };
 		A5CCFF251643CEBE00FA4ABF /* MediaDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585627415F90BAD00446653 /* MediaDetailViewController.xib */; };
-		A5CCFF261643CEBE00FA4ABF /* MediaFullSizeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585627715F90BAD00446653 /* MediaFullSizeViewController.xib */; };
 		A5CCFF271643CEBE00FA4ABF /* MediaLicenseChooserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585627A15F90BAD00446653 /* MediaLicenseChooserViewController.xib */; };
 		A5CCFF281643CEBE00FA4ABF /* MediaLicenseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585627D15F90BAD00446653 /* MediaLicenseViewController.xib */; };
 		A5CCFF291643CEBE00FA4ABF /* MediaLocalisationPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585628015F90BAD00446653 /* MediaLocalisationPickerViewController.xib */; };
@@ -767,8 +757,6 @@
 		A585613015F90BA200446653 /* UIGlossyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIGlossyButton.m; sourceTree = "<group>"; };
 		A585623815F90BAD00446653 /* LTConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTConnectionManager.h; sourceTree = "<group>"; };
 		A585623915F90BAD00446653 /* LTConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTConnectionManager.m; sourceTree = "<group>"; };
-		A585623A15F90BAD00446653 /* LTDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTDataManager.h; sourceTree = "<group>"; };
-		A585623B15F90BAD00446653 /* LTDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTDataManager.m; sourceTree = "<group>"; };
 		A585623E15F90BAD00446653 /* LTXMLRPCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTXMLRPCClient.h; sourceTree = "<group>"; };
 		A585623F15F90BAD00446653 /* LTXMLRPCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTXMLRPCClient.m; sourceTree = "<group>"; };
 		A585624115F90BAD00446653 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
@@ -802,9 +790,6 @@
 		A585627215F90BAD00446653 /* MediaDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaDetailViewController.h; sourceTree = "<group>"; };
 		A585627315F90BAD00446653 /* MediaDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaDetailViewController.m; sourceTree = "<group>"; };
 		A585627415F90BAD00446653 /* MediaDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaDetailViewController.xib; sourceTree = "<group>"; };
-		A585627515F90BAD00446653 /* MediaFullSizeViewContoller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaFullSizeViewContoller.h; sourceTree = "<group>"; };
-		A585627615F90BAD00446653 /* MediaFullSizeViewContoller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaFullSizeViewContoller.m; sourceTree = "<group>"; };
-		A585627715F90BAD00446653 /* MediaFullSizeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaFullSizeViewController.xib; sourceTree = "<group>"; };
 		A585627815F90BAD00446653 /* MediaLicenseChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaLicenseChooserViewController.h; sourceTree = "<group>"; };
 		A585627915F90BAD00446653 /* MediaLicenseChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaLicenseChooserViewController.m; sourceTree = "<group>"; };
 		A585627A15F90BAD00446653 /* MediaLicenseChooserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaLicenseChooserViewController.xib; sourceTree = "<group>"; };
@@ -864,7 +849,7 @@
 		A5CCFE911643CE6300FA4ABF /* UIActionSheet+MKBlockAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+MKBlockAdditions.m"; sourceTree = "<group>"; };
 		A5CCFE921643CE6300FA4ABF /* UIAlertView+MKBlockAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+MKBlockAdditions.h"; sourceTree = "<group>"; };
 		A5CCFE931643CE6300FA4ABF /* UIAlertView+MKBlockAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+MKBlockAdditions.m"; sourceTree = "<group>"; };
-		A5CCFF3A1643CEBE00FA4ABF /* Geodiversité.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Geodiversité.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5CCFF3A1643CEBE00FA4ABF /* Géodiversité.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Géodiversité.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5CCFF3C1643CEBE00FA4ABF /* LesTaxinomes Prod copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "LesTaxinomes Prod copy-Info.plist"; path = "/Users/pierreloup_perso/Developer/les-taxinomes-iphone/LesTaxinomes Prod copy-Info.plist"; sourceTree = "<absolute>"; };
 		A5CCFF411643CF8900FA4ABF /* Geodiversite-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Geodiversite-Info.plist"; sourceTree = "<group>"; };
 		A5CCFF4A1643D1E500FA4ABF /* UIActionSheet+PhotoAssetPickerAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+PhotoAssetPickerAddition.h"; sourceTree = "<group>"; };
@@ -1112,7 +1097,7 @@
 				37D2E7D9144709ED0044EC3A /* LesTaxinomes Dev.app */,
 				A5AC0A8A15DABF31000F9311 /* LesTaxinomes.app */,
 				C83D43BF15ED468400148CD2 /* LesTaxinomes Tests.app */,
-				A5CCFF3A1643CEBE00FA4ABF /* Geodiversité.app */,
+				A5CCFF3A1643CEBE00FA4ABF /* Géodiversité.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1383,8 +1368,6 @@
 				A5CCFF491643D1E500FA4ABF /* Categories */,
 				A585623815F90BAD00446653 /* LTConnectionManager.h */,
 				A585623915F90BAD00446653 /* LTConnectionManager.m */,
-				A585623A15F90BAD00446653 /* LTDataManager.h */,
-				A585623B15F90BAD00446653 /* LTDataManager.m */,
 				A585623E15F90BAD00446653 /* LTXMLRPCClient.h */,
 				A585623F15F90BAD00446653 /* LTXMLRPCClient.m */,
 			);
@@ -1473,9 +1456,6 @@
 				A585627215F90BAD00446653 /* MediaDetailViewController.h */,
 				A585627315F90BAD00446653 /* MediaDetailViewController.m */,
 				A585627415F90BAD00446653 /* MediaDetailViewController.xib */,
-				A585627515F90BAD00446653 /* MediaFullSizeViewContoller.h */,
-				A585627615F90BAD00446653 /* MediaFullSizeViewContoller.m */,
-				A585627715F90BAD00446653 /* MediaFullSizeViewController.xib */,
 				A585627815F90BAD00446653 /* MediaLicenseChooserViewController.h */,
 				A585627915F90BAD00446653 /* MediaLicenseChooserViewController.m */,
 				A585627A15F90BAD00446653 /* MediaLicenseChooserViewController.xib */,
@@ -1917,7 +1897,7 @@
 			);
 			name = "Geodiversite Prod";
 			productName = Taxinomes;
-			productReference = A5CCFF3A1643CEBE00FA4ABF /* Geodiversité.app */;
+			productReference = A5CCFF3A1643CEBE00FA4ABF /* Géodiversité.app */;
 			productType = "com.apple.product-type.application";
 		};
 		C83D43BE15ED468400148CD2 /* LesTaxinomes Tests */ = {
@@ -1997,7 +1977,6 @@
 				A58562D115F90BAD00446653 /* AuthenticationSheetViewController.xib in Resources */,
 				A58562D715F90BAD00446653 /* HomeViewController.xib in Resources */,
 				A58562E315F90BAD00446653 /* MediaDetailViewController.xib in Resources */,
-				A58562E715F90BAD00446653 /* MediaFullSizeViewController.xib in Resources */,
 				A58562EB15F90BAD00446653 /* MediaLicenseChooserViewController.xib in Resources */,
 				A58562EF15F90BAD00446653 /* MediaLicenseViewController.xib in Resources */,
 				A58562F315F90BAD00446653 /* MediaLocalisationPickerViewController.xib in Resources */,
@@ -2063,7 +2042,6 @@
 				A58562D215F90BAD00446653 /* AuthenticationSheetViewController.xib in Resources */,
 				A58562D815F90BAD00446653 /* HomeViewController.xib in Resources */,
 				A58562E415F90BAD00446653 /* MediaDetailViewController.xib in Resources */,
-				A58562E815F90BAD00446653 /* MediaFullSizeViewController.xib in Resources */,
 				A58562EC15F90BAD00446653 /* MediaLicenseChooserViewController.xib in Resources */,
 				A58562F015F90BAD00446653 /* MediaLicenseViewController.xib in Resources */,
 				A58562F415F90BAD00446653 /* MediaLocalisationPickerViewController.xib in Resources */,
@@ -2112,7 +2090,6 @@
 				A5CCFF221643CEBE00FA4ABF /* AuthenticationSheetViewController.xib in Resources */,
 				A5CCFF241643CEBE00FA4ABF /* HomeViewController.xib in Resources */,
 				A5CCFF251643CEBE00FA4ABF /* MediaDetailViewController.xib in Resources */,
-				A5CCFF261643CEBE00FA4ABF /* MediaFullSizeViewController.xib in Resources */,
 				A5CCFF271643CEBE00FA4ABF /* MediaLicenseChooserViewController.xib in Resources */,
 				A5CCFF281643CEBE00FA4ABF /* MediaLicenseViewController.xib in Resources */,
 				A5CCFF291643CEBE00FA4ABF /* MediaLocalisationPickerViewController.xib in Resources */,
@@ -2208,7 +2185,6 @@
 				A585621B15F90BA200446653 /* Reachability.m in Sources */,
 				A585621E15F90BA200446653 /* UIGlossyButton.m in Sources */,
 				A58562AD15F90BAD00446653 /* LTConnectionManager.m in Sources */,
-				A58562AF15F90BAD00446653 /* LTDataManager.m in Sources */,
 				A58562B315F90BAD00446653 /* LTXMLRPCClient.m in Sources */,
 				A58562B715F90BAD00446653 /* LesTaxinomesAppDelegate.m in Sources */,
 				A58562BB15F90BAD00446653 /* Annotation.m in Sources */,
@@ -2222,7 +2198,6 @@
 				A58562D515F90BAD00446653 /* HomeViewController.m in Sources */,
 				A58562D915F90BAD00446653 /* LegalInformationsViewController.m in Sources */,
 				A58562E115F90BAD00446653 /* MediaDetailViewController.m in Sources */,
-				A58562E515F90BAD00446653 /* MediaFullSizeViewContoller.m in Sources */,
 				A58562E915F90BAD00446653 /* MediaLicenseChooserViewController.m in Sources */,
 				A58562ED15F90BAD00446653 /* MediaLicenseViewController.m in Sources */,
 				A58562F115F90BAD00446653 /* MediaLocalisationPickerViewController.m in Sources */,
@@ -2318,7 +2293,6 @@
 				A585621C15F90BA200446653 /* Reachability.m in Sources */,
 				A585621F15F90BA200446653 /* UIGlossyButton.m in Sources */,
 				A58562AE15F90BAD00446653 /* LTConnectionManager.m in Sources */,
-				A58562B015F90BAD00446653 /* LTDataManager.m in Sources */,
 				A58562B415F90BAD00446653 /* LTXMLRPCClient.m in Sources */,
 				A58562B815F90BAD00446653 /* LesTaxinomesAppDelegate.m in Sources */,
 				A58562BC15F90BAD00446653 /* Annotation.m in Sources */,
@@ -2332,7 +2306,6 @@
 				A58562D615F90BAD00446653 /* HomeViewController.m in Sources */,
 				A58562DA15F90BAD00446653 /* LegalInformationsViewController.m in Sources */,
 				A58562E215F90BAD00446653 /* MediaDetailViewController.m in Sources */,
-				A58562E615F90BAD00446653 /* MediaFullSizeViewContoller.m in Sources */,
 				A58562EA15F90BAD00446653 /* MediaLicenseChooserViewController.m in Sources */,
 				A58562EE15F90BAD00446653 /* MediaLicenseViewController.m in Sources */,
 				A58562F215F90BAD00446653 /* MediaLocalisationPickerViewController.m in Sources */,
@@ -2428,7 +2401,6 @@
 				A5CCFEC11643CEBE00FA4ABF /* Reachability.m in Sources */,
 				A5CCFEC21643CEBE00FA4ABF /* UIGlossyButton.m in Sources */,
 				A5CCFEC31643CEBE00FA4ABF /* LTConnectionManager.m in Sources */,
-				A5CCFEC41643CEBE00FA4ABF /* LTDataManager.m in Sources */,
 				A5CCFEC61643CEBE00FA4ABF /* LTXMLRPCClient.m in Sources */,
 				A5CCFEC71643CEBE00FA4ABF /* LesTaxinomesAppDelegate.m in Sources */,
 				A5CCFEC81643CEBE00FA4ABF /* Annotation.m in Sources */,
@@ -2442,7 +2414,6 @@
 				A5CCFED01643CEBE00FA4ABF /* HomeViewController.m in Sources */,
 				A5CCFED11643CEBE00FA4ABF /* LegalInformationsViewController.m in Sources */,
 				A5CCFED21643CEBE00FA4ABF /* MediaDetailViewController.m in Sources */,
-				A5CCFED31643CEBE00FA4ABF /* MediaFullSizeViewContoller.m in Sources */,
 				A5CCFED41643CEBE00FA4ABF /* MediaLicenseChooserViewController.m in Sources */,
 				A5CCFED51643CEBE00FA4ABF /* MediaLicenseViewController.m in Sources */,
 				A5CCFED61643CEBE00FA4ABF /* MediaLocalisationPickerViewController.m in Sources */,
@@ -2539,7 +2510,6 @@
 				A585621D15F90BA200446653 /* Reachability.m in Sources */,
 				A585622015F90BA200446653 /* UIGlossyButton.m in Sources */,
 				A585632515F90C6500446653 /* LTConnectionManager.m in Sources */,
-				A585632615F90C7000446653 /* LTDataManager.m in Sources */,
 				A585632815F90C7000446653 /* LTXMLRPCClient.m in Sources */,
 				A585632915F90C7F00446653 /* Annotation.m in Sources */,
 				A585632A15F90C7F00446653 /* Author.m in Sources */,
@@ -2835,7 +2805,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Geodiversite/Supporting Files/Geodiversite-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				PRODUCT_NAME = "Geodiversité";
+				PRODUCT_NAME = "Géodiversité";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2861,7 +2831,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Geodiversite/Supporting Files/Geodiversite-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				PRODUCT_NAME = "Geodiversité";
+				PRODUCT_NAME = "Géodiversité";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;

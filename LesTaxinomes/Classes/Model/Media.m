@@ -27,7 +27,6 @@
 #import "Author.h"
 #import "License.h"
 #import "Section.h"
-#import "LTDataManager.h"
 
 @implementation Media
 

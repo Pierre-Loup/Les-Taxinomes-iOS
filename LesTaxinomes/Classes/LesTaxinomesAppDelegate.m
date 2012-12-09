@@ -25,7 +25,6 @@
 
 #import "LesTaxinomesAppDelegate.h"
 #import "LTConnectionManager.h"
-#import "LTDataManager.h"
 #import "Constants.h"
 #import "License.h"
 #import "DCIntrospect.h"
@@ -35,7 +34,8 @@
 @synthesize tabBarController = tabBarController_;
 @synthesize launchScreenView = launchScreenView_;
 
-- (void)applicationDidFinishLaunching:(UIApplication *)application{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
     
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"Taxinomes.sqlite"];
     
@@ -61,15 +61,21 @@
         [[DCIntrospect sharedIntrospector] start];
     #endif
     
-    // Setup launch sound and play it
-    NSString * launchSoundPath = [[NSBundle mainBundle] pathForResource:@"oiseau" ofType:@"aif"];
-    if (launchSoundPath) {
-        AudioServicesCreateSystemSoundID((CFURLRef)[NSURL fileURLWithPath: launchSoundPath], &launchSoundID_);
+    
+    // Setup launch sound and play it application were not woken up by location event
+    if (![launchOptions objectForKey:UIApplicationLaunchOptionsLocationKey]) {
+        NSString * launchSoundPath = [[NSBundle mainBundle] pathForResource:@"oiseau" ofType:@"aif"];
+        if (launchSoundPath) {
+            AudioServicesCreateSystemSoundID((CFURLRef)[NSURL fileURLWithPath: launchSoundPath], &launchSoundID_);
+        }
+        [self playLaunchSound];
     }
-    [self playLaunchSound];
+    
     // Setup fack spash screen
     launchScreenView_ = [[UIImageView alloc] initWithFrame: self.tabBarController.view.frame];
     launchScreenView_.image = [UIImage imageNamed:@"Default.png"];
+    
+    return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

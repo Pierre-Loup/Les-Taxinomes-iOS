@@ -74,17 +74,12 @@
     self.passwordTextField = nil;
     self.signinButton = nil;
 }
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
                                                                                                                                                                 
 #pragma mark Actions                                                                                                                                                            
 
 - (IBAction)submitAuthentication:(id)sender {
     
-    [self showHudForLoading];
+    [self showDefaultHud];
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
         [cm authWithLogin:self.loginTextField.text
                  password:self.passwordTextField.text
