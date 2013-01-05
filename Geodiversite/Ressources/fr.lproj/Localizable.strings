@@ -1,6 +1,6 @@
 /* 
   Localization.string.strings
-  Taxinomes
+  LesTaxinomes
 
   Created by Pierre-Loup Tristant on 30/04/12.
   Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
@@ -46,7 +46,7 @@
 "media_upload_no_title" = "Sans titre";
 "media_upload_no_license_text" = "Aucune licence";
 "media_upload.location_picker_cell.text" = "Localisation du média";
-"media_upload.text_prefix" = "Média partagé avec l'application Géodiv pour iPhone";
+"media_upload.text_prefix" = "Média partagé avec l'application Géodiversité pour iPhone";
 "media_upload.confirm.title" = "Partage réussi";
 "media_upload.confirm.text" = "Le média a bien été partagé.";
 

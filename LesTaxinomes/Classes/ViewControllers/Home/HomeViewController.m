@@ -24,40 +24,43 @@
  */
 
 #import "HomeViewController.h"
+
+#import "AuthenticationSheetViewController.h"
 #import "LegalInformationsViewController.h"
 #import "MediaUploadFormViewController.h"
 #import "UIActionSheet+PhotoAssetPickerAddition.h"
 
-@interface HomeViewController ()
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Private interface
+
+@interface HomeViewController () <LTAuthenticationSheetDelegate>
 @property (nonatomic, retain) IBOutlet UILabel* welcomLabel;
-- (IBAction)infoButtonAction:(id) sender;
+@property (nonatomic, retain) NSURL* mediaToShareAssetURL;
+@property (nonatomic, assign) BOOL shouldPresentAuthenticationSheet;
 @end
 
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - View implementation
+
 @implementation HomeViewController
+;
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Superclass overrides
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        _shouldPresentAuthenticationSheet = NO;
     }
     return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
 - (void)dealloc {
     [_welcomLabel release];
     [super dealloc];
 }
-
-#pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
@@ -80,13 +83,37 @@
     [cameraBarButton release];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    if(self.shouldPresentAuthenticationSheet) {
+        self.shouldPresentAuthenticationSheet = NO;
+        [self displayAuthenticationSheetAnimated:YES];
+    }
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     self.welcomLabel = nil;
 }
 
-#pragma mark - Actions
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Private methods
+
+- (void)displayAuthenticationSheetAnimated:(BOOL)animated {
+    AuthenticationSheetViewController * authenticationSheetViewController =
+    [[AuthenticationSheetViewController alloc] initWithNibName:@"AuthenticationSheetViewController"
+                                                        bundle:nil];
+    authenticationSheetViewController.delegate = self;
+    UINavigationController * navigationController = [[UINavigationController alloc] initWithRootViewController:authenticationSheetViewController];
+    authenticationSheetViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentModalViewController:navigationController animated:animated];
+    [authenticationSheetViewController release];
+    [navigationController release];
+}
+
+#pragma mark Actions
 
 - (IBAction)infoButtonAction:(id) sender {
     LegalInformationsViewController *legalInformationsViewController = [[LegalInformationsViewController alloc] initWithNibName:@"LegalInformationsViewController" bundle:nil];
@@ -100,11 +127,46 @@
                               presentVC:self
                           onPhotoPicked:^(NSURL* chosenImageAssetURL, NSError* error) {
                               if (chosenImageAssetURL && !error) {
-                                  MediaUploadFormViewController* mediaUploadVC = [[MediaUploadFormViewController alloc] initWithAssetURL:chosenImageAssetURL];
-                                  [self.navigationController pushViewController:mediaUploadVC animated:YES];
-                                  [mediaUploadVC release];
+                                  LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
+                                  if (!cm.authenticatedUser) {
+                                      [self showDefaultHud];
+                                      [cm authWithLogin:nil
+                                               password:nil
+                                          responseBlock:^(Author *authenticatedUser, NSError *error) {
+                                              [self.hud hide:YES];
+                                              if (!authenticatedUser) {
+                                                  self.mediaToShareAssetURL = chosenImageAssetURL;
+                                                  if(self.presentedViewController) {
+                                                      self.shouldPresentAuthenticationSheet = YES;
+                                                  } else {
+                                                      [self displayAuthenticationSheetAnimated:YES];
+                                                  }
+                                              } else {
+                                                  [self dismissModalViewControllerAnimated:YES];
+                                                  MediaUploadFormViewController* mediaUploadVC = [[MediaUploadFormViewController alloc] initWithAssetURL:chosenImageAssetURL];
+                                                  [self.navigationController pushViewController:mediaUploadVC animated:YES];
+                                                  [mediaUploadVC release];
+                                              }
+                                        }];
+                                  }
                               }
                           } onCancel:^{}];
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - LTAuthenticationSheetDelegate
+
+- (void)authenticationDidFinishWithSuccess:(BOOL)success {
+    Author* authenticatedUser = [LTConnectionManager sharedConnectionManager].authenticatedUser;
+    if (success && authenticatedUser) {
+        [self dismissModalViewControllerAnimated:YES];
+        MediaUploadFormViewController* mediaUploadVC = [[MediaUploadFormViewController alloc] initWithAssetURL:self.mediaToShareAssetURL];
+        self.mediaToShareAssetURL = nil;
+        [self.navigationController pushViewController:mediaUploadVC animated:YES];
+        [mediaUploadVC release];
+    }
 }
 
 @end

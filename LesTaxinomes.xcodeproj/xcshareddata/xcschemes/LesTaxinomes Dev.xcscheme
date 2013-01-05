@@ -14,6 +14,34 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A5402526167E27FF0038B229"
+               BuildableName = "libMNMBottomPullToRefresh.a"
+               BlueprintName = "MNMBottomPullToRefresh"
+               ReferencedContainer = "container:MNMBottomPullToRefresh/MNMBottomPullToRefresh.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A540256F167E30550038B229"
+               BuildableName = "MMBottomPullToRefreshBundle.bundle"
+               BlueprintName = "MMBottomPullToRefreshBundle"
+               ReferencedContainer = "container:MNMBottomPullToRefresh/MNMBottomPullToRefresh.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "37D2E7D8144709ED0044EC3A"
                BuildableName = "LesTaxinomes Dev.app"
                BlueprintName = "LesTaxinomes Dev"

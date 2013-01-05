@@ -25,11 +25,12 @@
 
 #import <AssetsLibrary/ALAsset.h>
 #import <AssetsLibrary/ALAssetRepresentation.h>
+
+#import "LTConnectionManager.h"
+#import "MapCell.h"
+#import "MediaUploadFormViewController.h"
 #import "NSData+Base64.h"
 #import "NSMutableDictionary+ImageMetadata.h"
-#import "LTConnectionManager.h"
-#import "MediaUploadFormViewController.h"
-#import "MapCell.h"
 #import "SingleLineInputCell.h"
 #import "UIImageView+PhotoFrame.h"
 
@@ -182,6 +183,11 @@
     [self refreshForm];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.hud hide:animated];
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -198,78 +204,8 @@
     self.publishSwitch = nil;
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self.hud hide:animated];
-}
-
-#pragma mark - Properties
-
-- (NSMutableDictionary *)cellForIndexPath {
-    if (!_cellForIndexPath) {
-        _cellForIndexPath = [NSMutableDictionary new];
-    }
-    return _cellForIndexPath;
-}
-
-- (CLGeocoder *)reverseGeocoder {
-    if (!_reverseGeocoder) {
-        _reverseGeocoder = [[CLGeocoder alloc] init];
-    }    return _reverseGeocoder;
-}
-
-- (UIImage *)mediaImage {
-    return self.mediaSnapshotView.image;
-}
-
-- (void)setMediaLocation:(CLLocation *)mediaLocation {
-    if (mediaLocation &&
-        ![self.mediaLocation isEqual:mediaLocation] &&
-        (mediaLocation.coordinate.latitude || mediaLocation.coordinate.longitude)) {
-        [_mediaLocation release];
-        _mediaLocation = [mediaLocation retain];
-        [self.reverseGeocoder reverseGeocodeLocation:self.mediaLocation
-                                   completionHandler:^(NSArray *placemarks, NSError *error) {
-                                       CLPlacemark* placemark = [placemarks objectAtIndex:0];
-                                       if (placemark) {
-                                           self.cityInput.text = placemark.locality;
-                                           self.zipcodeInput.text = placemark.postalCode;
-                                           self.countryInput.text = placemark.country;
-                                       }
-                                   }];
-        [self refreshForm];
-    }
-}
-
-#pragma mark - IBActions
-
-- (IBAction)uploadMedia:(id)sender {
-    
-    [self showDefaultHud];
-    
-    LTConnectionManager* connectionManager = [LTConnectionManager sharedConnectionManager];
-    connectionManager.delegate = self;
-    [connectionManager addMediaWithTitle:self.titleInput.text
-                                    text:self.textInput.text
-                                 license:_license
-                                assetURL:self.mediaAssetURL
-                           responseBlock:^(Media *media, NSError *error) {
-                               if (media && !error) {
-                                   [self showConfirmHudWithText:_T(@"media_upload.confirm.title")];
-                                   [self.navigationController popViewControllerAnimated:YES];
-                               }
-                               else if ([error shouldBeDisplayed]) {
-                                   [self.hud hide:NO];
-                                   [UIAlertView showWithError:error];
-                               }
-                               else {
-                                   [self showErrorHudWithText:_T(@"error.upload_failed.title")];
-                               }
-                           }];
-}
-
-#pragma mark - Tools
-
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Private methods
 
 - (void)refreshForm {
     [self.cellForIndexPath removeAllObjects];
@@ -356,7 +292,73 @@
     [self.tableView reloadData];
 }
 
-#pragma mark - Table view data source
+#pragma mark Properties
+
+- (NSMutableDictionary *)cellForIndexPath {
+    if (!_cellForIndexPath) {
+        _cellForIndexPath = [NSMutableDictionary new];
+    }
+    return _cellForIndexPath;
+}
+
+- (CLGeocoder *)reverseGeocoder {
+    if (!_reverseGeocoder) {
+        _reverseGeocoder = [[CLGeocoder alloc] init];
+    }    return _reverseGeocoder;
+}
+
+- (UIImage *)mediaImage {
+    return self.mediaSnapshotView.image;
+}
+
+- (void)setMediaLocation:(CLLocation *)mediaLocation {
+    if (mediaLocation &&
+        ![self.mediaLocation isEqual:mediaLocation] &&
+        (mediaLocation.coordinate.latitude || mediaLocation.coordinate.longitude)) {
+        [_mediaLocation release];
+        _mediaLocation = [mediaLocation retain];
+        [self.reverseGeocoder reverseGeocodeLocation:self.mediaLocation
+                                   completionHandler:^(NSArray *placemarks, NSError *error) {
+                                       CLPlacemark* placemark = [placemarks objectAtIndex:0];
+                                       if (placemark) {
+                                           self.cityInput.text = placemark.locality;
+                                           self.zipcodeInput.text = placemark.postalCode;
+                                           self.countryInput.text = placemark.country;
+                                       }
+                                   }];
+        [self refreshForm];
+    }
+}
+
+#pragma mark Actions
+
+- (IBAction)uploadMedia:(id)sender {
+    
+    [self showDefaultHud];
+    
+    LTConnectionManager* connectionManager = [LTConnectionManager sharedConnectionManager];
+    connectionManager.delegate = self;
+    [connectionManager addMediaWithTitle:self.titleInput.text
+                                    text:self.textInput.text
+                                 license:_license
+                                assetURL:self.mediaAssetURL
+                           responseBlock:^(Media *media, NSError *error) {
+                               if (media && !error) {
+                                   [self showConfirmHudWithText:_T(@"media_upload.confirm.title")];
+                                   [self.navigationController popViewControllerAnimated:YES];
+                               }
+                               else if ([error shouldBeDisplayed]) {
+                                   [self.hud hide:NO];
+                                   [UIAlertView showWithError:error];
+                               }
+                               else {
+                                   [self showErrorHudWithText:_T(@"error.upload_failed.title")];
+                               }
+                           }];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -387,6 +389,7 @@
     return (UITableViewCell *)[self.cellForIndexPath objectForKey:indexPath];
 }
 
+////////////////////////////////////////////////////////////////////////////////
 #pragma mark UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -405,19 +408,20 @@
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UIImagePickerControllerDelegate
 
 -(void)imagePickerController:(UIImagePickerController *)picker
 didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    [self dismissModalViewControllerAnimated:YES];
     self.mediaSnapshotView.image = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
     
     NSURL* asserURL = [info objectForKey:UIImagePickerControllerReferenceURL];
     // Get the assets library
     ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
     [library assetForURL:asserURL resultBlock:^(ALAsset *asset) {
-        if (asset) {
+        
+        if (asset) { 
             ALAssetRepresentation *representation = [asset defaultRepresentation];
             NSMutableDictionary *imageMetadata = [NSMutableDictionary dictionaryWithDictionary:[representation metadata]];
             CLLocation* mediaLocation = [imageMetadata location];
@@ -437,6 +441,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UIImageTextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -448,6 +453,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [textField resignFirstResponder];
 }
 
+////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UITextViewdDelegate
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -460,6 +466,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     return YES;
 }
 
+////////////////////////////////////////////////////////////////////////////////
 #pragma mark - MediaLicenseChooserDelegate
 
 - (void)didChooseLicense:(License *)license
@@ -475,7 +482,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     
 }
 
-#pragma mark -  MediaLocationPickerDelegate
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - MediaLocationPickerDelegate
 
 - (void)mediaLocationPicker:(MediaLocalisationPickerViewController *)mediaLocationPicker didPickLocation:(CLLocation *)location
 {
@@ -483,7 +491,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [self refreshForm];
 }
 
-#pragma mark MediaLocationPickerDelegate 
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - MediaLocationPickerDelegate 
 
 - (void)uploadDeterminationDidUpdate:(CGFloat)determination {
     if (self.hud.mode != MBProgressHUDModeDeterminate) {

@@ -68,19 +68,19 @@
 #pragma mark - Public methods
 
 - (void)showDefaultHud {
-    [self.view addSubview:self.hud];
+    [self.view.window addSubview:self.hud];
     self.hud.mode = MBProgressHUDModeIndeterminate;
     [self.hud show:YES];
 }
 
 - (void)showDeterminateHud {
-    [self.view addSubview:self.hud];
+    [self.view.window addSubview:self.hud];
 	self.hud.mode = MBProgressHUDModeDeterminate;
     [self.hud show:YES];
 }
 
 - (void)showErrorHudWithText:(NSString *)text {
-    [self.view addSubview:self.hud];
+    [self.view.window addSubview:self.hud];
     self.hud.mode = MBProgressHUDModeCustomView;
 	self.hud.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cross_hudicon.png"]] autorelease];
 	if (text)
@@ -90,7 +90,7 @@
 }
 
 - (void)showConfirmHudWithText:(NSString *)text {
-    [self.view addSubview:self.hud];
+    [self.view.window addSubview:self.hud];
     self.hud.mode = MBProgressHUDModeCustomView;
 	self.hud.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark_hudicon.png"]] autorelease];
 	if (text)
@@ -100,7 +100,7 @@
 }
 
 - (void)showHudWithTextOnly:(NSString *)text {
-    [self.view addSubview:self.hud];
+    [self.view.window addSubview:self.hud];
 	self.hud.mode = MBProgressHUDModeText;
 	self.hud.labelText = text;
 	self.hud.margin = 10.f;

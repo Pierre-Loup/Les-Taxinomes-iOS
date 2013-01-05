@@ -90,8 +90,10 @@
         media.status = [response objectForKey:@"statut"];
     }
     if ([response objectForKey:@"date"]) {
-        NSString *strDateDesc = [NSString stringWithFormat:@"%@ +0000",[response objectForKey:@"date"]];
-        NSDate *date = [[[NSDate alloc] initWithString:strDateDesc] autorelease];
+        NSString* strDateDesc = [response objectForKey:@"date"];
+        NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSDate *date = [dateFormatter dateFromString:strDateDesc];
         if(date != nil)
             media.date = date;
         else
@@ -109,8 +111,11 @@
     }
     
     if ([response objectForKey:@"date_modif"]) {
-        NSString *strUpdateDateDesc = [NSString stringWithFormat:@"%@ +0000",[response objectForKey:@"date_modif"]];
-        NSDate *updateDate = [[[NSDate alloc] initWithString:strUpdateDateDesc] autorelease];
+        NSString* strUpdateDateDesc = [response objectForKey:@"date_modif"];
+        
+        NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSDate* updateDate = [dateFormatter dateFromString:strUpdateDateDesc];
         if(updateDate != nil)
             media.updateDate = updateDate;
         else

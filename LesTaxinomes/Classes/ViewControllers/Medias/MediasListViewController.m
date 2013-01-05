@@ -46,11 +46,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private interface
 
-@interface MediasListViewController () <NSFetchedResultsControllerDelegate>
+@interface MediasListViewController () <UIScrollViewDelegate, MNMBottomPullToRefreshManagerClient>
 
 @property (nonatomic, retain) IBOutlet MediaDetailViewController *mediaDetailViewController;
+@property (nonatomic, retain) MNMBottomPullToRefreshManager *pullToRefreshManager;
 @property (nonatomic, retain) UIBarButtonItem* reloadBarButton;
-@property (nonatomic, assign) MediaLoadingStatus mediaLoadingStatus;
 @property (nonatomic, retain) NSFetchedResultsController* mediasListResultController;
 
 @end
@@ -62,21 +62,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Supermethods overrides
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        [self commonInit];
-    }
-    return self;
-}
-
-- (void)awakeFromNib
-{
-    [super awakeFromNib];
-    [self commonInit];
-}
 
 - (void)dealloc
 {
@@ -97,17 +82,18 @@
     self.mediaDetailViewController = (MediaDetailViewController *)[[[self.splitViewController.viewControllers lastObject] topViewController] retain];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillDisappear:animated];
-    self.mediasListResultController.delegate = nil;
-    self.mediasListResultController = nil;
+    [super viewWillAppear:animated];
+    if ([[self.mediasListResultController fetchedObjects] count] == 0) {
+        [self showDefaultHud];
+        [self loadMoreMedias];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    self.mediasListResultController.delegate = nil;
     self.mediasListResultController = nil;
 }
 
@@ -134,15 +120,17 @@
     }
 }
 
+- (void)viewDidLayoutSubviews {
+    
+    [super viewDidLayoutSubviews];
+    
+    [self.pullToRefreshManager relocatePullToRefreshView];
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private Methods
 
-- (void)commonInit
-{
-    self.mediaLoadingStatus = SUCCEED;
-}
-
-- (void)loadSynchMedias
+- (void)loadMoreMedias
 {
     NSRange mediasRange;
     mediasRange.location = [[self.mediasListResultController fetchedObjects] count];
@@ -153,50 +141,43 @@
                                            withRange:mediasRange
                                        responseBlock:^(NSArray *medias, NSError *error) {
                                            if (medias) {
-                                               if ([medias count] == 0) {
-                                                   self.mediaLoadingStatus = NOMORETOLOAD;
-                                                   [self.tableView reloadData];
-                                               } else {
-                                                   self.mediaLoadingStatus = SUCCEED;
-                                               }
+                                               self.mediasListResultController = nil;
                                                [self.hud hide:YES];
                                            } else if ([error shouldBeDisplayed]) {
                                                [UIAlertView showWithError:error];
                                                [self.hud hide:NO];
-                                               self.mediaLoadingStatus = FAILED;
-                                               [self.tableView reloadData];
                                            }
-                                           if (!self.reloadBarButton.enabled) {
-                                               self.reloadBarButton.enabled = YES;
-                                               [self.tableView reloadData];
-                                           }
+                                           [self.pullToRefreshManager tableViewReloadFinished];
+                                           [self.tableView reloadData];
+                                           self.reloadBarButton.enabled = YES;
                                        }];
 }
 
 - (void)refreshButtonAction:(id)sender
 {    
     self.reloadBarButton.enabled = NO;
-    self.mediaLoadingStatus = PENDING;
-    self.mediasListResultController.delegate = nil;
+    [self showDefaultHud];
     self.mediasListResultController = nil;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         [Media deleteAllMedias];
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.mediaLoadingStatus = SUCCEED;
             [self.tableView reloadData];
+            [self loadMoreMedias];
         });
     });
 }
 
 #pragma mark Properties
 
-- (NSFetchedResultsController*)mediasListResultController
-{
-    if (self.view.window == nil ||
-        self.reloadBarButton.enabled == NO) {
-        return nil;
+- (MNMBottomPullToRefreshManager*)pullToRefreshManager {
+    if (!_pullToRefreshManager) {
+        _pullToRefreshManager = [[MNMBottomPullToRefreshManager alloc] initWithPullToRefreshViewHeight:60.0f tableView:self.tableView withClient:self];
     }
-    
+    return _pullToRefreshManager;
+}
+
+- (NSFetchedResultsController*)mediasListResultController
+{    
     if (!_mediasListResultController) {
         NSPredicate* predicate = nil;
         if (self.currentUser) {
@@ -209,7 +190,7 @@
                                                      ascending:NO
                                                  withPredicate:predicate
                                                        groupBy:nil
-                                                      delegate:self] retain];
+                                                      delegate:nil] retain];
     }
     return _mediasListResultController;
 }
@@ -226,35 +207,11 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    NSInteger nbMedias = [[self.mediasListResultController fetchedObjects] count];
-    switch (self.mediaLoadingStatus) {
-        case FAILED:
-        case NOMORETOLOAD:
-            return nbMedias;
-            break;
-        default:
-            return (nbMedias+1);
-            break;
-    }
-    
+    return [[self.mediasListResultController fetchedObjects] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger nbMedias = [[self.mediasListResultController fetchedObjects] count];
-    if([indexPath row] == nbMedias) {
-        SpinnerCell* spinnerCell = [self.tableView dequeueReusableCellWithIdentifier:kSpinnerCellIdentifier];
-        if (!spinnerCell) {
-            spinnerCell =  [SpinnerCell spinnerCell];
-        }
-        [spinnerCell.spinner startAnimating];
-        if ( self.mediaLoadingStatus == SUCCEED) {
-            [self loadSynchMedias];
-            self.mediaLoadingStatus = PENDING;
-        }
-        return spinnerCell;
-    }
-    
     Media* media = [self.mediasListResultController objectAtIndexPath:indexPath];
     MediaListCell* cell = nil;
     
@@ -289,84 +246,56 @@
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-#pragma mark - UITableViewDelegate
 
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
-{
-    if (controller == self.mediasListResultController) {
-        [self.tableView beginUpdates];
-    }
+
+/**
+ * Asks the delegate for the height to use for a row in a specified location.
+ *
+ * @param The table-view object requesting this information.
+ * @param indexPath: An index path that locates a row in tableView.
+ * @return A floating-point value that specifies the height (in points) that row should be.
+ */
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return tableView.rowHeight;
 }
 
+#pragma mark -
+#pragma mark MNMBottomPullToRefreshManagerClient
 
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
-           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
-{
-    if (controller == self.mediasListResultController) {
-    switch(type) {
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
-                          withRowAnimation:kCommonRowAnnimation];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]
-                          withRowAnimation:kCommonRowAnnimation];
-            break;
-    }
-    }
+/**
+ * This is the same delegate method as UIScrollView but required in MNMBottomPullToRefreshManagerClient protocol
+ * to warn about its implementation. Here you have to call [MNMBottomPullToRefreshManager tableViewScrolled]
+ *
+ * Tells the delegate when the user scrolls the content view within the receiver.
+ *
+ * @param scrollView: The scroll-view object in which the scrolling occurred.
+ */
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self.pullToRefreshManager tableViewScrolled];
 }
 
+/**
+ * This is the same delegate method as UIScrollView but required in MNMBottomPullToRefreshClient protocol
+ * to warn about its implementation. Here you have to call [MNMBottomPullToRefreshManager tableViewReleased]
+ *
+ * Tells the delegate when dragging ended in the scroll view.
+ *
+ * @param scrollView: The scroll-view object that finished scrolling the content view.
+ * @param decelerate: YES if the scrolling movement will continue, but decelerate, after a touch-up gesture during a dragging operation.
+ */
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    [self.pullToRefreshManager tableViewReleased];
+}
 
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
-       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-      newIndexPath:(NSIndexPath *)newIndexPath
-{
-
-    if (controller == self.mediasListResultController) {
-    UITableView *tableView = self.tableView;
-    Media* media = [self.mediasListResultController objectAtIndexPath:indexPath];
-    UITableViewCell* cell;
+/**
+ * Tells client that refresh has been triggered
+ * After reloading is completed must call [MNMBottomPullToRefreshManager tableViewReloadFinished]
+ *
+ * @param manager PTR manager
+ */
+- (void)bottomPullToRefreshTriggered:(MNMBottomPullToRefreshManager *)manager {
     
-    switch(type) {
-            
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
-                             withRowAnimation:kCommonRowAnnimation];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
-                             withRowAnimation:kCommonRowAnnimation];
-            break;
-            
-        case NSFetchedResultsChangeUpdate:
-            cell = [tableView cellForRowAtIndexPath:indexPath];
-            if ([cell isKindOfClass:[MediaListCell class]]) {
-                ((MediaListCell*)[tableView cellForRowAtIndexPath:indexPath]).media = media;
-            } else {
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath]
-                                      withRowAnimation:kCommonRowAnnimation];
-            }
-            break;
-            
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
-                             withRowAnimation:kCommonRowAnnimation];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
-                             withRowAnimation:kCommonRowAnnimation];
-            break;
-    }
-    }
-}
-
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    if (controller == self.mediasListResultController) {
-        [self.tableView endUpdates];
-    }
+    [self loadMoreMedias];
 }
 
 @end

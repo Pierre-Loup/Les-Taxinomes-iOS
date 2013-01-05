@@ -26,13 +26,7 @@
 #import <UIKit/UIKit.h>
 #import "Author.h"
 #import "LTTableViewController.h"
-
-typedef enum {
-    FAILED = 0,
-    PENDING,
-    SUCCEED,
-    NOMORETOLOAD,
-} MediaLoadingStatus;
+#import "MNMBottomPullToRefreshManager.h"
 
 @interface MediasListViewController : LTTableViewController
 

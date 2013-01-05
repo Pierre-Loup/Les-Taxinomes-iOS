@@ -111,7 +111,8 @@
     [self.delegate authenticationDidFinishWithSuccess:NO];
 }
 
-#pragma mark - Text field delegate
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - UITextField delegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == self.loginTextField) {

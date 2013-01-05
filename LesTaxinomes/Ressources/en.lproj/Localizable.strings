@@ -1,6 +1,6 @@
 /* 
   Localization.string.strings
-  Taxinomes
+  LesTaxinomes
 
   Created by Pierre-Loup Tristant on 30/04/12.
   Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
@@ -66,3 +66,7 @@
 "error.upload_failed.text" = "Media sharing failed. Please retry later";
 "error.internal.title" = "Internal error";
 "error.internal.text" = "An internal error has occured. If the problem persists, please send use an email at bretagne@lespetitsdebrouillards.org";
+
+"MNM_BOTTOM_PTR_PULL_TEXT" = "Pull to get more...";
+"MNM_BOTTOM_PTR_RELEASE_TEXT" = "Release now!";
+"MNM_BOTTOM_PTR_LOADING_TEXT" = "Loading...";
