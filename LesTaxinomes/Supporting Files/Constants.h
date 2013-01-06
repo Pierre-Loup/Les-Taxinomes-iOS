@@ -63,24 +63,24 @@
 //#5F8237
 #ifdef GEODIV
 #define kPinColor MKPinAnnotationColorRed
-#define kMainColor [UIColor colorWithRed:(29.0/255.0) green:(176.0/255.0) blue:(252.0/255.0) alpha:1.0]
-#define kSecondaryColor [UIColor colorWithRed:(0.0/255.0) green:(0.0/255.0) blue:(0.0/255.0) alpha:1.0]
+#define kMainColor [UIColor colorWithRed:(29.0f/255.0f) green:(176.0f/255.0f) blue:(252.0f/255.0f) alpha:1.0f]
+#define kSecondaryColor [UIColor colorWithRed:(0.0f/255.0f) green:(0.0f/255.0f) blue:(0.0f/255.0f) alpha:1.0f]
 #else
 #define kPinColor MKPinAnnotationColorGreen
-#define kMainColor [UIColor colorWithRed:(95.0/255.0) green:(130.0/255.0) blue:(55.0/255.0) alpha:1.0]
-#define kSecondaryColor [UIColor colorWithRed:(132.0/255.0) green:(211.0/255.0) blue:(58.0/255.0) alpha:1.0]
+#define kMainColor [UIColor colorWithRed:(95.0f/255.0f) green:(130.0f/255.0f) blue:(55.0/255.0f) alpha:1.0f]
+#define kSecondaryColor [UIColor colorWithRed:(132.0f/255.0f) green:(211.0/255.0f) blue:(58.0/255.0f) alpha:1.0f]
 #endif
 // Sizes
-#define THUMBNAIL_MAX_HEIGHT 100.0
-#define THUMBNAIL_MAX_WIDHT 100.0
-#define MEDIA_MAX_WIDHT 512.0
-#define MEDIA_MAX_WIDHT_LARGE 1024.0
+#define THUMBNAIL_MAX_HEIGHT 100.0f
+#define THUMBNAIL_MAX_WIDHT 100.0f
+#define MEDIA_MAX_WIDHT 512.0f
+#define MEDIA_MAX_WIDHT_LARGE 1024.0f
 
 // Texts
 #define kPhotoGroupName @"LesTaxinomes"
 
 // Times
-#define kMediaCacheTime 3600.0
+#define kMediaCacheTime 3600.0f
 
 #ifdef DEV
 #define kHost @"taxinomes.arscenic.org"

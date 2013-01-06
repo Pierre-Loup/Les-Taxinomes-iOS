@@ -174,8 +174,8 @@
     [self.mediaSnapshotView applyPhotoFrameEffect];
     
     
-    if (_license) {
-        self.licenseCell.detailTextLabel.text = _license.name;
+    if (self.license) {
+        self.licenseCell.detailTextLabel.text = self.license.name;
     } else {
         self.licenseCell.detailTextLabel.text = _T(@"media_upload_no_license_text");
     }
@@ -340,7 +340,8 @@
     connectionManager.delegate = self;
     [connectionManager addMediaWithTitle:self.titleInput.text
                                     text:self.textInput.text
-                                 license:_license
+                                 license:self.license
+                                location:self.mediaLocation
                                 assetURL:self.mediaAssetURL
                            responseBlock:^(Media *media, NSError *error) {
                                if (media && !error) {
@@ -396,7 +397,7 @@
     if ([indexPath isEqual:kLicenseCellIndexPath]) {
         MediaLicenseChooserViewController* mediaLicenseChooserVC = [[[MediaLicenseChooserViewController alloc] init] autorelease];
         mediaLicenseChooserVC.delegate = self;
-        mediaLicenseChooserVC.currentLicense = _license;
+        mediaLicenseChooserVC.currentLicense = self.license;
         [self.navigationController pushViewController:mediaLicenseChooserVC animated:YES];
     } else if ([indexPath isEqual:kLocationPickerCellIndexPath]){
         MediaLocalisationPickerViewController* mediaLocationPickerVC = [[[MediaLocalisationPickerViewController alloc] init] autorelease];
@@ -473,10 +474,10 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [license release];
     if (license) {
-        _license = [license retain];
+        self.license = license;
         self.licenseCell.detailTextLabel.text = license.name;
     } else {
-        _license = nil;
+        self.license = nil;
         self.licenseCell.detailTextLabel.text = _T(@"media_upload_no_license_text");
     }
     

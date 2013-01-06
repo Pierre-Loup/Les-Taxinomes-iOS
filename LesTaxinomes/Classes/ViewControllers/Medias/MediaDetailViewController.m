@@ -380,6 +380,8 @@
                                         }
                                         failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
                                             [self showErrorHudWithText:nil];
+                                            [self.placeholderAIView stopAnimating];
+                                            [self refreshView];
                                         }];
 }
 

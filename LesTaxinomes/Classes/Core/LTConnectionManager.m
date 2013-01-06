@@ -306,6 +306,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
 - (void)addMediaWithTitle:(NSString *)title
                      text:(NSString *)text
                   license:(License *)license
+                 location:(CLLocation*)location
                  assetURL:(NSURL *)assetURL
             responseBlock:(void (^)(Media* media, NSError *error))responseBlock {
     
@@ -346,9 +347,16 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
         ALAssetRepresentation* assetRepresentation = [asset defaultRepresentation];
         
         // Media location (GIS)
-        NSMutableDictionary* imageMetadata = [NSMutableDictionary dictionaryWithDictionary:[assetRepresentation metadata]];
-        NSString* latitudeStr = [NSString stringWithFormat:@"%f", [imageMetadata location].coordinate.latitude];
-        NSString* longitudeStr = [NSString stringWithFormat:@"%f", [imageMetadata location].coordinate.longitude];
+        NSString* latitudeStr = nil;
+        NSString* longitudeStr = nil;
+        if (location) {
+            latitudeStr = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
+            longitudeStr = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
+        } else {
+            NSMutableDictionary* imageMetadata = [NSMutableDictionary dictionaryWithDictionary:[assetRepresentation metadata]];
+            latitudeStr = [NSString stringWithFormat:@"%f", [imageMetadata location].coordinate.latitude];
+            longitudeStr = [NSString stringWithFormat:@"%f", [imageMetadata location].coordinate.longitude];
+        }
         [parameters setValue:@{@"lat" : latitudeStr, @"lon" : longitudeStr} forKey:@"gis"];
         
         // Retrieve the image orientation from the ALAsset
@@ -361,13 +369,12 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
         // Media
         CGImageRef iref = [assetRepresentation fullResolutionImage];
         if (iref) {
-            UIImage* mediaImage = [[UIImage imageWithCGImage:iref scale:1 orientation:orientation] retain];
+            UIImage* mediaImage = [UIImage imageWithCGImage:iref scale:1 orientation:orientation];
             if (mediaImage.size.width > MEDIA_MAX_WIDHT) {
                 CGFloat imageHeight = (MEDIA_MAX_WIDHT/mediaImage.size.width)*mediaImage.size.height;
                 CGSize newSize = CGSizeMake(MEDIA_MAX_WIDHT, imageHeight);
-                [mediaImage resizedImageToSize:newSize];
+                mediaImage = [mediaImage resizedImageToFitInSize:newSize scaleIfSmaller:YES];
             }
-            
             NSData* imageData = [NSData dataWithData:UIImageJPEGRepresentation(mediaImage, 1.0f)];
             NSDictionary *document = @{
             @"name" : [NSString stringWithFormat:@"%@.jpg",title],

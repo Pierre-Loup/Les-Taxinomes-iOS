@@ -10,6 +10,9 @@
 		37D2E7DE144709ED0044EC3A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7DD144709ED0044EC3A /* UIKit.framework */; };
 		37D2E7E0144709ED0044EC3A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7DF144709ED0044EC3A /* Foundation.framework */; };
 		37D2E7E2144709ED0044EC3A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7E1144709ED0044EC3A /* CoreGraphics.framework */; };
+		A50FC3AC1699C143003F10D8 /* libMNMBottomPullToRefresh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A50FC3AB1699C143003F10D8 /* libMNMBottomPullToRefresh.a */; };
+		A50FC3AD1699C148003F10D8 /* libMNMBottomPullToRefresh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A50FC3AB1699C143003F10D8 /* libMNMBottomPullToRefresh.a */; };
+		A50FC3AF1699C16E003F10D8 /* libMNMBottomPullToRefresh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A50FC3AB1699C143003F10D8 /* libMNMBottomPullToRefresh.a */; };
 		A520285B16203434006EF054 /* NSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A520285A16203434006EF054 /* NSStringAdditions.m */; };
 		A520285C16203434006EF054 /* NSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A520285A16203434006EF054 /* NSStringAdditions.m */; };
 		A520285D16203434006EF054 /* NSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A520285A16203434006EF054 /* NSStringAdditions.m */; };
@@ -34,9 +37,6 @@
 		A52028A8162037D9006EF054 /* XMLRPCResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = A5202895162037D9006EF054 /* XMLRPCResponse.m */; };
 		A52028A9162037D9006EF054 /* XMLRPCResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = A5202895162037D9006EF054 /* XMLRPCResponse.m */; };
 		A52028AA162037D9006EF054 /* XMLRPCResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = A5202895162037D9006EF054 /* XMLRPCResponse.m */; };
-		A5402562167E29E00038B229 /* libMNMBottomPullToRefresh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5402561167E29E00038B229 /* libMNMBottomPullToRefresh.a */; };
-		A540256A167E2FFE0038B229 /* libMNMBottomPullToRefresh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5402561167E29E00038B229 /* libMNMBottomPullToRefresh.a */; };
-		A540256B167E2FFF0038B229 /* libMNMBottomPullToRefresh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5402561167E29E00038B229 /* libMNMBottomPullToRefresh.a */; };
 		A5402582167E31620038B229 /* MNMBottomPullToRefreshArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A5402580167E31620038B229 /* MNMBottomPullToRefreshArrow.png */; };
 		A5402583167E31620038B229 /* MNMBottomPullToRefreshArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A5402580167E31620038B229 /* MNMBottomPullToRefreshArrow.png */; };
 		A5402584167E31620038B229 /* MNMBottomPullToRefreshArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A5402580167E31620038B229 /* MNMBottomPullToRefreshArrow.png */; };
@@ -643,6 +643,7 @@
 		37D2E7DF144709ED0044EC3A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		37D2E7E1144709ED0044EC3A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		37D2E7F8144709EE0044EC3A /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		A50FC3AB1699C143003F10D8 /* libMNMBottomPullToRefresh.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMNMBottomPullToRefresh.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A520285916203434006EF054 /* NSStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringAdditions.h; sourceTree = "<group>"; };
 		A520285A16203434006EF054 /* NSStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringAdditions.m; sourceTree = "<group>"; };
 		A5202886162037D9006EF054 /* XMLRPCConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLRPCConnection.h; sourceTree = "<group>"; };
@@ -661,7 +662,6 @@
 		A5202893162037D9006EF054 /* XMLRPCRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLRPCRequest.m; sourceTree = "<group>"; };
 		A5202894162037D9006EF054 /* XMLRPCResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLRPCResponse.h; sourceTree = "<group>"; };
 		A5202895162037D9006EF054 /* XMLRPCResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLRPCResponse.m; sourceTree = "<group>"; };
-		A5402561167E29E00038B229 /* libMNMBottomPullToRefresh.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMNMBottomPullToRefresh.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5402580167E31620038B229 /* MNMBottomPullToRefreshArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MNMBottomPullToRefreshArrow.png; sourceTree = "<group>"; };
 		A5402581167E31620038B229 /* MNMBottomPullToRefreshArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MNMBottomPullToRefreshArrow@2x.png"; sourceTree = "<group>"; };
 		A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -984,7 +984,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5402562167E29E00038B229 /* libMNMBottomPullToRefresh.a in Frameworks */,
+				A50FC3AC1699C143003F10D8 /* libMNMBottomPullToRefresh.a in Frameworks */,
 				A5D38684167153AE006A1D4B /* MessageUI.framework in Frameworks */,
 				C8339C2814ED6366000A4E37 /* AssetsLibrary.framework in Frameworks */,
 				A5582F4D15A4D9D1008F2F93 /* QuartzCore.framework in Frameworks */,
@@ -1011,6 +1011,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A50FC3AD1699C148003F10D8 /* libMNMBottomPullToRefresh.a in Frameworks */,
 				A5AC0A4015DABF31000F9311 /* AssetsLibrary.framework in Frameworks */,
 				A5AC0A4115DABF31000F9311 /* QuartzCore.framework in Frameworks */,
 				A5AC0A4215DABF31000F9311 /* AudioToolbox.framework in Frameworks */,
@@ -1030,7 +1031,6 @@
 				A5AC0A5015DABF31000F9311 /* Foundation.framework in Frameworks */,
 				A5AC0A5115DABF31000F9311 /* CoreGraphics.framework in Frameworks */,
 				A5D38685167153B9006A1D4B /* MessageUI.framework in Frameworks */,
-				A540256A167E2FFE0038B229 /* libMNMBottomPullToRefresh.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1038,6 +1038,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A50FC3AF1699C16E003F10D8 /* libMNMBottomPullToRefresh.a in Frameworks */,
 				A5CCFEF01643CEBE00FA4ABF /* AssetsLibrary.framework in Frameworks */,
 				A5CCFEF11643CEBE00FA4ABF /* QuartzCore.framework in Frameworks */,
 				A5CCFEF21643CEBE00FA4ABF /* AudioToolbox.framework in Frameworks */,
@@ -1057,7 +1058,6 @@
 				A5CCFF001643CEBE00FA4ABF /* Foundation.framework in Frameworks */,
 				A5CCFF011643CEBE00FA4ABF /* CoreGraphics.framework in Frameworks */,
 				A5D38686167153BA006A1D4B /* MessageUI.framework in Frameworks */,
-				A540256B167E2FFF0038B229 /* libMNMBottomPullToRefresh.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1114,7 +1114,7 @@
 		37D2E7DC144709ED0044EC3A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A5402561167E29E00038B229 /* libMNMBottomPullToRefresh.a */,
+				A50FC3AB1699C143003F10D8 /* libMNMBottomPullToRefresh.a */,
 				A5D38683167153AE006A1D4B /* MessageUI.framework */,
 				C83D43D415ED471700148CD2 /* GHUnitIOS.framework */,
 				A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */,
@@ -2705,7 +2705,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2718,12 +2718,13 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "LesTaxinomes/Supporting Files/LesTaxinomes-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/LesTaxinomes-blkgtxnfqictavhfihzwkgupaxra/Build/Products/Debug-iphoneos\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -2734,7 +2735,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2747,12 +2748,13 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "LesTaxinomes/Supporting Files/LesTaxinomes-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/LesTaxinomes-blkgtxnfqictavhfihzwkgupaxra/Build/Products/Debug-iphoneos\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -2776,7 +2778,11 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "LesTaxinomes/Supporting Files/LesTaxinomes-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/LesTaxinomes-blkgtxnfqictavhfihzwkgupaxra/Build/Products/Debug-iphoneos\"",
+				);
 				PRODUCT_NAME = LesTaxinomes;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -2802,7 +2808,11 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "LesTaxinomes/Supporting Files/LesTaxinomes-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/LesTaxinomes-blkgtxnfqictavhfihzwkgupaxra/Build/Products/Debug-iphoneos\"",
+				);
 				PRODUCT_NAME = LesTaxinomes;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -2828,7 +2838,11 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Geodiversite/Supporting Files/Geodiversite-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/LesTaxinomes-blkgtxnfqictavhfihzwkgupaxra/Build/Products/Debug-iphoneos\"",
+				);
 				PRODUCT_NAME = "Géodiversité";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -2854,7 +2868,11 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Geodiversite/Supporting Files/Geodiversite-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/LesTaxinomes-blkgtxnfqictavhfihzwkgupaxra/Build/Products/Debug-iphoneos\"",
+				);
 				PRODUCT_NAME = "Géodiversité";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -2887,6 +2905,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "LesTaxinomesTests/LesTaxinomesTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/LesTaxinomes-blkgtxnfqictavhfihzwkgupaxra/Build/Products/Debug-iphoneos\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -2921,6 +2943,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "LesTaxinomesTests/LesTaxinomesTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/LesTaxinomes-blkgtxnfqictavhfihzwkgupaxra/Build/Products/Debug-iphoneos\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",

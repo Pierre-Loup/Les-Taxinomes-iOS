@@ -71,6 +71,7 @@ typedef enum LTConnectionManagerError {
 - (void)addMediaWithTitle:(NSString *)title
                      text:(NSString *)text
                   license:(License *)license
+                 location:(CLLocation*)location
                  assetURL:(NSURL *)assetURL
             responseBlock:(void (^)(Media* media, NSError *error))responseBlock;
 

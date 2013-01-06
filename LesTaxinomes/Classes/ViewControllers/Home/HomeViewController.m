@@ -148,6 +148,11 @@
                                                   [mediaUploadVC release];
                                               }
                                         }];
+                                  } else {
+                                      [self dismissModalViewControllerAnimated:YES];
+                                      MediaUploadFormViewController* mediaUploadVC = [[MediaUploadFormViewController alloc] initWithAssetURL:chosenImageAssetURL];
+                                      [self.navigationController pushViewController:mediaUploadVC animated:YES];
+                                      [mediaUploadVC release];
                                   }
                               }
                           } onCancel:^{}];
@@ -166,6 +171,8 @@
         self.mediaToShareAssetURL = nil;
         [self.navigationController pushViewController:mediaUploadVC animated:YES];
         [mediaUploadVC release];
+    } else {
+        [self dismissModalViewControllerAnimated:YES];
     }
 }
 
