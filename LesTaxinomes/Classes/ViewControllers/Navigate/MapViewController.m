@@ -166,6 +166,8 @@
             } else if ([error shouldBeDisplayed]) {
                 [UIAlertView showWithError:error];
                 [self.hud hide:NO];
+                self.reloadBarButton.enabled = YES;
+                self.scanBarButton.enabled = YES;
             }
         }];
     }

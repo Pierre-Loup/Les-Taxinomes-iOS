@@ -85,6 +85,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     if ([[self.mediasListResultController fetchedObjects] count] == 0) {
         [self showDefaultHud];
         [self loadMoreMedias];
