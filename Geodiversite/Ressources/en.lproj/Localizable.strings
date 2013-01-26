@@ -28,7 +28,7 @@
 "common.license" = "License";
 
 /* HOME */
-"home.welcom_text" = "Welcome to Geodiversite.NET !\n\nYou like rocks?\n\nHere, you will be able to share knowledge about geology of your country !\n\n With the site and the iPhone application \"Geodiversite.NET\", you are making one's contribution.";
+"home.welcom_text" = "Welcome to Geodiversite.NET !\n\nYou like rocks?\n\nHere, you will be able to share knowledge about geology of your country !\n\n With the site and the iPhone application \"Géodiversité\", you are making one's contribution.";
 
 /* LEGAL INFORMATIONS*/
 "legal_informations.title" = "Legal notes";

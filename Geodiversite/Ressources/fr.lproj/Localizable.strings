@@ -28,7 +28,7 @@
 "common.license" = "Licence";
 
 /* HOME */
-"home.welcom_text" = "Bienvenue sur Géodiversité.NET !\n\nVous aimez les cailloux ?\n\nVous allez pouvoir partager vos connaissances et découvrir la géologie de votre région !\n\nGrâce au site et à l'application iPhone \"Géodiv\", apportez votre pierre à l'édifice !";
+"home.welcom_text" = "Bienvenue sur Géodiversité.NET !\n\nVous aimez les cailloux ?\n\nVous allez pouvoir partager vos connaissances et découvrir la géologie de votre région !\n\nGrâce au site et à l'application iPhone \"Géodiversité\", apportez votre pierre à l'édifice !";
 
 /* LEGAL INFORMATIONS*/
 "legal_informations.title" = "Mentions Légales";
