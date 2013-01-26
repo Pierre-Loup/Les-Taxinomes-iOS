@@ -1,0 +1,155 @@
+//
+//  NavigateByURL.m
+//  TestURLNavigation
+//
+//  Created by Aymeric DE ABREU on 25/01/12.
+//  Copyright (c) 2012 Niji - Dsquare. All rights reserved.
+//
+
+#import "NFNavigationByURL.h"
+
+@implementation NFNavigationByURL
+
+@synthesize delegate = _delegate;
+
+- (id)initWithURL:(NSURL*)url
+{
+    self = [super init];
+    if (self) {
+        
+        NSString* strToSeparate;
+        NSArray* comps = [[url absoluteString] componentsSeparatedByString:@"://"];
+        
+        if ([comps count] > 1) {
+            strToSeparate = [comps objectAtIndex:1];
+        }
+        else {
+            strToSeparate = [comps objectAtIndex:0];
+        }
+        viewControllers_ = [[NSMutableArray alloc] init];
+        arrayOfParameters_ = [[NSMutableArray alloc] init];
+        for (NSString* comp in [strToSeparate componentsSeparatedByString:@"/"]) {
+            NSArray* otherComponents = [comp componentsSeparatedByString:@"?"];
+            if ([otherComponents count] == 1) {
+                [arrayOfParameters_ addObject:[NSDictionary dictionary]];
+            }
+            else
+            {
+                NSString* parameters = [otherComponents objectAtIndex:1];
+                NSArray* couples = [parameters componentsSeparatedByString:@"&"];
+                NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+                for (NSString* param in couples) {
+                    NSArray* keyObject = [param componentsSeparatedByString:@"="];
+                    if ([keyObject count] == 2) {
+                        [params setObject:[keyObject objectAtIndex:1] forKey:[keyObject objectAtIndex:0]];
+                    }
+                }
+                [arrayOfParameters_ addObject:params];
+                [params release];
+            }
+            [viewControllers_ addObject:[otherComponents objectAtIndex:0]];
+        }
+        indexViewController_ = 0;
+
+    }
+    return self;
+}
+
+- (void)buildNavigationOnRootController:(UIViewController*)rootController
+{
+    if (indexViewController_ >= [viewControllers_ count]) {
+        if ([delegate_ respondsToSelector:@selector(urlNavigationDidFinish:)]) {
+            [delegate_ urlNavigationDidFinish:self];
+        }
+        return;
+    }
+    RELEASE_SAFELY(rootController_);
+
+    NSString* controllerToLoad = [viewControllers_ objectAtIndex:indexViewController_];
+    if ([rootController isKindOfClass:[UITabBarController class]]) {
+        Class controllerClass = NSClassFromString(controllerToLoad);
+        for (UIViewController* vc in ((UITabBarController*)rootController).viewControllers) {
+            if ([vc isKindOfClass:[UINavigationController class]]) {
+                NSArray* viewControllers = [(UINavigationController*)vc viewControllers];
+                if([viewControllers count]>0 && [[((UINavigationController*)vc).viewControllers objectAtIndex:0] isKindOfClass:controllerClass])
+                {
+                    [((UINavigationController*)vc) popToRootViewControllerAnimated:NO];
+                    ((UITabBarController*)rootController).selectedViewController = vc;
+                    rootController_ = [((UINavigationController*)vc).topViewController retain];
+                }
+            }
+            else
+            {
+                if ([vc isKindOfClass:controllerClass]) {
+                    ((UITabBarController*)rootController).selectedViewController = vc;
+                    rootController_ = [vc retain];
+                }
+            }
+        }
+
+        if([rootController_ respondsToSelector:@selector(navigationURL:applyParams:)]){
+            [(id<URLControllerNavigationDelegate>)rootController_ navigationURL:self applyParams:[arrayOfParameters_ objectAtIndex:indexViewController_]];
+        }
+
+        indexViewController_++;
+        [self buildNavigationOnRootController:rootController_];
+    }
+    else if([rootController isKindOfClass:[UINavigationController class]])
+    {
+        [((UINavigationController*)rootController) popToRootViewControllerAnimated:NO];
+        rootController_ = [((UINavigationController*)rootController).topViewController retain];
+
+        if([rootController_ respondsToSelector:@selector(navigationURL:applyParams:)]){
+            [(id<URLControllerNavigationDelegate>)rootController_ navigationURL:self applyParams:[arrayOfParameters_ objectAtIndex:indexViewController_]];
+        }
+
+        [self buildNavigationOnRootController:rootController_];
+    }
+    else
+    {
+        Class controllerClass = NSClassFromString(controllerToLoad);
+        rootController_ = [rootController retain];
+        NSAssert([controllerClass conformsToProtocol:@protocol(URLControllerNavigationDelegate)], @"The class %@ in the path must conform to URLControllerNavigationDelegate", controllerToLoad);
+        if ([controllerClass conformsToProtocol:@protocol(URLControllerNavigationDelegate)]) {
+            [nextController_ release];
+            nextController_ = [[controllerClass alloc] initFromURLWithPreviousController:rootController withParams:[arrayOfParameters_ objectAtIndex:indexViewController_] andNavigationURL:self];
+
+        }
+        else
+        {
+            
+            if ([delegate_ respondsToSelector:@selector(urlNavigationDidFinish:)]) {
+                [delegate_ urlNavigationDidFinish:self];
+            }
+        }
+ 
+        
+        
+    }
+}
+
+- (void)controllerFinishedInit:(UIViewController*)viewController 
+{
+    
+    [rootController_.navigationController pushViewController:viewController animated:NO];
+    indexViewController_++;
+    if (indexViewController_ >= [viewControllers_ count]) {
+        if ([delegate_ respondsToSelector:@selector(urlNavigationDidFinish:)]) {
+            [delegate_ urlNavigationDidFinish:self];
+        }
+        return;
+    }
+    [self buildNavigationOnRootController:viewController];
+}
+
+- (void)dealloc {
+    [nextController_ release];
+    [rootController_ release];
+    [viewControllers_ release];
+    [arrayOfParameters_ release];
+    
+    [super dealloc];
+}
+
+@end
+

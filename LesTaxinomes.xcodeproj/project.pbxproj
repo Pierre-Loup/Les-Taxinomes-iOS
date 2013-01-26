@@ -56,7 +56,6 @@
 		A56565B8167294B900DF37B9 /* default_avatar_medium@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A56565A3167294B900DF37B9 /* default_avatar_medium@2x.png */; };
 		A56565B9167294B900DF37B9 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A56565A4167294B900DF37B9 /* Icon.png */; };
 		A56565BA167294B900DF37B9 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A56565A5167294B900DF37B9 /* Icon@2x.png */; };
-		A56565BB167294B900DF37B9 /* Icon@AppStore.png in Resources */ = {isa = PBXBuildFile; fileRef = A56565A6167294B900DF37B9 /* Icon@AppStore.png */; };
 		A56565C41672A19000DF37B9 /* background-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A56565C31672A19000DF37B9 /* background-568h@2x.png */; };
 		A56565C81672A20A00DF37B9 /* tabbar_account.png in Resources */ = {isa = PBXBuildFile; fileRef = A585603A15F90B4700446653 /* tabbar_account.png */; };
 		A56565CA1672A20A00DF37B9 /* tabbar_home.png in Resources */ = {isa = PBXBuildFile; fileRef = A585603C15F90B4700446653 /* tabbar_home.png */; };
@@ -396,7 +395,6 @@
 		A5CCFEFF1643CEBE00FA4ABF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7DD144709ED0044EC3A /* UIKit.framework */; };
 		A5CCFF001643CEBE00FA4ABF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7DF144709ED0044EC3A /* Foundation.framework */; };
 		A5CCFF011643CEBE00FA4ABF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7E1144709ED0044EC3A /* CoreGraphics.framework */; };
-		A5CCFF071643CEBE00FA4ABF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A585601E15F90B4700446653 /* Localizable.strings */; };
 		A5CCFF1C1643CEBE00FA4ABF /* JesayaFree.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A585604015F90B4700446653 /* JesayaFree.ttf */; };
 		A5CCFF1F1643CEBE00FA4ABF /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585624015F90BAD00446653 /* MainWindow.xib */; };
 		A5CCFF201643CEBE00FA4ABF /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585624515F90BAD00446653 /* MainWindow_iPad.xib */; };
@@ -2096,7 +2094,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5CCFF071643CEBE00FA4ABF /* Localizable.strings in Resources */,
 				A5CCFF1C1643CEBE00FA4ABF /* JesayaFree.ttf in Resources */,
 				A5CCFF1F1643CEBE00FA4ABF /* MainWindow.xib in Resources */,
 				A5CCFF201643CEBE00FA4ABF /* MainWindow_iPad.xib in Resources */,
@@ -2141,7 +2138,6 @@
 				A56565B8167294B900DF37B9 /* default_avatar_medium@2x.png in Resources */,
 				A56565B9167294B900DF37B9 /* Icon.png in Resources */,
 				A56565BA167294B900DF37B9 /* Icon@2x.png in Resources */,
-				A56565BB167294B900DF37B9 /* Icon@AppStore.png in Resources */,
 				A56565C41672A19000DF37B9 /* background-568h@2x.png in Resources */,
 				A56565C81672A20A00DF37B9 /* tabbar_account.png in Resources */,
 				A56565CA1672A20A00DF37B9 /* tabbar_home.png in Resources */,

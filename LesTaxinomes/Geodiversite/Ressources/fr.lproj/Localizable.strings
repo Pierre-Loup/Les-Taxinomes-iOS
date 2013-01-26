@@ -1,0 +1,82 @@
+/* 
+  Localization.string.strings
+  LesTaxinomes
+
+  Created by Pierre-Loup Tristant on 30/04/12.
+  Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
+*/
+
+"common.cancel" = "Annuler";
+"common.ok" = "OK";
+"common.back" = "Retour";
+"common.loading" = "Chargement";
+"common.logout" = "Déconnexion";
+"common.signin" = "Connexion";
+"common.finish" = "Terminer";
+"common.share" = "Partager";
+"common.title" = "Titre";
+"common.texte" = "Texte";
+"common.city" = "Ville";
+"common.zipcode" = "Code postal";
+"common.country" = "Pays";
+"common.media" = "Média";
+"common.author" = "Auteur";
+"common.description" = "Description";
+"common.map" = "Carte";
+"common.anonymous" = "Anonyme";
+"common.by" = "Par";
+"common.license" = "Licence";
+
+/* HOME */
+"home.welcom_text" = "Bienvenue sur Géodiversité.NET !\n\nVous aimez les cailloux ?\n\nVous allez pouvoir partager vos connaissances et découvrir la géologie de votre région !\n\nGrâce au site et à l'application iPhone \"Géodiv\", apportez votre pierre à l'édifice !";
+
+/* LEGAL INFORMATIONS*/
+"legal_informations.title" = "Mentions Légales";
+
+/* MEDIA DETAIL VC*/
+"media_detail.no_text" = "Pas de description";
+"media_detail.publish_info_patern" = "Publié par %@ le %@\n%d vues";
+
+/* ACCOUNT */
+"account_uploas_media" = "Publier un média";
+"account_my_medias" = "Mes médias";
+
+/* MEDIA UPLOAD FORM */
+"media_upload_view_title" = "Partager";
+"media_upload_no_title" = "Sans titre";
+"media_upload_no_license_text" = "Aucune licence";
+"media_upload.location_picker_cell.text" = "Localisation du média";
+"media_upload.text_prefix" = "Média partagé avec l'application Géodiversité pour iPhone";
+"media_upload.confirm.title" = "Partage réussi";
+"media_upload.confirm.text" = "Le média a bien été partagé.";
+
+/* ERROR */
+"error.network.title" = "Problème réseau";
+"error.network.text" = "Vérifiez que vous êtes connecté au wifi ou au réseau internet mobile";
+"error.auth_failed.title" = "L'authentification à échouée";
+"error.auth_failed.text" = "Vérifiez votre que votre login et votre mot de passe";
+"error.upload_failed.title" = "Partage échoué";
+"error.upload_failed.text" = "Le partage du média a échoué. Réésayez plus tard";
+"error.internal.title" = "Erreur interne";
+"error.internal.text" = "Une erreur interne s'est produite. Si le problème persite, merci de nous envoyer une email à contact@maison-des-mineraux.org";
+
+/* MEDIA LOCATION PICKER */
+"media_location_picker.drag_me" = "Deplacez moi !";
+
+/* PHOTO ACTION SHEET */
+"photo_action_sheet.camera" = "Appareil photo";
+"photo_action_sheet.photo_library" = "Bibliothèque";
+
+/* ERROR */
+"error.network.title" = "Problème réseau";
+"error.network.text" = "Vérifiez que vous êtes connecté au wifi ou au réseau internet mobile";
+"error.auth_failed.title" = "L'authentification à échouée";
+"error.auth_failed.text" = "Vérifiez votre que votre login et votre mot de passe";
+"error.upload_failed.title" = "Partage échoué";
+"error.upload_failed.text" = "Le partage du média a échoué. Réésayez plus tard";
+"error.internal.title" = "Erreur interne";
+"error.internal.text" = "Une erreur interne s'est produite. Si le problème persite, merci de nous envoyer une email à bretagne@lespetitsdebrouillards.org";
+
+"MNM_BOTTOM_PTR_PULL_TEXT" = "Tirer pour voir plus...";
+"MNM_BOTTOM_PTR_RELEASE_TEXT" = "Relacher";
+"MNM_BOTTOM_PTR_LOADING_TEXT" = "Chargement...";
