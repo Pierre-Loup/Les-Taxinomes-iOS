@@ -1,0 +1,291 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A540252B167E27FF0038B229 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A540252A167E27FF0038B229 /* Foundation.framework */; };
+		A5402559167E281F0038B229 /* MNMBottomPullToRefreshManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A5402556167E281F0038B229 /* MNMBottomPullToRefreshManager.m */; };
+		A540255A167E281F0038B229 /* MNMBottomPullToRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5402558167E281F0038B229 /* MNMBottomPullToRefreshView.m */; };
+		A5402560167E296C0038B229 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A540255E167E29480038B229 /* UIKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A5402525167E27FF0038B229 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A5402527167E27FF0038B229 /* libMNMBottomPullToRefresh.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMNMBottomPullToRefresh.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A540252A167E27FF0038B229 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A540252E167E27FF0038B229 /* MNMBottomPullToRefresh-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MNMBottomPullToRefresh-Prefix.pch"; sourceTree = "<group>"; };
+		A5402555167E281F0038B229 /* MNMBottomPullToRefreshManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNMBottomPullToRefreshManager.h; sourceTree = "<group>"; };
+		A5402556167E281F0038B229 /* MNMBottomPullToRefreshManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNMBottomPullToRefreshManager.m; sourceTree = "<group>"; };
+		A5402557167E281F0038B229 /* MNMBottomPullToRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNMBottomPullToRefreshView.h; sourceTree = "<group>"; };
+		A5402558167E281F0038B229 /* MNMBottomPullToRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNMBottomPullToRefreshView.m; sourceTree = "<group>"; };
+		A540255E167E29480038B229 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A5402571167E30550038B229 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		A5402575167E30550038B229 /* MMBottomPullToRefreshBundle-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MMBottomPullToRefreshBundle-Info.plist"; sourceTree = "<group>"; };
+		A5402577167E30550038B229 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A5402579167E30550038B229 /* MMBottomPullToRefreshBundle-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MMBottomPullToRefreshBundle-Prefix.pch"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A5402524167E27FF0038B229 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5402560167E296C0038B229 /* UIKit.framework in Frameworks */,
+				A540252B167E27FF0038B229 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A540251C167E27FF0038B229 = {
+			isa = PBXGroup;
+			children = (
+				A540252C167E27FF0038B229 /* MNMBottomPullToRefresh */,
+				A5402573167E30550038B229 /* MMBottomPullToRefreshBundle */,
+				A5402529167E27FF0038B229 /* Frameworks */,
+				A5402528167E27FF0038B229 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A5402528167E27FF0038B229 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A5402527167E27FF0038B229 /* libMNMBottomPullToRefresh.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A5402529167E27FF0038B229 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A540255E167E29480038B229 /* UIKit.framework */,
+				A540252A167E27FF0038B229 /* Foundation.framework */,
+				A5402571167E30550038B229 /* CoreFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A540252C167E27FF0038B229 /* MNMBottomPullToRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				A5402555167E281F0038B229 /* MNMBottomPullToRefreshManager.h */,
+				A5402556167E281F0038B229 /* MNMBottomPullToRefreshManager.m */,
+				A5402557167E281F0038B229 /* MNMBottomPullToRefreshView.h */,
+				A5402558167E281F0038B229 /* MNMBottomPullToRefreshView.m */,
+				A540252D167E27FF0038B229 /* Supporting Files */,
+			);
+			path = MNMBottomPullToRefresh;
+			sourceTree = "<group>";
+		};
+		A540252D167E27FF0038B229 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A540252E167E27FF0038B229 /* MNMBottomPullToRefresh-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A5402573167E30550038B229 /* MMBottomPullToRefreshBundle */ = {
+			isa = PBXGroup;
+			children = (
+				A5402574167E30550038B229 /* Supporting Files */,
+			);
+			path = MMBottomPullToRefreshBundle;
+			sourceTree = "<group>";
+		};
+		A5402574167E30550038B229 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A5402575167E30550038B229 /* MMBottomPullToRefreshBundle-Info.plist */,
+				A5402576167E30550038B229 /* InfoPlist.strings */,
+				A5402579167E30550038B229 /* MMBottomPullToRefreshBundle-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A5402526167E27FF0038B229 /* MNMBottomPullToRefresh */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A540254C167E27FF0038B229 /* Build configuration list for PBXNativeTarget "MNMBottomPullToRefresh" */;
+			buildPhases = (
+				A5402523167E27FF0038B229 /* Sources */,
+				A5402524167E27FF0038B229 /* Frameworks */,
+				A5402525167E27FF0038B229 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MNMBottomPullToRefresh;
+			productName = MNMBottomPullToRefresh;
+			productReference = A5402527167E27FF0038B229 /* libMNMBottomPullToRefresh.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A540251E167E27FF0038B229 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Pierre-Loup Tristant";
+			};
+			buildConfigurationList = A5402521167E27FF0038B229 /* Build configuration list for PBXProject "MNMBottomPullToRefresh" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				fr,
+			);
+			mainGroup = A540251C167E27FF0038B229;
+			productRefGroup = A5402528167E27FF0038B229 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A5402526167E27FF0038B229 /* MNMBottomPullToRefresh */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A5402523167E27FF0038B229 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5402559167E281F0038B229 /* MNMBottomPullToRefreshManager.m in Sources */,
+				A540255A167E281F0038B229 /* MNMBottomPullToRefreshView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A5402576167E30550038B229 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A5402577167E30550038B229 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A540254A167E27FF0038B229 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		A540254B167E27FF0038B229 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A540254D167E27FF0038B229 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/MNMBottomPullToRefresh.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MNMBottomPullToRefresh/MNMBottomPullToRefresh-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		A540254E167E27FF0038B229 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/MNMBottomPullToRefresh.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MNMBottomPullToRefresh/MNMBottomPullToRefresh-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A5402521167E27FF0038B229 /* Build configuration list for PBXProject "MNMBottomPullToRefresh" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A540254A167E27FF0038B229 /* Debug */,
+				A540254B167E27FF0038B229 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A540254C167E27FF0038B229 /* Build configuration list for PBXNativeTarget "MNMBottomPullToRefresh" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A540254D167E27FF0038B229 /* Debug */,
+				A540254E167E27FF0038B229 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A540251E167E27FF0038B229 /* Project object */;
+}

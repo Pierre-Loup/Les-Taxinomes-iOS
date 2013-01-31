@@ -1,9 +1,9 @@
-Les Taxinomes iPhone is free software: you can redistribute it and/or modify
+LesTaxinomes is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Les Taxinomes iPhone is distributed in the hope that it will be useful,
+    LesTaxinomes is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
@@ -14,22 +14,25 @@ Les Taxinomes iPhone is free software: you can redistribute it and/or modify
 A different license may apply to other software included in this package, 
 including :
 
-- GHUnit and Andrew Donoho's Reachability class.  (Taxinomes/classes/ExternalSources/Reachability/)
-- All-Seeing Interactive's ASIHTTPRequest classes.   (Taxinomes/classes/ExternalSources/ASI/)
-- World Wide Web Consortium's tidy library.  (Taxinomes/classes/ExternalSources/c_tidy/)
-- Divisible by Zero's Cocoa XML-RPC Client Framework (Taxinomes/classes/ExternalSources/XML-RPC/)
-- toxicsoftware.com's CTidy class. (Taxinomes/classes/ExternalSources/)
-- Michael Waterfall and Danilo Ercoli's NSString+XMLExtensions class (Taxinomes/classes/ExternalSources/)
-- Gustavo Pelosi Ambrozio's NSMutableDictionary+ImageMetadata class (Taxinomes/classes/ExternalSources/GusUtils/)
-- Matt Gallagher's NSData+Base64 class (Taxinomes/classes/ExternalSources/)
-- Trevor Harmon's UIImage+Resize class (Taxinomes/classes/ExternalSources/)
-- Matej Bukovinski's MBProgressHUD class (Taxinomes/classes/ExternalSources/)
-- First Water Tech Ltd's UIGlossyButton class (Taxinomes/classes/ExternalSources/)
-- Seymour Cakes's UIImageView+PhotoFrame category (Taxinomes/classes/ExternalSources/)
+- Reachability class by Apple and Andrew Donoho's
+- Cocoa XML-RPC framework by Divisible by Zero's
+- toxicsoftware.com's CTidy class
+- NSString+XMLExtensions class by Michael Waterfall and Danilo Ercoli
+- NSMutableDictionary+ImageMetadata class by Gustavo Pelosi Ambrozio
+- NSData+Base64 category by Matt Gallagher
+- UIImage+Resize category by Olivier Halligon
+- UIImageView+PhotoFrame categorySeymour Cakes
+- MBProgressHUD classMatej Bukovinski
+- UIGlossyButton class by First Water Tech Ltd's
+- DCIntrospect tool by Patrick Richards and Domestic Cat Software
+- AFNetworking framework Gowolla
+- MagicalRecord framework by Magical Panda Software
+- EGOPhotoViewer by enormego
 
-Please consult their respective headers for the terms of their individual licenses.
+Please consult their respective headers for the terms of their individual licenses in header files (Taxinomes/classes/ExternalSources/).
 
 The images files of the Taxinomes/images are copyrighted :
 
 Tab bar icons to Joseph Wain and Glyphish (http://glyphish.com)
+The image in EGOPhotoViewer's Ressources folder to enormego (http://developers.enormego.com)
 all other image files to Anthony Bossard and Les Petits Débrouillards Bretagne.
