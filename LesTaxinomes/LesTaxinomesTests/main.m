@@ -3,7 +3,7 @@
 //  LesTaxinomesTests
 //
 //  Created by Pierre-Loup Tristant on 28/08/12.
-//  Copyright (c) 2012  Les Petits Débrouillards Bretagne. All rights reserved.
+//  Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
