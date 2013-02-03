@@ -166,12 +166,12 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
                                                                       success:successBlock
                                                                       failure:failureBlock];
     if (downloadProgressBlock)
-        [operation setDownloadProgressBlock:^(NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
             downloadProgressBlock(((CGFloat)totalBytesRead)/((CGFloat)totalBytesExpectedToRead));
         }];
 
     if (uploadProgressBlock)
-        [operation setUploadProgressBlock:^(NSInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
             uploadProgressBlock(((CGFloat)totalBytesWritten)/((CGFloat)totalBytesExpectedToWrite));
         }];
     operation.successCallbackQueue = xmlrpc_request_operation_processing_queue();
