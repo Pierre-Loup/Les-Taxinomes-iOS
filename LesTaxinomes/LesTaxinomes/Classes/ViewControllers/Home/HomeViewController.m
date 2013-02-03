@@ -35,8 +35,8 @@
 #pragma mark - Private interface
 
 @interface HomeViewController () <LTAuthenticationSheetDelegate>
-@property (nonatomic, retain) IBOutlet UILabel* welcomLabel;
-@property (nonatomic, retain) NSURL* mediaToShareAssetURL;
+@property (nonatomic, strong) IBOutlet UILabel* welcomLabel;
+@property (nonatomic, strong) NSURL* mediaToShareAssetURL;
 @property (nonatomic, assign) BOOL shouldPresentAuthenticationSheet;
 @end
 
@@ -57,10 +57,6 @@
     return self;
 }
 
-- (void)dealloc {
-    [_welcomLabel release];
-    [super dealloc];
-}
 
 - (void)viewDidLoad
 {
@@ -76,11 +72,9 @@
     [infoButton addTarget:self action:@selector(infoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
     [self.navigationItem setLeftBarButtonItem:leftButton animated:YES];
-    [leftButton release];
     
     UIBarButtonItem* cameraBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(cameraButtonAction:)];
     [self.navigationItem setRightBarButtonItem:cameraBarButton animated:YES];
-    [cameraBarButton release];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -109,8 +103,6 @@
     UINavigationController * navigationController = [[UINavigationController alloc] initWithRootViewController:authenticationSheetViewController];
     authenticationSheetViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentModalViewController:navigationController animated:animated];
-    [authenticationSheetViewController release];
-    [navigationController release];
 }
 
 #pragma mark Actions
@@ -118,7 +110,6 @@
 - (IBAction)infoButtonAction:(id) sender {
     LegalInformationsViewController *legalInformationsViewController = [[LegalInformationsViewController alloc] initWithNibName:@"LegalInformationsViewController" bundle:nil];
     [self.navigationController pushViewController:legalInformationsViewController animated:YES];
-    [legalInformationsViewController release];
 }
 
 - (void)cameraButtonAction:(id) sender {
@@ -145,14 +136,12 @@
                                                   [self dismissModalViewControllerAnimated:YES];
                                                   MediaUploadFormViewController* mediaUploadVC = [[MediaUploadFormViewController alloc] initWithAssetURL:chosenImageAssetURL];
                                                   [self.navigationController pushViewController:mediaUploadVC animated:YES];
-                                                  [mediaUploadVC release];
                                               }
                                         }];
                                   } else {
                                       [self dismissModalViewControllerAnimated:YES];
                                       MediaUploadFormViewController* mediaUploadVC = [[MediaUploadFormViewController alloc] initWithAssetURL:chosenImageAssetURL];
                                       [self.navigationController pushViewController:mediaUploadVC animated:YES];
-                                      [mediaUploadVC release];
                                   }
                               }
                           } onCancel:^{}];
@@ -170,7 +159,6 @@
         MediaUploadFormViewController* mediaUploadVC = [[MediaUploadFormViewController alloc] initWithAssetURL:self.mediaToShareAssetURL];
         self.mediaToShareAssetURL = nil;
         [self.navigationController pushViewController:mediaUploadVC animated:YES];
-        [mediaUploadVC release];
     } else {
         [self dismissModalViewControllerAnimated:YES];
     }

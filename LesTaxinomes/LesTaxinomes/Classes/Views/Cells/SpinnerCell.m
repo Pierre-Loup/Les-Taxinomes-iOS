@@ -11,14 +11,14 @@
 @implementation SpinnerCell
 
 + (SpinnerCell *)spinnerCell {
-    return [[[self alloc] init] autorelease];
+    return [[self alloc] init];
 }
 
 - (id)init {
     NSArray* views = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class]) owner:self options:nil];
     UIView* view = [views objectAtIndex:0];
     if ([view isKindOfClass:[self class]]) {
-        self = (SpinnerCell *)[view retain];
+        self = (SpinnerCell *)view;
         [self.spinner startAnimating];
         return self;
     } else {
@@ -26,9 +26,5 @@
     }
 }
 
-- (void)dealloc {
-    [_spinner release];
-    [super dealloc];
-}
 
 @end

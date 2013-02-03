@@ -61,10 +61,6 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Supermethods overrides
 
-- (void)dealloc {
-    [_authenticatedUser release];
-	[super dealloc];
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Public Methods
@@ -99,7 +95,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                         License* license = [License licenseWithXMLRPCResponse:xmlLicenseDict
                                                                                         error:&licenseError];
                                         if (license && ! licenseError) {
-                                            [licenses addObject:licenseError];
+                                            [licenses addObject:license];
                                         } else {
                                             LogError(@"%@", licenseError);
                                         }
@@ -433,7 +429,6 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
     } failureBlock:^(NSError *error) {
         if(responseBlock) responseBlock(nil,error);
     }];
-    [library release];
 }
 
 - (void)authWithLogin:(NSString *)login

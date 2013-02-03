@@ -10,7 +10,7 @@
 
 @interface SingleLineInputCell : UITableViewCell
 
-@property (nonatomic, retain) IBOutlet UITextField* input;
+@property (nonatomic, strong) IBOutlet UITextField* input;
 
 + (SingleLineInputCell *)singleLineInputCell;
 + (SingleLineInputCell *)singleLineInputCellWithTitle:(NSString *)title;

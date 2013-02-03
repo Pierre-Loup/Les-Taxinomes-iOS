@@ -31,10 +31,10 @@
     
 }
 
-@property (nonatomic, retain) IBOutlet IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet UITabBarController* tabBarController;
-@property (nonatomic, retain) IBOutlet UISplitViewController* splitViewController;
-@property (nonatomic, retain) UIImageView *launchScreenView;
+@property (nonatomic, strong) IBOutlet IBOutlet UIWindow *window;
+@property (nonatomic, strong) IBOutlet UITabBarController* tabBarController;
+@property (nonatomic, strong) IBOutlet UISplitViewController* splitViewController;
+@property (nonatomic, strong) UIImageView *launchScreenView;
 
 - (void) dismissLaunchScreenView:(NSTimer*)timer;
 - (void) playLaunchSound;

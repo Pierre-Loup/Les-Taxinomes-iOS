@@ -30,14 +30,14 @@
 
 @interface Author : NSManagedObject
 
-@property (nonatomic, retain) NSString * avatarURL;
-@property (nonatomic, retain) NSString * biography;
-@property (nonatomic, retain) NSNumber * identifier;
-@property (nonatomic, retain) NSDate * localUpdateDate;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSDate * signupDate;
-@property (nonatomic, retain) NSString * status;
-@property (nonatomic, retain) NSSet *medias;
+@property (nonatomic, strong) NSString * avatarURL;
+@property (nonatomic, strong) NSString * biography;
+@property (nonatomic, strong) NSNumber * identifier;
+@property (nonatomic, strong) NSDate * localUpdateDate;
+@property (nonatomic, strong) NSString * name;
+@property (nonatomic, strong) NSDate * signupDate;
+@property (nonatomic, strong) NSString * status;
+@property (nonatomic, strong) NSSet *medias;
 
 + (Author *)authorWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error;
 + (Author *)authorWithIdentifier: (NSNumber *)identifier;

@@ -28,8 +28,8 @@
 
 @interface Annotation : NSObject <MKAnnotation>
 
-@property (nonatomic, retain) NSString* title;
-@property (nonatomic, retain) NSString* subtitle;
+@property (nonatomic, strong) NSString* title;
+@property (nonatomic, strong) NSString* subtitle;
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 
 @end

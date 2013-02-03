@@ -29,8 +29,8 @@
 #define kTitleLabelMarginRight 60.0
 
 @interface LTTitleView ()
-@property (nonatomic, retain) IBOutlet UILabel* titleLabel;
-@property (nonatomic, retain) IBOutlet UIImageView* backgroundImageView;
+@property (nonatomic, strong) IBOutlet UILabel* titleLabel;
+@property (nonatomic, strong) IBOutlet UIImageView* backgroundImageView;
 - (void)setupWithFrame:(CGRect)frame;
 @end
 
@@ -39,7 +39,7 @@
 @synthesize backgroundImageView = backgroundImageView_;
 
 + (LTTitleView *)titleViewWithFrame:(CGRect)frame {
-    return [[[self alloc] initWithFrame:frame] autorelease];
+    return [[self alloc] initWithFrame:frame];
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -55,11 +55,6 @@
     [self setupWithFrame:self.bounds];
 }
 
-- (void)dealloc {
-    [titleLabel_ release];
-    [backgroundImageView_ release];
-    [super dealloc];
-}
 
 #pragma mark - Properties
 

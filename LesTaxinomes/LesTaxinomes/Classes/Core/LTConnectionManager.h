@@ -48,8 +48,8 @@ typedef enum LTConnectionManagerError {
 
 @interface LTConnectionManager : NSObject
 
-@property (nonatomic, retain) Author * authenticatedUser;
-@property (nonatomic, assign) id<LTConnectionManagerDelegate> delegate;
+@property (nonatomic, strong) Author * authenticatedUser;
+@property (nonatomic, unsafe_unretained) id<LTConnectionManagerDelegate> delegate;
 
 + (LTConnectionManager *)sharedConnectionManager;
 - (void)getLicensesWithResponseBlock:(void (^)(NSArray* licenses, NSError *error))responseBlock;

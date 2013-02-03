@@ -18,9 +18,9 @@
 #pragma mark - Private interface
 
 @interface MediaListCell ()
-@property (nonatomic, retain) IBOutlet UIImageView* image;
-@property (nonatomic, retain) IBOutlet UILabel* title;
-@property (nonatomic, retain) IBOutlet UILabel* author;
+@property (nonatomic, strong) IBOutlet UIImageView* image;
+@property (nonatomic, strong) IBOutlet UILabel* title;
+@property (nonatomic, strong) IBOutlet UILabel* author;
 @end
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@
     NSArray* views = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class]) owner:self options:nil];
     UIView* view = [views objectAtIndex:0];
     if ([view isKindOfClass:[self class]]) {
-        self = (MediaListCell *)[view retain];
+        self = (MediaListCell *)view;
         self.title.textColor = kMainColor;
         self.author.textColor = kSecondaryColor;
         return self;
@@ -50,7 +50,7 @@
 
 + (MediaListCell *)mediaListCell
 {
-    return [[[self alloc] init] autorelease];
+    return [[self alloc] init];
 }
 
 #pragma mark Properties

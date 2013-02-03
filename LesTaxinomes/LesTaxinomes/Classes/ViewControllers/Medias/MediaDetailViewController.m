@@ -36,18 +36,18 @@
     int asynchLoadCounter_;
 }
 
-@property (nonatomic, retain) IBOutlet UIScrollView * scrollView;
-@property (nonatomic, retain) IBOutlet UIImageView * mediaImageView;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView* placeholderAIView;
-@property (nonatomic, retain) IBOutlet LTTitleView * authorTitleView;
-@property (nonatomic, retain) IBOutlet UIImageView * authorAvatarView;
-@property (nonatomic, retain) IBOutlet UILabel * authorNameLabel;
-@property (nonatomic, retain) IBOutlet LTTitleView * descTitleView;
-@property (nonatomic, retain) IBOutlet UITextView * descTextView;
-@property (nonatomic, retain) IBOutlet LTTitleView * licenseTitleView;
-@property (nonatomic, retain) IBOutlet UILabel * licenseNameLabel;
-@property (nonatomic, retain) IBOutlet LTTitleView * mapTitleView;
-@property (nonatomic, retain) IBOutlet MKMapView * mapView;
+@property (nonatomic, strong) IBOutlet UIScrollView * scrollView;
+@property (nonatomic, strong) IBOutlet UIImageView * mediaImageView;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView* placeholderAIView;
+@property (nonatomic, strong) IBOutlet LTTitleView * authorTitleView;
+@property (nonatomic, strong) IBOutlet UIImageView * authorAvatarView;
+@property (nonatomic, strong) IBOutlet UILabel * authorNameLabel;
+@property (nonatomic, strong) IBOutlet LTTitleView * descTitleView;
+@property (nonatomic, strong) IBOutlet UITextView * descTextView;
+@property (nonatomic, strong) IBOutlet LTTitleView * licenseTitleView;
+@property (nonatomic, strong) IBOutlet UILabel * licenseNameLabel;
+@property (nonatomic, strong) IBOutlet LTTitleView * mapTitleView;
+@property (nonatomic, strong) IBOutlet MKMapView * mapView;
 @property (nonatomic, readonly) IBOutlet UIImageView* downloadImageView;
 
 @end
@@ -65,29 +65,14 @@
     return self;
 }
 
-- (void) dealloc {
-    [_media release];
-    [_scrollView release];
-    [_mediaImageView release];
-    [_placeholderAIView release];
-    [_authorTitleView release];
-    [_authorAvatarView release];
-    [_authorNameLabel release];
-    [_descTitleView release];
-    [_descTextView release];
-    [_mapTitleView release];
-    [_mapView release];
-    [_downloadImageView release];
-    [super dealloc];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = self.media.title;
     
-    UIBarButtonItem* backButtonItem = [[[UIBarButtonItem alloc] initWithTitle:_T(@"common.back")
+    UIBarButtonItem* backButtonItem = [[UIBarButtonItem alloc] initWithTitle:_T(@"common.back")
                                                                         style:UIBarButtonItemStyleBordered
-                                                                       target:nil action:nil] autorelease];
+                                                                       target:nil action:nil];
     self.navigationItem.backBarButtonItem = backButtonItem;
     
     asynchLoadCounter_ = 0;
@@ -97,7 +82,6 @@
     
     UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                    action:@selector(mapTouched:)];
-    [tapGestureRecognizer autorelease];
     [tapGestureRecognizer setNumberOfTouchesRequired:1];
     [tapGestureRecognizer setDelegate:self];
     [self.mapView addGestureRecognizer:tapGestureRecognizer];
@@ -123,8 +107,7 @@
 
 - (void)setMedia:(Media *)media {
     if(media != _media) {
-        [_media release];
-        _media = [media retain];
+        _media = media;
         [self.scrollView scrollsToTop];
         [self configureView];
     }
@@ -221,7 +204,7 @@
                                             currentContentHeight,
                                             self.authorNameLabel.frame.size.width,
                                             self.authorNameLabel.frame.size.height);
-    NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"dd/MM/yyyy"];
     self.authorNameLabel.text = [NSString stringWithFormat:_T(@"media_detail.publish_info_patern"),
                                  self.media.author.name,
@@ -340,7 +323,6 @@
         NSURL* imageURL = [NSURL URLWithString:self.media.mediaLargeURL];
         EGOPhotoViewController* photoController = [[EGOPhotoViewController alloc] initWithImageURL:imageURL];
         [self.navigationController pushViewController:photoController animated:YES];
-        [photoController release];
         [self.hud hide:YES];
     } else {
         [self showErrorHudWithText:nil];
@@ -360,7 +342,6 @@
 {
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                            action:@selector(mediaImageTouched:)];
-    [tapGestureRecognizer autorelease];
     [tapGestureRecognizer setNumberOfTouchesRequired:1];
     [tapGestureRecognizer setDelegate:self];
     
@@ -371,17 +352,18 @@
     self.licenseTitleView.title = _T(@"common.license");
     self.mapTitleView.title = _T(@"common.map");
     [self.placeholderAIView startAnimating];
+    __block MediaDetailViewController* weakSelf = self;
     [self.mediaImageView setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.media.mediaMediumURL]]
                                placeholderImage:[UIImage imageNamed:@"egopv_photo_placeholder"]
                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                            [self.hud hide:YES];
-                                            [self.placeholderAIView stopAnimating];
-                                            [self refreshView];
+                                            [weakSelf.hud hide:YES];
+                                            [weakSelf.placeholderAIView stopAnimating];
+                                            [weakSelf refreshView];
                                         }
                                         failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                            [self showErrorHudWithText:nil];
-                                            [self.placeholderAIView stopAnimating];
-                                            [self refreshView];
+                                            [weakSelf showErrorHudWithText:nil];
+                                            [weakSelf.placeholderAIView stopAnimating];
+                                            [weakSelf refreshView];
                                         }];
 }
 
@@ -396,7 +378,6 @@
     MapViewController* mapVC = [[MapViewController alloc] initWithAnnotation:self.media];
     [self.navigationController pushViewController:mapVC animated:YES];
     mapVC.title = _T(@"common.map");
-    [mapVC release];
 }
 
 @end

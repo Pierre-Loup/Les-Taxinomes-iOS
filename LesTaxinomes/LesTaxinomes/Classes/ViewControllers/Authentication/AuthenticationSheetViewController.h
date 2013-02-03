@@ -35,5 +35,5 @@
 @end
 
 @interface AuthenticationSheetViewController :LTViewController
-@property (nonatomic, assign) id<LTAuthenticationSheetDelegate> delegate;
+@property (nonatomic, unsafe_unretained) id<LTAuthenticationSheetDelegate> delegate;
 @end

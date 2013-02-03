@@ -60,22 +60,22 @@
                                             MediaLocationPickerDelegate,
                                             LTConnectionManagerDelegate>
 
-@property (nonatomic, retain) IBOutlet UITableViewCell* textCell;
-@property (nonatomic, retain) IBOutlet UITableViewCell* licenseCell;
-@property (nonatomic, retain) IBOutlet UITableViewCell* publishCell;
-@property (nonatomic, retain) IBOutlet UIImageView* mediaSnapshotView;
-@property (nonatomic, retain) UITextField* titleInput;
-@property (nonatomic, retain) IBOutlet UITextView* textInput;
-@property (nonatomic, retain) UITextField* cityInput;
-@property (nonatomic, retain) UITextField* zipcodeInput;
-@property (nonatomic, retain) UITextField* countryInput;
-@property (nonatomic, retain) IBOutlet UIGlossyButton* shareButton;
-@property (nonatomic, retain) IBOutlet UISwitch* publishSwitch;
+@property (nonatomic, strong) IBOutlet UITableViewCell* textCell;
+@property (nonatomic, strong) IBOutlet UITableViewCell* licenseCell;
+@property (nonatomic, strong) IBOutlet UITableViewCell* publishCell;
+@property (nonatomic, strong) IBOutlet UIImageView* mediaSnapshotView;
+@property (nonatomic, strong) UITextField* titleInput;
+@property (nonatomic, strong) IBOutlet UITextView* textInput;
+@property (nonatomic, strong) UITextField* cityInput;
+@property (nonatomic, strong) UITextField* zipcodeInput;
+@property (nonatomic, strong) UITextField* countryInput;
+@property (nonatomic, strong) IBOutlet UIGlossyButton* shareButton;
+@property (nonatomic, strong) IBOutlet UISwitch* publishSwitch;
 
-@property (nonatomic, retain) NSURL* mediaAssetURL;
-@property (nonatomic, retain) License* license;
-@property (nonatomic, retain) CLLocation* mediaLocation;
-@property (nonatomic, readonly) NSArray* rowsInSection;
+@property (nonatomic, strong) NSURL* mediaAssetURL;
+@property (nonatomic, strong) License* license;
+@property (nonatomic, strong) CLLocation* mediaLocation;
+@property (unsafe_unretained, nonatomic, readonly) NSArray* rowsInSection;
 @property (nonatomic, readonly) NSMutableDictionary* cellForIndexPath;
 @property (nonatomic, readonly) CLGeocoder* reverseGeocoder;
 
@@ -94,13 +94,12 @@
     self = [self initWithNibName:@"MediaUploadFormViewController" bundle:nil];
     if (self) {
         self.mediaAssetURL = assetURL;
-        _rowsInSection = [@[[NSNumber numberWithInt:1],
+        _rowsInSection = @[[NSNumber numberWithInt:1],
                           [NSNumber numberWithInt:1],
                           [NSNumber numberWithInt:1],
                           [NSNumber numberWithInt:1],
-                          [NSNumber numberWithInt:1]]
-                          retain];
-        _license = [[License defaultLicense] retain];
+                          [NSNumber numberWithInt:1]];
+        _license = [License defaultLicense];
     }
     return self;
 }
@@ -113,25 +112,6 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)dealloc {
-    [_license release];
-    [_textCell release];
-    [_licenseCell release];
-    [_publishCell release];
-    [_mediaSnapshotView release];
-    [_titleInput release];
-    [_textInput release];
-    [_cityInput release];
-    [_zipcodeInput release];
-    [_countryInput release];
-    [_shareButton release];
-    [_publishSwitch release];
-    [_mediaAssetURL release];
-    [_rowsInSection release];
-    [_reverseGeocoder release];
-    [_cellForIndexPath release];
-    [super dealloc];
-}
 
 - (void)viewDidLoad
 {
@@ -163,13 +143,12 @@
         // Media
         CGImageRef iref = [assetRepresentation fullResolutionImage];
         if (iref) {
-            self.mediaSnapshotView.image = [[UIImage imageWithCGImage:iref scale:1 orientation:orientation] retain];
+            self.mediaSnapshotView.image = [UIImage imageWithCGImage:iref scale:1 orientation:orientation];
         }
     } failureBlock:^(NSError *error) {
         
         [self.navigationController popViewControllerAnimated:YES];
     }];
-    [library release];
     
     [self.mediaSnapshotView applyPhotoFrameEffect];
     
@@ -227,8 +206,8 @@
     // Location picker cell
     UITableViewCell* localisationPickerCell = [self.tableView dequeueReusableCellWithIdentifier:kLocalisationPickerCellId];
     if (!localisationPickerCell) {
-        localisationPickerCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                         reuseIdentifier:kLocalisationPickerCellId] autorelease];
+        localisationPickerCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                         reuseIdentifier:kLocalisationPickerCellId];
     }
     [localisationPickerCell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     [localisationPickerCell setSelectionStyle:UITableViewCellSelectionStyleNone];
@@ -242,7 +221,7 @@
         if (!mapCell) {
             mapCell = [MapCell mapCell];
         }
-        MKPlacemark* annotation = [[[MKPlacemark alloc] initWithCoordinate:self.mediaLocation.coordinate addressDictionary:nil] autorelease];
+        MKPlacemark* annotation = [[MKPlacemark alloc] initWithCoordinate:self.mediaLocation.coordinate addressDictionary:nil];
         [mapCell.mapView removeAnnotations:mapCell.mapView.annotations];
         [mapCell.mapView addAnnotation:annotation];
         [mapCell.mapView setRegion:MKCoordinateRegionMake(self.mediaLocation.coordinate, MKCoordinateSpanMake(0.1, 0.1))];
@@ -315,8 +294,7 @@
     if (mediaLocation &&
         ![self.mediaLocation isEqual:mediaLocation] &&
         (mediaLocation.coordinate.latitude || mediaLocation.coordinate.longitude)) {
-        [_mediaLocation release];
-        _mediaLocation = [mediaLocation retain];
+        _mediaLocation = mediaLocation;
         [self.reverseGeocoder reverseGeocodeLocation:self.mediaLocation
                                    completionHandler:^(NSArray *placemarks, NSError *error) {
                                        CLPlacemark* placemark = [placemarks objectAtIndex:0];
@@ -395,12 +373,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([indexPath isEqual:kLicenseCellIndexPath]) {
-        MediaLicenseChooserViewController* mediaLicenseChooserVC = [[[MediaLicenseChooserViewController alloc] init] autorelease];
+        MediaLicenseChooserViewController* mediaLicenseChooserVC = [[MediaLicenseChooserViewController alloc] init];
         mediaLicenseChooserVC.delegate = self;
         mediaLicenseChooserVC.currentLicense = self.license;
         [self.navigationController pushViewController:mediaLicenseChooserVC animated:YES];
     } else if ([indexPath isEqual:kLocationPickerCellIndexPath]){
-        MediaLocalisationPickerViewController* mediaLocationPickerVC = [[[MediaLocalisationPickerViewController alloc] init] autorelease];
+        MediaLocalisationPickerViewController* mediaLocationPickerVC = [[MediaLocalisationPickerViewController alloc] init];
         mediaLocationPickerVC.delegate = self;
         if (self.mediaLocation) {
             mediaLocationPickerVC.location = self.mediaLocation;
@@ -433,7 +411,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         
     }];
     
-    [library release];
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -472,7 +449,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 
 - (void)didChooseLicense:(License *)license
 {
-    [license release];
     if (license) {
         self.license = license;
         self.licenseCell.detailTextLabel.text = license.name;

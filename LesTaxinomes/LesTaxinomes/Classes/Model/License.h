@@ -30,13 +30,13 @@
 
 @interface License : NSManagedObject
 
-@property (nonatomic, retain) NSString* abbr;
-@property (nonatomic, retain) NSString* desc;
-@property (nonatomic, retain) NSString* icon;
-@property (nonatomic, retain) NSNumber* identifier;
-@property (nonatomic, retain) NSString* link;
-@property (nonatomic, retain) NSString* name;
-@property (nonatomic, retain) Media *medias;
+@property (nonatomic, strong) NSString* abbr;
+@property (nonatomic, strong) NSString* desc;
+@property (nonatomic, strong) NSString* icon;
+@property (nonatomic, strong) NSNumber* identifier;
+@property (nonatomic, strong) NSString* link;
+@property (nonatomic, strong) NSString* name;
+@property (nonatomic, strong) Media *medias;
 
 + (License*)licenseWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error;
 + (License*)licenseWithIdentifier:(NSNumber*)identifier;

@@ -26,7 +26,7 @@
 #import "LTViewController.h"
 
 @interface LTViewController ()
-@property (nonatomic, retain) LTiPhoneBackgroundView* bgView;
+@property (nonatomic, strong) LTiPhoneBackgroundView* bgView;
 @end
 
 @implementation LTViewController
@@ -44,7 +44,7 @@
         CGRect bgFrame = CGRectMake(0, -self.navigationController.navigationBar.frame.size.height,
                                     winFrame.size.width,
                                     winFrame.size.height);
-        self.bgView = [[[LTiPhoneBackgroundView alloc] initWithFrame:bgFrame] autorelease];
+        self.bgView = [[LTiPhoneBackgroundView alloc] initWithFrame:bgFrame];
         self.bgView.light = YES;
         [self.view addSubview:self.bgView];
         [self.view sendSubviewToBack:self.bgView];
@@ -57,7 +57,6 @@
 - (void)viewDidUnload {
     
     [super viewDidUnload];
-    [_hud release];
     _hud = nil;
 }
 
@@ -88,7 +87,7 @@
 - (void)showErrorHudWithText:(NSString *)text {
     [self.view addSubview:self.hud];
     self.hud.mode = MBProgressHUDModeCustomView;
-	self.hud.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cross_hudicon.png"]] autorelease];
+	self.hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cross_hudicon.png"]];
 	if (text)
         self.hud.labelText = text;
 	[self.hud show:YES];
@@ -98,7 +97,7 @@
 - (void)showConfirmHudWithText:(NSString *)text {
     [self.view addSubview:self.hud];
     self.hud.mode = MBProgressHUDModeCustomView;
-	self.hud.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark_hudicon.png"]] autorelease];
+	self.hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark_hudicon.png"]];
 	if (text)
         self.hud.labelText = text;
 	[self.hud show:YES];
@@ -121,7 +120,6 @@
 - (void)hudWasHidden:(MBProgressHUD *)hud {
 	// Remove HUD from screen when the HUD was hidded
 	[self.hud removeFromSuperview];
-    [_hud release];
     _hud = nil;
 }
 

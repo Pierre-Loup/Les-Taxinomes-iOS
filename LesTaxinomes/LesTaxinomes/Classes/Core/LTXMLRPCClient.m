@@ -91,7 +91,7 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
     LogDebug(@"WS method: %@", method);
     
     // Create XML-RPC body from array or dict object parameter
-    XMLRPCRequest* xmlrpcRequest = [[[XMLRPCRequest alloc] initWithURL:self.baseURL] autorelease];
+    XMLRPCRequest* xmlrpcRequest = [[XMLRPCRequest alloc] initWithURL:self.baseURL];
     [xmlrpcRequest setMethod:method withParameter:object?object:@{}];
     if (method != LTXMLRCPMethodGeoDivCreerMedia) LogDebug(@"REQUEST: %@",[xmlrpcRequest body]);
     
@@ -122,7 +122,7 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
     // Create success block
     void (^successBlock)(AFHTTPRequestOperation *operation, id responseObject);
     successBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        id response = [[[[XMLRPCResponse alloc] initWithData:responseObject] autorelease] object];
+        id response = [[[XMLRPCResponse alloc] initWithData:responseObject] object];
         LogDebug(@"RESPONSE: %@",response);
         if (![response isKindOfClass:[NSError class]]) {
             NSError* wsResponseError = nil;

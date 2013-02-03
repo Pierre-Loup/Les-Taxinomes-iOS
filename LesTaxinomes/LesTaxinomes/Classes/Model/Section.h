@@ -30,11 +30,11 @@
 
 @interface Section : NSManagedObject
 
-@property (nonatomic, retain) NSString * desc;
-@property (nonatomic, retain) NSNumber * identifier;
-@property (nonatomic, retain) NSString * imageURL;
-@property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) Section *parent;
-@property (nonatomic, retain) Media *medias;
+@property (nonatomic, strong) NSString * desc;
+@property (nonatomic, strong) NSNumber * identifier;
+@property (nonatomic, strong) NSString * imageURL;
+@property (nonatomic, strong) NSString * title;
+@property (nonatomic, strong) Section *parent;
+@property (nonatomic, strong) Media *medias;
 
 @end

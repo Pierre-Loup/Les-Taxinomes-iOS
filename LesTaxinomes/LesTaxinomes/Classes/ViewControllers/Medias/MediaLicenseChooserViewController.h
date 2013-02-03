@@ -40,7 +40,7 @@
     
 }
 
-@property (nonatomic, assign) id<MediaLicenseChooserDelegate> delegate;
-@property (nonatomic, retain) License * currentLicense;
+@property (nonatomic, unsafe_unretained) id<MediaLicenseChooserDelegate> delegate;
+@property (nonatomic, strong) License * currentLicense;
 
 @end

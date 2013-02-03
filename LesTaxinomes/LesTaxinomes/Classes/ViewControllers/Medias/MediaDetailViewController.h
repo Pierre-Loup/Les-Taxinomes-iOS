@@ -31,6 +31,6 @@
 #import "LTTitleView.h"
 
 @interface MediaDetailViewController : LTViewController
-@property (nonatomic, retain) Media* media;
+@property (nonatomic, strong) Media* media;
 
 @end

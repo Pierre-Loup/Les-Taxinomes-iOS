@@ -27,7 +27,7 @@
 
 @interface LTTitleView : UIView
 
-@property (nonatomic, assign) NSString* title;
+@property (nonatomic, unsafe_unretained) NSString* title;
 
 + (LTTitleView *)titleViewWithFrame:(CGRect)frame;
 - (id)initWithFrame:(CGRect)frame;

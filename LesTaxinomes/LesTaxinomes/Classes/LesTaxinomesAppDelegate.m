@@ -66,7 +66,7 @@
     if (![launchOptions objectForKey:UIApplicationLaunchOptionsLocationKey]) {
         NSString * launchSoundPath = [[NSBundle mainBundle] pathForResource:@"oiseau" ofType:@"aif"];
         if (launchSoundPath) {
-            AudioServicesCreateSystemSoundID((CFURLRef)[NSURL fileURLWithPath: launchSoundPath], &launchSoundID_);
+            AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath: launchSoundPath], &launchSoundID_);
         }
         [self playLaunchSound];
     }
@@ -111,10 +111,6 @@
 - (void)dealloc
 {
     AudioServicesDisposeSystemSoundID(launchSoundID_);
-    [window_ release];
-    [launchScreenView_ release];
-    [tabBarController_ release];
-    [super dealloc];
 }
 
 #pragma mark Helpers

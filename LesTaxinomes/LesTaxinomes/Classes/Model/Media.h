@@ -31,27 +31,27 @@
 
 @interface Media : NSManagedObject <MKAnnotation>
 
-@property (nonatomic, retain) NSDate * date;
-@property (nonatomic, retain) NSNumber * identifier;
-@property (nonatomic, retain) NSNumber * latitude;
-@property (nonatomic, retain) NSDate * localUpdateDate;
-@property (nonatomic, retain) NSNumber * longitude;
-@property (nonatomic, retain) NSString * mediaLargeLocalFile;
-@property (nonatomic, retain) NSString * mediaLargeURL;
-@property (nonatomic, retain) NSString * mediaMediumLocalFile;
-@property (nonatomic, retain) NSString * mediaMediumURL;
-@property (nonatomic, retain) NSString * mediaThumbnailLocalFile;
-@property (nonatomic, retain) NSString * mediaThumbnailUrl;
-@property (nonatomic, retain) NSNumber * popularity;
-@property (nonatomic, retain) NSString * status;
-@property (nonatomic, retain) NSString * text;
+@property (nonatomic, strong) NSDate * date;
+@property (nonatomic, strong) NSNumber * identifier;
+@property (nonatomic, strong) NSNumber * latitude;
+@property (nonatomic, strong) NSDate * localUpdateDate;
+@property (nonatomic, strong) NSNumber * longitude;
+@property (nonatomic, strong) NSString * mediaLargeLocalFile;
+@property (nonatomic, strong) NSString * mediaLargeURL;
+@property (nonatomic, strong) NSString * mediaMediumLocalFile;
+@property (nonatomic, strong) NSString * mediaMediumURL;
+@property (nonatomic, strong) NSString * mediaThumbnailLocalFile;
+@property (nonatomic, strong) NSString * mediaThumbnailUrl;
+@property (nonatomic, strong) NSNumber * popularity;
+@property (nonatomic, strong) NSString * status;
+@property (nonatomic, strong) NSString * text;
 @property (nonatomic, copy) NSString * title;
-@property (nonatomic, retain) NSDate * updateDate;
-@property (nonatomic, retain) NSNumber * visits;
-@property (nonatomic, retain) NSNumber * sychGapForDateSorting;
-@property (nonatomic, retain) Author * author;
-@property (nonatomic, retain) License * license;
-@property (nonatomic, retain) Section * section;
+@property (nonatomic, strong) NSDate * updateDate;
+@property (nonatomic, strong) NSNumber * visits;
+@property (nonatomic, strong) NSNumber * sychGapForDateSorting;
+@property (nonatomic, strong) Author * author;
+@property (nonatomic, strong) License * license;
+@property (nonatomic, strong) Section * section;
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 
 + (Media *)mediaWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error;

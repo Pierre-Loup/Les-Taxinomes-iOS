@@ -11,7 +11,7 @@
 
 @interface MapCell : UITableViewCell
 
-@property (nonatomic, retain) IBOutlet MKMapView* mapView;
+@property (nonatomic, strong) IBOutlet MKMapView* mapView;
 
 + (MapCell *)mapCell;
 + (NSString *)reuseIdentifier;

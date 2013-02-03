@@ -26,7 +26,7 @@
 #import "LegalInformationsViewController.h"
 
 @interface LegalInformationsViewController ()
-@property (nonatomic, retain) IBOutlet UITextView* cguTextView;
+@property (nonatomic, strong) IBOutlet UITextView* cguTextView;
 @end
 
 @implementation LegalInformationsViewController

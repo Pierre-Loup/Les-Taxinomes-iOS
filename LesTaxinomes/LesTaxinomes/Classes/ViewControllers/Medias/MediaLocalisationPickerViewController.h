@@ -21,7 +21,7 @@
 
 @interface MediaLocalisationPickerViewController : LTViewController
 
-@property (nonatomic, assign) id<MediaLocationPickerDelegate> delegate;
-@property (nonatomic, retain) CLLocation* location;
+@property (nonatomic, unsafe_unretained) id<MediaLocationPickerDelegate> delegate;
+@property (nonatomic, strong) CLLocation* location;
 
 @end

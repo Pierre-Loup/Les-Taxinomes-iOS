@@ -12,7 +12,7 @@
 @interface MediaLocalisationPickerViewController () <MKMapViewDelegate> {
     UIBarButtonItem* rightBarButton_;
 }
-@property (nonatomic, retain) IBOutlet MKMapView* mapView;
+@property (nonatomic, strong) IBOutlet MKMapView* mapView;
 - (void)refreshMap;
 @end
 
@@ -36,26 +36,19 @@
     if (location_) {
         [self refreshMap];
     } else {
-        self.location = [[[CLLocation alloc] initWithLatitude:0.0 longitude:0.0] autorelease];
+        self.location = [[CLLocation alloc] initWithLatitude:0.0 longitude:0.0];
         [mapView_ setRegion:MKCoordinateRegionMake(location_.coordinate, MKCoordinateSpanMake(180.0, 180.0))];
     }
 }
 
 - (void)viewDidUnload {
     [super viewDidUnload];
-    [rightBarButton_ release];
     rightBarButton_ = nil;
     self.mapView = nil;
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
 
-- (void)dealloc {
-    [location_ release];
-    [mapView_ release];
-    [rightBarButton_ release];
-    [super dealloc];
-}
 
 - (void)okButtonButtonPressed:(UIBarButtonItem *)sender {
     if ([delegate_ respondsToSelector:@selector(mediaLocationPicker:didPickLocation:)]
@@ -66,8 +59,7 @@
 }
 
 - (void)setLocation:(CLLocation *)location {
-    [location_ release];
-    location_ = [location retain];
+    location_ = location;
     
     [self refreshMap];
 }
@@ -84,7 +76,6 @@
         [mapView_ addAnnotation:annotation];
         [mapView_ selectAnnotation:annotation animated:YES];
         [mapView_ setRegion:MKCoordinateRegionMake(location_.coordinate, MKCoordinateSpanMake(18.0, 18.0))];
-        [annotation release];
     }
 }
 
@@ -100,14 +91,13 @@
     [pinView setDraggable:YES];
     [pinView setAnimatesDrop:YES];
     [pinView setPinColor:kPinColor];
-    return [pinView autorelease];
+    return pinView;
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)annotationView didChangeDragState:(MKAnnotationViewDragState)newState fromOldState:(MKAnnotationViewDragState)oldState {
     if (oldState == MKAnnotationViewDragStateDragging
         && newState == MKAnnotationViewDragStateEnding) {
         
-        [location_ release];
         location_ = [[CLLocation alloc] initWithLatitude:annotationView.annotation.coordinate.latitude 
                                                longitude:annotationView.annotation.coordinate.longitude];
     }

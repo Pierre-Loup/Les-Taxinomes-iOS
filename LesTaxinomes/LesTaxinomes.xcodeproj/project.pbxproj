@@ -22,7 +22,6 @@
 		A5582F4D15A4D9D1008F2F93 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */; };
 		A56565AC167294B900DF37B9 /* Crozon.gpx in Resources */ = {isa = PBXBuildFile; fileRef = A5656594167294B900DF37B9 /* Crozon.gpx */; };
 		A56565AD167294B900DF37B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5656595167294B900DF37B9 /* Localizable.strings */; };
-		A56565B1167294B900DF37B9 /* chooser_background.png in Resources */ = {isa = PBXBuildFile; fileRef = A565659C167294B900DF37B9 /* chooser_background.png */; };
 		A56565B2167294B900DF37B9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A565659D167294B900DF37B9 /* Default-568h@2x.png */; };
 		A56565B3167294B900DF37B9 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A565659E167294B900DF37B9 /* Default.png */; };
 		A56565B4167294B900DF37B9 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A565659F167294B900DF37B9 /* Default@2x.png */; };
@@ -335,6 +334,19 @@
 		A5EA0C4F16BEC663004DFA06 /* libMBProgressHUD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0C4E16BEC663004DFA06 /* libMBProgressHUD.a */; };
 		A5EA0C5016BEC669004DFA06 /* libMBProgressHUD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0C4E16BEC663004DFA06 /* libMBProgressHUD.a */; };
 		A5EA0C5116BEC66A004DFA06 /* libMBProgressHUD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0C4E16BEC663004DFA06 /* libMBProgressHUD.a */; };
+		A5EA0C5216BEC9F1004DFA06 /* NSMutableDictionary+ImageMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = A58560F215F90BA200446653 /* NSMutableDictionary+ImageMetadata.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A5EA0C5316BEC9F1004DFA06 /* NSMutableDictionary+ImageMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = A58560F215F90BA200446653 /* NSMutableDictionary+ImageMetadata.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A5EA0C5416BEC9F2004DFA06 /* NSMutableDictionary+ImageMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = A58560F215F90BA200446653 /* NSMutableDictionary+ImageMetadata.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A5EA0C5516BEC9F5004DFA06 /* NSMutableDictionary+ImageMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = A58560F215F90BA200446653 /* NSMutableDictionary+ImageMetadata.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A5EA0C5616BEC9F8004DFA06 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B0290C1620453E005D14DC /* UIImage+Resize.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A5EA0C5716BEC9F9004DFA06 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B0290C1620453E005D14DC /* UIImage+Resize.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A5EA0C5816BEC9F9004DFA06 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B0290C1620453E005D14DC /* UIImage+Resize.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A5EA0C5916BEC9FC004DFA06 /* UIImageView+PhotoFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = A58560FA15F90BA200446653 /* UIImageView+PhotoFrame.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A5EA0C5A16BEC9FD004DFA06 /* UIImageView+PhotoFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = A58560FA15F90BA200446653 /* UIImageView+PhotoFrame.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A5EA0C5B16BEC9FE004DFA06 /* UIImageView+PhotoFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = A58560FA15F90BA200446653 /* UIImageView+PhotoFrame.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A5EA0C5C16BECA01004DFA06 /* UIGlossyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A585613015F90BA200446653 /* UIGlossyButton.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A5EA0C5D16BECA01004DFA06 /* UIGlossyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A585613015F90BA200446653 /* UIGlossyButton.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A5EA0C5E16BECA02004DFA06 /* UIGlossyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A585613015F90BA200446653 /* UIGlossyButton.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A5FD424D167E113500B56F2A /* background-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = A5FD424B167E113500B56F2A /* background-568h.png */; };
 		A5FD424E167E113500B56F2A /* background-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = A5FD424B167E113500B56F2A /* background-568h.png */; };
 		A5FD424F167E113500B56F2A /* background-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5FD424C167E113500B56F2A /* background-568h@2x.png */; };
@@ -384,7 +396,6 @@
 		A5656596167294B900DF37B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A5656597167294B900DF37B9 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A565659B167294B900DF37B9 /* bg_title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_title.png; sourceTree = "<group>"; };
-		A565659C167294B900DF37B9 /* chooser_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chooser_background.png; sourceTree = "<group>"; };
 		A565659D167294B900DF37B9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		A565659E167294B900DF37B9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		A565659F167294B900DF37B9 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -781,7 +792,6 @@
 				A56565C31672A19000DF37B9 /* background-568h@2x.png */,
 				A565659B167294B900DF37B9 /* bg_title.png */,
 				A56565D51672A6B400DF37B9 /* bg_title@2x.png */,
-				A565659C167294B900DF37B9 /* chooser_background.png */,
 				A565659D167294B900DF37B9 /* Default-568h@2x.png */,
 				A565659E167294B900DF37B9 /* Default.png */,
 				A565659F167294B900DF37B9 /* Default@2x.png */,
@@ -1378,7 +1388,6 @@
 				A5CCFF341643CEBE00FA4ABF /* SpinnerCell.xib in Resources */,
 				A56565AC167294B900DF37B9 /* Crozon.gpx in Resources */,
 				A56565AD167294B900DF37B9 /* Localizable.strings in Resources */,
-				A56565B1167294B900DF37B9 /* chooser_background.png in Resources */,
 				A56565B2167294B900DF37B9 /* Default-568h@2x.png in Resources */,
 				A56565B3167294B900DF37B9 /* Default.png in Resources */,
 				A56565B4167294B900DF37B9 /* Default@2x.png in Resources */,
@@ -1455,6 +1464,10 @@
 				A5CCFF4C1643D1E500FA4ABF /* UIActionSheet+PhotoAssetPickerAddition.m in Sources */,
 				A5CCFF8A1644945900FA4ABF /* UIAlertView+LTErrorAdditions.m in Sources */,
 				A5CCFF8F1644949600FA4ABF /* NSError+LTErrorAdditions.m in Sources */,
+				A5EA0C5216BEC9F1004DFA06 /* NSMutableDictionary+ImageMetadata.m in Sources */,
+				A5EA0C5616BEC9F8004DFA06 /* UIImage+Resize.m in Sources */,
+				A5EA0C5916BEC9FC004DFA06 /* UIImageView+PhotoFrame.m in Sources */,
+				A5EA0C5C16BECA01004DFA06 /* UIGlossyButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1495,6 +1508,10 @@
 				A5CCFF4D1643D1E500FA4ABF /* UIActionSheet+PhotoAssetPickerAddition.m in Sources */,
 				A5CCFF8B1644945900FA4ABF /* UIAlertView+LTErrorAdditions.m in Sources */,
 				A5CCFF901644949600FA4ABF /* NSError+LTErrorAdditions.m in Sources */,
+				A5EA0C5316BEC9F1004DFA06 /* NSMutableDictionary+ImageMetadata.m in Sources */,
+				A5EA0C5716BEC9F9004DFA06 /* UIImage+Resize.m in Sources */,
+				A5EA0C5A16BEC9FD004DFA06 /* UIImageView+PhotoFrame.m in Sources */,
+				A5EA0C5D16BECA01004DFA06 /* UIGlossyButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1535,6 +1552,10 @@
 				A5CCFF4E1643D1E500FA4ABF /* UIActionSheet+PhotoAssetPickerAddition.m in Sources */,
 				A5CCFF8C1644945900FA4ABF /* UIAlertView+LTErrorAdditions.m in Sources */,
 				A5CCFF911644949600FA4ABF /* NSError+LTErrorAdditions.m in Sources */,
+				A5EA0C5416BEC9F2004DFA06 /* NSMutableDictionary+ImageMetadata.m in Sources */,
+				A5EA0C5816BEC9F9004DFA06 /* UIImage+Resize.m in Sources */,
+				A5EA0C5B16BEC9FE004DFA06 /* UIImageView+PhotoFrame.m in Sources */,
+				A5EA0C5E16BECA02004DFA06 /* UIGlossyButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1553,6 +1574,7 @@
 				A585632D15F90C7F00446653 /* Section.m in Sources */,
 				A585632E15F90C8300446653 /* LTDataModel.xcdatamodeld in Sources */,
 				A59120E9166FE0C700E166B9 /* NSError+LTErrorAdditions.m in Sources */,
+				A5EA0C5516BEC9F5004DFA06 /* NSMutableDictionary+ImageMetadata.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1658,6 +1680,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "../**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "-ObjC";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 			};
@@ -1681,6 +1704,7 @@
 				HEADER_SEARCH_PATHS = "../**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "-ObjC";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -1705,11 +1729,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "LesTaxinomes/Supporting Files/LesTaxinomes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-dhgrpljcvayzzhcalprlhwzedcvx/Build/Products/Debug-iphoneos\"",
-					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-fqdorrqeczynlscrslmxbxufdkgw/Build/Products/Debug-iphoneos\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1736,11 +1756,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "LesTaxinomes/Supporting Files/LesTaxinomes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-dhgrpljcvayzzhcalprlhwzedcvx/Build/Products/Debug-iphoneos\"",
-					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-fqdorrqeczynlscrslmxbxufdkgw/Build/Products/Debug-iphoneos\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1753,6 +1769,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -1767,11 +1784,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "LesTaxinomes/Supporting Files/LesTaxinomes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-dhgrpljcvayzzhcalprlhwzedcvx/Build/Products/Debug-iphoneos\"",
-					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-fqdorrqeczynlscrslmxbxufdkgw/Build/Products/Debug-iphoneos\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = LesTaxinomes;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1784,6 +1797,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -1798,11 +1812,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "LesTaxinomes/Supporting Files/LesTaxinomes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-dhgrpljcvayzzhcalprlhwzedcvx/Build/Products/Debug-iphoneos\"",
-					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-fqdorrqeczynlscrslmxbxufdkgw/Build/Products/Debug-iphoneos\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = LesTaxinomes;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1829,11 +1839,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Geodiversite/Supporting Files/Geodiversite-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-dhgrpljcvayzzhcalprlhwzedcvx/Build/Products/Debug-iphoneos\"",
-					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-fqdorrqeczynlscrslmxbxufdkgw/Build/Products/Debug-iphoneos\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "Géodiversité";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1859,11 +1865,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Geodiversite/Supporting Files/Geodiversite-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-dhgrpljcvayzzhcalprlhwzedcvx/Build/Products/Debug-iphoneos\"",
-					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-fqdorrqeczynlscrslmxbxufdkgw/Build/Products/Debug-iphoneos\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "Géodiversité";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1895,15 +1897,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "LesTaxinomesTests/LesTaxinomesTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-dhgrpljcvayzzhcalprlhwzedcvx/Build/Products/Debug-iphoneos\"",
-					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-fqdorrqeczynlscrslmxbxufdkgw/Build/Products/Debug-iphoneos\"",
-				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-all_load",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -1934,15 +1929,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "LesTaxinomesTests/LesTaxinomesTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-dhgrpljcvayzzhcalprlhwzedcvx/Build/Products/Debug-iphoneos\"",
-					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-fqdorrqeczynlscrslmxbxufdkgw/Build/Products/Debug-iphoneos\"",
-				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-all_load",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;

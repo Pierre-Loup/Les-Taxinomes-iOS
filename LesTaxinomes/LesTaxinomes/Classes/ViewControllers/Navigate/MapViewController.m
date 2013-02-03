@@ -12,10 +12,10 @@
 #define kPinAnnotationIdentifier @"pin"
 
 @interface MapViewController ()
-@property (nonatomic, retain) CLLocationManager* locationManager;
+@property (nonatomic, strong) CLLocationManager* locationManager;
 @property (nonatomic, assign) NSInteger searchStartIndex;
-@property (nonatomic, retain) UIBarButtonItem* reloadBarButton;
-@property (nonatomic, retain) UIBarButtonItem* scanBarButton;
+@property (nonatomic, strong) UIBarButtonItem* reloadBarButton;
+@property (nonatomic, strong) UIBarButtonItem* scanBarButton;
 @end
 
 @implementation MapViewController
@@ -26,24 +26,16 @@
 - (id)initWithAnnotation:(id<MKAnnotation>)annotation {
     self = [super initWithNibName:NSStringFromClass([self class]) bundle:nil];
     if (self) {
-        _referenceAnnotation = [annotation retain];
+        _referenceAnnotation = annotation;
     }
     return self;
 }
 
-- (void)dealloc {
-    [_referenceAnnotation release];
-    [_mapView release];
-    [_locationManager release];
-    [_reloadBarButton release];
-    [_scanBarButton release];
-    [super dealloc];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.scanBarButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(scanButtonAction:)] autorelease];
+    self.scanBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(scanButtonAction:)];
     [self.navigationItem setRightBarButtonItem:self.scanBarButton];
     
     
@@ -120,8 +112,8 @@
         range.location = self.searchStartIndex;
         range.length = kNbMediasStep;
         
-        CLLocation* searchLocation = [[[CLLocation alloc] initWithLatitude:self.referenceAnnotation.coordinate.latitude
-                                                                longitude:self.referenceAnnotation.coordinate.longitude] autorelease];
+        CLLocation* searchLocation = [[CLLocation alloc] initWithLatitude:self.referenceAnnotation.coordinate.latitude
+                                                                longitude:self.referenceAnnotation.coordinate.longitude];
         
         [[LTConnectionManager sharedConnectionManager] getShortMediasByDateForAuthor:nil
                                                                         nearLocation:searchLocation
@@ -134,7 +126,7 @@
                 
                 BOOL shouldLoadMoreMedias = YES;
                 for (Media* newMedia in medias) {
-                    __block Media* blockNewMedia = newMedia;
+                    __unsafe_unretained Media* blockNewMedia = newMedia;
                     NSInteger mediaFoundIndex = [self.mapView.annotations indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
                         if ([obj isKindOfClass:[Media class]]) {
                             Media* displayedMedia = (Media *)obj;
@@ -179,8 +171,7 @@
     if (!self.referenceAnnotation
         && self.mapView.showsUserLocation
         && CLLocationCoordinate2DIsValid(userLocation.coordinate)) {
-        [_referenceAnnotation release];
-        _referenceAnnotation = [self.mapView.userLocation retain];
+        _referenceAnnotation = self.mapView.userLocation;
         [self.mapView setRegion:MKCoordinateRegionMake(self.referenceAnnotation.coordinate, MKCoordinateSpanMake(1, 1)) animated:YES];
         [self loadMoreCloseMedias];
     }
@@ -195,7 +186,7 @@
     
     MKPinAnnotationView * annotationView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:kPinAnnotationIdentifier];
     if (!annotationView) {
-        annotationView = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:kPinAnnotationIdentifier] autorelease];
+        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:kPinAnnotationIdentifier];
         annotationView.pinColor = MKPinAnnotationColorGreen;
     }
     [annotationView setRightCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeDetailDisclosure]];
@@ -215,7 +206,6 @@
         mediaDetailViewController.media = media;
         mediaDetailViewController.title = _T(@"common.media");
         [self.navigationController pushViewController:mediaDetailViewController animated:YES];
-        [mediaDetailViewController release];
     }
 }
 
@@ -230,7 +220,7 @@
 - (void)didRetrievedShortMedias:(NSArray *)medias {
     BOOL shouldLoadMoreMedias = YES;
     for (Media* newMedia in medias) {
-        __block Media* blockNewMedia = newMedia;
+        __unsafe_unretained Media* blockNewMedia = newMedia;
         NSInteger mediaFoundIndex = [self.mapView.annotations indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
             if ([obj isKindOfClass:[Media class]]) {
                 Media* displayedMedia = (Media *)obj;
@@ -273,7 +263,6 @@
     self.scanBarButton.enabled = YES;
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:_T(@"alert_network_unreachable_title") message:_T(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:_T(@"common.ok") otherButtonTitles:nil];
     [alert show];
-    [alert release];
 }
 
 @end

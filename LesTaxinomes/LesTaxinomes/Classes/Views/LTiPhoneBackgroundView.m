@@ -32,10 +32,6 @@
     [self setup];
 }
 
-- (void)dealloc {
-    [bgImageView_ release];
-    [super dealloc];
-}
 
 #pragma mark - Properties
    

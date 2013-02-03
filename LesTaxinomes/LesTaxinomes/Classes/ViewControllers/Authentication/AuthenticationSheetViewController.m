@@ -26,11 +26,11 @@
 #import "AuthenticationSheetViewController.h"
 
 @interface AuthenticationSheetViewController ()
-@property (nonatomic, retain) IBOutlet UILabel* loginLabel;
-@property (nonatomic, retain) IBOutlet UITextField* loginTextField;
-@property (nonatomic, retain) IBOutlet UILabel* passwordLabel;
-@property (nonatomic, retain) IBOutlet UITextField* passwordTextField;
-@property (nonatomic, retain) IBOutlet UIGlossyButton* signinButton;
+@property (nonatomic, strong) IBOutlet UILabel* loginLabel;
+@property (nonatomic, strong) IBOutlet UITextField* loginTextField;
+@property (nonatomic, strong) IBOutlet UILabel* passwordLabel;
+@property (nonatomic, strong) IBOutlet UITextField* passwordTextField;
+@property (nonatomic, strong) IBOutlet UIGlossyButton* signinButton;
 
 @end
 
@@ -44,12 +44,6 @@
     return self;
 }
 
-- (void)dealloc {
-    [_loginTextField release];
-    [_passwordTextField release];
-    [_signinButton release];
-    [super dealloc];
-}
 
 - (void)viewDidLoad {
     
@@ -57,7 +51,6 @@
     self.title = _T(@"common.signin");
         UIBarButtonItem * cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:_T(@"common.cancel") style:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTouched:)];
         [self.navigationItem setRightBarButtonItem:cancelBarButton];
-        [cancelBarButton release];
     
     self.loginLabel.textColor = kMainColor;
     self.passwordLabel.textColor = kMainColor;

@@ -30,7 +30,7 @@
 
 @interface MediasListViewController : LTTableViewController
 
-@property (nonatomic, retain) Author* currentUser;
+@property (nonatomic, strong) Author* currentUser;
 
 @end
 

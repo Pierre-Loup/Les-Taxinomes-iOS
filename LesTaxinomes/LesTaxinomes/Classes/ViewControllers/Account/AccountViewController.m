@@ -36,9 +36,9 @@
     
     UIBarButtonItem* rightBarButton_;
 }
-@property (retain, nonatomic) IBOutlet UITableView* tableView;
-@property (retain, nonatomic) IBOutlet LTTitleView* userNameView;
-@property (retain, nonatomic) IBOutlet UIImageView* avatarView;
+@property (strong, nonatomic) IBOutlet UITableView* tableView;
+@property (strong, nonatomic) IBOutlet LTTitleView* userNameView;
+@property (strong, nonatomic) IBOutlet UIImageView* avatarView;
 
 - (void)commonInit;
 - (void)displayAuthenticationSheetAnimated:(BOOL)animated;
@@ -64,7 +64,7 @@
 }
 
 - (void)commonInit {
-    accountMenuLabels_ = [@[_T(@"account_my_medias")] retain];
+    accountMenuLabels_ = @[_T(@"account_my_medias")];
 }
 
 - (void)didReceiveMemoryWarning
@@ -75,13 +75,6 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void) dealloc {
-    [authenticatedUser_ release];
-    [rightBarButton_ release];
-    [accountMenuLabels_ release];
-    [avatarView_ release];
-    [super dealloc];
-}
 
 #pragma mark - View lifecycle
 
@@ -132,8 +125,6 @@
     UINavigationController * navigationController = [[UINavigationController alloc] initWithRootViewController:authenticationSheetViewController];
     authenticationSheetViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentModalViewController:navigationController animated:animated];
-    [authenticationSheetViewController release];
-    [navigationController release];
 }
 
 - (IBAction)dismissKeyboardSubview:(id)sender {    
@@ -165,7 +156,7 @@
     
     cell = [tableView dequeueReusableCellWithIdentifier:gridCellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: @"accountMenuCell"] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: @"accountMenuCell"];
     }
     if ([indexPath section] == 0) {
         cell.textLabel.text = [accountMenuLabels_ objectAtIndex:[indexPath row]];
@@ -186,7 +177,6 @@
         mediasListViewController.currentUser = [LTConnectionManager sharedConnectionManager].authenticatedUser;
         [self.navigationController pushViewController:mediasListViewController animated:YES];
         mediasListViewController.title = _T(@"account_my_medias");
-        [mediasListViewController release];
     }
 }
 
@@ -212,7 +202,6 @@
     }
     [avatarView_ setHidden:NO];
     [self.tableView setHidden:NO];
-    [rightBarButton_ release];
     rightBarButton_ = nil;
     rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:_T(@"common.logout") style:UIBarButtonItemStylePlain target:self action:@selector(logoutButtonPressed:)];
     [self.navigationItem setRightBarButtonItem:rightBarButton_ animated:YES];
@@ -221,7 +210,6 @@
 }
 
 - (void)switchToUnauthenticatedModeAnimated:(BOOL)animated {
-    [rightBarButton_ release];
     rightBarButton_ = nil;
     rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:_T(@"common.signin") style:UIBarButtonItemStylePlain target:self action:@selector(signInButtonPressed:)];
     [self.navigationItem setRightBarButtonItem:rightBarButton_ animated:YES];

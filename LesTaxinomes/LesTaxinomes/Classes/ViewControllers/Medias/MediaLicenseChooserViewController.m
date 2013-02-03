@@ -42,7 +42,7 @@
 {
     self = [super init];
     if (self) {
-        [self initWithNibName:NSStringFromClass([MediaLicenseChooserViewController class]) bundle:nil];
+        if (!(self = [self initWithNibName:NSStringFromClass([MediaLicenseChooserViewController class]) bundle:nil])) return nil;
     }
     return self;
 }
@@ -51,8 +51,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        licenses_ = [[License allLicenses] retain];
-        currentLicenseIndexPath_ = [[self indexPathForCurrentLicense] retain];
+        licenses_ = [License allLicenses];
+        currentLicenseIndexPath_ = [self indexPathForCurrentLicense];
     }
     return self;
 }
@@ -68,18 +68,10 @@
 
 - (void)viewDidUnload
 {
-    [rightBarButton_ release];
     rightBarButton_ = nil;
     [super viewDidUnload];
 }
 
-- (void)dealloc {
-    
-    [rightBarButton_ release];
-    [licenses_ release];
-    [currentLicense_ release];
-    [super dealloc];
-}
 
 #pragma mark Tools
 
@@ -118,7 +110,7 @@
     
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:kLicenceCellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kLicenceCellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kLicenceCellIdentifier];
     }
     
     if (indexPath.row < [licenses_ count] 
@@ -145,15 +137,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSIndexPath * currentLicenseIndexPath = [self indexPathForCurrentLicense];
     if ([indexPath isEqual:currentLicenseIndexPath]) {
-        [currentLicense_ release];
         currentLicense_ = nil;
-        [currentLicenseIndexPath_ release];
         currentLicenseIndexPath_ = nil;
     } else {
-        [currentLicense_ release];
-        currentLicense_ = [[licenses_ objectAtIndex:indexPath.row] retain];
-        [currentLicenseIndexPath_ release];
-        currentLicenseIndexPath_ = [indexPath retain];
+        currentLicense_ = [licenses_ objectAtIndex:indexPath.row];
+        currentLicenseIndexPath_ = indexPath;
     }
     [tableView reloadData];
 }

@@ -48,10 +48,10 @@
 
 @interface MediasListViewController () <UIScrollViewDelegate, MNMBottomPullToRefreshManagerClient>
 
-@property (nonatomic, retain) IBOutlet MediaDetailViewController *mediaDetailViewController;
-@property (nonatomic, retain) MNMBottomPullToRefreshManager *pullToRefreshManager;
-@property (nonatomic, retain) UIBarButtonItem* reloadBarButton;
-@property (nonatomic, retain) NSFetchedResultsController* mediasListResultController;
+@property (nonatomic, strong) IBOutlet MediaDetailViewController *mediaDetailViewController;
+@property (nonatomic, strong) MNMBottomPullToRefreshManager *pullToRefreshManager;
+@property (nonatomic, strong) UIBarButtonItem* reloadBarButton;
+@property (nonatomic, strong) NSFetchedResultsController* mediasListResultController;
 
 @end
 
@@ -63,14 +63,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Supermethods overrides
 
-- (void)dealloc
-{
-    [_currentUser release];
-    [_mediaDetailViewController release];
-    [_reloadBarButton release];
-    [_mediasListResultController release];
-    [super dealloc];
-}
 
 - (void)viewDidLoad
 {
@@ -79,7 +71,7 @@
     self.reloadBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonAction:)];
     [self.navigationItem setRightBarButtonItem:self.reloadBarButton animated:YES];
     
-    self.mediaDetailViewController = (MediaDetailViewController *)[[[self.splitViewController.viewControllers lastObject] topViewController] retain];
+    self.mediaDetailViewController = (MediaDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -191,11 +183,11 @@
             predicate = [NSPredicate predicateWithFormat:@"status == %@",@"publie"];
         }
         
-        _mediasListResultController = [[Media fetchAllSortedBy:@"date"
+        _mediasListResultController = [Media fetchAllSortedBy:@"date"
                                                      ascending:NO
                                                  withPredicate:predicate
                                                        groupBy:nil
-                                                      delegate:nil] retain];
+                                                      delegate:nil];
     }
     return _mediasListResultController;
 }
@@ -246,7 +238,6 @@
             mediaDetailViewController.media = media;
             mediaDetailViewController.title = media.title;
             [self.navigationController pushViewController:mediaDetailViewController animated:YES];
-            [mediaDetailViewController release];
         }
     }
 }

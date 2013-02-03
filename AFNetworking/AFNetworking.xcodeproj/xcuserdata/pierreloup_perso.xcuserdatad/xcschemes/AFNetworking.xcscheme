@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A5EA0BB116BEBE0F004DFA06"
-               BuildableName = "libMKBlockAdditions.a"
-               BlueprintName = "MKBlockAdditions"
-               ReferencedContainer = "container:MKBlockAdditions.xcodeproj">
+               BlueprintIdentifier = "A5B505E816BD5FDA008BF699"
+               BuildableName = "libAFNetworking.a"
+               BlueprintName = "AFNetworking"
+               ReferencedContainer = "container:AFNetworking.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
