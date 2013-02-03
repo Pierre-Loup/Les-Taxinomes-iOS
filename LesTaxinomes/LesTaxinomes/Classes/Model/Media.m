@@ -52,7 +52,7 @@
 @dynamic license;
 @dynamic section;
 
-+ (Media *)mediaWithXMLRPCResponse:(NSDictionary *)response {
++ (Media*)mediaWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error {
     
     if(response == nil){
         return nil;
@@ -145,7 +145,7 @@
     
     if([[response objectForKey:@"auteurs"] isKindOfClass:[NSArray class]]){
         NSDictionary * authorDict = [[response objectForKey:@"auteurs"] objectAtIndex:0];
-        media.author = [Author authorWithXMLRPCResponse:authorDict];
+        media.author = [Author authorWithXMLRPCResponse:authorDict error:error];
     }
     
     if ([[response objectForKey:@"gis"] isKindOfClass:[NSArray class]]) {
@@ -160,13 +160,13 @@
     
     media.localUpdateDate = [NSDate date];
     
-    [context save];
+    [context save:error];
     
     return media;
     
 }
 
-+ (Media *)mediaLargeURLWithXMLRPCResponse:(NSDictionary *)response {
++ (Media*)mediaLargeURLWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error {
     if(response == nil){
         return nil;
     }
@@ -191,7 +191,7 @@
         media.mediaLargeURL = [response objectForKey:@"document"];
     }
     
-    [context save];
+    [context save:error];
     
     return media;
 }
@@ -214,7 +214,12 @@
     for (Media* media in allMedias) {
         [media deleteEntity];
     }
-    [context save];
+    
+    NSError* error;
+    [context save:&error];
+    if (error) {
+        LogError(@"%@", error);
+    }
 }
 
 #pragma mark - MKAnnotation protocol

@@ -54,8 +54,8 @@
 @property (nonatomic, retain) Section * section;
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 
-+ (Media *)mediaWithXMLRPCResponse: (NSDictionary *) response;
-+ (Media *)mediaLargeURLWithXMLRPCResponse:(NSDictionary *)response;
++ (Media *)mediaWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error;
++ (Media *)mediaLargeURLWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error;
 + (Media *)mediaWithIdentifier: (NSNumber *)identifier;
 + (NSArray *)allMedias;
 + (void)deleteAllMedias;

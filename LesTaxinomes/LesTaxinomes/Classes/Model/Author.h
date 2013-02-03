@@ -39,7 +39,7 @@
 @property (nonatomic, retain) NSString * status;
 @property (nonatomic, retain) NSSet *medias;
 
-+ (Author *)authorWithXMLRPCResponse:(NSDictionary*)response;
++ (Author *)authorWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error;
 + (Author *)authorWithIdentifier: (NSNumber *)identifier;
 + (NSArray *)allAuthors;
 @end

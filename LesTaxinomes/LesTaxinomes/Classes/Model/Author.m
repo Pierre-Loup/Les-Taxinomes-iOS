@@ -37,7 +37,7 @@
 @dynamic status;
 @dynamic medias;
 
-+ (Author*)authorWithXMLRPCResponse:(NSDictionary*)response {
++ (Author*)authorWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error {
     
     if(response == nil){
         return nil;
@@ -98,7 +98,7 @@
     
     author.localUpdateDate = [NSDate date];
     
-    [context save];
+    [context save:error];
     
     return author;
 }

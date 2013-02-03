@@ -38,9 +38,9 @@
 @property (nonatomic, retain) NSString* name;
 @property (nonatomic, retain) Media *medias;
 
-+ (License *)licenseWithXMLRPCResponse: (NSDictionary *) response;
-+ (License *)licenseWithIdentifier: (NSNumber *)identifier;
-+ (License *)defaultLicense;
-+ (NSArray *)allLicenses;
++ (License*)licenseWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error;
++ (License*)licenseWithIdentifier:(NSNumber*)identifier;
++ (License*)defaultLicense;
++ (NSArray*)allLicenses;
 
 @end

@@ -36,7 +36,7 @@
 @dynamic name;
 @dynamic medias;
 
-+ (License *)licenseWithXMLRPCResponse: (NSDictionary *) response {
++ (License *)licenseWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error {
     if(response == nil){
         return nil;
     }
@@ -60,7 +60,7 @@
     return license;
 }
 
-+ (License *)licenseWithIdentifier: (NSNumber *)identifier {
++ (License *)licenseWithIdentifier:(NSNumber*)identifier {
     NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d", [identifier integerValue]];
     License* license = [License findFirstWithPredicate:predicate inContext:context];
