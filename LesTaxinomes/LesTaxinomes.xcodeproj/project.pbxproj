@@ -293,9 +293,9 @@
 		A5CCFF321643CEBE00FA4ABF /* MediaListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585629F15F90BAD00446653 /* MediaListCell.xib */; };
 		A5CCFF331643CEBE00FA4ABF /* SingleLineInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A58562A215F90BAD00446653 /* SingleLineInputCell.xib */; };
 		A5CCFF341643CEBE00FA4ABF /* SpinnerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A58562A515F90BAD00446653 /* SpinnerCell.xib */; };
-		A5CCFF4C1643D1E500FA4ABF /* UIActionSheet+PhotoAssetPickerAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = A5CCFF4B1643D1E500FA4ABF /* UIActionSheet+PhotoAssetPickerAddition.m */; };
-		A5CCFF4D1643D1E500FA4ABF /* UIActionSheet+PhotoAssetPickerAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = A5CCFF4B1643D1E500FA4ABF /* UIActionSheet+PhotoAssetPickerAddition.m */; };
-		A5CCFF4E1643D1E500FA4ABF /* UIActionSheet+PhotoAssetPickerAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = A5CCFF4B1643D1E500FA4ABF /* UIActionSheet+PhotoAssetPickerAddition.m */; };
+		A5CCFF4C1643D1E500FA4ABF /* UIActionSheet+PhotoAssetPickerAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = A5CCFF4B1643D1E500FA4ABF /* UIActionSheet+PhotoAssetPickerAddition.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A5CCFF4D1643D1E500FA4ABF /* UIActionSheet+PhotoAssetPickerAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = A5CCFF4B1643D1E500FA4ABF /* UIActionSheet+PhotoAssetPickerAddition.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A5CCFF4E1643D1E500FA4ABF /* UIActionSheet+PhotoAssetPickerAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = A5CCFF4B1643D1E500FA4ABF /* UIActionSheet+PhotoAssetPickerAddition.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A5CCFF7416448E5F00FA4ABF /* cross_hudicon.png in Resources */ = {isa = PBXBuildFile; fileRef = A5CCFF7216448E5F00FA4ABF /* cross_hudicon.png */; };
 		A5CCFF7516448E5F00FA4ABF /* cross_hudicon.png in Resources */ = {isa = PBXBuildFile; fileRef = A5CCFF7216448E5F00FA4ABF /* cross_hudicon.png */; };
 		A5CCFF7716448E5F00FA4ABF /* cross_hudicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5CCFF7316448E5F00FA4ABF /* cross_hudicon@2x.png */; };

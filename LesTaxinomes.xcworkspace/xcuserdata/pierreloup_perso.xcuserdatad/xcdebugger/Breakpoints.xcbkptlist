@@ -2,6 +2,60 @@
 <Bucket
    type = "0"
    version = "1.0">
+   <FileBreakpoints>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "MKBlockAdditions/MKBlockAdditions/UIActionSheet+MKBlockAdditions.m"
+         timestampString = "381605830.349035"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "158"
+         endingLineNumber = "158"
+         landmarkName = "+actionSheet:didDismissWithButtonIndex:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "MKBlockAdditions/MKBlockAdditions/UIActionSheet+MKBlockAdditions.m"
+         timestampString = "381606018.531998"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "45"
+         endingLineNumber = "45"
+         landmarkName = "+actionSheetWithTitle:message:destructiveButtonTitle:buttons:showInView:onDismiss:onCancel:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "MKBlockAdditions/MKBlockAdditions/UIActionSheet+MKBlockAdditions.m"
+         timestampString = "381606034.509729"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "82"
+         endingLineNumber = "82"
+         landmarkName = "+photoPickerWithTitle:showInView:presentVC:onPhotoPicked:onCancel:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "MKBlockAdditions/MKBlockAdditions/UIActionSheet+MKBlockAdditions.m"
+         timestampString = "381606083.090591"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "25"
+         endingLineNumber = "25"
+         landmarkName = "+actionSheetWithTitle:message:buttons:showInView:onDismiss:onCancel:"
+         landmarkType = "5">
+      </FileBreakpoint>
+   </FileBreakpoints>
    <SymbolicBreakpoints>
       <AddressBreakpoint
          shouldBeEnabled = "Yes"
