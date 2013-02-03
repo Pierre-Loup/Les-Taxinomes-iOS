@@ -50,17 +50,6 @@
 		A5EA0B6C16BEBC6A004DFA06 /* EGOQuickPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOQuickPhoto.m; sourceTree = "<group>"; };
 		A5EA0B6D16BEBC6A004DFA06 /* EGOQuickPhotoSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOQuickPhotoSource.h; sourceTree = "<group>"; };
 		A5EA0B6E16BEBC6A004DFA06 /* EGOQuickPhotoSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOQuickPhotoSource.m; sourceTree = "<group>"; };
-		A5EA0B7016BEBC6A004DFA06 /* egopv_error_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = egopv_error_placeholder.png; sourceTree = "<group>"; };
-		A5EA0B7116BEBC6A004DFA06 /* egopv_error_placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "egopv_error_placeholder@2x.png"; sourceTree = "<group>"; };
-		A5EA0B7216BEBC6A004DFA06 /* egopv_fullscreen_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = egopv_fullscreen_button.png; sourceTree = "<group>"; };
-		A5EA0B7316BEBC6A004DFA06 /* egopv_fullscreen_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "egopv_fullscreen_button@2x.png"; sourceTree = "<group>"; };
-		A5EA0B7416BEBC6A004DFA06 /* egopv_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = egopv_left.png; sourceTree = "<group>"; };
-		A5EA0B7516BEBC6A004DFA06 /* egopv_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "egopv_left@2x.png"; sourceTree = "<group>"; };
-		A5EA0B7616BEBC6A004DFA06 /* egopv_minimize_fullscreen_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = egopv_minimize_fullscreen_button.png; sourceTree = "<group>"; };
-		A5EA0B7716BEBC6A004DFA06 /* egopv_photo_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = egopv_photo_placeholder.png; sourceTree = "<group>"; };
-		A5EA0B7816BEBC6A004DFA06 /* egopv_photo_placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "egopv_photo_placeholder@2x.png"; sourceTree = "<group>"; };
-		A5EA0B7916BEBC6A004DFA06 /* egopv_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = egopv_right.png; sourceTree = "<group>"; };
-		A5EA0B7A16BEBC6A004DFA06 /* egopv_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "egopv_right@2x.png"; sourceTree = "<group>"; };
 		A5EA0B7D16BEBC6A004DFA06 /* EGOPhotoCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOPhotoCaptionView.h; sourceTree = "<group>"; };
 		A5EA0B7E16BEBC6A004DFA06 /* EGOPhotoCaptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOPhotoCaptionView.m; sourceTree = "<group>"; };
 		A5EA0B8016BEBC6A004DFA06 /* EGOPhotoImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOPhotoImageView.h; sourceTree = "<group>"; };
@@ -117,7 +106,6 @@
 				A5EA0B6216BEBC6A004DFA06 /* Controller */,
 				A5EA0B6616BEBC6A004DFA06 /* EGOPhotoGlobal.h */,
 				A5EA0B6716BEBC6A004DFA06 /* Model */,
-				A5EA0B6F16BEBC6A004DFA06 /* Resources */,
 				A5EA0B7B16BEBC6A004DFA06 /* Views */,
 				A5EA0B4C16BEBBF6004DFA06 /* Supporting Files */,
 			);
@@ -195,24 +183,6 @@
 				A5EA0B6E16BEBC6A004DFA06 /* EGOQuickPhotoSource.m */,
 			);
 			path = EGOQuickPhoto;
-			sourceTree = "<group>";
-		};
-		A5EA0B6F16BEBC6A004DFA06 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				A5EA0B7016BEBC6A004DFA06 /* egopv_error_placeholder.png */,
-				A5EA0B7116BEBC6A004DFA06 /* egopv_error_placeholder@2x.png */,
-				A5EA0B7216BEBC6A004DFA06 /* egopv_fullscreen_button.png */,
-				A5EA0B7316BEBC6A004DFA06 /* egopv_fullscreen_button@2x.png */,
-				A5EA0B7416BEBC6A004DFA06 /* egopv_left.png */,
-				A5EA0B7516BEBC6A004DFA06 /* egopv_left@2x.png */,
-				A5EA0B7616BEBC6A004DFA06 /* egopv_minimize_fullscreen_button.png */,
-				A5EA0B7716BEBC6A004DFA06 /* egopv_photo_placeholder.png */,
-				A5EA0B7816BEBC6A004DFA06 /* egopv_photo_placeholder@2x.png */,
-				A5EA0B7916BEBC6A004DFA06 /* egopv_right.png */,
-				A5EA0B7A16BEBC6A004DFA06 /* egopv_right@2x.png */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		A5EA0B7B16BEBC6A004DFA06 /* Views */ = {
@@ -419,6 +389,7 @@
 				A5EA0B5616BEBBF6004DFA06 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

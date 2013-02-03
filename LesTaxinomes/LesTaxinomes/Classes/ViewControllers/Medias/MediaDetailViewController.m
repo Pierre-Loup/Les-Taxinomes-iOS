@@ -356,6 +356,7 @@
     [self.mediaImageView setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.media.mediaMediumURL]]
                                placeholderImage:[UIImage imageNamed:@"egopv_photo_placeholder"]
                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                            weakSelf.mediaImageView.image = image;
                                             [weakSelf.hud hide:YES];
                                             [weakSelf.placeholderAIView stopAnimating];
                                             [weakSelf refreshView];
