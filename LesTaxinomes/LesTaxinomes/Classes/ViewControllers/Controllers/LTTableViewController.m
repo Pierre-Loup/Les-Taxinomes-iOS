@@ -10,7 +10,6 @@
 #import "LTiPhoneBackgroundView.h"
 
 @interface LTTableViewController ()
-@property (nonatomic, strong) LTiPhoneBackgroundView* bgView;
 @end
 
 @implementation LTTableViewController
@@ -23,22 +22,7 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
-    // background for iPhone screen
-    if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        CGRect winFrame = [[UIApplication sharedApplication] keyWindow].frame;
-        CGRect bgFrame = CGRectMake(0, -self.navigationController.navigationBar.frame.size.height,
-                                    winFrame.size.width,
-                                    winFrame.size.height);
-        self.bgView = [[LTiPhoneBackgroundView alloc] initWithFrame:bgFrame];
-        self.bgView.light = YES;
-        self.bgView.frame = bgFrame;
-        UIView* tableViewBackgroundView = [[UIView alloc] initWithFrame:self.tableView.frame];
-        [tableViewBackgroundView addSubview:self.bgView];
-        self.tableView.backgroundView = tableViewBackgroundView;
-    }
-    
-    [self.navigationController.navigationBar setTintColor:kMainColor];
+    [self.navigationController.navigationBar setTintColor:kNavigationBarColor];
 }
 
 - (void)viewDidUnload {

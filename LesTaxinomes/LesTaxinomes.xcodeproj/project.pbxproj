@@ -140,10 +140,10 @@
 		A58562F215F90BAD00446653 /* MediaLocalisationPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585627F15F90BAD00446653 /* MediaLocalisationPickerViewController.m */; };
 		A58562F315F90BAD00446653 /* MediaLocalisationPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585628015F90BAD00446653 /* MediaLocalisationPickerViewController.xib */; };
 		A58562F415F90BAD00446653 /* MediaLocalisationPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585628015F90BAD00446653 /* MediaLocalisationPickerViewController.xib */; };
-		A58562F515F90BAD00446653 /* MediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585628215F90BAD00446653 /* MediasListViewController.m */; };
-		A58562F615F90BAD00446653 /* MediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585628215F90BAD00446653 /* MediasListViewController.m */; };
-		A58562F715F90BAD00446653 /* MediasListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585628315F90BAD00446653 /* MediasListViewController.xib */; };
-		A58562F815F90BAD00446653 /* MediasListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585628315F90BAD00446653 /* MediasListViewController.xib */; };
+		A58562F515F90BAD00446653 /* LTMediasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585628215F90BAD00446653 /* LTMediasViewController.m */; };
+		A58562F615F90BAD00446653 /* LTMediasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585628215F90BAD00446653 /* LTMediasViewController.m */; };
+		A58562F715F90BAD00446653 /* LTMediasViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585628315F90BAD00446653 /* LTMediasViewController.xib */; };
+		A58562F815F90BAD00446653 /* LTMediasViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585628315F90BAD00446653 /* LTMediasViewController.xib */; };
 		A58562F915F90BAD00446653 /* TextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585628615F90BAD00446653 /* TextCell.xib */; };
 		A58562FA15F90BAD00446653 /* TextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585628615F90BAD00446653 /* TextCell.xib */; };
 		A58562FB15F90BAD00446653 /* MediaUploadFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585628715F90BAD00446653 /* MediaUploadFormViewController.xib */; };
@@ -242,7 +242,7 @@
 		A5CCFED41643CEBE00FA4ABF /* MediaLicenseChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585627915F90BAD00446653 /* MediaLicenseChooserViewController.m */; };
 		A5CCFED51643CEBE00FA4ABF /* MediaLicenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585627C15F90BAD00446653 /* MediaLicenseViewController.m */; };
 		A5CCFED61643CEBE00FA4ABF /* MediaLocalisationPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585627F15F90BAD00446653 /* MediaLocalisationPickerViewController.m */; };
-		A5CCFED71643CEBE00FA4ABF /* MediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585628215F90BAD00446653 /* MediasListViewController.m */; };
+		A5CCFED71643CEBE00FA4ABF /* LTMediasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585628215F90BAD00446653 /* LTMediasViewController.m */; };
 		A5CCFED81643CEBE00FA4ABF /* MediaUploadFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585628B15F90BAD00446653 /* MediaUploadFormViewController.m */; };
 		A5CCFED91643CEBE00FA4ABF /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585629115F90BAD00446653 /* MapViewController.m */; };
 		A5CCFEDA1643CEBE00FA4ABF /* MapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A585629B15F90BAD00446653 /* MapCell.m */; };
@@ -282,7 +282,7 @@
 		A5CCFF271643CEBE00FA4ABF /* MediaLicenseChooserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585627A15F90BAD00446653 /* MediaLicenseChooserViewController.xib */; };
 		A5CCFF281643CEBE00FA4ABF /* MediaLicenseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585627D15F90BAD00446653 /* MediaLicenseViewController.xib */; };
 		A5CCFF291643CEBE00FA4ABF /* MediaLocalisationPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585628015F90BAD00446653 /* MediaLocalisationPickerViewController.xib */; };
-		A5CCFF2A1643CEBE00FA4ABF /* MediasListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585628315F90BAD00446653 /* MediasListViewController.xib */; };
+		A5CCFF2A1643CEBE00FA4ABF /* LTMediasViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585628315F90BAD00446653 /* LTMediasViewController.xib */; };
 		A5CCFF2B1643CEBE00FA4ABF /* TextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585628615F90BAD00446653 /* TextCell.xib */; };
 		A5CCFF2C1643CEBE00FA4ABF /* MediaUploadFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585628715F90BAD00446653 /* MediaUploadFormViewController.xib */; };
 		A5CCFF2D1643CEBE00FA4ABF /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585629215F90BAD00446653 /* MapViewController.xib */; };
@@ -310,6 +310,21 @@
 		A5CCFF8F1644949600FA4ABF /* NSError+LTErrorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A5CCFF8E1644949600FA4ABF /* NSError+LTErrorAdditions.m */; };
 		A5CCFF901644949600FA4ABF /* NSError+LTErrorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A5CCFF8E1644949600FA4ABF /* NSError+LTErrorAdditions.m */; };
 		A5CCFF911644949600FA4ABF /* NSError+LTErrorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A5CCFF8E1644949600FA4ABF /* NSError+LTErrorAdditions.m */; };
+		A5D1623E16C19F8900EAE613 /* icon_list.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D1623C16C19F8900EAE613 /* icon_list.png */; };
+		A5D1623F16C19F8900EAE613 /* icon_list.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D1623C16C19F8900EAE613 /* icon_list.png */; };
+		A5D1624016C19F8900EAE613 /* icon_list.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D1623C16C19F8900EAE613 /* icon_list.png */; };
+		A5D1624116C19F8900EAE613 /* icon_list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D1623D16C19F8900EAE613 /* icon_list@2x.png */; };
+		A5D1624216C19F8900EAE613 /* icon_list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D1623D16C19F8900EAE613 /* icon_list@2x.png */; };
+		A5D1624316C19F8900EAE613 /* icon_list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D1623D16C19F8900EAE613 /* icon_list@2x.png */; };
+		A5D1624616C19FA400EAE613 /* icon_grid.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D1624416C19FA400EAE613 /* icon_grid.png */; };
+		A5D1624716C19FA400EAE613 /* icon_grid.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D1624416C19FA400EAE613 /* icon_grid.png */; };
+		A5D1624816C19FA400EAE613 /* icon_grid.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D1624416C19FA400EAE613 /* icon_grid.png */; };
+		A5D1624916C19FA400EAE613 /* icon_grid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D1624516C19FA400EAE613 /* icon_grid@2x.png */; };
+		A5D1624A16C19FA400EAE613 /* icon_grid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D1624516C19FA400EAE613 /* icon_grid@2x.png */; };
+		A5D1624B16C19FA400EAE613 /* icon_grid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D1624516C19FA400EAE613 /* icon_grid@2x.png */; };
+		A5D1625116C1A40800EAE613 /* libGMGridView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5D1625016C1A40800EAE613 /* libGMGridView.a */; };
+		A5D1625216C1A41B00EAE613 /* libGMGridView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5D1625016C1A40800EAE613 /* libGMGridView.a */; };
+		A5D1625316C1A41C00EAE613 /* libGMGridView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5D1625016C1A40800EAE613 /* libGMGridView.a */; };
 		A5D38684167153AE006A1D4B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5D38683167153AE006A1D4B /* MessageUI.framework */; };
 		A5D38685167153B9006A1D4B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5D38683167153AE006A1D4B /* MessageUI.framework */; };
 		A5D38686167153BA006A1D4B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5D38683167153AE006A1D4B /* MessageUI.framework */; };
@@ -525,9 +540,9 @@
 		A585627E15F90BAD00446653 /* MediaLocalisationPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaLocalisationPickerViewController.h; sourceTree = "<group>"; };
 		A585627F15F90BAD00446653 /* MediaLocalisationPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaLocalisationPickerViewController.m; sourceTree = "<group>"; };
 		A585628015F90BAD00446653 /* MediaLocalisationPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaLocalisationPickerViewController.xib; sourceTree = "<group>"; };
-		A585628115F90BAD00446653 /* MediasListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediasListViewController.h; sourceTree = "<group>"; };
-		A585628215F90BAD00446653 /* MediasListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediasListViewController.m; sourceTree = "<group>"; };
-		A585628315F90BAD00446653 /* MediasListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediasListViewController.xib; sourceTree = "<group>"; };
+		A585628115F90BAD00446653 /* LTMediasViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTMediasViewController.h; sourceTree = "<group>"; };
+		A585628215F90BAD00446653 /* LTMediasViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTMediasViewController.m; sourceTree = "<group>"; };
+		A585628315F90BAD00446653 /* LTMediasViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LTMediasViewController.xib; sourceTree = "<group>"; };
 		A585628615F90BAD00446653 /* TextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextCell.xib; sourceTree = "<group>"; };
 		A585628815F90BAD00446653 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MediaUploadFormViewController.xib; sourceTree = "<group>"; };
 		A585628915F90BAD00446653 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/MediaUploadFormViewController.xib; sourceTree = "<group>"; };
@@ -583,6 +598,11 @@
 		A5CCFF8D1644949600FA4ABF /* NSError+LTErrorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+LTErrorAdditions.h"; sourceTree = "<group>"; };
 		A5CCFF8E1644949600FA4ABF /* NSError+LTErrorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+LTErrorAdditions.m"; sourceTree = "<group>"; };
 		A5CCFF92164495D800FA4ABF /* LTErrorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTErrorAdditions.h; sourceTree = "<group>"; };
+		A5D1623C16C19F8900EAE613 /* icon_list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_list.png; sourceTree = "<group>"; };
+		A5D1623D16C19F8900EAE613 /* icon_list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_list@2x.png"; sourceTree = "<group>"; };
+		A5D1624416C19FA400EAE613 /* icon_grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_grid.png; sourceTree = "<group>"; };
+		A5D1624516C19FA400EAE613 /* icon_grid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_grid@2x.png"; sourceTree = "<group>"; };
+		A5D1625016C1A40800EAE613 /* libGMGridView.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGMGridView.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5D38683167153AE006A1D4B /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		A5EA0B3816BEBA7C004DFA06 /* libMagicalRecords.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMagicalRecords.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5EA0B8D16BEBCD3004DFA06 /* libEGOPhotoViewer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libEGOPhotoViewer.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -628,6 +648,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5D1625116C1A40800EAE613 /* libGMGridView.a in Frameworks */,
 				A5EA0C4F16BEC663004DFA06 /* libMBProgressHUD.a in Frameworks */,
 				A5EA0C2E16BEC588004DFA06 /* libReachability.a in Frameworks */,
 				A5EA0C0F16BEC415004DFA06 /* libXML-RPC.a in Frameworks */,
@@ -691,6 +712,7 @@
 				A5EA0C1016BEC421004DFA06 /* libXML-RPC.a in Frameworks */,
 				A5EA0C2F16BEC592004DFA06 /* libReachability.a in Frameworks */,
 				A5EA0C5016BEC669004DFA06 /* libMBProgressHUD.a in Frameworks */,
+				A5D1625216C1A41B00EAE613 /* libGMGridView.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -726,6 +748,7 @@
 				A5EA0C1116BEC421004DFA06 /* libXML-RPC.a in Frameworks */,
 				A5EA0C3016BEC593004DFA06 /* libReachability.a in Frameworks */,
 				A5EA0C5116BEC66A004DFA06 /* libMBProgressHUD.a in Frameworks */,
+				A5D1625316C1A41C00EAE613 /* libGMGridView.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -783,6 +806,7 @@
 		37D2E7DC144709ED0044EC3A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A5D1625016C1A40800EAE613 /* libGMGridView.a */,
 				A5EA0C4E16BEC663004DFA06 /* libMBProgressHUD.a */,
 				A5EA0C2D16BEC588004DFA06 /* libReachability.a */,
 				A5EA0C0E16BEC415004DFA06 /* libXML-RPC.a */,
@@ -831,6 +855,10 @@
 		A5656598167294B900DF37B9 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				A5D1624416C19FA400EAE613 /* icon_grid.png */,
+				A5D1624516C19FA400EAE613 /* icon_grid@2x.png */,
+				A5D1623C16C19F8900EAE613 /* icon_list.png */,
+				A5D1623D16C19F8900EAE613 /* icon_list@2x.png */,
 				A56565CC1672A2C800DF37B9 /* tabbar_medias.png */,
 				A56565ED1672B69900DF37B9 /* background-568h.png */,
 				A56565C31672A19000DF37B9 /* background-568h@2x.png */,
@@ -1068,9 +1096,9 @@
 				A585627E15F90BAD00446653 /* MediaLocalisationPickerViewController.h */,
 				A585627F15F90BAD00446653 /* MediaLocalisationPickerViewController.m */,
 				A585628015F90BAD00446653 /* MediaLocalisationPickerViewController.xib */,
-				A585628115F90BAD00446653 /* MediasListViewController.h */,
-				A585628215F90BAD00446653 /* MediasListViewController.m */,
-				A585628315F90BAD00446653 /* MediasListViewController.xib */,
+				A585628115F90BAD00446653 /* LTMediasViewController.h */,
+				A585628215F90BAD00446653 /* LTMediasViewController.m */,
+				A585628315F90BAD00446653 /* LTMediasViewController.xib */,
 				A585628415F90BAD00446653 /* MediaUploadForm */,
 			);
 			path = Medias;
@@ -1334,7 +1362,7 @@
 				A58562EB15F90BAD00446653 /* MediaLicenseChooserViewController.xib in Resources */,
 				A58562EF15F90BAD00446653 /* MediaLicenseViewController.xib in Resources */,
 				A58562F315F90BAD00446653 /* MediaLocalisationPickerViewController.xib in Resources */,
-				A58562F715F90BAD00446653 /* MediasListViewController.xib in Resources */,
+				A58562F715F90BAD00446653 /* LTMediasViewController.xib in Resources */,
 				A58562F915F90BAD00446653 /* TextCell.xib in Resources */,
 				A58562FB15F90BAD00446653 /* MediaUploadFormViewController.xib in Resources */,
 				A585630515F90BAD00446653 /* MapViewController.xib in Resources */,
@@ -1368,6 +1396,10 @@
 				A5EA0C8216BED271004DFA06 /* egopv_photo_placeholder@2x.png in Resources */,
 				A5EA0C8516BED271004DFA06 /* egopv_right.png in Resources */,
 				A5EA0C8816BED271004DFA06 /* egopv_right@2x.png in Resources */,
+				A5D1623E16C19F8900EAE613 /* icon_list.png in Resources */,
+				A5D1624116C19F8900EAE613 /* icon_list@2x.png in Resources */,
+				A5D1624616C19FA400EAE613 /* icon_grid.png in Resources */,
+				A5D1624916C19FA400EAE613 /* icon_grid@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1401,7 +1433,7 @@
 				A58562EC15F90BAD00446653 /* MediaLicenseChooserViewController.xib in Resources */,
 				A58562F015F90BAD00446653 /* MediaLicenseViewController.xib in Resources */,
 				A58562F415F90BAD00446653 /* MediaLocalisationPickerViewController.xib in Resources */,
-				A58562F815F90BAD00446653 /* MediasListViewController.xib in Resources */,
+				A58562F815F90BAD00446653 /* LTMediasViewController.xib in Resources */,
 				A58562FA15F90BAD00446653 /* TextCell.xib in Resources */,
 				A58562FC15F90BAD00446653 /* MediaUploadFormViewController.xib in Resources */,
 				A585630615F90BAD00446653 /* MapViewController.xib in Resources */,
@@ -1435,6 +1467,10 @@
 				A5EA0C8316BED271004DFA06 /* egopv_photo_placeholder@2x.png in Resources */,
 				A5EA0C8616BED271004DFA06 /* egopv_right.png in Resources */,
 				A5EA0C8916BED271004DFA06 /* egopv_right@2x.png in Resources */,
+				A5D1623F16C19F8900EAE613 /* icon_list.png in Resources */,
+				A5D1624216C19F8900EAE613 /* icon_list@2x.png in Resources */,
+				A5D1624716C19FA400EAE613 /* icon_grid.png in Resources */,
+				A5D1624A16C19FA400EAE613 /* icon_grid@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1452,7 +1488,7 @@
 				A5CCFF271643CEBE00FA4ABF /* MediaLicenseChooserViewController.xib in Resources */,
 				A5CCFF281643CEBE00FA4ABF /* MediaLicenseViewController.xib in Resources */,
 				A5CCFF291643CEBE00FA4ABF /* MediaLocalisationPickerViewController.xib in Resources */,
-				A5CCFF2A1643CEBE00FA4ABF /* MediasListViewController.xib in Resources */,
+				A5CCFF2A1643CEBE00FA4ABF /* LTMediasViewController.xib in Resources */,
 				A5CCFF2B1643CEBE00FA4ABF /* TextCell.xib in Resources */,
 				A5CCFF2C1643CEBE00FA4ABF /* MediaUploadFormViewController.xib in Resources */,
 				A5CCFF2D1643CEBE00FA4ABF /* MapViewController.xib in Resources */,
@@ -1501,6 +1537,10 @@
 				A5EA0C8416BED271004DFA06 /* egopv_photo_placeholder@2x.png in Resources */,
 				A5EA0C8716BED271004DFA06 /* egopv_right.png in Resources */,
 				A5EA0C8A16BED271004DFA06 /* egopv_right@2x.png in Resources */,
+				A5D1624016C19F8900EAE613 /* icon_list.png in Resources */,
+				A5D1624316C19F8900EAE613 /* icon_list@2x.png in Resources */,
+				A5D1624816C19FA400EAE613 /* icon_grid.png in Resources */,
+				A5D1624B16C19FA400EAE613 /* icon_grid@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1537,7 +1577,7 @@
 				A58562E915F90BAD00446653 /* MediaLicenseChooserViewController.m in Sources */,
 				A58562ED15F90BAD00446653 /* MediaLicenseViewController.m in Sources */,
 				A58562F115F90BAD00446653 /* MediaLocalisationPickerViewController.m in Sources */,
-				A58562F515F90BAD00446653 /* MediasListViewController.m in Sources */,
+				A58562F515F90BAD00446653 /* LTMediasViewController.m in Sources */,
 				A58562FD15F90BAD00446653 /* MediaUploadFormViewController.m in Sources */,
 				A585630315F90BAD00446653 /* MapViewController.m in Sources */,
 				A585630D15F90BAD00446653 /* MapCell.m in Sources */,
@@ -1581,7 +1621,7 @@
 				A58562EA15F90BAD00446653 /* MediaLicenseChooserViewController.m in Sources */,
 				A58562EE15F90BAD00446653 /* MediaLicenseViewController.m in Sources */,
 				A58562F215F90BAD00446653 /* MediaLocalisationPickerViewController.m in Sources */,
-				A58562F615F90BAD00446653 /* MediasListViewController.m in Sources */,
+				A58562F615F90BAD00446653 /* LTMediasViewController.m in Sources */,
 				A58562FE15F90BAD00446653 /* MediaUploadFormViewController.m in Sources */,
 				A585630415F90BAD00446653 /* MapViewController.m in Sources */,
 				A585630E15F90BAD00446653 /* MapCell.m in Sources */,
@@ -1625,7 +1665,7 @@
 				A5CCFED41643CEBE00FA4ABF /* MediaLicenseChooserViewController.m in Sources */,
 				A5CCFED51643CEBE00FA4ABF /* MediaLicenseViewController.m in Sources */,
 				A5CCFED61643CEBE00FA4ABF /* MediaLocalisationPickerViewController.m in Sources */,
-				A5CCFED71643CEBE00FA4ABF /* MediasListViewController.m in Sources */,
+				A5CCFED71643CEBE00FA4ABF /* LTMediasViewController.m in Sources */,
 				A5CCFED81643CEBE00FA4ABF /* MediaUploadFormViewController.m in Sources */,
 				A5CCFED91643CEBE00FA4ABF /* MapViewController.m in Sources */,
 				A5CCFEDA1643CEBE00FA4ABF /* MapCell.m in Sources */,
@@ -1750,6 +1790,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -1779,6 +1820,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
@@ -1816,8 +1858,11 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "LesTaxinomes/Supporting Files/LesTaxinomes-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-fqdorrqeczynlscrslmxbxufdkgw/Build/Products/Debug-iphoneos\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1843,8 +1888,11 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "LesTaxinomes/Supporting Files/LesTaxinomes-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-fqdorrqeczynlscrslmxbxufdkgw/Build/Products/Debug-iphoneos\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1871,7 +1919,7 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "LesTaxinomes/Supporting Files/LesTaxinomes-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = LesTaxinomes;
 				PROVISIONING_PROFILE = "";
@@ -1899,7 +1947,7 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "LesTaxinomes/Supporting Files/LesTaxinomes-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = LesTaxinomes;
 				PROVISIONING_PROFILE = "";
@@ -1926,7 +1974,7 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Geodiversite/Supporting Files/Geodiversite-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "Géodiversité";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1952,7 +2000,7 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Geodiversite/Supporting Files/Geodiversite-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "Géodiversité";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1966,7 +2014,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1984,7 +2032,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "LesTaxinomesTests/LesTaxinomesTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1998,7 +2046,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -2016,7 +2064,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "LesTaxinomesTests/LesTaxinomesTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -60,13 +60,13 @@
 #define kSectionEntityParentField @"parent"
 
 //Color
-//#5F8237
 #ifdef GEODIV
 #define kPinColor MKPinAnnotationColorRed
 #define kMainColor [UIColor colorWithRed:(29.0f/255.0f) green:(176.0f/255.0f) blue:(252.0f/255.0f) alpha:1.0f]
 #define kSecondaryColor [UIColor colorWithRed:(0.0f/255.0f) green:(0.0f/255.0f) blue:(0.0f/255.0f) alpha:1.0f]
 #else
 #define kPinColor MKPinAnnotationColorGreen
+#define kNavigationBarColor [UIColor colorWithRed:(95.0f/255.0f) green:(130.0f/255.0f) blue:(55.0/255.0f) alpha:1.0f]
 #define kMainColor [UIColor colorWithRed:(95.0f/255.0f) green:(130.0f/255.0f) blue:(55.0/255.0f) alpha:1.0f]
 #define kSecondaryColor [UIColor colorWithRed:(132.0f/255.0f) green:(211.0/255.0f) blue:(58.0/255.0f) alpha:1.0f]
 #endif

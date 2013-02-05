@@ -25,10 +25,10 @@
 
 #import <UIKit/UIKit.h>
 #import "Author.h"
-#import "LTTableViewController.h"
+#import "LTViewController.h"
 #import "MNMBottomPullToRefreshManager.h"
 
-@interface MediasListViewController : LTTableViewController
+@interface LTMediasViewController : LTViewController
 
 @property (nonatomic, strong) Author* currentUser;
 

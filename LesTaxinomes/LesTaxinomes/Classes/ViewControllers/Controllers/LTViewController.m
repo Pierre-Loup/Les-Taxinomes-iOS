@@ -26,7 +26,6 @@
 #import "LTViewController.h"
 
 @interface LTViewController ()
-@property (nonatomic, strong) LTiPhoneBackgroundView* bgView;
 @end
 
 @implementation LTViewController
@@ -36,22 +35,8 @@
 #pragma mark - Superclass Overrides
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    // background for iPhone screen
-    if (![[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        CGRect winFrame = [[UIApplication sharedApplication] keyWindow].frame;
-        CGRect bgFrame = CGRectMake(0, -self.navigationController.navigationBar.frame.size.height,
-                                    winFrame.size.width,
-                                    winFrame.size.height);
-        self.bgView = [[LTiPhoneBackgroundView alloc] initWithFrame:bgFrame];
-        self.bgView.light = YES;
-        [self.view addSubview:self.bgView];
-        [self.view sendSubviewToBack:self.bgView];
-        self.bgView.frame = bgFrame;
-    }
-    
-    [self.navigationController.navigationBar setTintColor:kMainColor];
+    [super viewDidLoad];    
+    [self.navigationController.navigationBar setTintColor:kNavigationBarColor];
 }
 
 - (void)viewDidUnload {

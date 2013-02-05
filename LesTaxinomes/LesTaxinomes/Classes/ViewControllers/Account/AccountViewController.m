@@ -25,7 +25,7 @@
 
 #import "AccountViewController.h"
 #import "MediaUploadFormViewController.h"
-#import "MediasListViewController.h"
+#import "LTMediasViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "LTTitleView.h"
 
@@ -173,7 +173,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.row == 0 && indexPath.section == 0) {
-        MediasListViewController * mediasListViewController = [[MediasListViewController alloc] initWithNibName:@"MediasListViewController" bundle:nil];
+        LTMediasViewController * mediasListViewController = [[LTMediasViewController alloc] initWithNibName:@"MediasListViewController" bundle:nil];
         mediasListViewController.currentUser = [LTConnectionManager sharedConnectionManager].authenticatedUser;
         [self.navigationController pushViewController:mediasListViewController animated:YES];
         mediasListViewController.title = _T(@"account_my_medias");

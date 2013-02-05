@@ -26,9 +26,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Imports
 
-#import "MediasListViewController.h"
+#import "LTMediasViewController.h"
 
 #import "Author.h"
+#import "GMGridView.h"
 #import "LTConnectionManager.h"
 #import "MediaDetailViewController.h"
 #import "MediaListCell.h"
@@ -46,30 +47,61 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private interface
 
-@interface MediasListViewController () <UIScrollViewDelegate, MNMBottomPullToRefreshManagerClient>
+typedef enum {
+    LTMediasDisplayModeList,
+    LTMediasDisplayModeGrid
+} LTMediasDisplayMode ;
+
+@interface LTMediasViewController () <UIScrollViewDelegate, MNMBottomPullToRefreshManagerClient>
 
 @property (nonatomic, strong) IBOutlet MediaDetailViewController *mediaDetailViewController;
+@property (nonatomic, strong) IBOutlet UITableView* tableView;
+@property (nonatomic, strong) IBOutlet GMGridView* gridView;
 @property (nonatomic, strong) MNMBottomPullToRefreshManager *pullToRefreshManager;
-@property (nonatomic, strong) UIBarButtonItem* reloadBarButton;
+@property (nonatomic, strong) UIBarButtonItem* displayBarButton;
 @property (nonatomic, strong) NSFetchedResultsController* mediasListResultController;
-
+@property (nonatomic) LTMediasDisplayMode displayMode;
 @end
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Implementation
 
-@implementation MediasListViewController
+@implementation LTMediasViewController
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Supermethods overrides
 
+- (id)init {
+    self = [super init];
+    if (self) {
+        [self commonInit];
+    }
+    return self;
+}
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self commonInit];
+    }
+    return self;
+}
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        [self commonInit];
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.reloadBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonAction:)];
-    [self.navigationItem setRightBarButtonItem:self.reloadBarButton animated:YES];
+    self.displayBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_grid"]
+                                                             style:UIBarButtonItemStyleBordered
+                                                            target:self
+                                                            action:@selector(displayBarButton:)];
+    [self.navigationItem setRightBarButtonItem:self.displayBarButton animated:YES];
     
     self.mediaDetailViewController = (MediaDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
@@ -97,7 +129,7 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    self.reloadBarButton = nil;
+    self.displayBarButton = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -127,6 +159,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private Methods
 
+- (void)commonInit
+{
+    _displayMode = LTMediasDisplayModeList;
+}
+
 - (void)loadMoreMedias
 {
     NSRange mediasRange;
@@ -146,13 +183,13 @@
                                            }
                                            [self.pullToRefreshManager tableViewReloadFinished];
                                            [self.tableView reloadData];
-                                           self.reloadBarButton.enabled = YES;
+                                           self.displayBarButton.enabled = YES;
                                        }];
 }
 
 - (void)refreshButtonAction:(id)sender
-{    
-    self.reloadBarButton.enabled = NO;
+{
+    self.displayBarButton.enabled = NO;
     [self showDefaultHud];
     self.mediasListResultController = nil;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
@@ -164,9 +201,50 @@
     });
 }
 
+- (void)displayBarButton:(id)sender
+{
+    if (self.displayMode == LTMediasDisplayModeList) {
+        
+        self.displayMode = LTMediasDisplayModeGrid;
+        
+    } else if (self.displayMode == LTMediasDisplayModeGrid) {
+        
+        self.displayMode = LTMediasDisplayModeList;
+    }
+}
+
 #pragma mark Properties
 
-- (MNMBottomPullToRefreshManager*)pullToRefreshManager {
+- (void)setDisplayMode:(LTMediasDisplayMode)displayMode
+{
+    if (displayMode == LTMediasDisplayModeList) {
+        self.displayBarButton.enabled = NO;
+        [UIView transitionFromView:self.gridView
+                            toView:self.tableView
+                          duration:1.0
+                           options:UIViewAnimationOptionTransitionFlipFromRight|UIViewAnimationOptionShowHideTransitionViews
+                        completion:^(BOOL finished) {
+                             self.displayBarButton.enabled = YES;
+                         }];
+        self.displayBarButton.image = [UIImage imageNamed:@"icon_grid"];
+        _displayMode = LTMediasDisplayModeList;
+        
+    } else if (displayMode == LTMediasDisplayModeGrid) {
+        self.displayBarButton.enabled = NO;
+        [UIView transitionFromView:self.tableView
+                            toView:self.gridView
+                          duration:1.0
+                           options:UIViewAnimationOptionTransitionFlipFromLeft|UIViewAnimationOptionShowHideTransitionViews
+                        completion:^(BOOL finished) {
+                             self.displayBarButton.enabled = YES;
+                         }];
+        self.displayBarButton.image = [UIImage imageNamed:@"icon_list"];
+        _displayMode = LTMediasDisplayModeGrid;
+    }
+}
+
+- (MNMBottomPullToRefreshManager*)pullToRefreshManager
+{
     if (!_pullToRefreshManager) {
         _pullToRefreshManager = [[MNMBottomPullToRefreshManager alloc] initWithPullToRefreshViewHeight:60.0f tableView:self.tableView withClient:self];
     }
