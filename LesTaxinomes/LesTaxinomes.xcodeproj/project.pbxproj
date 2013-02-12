@@ -13,6 +13,9 @@
 		A50FC3AC1699C143003F10D8 /* libMNMBottomPullToRefresh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A50FC3AB1699C143003F10D8 /* libMNMBottomPullToRefresh.a */; };
 		A50FC3AD1699C148003F10D8 /* libMNMBottomPullToRefresh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A50FC3AB1699C143003F10D8 /* libMNMBottomPullToRefresh.a */; };
 		A50FC3AF1699C16E003F10D8 /* libMNMBottomPullToRefresh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A50FC3AB1699C143003F10D8 /* libMNMBottomPullToRefresh.a */; };
+		A51EA6F416CAE107000CC187 /* libPSTCollectionView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A51EA6F316CAE107000CC187 /* libPSTCollectionView.a */; };
+		A51EA6F516CAE10B000CC187 /* libPSTCollectionView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A51EA6F316CAE107000CC187 /* libPSTCollectionView.a */; };
+		A51EA6F616CAE10B000CC187 /* libPSTCollectionView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A51EA6F316CAE107000CC187 /* libPSTCollectionView.a */; };
 		A5402582167E31620038B229 /* MNMBottomPullToRefreshArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A5402580167E31620038B229 /* MNMBottomPullToRefreshArrow.png */; };
 		A5402583167E31620038B229 /* MNMBottomPullToRefreshArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A5402580167E31620038B229 /* MNMBottomPullToRefreshArrow.png */; };
 		A5402584167E31620038B229 /* MNMBottomPullToRefreshArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A5402580167E31620038B229 /* MNMBottomPullToRefreshArrow.png */; };
@@ -322,9 +325,6 @@
 		A5D1624916C19FA400EAE613 /* icon_grid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D1624516C19FA400EAE613 /* icon_grid@2x.png */; };
 		A5D1624A16C19FA400EAE613 /* icon_grid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D1624516C19FA400EAE613 /* icon_grid@2x.png */; };
 		A5D1624B16C19FA400EAE613 /* icon_grid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D1624516C19FA400EAE613 /* icon_grid@2x.png */; };
-		A5D1625116C1A40800EAE613 /* libGMGridView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5D1625016C1A40800EAE613 /* libGMGridView.a */; };
-		A5D1625216C1A41B00EAE613 /* libGMGridView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5D1625016C1A40800EAE613 /* libGMGridView.a */; };
-		A5D1625316C1A41C00EAE613 /* libGMGridView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5D1625016C1A40800EAE613 /* libGMGridView.a */; };
 		A5D38684167153AE006A1D4B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5D38683167153AE006A1D4B /* MessageUI.framework */; };
 		A5D38685167153B9006A1D4B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5D38683167153AE006A1D4B /* MessageUI.framework */; };
 		A5D38686167153BA006A1D4B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5D38683167153AE006A1D4B /* MessageUI.framework */; };
@@ -437,6 +437,7 @@
 		37D2E7E1144709ED0044EC3A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		37D2E7F8144709EE0044EC3A /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		A50FC3AB1699C143003F10D8 /* libMNMBottomPullToRefresh.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMNMBottomPullToRefresh.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A51EA6F316CAE107000CC187 /* libPSTCollectionView.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPSTCollectionView.a; path = "../../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-fqdorrqeczynlscrslmxbxufdkgw/Build/Products/Debug-iphoneos/libPSTCollectionView.a"; sourceTree = "<group>"; };
 		A5402580167E31620038B229 /* MNMBottomPullToRefreshArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MNMBottomPullToRefreshArrow.png; sourceTree = "<group>"; };
 		A5402581167E31620038B229 /* MNMBottomPullToRefreshArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MNMBottomPullToRefreshArrow@2x.png"; sourceTree = "<group>"; };
 		A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -602,7 +603,6 @@
 		A5D1623D16C19F8900EAE613 /* icon_list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_list@2x.png"; sourceTree = "<group>"; };
 		A5D1624416C19FA400EAE613 /* icon_grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_grid.png; sourceTree = "<group>"; };
 		A5D1624516C19FA400EAE613 /* icon_grid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_grid@2x.png"; sourceTree = "<group>"; };
-		A5D1625016C1A40800EAE613 /* libGMGridView.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGMGridView.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5D38683167153AE006A1D4B /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		A5EA0B3816BEBA7C004DFA06 /* libMagicalRecords.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMagicalRecords.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5EA0B8D16BEBCD3004DFA06 /* libEGOPhotoViewer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libEGOPhotoViewer.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -648,7 +648,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5D1625116C1A40800EAE613 /* libGMGridView.a in Frameworks */,
+				A51EA6F416CAE107000CC187 /* libPSTCollectionView.a in Frameworks */,
 				A5EA0C4F16BEC663004DFA06 /* libMBProgressHUD.a in Frameworks */,
 				A5EA0C2E16BEC588004DFA06 /* libReachability.a in Frameworks */,
 				A5EA0C0F16BEC415004DFA06 /* libXML-RPC.a in Frameworks */,
@@ -712,7 +712,7 @@
 				A5EA0C1016BEC421004DFA06 /* libXML-RPC.a in Frameworks */,
 				A5EA0C2F16BEC592004DFA06 /* libReachability.a in Frameworks */,
 				A5EA0C5016BEC669004DFA06 /* libMBProgressHUD.a in Frameworks */,
-				A5D1625216C1A41B00EAE613 /* libGMGridView.a in Frameworks */,
+				A51EA6F516CAE10B000CC187 /* libPSTCollectionView.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -748,7 +748,7 @@
 				A5EA0C1116BEC421004DFA06 /* libXML-RPC.a in Frameworks */,
 				A5EA0C3016BEC593004DFA06 /* libReachability.a in Frameworks */,
 				A5EA0C5116BEC66A004DFA06 /* libMBProgressHUD.a in Frameworks */,
-				A5D1625316C1A41C00EAE613 /* libGMGridView.a in Frameworks */,
+				A51EA6F616CAE10B000CC187 /* libPSTCollectionView.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -806,7 +806,7 @@
 		37D2E7DC144709ED0044EC3A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A5D1625016C1A40800EAE613 /* libGMGridView.a */,
+				A51EA6F316CAE107000CC187 /* libPSTCollectionView.a */,
 				A5EA0C4E16BEC663004DFA06 /* libMBProgressHUD.a */,
 				A5EA0C2D16BEC588004DFA06 /* libReachability.a */,
 				A5EA0C0E16BEC415004DFA06 /* libXML-RPC.a */,
@@ -1920,7 +1920,10 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "LesTaxinomes/Supporting Files/LesTaxinomes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-fqdorrqeczynlscrslmxbxufdkgw/Build/Products/Debug-iphoneos\"",
+				);
 				PRODUCT_NAME = LesTaxinomes;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1948,7 +1951,10 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "LesTaxinomes/Supporting Files/LesTaxinomes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-fqdorrqeczynlscrslmxbxufdkgw/Build/Products/Debug-iphoneos\"",
+				);
 				PRODUCT_NAME = LesTaxinomes;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1975,7 +1981,10 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Geodiversite/Supporting Files/Geodiversite-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-fqdorrqeczynlscrslmxbxufdkgw/Build/Products/Debug-iphoneos\"",
+				);
 				PRODUCT_NAME = "Géodiversité";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2001,7 +2010,10 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Geodiversite/Supporting Files/Geodiversite-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-fqdorrqeczynlscrslmxbxufdkgw/Build/Products/Debug-iphoneos\"",
+				);
 				PRODUCT_NAME = "Géodiversité";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;

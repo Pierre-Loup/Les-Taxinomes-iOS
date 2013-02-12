@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:GMGridView/GMGridView.xcodeproj">
+      location = "group:PSTCollectionView/PSTCollectionView.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:MBProgressHUD/MBProgressHUD.xcodeproj">
