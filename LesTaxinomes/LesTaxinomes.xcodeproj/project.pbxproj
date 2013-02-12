@@ -16,6 +16,9 @@
 		A51EA6F416CAE107000CC187 /* libPSTCollectionView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A51EA6F316CAE107000CC187 /* libPSTCollectionView.a */; };
 		A51EA6F516CAE10B000CC187 /* libPSTCollectionView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A51EA6F316CAE107000CC187 /* libPSTCollectionView.a */; };
 		A51EA6F616CAE10B000CC187 /* libPSTCollectionView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A51EA6F316CAE107000CC187 /* libPSTCollectionView.a */; };
+		A51EA72116CAE9AA000CC187 /* LTAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = A51EA72016CAE9AA000CC187 /* LTAppearance.m */; };
+		A51EA72216CAE9AF000CC187 /* LTAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = A51EA72016CAE9AA000CC187 /* LTAppearance.m */; };
+		A51EA72316CAE9B0000CC187 /* LTAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = A51EA72016CAE9AA000CC187 /* LTAppearance.m */; };
 		A5402582167E31620038B229 /* MNMBottomPullToRefreshArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A5402580167E31620038B229 /* MNMBottomPullToRefreshArrow.png */; };
 		A5402583167E31620038B229 /* MNMBottomPullToRefreshArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A5402580167E31620038B229 /* MNMBottomPullToRefreshArrow.png */; };
 		A5402584167E31620038B229 /* MNMBottomPullToRefreshArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A5402580167E31620038B229 /* MNMBottomPullToRefreshArrow.png */; };
@@ -438,6 +441,8 @@
 		37D2E7F8144709EE0044EC3A /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		A50FC3AB1699C143003F10D8 /* libMNMBottomPullToRefresh.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMNMBottomPullToRefresh.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A51EA6F316CAE107000CC187 /* libPSTCollectionView.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPSTCollectionView.a; path = "../../../../Library/Developer/Xcode/DerivedData/LesTaxinomes-fqdorrqeczynlscrslmxbxufdkgw/Build/Products/Debug-iphoneos/libPSTCollectionView.a"; sourceTree = "<group>"; };
+		A51EA71F16CAE9AA000CC187 /* LTAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTAppearance.h; sourceTree = "<group>"; };
+		A51EA72016CAE9AA000CC187 /* LTAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTAppearance.m; sourceTree = "<group>"; };
 		A5402580167E31620038B229 /* MNMBottomPullToRefreshArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MNMBottomPullToRefreshArrow.png; sourceTree = "<group>"; };
 		A5402581167E31620038B229 /* MNMBottomPullToRefreshArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MNMBottomPullToRefreshArrow@2x.png"; sourceTree = "<group>"; };
 		A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -1136,6 +1141,8 @@
 		A585629315F90BAD00446653 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A51EA71F16CAE9AA000CC187 /* LTAppearance.h */,
+				A51EA72016CAE9AA000CC187 /* LTAppearance.m */,
 				A585629415F90BAD00446653 /* Cells */,
 				A58562A615F90BAD00446653 /* LTBackgroundView.h */,
 				A58562A715F90BAD00446653 /* LTBackgroundView.m */,
@@ -1596,6 +1603,7 @@
 				A5EA0C5616BEC9F8004DFA06 /* UIImage+Resize.m in Sources */,
 				A5EA0C5916BEC9FC004DFA06 /* UIImageView+PhotoFrame.m in Sources */,
 				A5EA0C5C16BECA01004DFA06 /* UIGlossyButton.m in Sources */,
+				A51EA72116CAE9AA000CC187 /* LTAppearance.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1640,6 +1648,7 @@
 				A5EA0C5716BEC9F9004DFA06 /* UIImage+Resize.m in Sources */,
 				A5EA0C5A16BEC9FD004DFA06 /* UIImageView+PhotoFrame.m in Sources */,
 				A5EA0C5D16BECA01004DFA06 /* UIGlossyButton.m in Sources */,
+				A51EA72216CAE9AF000CC187 /* LTAppearance.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1684,6 +1693,7 @@
 				A5EA0C5816BEC9F9004DFA06 /* UIImage+Resize.m in Sources */,
 				A5EA0C5B16BEC9FE004DFA06 /* UIImageView+PhotoFrame.m in Sources */,
 				A5EA0C5E16BECA02004DFA06 /* UIGlossyButton.m in Sources */,
+				A51EA72316CAE9B0000CC187 /* LTAppearance.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

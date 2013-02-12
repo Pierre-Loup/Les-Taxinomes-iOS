@@ -24,10 +24,11 @@
  */
 
 #import "LesTaxinomesAppDelegate.h"
-#import "LTConnectionManager.h"
-#import "Constants.h"
-#import "License.h"
+
 #import "DCIntrospect.h"
+#import "License.h"
+#import "LTAppearance.h"
+#import "LTConnectionManager.h"
 
 @implementation LesTaxinomesAppDelegate
 @synthesize window = window_;
@@ -74,6 +75,8 @@
     // Setup fack spash screen
     launchScreenView_ = [[UIImageView alloc] initWithFrame: self.tabBarController.view.frame];
     launchScreenView_.image = [UIImage imageNamed:@"Default.png"];
+    
+    [LTAppearance setup];
     
     return YES;
 }

@@ -22,7 +22,6 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    [self.navigationController.navigationBar setTintColor:kNavigationBarColor];
 }
 
 - (void)viewDidUnload {

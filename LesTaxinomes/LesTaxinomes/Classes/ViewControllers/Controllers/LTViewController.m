@@ -35,8 +35,7 @@
 #pragma mark - Superclass Overrides
 
 - (void)viewDidLoad {
-    [super viewDidLoad];    
-    [self.navigationController.navigationBar setTintColor:kNavigationBarColor];
+    [super viewDidLoad];
 }
 
 - (void)viewDidUnload {

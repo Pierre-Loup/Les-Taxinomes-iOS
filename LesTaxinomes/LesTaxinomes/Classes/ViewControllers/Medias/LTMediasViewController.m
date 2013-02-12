@@ -29,7 +29,7 @@
 #import "LTMediasViewController.h"
 
 #import "Author.h"
-#import "GMGridView.h"
+#import "PSTCollectionView.h"
 #import "LTConnectionManager.h"
 #import "MediaDetailViewController.h"
 #import "MediaListCell.h"
@@ -56,7 +56,7 @@ typedef enum {
 
 @property (nonatomic, strong) IBOutlet MediaDetailViewController *mediaDetailViewController;
 @property (nonatomic, strong) IBOutlet UITableView* tableView;
-@property (nonatomic, strong) IBOutlet GMGridView* gridView;
+@property (nonatomic, strong) IBOutlet PSUICollectionView* collectionView;
 @property (nonatomic, strong) MNMBottomPullToRefreshManager *pullToRefreshManager;
 @property (nonatomic, strong) UIBarButtonItem* displayBarButton;
 @property (nonatomic, strong) NSFetchedResultsController* mediasListResultController;
@@ -219,7 +219,7 @@ typedef enum {
 {
     if (displayMode == LTMediasDisplayModeList) {
         self.displayBarButton.enabled = NO;
-        [UIView transitionFromView:self.gridView
+        [UIView transitionFromView:self.collectionView
                             toView:self.tableView
                           duration:1.0
                            options:UIViewAnimationOptionTransitionFlipFromRight|UIViewAnimationOptionShowHideTransitionViews
@@ -232,7 +232,7 @@ typedef enum {
     } else if (displayMode == LTMediasDisplayModeGrid) {
         self.displayBarButton.enabled = NO;
         [UIView transitionFromView:self.tableView
-                            toView:self.gridView
+                            toView:self.collectionView
                           duration:1.0
                            options:UIViewAnimationOptionTransitionFlipFromLeft|UIViewAnimationOptionShowHideTransitionViews
                         completion:^(BOOL finished) {
