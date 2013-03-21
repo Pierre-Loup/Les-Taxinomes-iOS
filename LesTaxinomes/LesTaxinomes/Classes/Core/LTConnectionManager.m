@@ -42,6 +42,8 @@
 #import "UIImage+Resize.h"
 #import "XMLRPCResponse.h"
 
+#define kLTConnectionManagerShortMediaMaxStep 20.0
+
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Defines & contants
 
@@ -119,8 +121,8 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             withRange:(NSRange)range
                         responseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock {
     
-    if(range.length == 0 || range.length > kDefaultLimit)
-        range.length = kDefaultLimit;
+    if(range.length == 0 || range.length > kLTConnectionManagerShortMediaMaxStep)
+        range.length = kLTConnectionManagerShortMediaMaxStep;
     NSString* limite = [NSString stringWithFormat:@"%d,%d", range.location,range.length];
     NSArray *requestedFields = @[@"id_media", @"titre", @"date", @"statut", @"vignette", @"auteurs", @"gis"];
     NSNumber* thumbnailWidth = [NSNumber numberWithDouble:(THUMBNAIL_MAX_WIDHT)];

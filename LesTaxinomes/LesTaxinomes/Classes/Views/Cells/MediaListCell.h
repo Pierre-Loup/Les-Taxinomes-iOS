@@ -10,6 +10,6 @@
 #import "Media.h"
 
 @interface MediaListCell : UITableViewCell
-@property (nonatomic, unsafe_unretained) Media* media;
+@property (nonatomic, weak) Media* media;
 + (MediaListCell *)mediaListCell;
 @end

@@ -113,8 +113,7 @@
 
 
 // WS
-#define kDefaultLimit 20
-#define kNbMediasStep 10
+#define kLTMediasLoadingStep 20;
 #define kLimitParamName @"limite"
 #define kSortParamName @"tri"
 #define kSessionCookieName @"spip_session"

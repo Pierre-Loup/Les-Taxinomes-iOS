@@ -8,6 +8,7 @@
 
 "common.cancel" = "Cancel";
 "common.ok" = "OK";
+"common.back" = "Back";
 "common.loading" = "Loading";
 "common.logout" = "Logout";
 "common.signin" = "Sign In";
@@ -31,6 +32,9 @@
 
 /* LEGAL INFORMATIONS*/
 "legal_informations.title" = "Legal notes";
+
+/* MEDIA LIST */
+"medias.loadmorebutton.title" = "Charger plus";
 
 /* MEDIA DETAIL VC*/
 "media_detail.no_text" = "No description";
@@ -65,7 +69,3 @@
 "error.upload_failed.text" = "Media sharing failed. Please retry later";
 "error.internal.title" = "Internal error";
 "error.internal.text" = "An internal error has occured. If the problem persists, please send use an email at bretagne@lespetitsdebrouillards.org";
-
-"MNM_BOTTOM_PTR_PULL_TEXT" = "Pull to get more...";
-"MNM_BOTTOM_PTR_RELEASE_TEXT" = "Release now!";
-"MNM_BOTTOM_PTR_LOADING_TEXT" = "Loading...";

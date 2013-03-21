@@ -33,6 +33,9 @@
 /* LEGAL INFORMATIONS*/
 "legal_informations.title" = "Mentions Légales";
 
+/* MEDIA LIST */
+"medias.loadmorebutton.title" = "Load more";
+
 /* MEDIA DETAIL VC*/
 "media_detail.no_text" = "Pas de description";
 "media_detail.publish_info_patern" = "Publié par %@ le %@\n%d vues";
@@ -66,7 +69,3 @@
 "error.upload_failed.text" = "Le partage du média a échoué. Réésayez plus tard";
 "error.internal.title" = "Erreur interne";
 "error.internal.text" = "Une erreur interne s'est produite. Si le problème persite, merci de nous envoyer une email à bretagne@lespetitsdebrouillards.org";
-
-"MNM_BOTTOM_PTR_PULL_TEXT" = "Tirer pour voir plus...";
-"MNM_BOTTOM_PTR_RELEASE_TEXT" = "Relacher";
-"MNM_BOTTOM_PTR_LOADING_TEXT" = "Chargement...";

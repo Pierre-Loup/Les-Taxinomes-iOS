@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:ISRefreshControl/ISRefreshControl.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:PSTCollectionView/PSTCollectionView.xcodeproj">
    </FileRef>
    <FileRef
@@ -27,9 +30,6 @@
    </FileRef>
    <FileRef
       location = "group:AFNetworking/AFNetworking.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:MNMBottomPullToRefresh/MNMBottomPullToRefresh.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:LesTaxinomes/LesTaxinomes.xcodeproj">

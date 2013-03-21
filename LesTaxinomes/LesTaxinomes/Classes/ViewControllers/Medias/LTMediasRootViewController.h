@@ -26,11 +26,16 @@
 #import <UIKit/UIKit.h>
 #import "Author.h"
 #import "LTViewController.h"
-#import "MNMBottomPullToRefreshManager.h"
+#import "LTMediasDataSource.h"
+#import "LTMediasDelegate.h"
 
-@interface LTMediasViewController : LTViewController
+@interface LTMediasRootViewController : LTViewController    <LTMediasDataSource
+                                                            ,LTMediasDelegate>
 
 @property (nonatomic, strong) Author* currentUser;
+@property (nonatomic, readonly) NSFetchedResultsController* mediasResultController;
+
+- (void)loadMoreMedias;
 
 @end
 

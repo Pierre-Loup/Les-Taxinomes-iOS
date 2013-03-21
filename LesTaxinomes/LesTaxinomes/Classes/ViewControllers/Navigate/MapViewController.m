@@ -110,7 +110,7 @@
         
         NSRange range;
         range.location = self.searchStartIndex;
-        range.length = kNbMediasStep;
+        range.length = kLTMediasLoadingStep;
         
         CLLocation* searchLocation = [[CLLocation alloc] initWithLatitude:self.referenceAnnotation.coordinate.latitude
                                                                 longitude:self.referenceAnnotation.coordinate.longitude];
