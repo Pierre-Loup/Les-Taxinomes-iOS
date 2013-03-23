@@ -55,6 +55,11 @@
 
 #pragma mark Properties
 
+- (NSString*)reuseIdentifier
+{
+    return NSStringFromClass([self class]);
+}
+
 - (void)setDisplayMode:(LTMediasLoadMoreFooterViewDisplayMode)displayMode
 {
     _displayMode = displayMode;
