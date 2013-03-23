@@ -13,11 +13,14 @@
 #import "LTMediasLoadMoreFooterView.h"
 
 @class LTMediasLoadMoreFooterView;
+@class Media;
 
 @interface LTMediasGridViewController : LTCollectionViewController
 
 @property (nonatomic, readonly) LTMediasLoadMoreFooterView* footerView;
 @property (nonatomic, weak) id<LTMediasDataSource> dataSource;
 @property (nonatomic, weak) id<LTMediasDelegate> delegate;
+
+@property (nonatomic, weak) Media* firstVisibleMedia;
 
 @end

@@ -248,6 +248,7 @@ typedef enum {
     
     if (_displayMode == LTMediasDisplayModeList) {
         [self.listViewController.tableView reloadData];
+        self.listViewController.firstVisibleMedia = self.gridViewController.firstVisibleMedia;
         [UIView transitionFromView:self.gridViewController.view
                             toView:self.listViewController.view
                           duration:1.0
@@ -257,6 +258,7 @@ typedef enum {
         
     } else if (_displayMode == LTMediasDisplayModeGrid) {
         [self.gridViewController.collectionView reloadData];
+        self.gridViewController.firstVisibleMedia = self.listViewController.firstVisibleMedia;
         [UIView transitionFromView:self.listViewController.view
                             toView:self.gridViewController.view
                           duration:1.0

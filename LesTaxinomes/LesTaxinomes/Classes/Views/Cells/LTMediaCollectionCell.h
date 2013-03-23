@@ -12,7 +12,7 @@
 
 @interface LTMediaCollectionCell : PSTCollectionViewCell
 
-@property (nonatomic, weak) Media* media;
+@property (nonatomic, strong) Media* media;
 
 + (NSString *)reuseIdentifier;
 

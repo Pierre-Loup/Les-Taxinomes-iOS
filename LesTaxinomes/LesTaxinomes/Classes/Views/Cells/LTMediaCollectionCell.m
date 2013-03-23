@@ -70,6 +70,7 @@
 
 - (void)setMedia:(Media *)media
 {
+    _media = media;
     [self.imageView setImageWithURL:[NSURL URLWithString:media.mediaThumbnailUrl]
                placeholderImage:[UIImage imageNamed:@"Icon"]];
 }

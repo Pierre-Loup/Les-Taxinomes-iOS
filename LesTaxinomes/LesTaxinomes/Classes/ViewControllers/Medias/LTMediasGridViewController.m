@@ -42,6 +42,39 @@
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Public methods
+
+- (Media*)firstVisibleMedia
+{
+    if (self.collectionView.visibleCells.count == 0) {
+        return nil;
+    }
+    
+    NSArray* sortedVisibleCells = [self.collectionView.visibleCells sortedArrayUsingComparator:^NSComparisonResult(LTMediaCollectionCell *cell1, LTMediaCollectionCell *cell2) {
+        NSIndexPath* indexPath1 = [self.collectionView indexPathForCell:cell1];
+        NSIndexPath* indexPath2 = [self.collectionView indexPathForCell:cell2];
+        
+        if (indexPath1.row < indexPath2.row)
+            return NSOrderedAscending;
+        else if (indexPath1.row > indexPath2.row)
+            return NSOrderedDescending;
+        else
+            return NSOrderedSame;
+    }];
+    
+    LTMediaCollectionCell* cell = sortedVisibleCells[0];
+    return cell.media;
+}
+
+- (void)setFirstVisibleMedia:(Media *)firstVisibleMedia
+{
+    NSIndexPath* indexPath = [self.dataSource.mediasResultController indexPathForObject:firstVisibleMedia];
+    [self.collectionView scrollToItemAtIndexPath:indexPath
+                                atScrollPosition:PSTCollectionViewScrollPositionTop
+                                        animated:NO];
+}
+
+////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(PSTCollectionView *)view numberOfItemsInSection:(NSInteger)section

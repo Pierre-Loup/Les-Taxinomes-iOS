@@ -12,7 +12,7 @@
 #import "LTMediasListViewController.h"
 
 #import "LTMediasLoadMoreFooterView.h"
-#import "MediaListCell.h"
+#import "LTMediaListCell.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Defines & contants
@@ -86,6 +86,40 @@
     [super viewDidAppear:animated];
 }
 
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Public methods
+
+- (Media*)firstVisibleMedia
+{
+    if (self.tableView.visibleCells.count == 0) {
+        return nil;
+    }
+    
+    NSArray* sortedVisibleCells = [self.tableView.visibleCells sortedArrayUsingComparator:^NSComparisonResult(LTMediaListCell *cell1, LTMediaListCell *cell2) {
+        NSIndexPath* indexPath1 = [self.tableView indexPathForCell:cell1];
+        NSIndexPath* indexPath2 = [self.tableView indexPathForCell:cell2];
+        
+        if (indexPath1.row < indexPath2.row)
+            return NSOrderedAscending;
+        else if (indexPath1.row > indexPath2.row)
+            return NSOrderedDescending;
+        else
+            return NSOrderedSame;
+    }];
+    
+    LTMediaListCell* cell = sortedVisibleCells[0];
+    return cell.media;
+}
+
+- (void)setFirstVisibleMedia:(Media *)firstVisibleMedia
+{
+    NSIndexPath* indexPath = [self.dataSource.mediasResultController indexPathForObject:firstVisibleMedia];
+    [self.tableView scrollToRowAtIndexPath:indexPath
+                          atScrollPosition:UITableViewScrollPositionTop
+                                  animated:NO];
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private methods
 
@@ -111,11 +145,11 @@
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Media* media = [self.dataSource.mediasResultController objectAtIndexPath:indexPath];
-    MediaListCell* cell = nil;
+    LTMediaListCell* cell = nil;
     
     cell = [aTableView dequeueReusableCellWithIdentifier:kLTMediaListCellIdentifier];
     if (!cell) {
-        cell = [MediaListCell mediaListCell];
+        cell = [LTMediaListCell mediaListCell];
     }
     
     cell.media = media;

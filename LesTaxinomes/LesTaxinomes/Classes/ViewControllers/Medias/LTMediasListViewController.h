@@ -12,10 +12,14 @@
 #import "LTMediasDelegate.h"
 #import "LTMediasLoadMoreFooterView.h"
 
+@class Media;
+
 @interface LTMediasListViewController : LTTableViewController
 
 @property (nonatomic, readonly) LTMediasLoadMoreFooterView* footerView;
 @property (nonatomic, weak) id<LTMediasDataSource> dataSource;
 @property (nonatomic, weak) id<LTMediasDelegate> delegate;
+
+@property (nonatomic, weak) Media* firstVisibleMedia;
 
 @end

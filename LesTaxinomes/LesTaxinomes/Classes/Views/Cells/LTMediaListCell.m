@@ -9,7 +9,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Imports
 
-#import "MediaListCell.h"
+#import "LTMediaListCell.h"
 
 #import "Author.h"
 #import "UIImageView+AFNetworking.h"
@@ -17,7 +17,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private interface
 
-@interface MediaListCell ()
+@interface LTMediaListCell ()
 @property (nonatomic, strong) IBOutlet UIImageView* image;
 @property (nonatomic, strong) IBOutlet UILabel* title;
 @property (nonatomic, strong) IBOutlet UILabel* author;
@@ -26,7 +26,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Implementation
 
-@implementation MediaListCell
+@implementation LTMediaListCell
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Supermethods overrides
@@ -36,7 +36,7 @@
     NSArray* views = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class]) owner:self options:nil];
     UIView* view = [views objectAtIndex:0];
     if ([view isKindOfClass:[self class]]) {
-        self = (MediaListCell *)view;
+        self = (LTMediaListCell *)view;
         self.title.textColor = kMainColor;
         self.author.textColor = kSecondaryColor;
         return self;
@@ -48,7 +48,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Public Methods
 
-+ (MediaListCell *)mediaListCell
++ (LTMediaListCell *)mediaListCell
 {
     return [[self alloc] init];
 }
@@ -57,6 +57,7 @@
 
 - (void)setMedia:(Media *)media
 {
+    _media = media;
     if (media.title.length) {
         self.title.text = media.title;
     } else {

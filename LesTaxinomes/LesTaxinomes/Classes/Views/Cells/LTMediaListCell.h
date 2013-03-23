@@ -9,7 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "Media.h"
 
-@interface MediaListCell : UITableViewCell
-@property (nonatomic, weak) Media* media;
-+ (MediaListCell *)mediaListCell;
+@interface LTMediaListCell : UITableViewCell
+
+@property (nonatomic, strong) Media* media;
+
++ (LTMediaListCell *)mediaListCell;
+
 @end

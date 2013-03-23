@@ -13,6 +13,12 @@
 		A5003DCE16FBAC3E0061CE24 /* UIGlossyButton+LT.m in Sources */ = {isa = PBXBuildFile; fileRef = A5003DCD16FBAC3E0061CE24 /* UIGlossyButton+LT.m */; };
 		A5003DCF16FBAC3E0061CE24 /* UIGlossyButton+LT.m in Sources */ = {isa = PBXBuildFile; fileRef = A5003DCD16FBAC3E0061CE24 /* UIGlossyButton+LT.m */; };
 		A5003DD016FBAC3E0061CE24 /* UIGlossyButton+LT.m in Sources */ = {isa = PBXBuildFile; fileRef = A5003DCD16FBAC3E0061CE24 /* UIGlossyButton+LT.m */; };
+		A51847CC16FDE5C500387810 /* LTMediasGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A51847C916FDE5C500387810 /* LTMediasGridViewController.m */; };
+		A51847CD16FDE5C500387810 /* LTMediasGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A51847C916FDE5C500387810 /* LTMediasGridViewController.m */; };
+		A51847CE16FDE5C500387810 /* LTMediasGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A51847C916FDE5C500387810 /* LTMediasGridViewController.m */; };
+		A51847CF16FDE5C500387810 /* LTMediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A51847CB16FDE5C500387810 /* LTMediasListViewController.m */; };
+		A51847D016FDE5C500387810 /* LTMediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A51847CB16FDE5C500387810 /* LTMediasListViewController.m */; };
+		A51847D116FDE5C500387810 /* LTMediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A51847CB16FDE5C500387810 /* LTMediasListViewController.m */; };
 		A51EA6F416CAE107000CC187 /* libPSTCollectionView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A51EA6F316CAE107000CC187 /* libPSTCollectionView.a */; };
 		A51EA6F516CAE10B000CC187 /* libPSTCollectionView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A51EA6F316CAE107000CC187 /* libPSTCollectionView.a */; };
 		A51EA6F616CAE10B000CC187 /* libPSTCollectionView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A51EA6F316CAE107000CC187 /* libPSTCollectionView.a */; };
@@ -167,10 +173,10 @@
 		A585630E15F90BAD00446653 /* MapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A585629B15F90BAD00446653 /* MapCell.m */; };
 		A585630F15F90BAD00446653 /* MapCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585629C15F90BAD00446653 /* MapCell.xib */; };
 		A585631015F90BAD00446653 /* MapCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585629C15F90BAD00446653 /* MapCell.xib */; };
-		A585631115F90BAD00446653 /* MediaListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A585629E15F90BAD00446653 /* MediaListCell.m */; };
-		A585631215F90BAD00446653 /* MediaListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A585629E15F90BAD00446653 /* MediaListCell.m */; };
-		A585631315F90BAD00446653 /* MediaListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585629F15F90BAD00446653 /* MediaListCell.xib */; };
-		A585631415F90BAD00446653 /* MediaListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585629F15F90BAD00446653 /* MediaListCell.xib */; };
+		A585631115F90BAD00446653 /* LTMediaListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A585629E15F90BAD00446653 /* LTMediaListCell.m */; };
+		A585631215F90BAD00446653 /* LTMediaListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A585629E15F90BAD00446653 /* LTMediaListCell.m */; };
+		A585631315F90BAD00446653 /* LTMediaListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585629F15F90BAD00446653 /* LTMediaListCell.xib */; };
+		A585631415F90BAD00446653 /* LTMediaListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585629F15F90BAD00446653 /* LTMediaListCell.xib */; };
 		A585631515F90BAD00446653 /* SingleLineInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562A115F90BAD00446653 /* SingleLineInputCell.m */; };
 		A585631615F90BAD00446653 /* SingleLineInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562A115F90BAD00446653 /* SingleLineInputCell.m */; };
 		A585631715F90BAD00446653 /* SingleLineInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A58562A215F90BAD00446653 /* SingleLineInputCell.xib */; };
@@ -249,7 +255,7 @@
 		A5CCFED81643CEBE00FA4ABF /* MediaUploadFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585628B15F90BAD00446653 /* MediaUploadFormViewController.m */; };
 		A5CCFED91643CEBE00FA4ABF /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A585629115F90BAD00446653 /* MapViewController.m */; };
 		A5CCFEDA1643CEBE00FA4ABF /* MapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A585629B15F90BAD00446653 /* MapCell.m */; };
-		A5CCFEDB1643CEBE00FA4ABF /* MediaListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A585629E15F90BAD00446653 /* MediaListCell.m */; };
+		A5CCFEDB1643CEBE00FA4ABF /* LTMediaListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A585629E15F90BAD00446653 /* LTMediaListCell.m */; };
 		A5CCFEDC1643CEBE00FA4ABF /* SingleLineInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562A115F90BAD00446653 /* SingleLineInputCell.m */; };
 		A5CCFEDD1643CEBE00FA4ABF /* SpinnerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562A415F90BAD00446653 /* SpinnerCell.m */; };
 		A5CCFEDE1643CEBE00FA4ABF /* LTBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562A715F90BAD00446653 /* LTBackgroundView.m */; };
@@ -293,7 +299,7 @@
 		A5CCFF2F1643CEBE00FA4ABF /* GridCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585629815F90BAD00446653 /* GridCellView.xib */; };
 		A5CCFF301643CEBE00FA4ABF /* LicenseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585629915F90BAD00446653 /* LicenseCell.xib */; };
 		A5CCFF311643CEBE00FA4ABF /* MapCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585629C15F90BAD00446653 /* MapCell.xib */; };
-		A5CCFF321643CEBE00FA4ABF /* MediaListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585629F15F90BAD00446653 /* MediaListCell.xib */; };
+		A5CCFF321643CEBE00FA4ABF /* LTMediaListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A585629F15F90BAD00446653 /* LTMediaListCell.xib */; };
 		A5CCFF331643CEBE00FA4ABF /* SingleLineInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A58562A215F90BAD00446653 /* SingleLineInputCell.xib */; };
 		A5CCFF341643CEBE00FA4ABF /* SpinnerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A58562A515F90BAD00446653 /* SpinnerCell.xib */; };
 		A5CCFF4C1643D1E500FA4ABF /* UIActionSheet+PhotoAssetPickerAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = A5CCFF4B1643D1E500FA4ABF /* UIActionSheet+PhotoAssetPickerAddition.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -376,12 +382,6 @@
 		A5E6796016ECD32600203EE8 /* LTCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6795F16ECD32600203EE8 /* LTCollectionViewFlowLayout.m */; };
 		A5E6796116ECD32600203EE8 /* LTCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6795F16ECD32600203EE8 /* LTCollectionViewFlowLayout.m */; };
 		A5E6796216ECD32600203EE8 /* LTCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6795F16ECD32600203EE8 /* LTCollectionViewFlowLayout.m */; };
-		A5E6796516ECD5AE00203EE8 /* LTMediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6796416ECD5AD00203EE8 /* LTMediasListViewController.m */; };
-		A5E6796616ECD5AE00203EE8 /* LTMediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6796416ECD5AD00203EE8 /* LTMediasListViewController.m */; };
-		A5E6796716ECD5AE00203EE8 /* LTMediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6796416ECD5AD00203EE8 /* LTMediasListViewController.m */; };
-		A5E6796A16ECD5D900203EE8 /* LTMediasGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6796916ECD5D900203EE8 /* LTMediasGridViewController.m */; };
-		A5E6796B16ECD5D900203EE8 /* LTMediasGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6796916ECD5D900203EE8 /* LTMediasGridViewController.m */; };
-		A5E6796C16ECD5D900203EE8 /* LTMediasGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6796916ECD5D900203EE8 /* LTMediasGridViewController.m */; };
 		A5E6797616ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6797516ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m */; };
 		A5E6797716ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6797516ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m */; };
 		A5E6797816ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6797516ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m */; };
@@ -463,6 +463,10 @@
 		A5003DCC16FBAC3D0061CE24 /* UIGlossyButton+LT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIGlossyButton+LT.h"; path = "Categories/UIGlossyButton+LT.h"; sourceTree = "<group>"; };
 		A5003DCD16FBAC3E0061CE24 /* UIGlossyButton+LT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIGlossyButton+LT.m"; path = "Categories/UIGlossyButton+LT.m"; sourceTree = "<group>"; };
 		A5003DD216FBB0850061CE24 /* LTMediasDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LTMediasDelegate.h; path = LesTaxinomes/Classes/ViewControllers/Controllers/Protocols/LTMediasDelegate.h; sourceTree = SOURCE_ROOT; };
+		A51847C816FDE5C400387810 /* LTMediasGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTMediasGridViewController.h; sourceTree = "<group>"; };
+		A51847C916FDE5C500387810 /* LTMediasGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTMediasGridViewController.m; sourceTree = "<group>"; };
+		A51847CA16FDE5C500387810 /* LTMediasListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTMediasListViewController.h; sourceTree = "<group>"; };
+		A51847CB16FDE5C500387810 /* LTMediasListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTMediasListViewController.m; sourceTree = "<group>"; };
 		A51EA6F316CAE107000CC187 /* libPSTCollectionView.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPSTCollectionView.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A51EA71F16CAE9AA000CC187 /* LTAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTAppearance.h; sourceTree = "<group>"; };
 		A51EA72016CAE9AA000CC187 /* LTAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTAppearance.m; sourceTree = "<group>"; };
@@ -587,9 +591,9 @@
 		A585629A15F90BAD00446653 /* MapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapCell.h; sourceTree = "<group>"; };
 		A585629B15F90BAD00446653 /* MapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapCell.m; sourceTree = "<group>"; };
 		A585629C15F90BAD00446653 /* MapCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapCell.xib; sourceTree = "<group>"; };
-		A585629D15F90BAD00446653 /* MediaListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaListCell.h; sourceTree = "<group>"; };
-		A585629E15F90BAD00446653 /* MediaListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaListCell.m; sourceTree = "<group>"; };
-		A585629F15F90BAD00446653 /* MediaListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaListCell.xib; sourceTree = "<group>"; };
+		A585629D15F90BAD00446653 /* LTMediaListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTMediaListCell.h; sourceTree = "<group>"; };
+		A585629E15F90BAD00446653 /* LTMediaListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTMediaListCell.m; sourceTree = "<group>"; };
+		A585629F15F90BAD00446653 /* LTMediaListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LTMediaListCell.xib; sourceTree = "<group>"; };
 		A58562A015F90BAD00446653 /* SingleLineInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleLineInputCell.h; sourceTree = "<group>"; };
 		A58562A115F90BAD00446653 /* SingleLineInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleLineInputCell.m; sourceTree = "<group>"; };
 		A58562A215F90BAD00446653 /* SingleLineInputCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleLineInputCell.xib; sourceTree = "<group>"; };
@@ -650,10 +654,6 @@
 		A5E6795A16ECD17400203EE8 /* libISRefreshControl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libISRefreshControl.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5E6795E16ECD32600203EE8 /* LTCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		A5E6795F16ECD32600203EE8 /* LTCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCollectionViewFlowLayout.m; sourceTree = "<group>"; };
-		A5E6796316ECD5AD00203EE8 /* LTMediasListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTMediasListViewController.h; path = LesTaxinomes/Classes/ViewControllers/Controllers/LTMediasListViewController.h; sourceTree = SOURCE_ROOT; };
-		A5E6796416ECD5AD00203EE8 /* LTMediasListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTMediasListViewController.m; path = LesTaxinomes/Classes/ViewControllers/Controllers/LTMediasListViewController.m; sourceTree = SOURCE_ROOT; };
-		A5E6796816ECD5D900203EE8 /* LTMediasGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTMediasGridViewController.h; path = LesTaxinomes/Classes/ViewControllers/Controllers/LTMediasGridViewController.h; sourceTree = SOURCE_ROOT; };
-		A5E6796916ECD5D900203EE8 /* LTMediasGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTMediasGridViewController.m; path = LesTaxinomes/Classes/ViewControllers/Controllers/LTMediasGridViewController.m; sourceTree = SOURCE_ROOT; };
 		A5E6796E16ECE91C00203EE8 /* LTMediasDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LTMediasDataSource.h; path = LesTaxinomes/Classes/ViewControllers/Controllers/Protocols/LTMediasDataSource.h; sourceTree = SOURCE_ROOT; };
 		A5E6797416ECFA2900203EE8 /* LTMediasLoadMoreFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTMediasLoadMoreFooterView.h; sourceTree = "<group>"; };
 		A5E6797516ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTMediasLoadMoreFooterView.m; sourceTree = "<group>"; };
@@ -1119,10 +1119,6 @@
 				A5B7C95C161B83D200BEC7D5 /* LTViewController.m */,
 				A5E678F616ECC95700203EE8 /* LTCollectionViewController.h */,
 				A5E678F716ECC95700203EE8 /* LTCollectionViewController.m */,
-				A5E6796316ECD5AD00203EE8 /* LTMediasListViewController.h */,
-				A5E6796416ECD5AD00203EE8 /* LTMediasListViewController.m */,
-				A5E6796816ECD5D900203EE8 /* LTMediasGridViewController.h */,
-				A5E6796916ECD5D900203EE8 /* LTMediasGridViewController.m */,
 			);
 			name = Controllers;
 			path = LTControllers;
@@ -1146,6 +1142,10 @@
 				A585628115F90BAD00446653 /* LTMediasRootViewController.h */,
 				A585628215F90BAD00446653 /* LTMediasRootViewController.m */,
 				A585628315F90BAD00446653 /* LTMediasRootViewController.xib */,
+				A51847C816FDE5C400387810 /* LTMediasGridViewController.h */,
+				A51847C916FDE5C500387810 /* LTMediasGridViewController.m */,
+				A51847CA16FDE5C500387810 /* LTMediasListViewController.h */,
+				A51847CB16FDE5C500387810 /* LTMediasListViewController.m */,
 				A585628415F90BAD00446653 /* MediaUploadForm */,
 			);
 			path = Medias;
@@ -1210,9 +1210,9 @@
 				A585629A15F90BAD00446653 /* MapCell.h */,
 				A585629B15F90BAD00446653 /* MapCell.m */,
 				A585629C15F90BAD00446653 /* MapCell.xib */,
-				A585629D15F90BAD00446653 /* MediaListCell.h */,
-				A585629E15F90BAD00446653 /* MediaListCell.m */,
-				A585629F15F90BAD00446653 /* MediaListCell.xib */,
+				A585629D15F90BAD00446653 /* LTMediaListCell.h */,
+				A585629E15F90BAD00446653 /* LTMediaListCell.m */,
+				A585629F15F90BAD00446653 /* LTMediaListCell.xib */,
 				A58562A015F90BAD00446653 /* SingleLineInputCell.h */,
 				A58562A115F90BAD00446653 /* SingleLineInputCell.m */,
 				A58562A215F90BAD00446653 /* SingleLineInputCell.xib */,
@@ -1463,7 +1463,7 @@
 				A585630915F90BAD00446653 /* GridCellView.xib in Resources */,
 				A585630B15F90BAD00446653 /* LicenseCell.xib in Resources */,
 				A585630F15F90BAD00446653 /* MapCell.xib in Resources */,
-				A585631315F90BAD00446653 /* MediaListCell.xib in Resources */,
+				A585631315F90BAD00446653 /* LTMediaListCell.xib in Resources */,
 				A585631715F90BAD00446653 /* SingleLineInputCell.xib in Resources */,
 				A585631B15F90BAD00446653 /* SpinnerCell.xib in Resources */,
 				A5CCFF7416448E5F00FA4ABF /* cross_hudicon.png in Resources */,
@@ -1534,7 +1534,7 @@
 				A585630A15F90BAD00446653 /* GridCellView.xib in Resources */,
 				A585630C15F90BAD00446653 /* LicenseCell.xib in Resources */,
 				A585631015F90BAD00446653 /* MapCell.xib in Resources */,
-				A585631415F90BAD00446653 /* MediaListCell.xib in Resources */,
+				A585631415F90BAD00446653 /* LTMediaListCell.xib in Resources */,
 				A585631815F90BAD00446653 /* SingleLineInputCell.xib in Resources */,
 				A585631C15F90BAD00446653 /* SpinnerCell.xib in Resources */,
 				A5CCFF7516448E5F00FA4ABF /* cross_hudicon.png in Resources */,
@@ -1589,7 +1589,7 @@
 				A5CCFF2F1643CEBE00FA4ABF /* GridCellView.xib in Resources */,
 				A5CCFF301643CEBE00FA4ABF /* LicenseCell.xib in Resources */,
 				A5CCFF311643CEBE00FA4ABF /* MapCell.xib in Resources */,
-				A5CCFF321643CEBE00FA4ABF /* MediaListCell.xib in Resources */,
+				A5CCFF321643CEBE00FA4ABF /* LTMediaListCell.xib in Resources */,
 				A5CCFF331643CEBE00FA4ABF /* SingleLineInputCell.xib in Resources */,
 				A5CCFF341643CEBE00FA4ABF /* SpinnerCell.xib in Resources */,
 				A56565AC167294B900DF37B9 /* Crozon.gpx in Resources */,
@@ -1674,7 +1674,7 @@
 				A58562FD15F90BAD00446653 /* MediaUploadFormViewController.m in Sources */,
 				A585630315F90BAD00446653 /* MapViewController.m in Sources */,
 				A585630D15F90BAD00446653 /* MapCell.m in Sources */,
-				A585631115F90BAD00446653 /* MediaListCell.m in Sources */,
+				A585631115F90BAD00446653 /* LTMediaListCell.m in Sources */,
 				A585631515F90BAD00446653 /* SingleLineInputCell.m in Sources */,
 				A585631915F90BAD00446653 /* SpinnerCell.m in Sources */,
 				A585631D15F90BAD00446653 /* LTBackgroundView.m in Sources */,
@@ -1693,10 +1693,10 @@
 				A559BADE16E7D951008C3917 /* LTMediaCollectionCell.m in Sources */,
 				A5E678F816ECC95700203EE8 /* LTCollectionViewController.m in Sources */,
 				A5E6796016ECD32600203EE8 /* LTCollectionViewFlowLayout.m in Sources */,
-				A5E6796516ECD5AE00203EE8 /* LTMediasListViewController.m in Sources */,
-				A5E6796A16ECD5D900203EE8 /* LTMediasGridViewController.m in Sources */,
 				A5E6797616ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m in Sources */,
 				A5003DCE16FBAC3E0061CE24 /* UIGlossyButton+LT.m in Sources */,
+				A51847CC16FDE5C500387810 /* LTMediasGridViewController.m in Sources */,
+				A51847CF16FDE5C500387810 /* LTMediasListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1726,7 +1726,7 @@
 				A58562FE15F90BAD00446653 /* MediaUploadFormViewController.m in Sources */,
 				A585630415F90BAD00446653 /* MapViewController.m in Sources */,
 				A585630E15F90BAD00446653 /* MapCell.m in Sources */,
-				A585631215F90BAD00446653 /* MediaListCell.m in Sources */,
+				A585631215F90BAD00446653 /* LTMediaListCell.m in Sources */,
 				A585631615F90BAD00446653 /* SingleLineInputCell.m in Sources */,
 				A585631A15F90BAD00446653 /* SpinnerCell.m in Sources */,
 				A585631E15F90BAD00446653 /* LTBackgroundView.m in Sources */,
@@ -1745,10 +1745,10 @@
 				A559BADF16E7D951008C3917 /* LTMediaCollectionCell.m in Sources */,
 				A5E678F916ECC95700203EE8 /* LTCollectionViewController.m in Sources */,
 				A5E6796116ECD32600203EE8 /* LTCollectionViewFlowLayout.m in Sources */,
-				A5E6796616ECD5AE00203EE8 /* LTMediasListViewController.m in Sources */,
-				A5E6796B16ECD5D900203EE8 /* LTMediasGridViewController.m in Sources */,
 				A5E6797716ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m in Sources */,
 				A5003DCF16FBAC3E0061CE24 /* UIGlossyButton+LT.m in Sources */,
+				A51847CD16FDE5C500387810 /* LTMediasGridViewController.m in Sources */,
+				A51847D016FDE5C500387810 /* LTMediasListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1778,7 +1778,7 @@
 				A5CCFED81643CEBE00FA4ABF /* MediaUploadFormViewController.m in Sources */,
 				A5CCFED91643CEBE00FA4ABF /* MapViewController.m in Sources */,
 				A5CCFEDA1643CEBE00FA4ABF /* MapCell.m in Sources */,
-				A5CCFEDB1643CEBE00FA4ABF /* MediaListCell.m in Sources */,
+				A5CCFEDB1643CEBE00FA4ABF /* LTMediaListCell.m in Sources */,
 				A5CCFEDC1643CEBE00FA4ABF /* SingleLineInputCell.m in Sources */,
 				A5CCFEDD1643CEBE00FA4ABF /* SpinnerCell.m in Sources */,
 				A5CCFEDE1643CEBE00FA4ABF /* LTBackgroundView.m in Sources */,
@@ -1797,10 +1797,10 @@
 				A559BAE016E7D951008C3917 /* LTMediaCollectionCell.m in Sources */,
 				A5E678FA16ECC95700203EE8 /* LTCollectionViewController.m in Sources */,
 				A5E6796216ECD32600203EE8 /* LTCollectionViewFlowLayout.m in Sources */,
-				A5E6796716ECD5AE00203EE8 /* LTMediasListViewController.m in Sources */,
-				A5E6796C16ECD5D900203EE8 /* LTMediasGridViewController.m in Sources */,
 				A5E6797816ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m in Sources */,
 				A5003DD016FBAC3E0061CE24 /* UIGlossyButton+LT.m in Sources */,
+				A51847CE16FDE5C500387810 /* LTMediasGridViewController.m in Sources */,
+				A51847D116FDE5C500387810 /* LTMediasListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
