@@ -14,7 +14,6 @@
 {
     self.tintColor = kMainColor;
     self.buttonCornerRadius = 10;
-    self.titleLabel.font = [UIFont fontWithName:@"Jesaya Free" size:17];
     [self.titleLabel setShadowOffset:CGSizeMake(0, 1)];
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self setTitle:_T(@"medias.loadmorebutton.title") forState:UIControlStateNormal];

@@ -19,7 +19,8 @@
     @{
         UITextAttributeTextColor:[UIColor blackColor],
         UITextAttributeTextShadowColor:[UIColor whiteColor],
-        UITextAttributeTextShadowOffset:[NSValue valueWithUIOffset:UIOffsetMake(0, 1)]
+        UITextAttributeTextShadowOffset:[NSValue valueWithUIOffset:UIOffsetMake(0, 1)],
+        UITextAttributeFont:[UIFont fontWithName:@"Jesaya Free" size:20]
     }];
     
 }

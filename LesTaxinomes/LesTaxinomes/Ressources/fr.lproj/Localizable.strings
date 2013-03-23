@@ -34,7 +34,7 @@
 "legal_informations.title" = "Mentions Légales";
 
 /* MEDIA LIST */
-"medias.loadmorebutton.title" = "Load more";
+"medias.loadmorebutton.title" = "Charger plus";
 
 /* MEDIA DETAIL VC*/
 "media_detail.no_text" = "Pas de description";

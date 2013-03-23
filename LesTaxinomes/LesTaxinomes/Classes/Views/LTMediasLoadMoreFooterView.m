@@ -27,7 +27,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor whiteColor];
         
         _loadMoreButton = [[UIGlossyButton alloc] initWithFrame:CGRectMake(0.f, 0.f, 120.f, 40.f)];
         [_loadMoreButton setupStandardMainColorButton];
