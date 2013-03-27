@@ -7,11 +7,15 @@
 //
 
 #import "LTMediasGridViewController.h"
+
+// UI
+#import "SRRefreshView.h"
 #import "LTCollectionViewFlowLayout.h"
 #import "LTMediaCollectionCell.h"
 #import "LTMediasLoadMoreFooterView.h"
 
-@interface LTMediasGridViewController ()
+@interface LTMediasGridViewController () <SRRefreshDelegate>
+@property (nonatomic, strong) SRRefreshView* slimeView;
 @property (nonatomic, strong) LTMediasLoadMoreFooterView* footerView;
 @end
 
@@ -20,6 +24,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.slimeView = [SRRefreshView new];
+    self.slimeView.delegate = self;
+    [self.collectionView addSubview:self.slimeView];
+    
     [self.collectionView registerClass:[LTMediaCollectionCell class]
             forCellWithReuseIdentifier:[LTMediaCollectionCell reuseIdentifier]];
     
@@ -74,6 +83,16 @@
                                         animated:NO];
 }
 
+
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Private methods
+
+- (void)refreshAction:(id)sender
+{
+    NSLog(@"refreshAction:");
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UICollectionViewDataSource
 
@@ -106,5 +125,23 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UICollectionViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.slimeView scrollViewDidScroll];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [self.slimeView scrollViewDidEndDraging];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - SRRRefreshViewDelegate
+
+- (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
+{
+    [self.delegate refreshMedias];
+}
 
 @end

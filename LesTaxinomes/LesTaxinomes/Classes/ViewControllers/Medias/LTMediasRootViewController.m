@@ -38,6 +38,7 @@
 #import "MediaDetailViewController.h"
 // Views
 #import "SpinnerCell.h"
+#import "SRRefreshView.h"
 #import "UIImageView+AFNetworking.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -105,8 +106,6 @@ typedef enum {
     [self.navigationItem setRightBarButtonItem:self.displayBarButton animated:YES];
     
     [self.view addSubview:self.listViewController.view];
-    [self.view addSubview:self.gridViewController.view];
-    self.gridViewController.view.hidden = YES;
     
     self.mediaDetailViewController = (MediaDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
@@ -173,18 +172,21 @@ typedef enum {
 - (void)commonInit
 {
     _displayMode = LTMediasDisplayModeList;
+    
     _listViewController = [LTMediasListViewController new];
     _listViewController.dataSource = self;
     _listViewController.delegate = self;
     [self addChildViewController:_listViewController];
+    
     _gridViewController = [LTMediasGridViewController new];
     _gridViewController.dataSource = self;
     _gridViewController.delegate = self;
-    [self addChildViewController:_gridViewController];
 }
 
 - (void)loadMoreMedias
 {
+    [self.listViewController.slimeView endRefresh];
+    [self.gridViewController.slimeView endRefresh];
     self.listViewController.footerView.displayMode = LTMediasLoadMoreFooterViewDisplayModeLoading;
     self.gridViewController.footerView.displayMode = LTMediasLoadMoreFooterViewDisplayModeLoading;
     
@@ -207,22 +209,21 @@ typedef enum {
         [self reloadData];
         self.listViewController.footerView.displayMode = LTMediasLoadMoreFooterViewDisplayModeNormal;
         self.gridViewController.footerView.displayMode = LTMediasLoadMoreFooterViewDisplayModeNormal;
+        
     }];
 }
 
-//- (void)refreshButtonAction:(id)sender
-//{
-//    self.displayBarButton.enabled = NO;
-//    [self showDefaultHud];
-//    self.mediasResultController = nil;
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-//        [Media deleteAllMedias];
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [self reloadData];
-//            [self loadMoreMedias];
-//        });
-//    });
-//}
+- (void)refreshMedias
+{
+    self.mediasResultController = nil;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [Media deleteAllMedias];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self reloadData];
+            [self loadMoreMedias];
+        });
+    });
+}
 
 - (void)displayBarButton:(id)sender
 {
@@ -247,23 +248,43 @@ typedef enum {
     _displayMode = displayMode;
     
     if (_displayMode == LTMediasDisplayModeList) {
+        
+        [self addChildViewController:self.listViewController];
+        [self.listViewController didMoveToParentViewController:self];
+        [self.view addSubview:self.listViewController.view];
+        
         [self.listViewController.tableView reloadData];
         self.listViewController.firstVisibleMedia = self.gridViewController.firstVisibleMedia;
+        
         [UIView transitionFromView:self.gridViewController.view
                             toView:self.listViewController.view
                           duration:1.0
                            options:UIViewAnimationOptionTransitionFlipFromRight|UIViewAnimationOptionShowHideTransitionViews
-                        completion:^(BOOL finished) {}];
+                        completion:^(BOOL finished) {
+                            [self.gridViewController willMoveToParentViewController:self];
+                            [self.gridViewController removeFromParentViewController];
+                        }];
+        
         self.displayBarButton.image = [UIImage imageNamed:@"icon_grid"];
         
     } else if (_displayMode == LTMediasDisplayModeGrid) {
+        
+        [self addChildViewController:self.gridViewController];
+        [self.gridViewController didMoveToParentViewController:self];
+        [self.view addSubview:self.gridViewController.view];
+        
         [self.gridViewController.collectionView reloadData];
         self.gridViewController.firstVisibleMedia = self.listViewController.firstVisibleMedia;
+        
         [UIView transitionFromView:self.listViewController.view
                             toView:self.gridViewController.view
                           duration:1.0
                            options:UIViewAnimationOptionTransitionFlipFromLeft|UIViewAnimationOptionShowHideTransitionViews
-                        completion:^(BOOL finished) {}];
+                        completion:^(BOOL finished) {
+                            [self.listViewController willMoveToParentViewController:nil];
+                            [self.listViewController removeFromParentViewController];
+                        }];
+        
         self.displayBarButton.image = [UIImage imageNamed:@"icon_list"];
         
     }

@@ -10,6 +10,7 @@
 
 @protocol LTMediasDelegate <NSObject>
 @required
+- (void)refreshMedias;
 - (void)loadMoreMedias;
 
 @end

@@ -36,6 +36,7 @@
 @property (nonatomic, readonly) NSFetchedResultsController* mediasResultController;
 
 - (void)loadMoreMedias;
+- (void)refreshMedias;
 
 @end
 

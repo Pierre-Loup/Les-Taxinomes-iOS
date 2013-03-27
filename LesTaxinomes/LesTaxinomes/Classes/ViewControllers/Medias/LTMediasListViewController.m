@@ -11,9 +11,10 @@
 
 #import "LTMediasListViewController.h"
 
-#import "LTMediasLoadMoreFooterView.h"
+// UI
+#import "SRRefreshView.h"
 #import "LTMediaListCell.h"
-
+#import "LTMediasLoadMoreFooterView.h"
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Defines & contants
 
@@ -23,7 +24,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private interface
 
-@interface LTMediasListViewController ()
+@interface LTMediasListViewController () <SRRefreshDelegate>
+@property (nonatomic, strong) SRRefreshView* slimeView;
 @property (nonatomic, strong) LTMediasLoadMoreFooterView* footerView;
 @end
 
@@ -35,36 +37,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Superclasse overrides
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        [self commonInit];
-    }
-    return self;
-}
-
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        [self commonInit];
-    }
-    return self;
-}
-
-- (id)initWithCoder:(NSCoder *)coder
-{
-    self = [super initWithCoder:coder];
-    if (self) {
-        [self commonInit];
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Puff to refresh top view
+    self.slimeView = [SRRefreshView new];
+    self.slimeView.delegate = self;
+    [self.tableView addSubview:self.slimeView];
+    
+    // Footer load more view
     CGRect footerViewFrame = CGRectMake(0.f, 0.f,
                                         self.tableView.frame.size.width,
                                         kLTMediasListCommonRowHeight);
@@ -76,14 +58,16 @@
     self.tableView.tableFooterView = self.footerView;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidUnload
 {
-    [super viewWillAppear:animated];
+    [super viewDidUnload];
+    self.footerView = nil;
+    self.slimeView = nil;
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)dealloc
 {
-    [super viewDidAppear:animated];
+    [self.slimeView removeFromSuperview];
 }
 
 
@@ -123,8 +107,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private methods
 
-- (void)commonInit {
-    
+- (void)refreshAction:(id)sender
+{
+    NSLog(@"refreshAction:");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -189,4 +174,26 @@
 {
     return kLTMediasListCommonRowHeight;
 }
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - UITableViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.slimeView scrollViewDidScroll];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [self.slimeView scrollViewDidEndDraging];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - SRRRefreshViewDelegate
+
+- (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
+{
+    [self.delegate refreshMedias];
+}
+
 @end
