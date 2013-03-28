@@ -99,9 +99,11 @@
 - (void)setFirstVisibleMedia:(Media *)firstVisibleMedia
 {
     NSIndexPath* indexPath = [self.dataSource.mediasResultController indexPathForObject:firstVisibleMedia];
-    [self.tableView scrollToRowAtIndexPath:indexPath
+    if (self.dataSource.mediasResultController.fetchedObjects.count > indexPath.row) {
+        [self.tableView scrollToRowAtIndexPath:indexPath
                           atScrollPosition:UITableViewScrollPositionTop
                                   animated:NO];
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

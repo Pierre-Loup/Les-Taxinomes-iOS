@@ -24,13 +24,16 @@
  */
 #import <QuickLook/QuickLook.h>
 
-#import "Annotation.h"
+// UI
 #import "EGOPhotoGlobal.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIImageView+PhotoFrame.h"
-//VC
+// VC
 #import "MapViewController.h"
 #import "MediaDetailViewController.h"
+// MODEL
+#import "Annotation.h"
+#import "Media+Business.h"
 
 @interface MediaDetailViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>{
     int asynchLoadCounter_;

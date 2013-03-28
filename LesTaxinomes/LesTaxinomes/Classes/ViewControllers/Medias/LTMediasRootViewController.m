@@ -217,7 +217,10 @@ typedef enum {
 {
     self.mediasResultController = nil;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [Media deleteAllMedias];
+        ;
+        [Media truncateAll];
+        NSError* error;
+        [[NSManagedObjectContext contextForCurrentThread] save:&error];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self reloadData];
             [self loadMoreMedias];

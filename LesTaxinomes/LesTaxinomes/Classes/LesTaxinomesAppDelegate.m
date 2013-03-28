@@ -44,16 +44,27 @@
     [[LTConnectionManager sharedConnectionManager] getLicensesWithResponseBlock:^(NSArray *licenses, NSError *error) {
     }];
     
-    // iPad
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        [self.window addSubview:self.splitViewController.view];
-    } else { // iPhone
-        UINavigationBar *bar = [self.tabBarController.navigationController navigationBar];
-        [bar setTintColor:[UIColor colorWithRed:(95.0/255.0) green:(130.0/255) blue:(55.0/255.0) alpha:1.0]];
-        [self.window addSubview: self.tabBarController.view];
+    // Setup tabbar names
+    NSArray* tabItemsTitles = @[_T(@"tabbar.home"),
+                                _T(@"tabbar.medias"),
+                                _T(@"tabbar.explore"),
+                                _T(@"tabbar.myaccount"),
+                                _T(@"tabbar.authors")];
+    
+    for (NSInteger i = 0;
+         i < self.tabBarController.tabBar.items.count;
+         i++) {
+        UINavigationController* navigationController = self.tabBarController.viewControllers[i];
+        ((UIViewController*)navigationController.viewControllers[0]).navigationItem.title = tabItemsTitles[i];
+        ((UITabBarItem*)self.tabBarController.tabBar.items[i]).title = tabItemsTitles[i];
     }
     
-    
+    // iPad
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        self.window.rootViewController = self.splitViewController;
+    } else { // iPhone
+        self.window.rootViewController = self.tabBarController;
+    }
     
     [self.window makeKeyAndVisible];
     

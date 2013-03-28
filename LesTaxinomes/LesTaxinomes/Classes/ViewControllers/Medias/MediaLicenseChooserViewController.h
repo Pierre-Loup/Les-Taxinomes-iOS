@@ -24,8 +24,10 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "License.h"
+
 #import "LTTableViewController.h"
+
+@class License;
 
 @protocol MediaLicenseChooserDelegate <NSObject>
 

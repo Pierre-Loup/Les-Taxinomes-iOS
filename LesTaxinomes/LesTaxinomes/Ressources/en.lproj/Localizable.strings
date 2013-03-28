@@ -27,6 +27,13 @@
 "common.by" = "By";
 "common.license" = "License";
 
+/* TAB NAR */
+"tabbar.home"       = "Home";
+"tabbar.medias"     = "Medias";
+"tabbar.explore"    = "Explore";
+"tabbar.myaccount"  = "My account";
+"tabbar.authors"    = "Authors";
+
 /* HOME */
 "home.welcom_text" = "Welcome to Les Taxinomes !\n\nYou are curious by nature?\n\nHere, you will be able to share your love of nature!\n\n With the site and the iPhone application \"Les Taxinomes\", you are participating in the inventory of biodiversity.";
 

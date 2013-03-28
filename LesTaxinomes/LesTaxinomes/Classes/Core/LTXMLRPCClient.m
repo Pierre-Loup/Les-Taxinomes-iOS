@@ -17,9 +17,12 @@
 
 NSString* const LTXMLRPCServerErrorDomain = @"org.lestaxinomes.app.iphone.LesTaxinomes.LTXMLRPCServerError";
 
+// SPIP methods names
 NSString* const LTXMLRCPMethodSPIPListeLicences = @"spip.liste_licences";
+NSString* const LTXMLRCPMethodSPIPListeAuteurs = @"spip.liste_auteurs";
 NSString* const LTXMLRCPMethodSPIPLireAuteur = @"spip.lire_auteur";
 NSString* const LTXMLRCPMethodSPIPAuth = @"spip.auth";
+// GEODIV methods names
 NSString* const LTXMLRCPMethodGeoDivListeMedias = @"geodiv.liste_medias";
 NSString* const LTXMLRCPMethodGeoDivLireMedia = @"geodiv.lire_media";
 NSString* const LTXMLRCPMethodGeoDivCreerMedia = @"geodiv.creer_media";

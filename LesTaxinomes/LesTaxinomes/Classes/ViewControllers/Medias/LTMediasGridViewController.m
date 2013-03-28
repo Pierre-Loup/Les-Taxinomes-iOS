@@ -40,16 +40,6 @@
                         forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Public methods
 
@@ -78,9 +68,11 @@
 - (void)setFirstVisibleMedia:(Media *)firstVisibleMedia
 {
     NSIndexPath* indexPath = [self.dataSource.mediasResultController indexPathForObject:firstVisibleMedia];
-    [self.collectionView scrollToItemAtIndexPath:indexPath
-                                atScrollPosition:PSTCollectionViewScrollPositionTop
-                                        animated:NO];
+    if (self.dataSource.mediasResultController.fetchedObjects.count > indexPath.row) {
+        [self.collectionView scrollToItemAtIndexPath:indexPath
+                                    atScrollPosition:PSTCollectionViewScrollPositionTop
+                                            animated:NO];
+    }
 }
 
 

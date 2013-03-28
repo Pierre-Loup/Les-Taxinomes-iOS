@@ -12,6 +12,7 @@
 extern NSString* const LTXMLRPCServerErrorDomain;
 
 extern NSString* const LTXMLRCPMethodSPIPListeLicences;
+extern NSString* const LTXMLRCPMethodSPIPListeAuteurs;
 extern NSString* const LTXMLRCPMethodSPIPLireAuteur;
 extern NSString* const LTXMLRCPMethodSPIPAuth;
 extern NSString* const LTXMLRCPMethodGeoDivListeMedias;

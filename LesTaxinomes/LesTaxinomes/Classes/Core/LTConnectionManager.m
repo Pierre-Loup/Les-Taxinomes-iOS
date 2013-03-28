@@ -34,15 +34,15 @@
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <CoreLocation/CoreLocation.h>
 
-#import "Author.h"
-#import "License.h"
+#import "Author+Business.h"
+#import "License+Business.h"
 #import "LTXMLRPCClient.h"
-#import "Media.h"
+#import "Media+Business.h"
 #import "NSMutableDictionary+ImageMetadata.h"
 #import "UIImage+Resize.h"
 #import "XMLRPCResponse.h"
 
-#define kLTConnectionManagerShortMediaMaxStep 20.0
+#define kLTConnectionManagerMaxItemsStep 20.0
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Defines & contants
@@ -121,8 +121,8 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             withRange:(NSRange)range
                         responseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock {
     
-    if(range.length == 0 || range.length > kLTConnectionManagerShortMediaMaxStep)
-        range.length = kLTConnectionManagerShortMediaMaxStep;
+    if(range.length == 0 || range.length > kLTConnectionManagerMaxItemsStep)
+        range.length = kLTConnectionManagerMaxItemsStep;
     NSString* limite = [NSString stringWithFormat:@"%d,%d", range.location,range.length];
     NSArray *requestedFields = @[@"id_media", @"titre", @"date", @"statut", @"vignette", @"auteurs", @"gis"];
     NSNumber* thumbnailWidth = [NSNumber numberWithDouble:(THUMBNAIL_MAX_WIDHT)];
@@ -312,6 +312,64 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             }
                         } failure:^(NSError* error) {
                             
+                            if(responseBlock) responseBlock(nil, error);
+                        }];
+}
+
+- (void)getShortAuthorsWithRange:(NSRange)range
+                     withSortKey:(LTAuthorsSortType)sortType
+                   responseBlock:(void (^)(NSArray* authors, NSError *error))responseBlock
+{
+    if(range.length == 0 || range.length > kLTConnectionManagerMaxItemsStep)
+        range.length = kLTConnectionManagerMaxItemsStep;
+    
+    NSString* limite = [NSString stringWithFormat:@"%d,%d", range.location,range.length];
+    NSString* sortKey;
+    if (sortType == LTAuthorsSortAlphabeticOrder) {
+        sortKey = @"nom";
+    } else {
+        sortType = @"date_inscription";
+    }
+    
+    LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
+    [xmlrpcClient executeMethod:LTXMLRCPMethodSPIPListeAuteurs
+                     withObject:@{ @"limite": limite, @"tri" : sortKey}
+               authCookieEnable:NO
+                        success:^(id response) {
+                            if([response isKindOfClass:[NSArray  class]]) {
+                                
+                                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                                    NSMutableArray* authors = [NSMutableArray array];
+                                    
+                                    for(NSDictionary* authorDict in (NSArray *)response){
+                                        
+                                        NSError* authorError;
+                                        Author* authorObject = [Author authorWithXMLRPCResponse:authorDict
+                                                                                          error:&authorError];
+                                        if (authorObject && !authorError) {
+                                            
+                                            [authors addObject:authorObject];
+                                        } else {
+                                            
+                                            LogError(@"%@", authorError);
+                                        }
+                                    }
+                                    
+                                    // Dispatch the result on the main thread
+                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                        if(responseBlock) responseBlock(authors, nil);
+                                    });
+                                });
+                            } else {
+                                NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                                                     code:LTConnectionManagerInternalError
+                                                                 userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodGeoDivListeMedias}];
+                                
+                                
+                                if(responseBlock) responseBlock(nil, error);
+                                
+                            }
+                        } failure:^(NSError *error) {
                             if(responseBlock) responseBlock(nil, error);
                         }];
 }

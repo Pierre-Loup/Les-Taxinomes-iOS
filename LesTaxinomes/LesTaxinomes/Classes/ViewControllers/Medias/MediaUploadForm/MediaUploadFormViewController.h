@@ -25,14 +25,16 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import "License.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <CoreLocation/CoreLocation.h>
+
 #import "LTTableViewController.h"
 #import "AuthenticationSheetViewController.h"
 #import "MediaLicenseChooserViewController.h"
 #import "MediaLocalisationPickerViewController.h"
 #import "UIGlossyButton.h"
+
+@class License;
 
 @interface MediaUploadFormViewController : LTTableViewController
 - (id)initWithAssetURL:(NSURL*)assetURL;

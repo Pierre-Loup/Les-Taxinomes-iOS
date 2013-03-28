@@ -27,6 +27,13 @@
 "common.by" = "By";
 "common.license" = "License";
 
+/* TAB NAR */
+"tabbar.home"       = "Home";
+"tabbar.medias"     = "Medias";
+"tabbar.explore"    = "Explore";
+"tabbar.myaccount"  = "My account";
+"tabbar.authors"    = "Authors";
+
 /* HOME */
 "home.welcom_text" = "Welcome to Geodiversite.NET !\n\nYou like rocks?\n\nHere, you will be able to share knowledge about geology of your country !\n\n With the site and the iPhone application \"Géodiversité\", you are making one's contribution.";
 

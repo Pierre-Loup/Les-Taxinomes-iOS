@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:ISRefreshControl/ISRefreshControl.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:PSTCollectionView/PSTCollectionView.xcodeproj">
    </FileRef>
    <FileRef

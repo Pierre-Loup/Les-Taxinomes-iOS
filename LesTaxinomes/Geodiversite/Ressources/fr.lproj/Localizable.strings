@@ -27,13 +27,20 @@
 "common.by" = "Par";
 "common.license" = "Licence";
 
+/* TAB NAR */
+"tabbar.home"       = "Accueil";
+"tabbar.medias"     = "Médias";
+"tabbar.navigate"   = "Explorer";
+"tabbar.myaccount"  = "Mon espace";
+"tabbar.authors"    = "Auteurs";
+
 /* HOME */
 "home.welcom_text" = "Bienvenue sur Géodiversité.NET !\n\nVous aimez les cailloux ?\n\nVous allez pouvoir partager vos connaissances et découvrir la géologie de votre région !\n\nGrâce au site et à l'application iPhone \"Géodiversité\", apportez votre pierre à l'édifice !";
 
-/* LEGAL INFORMATIONS*/
+/* LEGAL INFORMATIONS */
 "legal_informations.title" = "Mentions Légales";
 
-/* MEDIA DETAIL VC*/
+/* MEDIA DETAIL VC */
 "media_detail.no_text" = "Pas de description";
 "media_detail.publish_info_patern" = "Publié par %@ le %@\n%d vues";
 

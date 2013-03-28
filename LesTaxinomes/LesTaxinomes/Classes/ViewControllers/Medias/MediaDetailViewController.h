@@ -25,12 +25,14 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import "Media.h"
 
 #import "LTViewController.h"
 #import "LTTitleView.h"
 
+@class Media;
+
 @interface MediaDetailViewController : LTViewController
+
 @property (nonatomic, strong) Media* media;
 
 @end

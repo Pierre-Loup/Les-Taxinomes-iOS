@@ -7,7 +7,10 @@
 //
 
 #import "MapViewController.h"
+// VCs
 #import "MediaDetailViewController.h"
+// MODEL
+#import "Media+Business.h"
 
 #define kPinAnnotationIdentifier @"pin"
 

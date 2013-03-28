@@ -13,7 +13,7 @@
 + (void)setup {
 
     [[UINavigationBar appearance] setTintColor:kNavigationBarColor];
-    
+
     // Customize the title text for *all* UINavigationBars
     [[UINavigationBar appearance] setTitleTextAttributes:
     @{

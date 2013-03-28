@@ -35,10 +35,15 @@
  */
 extern NSString* const LTConnectionManagerErrorDomain;
 
-typedef enum LTConnectionManagerError {
+typedef enum  {
     LTConnectionManagerBadArgsError = 77001,
-    LTConnectionManagerInternalError = 77002,
+    LTConnectionManagerInternalError = 77002
 } LTConnectionManagerError;
+
+typedef enum {
+    LTAuthorsSortBySignupDate,
+    LTAuthorsSortAlphabeticOrder
+} LTAuthorsSortType;
 
 @protocol LTConnectionManagerDelegate <NSObject>
 @optional
@@ -67,6 +72,10 @@ typedef enum LTConnectionManagerError {
 
 - (void)getAuthorWithId:(NSNumber *)authorIdentifier
           responseBlock:(void (^)(Author* author, NSError *error))responseBlock;
+
+- (void)getShortAuthorsWithRange:(NSRange)range
+                     withSortKey:(LTAuthorsSortType)sortType
+                   responseBlock:(void (^)(NSArray* authors, NSError *error))responseBlock;
 
 - (void)addMediaWithTitle:(NSString *)title
                      text:(NSString *)text

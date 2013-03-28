@@ -27,6 +27,13 @@
 "common.by" = "Par";
 "common.license" = "Licence";
 
+/* TAB NAR */
+"tabbar.home"       = "Accueil";
+"tabbar.medias"     = "Médias";
+"tabbar.navigate"   = "Explorer";
+"tabbar.myaccount"  = "Mon espace";
+"tabbar.authors"    = "Auteurs";
+
 /* HOME */
 "home.welcom_text" = "Bienvenue sur Les Taxinomes !\n\nVous êtes curieux de nature ?\n\nVous allez pouvoir partager votre goût pour la nature !\n\nGrâce au site et à l'application iPhone \"Les Taxinomes\", vous participez à l’inventaire de la biodiversité.";
 

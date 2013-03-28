@@ -1,56 +1,16 @@
 //
-//  Media.m
+//  Media+Business.m
 //  LesTaxinomes
 //
-//  Created by Pierre-Loup Tristant on 06/05/12.
-//  Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
+//  Created by Pierre-Loup Tristant on 29/03/13.
+//  Copyright (c) 2013  Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
-/*
- 
- LesTaxinomes is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
- 
- LesTaxinomes is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>
- 
- */
+#import "Author+Business.h"
+#import "License+Business.h"
+#import "Media+Business.h"
 
-#import "Media.h"
-#import "Author.h"
-#import "License.h"
-#import "Section.h"
-
-@implementation Media
-
-@dynamic date;
-@dynamic identifier;
-@dynamic latitude;
-@dynamic localUpdateDate;
-@dynamic longitude;
-@dynamic mediaLargeLocalFile;
-@dynamic mediaLargeURL;
-@dynamic mediaMediumLocalFile;
-@dynamic mediaMediumURL;
-@dynamic mediaThumbnailLocalFile;
-@dynamic mediaThumbnailUrl;
-@dynamic popularity;
-@dynamic status;
-@dynamic text;
-@dynamic title;
-@dynamic updateDate;
-@dynamic visits;
-@dynamic sychGapForDateSorting;
-@dynamic author;
-@dynamic license;
-@dynamic section;
+@implementation Media (Business)
 
 + (Media*)mediaWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error {
     
@@ -180,7 +140,7 @@
     }
     
     NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
-    Media *media = [Media mediaWithIdentifier:mediaIdentifier];
+    Media *media = [Media findFirstByAttribute:@"identifier" withValue:mediaIdentifier];
     
     if (!media) {
         return nil;
@@ -196,37 +156,10 @@
     return media;
 }
 
-+ (Media *)mediaWithIdentifier:(NSNumber *)identifier {
-    NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
-    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d",[identifier integerValue]];
-    Media *media = [Media findFirstWithPredicate:predicate inContext:context];
-    return media;
-}
-
-+ (NSArray *)allMedias {
-    NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
-    return [Media findAllInContext:context];
-}
-
-+ (void)deleteAllMedias {
-    NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
-    NSArray* allMedias = [Media findAllInContext:context];
-    for (Media* media in allMedias) {
-        [media deleteEntity];
-    }
-    
-    NSError* error;
-    [context save:&error];
-    if (error) {
-        LogError(@"%@", error);
-    }
-}
-
 #pragma mark - MKAnnotation protocol
 
 - (CLLocationCoordinate2D)coordinate {
     return CLLocationCoordinate2DMake([self.latitude floatValue], [self.longitude floatValue]);
 }
-
 
 @end

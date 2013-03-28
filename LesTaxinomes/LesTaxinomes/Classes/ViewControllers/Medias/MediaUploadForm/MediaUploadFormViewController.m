@@ -34,6 +34,9 @@
 #import "SingleLineInputCell.h"
 #import "UIImageView+PhotoFrame.h"
 
+// MODEL
+#import "License+Business.h"
+
 #define kLocalisationPickerCellId @"localisationPickerCell"
 #define kCityCellId @"CityCell"
 #define kZipcodeCellId @"ZipcodeCell"

@@ -25,6 +25,8 @@
 
 #import "MediaLicenseChooserViewController.h"
 
+#import "License+Business.h"
+
 #define kLicenceCellIdentifier @"LicenceCell"
 
 @interface MediaLicenseChooserViewController (Private)
@@ -51,7 +53,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        licenses_ = [License allLicenses];
+        licenses_ = [License findAll];
         currentLicenseIndexPath_ = [self indexPathForCurrentLicense];
     }
     return self;
