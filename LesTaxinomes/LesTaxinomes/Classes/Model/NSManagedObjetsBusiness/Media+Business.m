@@ -137,7 +137,6 @@
         return nil;
     }
     
-    NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
     Media *media = [Media findFirstByAttribute:@"identifier" withValue:mediaIdentifier];
     
     if (!media) {
