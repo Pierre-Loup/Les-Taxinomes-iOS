@@ -59,10 +59,10 @@ typedef enum {
 + (LTConnectionManager *)sharedConnectionManager;
 - (void)getLicensesWithResponseBlock:(void (^)(NSArray* licenses, NSError *error))responseBlock;
 
-- (void)getShortMediasByDateForAuthor:(Author *)author
-                         nearLocation:(CLLocation *)location
-                            withRange:(NSRange)range
-                        responseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock;
+- (void)getMediasSummariesByDateForAuthor:(Author *)author
+                             nearLocation:(CLLocation *)location
+                                withRange:(NSRange)range
+                            responseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock;
 
 - (void)getMediaWithId:(NSNumber *)mediaIdentifier
          responseBlock:(void (^)(Media* media, NSError *error))responseBlock;
@@ -73,7 +73,7 @@ typedef enum {
 - (void)getAuthorWithId:(NSNumber *)authorIdentifier
           responseBlock:(void (^)(Author* author, NSError *error))responseBlock;
 
-- (void)getShortAuthorsWithRange:(NSRange)range
+- (void)getAuthorsSummariesWithRange:(NSRange)range
                      withSortKey:(LTAuthorsSortType)sortType
                    responseBlock:(void (^)(NSArray* authors, NSError *error))responseBlock;
 

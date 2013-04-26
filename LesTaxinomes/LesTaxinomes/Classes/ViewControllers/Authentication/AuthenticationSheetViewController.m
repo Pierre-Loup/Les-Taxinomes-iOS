@@ -52,10 +52,10 @@
         UIBarButtonItem * cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:_T(@"common.cancel") style:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTouched:)];
         [self.navigationItem setRightBarButtonItem:cancelBarButton];
     
-    self.loginLabel.textColor = kMainColor;
-    self.passwordLabel.textColor = kMainColor;
+    self.loginLabel.textColor = kLTColorMain;
+    self.passwordLabel.textColor = kLTColorMain;
 
-    self.signinButton.tintColor = kSecondaryColor;
+    self.signinButton.tintColor = kLTColorSecondary;
     self.signinButton.buttonCornerRadius = 10.0;
     [self.signinButton setGradientType:kUIGlossyButtonGradientTypeLinearGlossyStandard];
 }

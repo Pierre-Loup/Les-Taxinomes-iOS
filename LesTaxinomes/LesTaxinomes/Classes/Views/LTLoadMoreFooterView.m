@@ -1,15 +1,15 @@
 //
-//  LTMediasLoadMoreFooterView.m
+//  LTLoadMoreFooterView.m
 //  LesTaxinomes
 //
 //  Created by Pierre-Loup Tristant on 10/03/13.
 //  Copyright (c) 2013  Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
-#import "LTMediasLoadMoreFooterView.h"
+#import "LTLoadMoreFooterView.h"
 #import "UIGlossyButton+LT.h"
 
-@interface LTMediasLoadMoreFooterView ()
+@interface LTLoadMoreFooterView ()
 
 @property (nonatomic, strong) UIGlossyButton* loadMoreButton;
 @property (nonatomic, strong) UIActivityIndicatorView* loadingIndicator;
@@ -17,7 +17,7 @@
 
 @end
 
-@implementation LTMediasLoadMoreFooterView
+@implementation LTLoadMoreFooterView
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Superclass overrides
@@ -60,17 +60,17 @@
     return NSStringFromClass([self class]);
 }
 
-- (void)setDisplayMode:(LTMediasLoadMoreFooterViewDisplayMode)displayMode
+- (void)setDisplayMode:(LTLoadMoreFooterViewDisplayMode)displayMode
 {
     _displayMode = displayMode;
     
-    if (displayMode == LTMediasLoadMoreFooterViewDisplayModeLoading) {
+    if (displayMode == LTLoadMoreFooterViewDisplayModeLoading) {
         [self.loadingIndicator startAnimating];
     } else {
         [self.loadingIndicator stopAnimating];
     }
-    self.loadMoreButton.hidden = (displayMode == LTMediasLoadMoreFooterViewDisplayModeLoading);
-    self.loadingLabel.hidden = (displayMode == LTMediasLoadMoreFooterViewDisplayModeNormal);
+    self.loadMoreButton.hidden = (displayMode == LTLoadMoreFooterViewDisplayModeLoading);
+    self.loadingLabel.hidden = (displayMode == LTLoadMoreFooterViewDisplayModeNormal);
 }
 
 @end

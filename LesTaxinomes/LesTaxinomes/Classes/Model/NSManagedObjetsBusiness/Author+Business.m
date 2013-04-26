@@ -76,8 +76,6 @@
     
     author.localUpdateDate = [NSDate date];
     
-    [context save:error];
-    
     return author;
 }
 

@@ -47,7 +47,6 @@
 				<object class="NSPSMatrix" key="NSFrameMatrix"/>
 				<string key="NSFrameSize">{320, 480}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSNextKeyView"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
 					<bytes key="NSRGB">MSAxIDEAA</bytes>
@@ -70,7 +69,7 @@
 				<bool key="IBUIHorizontal">NO</bool>
 				<object class="IBUINavigationController" key="IBUISelectedViewController" id="222117009">
 					<object class="IBUITabBarItem" key="IBUITabBarItem" id="147998648">
-						<string key="IBUITitle">Accueil</string>
+						<string key="IBUITitle"/>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">tabbar_home.png</string>
@@ -119,7 +118,7 @@
 					<object class="IBUINavigationController" id="366245200">
 						<string key="IBUITitle">Médias</string>
 						<object class="IBUITabBarItem" key="IBUITabBarItem" id="772492863">
-							<string key="IBUITitle">Médias</string>
+							<string key="IBUITitle"/>
 							<object class="NSCustomResource" key="IBUIImage">
 								<string key="NSClassName">NSImage</string>
 								<string key="NSResourceName">tabbar_medias.png</string>
@@ -166,7 +165,7 @@
 					<object class="IBUINavigationController" id="1010609312">
 						<string key="IBUITitle">Naviguer</string>
 						<object class="IBUITabBarItem" key="IBUITabBarItem" id="819701281">
-							<string key="IBUITitle">Explorer</string>
+							<string key="IBUITitle"/>
 							<object class="NSCustomResource" key="IBUIImage">
 								<string key="NSClassName">NSImage</string>
 								<string key="NSResourceName">tabbar_navigate.png</string>
@@ -211,7 +210,7 @@
 					</object>
 					<object class="IBUINavigationController" id="637635232">
 						<object class="IBUITabBarItem" key="IBUITabBarItem" id="1054489965">
-							<string key="IBUITitle">Mon espace</string>
+							<string key="IBUITitle"/>
 							<object class="NSCustomResource" key="IBUIImage">
 								<string key="NSClassName">NSImage</string>
 								<string key="NSResourceName">tabbar_account</string>
@@ -256,7 +255,7 @@
 					</object>
 					<object class="IBUINavigationController" id="173344849">
 						<object class="IBUITabBarItem" key="IBUITabBarItem" id="632071118">
-							<string key="IBUITitle">Auteurs</string>
+							<string key="IBUITitle"/>
 							<object class="NSCustomResource" key="IBUIImage">
 								<string key="NSClassName">NSImage</string>
 								<string key="NSResourceName">tabbar_authors</string>
@@ -301,7 +300,6 @@
 					<int key="NSvFlags">266</int>
 					<string key="NSFrame">{{0, 431}, {320, 49}}</string>
 					<reference key="NSSuperview"/>
-					<reference key="NSNextKeyView"/>
 					<string key="NSReuseIdentifierKey">_NS:473</string>
 					<object class="NSColor" key="IBUIBackgroundColor">
 						<int key="NSColorSpace">3</int>
@@ -615,7 +613,7 @@
 			<string key="tabbar_account">{16, 16}</string>
 			<string key="tabbar_authors">{16, 16}</string>
 			<string key="tabbar_home.png">{22, 22}</string>
-			<string key="tabbar_medias.png">{22, 24}</string>
+			<string key="tabbar_medias.png">{22, 23}</string>
 			<string key="tabbar_navigate.png">{27, 27}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>

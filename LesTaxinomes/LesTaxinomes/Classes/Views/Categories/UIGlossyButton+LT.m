@@ -12,7 +12,7 @@
 
 - (void)setupStandardMainColorButton
 {
-    self.tintColor = kMainColor;
+    self.tintColor = kLTColorMain;
     self.buttonCornerRadius = 10;
     [self.titleLabel setShadowOffset:CGSizeMake(0, 1)];
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

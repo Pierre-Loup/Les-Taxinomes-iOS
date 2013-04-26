@@ -120,8 +120,6 @@
     
     media.localUpdateDate = [NSDate date];
     
-    [context save:error];
-    
     return media;
     
 }
@@ -150,8 +148,6 @@
     if ([response objectForKey:@"document"]) {
         media.mediaLargeURL = [response objectForKey:@"document"];
     }
-    
-    [context save:error];
     
     return media;
 }

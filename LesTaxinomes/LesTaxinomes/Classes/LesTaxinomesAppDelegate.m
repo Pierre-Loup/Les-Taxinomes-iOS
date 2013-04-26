@@ -55,7 +55,7 @@
          i < self.tabBarController.tabBar.items.count;
          i++) {
         UINavigationController* navigationController = self.tabBarController.viewControllers[i];
-        ((UIViewController*)navigationController.viewControllers[0]).navigationItem.title = tabItemsTitles[i];
+        ((UIViewController*)navigationController.viewControllers[0]).title = tabItemsTitles[i];
         ((UITabBarItem*)self.tabBarController.tabBar.items[i]).title = tabItemsTitles[i];
     }
     

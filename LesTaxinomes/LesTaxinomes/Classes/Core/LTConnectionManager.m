@@ -103,6 +103,11 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                         }
                                     }
                                 }
+                                
+                                NSError* coredataError;
+                                [[NSManagedObjectContext contextForCurrentThread] save:&coredataError];
+                                if (coredataError) LogError(@"%@", coredataError);
+                                
                                 if(responseBlock) responseBlock(licenses, nil);
                             } else {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
@@ -116,7 +121,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
     
 }
 
-- (void)getShortMediasByDateForAuthor:(Author *)author
+- (void)getMediasSummariesByDateForAuthor:(Author *)author
                          nearLocation:(CLLocation *)location
                             withRange:(NSRange)range
                         responseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock {
@@ -159,12 +164,18 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                         NSError* mediaError;
                                         Media * mediaObject = [Media mediaWithXMLRPCResponse:mediaXML
                                                                                        error:&mediaError];
+                                        
                                         if (mediaObject && !mediaError) {
                                             [medias addObject:mediaObject];
                                         } else {
                                             LogError(@"%@", mediaError);
                                         }
                                     }
+                                    
+                                    NSError* coredataError;
+                                    [[NSManagedObjectContext contextForCurrentThread] save:&coredataError];
+                                    if (coredataError) LogError(@"%@",coredataError);
+                                    
                                     dispatch_async(dispatch_get_main_queue(), ^{
                                         if(responseBlock) responseBlock(medias, nil);
                                     });
@@ -212,6 +223,11 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                 NSError* error;
                                 Media * mediaObject = [Media mediaWithXMLRPCResponse:(NSDictionary *)response
                                                                                error:&error];
+                                
+                                NSError* coredataError;
+                                [[NSManagedObjectContext contextForCurrentThread] save:&coredataError];
+                                if (coredataError) LogError(@"%@",coredataError);
+                                
                                 if(responseBlock) responseBlock(mediaObject, error);
                                 
                             } else {
@@ -259,6 +275,11 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                 NSError* error;
                                 Media * mediaObject = [Media mediaLargeURLWithXMLRPCResponse:(NSDictionary *)response
                                                                                        error:&error];
+                                
+                                NSError* coredataError;
+                                [[NSManagedObjectContext contextForCurrentThread] save:&coredataError];
+                                if (coredataError) LogError(@"%@",coredataError);
+                                
                                 if(responseBlock) responseBlock(mediaObject, error);
                                 
                             } else {
@@ -299,6 +320,11 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                 NSError* error;
                                 Author* authorObject = [Author authorWithXMLRPCResponse:response
                                                                                   error:&error];
+                                
+                                NSError* coredataError;
+                                [[NSManagedObjectContext contextForCurrentThread] save:&coredataError];
+                                if (coredataError) LogError(@"%@",coredataError);
+                                
                                 if(responseBlock) responseBlock(authorObject, error);
                                 
                             } else {
@@ -316,7 +342,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                         }];
 }
 
-- (void)getShortAuthorsWithRange:(NSRange)range
+- (void)getAuthorsSummariesWithRange:(NSRange)range
                      withSortKey:(LTAuthorsSortType)sortType
                    responseBlock:(void (^)(NSArray* authors, NSError *error))responseBlock
 {
@@ -328,7 +354,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
     if (sortType == LTAuthorsSortAlphabeticOrder) {
         sortKey = @"nom";
     } else {
-        sortType = @"date_inscription";
+        sortKey = @"date_inscription";
     }
     
     LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
@@ -346,6 +372,11 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                         NSError* authorError;
                                         Author* authorObject = [Author authorWithXMLRPCResponse:authorDict
                                                                                           error:&authorError];
+                                        
+                                        NSError* coredataError;
+                                        [[NSManagedObjectContext contextForCurrentThread] save:&coredataError];
+                                        if (coredataError) LogError(@"%@",coredataError);
+                                        
                                         if (authorObject && !authorError) {
                                             
                                             [authors addObject:authorObject];
@@ -471,6 +502,11 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                         NSError* error;
                                         Media * mediaObject = [Media mediaWithXMLRPCResponse:response
                                                                                        error:&error];
+                                        
+                                        NSError* coredataError;
+                                        [[NSManagedObjectContext contextForCurrentThread] save:&coredataError];
+                                        if (coredataError) LogError(@"%@",coredataError);
+                                        
                                         if(responseBlock) responseBlock(mediaObject, error);
                                         
                                     } else {
@@ -512,6 +548,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                 NSError* error;
                                 self.authenticatedUser = [Author authorWithXMLRPCResponse:response
                                                                                     error:&error];
+                                [[NSManagedObjectContext contextForCurrentThread] save:&error];
                                 if(responseBlock) responseBlock(self.authenticatedUser, error);
                             } else {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain

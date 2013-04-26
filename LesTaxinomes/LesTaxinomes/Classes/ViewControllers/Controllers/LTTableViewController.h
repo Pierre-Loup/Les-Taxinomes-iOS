@@ -25,7 +25,6 @@
 
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
-#import "LTiPhoneBackgroundView.h"
 
 @interface LTTableViewController : UITableViewController <MBProgressHUDDelegate>
 @property (nonatomic, readonly) MBProgressHUD* hud;

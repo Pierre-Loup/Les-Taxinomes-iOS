@@ -10,15 +10,15 @@
 
 #import "LTMediasDataSource.h"
 #import "LTMediasDelegate.h"
-#import "LTMediasLoadMoreFooterView.h"
+#import "LTLoadMoreFooterView.h"
 
-@class LTMediasLoadMoreFooterView;
+@class LTLoadMoreFooterView;
 @class Media;
 @class SRRefreshView;
 
 @interface LTMediasGridViewController : LTCollectionViewController
 
-@property (nonatomic, readonly) LTMediasLoadMoreFooterView* footerView;
+@property (nonatomic, readonly) LTLoadMoreFooterView* footerView;
 @property (nonatomic, readonly) SRRefreshView* slimeView;
 @property (nonatomic, weak) id<LTMediasDataSource> dataSource;
 @property (nonatomic, weak) id<LTMediasDelegate> delegate;

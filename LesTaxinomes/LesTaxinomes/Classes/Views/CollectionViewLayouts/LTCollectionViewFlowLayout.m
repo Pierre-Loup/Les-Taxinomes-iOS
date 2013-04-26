@@ -16,9 +16,9 @@
     if (self) {
         self.minimumLineSpacing = 8.f;
         self.minimumInteritemSpacing = 8.f;
-        self.itemSize = CGSizeMake(70.f, 70.f);
         self.sectionInset = UIEdgeInsetsMake(8.f, 8.f, 8.f, 8.f);
         self.footerReferenceSize = CGSizeMake(320.0, 55.0);
+        self.itemSize = CGSizeMake(70.f, 70.f);
     }
     return self;
 }

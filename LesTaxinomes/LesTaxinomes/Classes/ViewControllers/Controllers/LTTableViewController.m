@@ -7,7 +7,7 @@
 //
 
 #import "LTTableViewController.h"
-#import "LTiPhoneBackgroundView.h"
+#import "MBProgressHUD.h"
 
 @interface LTTableViewController ()
 @end

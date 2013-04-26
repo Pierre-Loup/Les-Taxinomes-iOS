@@ -86,6 +86,9 @@
 		A53B71C81703912B007FC625 /* SRSlimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A53B71BE1703912B007FC625 /* SRSlimeView.m */; };
 		A53B71C91703912B007FC625 /* SRSlimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A53B71BE1703912B007FC625 /* SRSlimeView.m */; };
 		A53B71CA1703912B007FC625 /* SRSlimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A53B71BE1703912B007FC625 /* SRSlimeView.m */; };
+		A53E5B05172A4D7F001C2CB8 /* LTCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A53E5B04172A4D7F001C2CB8 /* LTCollectionViewFlowLayout.m */; };
+		A53E5B06172A4D7F001C2CB8 /* LTCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A53E5B04172A4D7F001C2CB8 /* LTCollectionViewFlowLayout.m */; };
+		A53E5B07172A4D7F001C2CB8 /* LTCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A53E5B04172A4D7F001C2CB8 /* LTCollectionViewFlowLayout.m */; };
 		A5582F4D15A4D9D1008F2F93 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */; };
 		A559BADE16E7D951008C3917 /* LTMediaCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A559BADD16E7D951008C3917 /* LTMediaCollectionCell.m */; };
 		A559BADF16E7D951008C3917 /* LTMediaCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A559BADD16E7D951008C3917 /* LTMediaCollectionCell.m */; };
@@ -238,8 +241,6 @@
 		A585631C15F90BAD00446653 /* SpinnerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A58562A515F90BAD00446653 /* SpinnerCell.xib */; };
 		A585631D15F90BAD00446653 /* LTBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562A715F90BAD00446653 /* LTBackgroundView.m */; };
 		A585631E15F90BAD00446653 /* LTBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562A715F90BAD00446653 /* LTBackgroundView.m */; };
-		A585631F15F90BAD00446653 /* LTiPhoneBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562A915F90BAD00446653 /* LTiPhoneBackgroundView.m */; };
-		A585632015F90BAD00446653 /* LTiPhoneBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562A915F90BAD00446653 /* LTiPhoneBackgroundView.m */; };
 		A585632115F90BAD00446653 /* LTTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562AB15F90BAD00446653 /* LTTitleView.m */; };
 		A585632215F90BAD00446653 /* LTTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562AB15F90BAD00446653 /* LTTitleView.m */; };
 		A585632515F90C6500446653 /* LTConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A585623915F90BAD00446653 /* LTConnectionManager.m */; };
@@ -302,7 +303,6 @@
 		A5CCFEDC1643CEBE00FA4ABF /* SingleLineInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562A115F90BAD00446653 /* SingleLineInputCell.m */; };
 		A5CCFEDD1643CEBE00FA4ABF /* SpinnerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562A415F90BAD00446653 /* SpinnerCell.m */; };
 		A5CCFEDE1643CEBE00FA4ABF /* LTBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562A715F90BAD00446653 /* LTBackgroundView.m */; };
-		A5CCFEDF1643CEBE00FA4ABF /* LTiPhoneBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562A915F90BAD00446653 /* LTiPhoneBackgroundView.m */; };
 		A5CCFEE01643CEBE00FA4ABF /* LTTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A58562AB15F90BAD00446653 /* LTTitleView.m */; };
 		A5CCFEE11643CEBE00FA4ABF /* LTTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B7C95A161B83D200BEC7D5 /* LTTableViewController.m */; };
 		A5CCFEE21643CEBE00FA4ABF /* LTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B7C95C161B83D200BEC7D5 /* LTViewController.m */; };
@@ -415,12 +415,9 @@
 		A5E6795716ECCD2600203EE8 /* ISRefresgControlIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5E6795316ECCD2600203EE8 /* ISRefresgControlIcon@2x.png */; };
 		A5E6795816ECCD2600203EE8 /* ISRefresgControlIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5E6795316ECCD2600203EE8 /* ISRefresgControlIcon@2x.png */; };
 		A5E6795916ECCD2600203EE8 /* ISRefresgControlIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5E6795316ECCD2600203EE8 /* ISRefresgControlIcon@2x.png */; };
-		A5E6796016ECD32600203EE8 /* LTCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6795F16ECD32600203EE8 /* LTCollectionViewFlowLayout.m */; };
-		A5E6796116ECD32600203EE8 /* LTCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6795F16ECD32600203EE8 /* LTCollectionViewFlowLayout.m */; };
-		A5E6796216ECD32600203EE8 /* LTCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6795F16ECD32600203EE8 /* LTCollectionViewFlowLayout.m */; };
-		A5E6797616ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6797516ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m */; };
-		A5E6797716ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6797516ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m */; };
-		A5E6797816ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6797516ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m */; };
+		A5E6797616ECFA2A00203EE8 /* LTLoadMoreFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6797516ECFA2A00203EE8 /* LTLoadMoreFooterView.m */; };
+		A5E6797716ECFA2A00203EE8 /* LTLoadMoreFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6797516ECFA2A00203EE8 /* LTLoadMoreFooterView.m */; };
+		A5E6797816ECFA2A00203EE8 /* LTLoadMoreFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6797516ECFA2A00203EE8 /* LTLoadMoreFooterView.m */; };
 		A5EA0B3916BEBA7C004DFA06 /* libMagicalRecords.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0B3816BEBA7C004DFA06 /* libMagicalRecords.a */; };
 		A5EA0B3A16BEBA8D004DFA06 /* libMagicalRecords.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0B3816BEBA7C004DFA06 /* libMagicalRecords.a */; };
 		A5EA0B3B16BEBA8D004DFA06 /* libMagicalRecords.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0B3816BEBA7C004DFA06 /* libMagicalRecords.a */; };
@@ -539,6 +536,8 @@
 		A53B71BC1703912B007FC625 /* SRRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SRRefreshView.m; path = SlimeRefresh/SRRefreshView.m; sourceTree = "<group>"; };
 		A53B71BD1703912B007FC625 /* SRSlimeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SRSlimeView.h; path = SlimeRefresh/SRSlimeView.h; sourceTree = "<group>"; };
 		A53B71BE1703912B007FC625 /* SRSlimeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SRSlimeView.m; path = SlimeRefresh/SRSlimeView.m; sourceTree = "<group>"; };
+		A53E5B03172A4D7F001C2CB8 /* LTCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		A53E5B04172A4D7F001C2CB8 /* LTCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A559BADC16E7D951008C3917 /* LTMediaCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTMediaCollectionCell.h; sourceTree = "<group>"; };
 		A559BADD16E7D951008C3917 /* LTMediaCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTMediaCollectionCell.m; sourceTree = "<group>"; };
@@ -661,8 +660,6 @@
 		A58562A515F90BAD00446653 /* SpinnerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpinnerCell.xib; sourceTree = "<group>"; };
 		A58562A615F90BAD00446653 /* LTBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTBackgroundView.h; sourceTree = "<group>"; };
 		A58562A715F90BAD00446653 /* LTBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTBackgroundView.m; sourceTree = "<group>"; };
-		A58562A815F90BAD00446653 /* LTiPhoneBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTiPhoneBackgroundView.h; sourceTree = "<group>"; };
-		A58562A915F90BAD00446653 /* LTiPhoneBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTiPhoneBackgroundView.m; sourceTree = "<group>"; };
 		A58562AA15F90BAD00446653 /* LTTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTTitleView.h; sourceTree = "<group>"; };
 		A58562AB15F90BAD00446653 /* LTTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTTitleView.m; sourceTree = "<group>"; };
 		A591B7B2150D57F000CE89BA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -708,11 +705,9 @@
 		A5E6792F16ECCCF500203EE8 /* egopv_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "egopv_right@2x.png"; sourceTree = "<group>"; };
 		A5E6795216ECCD2600203EE8 /* ISRefresgControlIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ISRefresgControlIcon.png; sourceTree = "<group>"; };
 		A5E6795316ECCD2600203EE8 /* ISRefresgControlIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ISRefresgControlIcon@2x.png"; sourceTree = "<group>"; };
-		A5E6795E16ECD32600203EE8 /* LTCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCollectionViewFlowLayout.h; sourceTree = "<group>"; };
-		A5E6795F16ECD32600203EE8 /* LTCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		A5E6796E16ECE91C00203EE8 /* LTMediasDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LTMediasDataSource.h; path = LesTaxinomes/Classes/ViewControllers/Controllers/Protocols/LTMediasDataSource.h; sourceTree = SOURCE_ROOT; };
-		A5E6797416ECFA2900203EE8 /* LTMediasLoadMoreFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTMediasLoadMoreFooterView.h; sourceTree = "<group>"; };
-		A5E6797516ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTMediasLoadMoreFooterView.m; sourceTree = "<group>"; };
+		A5E6797416ECFA2900203EE8 /* LTLoadMoreFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLoadMoreFooterView.h; sourceTree = "<group>"; };
+		A5E6797516ECFA2A00203EE8 /* LTLoadMoreFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLoadMoreFooterView.m; sourceTree = "<group>"; };
 		A5EA0B3816BEBA7C004DFA06 /* libMagicalRecords.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMagicalRecords.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5EA0B8D16BEBCD3004DFA06 /* libEGOPhotoViewer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libEGOPhotoViewer.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5EA0BD016BEBEC3004DFA06 /* libMKBlockAdditions.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMKBlockAdditions.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1002,6 +997,15 @@
 				A53B71BE1703912B007FC625 /* SRSlimeView.m */,
 			);
 			name = SlimeRefresh;
+			sourceTree = "<group>";
+		};
+		A53E5B02172A4D7F001C2CB8 /* CollectionViewLayouts */ = {
+			isa = PBXGroup;
+			children = (
+				A53E5B03172A4D7F001C2CB8 /* LTCollectionViewFlowLayout.h */,
+				A53E5B04172A4D7F001C2CB8 /* LTCollectionViewFlowLayout.m */,
+			);
+			path = CollectionViewLayouts;
 			sourceTree = "<group>";
 		};
 		A5656593167294B900DF37B9 /* Ressources */ = {
@@ -1297,20 +1301,17 @@
 			isa = PBXGroup;
 			children = (
 				A50C65001704E5910024594A /* Authors */,
+				A53E5B02172A4D7F001C2CB8 /* CollectionViewLayouts */,
 				A585629415F90BAD00446653 /* Cells */,
 				A5003DD116FBAC440061CE24 /* Categories */,
 				A51EA71F16CAE9AA000CC187 /* LTAppearance.h */,
 				A51EA72016CAE9AA000CC187 /* LTAppearance.m */,
 				A58562A615F90BAD00446653 /* LTBackgroundView.h */,
 				A58562A715F90BAD00446653 /* LTBackgroundView.m */,
-				A58562A815F90BAD00446653 /* LTiPhoneBackgroundView.h */,
-				A58562A915F90BAD00446653 /* LTiPhoneBackgroundView.m */,
 				A58562AA15F90BAD00446653 /* LTTitleView.h */,
 				A58562AB15F90BAD00446653 /* LTTitleView.m */,
-				A5E6795E16ECD32600203EE8 /* LTCollectionViewFlowLayout.h */,
-				A5E6795F16ECD32600203EE8 /* LTCollectionViewFlowLayout.m */,
-				A5E6797416ECFA2900203EE8 /* LTMediasLoadMoreFooterView.h */,
-				A5E6797516ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m */,
+				A5E6797416ECFA2900203EE8 /* LTLoadMoreFooterView.h */,
+				A5E6797516ECFA2A00203EE8 /* LTLoadMoreFooterView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1803,7 +1804,6 @@
 				A585631515F90BAD00446653 /* SingleLineInputCell.m in Sources */,
 				A585631915F90BAD00446653 /* SpinnerCell.m in Sources */,
 				A585631D15F90BAD00446653 /* LTBackgroundView.m in Sources */,
-				A585631F15F90BAD00446653 /* LTiPhoneBackgroundView.m in Sources */,
 				A585632115F90BAD00446653 /* LTTitleView.m in Sources */,
 				A5B7C95F161B83D200BEC7D5 /* LTTableViewController.m in Sources */,
 				A5B7C961161B83D200BEC7D5 /* LTViewController.m in Sources */,
@@ -1816,8 +1816,7 @@
 				A5EA0C5C16BECA01004DFA06 /* UIGlossyButton.m in Sources */,
 				A51EA72116CAE9AA000CC187 /* LTAppearance.m in Sources */,
 				A559BADE16E7D951008C3917 /* LTMediaCollectionCell.m in Sources */,
-				A5E6796016ECD32600203EE8 /* LTCollectionViewFlowLayout.m in Sources */,
-				A5E6797616ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m in Sources */,
+				A5E6797616ECFA2A00203EE8 /* LTLoadMoreFooterView.m in Sources */,
 				A5003DCE16FBAC3E0061CE24 /* UIGlossyButton+LT.m in Sources */,
 				A51847CC16FDE5C500387810 /* LTMediasGridViewController.m in Sources */,
 				A51847CF16FDE5C500387810 /* LTMediasListViewController.m in Sources */,
@@ -1833,6 +1832,7 @@
 				A50C654A170504170024594A /* Author.m in Sources */,
 				A50C6556170504FC0024594A /* Media.m in Sources */,
 				A50C655B170505830024594A /* License+Business.m in Sources */,
+				A53E5B05172A4D7F001C2CB8 /* LTCollectionViewFlowLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1862,7 +1862,6 @@
 				A585631615F90BAD00446653 /* SingleLineInputCell.m in Sources */,
 				A585631A15F90BAD00446653 /* SpinnerCell.m in Sources */,
 				A585631E15F90BAD00446653 /* LTBackgroundView.m in Sources */,
-				A585632015F90BAD00446653 /* LTiPhoneBackgroundView.m in Sources */,
 				A585632215F90BAD00446653 /* LTTitleView.m in Sources */,
 				A5B7C960161B83D200BEC7D5 /* LTTableViewController.m in Sources */,
 				A5B7C962161B83D200BEC7D5 /* LTViewController.m in Sources */,
@@ -1875,8 +1874,7 @@
 				A5EA0C5D16BECA01004DFA06 /* UIGlossyButton.m in Sources */,
 				A51EA72216CAE9AF000CC187 /* LTAppearance.m in Sources */,
 				A559BADF16E7D951008C3917 /* LTMediaCollectionCell.m in Sources */,
-				A5E6796116ECD32600203EE8 /* LTCollectionViewFlowLayout.m in Sources */,
-				A5E6797716ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m in Sources */,
+				A5E6797716ECFA2A00203EE8 /* LTLoadMoreFooterView.m in Sources */,
 				A5003DCF16FBAC3E0061CE24 /* UIGlossyButton+LT.m in Sources */,
 				A51847CD16FDE5C500387810 /* LTMediasGridViewController.m in Sources */,
 				A51847D016FDE5C500387810 /* LTMediasListViewController.m in Sources */,
@@ -1892,6 +1890,7 @@
 				A50C654B170504170024594A /* Author.m in Sources */,
 				A50C6557170504FC0024594A /* Media.m in Sources */,
 				A50C655C170505830024594A /* License+Business.m in Sources */,
+				A53E5B06172A4D7F001C2CB8 /* LTCollectionViewFlowLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1921,7 +1920,6 @@
 				A5CCFEDC1643CEBE00FA4ABF /* SingleLineInputCell.m in Sources */,
 				A5CCFEDD1643CEBE00FA4ABF /* SpinnerCell.m in Sources */,
 				A5CCFEDE1643CEBE00FA4ABF /* LTBackgroundView.m in Sources */,
-				A5CCFEDF1643CEBE00FA4ABF /* LTiPhoneBackgroundView.m in Sources */,
 				A5CCFEE01643CEBE00FA4ABF /* LTTitleView.m in Sources */,
 				A5CCFEE11643CEBE00FA4ABF /* LTTableViewController.m in Sources */,
 				A5CCFEE21643CEBE00FA4ABF /* LTViewController.m in Sources */,
@@ -1934,8 +1932,7 @@
 				A5EA0C5E16BECA02004DFA06 /* UIGlossyButton.m in Sources */,
 				A51EA72316CAE9B0000CC187 /* LTAppearance.m in Sources */,
 				A559BAE016E7D951008C3917 /* LTMediaCollectionCell.m in Sources */,
-				A5E6796216ECD32600203EE8 /* LTCollectionViewFlowLayout.m in Sources */,
-				A5E6797816ECFA2A00203EE8 /* LTMediasLoadMoreFooterView.m in Sources */,
+				A5E6797816ECFA2A00203EE8 /* LTLoadMoreFooterView.m in Sources */,
 				A5003DD016FBAC3E0061CE24 /* UIGlossyButton+LT.m in Sources */,
 				A51847CE16FDE5C500387810 /* LTMediasGridViewController.m in Sources */,
 				A51847D116FDE5C500387810 /* LTMediasListViewController.m in Sources */,
@@ -1951,6 +1948,7 @@
 				A50C654C170504170024594A /* Author.m in Sources */,
 				A50C6558170504FC0024594A /* Media.m in Sources */,
 				A50C655D170505830024594A /* License+Business.m in Sources */,
+				A53E5B07172A4D7F001C2CB8 /* LTCollectionViewFlowLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

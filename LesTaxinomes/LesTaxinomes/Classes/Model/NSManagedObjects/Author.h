@@ -13,14 +13,14 @@
 
 @interface Author : NSManagedObject
 
-@property (nonatomic, retain) NSString * avatarURL;
-@property (nonatomic, retain) NSString * biography;
-@property (nonatomic, retain) NSNumber * identifier;
-@property (nonatomic, retain) NSDate * localUpdateDate;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSDate * signupDate;
-@property (nonatomic, retain) NSString * status;
-@property (nonatomic, retain) NSString * emailAddress;
+@property (nonatomic, retain) NSString *avatarURL;
+@property (nonatomic, retain) NSString *biography;
+@property (nonatomic, retain) NSNumber *identifier;
+@property (nonatomic, retain) NSDate *localUpdateDate;
+@property (nonatomic, retain) NSString *name;
+@property (nonatomic, retain) NSDate *signupDate;
+@property (nonatomic, retain) NSString *status;
+@property (nonatomic, retain) NSString *emailAddress;
 @property (nonatomic, retain) NSSet *medias;
 @end
 

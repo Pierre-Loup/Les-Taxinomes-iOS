@@ -74,13 +74,13 @@
     [self waitForStatus:kGHUnitWaitStatusSuccess timeout:kDefaultTestTimeout];
 }
 
-- (void)test04_getShortMediasByDate {
+- (void)test04_getMediasSummariesByDate {
     
     [self prepare];
     NSRange mediasRange = kDefaultRange;
     
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
-    [cm getShortMediasByDateForAuthor:nil
+    [cm getMediasSummariesByDateForAuthor:nil
                          nearLocation:nil
                             withRange:mediasRange
                         responseBlock:^(NSArray *medias, NSError *error) {
@@ -97,13 +97,13 @@
     [self waitForStatus:kGHUnitWaitStatusSuccess timeout:kDefaultTestTimeout];
 }
 
-- (void)test05_getShortMediasByDate_forAuthor {
+- (void)test05_getMediasSummariesByDate_forAuthor {
     
     [self prepare];
     NSRange mediasRange = kDefaultRange;
     
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
-    [cm getShortMediasByDateForAuthor:kDefaultAuthor
+    [cm getMediasSummariesByDateForAuthor:kDefaultAuthor
                          nearLocation:nil
                             withRange:mediasRange
                         responseBlock:^(NSArray *medias, NSError *error) {
@@ -120,7 +120,7 @@
     [self waitForStatus:kGHUnitWaitStatusSuccess timeout:kDefaultTestTimeout];
 }
 
-- (void)test06_getShortMediasByDate_nearLocation {
+- (void)test06_getMediasSummariesByDate_nearLocation {
     
     [self prepare];
     NSRange mediasRange = kDefaultRange;
@@ -128,7 +128,7 @@
     
     
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
-    [cm getShortMediasByDateForAuthor:nil
+    [cm getMediasSummariesByDateForAuthor:nil
                          nearLocation:location
                             withRange:mediasRange
                         responseBlock:^(NSArray *medias, NSError *error) {

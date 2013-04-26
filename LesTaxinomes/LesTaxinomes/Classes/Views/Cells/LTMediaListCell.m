@@ -37,8 +37,7 @@
     UIView* view = [views objectAtIndex:0];
     if ([view isKindOfClass:[self class]]) {
         self = (LTMediaListCell *)view;
-        self.title.textColor = kMainColor;
-        self.author.textColor = kSecondaryColor;
+        self.author.textColor = kLTColorMain;
         return self;
     } else {
         return nil;

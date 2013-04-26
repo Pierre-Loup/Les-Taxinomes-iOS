@@ -116,13 +116,7 @@ typedef enum {
     [super viewWillAppear:animated];
     self.listViewController.view.frame = self.view.bounds;
     self.gridViewController.view.frame = self.view.bounds;
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
     if ([[self.mediasResultController fetchedObjects] count] == 0) {
-        [self showDefaultHud];
         [self loadMoreMedias];
     }
 }
@@ -187,28 +181,28 @@ typedef enum {
 {
     [self.listViewController.slimeView endRefresh];
     [self.gridViewController.slimeView endRefresh];
-    self.listViewController.footerView.displayMode = LTMediasLoadMoreFooterViewDisplayModeLoading;
-    self.gridViewController.footerView.displayMode = LTMediasLoadMoreFooterViewDisplayModeLoading;
+    self.listViewController.footerView.displayMode = LTLoadMoreFooterViewDisplayModeLoading;
+    self.gridViewController.footerView.displayMode = LTLoadMoreFooterViewDisplayModeLoading;
     
     NSRange mediasRange;
     mediasRange.location = [[self.mediasResultController fetchedObjects] count];
     mediasRange.length = kLTMediasLoadingStep;
-    [self.hud show:YES];
+
     LTConnectionManager* connectionManager = [LTConnectionManager sharedConnectionManager];
-    [connectionManager getShortMediasByDateForAuthor:self.currentUser
+    [connectionManager getMediasSummariesByDateForAuthor:self.currentUser
                                         nearLocation:nil
                                            withRange:mediasRange
     responseBlock:^(NSArray *medias, NSError *error) {
         if (medias) {
             self.mediasResultController = nil;
-            [self.hud hide:YES];
         } else if ([error shouldBeDisplayed]) {
             [UIAlertView showWithError:error];
-            [self.hud hide:NO];
+        } else {
+            [self showErrorHudWithText:_T(@"common.hud.failure")];
         }
         [self reloadData];
-        self.listViewController.footerView.displayMode = LTMediasLoadMoreFooterViewDisplayModeNormal;
-        self.gridViewController.footerView.displayMode = LTMediasLoadMoreFooterViewDisplayModeNormal;
+        self.listViewController.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
+        self.gridViewController.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
         
     }];
 }

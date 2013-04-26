@@ -14,7 +14,7 @@
 // UI
 #import "SRRefreshView.h"
 #import "LTMediaListCell.h"
-#import "LTMediasLoadMoreFooterView.h"
+#import "LTLoadMoreFooterView.h"
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Defines & contants
 
@@ -26,7 +26,7 @@
 
 @interface LTMediasListViewController () <SRRefreshDelegate>
 @property (nonatomic, strong) SRRefreshView* slimeView;
-@property (nonatomic, strong) LTMediasLoadMoreFooterView* footerView;
+@property (nonatomic, strong) LTLoadMoreFooterView* footerView;
 @end
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@
     CGRect footerViewFrame = CGRectMake(0.f, 0.f,
                                         self.tableView.frame.size.width,
                                         kLTMediasListCommonRowHeight);
-    self.footerView = [[LTMediasLoadMoreFooterView alloc] initWithFrame:footerViewFrame];
+    self.footerView = [[LTLoadMoreFooterView alloc] initWithFrame:footerViewFrame];
     [self.footerView.loadMoreButton addTarget:self.delegate
                                   action:@selector(loadMoreMedias)
                         forControlEvents:UIControlEventTouchUpInside];
@@ -108,11 +108,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private methods
-
-- (void)refreshAction:(id)sender
-{
-    NSLog(@"refreshAction:");
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UITableViewDataSource

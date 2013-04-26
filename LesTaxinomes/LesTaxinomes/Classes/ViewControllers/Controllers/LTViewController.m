@@ -24,6 +24,7 @@
  */
 
 #import "LTViewController.h"
+#import "MBProgressHUD.h"
 
 @interface LTViewController ()
 @end

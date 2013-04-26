@@ -12,11 +12,11 @@
 #import "SRRefreshView.h"
 #import "LTCollectionViewFlowLayout.h"
 #import "LTMediaCollectionCell.h"
-#import "LTMediasLoadMoreFooterView.h"
+#import "LTLoadMoreFooterView.h"
 
 @interface LTMediasGridViewController () <SRRefreshDelegate>
 @property (nonatomic, strong) SRRefreshView* slimeView;
-@property (nonatomic, strong) LTMediasLoadMoreFooterView* footerView;
+@property (nonatomic, strong) LTLoadMoreFooterView* footerView;
 @end
 
 @implementation LTMediasGridViewController
@@ -34,10 +34,10 @@
     
     CGRect footerViewFrame = CGRectNull;
     footerViewFrame.size = ((LTCollectionViewFlowLayout*)self.collectionView.collectionViewLayout).footerReferenceSize;
-    self.footerView = [[LTMediasLoadMoreFooterView alloc] initWithFrame:footerViewFrame];
+    self.footerView = [[LTLoadMoreFooterView alloc] initWithFrame:footerViewFrame];
     [self.footerView.loadMoreButton addTarget:self.delegate
-                                  action:@selector(loadMoreMedias)
-                        forControlEvents:UIControlEventTouchUpInside];
+                                       action:@selector(loadMoreMedias)
+                             forControlEvents:UIControlEventTouchUpInside];
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -79,11 +79,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private methods
-
-- (void)refreshAction:(id)sender
-{
-    NSLog(@"refreshAction:");
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UICollectionViewDataSource

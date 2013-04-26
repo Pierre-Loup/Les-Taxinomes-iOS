@@ -26,6 +26,7 @@
 "common.anonymous" = "Anonyme";
 "common.by" = "Par";
 "common.license" = "Licence";
+"common.hud.failure" = "Échec";
 
 /* TAB NAR */
 "tabbar.home"       = "Accueil";

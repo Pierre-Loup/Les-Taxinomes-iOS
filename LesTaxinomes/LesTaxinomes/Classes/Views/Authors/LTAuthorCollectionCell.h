@@ -8,6 +8,12 @@
 
 #import "PSTCollectionView.h"
 
+@class Author;
+
 @interface LTAuthorCollectionCell : PSTCollectionViewCell
+
+@property (nonatomic, strong) Author* author;
+
++ (NSString *)reuseIdentifier;
 
 @end
