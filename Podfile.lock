@@ -1,0 +1,43 @@
+PODS:
+  - AFNetworking (1.3.0)
+  - DCIntrospect (0.0.2)
+  - EGOCache (2.0)
+  - EGOImageLoading (0.0.1):
+    - EGOCache
+  - EGOPhotoViewer (0.0.1):
+    - EGOImageLoading (~> 0.0.1)
+  - MagicalRecord (2.1)
+  - MBProgressHUD (0.6)
+  - NSData+Base64 (1.0.0)
+  - PSTCollectionView (1.0.0)
+  - Reachability (3.1.0)
+  - UIKitCategoryAdditions (0.0.1)
+  - xmlrpc (2.3.3):
+    - NSData+Base64 (~> 1.0.0)
+
+DEPENDENCIES:
+  - AFNetworking (~> 1.3)
+  - DCIntrospect (~> 0.0)
+  - EGOPhotoViewer (~> 0.0)
+  - MagicalRecord (~> 2.1)
+  - MBProgressHUD (~> 0.6)
+  - PSTCollectionView (~> 1.0)
+  - Reachability (~> 3.1)
+  - UIKitCategoryAdditions (~> 0.0)
+  - xmlrpc (~> 2.3)
+
+SPEC CHECKSUMS:
+  AFNetworking: e528f20d06b1b818c3571266fb5efa20031a8ace
+  DCIntrospect: 2f5cab0b58b170459ebcb200f59042306fcb0c0d
+  EGOCache: c7116e8a6692eecb542f001a9c71f9b71ae9644b
+  EGOImageLoading: 36f4b972563da7dcd32d3e04027b4fe2d3ec0ae7
+  EGOPhotoViewer: 3fc07a25d0e3275241178ed17c9e66fd8811f2b3
+  MagicalRecord: 64e7184c240087a45e9588a722eaf05b0ad837f7
+  MBProgressHUD: 9b55a90566fb5d07df0602f6fd9fa04510ad5d52
+  NSData+Base64: 36c4e5b6479259c1a68866ccd2a8dd385c9744f7
+  PSTCollectionView: ca2fc4e0b64143618f7a9ed15d74180e5fb8d875
+  Reachability: ba94ecd4eaa037be3d0588b38956672588530c5b
+  UIKitCategoryAdditions: 393e65777c35ce92af6b32797d2e456c2df411ac
+  xmlrpc: 9ebaa6298ce90ff0c3c30404681f2030bdde54db
+
+COCOAPODS: 0.20.2

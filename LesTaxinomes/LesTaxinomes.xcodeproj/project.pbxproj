@@ -10,6 +10,7 @@
 		37D2E7DE144709ED0044EC3A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7DD144709ED0044EC3A /* UIKit.framework */; };
 		37D2E7E0144709ED0044EC3A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7DF144709ED0044EC3A /* Foundation.framework */; };
 		37D2E7E2144709ED0044EC3A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7E1144709ED0044EC3A /* CoreGraphics.framework */; };
+		969A2836DBAA428583DC6965 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF8C459EACEC47B38103DB6B /* libPods.a */; };
 		A5003DCE16FBAC3E0061CE24 /* UIGlossyButton+LT.m in Sources */ = {isa = PBXBuildFile; fileRef = A5003DCD16FBAC3E0061CE24 /* UIGlossyButton+LT.m */; };
 		A5003DCF16FBAC3E0061CE24 /* UIGlossyButton+LT.m in Sources */ = {isa = PBXBuildFile; fileRef = A5003DCD16FBAC3E0061CE24 /* UIGlossyButton+LT.m */; };
 		A5003DD016FBAC3E0061CE24 /* UIGlossyButton+LT.m in Sources */ = {isa = PBXBuildFile; fileRef = A5003DCD16FBAC3E0061CE24 /* UIGlossyButton+LT.m */; };
@@ -62,9 +63,6 @@
 		A51847CF16FDE5C500387810 /* LTMediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A51847CB16FDE5C500387810 /* LTMediasListViewController.m */; };
 		A51847D016FDE5C500387810 /* LTMediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A51847CB16FDE5C500387810 /* LTMediasListViewController.m */; };
 		A51847D116FDE5C500387810 /* LTMediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A51847CB16FDE5C500387810 /* LTMediasListViewController.m */; };
-		A51EA6F416CAE107000CC187 /* libPSTCollectionView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A51EA6F316CAE107000CC187 /* libPSTCollectionView.a */; };
-		A51EA6F516CAE10B000CC187 /* libPSTCollectionView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A51EA6F316CAE107000CC187 /* libPSTCollectionView.a */; };
-		A51EA6F616CAE10B000CC187 /* libPSTCollectionView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A51EA6F316CAE107000CC187 /* libPSTCollectionView.a */; };
 		A51EA72116CAE9AA000CC187 /* LTAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = A51EA72016CAE9AA000CC187 /* LTAppearance.m */; };
 		A51EA72216CAE9AF000CC187 /* LTAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = A51EA72016CAE9AA000CC187 /* LTAppearance.m */; };
 		A51EA72316CAE9B0000CC187 /* LTAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = A51EA72016CAE9AA000CC187 /* LTAppearance.m */; };
@@ -270,13 +268,6 @@
 		A5AC0A5015DABF31000F9311 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7DF144709ED0044EC3A /* Foundation.framework */; };
 		A5AC0A5115DABF31000F9311 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D2E7E1144709ED0044EC3A /* CoreGraphics.framework */; };
 		A5AF0EC3154888CF007F65DD /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5AF0EC2154888CF007F65DD /* MapKit.framework */; };
-		A5B5061716BD60E3008BF699 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5B5061616BD60E3008BF699 /* libAFNetworking.a */; };
-		A5B5061816BD60EC008BF699 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5B5061616BD60E3008BF699 /* libAFNetworking.a */; };
-		A5B5061916BD60EF008BF699 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5B5061616BD60E3008BF699 /* libAFNetworking.a */; };
-		A5B5061A16BD60EF008BF699 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5B5061616BD60E3008BF699 /* libAFNetworking.a */; };
-		A5B5066116BD6A04008BF699 /* libDCIntrospect.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5B5066016BD6A04008BF699 /* libDCIntrospect.a */; };
-		A5B5066216BD6A04008BF699 /* libDCIntrospect.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5B5066016BD6A04008BF699 /* libDCIntrospect.a */; };
-		A5B5066316BD6A04008BF699 /* libDCIntrospect.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5B5066016BD6A04008BF699 /* libDCIntrospect.a */; };
 		A5B7C95F161B83D200BEC7D5 /* LTTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B7C95A161B83D200BEC7D5 /* LTTableViewController.m */; };
 		A5B7C960161B83D200BEC7D5 /* LTTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B7C95A161B83D200BEC7D5 /* LTTableViewController.m */; };
 		A5B7C961161B83D200BEC7D5 /* LTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B7C95C161B83D200BEC7D5 /* LTViewController.m */; };
@@ -418,27 +409,6 @@
 		A5E6797616ECFA2A00203EE8 /* LTLoadMoreFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6797516ECFA2A00203EE8 /* LTLoadMoreFooterView.m */; };
 		A5E6797716ECFA2A00203EE8 /* LTLoadMoreFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6797516ECFA2A00203EE8 /* LTLoadMoreFooterView.m */; };
 		A5E6797816ECFA2A00203EE8 /* LTLoadMoreFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E6797516ECFA2A00203EE8 /* LTLoadMoreFooterView.m */; };
-		A5EA0B3916BEBA7C004DFA06 /* libMagicalRecords.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0B3816BEBA7C004DFA06 /* libMagicalRecords.a */; };
-		A5EA0B3A16BEBA8D004DFA06 /* libMagicalRecords.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0B3816BEBA7C004DFA06 /* libMagicalRecords.a */; };
-		A5EA0B3B16BEBA8D004DFA06 /* libMagicalRecords.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0B3816BEBA7C004DFA06 /* libMagicalRecords.a */; };
-		A5EA0B3C16BEBA8E004DFA06 /* libMagicalRecords.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0B3816BEBA7C004DFA06 /* libMagicalRecords.a */; };
-		A5EA0B8E16BEBCD3004DFA06 /* libEGOPhotoViewer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0B8D16BEBCD3004DFA06 /* libEGOPhotoViewer.a */; };
-		A5EA0BD116BEBEC3004DFA06 /* libMKBlockAdditions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0BD016BEBEC3004DFA06 /* libMKBlockAdditions.a */; };
-		A5EA0BD216BEBED7004DFA06 /* libMKBlockAdditions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0BD016BEBEC3004DFA06 /* libMKBlockAdditions.a */; };
-		A5EA0BD316BEBED9004DFA06 /* libMKBlockAdditions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0BD016BEBEC3004DFA06 /* libMKBlockAdditions.a */; };
-		A5EA0BD416BEBF3C004DFA06 /* libEGOPhotoViewer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0B8D16BEBCD3004DFA06 /* libEGOPhotoViewer.a */; };
-		A5EA0BD516BEBF3D004DFA06 /* libEGOPhotoViewer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0B8D16BEBCD3004DFA06 /* libEGOPhotoViewer.a */; };
-		A5EA0C0F16BEC415004DFA06 /* libXML-RPC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0C0E16BEC415004DFA06 /* libXML-RPC.a */; };
-		A5EA0C1016BEC421004DFA06 /* libXML-RPC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0C0E16BEC415004DFA06 /* libXML-RPC.a */; };
-		A5EA0C1116BEC421004DFA06 /* libXML-RPC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0C0E16BEC415004DFA06 /* libXML-RPC.a */; };
-		A5EA0C1216BEC422004DFA06 /* libXML-RPC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0C0E16BEC415004DFA06 /* libXML-RPC.a */; };
-		A5EA0C2E16BEC588004DFA06 /* libReachability.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0C2D16BEC588004DFA06 /* libReachability.a */; };
-		A5EA0C2F16BEC592004DFA06 /* libReachability.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0C2D16BEC588004DFA06 /* libReachability.a */; };
-		A5EA0C3016BEC593004DFA06 /* libReachability.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0C2D16BEC588004DFA06 /* libReachability.a */; };
-		A5EA0C3116BEC593004DFA06 /* libReachability.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0C2D16BEC588004DFA06 /* libReachability.a */; };
-		A5EA0C4F16BEC663004DFA06 /* libMBProgressHUD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0C4E16BEC663004DFA06 /* libMBProgressHUD.a */; };
-		A5EA0C5016BEC669004DFA06 /* libMBProgressHUD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0C4E16BEC663004DFA06 /* libMBProgressHUD.a */; };
-		A5EA0C5116BEC66A004DFA06 /* libMBProgressHUD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5EA0C4E16BEC663004DFA06 /* libMBProgressHUD.a */; };
 		A5EA0C5216BEC9F1004DFA06 /* NSMutableDictionary+ImageMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = A58560F215F90BA200446653 /* NSMutableDictionary+ImageMetadata.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A5EA0C5316BEC9F1004DFA06 /* NSMutableDictionary+ImageMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = A58560F215F90BA200446653 /* NSMutableDictionary+ImageMetadata.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A5EA0C5416BEC9F2004DFA06 /* NSMutableDictionary+ImageMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = A58560F215F90BA200446653 /* NSMutableDictionary+ImageMetadata.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -522,7 +492,6 @@
 		A51847C916FDE5C500387810 /* LTMediasGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTMediasGridViewController.m; sourceTree = "<group>"; };
 		A51847CA16FDE5C500387810 /* LTMediasListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTMediasListViewController.h; sourceTree = "<group>"; };
 		A51847CB16FDE5C500387810 /* LTMediasListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTMediasListViewController.m; sourceTree = "<group>"; };
-		A51EA6F316CAE107000CC187 /* libPSTCollectionView.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPSTCollectionView.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A51EA71F16CAE9AA000CC187 /* LTAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTAppearance.h; sourceTree = "<group>"; };
 		A51EA72016CAE9AA000CC187 /* LTAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTAppearance.m; sourceTree = "<group>"; };
 		A534E05F16FE183E004672E4 /* accessory_view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accessory_view.png; sourceTree = "<group>"; };
@@ -668,8 +637,6 @@
 		A5AF0EC2154888CF007F65DD /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		A5B0290B1620453E005D14DC /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		A5B0290C1620453E005D14DC /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		A5B5061616BD60E3008BF699 /* libAFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAFNetworking.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		A5B5066016BD6A04008BF699 /* libDCIntrospect.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDCIntrospect.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5B7C959161B83D200BEC7D5 /* LTTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTTableViewController.h; path = LesTaxinomes/Classes/ViewControllers/Controllers/LTTableViewController.h; sourceTree = SOURCE_ROOT; };
 		A5B7C95A161B83D200BEC7D5 /* LTTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTTableViewController.m; path = LesTaxinomes/Classes/ViewControllers/Controllers/LTTableViewController.m; sourceTree = SOURCE_ROOT; };
 		A5B7C95B161B83D200BEC7D5 /* LTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTViewController.h; path = LesTaxinomes/Classes/ViewControllers/Controllers/LTViewController.h; sourceTree = SOURCE_ROOT; };
@@ -708,15 +675,11 @@
 		A5E6796E16ECE91C00203EE8 /* LTMediasDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LTMediasDataSource.h; path = LesTaxinomes/Classes/ViewControllers/Controllers/Protocols/LTMediasDataSource.h; sourceTree = SOURCE_ROOT; };
 		A5E6797416ECFA2900203EE8 /* LTLoadMoreFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLoadMoreFooterView.h; sourceTree = "<group>"; };
 		A5E6797516ECFA2A00203EE8 /* LTLoadMoreFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLoadMoreFooterView.m; sourceTree = "<group>"; };
-		A5EA0B3816BEBA7C004DFA06 /* libMagicalRecords.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMagicalRecords.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		A5EA0B8D16BEBCD3004DFA06 /* libEGOPhotoViewer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libEGOPhotoViewer.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		A5EA0BD016BEBEC3004DFA06 /* libMKBlockAdditions.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMKBlockAdditions.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		A5EA0C0E16BEC415004DFA06 /* libXML-RPC.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libXML-RPC.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A5EA0C2D16BEC588004DFA06 /* libReachability.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libReachability.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		A5EA0C4E16BEC663004DFA06 /* libMBProgressHUD.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMBProgressHUD.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5FD424B167E113500B56F2A /* background-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-568h.png"; sourceTree = "<group>"; };
 		A5FD424C167E113500B56F2A /* background-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-568h@2x.png"; sourceTree = "<group>"; };
 		A5FD4254167E122600B56F2A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		AB8BEB58654147949C4CE779 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = ../Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		BF8C459EACEC47B38103DB6B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C82BB41615EFAC4600DDF7DB /* LTConnectionManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTConnectionManagerTest.m; sourceTree = "<group>"; };
 		C8339C1414ED4F93000A4E37 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		C8339C2514ED6355000A4E37 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -741,15 +704,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A51EA6F416CAE107000CC187 /* libPSTCollectionView.a in Frameworks */,
-				A5EA0C4F16BEC663004DFA06 /* libMBProgressHUD.a in Frameworks */,
-				A5EA0C2E16BEC588004DFA06 /* libReachability.a in Frameworks */,
-				A5EA0C0F16BEC415004DFA06 /* libXML-RPC.a in Frameworks */,
-				A5EA0BD116BEBEC3004DFA06 /* libMKBlockAdditions.a in Frameworks */,
-				A5EA0B8E16BEBCD3004DFA06 /* libEGOPhotoViewer.a in Frameworks */,
-				A5EA0B3916BEBA7C004DFA06 /* libMagicalRecords.a in Frameworks */,
-				A5B5066116BD6A04008BF699 /* libDCIntrospect.a in Frameworks */,
-				A5B5061716BD60E3008BF699 /* libAFNetworking.a in Frameworks */,
 				A5D38684167153AE006A1D4B /* MessageUI.framework in Frameworks */,
 				C8339C2814ED6366000A4E37 /* AssetsLibrary.framework in Frameworks */,
 				A5582F4D15A4D9D1008F2F93 /* QuartzCore.framework in Frameworks */,
@@ -769,6 +723,7 @@
 				37D2E7DE144709ED0044EC3A /* UIKit.framework in Frameworks */,
 				37D2E7E0144709ED0044EC3A /* Foundation.framework in Frameworks */,
 				37D2E7E2144709ED0044EC3A /* CoreGraphics.framework in Frameworks */,
+				969A2836DBAA428583DC6965 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -795,15 +750,6 @@
 				A5AC0A5015DABF31000F9311 /* Foundation.framework in Frameworks */,
 				A5AC0A5115DABF31000F9311 /* CoreGraphics.framework in Frameworks */,
 				A5D38685167153B9006A1D4B /* MessageUI.framework in Frameworks */,
-				A5B5061816BD60EC008BF699 /* libAFNetworking.a in Frameworks */,
-				A5B5066216BD6A04008BF699 /* libDCIntrospect.a in Frameworks */,
-				A5EA0B3A16BEBA8D004DFA06 /* libMagicalRecords.a in Frameworks */,
-				A5EA0BD216BEBED7004DFA06 /* libMKBlockAdditions.a in Frameworks */,
-				A5EA0BD516BEBF3D004DFA06 /* libEGOPhotoViewer.a in Frameworks */,
-				A5EA0C1016BEC421004DFA06 /* libXML-RPC.a in Frameworks */,
-				A5EA0C2F16BEC592004DFA06 /* libReachability.a in Frameworks */,
-				A5EA0C5016BEC669004DFA06 /* libMBProgressHUD.a in Frameworks */,
-				A51EA6F516CAE10B000CC187 /* libPSTCollectionView.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -830,15 +776,6 @@
 				A5CCFF001643CEBE00FA4ABF /* Foundation.framework in Frameworks */,
 				A5CCFF011643CEBE00FA4ABF /* CoreGraphics.framework in Frameworks */,
 				A5D38686167153BA006A1D4B /* MessageUI.framework in Frameworks */,
-				A5B5061916BD60EF008BF699 /* libAFNetworking.a in Frameworks */,
-				A5B5066316BD6A04008BF699 /* libDCIntrospect.a in Frameworks */,
-				A5EA0B3B16BEBA8D004DFA06 /* libMagicalRecords.a in Frameworks */,
-				A5EA0BD316BEBED9004DFA06 /* libMKBlockAdditions.a in Frameworks */,
-				A5EA0BD416BEBF3C004DFA06 /* libEGOPhotoViewer.a in Frameworks */,
-				A5EA0C1116BEC421004DFA06 /* libXML-RPC.a in Frameworks */,
-				A5EA0C3016BEC593004DFA06 /* libReachability.a in Frameworks */,
-				A5EA0C5116BEC66A004DFA06 /* libMBProgressHUD.a in Frameworks */,
-				A51EA6F616CAE10B000CC187 /* libPSTCollectionView.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -861,10 +798,6 @@
 				C83D43C215ED468400148CD2 /* Foundation.framework in Frameworks */,
 				C83D43C315ED468400148CD2 /* CoreGraphics.framework in Frameworks */,
 				C83D43D515ED471700148CD2 /* GHUnitIOS.framework in Frameworks */,
-				A5B5061A16BD60EF008BF699 /* libAFNetworking.a in Frameworks */,
-				A5EA0B3C16BEBA8E004DFA06 /* libMagicalRecords.a in Frameworks */,
-				A5EA0C1216BEC422004DFA06 /* libXML-RPC.a in Frameworks */,
-				A5EA0C3116BEC593004DFA06 /* libReachability.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -879,6 +812,7 @@
 				C83D43C415ED468400148CD2 /* LesTaxinomesTests */,
 				37D2E7DC144709ED0044EC3A /* Frameworks */,
 				37D2E7DA144709ED0044EC3A /* Products */,
+				AB8BEB58654147949C4CE779 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -896,15 +830,6 @@
 		37D2E7DC144709ED0044EC3A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A51EA6F316CAE107000CC187 /* libPSTCollectionView.a */,
-				A5EA0C4E16BEC663004DFA06 /* libMBProgressHUD.a */,
-				A5EA0C2D16BEC588004DFA06 /* libReachability.a */,
-				A5EA0C0E16BEC415004DFA06 /* libXML-RPC.a */,
-				A5EA0BD016BEBEC3004DFA06 /* libMKBlockAdditions.a */,
-				A5EA0B8D16BEBCD3004DFA06 /* libEGOPhotoViewer.a */,
-				A5EA0B3816BEBA7C004DFA06 /* libMagicalRecords.a */,
-				A5B5066016BD6A04008BF699 /* libDCIntrospect.a */,
-				A5B5061616BD60E3008BF699 /* libAFNetworking.a */,
 				A5D38683167153AE006A1D4B /* MessageUI.framework */,
 				C83D43D415ED471700148CD2 /* GHUnitIOS.framework */,
 				A5582F4C15A4D9D1008F2F93 /* QuartzCore.framework */,
@@ -926,6 +851,7 @@
 				37D2E7DF144709ED0044EC3A /* Foundation.framework */,
 				37D2E7E1144709ED0044EC3A /* CoreGraphics.framework */,
 				37D2E7F8144709EE0044EC3A /* SenTestingKit.framework */,
+				BF8C459EACEC47B38103DB6B /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1445,9 +1371,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 37D2E80B144709EE0044EC3A /* Build configuration list for PBXNativeTarget "LesTaxinomes Dev" */;
 			buildPhases = (
+				10CFBF18C82D4F30B80E7175 /* Check Pods Manifest.lock */,
 				37D2E7D5144709ED0044EC3A /* Sources */,
 				37D2E7D6144709ED0044EC3A /* Frameworks */,
 				37D2E7D7144709ED0044EC3A /* Resources */,
+				24AF37E43243471CA1E3EBEC /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1777,6 +1705,37 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		10CFBF18C82D4F30B80E7175 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+		};
+		24AF37E43243471CA1E3EBEC /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Pods-resources.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		37D2E7D5144709ED0044EC3A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -2102,6 +2061,7 @@
 		};
 		37D2E80C144709EE0044EC3A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB8BEB58654147949C4CE779 /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -2129,6 +2089,7 @@
 		};
 		37D2E80D144709EE0044EC3A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB8BEB58654147949C4CE779 /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";

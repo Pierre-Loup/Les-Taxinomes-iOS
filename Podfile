@@ -1,0 +1,11 @@
+xcodeproj 'LesTaxinomes/LesTaxinomes.xcodeproj'
+
+pod 'AFNetworking',		'~> 1.3'
+pod 'DCIntrospect', 		'~> 0.0'
+pod 'EGOPhotoViewer', 		'~> 0.0'
+pod 'MagicalRecord', 		'~> 2.1'
+pod 'MBProgressHUD', 		'~> 0.6'
+pod 'PSTCollectionView', 	'~> 1.0'
+pod 'Reachability', 		'~> 3.1'
+pod 'UIKitCategoryAdditions', 	'~> 0.0'
+pod 'xmlrpc',           	'~> 2.3'
