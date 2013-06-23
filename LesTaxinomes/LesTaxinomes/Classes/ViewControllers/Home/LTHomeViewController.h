@@ -26,5 +26,5 @@
 #import <UIKit/UIKit.h>
 #import "LTViewController.h"
 
-@interface HomeViewController : LTViewController
+@interface LTHomeViewController : LTViewController
 @end

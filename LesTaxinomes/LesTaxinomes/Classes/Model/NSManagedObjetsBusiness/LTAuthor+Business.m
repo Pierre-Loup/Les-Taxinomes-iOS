@@ -26,12 +26,12 @@
         return nil;
     }
     
-    NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
+    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier = %d", [authorIdentifier integerValue]];
-    LTAuthor *author = [LTAuthor findFirstWithPredicate:predicate inContext:context];
+    LTAuthor *author = [LTAuthor MR_findFirstWithPredicate:predicate inContext:context];
     if (!author) {
-        author = [LTAuthor createInContext:context];
+        author = [LTAuthor MR_createInContext:context];
         author.identifier = authorIdentifier;
         if (author == nil) {
             LogDebug(@"[ERROR] author = nil !!!");
@@ -81,12 +81,12 @@
 
 + (LTAuthor *)authorWithIdentifier: (NSNumber *)identifier {
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d", [identifier integerValue]];
-    LTAuthor *author = [LTAuthor findFirstWithPredicate:predicate];
+    LTAuthor *author = [LTAuthor MR_findFirstWithPredicate:predicate];
     return  author;
 }
 
 + (NSArray *)allAuthors {
-    return [LTAuthor findAll];
+    return [LTAuthor MR_findAll];
 }
 
 @end

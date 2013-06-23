@@ -53,7 +53,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        licenses_ = [LTLicense findAll];
+        licenses_ = [LTLicense MR_findAll];
         currentLicenseIndexPath_ = [self indexPathForCurrentLicense];
     }
     return self;

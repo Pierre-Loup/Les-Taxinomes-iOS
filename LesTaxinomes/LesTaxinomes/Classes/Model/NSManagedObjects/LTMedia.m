@@ -3,7 +3,7 @@
 //  LesTaxinomes
 //
 //  Created by Pierre-Loup Tristant on 23/06/13.
-//  Copyright (c) 2013  Les Petits Débrouillards Bretagne. All rights reserved.
+//  Copyright (c) 2013 Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
 #import "LTMedia.h"
@@ -29,7 +29,7 @@
 @dynamic status;
 @dynamic sychGapForDateSorting;
 @dynamic text;
-@dynamic title;
+@dynamic mediaTitle;
 @dynamic updateDate;
 @dynamic visits;
 @dynamic author;

@@ -32,11 +32,11 @@
         <attribute name="mediaMediumURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mediaThumbnailLocalFile" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mediaThumbnailUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mediaTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="popularity" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sychGapForDateSorting" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updateDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="visits" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="author" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="LTAuthor" inverseName="medias" inverseEntity="LTAuthor" syncable="YES"/>

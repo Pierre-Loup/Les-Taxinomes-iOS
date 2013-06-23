@@ -24,15 +24,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "MBProgressHUD.h"
+#import "SVProgressHUD.h"
 
-@interface LTTableViewController : UITableViewController <MBProgressHUDDelegate>
-@property (nonatomic, readonly) MBProgressHUD* hud;
-
-- (void)showDefaultHud;
-- (void)showDeterminateHud;
-- (void)showErrorHudWithText:(NSString *)text;
-- (void)showConfirmHudWithText:(NSString *)text;
-- (void)showHudWithTextOnly:(NSString *)text;
-
+@interface LTTableViewController : UITableViewController
 @end

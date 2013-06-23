@@ -22,14 +22,9 @@ static UIViewController *_presentVC;
                      onPhotoPicked:(PhotoAssetPickedBlock) photoAssetPicked
                           onCancel:(CancelBlock) cancelled;
 {
-    [_cancelBlock release];
-    _cancelBlock  = [cancelled copy];
-    
-    [_photoAssetPickedBlock release];
-    _photoAssetPickedBlock  = [photoAssetPicked copy];
-    
-    [_presentVC release];
-    _presentVC = [presentVC retain];
+    _cancelBlock  = cancelled;    
+    _photoAssetPickedBlock  = photoAssetPicked;
+    _presentVC = presentVC;
     
     int cancelButtonIndex = -1;
     
@@ -63,8 +58,7 @@ static UIViewController *_presentVC;
     
     if([view isKindOfClass:[UIBarButtonItem class]])
         [actionSheet showFromBarButtonItem:(UIBarButtonItem*) view animated:YES];
-    
-    [actionSheet release];
+
 }
 
 
@@ -80,7 +74,7 @@ static UIViewController *_presentVC;
             editedImage = (UIImage*) [info valueForKey:UIImagePickerControllerOriginalImage];
         NSMutableDictionary *metadata = [info objectForKey:UIImagePickerControllerMediaMetadata];
         
-        ALAssetsLibrary *assetsLibrary = [[[ALAssetsLibrary alloc] init] autorelease];
+        ALAssetsLibrary *assetsLibrary = [ALAssetsLibrary new];
         
         // Retrieve the image orientation from the ALAsset
         
@@ -92,7 +86,6 @@ static UIViewController *_presentVC;
                                     }];
     }
     [picker dismissModalViewControllerAnimated:YES];
-    [picker autorelease];
 }
 
 
@@ -100,8 +93,6 @@ static UIViewController *_presentVC;
 {
     // Dismiss the image selection and close the program
     [_presentVC dismissModalViewControllerAnimated:YES];
-    [picker autorelease];
-    [_presentVC release];
     _cancelBlock();
 }
 

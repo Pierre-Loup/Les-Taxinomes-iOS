@@ -7,6 +7,69 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A569D72417774C3900ED24B9 /* LTCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF9117772CFE00C16C06 /* LTCollectionViewController.m */; };
+		A569D72517774C3900ED24B9 /* LTTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF9317772CFE00C16C06 /* LTTableViewController.m */; };
+		A569D72617774C3900ED24B9 /* LTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF9517772CFE00C16C06 /* LTViewController.m */; };
+		A569D72717774C4200ED24B9 /* LTHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF9B17772CFE00C16C06 /* LTHomeViewController.m */; };
+		A569D72817774C4500ED24B9 /* LTLegalInformationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF9E17772CFE00C16C06 /* LTLegalInformationsViewController.m */; };
+		A569D72917774C4E00ED24B9 /* AuthenticationSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF8B17772CFE00C16C06 /* AuthenticationSheetViewController.m */; };
+		A577658E1777514500CC8EE6 /* MediaUploadFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFB917772CFE00C16C06 /* MediaUploadFormViewController.xib */; };
+		A577658F1777514800CC8EE6 /* MediaUploadFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFBD17772CFE00C16C06 /* MediaUploadFormViewController.m */; };
+		A57765901777523900CC8EE6 /* MediaLocalisationPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFB417772CFE00C16C06 /* MediaLocalisationPickerViewController.m */; };
+		A57765911777523C00CC8EE6 /* MediaLocalisationPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFB517772CFE00C16C06 /* MediaLocalisationPickerViewController.xib */; };
+		A57765921777524800CC8EE6 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF7117772CFE00C16C06 /* Annotation.m */; };
+		A57765931777525D00CC8EE6 /* LTConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF6617772CFE00C16C06 /* LTConnectionManager.m */; };
+		A57765941777525D00CC8EE6 /* LTPhotoSharingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF6817772CFE00C16C06 /* LTPhotoSharingManager.m */; };
+		A57765951777525D00CC8EE6 /* LTXMLRPCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF6A17772CFE00C16C06 /* LTXMLRPCClient.m */; };
+		A5776596177752EC00CC8EE6 /* LTCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFDF17772CFE00C16C06 /* LTCollectionViewFlowLayout.m */; };
+		A5776597177752F400CC8EE6 /* MediaLicenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFB117772CFE00C16C06 /* MediaLicenseViewController.m */; };
+		A5776598177752F800CC8EE6 /* MediaLicenseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFB217772CFE00C16C06 /* MediaLicenseViewController.xib */; };
+		A577659D1777532200CC8EE6 /* LTAuthor+Business.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF7F17772CFE00C16C06 /* LTAuthor+Business.m */; };
+		A577659E1777532200CC8EE6 /* LTLicense+Business.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF8117772CFE00C16C06 /* LTLicense+Business.m */; };
+		A577659F1777532200CC8EE6 /* LTMedia+Business.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF8317772CFE00C16C06 /* LTMedia+Business.m */; };
+		A57765A01777533300CC8EE6 /* MediaLicenseChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFAE17772CFE00C16C06 /* MediaLicenseChooserViewController.m */; };
+		A57765A11777533900CC8EE6 /* TextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFB817772CFE00C16C06 /* TextCell.xib */; };
+		A57765A21777533F00CC8EE6 /* MediaLicenseChooserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFAF17772CFE00C16C06 /* MediaLicenseChooserViewController.xib */; };
+		A57765A31777534200CC8EE6 /* MediaDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFAC17772CFE00C16C06 /* MediaDetailViewController.xib */; };
+		A57765A51777534D00CC8EE6 /* LTMediasGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFA417772CFE00C16C06 /* LTMediasGridViewController.m */; };
+		A57765A61777534D00CC8EE6 /* LTMediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFA617772CFE00C16C06 /* LTMediasListViewController.m */; };
+		A57765A71777534D00CC8EE6 /* LTMediasRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFA817772CFE00C16C06 /* LTMediasRootViewController.m */; };
+		A57765A81777534D00CC8EE6 /* MediaDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFAB17772CFE00C16C06 /* MediaDetailViewController.m */; };
+		A57765A91777536100CC8EE6 /* MediaUploadFormCells.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFCA17772CFE00C16C06 /* MediaUploadFormCells.xib */; };
+		A57765AA1777536300CC8EE6 /* LicenseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFCE17772CFE00C16C06 /* LicenseCell.xib */; };
+		A57765AC1777537900CC8EE6 /* LTMediaCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFD017772CFE00C16C06 /* LTMediaCollectionCell.m */; };
+		A57765AD1777537900CC8EE6 /* LTMediaListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFD217772CFE00C16C06 /* LTMediaListCell.m */; };
+		A57765AE1777537D00CC8EE6 /* LTMediaListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFD317772CFE00C16C06 /* LTMediaListCell.xib */; };
+		A57765AF1777538200CC8EE6 /* MapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFD517772CFE00C16C06 /* MapCell.m */; };
+		A57765B01777538600CC8EE6 /* MapCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFD617772CFE00C16C06 /* MapCell.xib */; };
+		A57765B11777538800CC8EE6 /* SingleLineInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFD917772CFE00C16C06 /* SingleLineInputCell.xib */; };
+		A57765B21777538C00CC8EE6 /* SingleLineInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFD817772CFE00C16C06 /* SingleLineInputCell.m */; };
+		A57765B31777538F00CC8EE6 /* SpinnerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFDB17772CFE00C16C06 /* SpinnerCell.m */; };
+		A57765B41777539200CC8EE6 /* SpinnerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFDC17772CFE00C16C06 /* SpinnerCell.xib */; };
+		A57765B5177753A900CC8EE6 /* LTLoadMoreFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFE517772CFE00C16C06 /* LTLoadMoreFooterView.m */; };
+		A57765B6177753A900CC8EE6 /* LTTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFE717772CFE00C16C06 /* LTTitleView.m */; };
+		A57765B71777545600CC8EE6 /* UIGlossyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFFB17772CFE00C16C06 /* UIGlossyButton.m */; };
+		A57765B81777546200CC8EE6 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFEF17772CFE00C16C06 /* UIImage+Resize.m */; };
+		A57765B91777546200CC8EE6 /* UIImageView+PhotoFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFF117772CFE00C16C06 /* UIImageView+PhotoFrame.m */; };
+		A57765BA1777546200CC8EE6 /* SRRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFF717772CFE00C16C06 /* SRRefreshView.m */; };
+		A57765BB1777546200CC8EE6 /* SRSlimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFF917772CFE00C16C06 /* SRSlimeView.m */; };
+		A57765BC1777547900CC8EE6 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFC017772CFE00C16C06 /* MapViewController.m */; };
+		A57765BD17775C0D00CC8EE6 /* UIGlossyButton+LT.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFC817772CFE00C16C06 /* UIGlossyButton+LT.m */; };
+		A57765BE1777625700CC8EE6 /* LesTaxinomes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF7217772CFE00C16C06 /* LesTaxinomes.xcdatamodeld */; };
+		A57765C61777627F00CC8EE6 /* LTAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = A57765C51777627F00CC8EE6 /* LTAuthor.m */; };
+		A57765C71777627F00CC8EE6 /* LTAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = A57765C51777627F00CC8EE6 /* LTAuthor.m */; };
+		A57765C81777627F00CC8EE6 /* LTAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = A57765C51777627F00CC8EE6 /* LTAuthor.m */; };
+		A57765CB1777628000CC8EE6 /* LTSection.m in Sources */ = {isa = PBXBuildFile; fileRef = A57765CA1777628000CC8EE6 /* LTSection.m */; };
+		A57765CC1777628000CC8EE6 /* LTSection.m in Sources */ = {isa = PBXBuildFile; fileRef = A57765CA1777628000CC8EE6 /* LTSection.m */; };
+		A57765CD1777628000CC8EE6 /* LTSection.m in Sources */ = {isa = PBXBuildFile; fileRef = A57765CA1777628000CC8EE6 /* LTSection.m */; };
+		A57765D01777628000CC8EE6 /* LTLicense.m in Sources */ = {isa = PBXBuildFile; fileRef = A57765CF1777628000CC8EE6 /* LTLicense.m */; };
+		A57765D11777628000CC8EE6 /* LTLicense.m in Sources */ = {isa = PBXBuildFile; fileRef = A57765CF1777628000CC8EE6 /* LTLicense.m */; };
+		A57765D21777628000CC8EE6 /* LTLicense.m in Sources */ = {isa = PBXBuildFile; fileRef = A57765CF1777628000CC8EE6 /* LTLicense.m */; };
+		A57765D3177764C400CC8EE6 /* UIActionSheet+PhotoAssetPickerAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF6217772CFE00C16C06 /* UIActionSheet+PhotoAssetPickerAddition.m */; };
+		A57765D4177764C400CC8EE6 /* UIAlertView+LTErrorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF6417772CFE00C16C06 /* UIAlertView+LTErrorAdditions.m */; };
+		A57765D917779FC400CC8EE6 /* LTMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = A57765D817779FC400CC8EE6 /* LTMedia.m */; };
+		A57765DA17779FC400CC8EE6 /* LTMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = A57765D817779FC400CC8EE6 /* LTMedia.m */; };
+		A57765DB17779FC400CC8EE6 /* LTMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = A57765D817779FC400CC8EE6 /* LTMedia.m */; };
 		A5E0B1C71777159F00CD4CCF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5E0B1C61777159F00CD4CCF /* Foundation.framework */; };
 		A5E0B1C91777159F00CD4CCF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5E0B1C81777159F00CD4CCF /* CoreGraphics.framework */; };
 		A5E0B1CB1777159F00CD4CCF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5E0B1CA1777159F00CD4CCF /* UIKit.framework */; };
@@ -49,6 +112,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A57765C41777627F00CC8EE6 /* LTAuthor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTAuthor.h; path = LesTaxinomes/Classes/Model/NSManagedObjects/LTAuthor.h; sourceTree = SOURCE_ROOT; };
+		A57765C51777627F00CC8EE6 /* LTAuthor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTAuthor.m; path = LesTaxinomes/Classes/Model/NSManagedObjects/LTAuthor.m; sourceTree = SOURCE_ROOT; };
+		A57765C91777628000CC8EE6 /* LTSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTSection.h; path = LesTaxinomes/Classes/Model/NSManagedObjects/LTSection.h; sourceTree = SOURCE_ROOT; };
+		A57765CA1777628000CC8EE6 /* LTSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTSection.m; path = LesTaxinomes/Classes/Model/NSManagedObjects/LTSection.m; sourceTree = SOURCE_ROOT; };
+		A57765CE1777628000CC8EE6 /* LTLicense.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTLicense.h; path = LesTaxinomes/Classes/Model/NSManagedObjects/LTLicense.h; sourceTree = SOURCE_ROOT; };
+		A57765CF1777628000CC8EE6 /* LTLicense.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTLicense.m; path = LesTaxinomes/Classes/Model/NSManagedObjects/LTLicense.m; sourceTree = SOURCE_ROOT; };
+		A57765D717779FC400CC8EE6 /* LTMedia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTMedia.h; path = LesTaxinomes/Classes/Model/NSManagedObjects/LTMedia.h; sourceTree = SOURCE_ROOT; };
+		A57765D817779FC400CC8EE6 /* LTMedia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTMedia.m; path = LesTaxinomes/Classes/Model/NSManagedObjects/LTMedia.m; sourceTree = SOURCE_ROOT; };
 		A5E0B1C31777159F00CD4CCF /* LesTaxinomes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LesTaxinomes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5E0B1C61777159F00CD4CCF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A5E0B1C81777159F00CD4CCF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -77,9 +148,6 @@
 		A5F6ECE417772A3400C16C06 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A5F6ECE517772A3400C16C06 /* JesayaFree.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = JesayaFree.ttf; sourceTree = "<group>"; };
 		A5F6ECE617772A3400C16C06 /* oiseau.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = oiseau.aif; sourceTree = "<group>"; };
-		A5F6EF5E17772CFE00C16C06 /* LTErrorAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTErrorAdditions.h; sourceTree = "<group>"; };
-		A5F6EF5F17772CFE00C16C06 /* NSError+LTErrorAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSError+LTErrorAdditions.h"; sourceTree = "<group>"; };
-		A5F6EF6017772CFE00C16C06 /* NSError+LTErrorAdditions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+LTErrorAdditions.m"; sourceTree = "<group>"; };
 		A5F6EF6117772CFE00C16C06 /* UIActionSheet+PhotoAssetPickerAddition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+PhotoAssetPickerAddition.h"; sourceTree = "<group>"; };
 		A5F6EF6217772CFE00C16C06 /* UIActionSheet+PhotoAssetPickerAddition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+PhotoAssetPickerAddition.m"; sourceTree = "<group>"; };
 		A5F6EF6317772CFE00C16C06 /* UIAlertView+LTErrorAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+LTErrorAdditions.h"; sourceTree = "<group>"; };
@@ -97,14 +165,6 @@
 		A5F6EF7017772CFE00C16C06 /* Annotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Annotation.h; sourceTree = "<group>"; };
 		A5F6EF7117772CFE00C16C06 /* Annotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Annotation.m; sourceTree = "<group>"; };
 		A5F6EF7317772CFE00C16C06 /* LesTaxinomes.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LesTaxinomes.xcdatamodel; sourceTree = "<group>"; };
-		A5F6EF7517772CFE00C16C06 /* LTAuthor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTAuthor.h; sourceTree = "<group>"; };
-		A5F6EF7617772CFE00C16C06 /* LTAuthor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTAuthor.m; sourceTree = "<group>"; };
-		A5F6EF7717772CFE00C16C06 /* LTLicense.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTLicense.h; sourceTree = "<group>"; };
-		A5F6EF7817772CFE00C16C06 /* LTLicense.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTLicense.m; sourceTree = "<group>"; };
-		A5F6EF7917772CFE00C16C06 /* LTMedia.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTMedia.h; sourceTree = "<group>"; };
-		A5F6EF7A17772CFE00C16C06 /* LTMedia.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTMedia.m; sourceTree = "<group>"; };
-		A5F6EF7B17772CFE00C16C06 /* LTSection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTSection.h; sourceTree = "<group>"; };
-		A5F6EF7C17772CFE00C16C06 /* LTSection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTSection.m; sourceTree = "<group>"; };
 		A5F6EF7E17772CFE00C16C06 /* LTAuthor+Business.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LTAuthor+Business.h"; sourceTree = "<group>"; };
 		A5F6EF7F17772CFE00C16C06 /* LTAuthor+Business.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "LTAuthor+Business.m"; sourceTree = "<group>"; };
 		A5F6EF8017772CFE00C16C06 /* LTLicense+Business.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LTLicense+Business.h"; sourceTree = "<group>"; };
@@ -126,12 +186,12 @@
 		A5F6EF9517772CFE00C16C06 /* LTViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTViewController.m; sourceTree = "<group>"; };
 		A5F6EF9717772CFE00C16C06 /* LTMediasDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTMediasDataSource.h; sourceTree = "<group>"; };
 		A5F6EF9817772CFE00C16C06 /* LTMediasDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTMediasDelegate.h; sourceTree = "<group>"; };
-		A5F6EF9A17772CFE00C16C06 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
-		A5F6EF9B17772CFE00C16C06 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
-		A5F6EF9C17772CFE00C16C06 /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
-		A5F6EF9D17772CFE00C16C06 /* LegalInformationsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LegalInformationsViewController.h; sourceTree = "<group>"; };
-		A5F6EF9E17772CFE00C16C06 /* LegalInformationsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LegalInformationsViewController.m; sourceTree = "<group>"; };
-		A5F6EF9F17772CFE00C16C06 /* LegalInformationsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LegalInformationsViewController.xib; sourceTree = "<group>"; };
+		A5F6EF9A17772CFE00C16C06 /* LTHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTHomeViewController.h; sourceTree = "<group>"; };
+		A5F6EF9B17772CFE00C16C06 /* LTHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTHomeViewController.m; sourceTree = "<group>"; };
+		A5F6EF9C17772CFE00C16C06 /* LTHomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LTHomeViewController.xib; sourceTree = "<group>"; };
+		A5F6EF9D17772CFE00C16C06 /* LTLegalInformationsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTLegalInformationsViewController.h; sourceTree = "<group>"; };
+		A5F6EF9E17772CFE00C16C06 /* LTLegalInformationsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTLegalInformationsViewController.m; sourceTree = "<group>"; };
+		A5F6EF9F17772CFE00C16C06 /* LTLegalInformationsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LTLegalInformationsViewController.xib; sourceTree = "<group>"; };
 		A5F6EFA017772CFE00C16C06 /* LTAuthorsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTAuthorsViewController.h; sourceTree = "<group>"; };
 		A5F6EFA117772CFE00C16C06 /* LTAuthorsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTAuthorsViewController.m; sourceTree = "<group>"; };
 		A5F6EFA317772CFE00C16C06 /* LTMediasGridViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTMediasGridViewController.h; sourceTree = "<group>"; };
@@ -140,7 +200,6 @@
 		A5F6EFA617772CFE00C16C06 /* LTMediasListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTMediasListViewController.m; sourceTree = "<group>"; };
 		A5F6EFA717772CFE00C16C06 /* LTMediasRootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTMediasRootViewController.h; sourceTree = "<group>"; };
 		A5F6EFA817772CFE00C16C06 /* LTMediasRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTMediasRootViewController.m; sourceTree = "<group>"; };
-		A5F6EFA917772CFE00C16C06 /* LTMediasRootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LTMediasRootViewController.xib; sourceTree = "<group>"; };
 		A5F6EFAA17772CFE00C16C06 /* MediaDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaDetailViewController.h; sourceTree = "<group>"; };
 		A5F6EFAB17772CFE00C16C06 /* MediaDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MediaDetailViewController.m; sourceTree = "<group>"; };
 		A5F6EFAC17772CFE00C16C06 /* MediaDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaDetailViewController.xib; sourceTree = "<group>"; };
@@ -167,7 +226,6 @@
 		A5F6EFC817772CFE00C16C06 /* UIGlossyButton+LT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIGlossyButton+LT.m"; sourceTree = "<group>"; };
 		A5F6EFCB17772CFE00C16C06 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MediaUploadFormCells.xib; sourceTree = "<group>"; };
 		A5F6EFCC17772CFE00C16C06 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/MediaUploadFormCells.xib; sourceTree = "<group>"; };
-		A5F6EFCD17772CFE00C16C06 /* GridCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GridCellView.xib; sourceTree = "<group>"; };
 		A5F6EFCE17772CFE00C16C06 /* LicenseCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LicenseCell.xib; sourceTree = "<group>"; };
 		A5F6EFCF17772CFE00C16C06 /* LTMediaCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTMediaCollectionCell.h; sourceTree = "<group>"; };
 		A5F6EFD017772CFE00C16C06 /* LTMediaCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTMediaCollectionCell.m; sourceTree = "<group>"; };
@@ -187,8 +245,6 @@
 		A5F6EFDF17772CFE00C16C06 /* LTCollectionViewFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		A5F6EFE017772CFE00C16C06 /* LTAppearance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTAppearance.h; sourceTree = "<group>"; };
 		A5F6EFE117772CFE00C16C06 /* LTAppearance.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTAppearance.m; sourceTree = "<group>"; };
-		A5F6EFE217772CFE00C16C06 /* LTBackgroundView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTBackgroundView.h; sourceTree = "<group>"; };
-		A5F6EFE317772CFE00C16C06 /* LTBackgroundView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTBackgroundView.m; sourceTree = "<group>"; };
 		A5F6EFE417772CFE00C16C06 /* LTLoadMoreFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTLoadMoreFooterView.h; sourceTree = "<group>"; };
 		A5F6EFE517772CFE00C16C06 /* LTLoadMoreFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTLoadMoreFooterView.m; sourceTree = "<group>"; };
 		A5F6EFE617772CFE00C16C06 /* LTTitleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTTitleView.h; sourceTree = "<group>"; };
@@ -396,9 +452,6 @@
 		A5F6EF5D17772CFE00C16C06 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				A5F6EF5E17772CFE00C16C06 /* LTErrorAdditions.h */,
-				A5F6EF5F17772CFE00C16C06 /* NSError+LTErrorAdditions.h */,
-				A5F6EF6017772CFE00C16C06 /* NSError+LTErrorAdditions.m */,
 				A5F6EF6117772CFE00C16C06 /* UIActionSheet+PhotoAssetPickerAddition.h */,
 				A5F6EF6217772CFE00C16C06 /* UIActionSheet+PhotoAssetPickerAddition.m */,
 				A5F6EF6317772CFE00C16C06 /* UIAlertView+LTErrorAdditions.h */,
@@ -422,14 +475,14 @@
 		A5F6EF7417772CFE00C16C06 /* NSManagedObjets */ = {
 			isa = PBXGroup;
 			children = (
-				A5F6EF7517772CFE00C16C06 /* LTAuthor.h */,
-				A5F6EF7617772CFE00C16C06 /* LTAuthor.m */,
-				A5F6EF7717772CFE00C16C06 /* LTLicense.h */,
-				A5F6EF7817772CFE00C16C06 /* LTLicense.m */,
-				A5F6EF7917772CFE00C16C06 /* LTMedia.h */,
-				A5F6EF7A17772CFE00C16C06 /* LTMedia.m */,
-				A5F6EF7B17772CFE00C16C06 /* LTSection.h */,
-				A5F6EF7C17772CFE00C16C06 /* LTSection.m */,
+				A57765CE1777628000CC8EE6 /* LTLicense.h */,
+				A57765CF1777628000CC8EE6 /* LTLicense.m */,
+				A57765C91777628000CC8EE6 /* LTSection.h */,
+				A57765CA1777628000CC8EE6 /* LTSection.m */,
+				A57765C41777627F00CC8EE6 /* LTAuthor.h */,
+				A57765C51777627F00CC8EE6 /* LTAuthor.m */,
+				A57765D717779FC400CC8EE6 /* LTMedia.h */,
+				A57765D817779FC400CC8EE6 /* LTMedia.m */,
 			);
 			path = NSManagedObjets;
 			sourceTree = "<group>";
@@ -508,12 +561,12 @@
 		A5F6EF9917772CFE00C16C06 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				A5F6EF9A17772CFE00C16C06 /* HomeViewController.h */,
-				A5F6EF9B17772CFE00C16C06 /* HomeViewController.m */,
-				A5F6EF9C17772CFE00C16C06 /* HomeViewController.xib */,
-				A5F6EF9D17772CFE00C16C06 /* LegalInformationsViewController.h */,
-				A5F6EF9E17772CFE00C16C06 /* LegalInformationsViewController.m */,
-				A5F6EF9F17772CFE00C16C06 /* LegalInformationsViewController.xib */,
+				A5F6EF9A17772CFE00C16C06 /* LTHomeViewController.h */,
+				A5F6EF9B17772CFE00C16C06 /* LTHomeViewController.m */,
+				A5F6EF9C17772CFE00C16C06 /* LTHomeViewController.xib */,
+				A5F6EF9D17772CFE00C16C06 /* LTLegalInformationsViewController.h */,
+				A5F6EF9E17772CFE00C16C06 /* LTLegalInformationsViewController.m */,
+				A5F6EF9F17772CFE00C16C06 /* LTLegalInformationsViewController.xib */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -527,7 +580,6 @@
 				A5F6EFA617772CFE00C16C06 /* LTMediasListViewController.m */,
 				A5F6EFA717772CFE00C16C06 /* LTMediasRootViewController.h */,
 				A5F6EFA817772CFE00C16C06 /* LTMediasRootViewController.m */,
-				A5F6EFA917772CFE00C16C06 /* LTMediasRootViewController.xib */,
 				A5F6EFAA17772CFE00C16C06 /* MediaDetailViewController.h */,
 				A5F6EFAB17772CFE00C16C06 /* MediaDetailViewController.m */,
 				A5F6EFAC17772CFE00C16C06 /* MediaDetailViewController.xib */,
@@ -583,8 +635,6 @@
 				A5F6EFDD17772CFE00C16C06 /* CollectionViewLayouts */,
 				A5F6EFE017772CFE00C16C06 /* LTAppearance.h */,
 				A5F6EFE117772CFE00C16C06 /* LTAppearance.m */,
-				A5F6EFE217772CFE00C16C06 /* LTBackgroundView.h */,
-				A5F6EFE317772CFE00C16C06 /* LTBackgroundView.m */,
 				A5F6EFE417772CFE00C16C06 /* LTLoadMoreFooterView.h */,
 				A5F6EFE517772CFE00C16C06 /* LTLoadMoreFooterView.m */,
 				A5F6EFE617772CFE00C16C06 /* LTTitleView.h */,
@@ -615,7 +665,6 @@
 			isa = PBXGroup;
 			children = (
 				A5F6EFCA17772CFE00C16C06 /* MediaUploadFormCells.xib */,
-				A5F6EFCD17772CFE00C16C06 /* GridCellView.xib */,
 				A5F6EFCE17772CFE00C16C06 /* LicenseCell.xib */,
 				A5F6EFCF17772CFE00C16C06 /* LTMediaCollectionCell.h */,
 				A5F6EFD017772CFE00C16C06 /* LTMediaCollectionCell.m */,
@@ -788,13 +837,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A57765911777523C00CC8EE6 /* MediaLocalisationPickerViewController.xib in Resources */,
 				A5F6ECE917772A3400C16C06 /* Localizable.strings in Resources */,
 				A5F6ECEA17772A3400C16C06 /* JesayaFree.ttf in Resources */,
+				A57765AE1777537D00CC8EE6 /* LTMediaListCell.xib in Resources */,
+				A57765AA1777536300CC8EE6 /* LicenseCell.xib in Resources */,
 				A5F6ECEC17772A9600C16C06 /* LesTaxinomes.storyboard in Resources */,
 				A5F6ECE717772A3400C16C06 /* Brest.gpx in Resources */,
+				A57765B01777538600CC8EE6 /* MapCell.xib in Resources */,
+				A57765A11777533900CC8EE6 /* TextCell.xib in Resources */,
 				A5F6ECEB17772A3400C16C06 /* oiseau.aif in Resources */,
+				A57765B41777539200CC8EE6 /* SpinnerCell.xib in Resources */,
+				A57765A21777533F00CC8EE6 /* MediaLicenseChooserViewController.xib in Resources */,
 				A5F6ECE817772A3400C16C06 /* CGU.strings in Resources */,
+				A5776598177752F800CC8EE6 /* MediaLicenseViewController.xib in Resources */,
+				A577658E1777514500CC8EE6 /* MediaUploadFormViewController.xib in Resources */,
+				A57765B11777538800CC8EE6 /* SingleLineInputCell.xib in Resources */,
+				A57765A91777536100CC8EE6 /* MediaUploadFormCells.xib in Resources */,
 				A5E0B1D91777159F00CD4CCF /* Images.xcassets in Resources */,
+				A57765A31777534200CC8EE6 /* MediaDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -852,9 +913,52 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A57765B71777545600CC8EE6 /* UIGlossyButton.m in Sources */,
+				A57765AC1777537900CC8EE6 /* LTMediaCollectionCell.m in Sources */,
+				A577659E1777532200CC8EE6 /* LTLicense+Business.m in Sources */,
+				A57765AF1777538200CC8EE6 /* MapCell.m in Sources */,
+				A57765C61777627F00CC8EE6 /* LTAuthor.m in Sources */,
+				A57765AD1777537900CC8EE6 /* LTMediaListCell.m in Sources */,
+				A57765B81777546200CC8EE6 /* UIImage+Resize.m in Sources */,
+				A57765931777525D00CC8EE6 /* LTConnectionManager.m in Sources */,
+				A569D72517774C3900ED24B9 /* LTTableViewController.m in Sources */,
+				A569D72917774C4E00ED24B9 /* AuthenticationSheetViewController.m in Sources */,
+				A57765A01777533300CC8EE6 /* MediaLicenseChooserViewController.m in Sources */,
+				A57765A71777534D00CC8EE6 /* LTMediasRootViewController.m in Sources */,
+				A57765B31777538F00CC8EE6 /* SpinnerCell.m in Sources */,
 				A5F6EFFC17772D1400C16C06 /* LTAppearance.m in Sources */,
+				A5776596177752EC00CC8EE6 /* LTCollectionViewFlowLayout.m in Sources */,
+				A57765D3177764C400CC8EE6 /* UIActionSheet+PhotoAssetPickerAddition.m in Sources */,
+				A57765951777525D00CC8EE6 /* LTXMLRPCClient.m in Sources */,
+				A569D72617774C3900ED24B9 /* LTViewController.m in Sources */,
+				A57765941777525D00CC8EE6 /* LTPhotoSharingManager.m in Sources */,
+				A57765CB1777628000CC8EE6 /* LTSection.m in Sources */,
+				A569D72817774C4500ED24B9 /* LTLegalInformationsViewController.m in Sources */,
 				A5E0B1D71777159F00CD4CCF /* LTAppDelegate.m in Sources */,
+				A57765A81777534D00CC8EE6 /* MediaDetailViewController.m in Sources */,
+				A57765921777524800CC8EE6 /* Annotation.m in Sources */,
+				A57765BD17775C0D00CC8EE6 /* UIGlossyButton+LT.m in Sources */,
+				A57765D01777628000CC8EE6 /* LTLicense.m in Sources */,
+				A577659D1777532200CC8EE6 /* LTAuthor+Business.m in Sources */,
+				A57765B21777538C00CC8EE6 /* SingleLineInputCell.m in Sources */,
+				A57765B5177753A900CC8EE6 /* LTLoadMoreFooterView.m in Sources */,
+				A57765BC1777547900CC8EE6 /* MapViewController.m in Sources */,
+				A57765B91777546200CC8EE6 /* UIImageView+PhotoFrame.m in Sources */,
+				A57765A61777534D00CC8EE6 /* LTMediasListViewController.m in Sources */,
+				A577658F1777514800CC8EE6 /* MediaUploadFormViewController.m in Sources */,
+				A57765D4177764C400CC8EE6 /* UIAlertView+LTErrorAdditions.m in Sources */,
+				A57765BE1777625700CC8EE6 /* LesTaxinomes.xcdatamodeld in Sources */,
+				A569D72417774C3900ED24B9 /* LTCollectionViewController.m in Sources */,
+				A569D72717774C4200ED24B9 /* LTHomeViewController.m in Sources */,
+				A57765BB1777546200CC8EE6 /* SRSlimeView.m in Sources */,
+				A57765B6177753A900CC8EE6 /* LTTitleView.m in Sources */,
+				A57765BA1777546200CC8EE6 /* SRRefreshView.m in Sources */,
+				A57765D917779FC400CC8EE6 /* LTMedia.m in Sources */,
+				A57765A51777534D00CC8EE6 /* LTMediasGridViewController.m in Sources */,
+				A577659F1777532200CC8EE6 /* LTMedia+Business.m in Sources */,
 				A5E0B1D31777159F00CD4CCF /* main.m in Sources */,
+				A5776597177752F400CC8EE6 /* MediaLicenseViewController.m in Sources */,
+				A57765901777523900CC8EE6 /* MediaLocalisationPickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -862,7 +966,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A57765C81777627F00CC8EE6 /* LTAuthor.m in Sources */,
 				A5E0B1EC1777159F00CD4CCF /* LesTaxinomesTests.m in Sources */,
+				A57765CD1777628000CC8EE6 /* LTSection.m in Sources */,
+				A57765D21777628000CC8EE6 /* LTLicense.m in Sources */,
+				A57765DB17779FC400CC8EE6 /* LTMedia.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -870,6 +978,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A57765DA17779FC400CC8EE6 /* LTMedia.m in Sources */,
+				A57765C71777627F00CC8EE6 /* LTAuthor.m in Sources */,
+				A57765D11777628000CC8EE6 /* LTLicense.m in Sources */,
+				A57765CC1777628000CC8EE6 /* LTSection.m in Sources */,
 				A5E0B22A1777190700CD4CCF /* main.m in Sources */,
 				A5E0B2291777183A00CD4CCF /* LTAppDelegate.m in Sources */,
 			);
@@ -1023,8 +1135,30 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LesTaxinomes/LesTaxinomes-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					LES_TAXINOMES,
+				);
 				INFOPLIST_FILE = "LesTaxinomes/LesTaxinomes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					CoreData,
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+					"-framework",
+					UIKit,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -1040,8 +1174,30 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LesTaxinomes/LesTaxinomes-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					LES_TAXINOMES,
+				);
 				INFOPLIST_FILE = "LesTaxinomes/LesTaxinomes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					CoreData,
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+					"-framework",
+					UIKit,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

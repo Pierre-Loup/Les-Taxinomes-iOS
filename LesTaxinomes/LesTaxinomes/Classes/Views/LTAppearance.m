@@ -23,8 +23,17 @@
         UITextAttributeFont:[UIFont fontWithName:@"Jesaya Free" size:20]
     }];
     
-    //[[UITabBar appearance] setTintColor:kLTColorNavigationBar];
-    //[[UITabBar appearance] setSelectedImageTintColor:kLTColorMain];
+    [[UITabBar appearance] setTintColor:kLTColorNavigationBar];
+    [[UITabBar appearance] setSelectedImageTintColor:kLTColorMain];
+    [[UITabBar appearance] setSelectionIndicatorImage:[[UIImage alloc] init]];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{
+                                                        UITextAttributeTextColor: [UIColor lightGrayColor]
+                                                       }
+                                             forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{
+                                                        UITextAttributeTextColor: kLTColorMain
+                                                        }
+                                             forState:UIControlStateSelected];
     
 }
 

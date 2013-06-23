@@ -167,7 +167,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.hud hide:animated];
+    [SVProgressHUD dismiss];
 }
 
 - (void)viewDidUnload
@@ -315,7 +315,7 @@
 
 - (IBAction)uploadMedia:(id)sender {
     
-    [self showDefaultHud];
+    [SVProgressHUD show];
     
     LTConnectionManager* connectionManager = [LTConnectionManager sharedConnectionManager];
     connectionManager.delegate = self;
@@ -326,15 +326,10 @@
                                 assetURL:self.mediaAssetURL
                            responseBlock:^(LTMedia *media, NSError *error) {
                                if (media && !error) {
-                                   [self showConfirmHudWithText:_T(@"media_upload.confirm.title")];
+                                   [SVProgressHUD showSuccessWithStatus:_T(@"media_upload.confirm.title")];
                                    [self.navigationController popViewControllerAnimated:YES];
-                               }
-                               else if ([error shouldBeDisplayed]) {
-                                   [self.hud hide:NO];
-                                   [UIAlertView showWithError:error];
-                               }
-                               else {
-                                   [self showErrorHudWithText:_T(@"error.upload_failed.title")];
+                               } else {
+                                   [SVProgressHUD showErrorWithStatus:_T(@"error.upload_failed.title")];
                                }
                            }];
 }
@@ -475,10 +470,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 #pragma mark - MediaLocationPickerDelegate 
 
 - (void)uploadDeterminationDidUpdate:(CGFloat)determination {
-    if (self.hud.mode != MBProgressHUDModeDeterminate) {
-        self.hud.mode = MBProgressHUDModeDeterminate;
-    }
-    self.hud.progress = determination;
+    [SVProgressHUD showProgress:determination];
 }
 
 @end

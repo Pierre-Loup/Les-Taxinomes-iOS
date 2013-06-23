@@ -36,12 +36,6 @@
 #define COCOAPODS_VERSION_MINOR_EGOPhotoViewer 0
 #define COCOAPODS_VERSION_PATCH_EGOPhotoViewer 1
 
-// MBProgressHUD
-#define COCOAPODS_POD_AVAILABLE_MBProgressHUD
-#define COCOAPODS_VERSION_MAJOR_MBProgressHUD 0
-#define COCOAPODS_VERSION_MINOR_MBProgressHUD 6
-#define COCOAPODS_VERSION_PATCH_MBProgressHUD 0
-
 // MagicalRecord
 #define COCOAPODS_POD_AVAILABLE_MagicalRecord
 #define COCOAPODS_VERSION_MAJOR_MagicalRecord 2
@@ -65,6 +59,12 @@
 #define COCOAPODS_VERSION_MAJOR_Reachability 3
 #define COCOAPODS_VERSION_MINOR_Reachability 1
 #define COCOAPODS_VERSION_PATCH_Reachability 0
+
+// SVProgressHUD
+#define COCOAPODS_POD_AVAILABLE_SVProgressHUD
+#define COCOAPODS_VERSION_MAJOR_SVProgressHUD 0
+#define COCOAPODS_VERSION_MINOR_SVProgressHUD 9
+#define COCOAPODS_VERSION_PATCH_SVProgressHUD 0
 
 // UIKitCategoryAdditions
 #define COCOAPODS_POD_AVAILABLE_UIKitCategoryAdditions

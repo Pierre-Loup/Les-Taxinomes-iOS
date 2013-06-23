@@ -27,19 +27,19 @@
         return nil;
     }
     
-    NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
+    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];
     
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d",[mediaIdentifier integerValue]];
-    LTMedia *media = [LTMedia findFirstWithPredicate:predicate
+    LTMedia *media = [LTMedia MR_findFirstWithPredicate:predicate
                                        inContext:context];
     
     if (!media) {
-        media = [LTMedia createInContext:context];
+        media = [LTMedia MR_createInContext:context];
         media.identifier = mediaIdentifier;
     }
     
     if ([response objectForKey:@"titre"]) {
-        media.title = [response objectForKey:@"titre"];
+        media.mediaTitle = [response objectForKey:@"titre"];
     }
     
     if ([response objectForKey:@"texte"]) {
@@ -99,7 +99,7 @@
     if ([response objectForKey: @"id_licence"]) {
         NSInteger licenceId = [[response objectForKey: @"id_licence"] intValue];
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d",licenceId];
-        media.license = [LTLicense findFirstWithPredicate:predicate
+        media.license = [LTLicense MR_findFirstWithPredicate:predicate
                                               inContext:context];
     }
     
@@ -137,7 +137,7 @@
         return nil;
     }
     
-    LTMedia *media = [LTMedia findFirstByAttribute:@"identifier" withValue:mediaIdentifier];
+    LTMedia *media = [LTMedia MR_findFirstByAttribute:@"identifier" withValue:mediaIdentifier];
     
     if (!media) {
         return nil;
@@ -149,12 +149,6 @@
     }
     
     return media;
-}
-
-#pragma mark - MKAnnotation protocol
-
-- (CLLocationCoordinate2D)coordinate {
-    return CLLocationCoordinate2DMake([self.latitude floatValue], [self.longitude floatValue]);
 }
 
 @end

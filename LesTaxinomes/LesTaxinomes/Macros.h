@@ -79,3 +79,6 @@
 #define LogCmd()
 
 #endif
+
+#define DEVICE_SYSTEM_MAJOR_VERSION [[[[[UIDevice currentDevice] systemVersion] componentsSeparatedByString:@"."] objectAtIndex:0] intValue]
+#define IOS7_OR_GREATER (DEVICE_SYSTEM_MAJOR_VERSION >= 7)

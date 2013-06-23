@@ -14,8 +14,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"Taxinomes.sqlite"];
+    
     [self.window makeKeyAndVisible];
-    //[LTAppearance setup];
+    if (!IOS7_OR_GREATER) {
+        [LTAppearance setup];
+
+    }
     return YES;
 }
 

@@ -57,8 +57,8 @@
 - (void)setMedia:(LTMedia *)media
 {
     _media = media;
-    if (media.title.length) {
-        self.title.text = media.title;
+    if (media.mediaTitle.length) {
+        self.title.text = media.mediaTitle;
     } else {
         self.title.text = _T(@"media_upload_no_title");
     }

@@ -81,7 +81,7 @@
 + (NSEntityDescription *) entityDescriptionInContext:(NSManagedObjectContext *)context;
 + (NSArray *) propertiesNamed:(NSArray *)properties;
 + (id) createEntity;
-+ (id) createInContext:(NSManagedObjectContext *)context;
++ (id) MR_createInContext:(NSManagedObjectContext *)context;
 - (BOOL) deleteEntity;
 - (BOOL) deleteInContext:(NSManagedObjectContext *)context;
 + (BOOL) deleteAllMatchingPredicate:(NSPredicate *)predicate;

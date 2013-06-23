@@ -15,13 +15,13 @@
         return nil;
     }
     
-    NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
+    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];
     
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d", [(NSString*)[response objectForKey:@"id"] intValue]];
-    LTLicense *license = [LTLicense findFirstWithPredicate:predicate inContext:context];
+    LTLicense *license = [LTLicense MR_findFirstWithPredicate:predicate inContext:context];
     
     if (!license) {
-        license = [LTLicense createInContext:context];
+        license = [LTLicense MR_createInContext:context];
         license.identifier = [NSNumber numberWithInt:[(NSString*)[response objectForKey:@"id"] intValue]];
     }
     
@@ -35,9 +35,9 @@
 }
 
 + (LTLicense *)licenseWithIdentifier:(NSNumber*)identifier {
-    NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
+    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d", [identifier integerValue]];
-    LTLicense *license = [LTLicense findFirstWithPredicate:predicate inContext:context];
+    LTLicense *license = [LTLicense MR_findFirstWithPredicate:predicate inContext:context];
     return  license;
 }
 

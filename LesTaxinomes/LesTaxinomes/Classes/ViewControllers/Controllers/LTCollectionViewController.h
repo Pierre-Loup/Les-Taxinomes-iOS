@@ -7,15 +7,7 @@
 //
 
 #import "PSTCollectionViewController.h"
-#import "MBProgressHUD.h"
+#import "SVProgressHUD.h"
 
-@interface LTCollectionViewController : PSTCollectionViewController <MBProgressHUDDelegate>
-@property (nonatomic, readonly) MBProgressHUD* hud;
-
-- (void)showDefaultHud;
-- (void)showDeterminateHud;
-- (void)showErrorHudWithText:(NSString *)text;
-- (void)showConfirmHudWithText:(NSString *)text;
-- (void)showHudWithTextOnly:(NSString *)text;
-
+@interface LTCollectionViewController : PSTCollectionViewController
 @end

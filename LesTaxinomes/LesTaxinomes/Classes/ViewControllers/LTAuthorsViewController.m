@@ -140,7 +140,7 @@
         ;
         [LTAuthor truncateAll];
         NSError* error;
-        [[NSManagedObjectContext contextForCurrentThread] save:&error];
+        [[NSManagedObjectContext MR_contextForCurrentThread] save:&error];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.collectionView reloadData];
             [self loadMoreAuthors];

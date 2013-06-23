@@ -186,10 +186,8 @@ typedef enum {
     responseBlock:^(NSArray *medias, NSError *error) {
         if (medias) {
             //self.mediasResultController = nil;
-        } else if ([error shouldBeDisplayed]) {
-            [UIAlertView showWithError:error];
-        } else {
-            [self showErrorHudWithText:_T(@"common.hud.failure")];
+        }else {
+            [SVProgressHUD showErrorWithStatus:_T(@"common.hud.failure")];
         }
 
         self.listViewController.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
@@ -202,9 +200,9 @@ typedef enum {
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         ;
-        [LTMedia truncateAll];
+        [LTMedia MR_truncateAll];
         NSError* error;
-        [[NSManagedObjectContext contextForCurrentThread] save:&error];
+        [[NSManagedObjectContext MR_contextForCurrentThread] save:&error];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self loadMoreMedias];
         });
@@ -291,7 +289,7 @@ typedef enum {
             predicate = [NSPredicate predicateWithFormat:@"status == %@",@"publie"];
         }
         
-        _mediasResultController = [LTMedia fetchAllSortedBy:@"date"
+        _mediasResultController = [LTMedia MR_fetchAllSortedBy:@"date"
                                                      ascending:NO
                                                  withPredicate:predicate
                                                        groupBy:nil

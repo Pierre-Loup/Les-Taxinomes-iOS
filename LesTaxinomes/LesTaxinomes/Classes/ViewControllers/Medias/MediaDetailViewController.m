@@ -71,7 +71,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = self.media.title;
+    self.title = self.media.mediaTitle;
     
     UIBarButtonItem* backButtonItem = [[UIBarButtonItem alloc] initWithTitle:_T(@"common.back")
                                                                         style:UIBarButtonItemStyleBordered
@@ -128,7 +128,7 @@
 
 - (void)configureView
 {
-    [self showDefaultHud];
+    [SVProgressHUD show];
     LTConnectionManager *cm = [LTConnectionManager sharedConnectionManager];
     
     // Load media datas if not present or not up to date
@@ -137,9 +137,9 @@
        || [[NSDate date] timeIntervalSinceDate: self.media.localUpdateDate] > kMediaCacheTime) {
         [cm getMediaWithId:self.media.identifier
              responseBlock:^(LTMedia *media, NSError *error) {
-                 if ([error shouldBeDisplayed]) {
-                     [UIAlertView showWithError:error];
-                     [self.hud hide:NO];
+                 if (error) {
+                     [SVProgressHUD showErrorWithStatus:nil];
+                     
                  } else {
                      self.media = media;
                  }
@@ -160,9 +160,8 @@
         [cm getAuthorWithId:self.media.author.identifier
               responseBlock:^(LTAuthor *author, NSError *error) {
                   
-                  if ([error shouldBeDisplayed]) {
-                      [UIAlertView showWithError:error];
-                      [self.hud hide:NO];
+                  if (error) {
+                      [SVProgressHUD showErrorWithStatus:nil];
                   }
                   
                   asynchLoadCounter_--;
@@ -285,7 +284,7 @@
     
     [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, currentContentHeight)];
     if (asynchLoadCounter_ > 0) {
-        [self showDefaultHud];
+        [SVProgressHUD show];
     } else {
         self.scrollView.hidden = NO;
     }
@@ -306,14 +305,14 @@
     if (self.media.mediaLargeURL.length) {
         [self displayLargeMediaPhotoViewer];
     } else {
-        [self showDefaultHud];
+        [SVProgressHUD show];
         [[LTConnectionManager sharedConnectionManager] getMediaLargeURLWithId:self.media.identifier responseBlock:^(LTMedia *media, NSError *error) {
             
             if (!error) {
                 self.media = media;
                 [self displayLargeMediaPhotoViewer];
             } else {
-                [self showErrorHudWithText:nil];
+                [SVProgressHUD showErrorWithStatus:nil];
             }
             
         }];
@@ -326,16 +325,16 @@
         NSURL* imageURL = [NSURL URLWithString:self.media.mediaLargeURL];
         EGOPhotoViewController* photoController = [[EGOPhotoViewController alloc] initWithImageURL:imageURL];
         [self.navigationController pushViewController:photoController animated:YES];
-        [self.hud hide:YES];
+        [SVProgressHUD dismiss];
     } else {
-        [self showErrorHudWithText:nil];
+        [SVProgressHUD showErrorWithStatus:nil];
     }
 }
 
 - (void)displayContentIfNeeded
 {
     if (asynchLoadCounter_ <= 0) {
-        [self.hud hide:YES];
+        [SVProgressHUD dismiss];
         [self refreshView];
         [self.scrollView setHidden:NO];
     }
@@ -360,12 +359,12 @@
                                placeholderImage:[UIImage imageNamed:@"egopv_photo_placeholder"]
                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                                             weakSelf.mediaImageView.image = image;
-                                            [weakSelf.hud hide:YES];
+                                            [SVProgressHUD dismiss];
                                             [weakSelf.placeholderAIView stopAnimating];
                                             [weakSelf refreshView];
                                         }
                                         failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                            [weakSelf showErrorHudWithText:nil];
+                                            [SVProgressHUD showErrorWithStatus:nil];
                                             [weakSelf.placeholderAIView stopAnimating];
                                             [weakSelf refreshView];
                                         }];

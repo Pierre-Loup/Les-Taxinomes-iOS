@@ -3,7 +3,7 @@
 //  LesTaxinomes
 //
 //  Created by Pierre-Loup Tristant on 23/06/13.
-//  Copyright (c) 2013  Les Petits Débrouillards Bretagne. All rights reserved.
+//  Copyright (c) 2013 Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -28,7 +28,7 @@
 @property (nonatomic, retain) NSString * status;
 @property (nonatomic, retain) NSNumber * sychGapForDateSorting;
 @property (nonatomic, retain) NSString * text;
-@property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSString * mediaTitle;
 @property (nonatomic, retain) NSDate * updateDate;
 @property (nonatomic, retain) NSNumber * visits;
 @property (nonatomic, retain) LTAuthor *author;

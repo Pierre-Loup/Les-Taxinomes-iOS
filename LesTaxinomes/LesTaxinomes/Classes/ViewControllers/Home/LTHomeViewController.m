@@ -23,10 +23,10 @@
  
  */
 
-#import "HomeViewController.h"
+#import "LTHomeViewController.h"
 
 #import "AuthenticationSheetViewController.h"
-#import "LegalInformationsViewController.h"
+#import "LTLegalInformationsViewController.h"
 #import "MediaUploadFormViewController.h"
 #import "UIActionSheet+PhotoAssetPickerAddition.h"
 
@@ -34,7 +34,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private interface
 
-@interface HomeViewController () <LTAuthenticationSheetDelegate>
+@interface LTHomeViewController () <LTAuthenticationSheetDelegate>
 @property (nonatomic, strong) IBOutlet UILabel* welcomLabel;
 @property (nonatomic, strong) NSURL* mediaToShareAssetURL;
 @property (nonatomic, assign) BOOL shouldPresentAuthenticationSheet;
@@ -43,7 +43,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - View implementation
 
-@implementation HomeViewController
+@implementation LTHomeViewController
 ;
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Superclass overrides
@@ -108,7 +108,7 @@
 #pragma mark Actions
 
 - (IBAction)infoButtonAction:(id) sender {
-    LegalInformationsViewController *legalInformationsViewController = [[LegalInformationsViewController alloc] initWithNibName:@"LegalInformationsViewController" bundle:nil];
+    LTLegalInformationsViewController *legalInformationsViewController = [[LTLegalInformationsViewController alloc] initWithNibName:@"LegalInformationsViewController" bundle:nil];
     [self.navigationController pushViewController:legalInformationsViewController animated:YES];
 }
 
@@ -120,11 +120,11 @@
                               if (chosenImageAssetURL && !error) {
                                   LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
                                   if (!cm.authenticatedUser) {
-                                      [self showDefaultHud];
+                                      [SVProgressHUD show];
                                       [cm authWithLogin:nil
                                                password:nil
                                           responseBlock:^(LTAuthor *authenticatedUser, NSError *error) {
-                                              [self.hud hide:YES];
+                                              [SVProgressHUD dismiss];
                                               if (!authenticatedUser) {
                                                   self.mediaToShareAssetURL = chosenImageAssetURL;
                                                   if(self.presentedViewController) {

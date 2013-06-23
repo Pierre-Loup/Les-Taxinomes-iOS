@@ -51,7 +51,7 @@
         [self.mapView setRegion:MKCoordinateRegionMake(self.referenceAnnotation.coordinate, MKCoordinateSpanMake(1, 1)) animated:YES];
     } else {
         self.mapView.showsUserLocation = YES;
-        [self showDefaultHud];
+        [SVProgressHUD show];
     }
 }
 
@@ -109,7 +109,7 @@
     if (self.referenceAnnotation) {
         self.reloadBarButton.enabled = NO;
         self.scanBarButton.enabled = NO;
-        [self showDefaultHud];
+        [SVProgressHUD show];
         
         NSRange range;
         range.location = self.searchStartIndex;
@@ -148,7 +148,7 @@
                 }
                 
                 [self.mapView addAnnotations:medias];
-                [self.hud hide:YES];
+                [SVProgressHUD dismiss];
                 self.reloadBarButton.enabled = YES;
                 self.scanBarButton.enabled = YES;
                 LTMedia *lastMedia = (LTMedia *)[medias lastObject];
@@ -158,9 +158,8 @@
                 CGFloat latDelta = MIN(2*MAX(latDif, lonDif), 180.0);
                 // Display the closest region with all the medias displayed
                 [self.mapView setRegion:MKCoordinateRegionMake(self.referenceAnnotation.coordinate, MKCoordinateSpanMake(latDelta, lonDelta)) animated:YES];
-            } else if ([error shouldBeDisplayed]) {
-                [UIAlertView showWithError:error];
-                [self.hud hide:NO];
+            } else {
+                [SVProgressHUD showErrorWithStatus:nil];
                 self.reloadBarButton.enabled = YES;
                 self.scanBarButton.enabled = YES;
             }
@@ -246,7 +245,7 @@
         [self loadMoreCloseMedias];
     } else {
         [self.mapView addAnnotations:medias];
-        [self.hud hide:YES];
+        [SVProgressHUD dismiss];
         self.reloadBarButton.enabled = YES;
         self.scanBarButton.enabled = YES;
         
@@ -261,7 +260,7 @@
 }
 
 - (void)didFailWithError:(NSError *)error {
-    [self.hud hide:YES];
+    [SVProgressHUD dismiss];
     self.reloadBarButton.enabled = YES;
     self.scanBarButton.enabled = YES;
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:_T(@"alert_network_unreachable_title") message:_T(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:_T(@"common.ok") otherButtonTitles:nil];

@@ -29,7 +29,7 @@
 #import "LTViewController.h"
 #import "LTTitleView.h"
 
-@class Media;
+@class LTMedia;
 
 @interface MediaDetailViewController : LTViewController
 

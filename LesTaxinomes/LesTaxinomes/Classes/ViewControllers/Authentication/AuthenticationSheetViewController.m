@@ -72,20 +72,17 @@
 
 - (IBAction)submitAuthentication:(id)sender {
     
-    [self showDefaultHud];
+    [SVProgressHUD show];
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
         [cm authWithLogin:self.loginTextField.text
                  password:self.passwordTextField.text
             responseBlock:^(LTAuthor *authenticatedUser, NSError *error) {
-                [self.hud hide:YES];
+                [SVProgressHUD dismiss];
                 if (authenticatedUser && !error) {
                     [self.delegate authenticationDidFinishWithSuccess:YES];
-                    [self.hud hide:YES];
-                } else if ([error shouldBeDisplayed]) {
-                    [UIAlertView showWithError:error];
-                    [self.hud hide:NO];
+                    [SVProgressHUD showSuccessWithStatus:nil];
                 } else {
-                    [self showErrorHudWithText:nil];
+                    [SVProgressHUD showErrorWithStatus:nil];
                 }
             }];
 }

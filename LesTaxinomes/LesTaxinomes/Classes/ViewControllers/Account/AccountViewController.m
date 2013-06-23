@@ -91,11 +91,11 @@
     [super viewWillAppear:animated];
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
     if (!cm.authenticatedUser) {
-        [self showDefaultHud];
+        [SVProgressHUD show];
         [cm authWithLogin:nil
                  password:nil
             responseBlock:^(LTAuthor *authenticatedUser, NSError *error) {
-                [self.hud hide:YES];
+                [SVProgressHUD dismiss];
                 if (authenticatedUser) {
                     [self switchToAuthenticatedModeAnimated:YES];
                 } else {
@@ -176,7 +176,7 @@
         LTMediasRootViewController * mediasListViewController = [[LTMediasRootViewController alloc] initWithNibName:@"MediasListViewController" bundle:nil];
         mediasListViewController.currentUser = [LTConnectionManager sharedConnectionManager].authenticatedUser;
         [self.navigationController pushViewController:mediasListViewController animated:YES];
-        mediasListViewController.title = _T(@"account_my_medias");
+        mediasListViewController.mediaTitle = _T(@"account_my_medias");
     }
 }
 

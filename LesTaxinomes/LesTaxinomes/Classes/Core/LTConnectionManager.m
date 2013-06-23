@@ -105,7 +105,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                 }
                                 
                                 NSError* coredataError;
-                                [[NSManagedObjectContext contextForCurrentThread] save:&coredataError];
+                                [[NSManagedObjectContext MR_contextForCurrentThread] save:&coredataError];
                                 if (coredataError) LogError(@"%@", coredataError);
                                 
                                 if(responseBlock) responseBlock(licenses, nil);
@@ -173,7 +173,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                     }
                                     
                                     NSError* coredataError;
-                                    [[NSManagedObjectContext contextForCurrentThread] save:&coredataError];
+                                    [[NSManagedObjectContext MR_contextForCurrentThread] save:&coredataError];
                                     if (coredataError) LogError(@"%@",coredataError);
                                     
                                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -225,7 +225,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                                                                error:&error];
                                 
                                 NSError* coredataError;
-                                [[NSManagedObjectContext contextForCurrentThread] save:&coredataError];
+                                [[NSManagedObjectContext MR_contextForCurrentThread] save:&coredataError];
                                 if (coredataError) LogError(@"%@",coredataError);
                                 
                                 if(responseBlock) responseBlock(mediaObject, error);
@@ -277,7 +277,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                                                                        error:&error];
                                 
                                 NSError* coredataError;
-                                [[NSManagedObjectContext contextForCurrentThread] save:&coredataError];
+                                [[NSManagedObjectContext MR_contextForCurrentThread] save:&coredataError];
                                 if (coredataError) LogError(@"%@",coredataError);
                                 
                                 if(responseBlock) responseBlock(mediaObject, error);
@@ -322,7 +322,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                                                                   error:&error];
                                 
                                 NSError *coredataError;
-                                [[NSManagedObjectContext contextForCurrentThread] save:&coredataError];
+                                [[NSManagedObjectContext MR_contextForCurrentThread] save:&coredataError];
                                 if (coredataError) LogError(@"%@",coredataError);
                                 
                                 if(responseBlock) responseBlock(authorObject, error);
@@ -374,7 +374,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                                                                           error:&authorError];
                                         
                                         NSError* coredataError;
-                                        [[NSManagedObjectContext contextForCurrentThread] save:&coredataError];
+                                        [[NSManagedObjectContext MR_contextForCurrentThread] save:&coredataError];
                                         if (coredataError) LogError(@"%@",coredataError);
                                         
                                         if (authorObject && !authorError) {
@@ -504,7 +504,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                                                                           error:&error];
                                         
                                         NSError *coredataError;
-                                        [[NSManagedObjectContext contextForCurrentThread] save:&coredataError];
+                                        [[NSManagedObjectContext MR_contextForCurrentThread] save:&coredataError];
                                         if (coredataError) LogError(@"%@",coredataError);
                                         
                                         if(responseBlock) responseBlock(mediaObject, error);
@@ -548,7 +548,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                 NSError* error;
                                 self.authenticatedUser = [LTAuthor authorWithXMLRPCResponse:response
                                                                                     error:&error];
-                                [[NSManagedObjectContext contextForCurrentThread] save:&error];
+                                [[NSManagedObjectContext MR_contextForCurrentThread] save:&error];
                                 if(responseBlock) responseBlock(self.authenticatedUser, error);
                             } else {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain

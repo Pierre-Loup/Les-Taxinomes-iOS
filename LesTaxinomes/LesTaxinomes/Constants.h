@@ -65,7 +65,9 @@
     #define kLTColorNavigationBar [UIColor colorWithRed:(29.0f/255.0f) green:(176.0f/255.0f) blue:(252.0f/255.0f) alpha:1.0f]
     #define kLTColorMain [UIColor colorWithRed:(29.0f/255.0f) green:(176.0f/255.0f) blue:(252.0f/255.0f) alpha:1.0f]
     #define kLTColorSecondary [UIColor colorWithRed:(0.0f/255.0f) green:(0.0f/255.0f) blue:(0.0f/255.0f) alpha:1.0f]
-#else
+#endif
+
+#ifdef LES_TAXINOMES
     #define kPinColor MKPinAnnotationColorGreen
     #define kLTColorNavigationBar [UIColor colorWithRed:(203.0f/255.0f) green:(203.0f/255.0f) blue:(203.0/255.0f) alpha:1.0f]
     #define kLTColorMain [UIColor colorWithRed:(157.0f/255.0f) green:(125.0f/255.0f) blue:(66.0/255.0f) alpha:1.0f]
@@ -83,20 +85,26 @@
 // Times
 #define kMediaCacheTime 3600.0f
 
-#ifdef DEV
+#ifdef LES_TAXINOMES
+#ifdef DEBUG
+
 #define kHost @"taxinomes.arscenic.org"
 #define kXMLRCPWebServiceURL @"http://taxinomes.arscenic.org/spip.php?action=xmlrpc_serveur"
 #define kHTTPHost @"http://taxinomes.arscenic.org/"
 #define kForgottenPasswordURL @"http://taxinomes.arscenic.org/spip.php?page=spip_pass"
 #define kSignupURL @"http://taxinomes.arscenic.org/spip.php?page=inscription"
-#endif
-#ifdef PROD
+
+#else
+
     #define kHost @"www.lestaxinomes.org"
     #define kXMLRCPWebServiceURL @"http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur"
     #define kHTTPHost @"http://www.lestaxinomes.org"
     #define kForgottenPasswordURL @"http://www.lestaxinomes.org/spip.php?page=spip_pass"
     #define kSignupURL @"http://www.lestaxinomes.org/spip.php?page=inscription"
+
 #endif
+#endif
+
 #ifdef GEODIV
 #define kHost @"http://www.geodiversite.net/"
 #define kXMLRCPWebServiceURL @"http://www.geodiversite.net/spip.php?action=xmlrpc_serveur"
@@ -104,6 +112,7 @@
 #define kForgottenPasswordURL @"http://www.geodiversite.net/spip.php?page=spip_pass"
 #define kSignupURL @"http://www.geodiversite.net/spip.php?page=inscription"
 #endif
+
 #ifdef TESTS
 #define kHost @"taxinomes.arscenic.org/"
 #define kXMLRCPWebServiceURL @"http://taxinomes.arscenic.org//spip.php?action=xmlrpc_serveur"
