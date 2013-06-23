@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>4F68428B-09B3-46E1-90F9-6206132911D4</string>
+	<key>IDESourceControlProjectName</key>
+	<string>LesTaxinomes</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>318C2FD2-1F4D-4021-B85F-FEC38BD039CA</key>
+		<string>https://github.com/Pierre-Loup/Les-Taxinomes-iOS.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>LesTaxinomes~Legacy/LesTaxinomes.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>318C2FD2-1F4D-4021-B85F-FEC38BD039CA</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Pierre-Loup/Les-Taxinomes-iOS.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>318C2FD2-1F4D-4021-B85F-FEC38BD039CA</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>318C2FD2-1F4D-4021-B85F-FEC38BD039CA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Les Taxinomes iOS</string>
+		</dict>
+	</array>
+</dict>
+</plist>
