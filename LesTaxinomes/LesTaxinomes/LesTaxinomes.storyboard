@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4457.6" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ZjQ-WO-pTj">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3682.6"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller - tabbar.medias-->
+        <scene sceneID="AH8-bb-JEK">
+            <objects>
+                <viewController id="lLe-XB-aLT" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lOA-Ni-m4V">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <tabBarItem key="tabBarItem" title="tabbar.medias" image="tabbar_medias" id="qK6-cK-ZN3"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qm9-sZ-iMp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="888" y="339"/>
+        </scene>
+        <!--View Controller - tabbar.home-->
+        <scene sceneID="Lcw-dz-CGN">
+            <objects>
+                <viewController id="WO0-2K-lTh" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Cf3-RE-dCJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <tabBarItem key="tabBarItem" title="tabbar.home" image="tabbar_home" id="JUi-fm-lnU"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wCn-Fj-5UG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="888" y="-314"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="ahS-88-Kkz">
+            <objects>
+                <tabBarController definesPresentationContext="YES" id="ZjQ-WO-pTj" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="8aZ-9i-eXX">
+                        <rect key="frame" x="129" y="330" width="163" height="49"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="WO0-2K-lTh" kind="relationship" relationship="viewControllers" id="fFi-eK-pJs"/>
+                        <segue destination="lLe-XB-aLT" kind="relationship" relationship="viewControllers" id="cYT-h5-M9K"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6bp-0w-N8S" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="354" y="13"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="tabbar_home" width="22" height="22"/>
+        <image name="tabbar_medias" width="22" height="23"/>
+    </resources>
+    <color key="tintColor" red="0.61568627450980395" green="0.49019607843137253" blue="0.25882352941176467" alpha="1" colorSpace="calibratedRGB"/>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
