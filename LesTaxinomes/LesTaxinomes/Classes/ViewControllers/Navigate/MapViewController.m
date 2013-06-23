@@ -10,7 +10,7 @@
 // VCs
 #import "MediaDetailViewController.h"
 // MODEL
-#import "Media+Business.h"
+#import "LTMedia+Business.h"
 
 #define kPinAnnotationIdentifier @"pin"
 
@@ -128,11 +128,11 @@
                 !error) {
                 
                 BOOL shouldLoadMoreMedias = YES;
-                for (Media* newMedia in medias) {
-                    __unsafe_unretained Media* blockNewMedia = newMedia;
+                for (LTMedia *newMedia in medias) {
+                    __unsafe_unretained LTMedia *blockNewMedia = newMedia;
                     NSInteger mediaFoundIndex = [self.mapView.annotations indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-                        if ([obj isKindOfClass:[Media class]]) {
-                            Media* displayedMedia = (Media *)obj;
+                        if ([obj isKindOfClass:[LTMedia class]]) {
+                            LTMedia *displayedMedia = (LTMedia *)obj;
                             if ([blockNewMedia.identifier intValue] == [displayedMedia.identifier intValue]) {
                                 *stop = YES;
                                 return YES;
@@ -151,7 +151,7 @@
                 [self.hud hide:YES];
                 self.reloadBarButton.enabled = YES;
                 self.scanBarButton.enabled = YES;
-                Media* lastMedia = (Media *)[medias lastObject];
+                LTMedia *lastMedia = (LTMedia *)[medias lastObject];
                 CGFloat latDif = fabs(fabs(self.referenceAnnotation.coordinate.latitude) - fabs(lastMedia.coordinate.latitude));
                 CGFloat lonDif = fabs(fabs(self.referenceAnnotation.coordinate.longitude) - fabs(lastMedia.coordinate.longitude));
                 CGFloat lonDelta = MIN(2*MAX(latDif, lonDif), 360.0);
@@ -202,8 +202,8 @@
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
-    if ([view.annotation isKindOfClass:[Media class]]) {
-        Media * media = (Media *)view.annotation;
+    if ([view.annotation isKindOfClass:[LTMedia class]]) {
+        LTMedia *media = (LTMedia *)view.annotation;
         MediaDetailViewController * mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailViewController"
                                                                                                             bundle:nil];
         mediaDetailViewController.media = media;
@@ -222,11 +222,11 @@
 
 - (void)didRetrievedShortMedias:(NSArray *)medias {
     BOOL shouldLoadMoreMedias = YES;
-    for (Media* newMedia in medias) {
-        __unsafe_unretained Media* blockNewMedia = newMedia;
+    for (LTMedia *newMedia in medias) {
+        __unsafe_unretained LTMedia *blockNewMedia = newMedia;
         NSInteger mediaFoundIndex = [self.mapView.annotations indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-            if ([obj isKindOfClass:[Media class]]) {
-                Media* displayedMedia = (Media *)obj;
+            if ([obj isKindOfClass:[LTMedia class]]) {
+                LTMedia *displayedMedia = (LTMedia *)obj;
                 if ([blockNewMedia.identifier intValue] == [displayedMedia.identifier intValue]) {
                     *stop = YES;
                     return YES;
@@ -250,7 +250,7 @@
         self.reloadBarButton.enabled = YES;
         self.scanBarButton.enabled = YES;
         
-        Media* lastMedia = (Media *)[medias lastObject];
+        LTMedia *lastMedia = (LTMedia *)[medias lastObject];
         CGFloat latDif = fabs(fabs(self.referenceAnnotation.coordinate.latitude) - fabs(lastMedia.coordinate.latitude));
         CGFloat lonDif = fabs(fabs(self.referenceAnnotation.coordinate.longitude) - fabs(lastMedia.coordinate.longitude));
         CGFloat lonDelta = MIN(2*MAX(latDif, lonDif), 360.0);

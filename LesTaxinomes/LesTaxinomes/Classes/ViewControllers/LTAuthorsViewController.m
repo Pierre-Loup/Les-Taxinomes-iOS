@@ -16,7 +16,7 @@
 #import "LTLoadMoreFooterView.h"
 #import "SRRefreshView.h"
 // MODEL
-#import "Author.h"
+#import "LTAuthor.h"
 
 @interface LTAuthorsViewController () <SRRefreshDelegate>
 @property (nonatomic, strong) SRRefreshView* slimeView;
@@ -138,7 +138,7 @@
     self.authorsResultController = nil;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         ;
-        [Author truncateAll];
+        [LTAuthor truncateAll];
         NSError* error;
         [[NSManagedObjectContext contextForCurrentThread] save:&error];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -159,7 +159,7 @@
             sortAttribute = @"signupDate";
         }
         
-        _authorsResultController = [Author fetchAllSortedBy:sortAttribute
+        _authorsResultController = [LTAuthor fetchAllSortedBy:sortAttribute
                                                 ascending:YES
                                             withPredicate:nil
                                                   groupBy:nil

@@ -1,23 +1,23 @@
 //
-//  Section.h
+//  LTSection.h
 //  LesTaxinomes
 //
-//  Created by Pierre-Loup Tristant on 29/03/13.
+//  Created by Pierre-Loup Tristant on 23/06/13.
 //  Copyright (c) 2013  Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Media, Section;
+@class LTMedia, LTSection;
 
-@interface Section : NSManagedObject
+@interface LTSection : NSManagedObject
 
 @property (nonatomic, retain) NSString * desc;
 @property (nonatomic, retain) NSNumber * identifier;
 @property (nonatomic, retain) NSString * imageURL;
 @property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) Media *medias;
-@property (nonatomic, retain) Section *parent;
+@property (nonatomic, retain) LTMedia *medias;
+@property (nonatomic, retain) LTSection *parent;
 
 @end

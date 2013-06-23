@@ -25,9 +25,9 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import "Media.h"
-#import "Author.h"
-#import "License.h"
+#import "LTMedia.h"
+#import "LTAuthor.h"
+#import "LTLicense.h"
 #import "XMLRPCRequest.h"
 
 /**
@@ -53,25 +53,25 @@ typedef enum {
 
 @interface LTConnectionManager : NSObject
 
-@property (nonatomic, strong) Author * authenticatedUser;
+@property (nonatomic, strong) LTAuthor *authenticatedUser;
 @property (nonatomic, unsafe_unretained) id<LTConnectionManagerDelegate> delegate;
 
 + (LTConnectionManager *)sharedConnectionManager;
 - (void)getLicensesWithResponseBlock:(void (^)(NSArray* licenses, NSError *error))responseBlock;
 
-- (void)getMediasSummariesByDateForAuthor:(Author *)author
+- (void)getMediasSummariesByDateForAuthor:(LTAuthor *)author
                              nearLocation:(CLLocation *)location
                                 withRange:(NSRange)range
                             responseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock;
 
 - (void)getMediaWithId:(NSNumber *)mediaIdentifier
-         responseBlock:(void (^)(Media* media, NSError *error))responseBlock;
+         responseBlock:(void (^)(LTMedia *media, NSError *error))responseBlock;
 
 - (void)getMediaLargeURLWithId:(NSNumber *)mediaIdentifier
-                 responseBlock:(void (^)(Media* media, NSError *error))responseBlock;
+                 responseBlock:(void (^)(LTMedia *media, NSError *error))responseBlock;
 
 - (void)getAuthorWithId:(NSNumber *)authorIdentifier
-          responseBlock:(void (^)(Author* author, NSError *error))responseBlock;
+          responseBlock:(void (^)(LTAuthor *author, NSError *error))responseBlock;
 
 - (void)getAuthorsSummariesWithRange:(NSRange)range
                      withSortKey:(LTAuthorsSortType)sortType
@@ -79,14 +79,14 @@ typedef enum {
 
 - (void)addMediaWithTitle:(NSString *)title
                      text:(NSString *)text
-                  license:(License *)license
+                  license:(LTLicense *)license
                  location:(CLLocation*)location
                  assetURL:(NSURL *)assetURL
-            responseBlock:(void (^)(Media* media, NSError *error))responseBlock;
+            responseBlock:(void (^)(LTMedia *media, NSError *error))responseBlock;
 
 - (void)authWithLogin:(NSString *)login
              password:(NSString *)password
-        responseBlock:(void (^)(Author* authenticatedUser, NSError *error))responseBlock;
+        responseBlock:(void (^)(LTAuthor *authenticatedUser, NSError *error))responseBlock;
 
 - (void)unAuthenticate;
 

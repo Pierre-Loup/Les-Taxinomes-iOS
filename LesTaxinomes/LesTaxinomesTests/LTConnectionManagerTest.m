@@ -11,8 +11,8 @@
 
 #define kDefaultTestTimeout 5.0
 #define kDefaultRange NSRangeFromString(@"0,10")
-#define kDefaultMedia ((Media *)[[Media allMedias] objectAtIndex:0])
-#define kDefaultAuthor ((Author *)[Author authorWithIdentifier:[NSNumber numberWithInt:211]])
+#define kDefaultMedia ((LTMedia *)[[LTMedia allMedias] objectAtIndex:0])
+#define kDefaultAuthor ((LTAuthor *)[LTAuthor authorWithIdentifier:[NSNumber numberWithInt:211]])
 
 
 @interface LTConnectionManagerTest : GHAsyncTestCase { }
@@ -30,7 +30,7 @@
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
     [cm authWithLogin:@"test1"
              password:@"testtest"
-        responseBlock:^(Author *authenticatedUser, NSError *error) {
+        responseBlock:^(LTAuthor *authenticatedUser, NSError *error) {
             if (authenticatedUser && !error) {
                 [self notify:kGHUnitWaitStatusSuccess];
             } else {
@@ -46,7 +46,7 @@
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
     [cm authWithLogin:nil
              password:nil
-        responseBlock:^(Author *authenticatedUser, NSError *error) {
+        responseBlock:^(LTAuthor *authenticatedUser, NSError *error) {
             if (authenticatedUser && !error) {
                 [self notify:kGHUnitWaitStatusSuccess];
             } else {
@@ -151,7 +151,7 @@
     
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
     [cm getMediaWithId:kDefaultMedia.identifier
-         responseBlock:^(Media *media, NSError *error) {
+         responseBlock:^(LTMedia *media, NSError *error) {
              if (media && !error) {
                  [self notify:kGHUnitWaitStatusSuccess];
              } else {
@@ -169,7 +169,7 @@
     
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
     [cm getAuthorWithId:kDefaultAuthor.identifier
-         responseBlock:^(Author *author, NSError *error) {
+         responseBlock:^(LTAuthor *author, NSError *error) {
              if (author && !error) {
                  [self notify:kGHUnitWaitStatusSuccess];
              } else {

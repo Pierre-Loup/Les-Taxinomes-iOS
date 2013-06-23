@@ -26,7 +26,7 @@
 #import "LesTaxinomesAppDelegate.h"
 
 #import "DCIntrospect.h"
-#import "License.h"
+#import "LTLicense.h"
 #import "LTAppearance.h"
 #import "LTConnectionManager.h"
 

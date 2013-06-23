@@ -33,6 +33,6 @@
 
 @interface MediaDetailViewController : LTViewController
 
-@property (nonatomic, strong) Media* media;
+@property (nonatomic, strong) LTMedia *media;
 
 @end

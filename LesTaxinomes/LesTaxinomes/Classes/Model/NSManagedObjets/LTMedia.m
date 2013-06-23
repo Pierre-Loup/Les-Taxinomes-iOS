@@ -1,18 +1,18 @@
 //
-//  Media.m
+//  LTMedia.m
 //  LesTaxinomes
 //
-//  Created by Pierre-Loup Tristant on 29/03/13.
+//  Created by Pierre-Loup Tristant on 23/06/13.
 //  Copyright (c) 2013  Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
-#import "Media.h"
-#import "Author.h"
-#import "License.h"
-#import "Section.h"
+#import "LTMedia.h"
+#import "LTAuthor.h"
+#import "LTLicense.h"
+#import "LTSection.h"
 
 
-@implementation Media
+@implementation LTMedia
 
 @dynamic date;
 @dynamic identifier;

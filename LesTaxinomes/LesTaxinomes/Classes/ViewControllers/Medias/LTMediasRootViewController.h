@@ -24,7 +24,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "Author.h"
+#import "LTAuthor.h"
 #import "LTViewController.h"
 #import "LTMediasDataSource.h"
 #import "LTMediasDelegate.h"
@@ -32,7 +32,7 @@
 @interface LTMediasRootViewController : LTViewController    <LTMediasDataSource
                                                             ,LTMediasDelegate>
 
-@property (nonatomic, strong) Author* currentUser;
+@property (nonatomic, strong) LTAuthor *currentUser;
 @property (nonatomic, readonly) NSFetchedResultsController* mediasResultController;
 
 - (void)loadMoreMedias;

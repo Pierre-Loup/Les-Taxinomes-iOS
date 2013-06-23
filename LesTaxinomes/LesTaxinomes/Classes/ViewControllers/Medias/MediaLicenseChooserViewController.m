@@ -25,7 +25,7 @@
 
 #import "MediaLicenseChooserViewController.h"
 
-#import "License+Business.h"
+#import "LTLicense+Business.h"
 
 #define kLicenceCellIdentifier @"LicenceCell"
 
@@ -53,7 +53,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        licenses_ = [License findAll];
+        licenses_ = [LTLicense findAll];
         currentLicenseIndexPath_ = [self indexPathForCurrentLicense];
     }
     return self;
@@ -82,7 +82,7 @@
         return nil;
     }
     
-    for (License * license in licenses_) {
+    for (LTLicense *license in licenses_) {
         if (license.identifier.intValue == currentLicense_.identifier.intValue) {
             return [NSIndexPath indexPathForRow:[licenses_ indexOfObject:license]inSection:0];
         }
@@ -95,7 +95,7 @@
 
 - (IBAction)oKButtonButtonPressed:(UIBarButtonItem *)sender {
     if (currentLicenseIndexPath_.row < [licenses_ count] 
-        && [[licenses_ objectAtIndex:currentLicenseIndexPath_.row] isKindOfClass:[License class]]
+        && [[licenses_ objectAtIndex:currentLicenseIndexPath_.row] isKindOfClass:[LTLicense class]]
         && [delegate_ respondsToSelector:@selector(didChooseLicense:)]) {
         [delegate_ didChooseLicense:currentLicense_];
         [self.navigationController popViewControllerAnimated:YES];
@@ -116,8 +116,8 @@
     }
     
     if (indexPath.row < [licenses_ count] 
-        && [[licenses_ objectAtIndex:indexPath.row] isKindOfClass:[License class]]) {
-        License * license = [licenses_ objectAtIndex:indexPath.row];
+        && [[licenses_ objectAtIndex:indexPath.row] isKindOfClass:[LTLicense class]]) {
+        LTLicense *license = [licenses_ objectAtIndex:indexPath.row];
         cell.textLabel.text = license.name;
         cell.detailTextLabel.text = license.desc;
         cell.detailTextLabel.numberOfLines = 0;

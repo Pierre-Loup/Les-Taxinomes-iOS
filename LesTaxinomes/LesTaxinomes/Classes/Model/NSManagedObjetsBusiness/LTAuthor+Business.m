@@ -6,11 +6,11 @@
 //  Copyright (c) 2013  Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
-#import "Author+Business.h"
+#import "LTAuthor+Business.h"
 
-@implementation Author (Business)
+@implementation LTAuthor (Business)
 
-+ (Author*)authorWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error {
++ (LTAuthor *)authorWithXMLRPCResponse:(NSDictionary *)response error:(NSError **)error {
     
     if(response == nil){
         return nil;
@@ -28,10 +28,10 @@
     
     NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
     
-    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d", [authorIdentifier integerValue]];
-    Author *author = [Author findFirstWithPredicate:predicate inContext:context];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier = %d", [authorIdentifier integerValue]];
+    LTAuthor *author = [LTAuthor findFirstWithPredicate:predicate inContext:context];
     if (!author) {
-        author = [Author createInContext:context];
+        author = [LTAuthor createInContext:context];
         author.identifier = authorIdentifier;
         if (author == nil) {
             LogDebug(@"[ERROR] author = nil !!!");
@@ -79,14 +79,14 @@
     return author;
 }
 
-+ (Author *)authorWithIdentifier: (NSNumber *)identifier {
++ (LTAuthor *)authorWithIdentifier: (NSNumber *)identifier {
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d", [identifier integerValue]];
-    Author *author = [Author findFirstWithPredicate:predicate];
+    LTAuthor *author = [LTAuthor findFirstWithPredicate:predicate];
     return  author;
 }
 
 + (NSArray *)allAuthors {
-    return [Author findAll];
+    return [LTAuthor findAll];
 }
 
 @end

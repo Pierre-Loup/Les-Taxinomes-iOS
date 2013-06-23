@@ -1,17 +1,17 @@
 //
-//  Section.m
+//  LTSection.m
 //  LesTaxinomes
 //
-//  Created by Pierre-Loup Tristant on 29/03/13.
+//  Created by Pierre-Loup Tristant on 23/06/13.
 //  Copyright (c) 2013  Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
-#import "Section.h"
-#import "Media.h"
-#import "Section.h"
+#import "LTSection.h"
+#import "LTMedia.h"
+#import "LTSection.h"
 
 
-@implementation Section
+@implementation LTSection
 
 @dynamic desc;
 @dynamic identifier;

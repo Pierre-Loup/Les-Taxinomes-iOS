@@ -34,10 +34,10 @@
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <CoreLocation/CoreLocation.h>
 
-#import "Author+Business.h"
-#import "License+Business.h"
+#import "LTAuthor+Business.h"
+#import "LTLicense+Business.h"
 #import "LTXMLRPCClient.h"
-#import "Media+Business.h"
+#import "LTMedia+Business.h"
 #import "NSMutableDictionary+ImageMetadata.h"
 #import "UIImage+Resize.h"
 #import "XMLRPCResponse.h"
@@ -94,7 +94,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                     if ([[responseDict objectForKey:key] isKindOfClass:[NSDictionary class]]) {
                                         NSDictionary *xmlLicenseDict = [responseDict objectForKey:key];
                                         NSError* licenseError;
-                                        License* license = [License licenseWithXMLRPCResponse:xmlLicenseDict
+                                        LTLicense *license = [LTLicense licenseWithXMLRPCResponse:xmlLicenseDict
                                                                                         error:&licenseError];
                                         if (license && ! licenseError) {
                                             [licenses addObject:license];
@@ -121,7 +121,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
     
 }
 
-- (void)getMediasSummariesByDateForAuthor:(Author *)author
+- (void)getMediasSummariesByDateForAuthor:(LTAuthor *)author
                          nearLocation:(CLLocation *)location
                             withRange:(NSRange)range
                         responseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock {
@@ -162,7 +162,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                     NSMutableArray *medias = [NSMutableArray array];
                                     for(NSDictionary *mediaXML in (NSArray *)response){
                                         NSError* mediaError;
-                                        Media * mediaObject = [Media mediaWithXMLRPCResponse:mediaXML
+                                        LTMedia *mediaObject = [LTMedia mediaWithXMLRPCResponse:mediaXML
                                                                                        error:&mediaError];
                                         
                                         if (mediaObject && !mediaError) {
@@ -195,7 +195,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
 }
 
 - (void)getMediaWithId:(NSNumber *)mediaIdentifier
-         responseBlock:(void (^)(Media* media, NSError *error))responseBlock {
+         responseBlock:(void (^)(LTMedia *media, NSError *error))responseBlock {
     
     if (!mediaIdentifier) {
         
@@ -221,7 +221,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             
                             if([response isKindOfClass:[NSDictionary class]]) {
                                 NSError* error;
-                                Media * mediaObject = [Media mediaWithXMLRPCResponse:(NSDictionary *)response
+                                LTMedia *mediaObject = [LTMedia mediaWithXMLRPCResponse:(NSDictionary *)response
                                                                                error:&error];
                                 
                                 NSError* coredataError;
@@ -245,7 +245,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
 }
 
 - (void)getMediaLargeURLWithId:(NSNumber *)mediaIdentifier
-                 responseBlock:(void (^)(Media* media, NSError *error))responseBlock {
+                 responseBlock:(void (^)(LTMedia *media, NSError *error))responseBlock {
     if (!mediaIdentifier) {
         
         NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
@@ -273,7 +273,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             if([response isKindOfClass:[NSDictionary class]]) {
                                 
                                 NSError* error;
-                                Media * mediaObject = [Media mediaLargeURLWithXMLRPCResponse:(NSDictionary *)response
+                                LTMedia *mediaObject = [LTMedia mediaLargeURLWithXMLRPCResponse:(NSDictionary *)response
                                                                                        error:&error];
                                 
                                 NSError* coredataError;
@@ -298,7 +298,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
 }
 
 - (void)getAuthorWithId:(NSNumber *)authorIdentifier
-          responseBlock:(void (^)(Author* author, NSError *error))responseBlock {
+          responseBlock:(void (^)(LTAuthor *author, NSError *error))responseBlock {
     if (!authorIdentifier) {
         NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                              code:LTConnectionManagerBadArgsError
@@ -317,18 +317,18 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             
                             if([response isKindOfClass:[NSDictionary class]]) {
                                 
-                                NSError* error;
-                                Author* authorObject = [Author authorWithXMLRPCResponse:response
+                                NSError *error;
+                                LTAuthor *authorObject = [LTAuthor authorWithXMLRPCResponse:response
                                                                                   error:&error];
                                 
-                                NSError* coredataError;
+                                NSError *coredataError;
                                 [[NSManagedObjectContext contextForCurrentThread] save:&coredataError];
                                 if (coredataError) LogError(@"%@",coredataError);
                                 
                                 if(responseBlock) responseBlock(authorObject, error);
                                 
                             } else {
-                                NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                NSError *error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
                                                                  userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodSPIPLireAuteur}];
                                 
@@ -369,8 +369,8 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                     
                                     for(NSDictionary* authorDict in (NSArray *)response){
                                         
-                                        NSError* authorError;
-                                        Author* authorObject = [Author authorWithXMLRPCResponse:authorDict
+                                        NSError *authorError;
+                                        LTAuthor *authorObject = [LTAuthor authorWithXMLRPCResponse:authorDict
                                                                                           error:&authorError];
                                         
                                         NSError* coredataError;
@@ -407,10 +407,10 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
 
 - (void)addMediaWithTitle:(NSString *)title
                      text:(NSString *)text
-                  license:(License *)license
+                  license:(LTLicense *)license
                  location:(CLLocation*)location
                  assetURL:(NSURL *)assetURL
-            responseBlock:(void (^)(Media* media, NSError *error))responseBlock {
+            responseBlock:(void (^)(LTMedia *media, NSError *error))responseBlock {
     
     if (!assetURL) {
         NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
@@ -499,11 +499,11 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                   downloadProgressBlock:nil
                                 success:^(id response) {
                                     if([response isKindOfClass:[NSDictionary class]]) {
-                                        NSError* error;
-                                        Media * mediaObject = [Media mediaWithXMLRPCResponse:response
-                                                                                       error:&error];
+                                        NSError *error;
+                                        LTMedia *mediaObject = [LTMedia mediaWithXMLRPCResponse:response
+                                                                                          error:&error];
                                         
-                                        NSError* coredataError;
+                                        NSError *coredataError;
                                         [[NSManagedObjectContext contextForCurrentThread] save:&coredataError];
                                         if (coredataError) LogError(@"%@",coredataError);
                                         
@@ -529,7 +529,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
 
 - (void)authWithLogin:(NSString *)login
              password:(NSString *)password
-        responseBlock:(void (^)(Author* authenticatedUser, NSError *error))responseBlock {
+        responseBlock:(void (^)(LTAuthor *authenticatedUser, NSError *error))responseBlock {
     
     NSMutableArray* identifiers = [NSMutableArray array];
     if (login) {
@@ -546,7 +546,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                         success:^(id response) {
                             if([response isKindOfClass:[NSDictionary class]]){
                                 NSError* error;
-                                self.authenticatedUser = [Author authorWithXMLRPCResponse:response
+                                self.authenticatedUser = [LTAuthor authorWithXMLRPCResponse:response
                                                                                     error:&error];
                                 [[NSManagedObjectContext contextForCurrentThread] save:&error];
                                 if(responseBlock) responseBlock(self.authenticatedUser, error);

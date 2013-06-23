@@ -68,7 +68,7 @@
 #pragma mark - Public methods
 #pragma mark Properties
 
-- (void)setMedia:(Media *)media
+- (void)setMedia:(LTMedia *)media
 {
     _media = media;
     [self.imageView setImageWithURL:[NSURL URLWithString:media.mediaThumbnailUrl]

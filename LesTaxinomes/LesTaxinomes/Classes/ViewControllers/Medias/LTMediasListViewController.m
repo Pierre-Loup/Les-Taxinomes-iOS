@@ -74,7 +74,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Public methods
 
-- (Media*)firstVisibleMedia
+- (LTMedia *)firstVisibleMedia
 {
     if (self.tableView.visibleCells.count == 0) {
         return nil;
@@ -96,7 +96,7 @@
     return cell.media;
 }
 
-- (void)setFirstVisibleMedia:(Media *)firstVisibleMedia
+- (void)setFirstVisibleMedia:(LTMedia *)firstVisibleMedia
 {
     NSIndexPath* indexPath = [self.dataSource.mediasResultController indexPathForObject:firstVisibleMedia];
     if (self.dataSource.mediasResultController.fetchedObjects.count > indexPath.row) {
@@ -126,7 +126,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Media* media = [self.dataSource.mediasResultController objectAtIndexPath:indexPath];
+    LTMedia *media = [self.dataSource.mediasResultController objectAtIndexPath:indexPath];
     LTMediaListCell* cell = nil;
     
     cell = [aTableView dequeueReusableCellWithIdentifier:kLTMediaListCellIdentifier];
@@ -145,7 +145,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    Media *media = [self.mediasResultController objectAtIndexPath:indexPath];
+//    LTMedia *media = [self.mediasResultController objectAtIndexPath:indexPath];
 //    if (self.dataSource.mediaDetailViewController) {
 //        [self.dataSource.mediaDetailViewController.navigationController popToRootViewControllerAnimated:YES];
 //        self.mediaDetailViewController.media = media;
@@ -160,16 +160,54 @@
 //    }
 }
 
-/**
- * Asks the delegate for the height to use for a row in a specified location.
- *
- * @param The table-view object requesting this information.
- * @param indexPath: An index path that locates a row in tableView.
- * @return A floating-point value that specifies the height (in points) that row should be.
- */
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return kLTMediasListCommonRowHeight;
+}
+
+#pragma mark - NSFetchedResultsControllerDelegate
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView beginUpdates];
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    UITableView *tableView = self.tableView;
+    LTMedia *media = (LTMedia *)anObject;
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            ((LTMediaListCell*)[tableView cellForRowAtIndexPath:indexPath]).media = media;
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView endUpdates];
 }
 
 ////////////////////////////////////////////////////////////////////////////////

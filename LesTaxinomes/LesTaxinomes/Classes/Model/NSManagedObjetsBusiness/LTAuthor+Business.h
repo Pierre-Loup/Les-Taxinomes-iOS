@@ -6,12 +6,12 @@
 //  Copyright (c) 2013  Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
-#import "Author.h"
+#import "LTAuthor.h"
 
-@interface Author (Business)
+@interface LTAuthor (Business)
 
-+ (Author *)authorWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error;
-+ (Author *)authorWithIdentifier: (NSNumber *)identifier;
++ (LTAuthor *)authorWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error;
++ (LTAuthor *)authorWithIdentifier: (NSNumber *)identifier;
 + (NSArray *)allAuthors;
 
 @end

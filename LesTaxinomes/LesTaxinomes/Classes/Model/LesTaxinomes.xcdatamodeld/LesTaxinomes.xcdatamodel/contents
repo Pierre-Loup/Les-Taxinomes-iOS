@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12C60" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Author" representedClassName="Author" syncable="YES">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3381.3" systemVersion="12E55" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="LTAuthor" representedClassName="LTAuthor" syncable="YES">
         <attribute name="avatarURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="biography" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="emailAddress" optional="YES" attributeType="String" syncable="YES"/>
@@ -9,18 +9,18 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="signupDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="medias" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Media" inverseName="author" inverseEntity="Media" syncable="YES"/>
+        <relationship name="medias" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LTMedia" inverseName="author" inverseEntity="LTMedia" syncable="YES"/>
     </entity>
-    <entity name="License" representedClassName="License" syncable="YES">
+    <entity name="LTLicense" representedClassName="LTLicense" syncable="YES">
         <attribute name="abbr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="icon" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="identifier" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="medias" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Media" inverseName="license" inverseEntity="Media" syncable="YES"/>
+        <relationship name="medias" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="LTMedia" inverseName="license" inverseEntity="LTMedia" syncable="YES"/>
     </entity>
-    <entity name="Media" representedClassName="Media" syncable="YES">
+    <entity name="LTMedia" representedClassName="LTMedia" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="identifier" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -39,22 +39,22 @@
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updateDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="visits" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="author" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Author" inverseName="medias" inverseEntity="Author" syncable="YES"/>
-        <relationship name="license" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="License" inverseName="medias" inverseEntity="License" syncable="YES"/>
-        <relationship name="section" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Section" inverseName="medias" inverseEntity="Section" syncable="YES"/>
+        <relationship name="author" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="LTAuthor" inverseName="medias" inverseEntity="LTAuthor" syncable="YES"/>
+        <relationship name="license" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="LTLicense" inverseName="medias" inverseEntity="LTLicense" syncable="YES"/>
+        <relationship name="section" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="LTSection" inverseName="medias" inverseEntity="LTSection" syncable="YES"/>
     </entity>
-    <entity name="Section" representedClassName="Section" syncable="YES">
+    <entity name="LTSection" representedClassName="LTSection" syncable="YES">
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="identifier" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="imageURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="medias" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Media" inverseName="section" inverseEntity="Media" syncable="YES"/>
-        <relationship name="parent" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Section" inverseName="parent" inverseEntity="Section" syncable="YES"/>
+        <relationship name="medias" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="LTMedia" inverseName="section" inverseEntity="LTMedia" syncable="YES"/>
+        <relationship name="parent" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="LTSection" inverseName="parent" inverseEntity="LTSection" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Author" positionX="97" positionY="396" width="128" height="178"/>
-        <element name="License" positionX="72" positionY="18" width="128" height="150"/>
-        <element name="Media" positionX="315" positionY="18" width="128" height="358"/>
-        <element name="Section" positionX="477" positionY="96" width="128" height="135"/>
+        <element name="LTAuthor" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="LTLicense" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="LTMedia" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="LTSection" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

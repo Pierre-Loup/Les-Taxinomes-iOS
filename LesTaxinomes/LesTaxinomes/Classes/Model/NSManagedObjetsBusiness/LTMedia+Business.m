@@ -6,13 +6,13 @@
 //  Copyright (c) 2013  Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
-#import "Author+Business.h"
-#import "License+Business.h"
-#import "Media+Business.h"
+#import "LTAuthor+Business.h"
+#import "LTLicense+Business.h"
+#import "LTMedia+Business.h"
 
-@implementation Media (Business)
+@implementation LTMedia (Business)
 
-+ (Media*)mediaWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error {
++ (LTMedia *)mediaWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error {
     
     if(response == nil){
         return nil;
@@ -30,11 +30,11 @@
     NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
     
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d",[mediaIdentifier integerValue]];
-    Media *media = [Media findFirstWithPredicate:predicate
+    LTMedia *media = [LTMedia findFirstWithPredicate:predicate
                                        inContext:context];
     
     if (!media) {
-        media = [Media createInContext:context];
+        media = [LTMedia createInContext:context];
         media.identifier = mediaIdentifier;
     }
     
@@ -99,13 +99,13 @@
     if ([response objectForKey: @"id_licence"]) {
         NSInteger licenceId = [[response objectForKey: @"id_licence"] intValue];
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d",licenceId];
-        media.license = [License findFirstWithPredicate:predicate
+        media.license = [LTLicense findFirstWithPredicate:predicate
                                               inContext:context];
     }
     
     if([[response objectForKey:@"auteurs"] isKindOfClass:[NSArray class]]){
         NSDictionary * authorDict = [[response objectForKey:@"auteurs"] objectAtIndex:0];
-        media.author = [Author authorWithXMLRPCResponse:authorDict error:error];
+        media.author = [LTAuthor authorWithXMLRPCResponse:authorDict error:error];
     }
     
     if ([[response objectForKey:@"gis"] isKindOfClass:[NSArray class]]) {
@@ -124,7 +124,7 @@
     
 }
 
-+ (Media*)mediaLargeURLWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error {
++ (LTMedia *)mediaLargeURLWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error {
     if(response == nil){
         return nil;
     }
@@ -137,7 +137,7 @@
         return nil;
     }
     
-    Media *media = [Media findFirstByAttribute:@"identifier" withValue:mediaIdentifier];
+    LTMedia *media = [LTMedia findFirstByAttribute:@"identifier" withValue:mediaIdentifier];
     
     if (!media) {
         return nil;

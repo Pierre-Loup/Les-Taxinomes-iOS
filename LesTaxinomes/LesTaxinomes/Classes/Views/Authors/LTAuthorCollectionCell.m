@@ -10,7 +10,7 @@
 // UI
 #import "UIImageView+AFNetworking.h"
 // MODEL
-#import "Author.h"
+#import "LTAuthor.h"
 
 @interface LTAuthorCollectionCell ()
 
@@ -75,7 +75,7 @@
 #pragma mark - Public methods
 #pragma mark Properties
 
-- (void)setAuthor:(Author *)author
+- (void)setAuthor:(LTAuthor *)author
 {
     _author = author;
     [self.imageView setImageWithURL:[NSURL URLWithString:author.avatarURL]

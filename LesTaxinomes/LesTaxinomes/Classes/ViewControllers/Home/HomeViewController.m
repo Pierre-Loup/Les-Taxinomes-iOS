@@ -123,7 +123,7 @@
                                       [self showDefaultHud];
                                       [cm authWithLogin:nil
                                                password:nil
-                                          responseBlock:^(Author *authenticatedUser, NSError *error) {
+                                          responseBlock:^(LTAuthor *authenticatedUser, NSError *error) {
                                               [self.hud hide:YES];
                                               if (!authenticatedUser) {
                                                   self.mediaToShareAssetURL = chosenImageAssetURL;
@@ -153,7 +153,7 @@
 #pragma mark - LTAuthenticationSheetDelegate
 
 - (void)authenticationDidFinishWithSuccess:(BOOL)success {
-    Author* authenticatedUser = [LTConnectionManager sharedConnectionManager].authenticatedUser;
+    LTAuthor *authenticatedUser = [LTConnectionManager sharedConnectionManager].authenticatedUser;
     if (success && authenticatedUser) {
         [self dismissModalViewControllerAnimated:YES];
         MediaUploadFormViewController* mediaUploadVC = [[MediaUploadFormViewController alloc] initWithAssetURL:self.mediaToShareAssetURL];

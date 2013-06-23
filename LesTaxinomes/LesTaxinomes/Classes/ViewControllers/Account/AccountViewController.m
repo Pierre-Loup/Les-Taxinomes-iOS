@@ -32,7 +32,7 @@
 @interface AccountViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, LTAuthenticationSheetDelegate> {
     
     NSArray* accountMenuLabels_;
-    Author * authenticatedUser_;
+    LTAuthor *authenticatedUser_;
     
     UIBarButtonItem* rightBarButton_;
 }
@@ -94,7 +94,7 @@
         [self showDefaultHud];
         [cm authWithLogin:nil
                  password:nil
-            responseBlock:^(Author *authenticatedUser, NSError *error) {
+            responseBlock:^(LTAuthor *authenticatedUser, NSError *error) {
                 [self.hud hide:YES];
                 if (authenticatedUser) {
                     [self switchToAuthenticatedModeAnimated:YES];
@@ -195,7 +195,7 @@
 
 - (void)switchToAuthenticatedModeAnimated:(BOOL)animated {
     if ([LTConnectionManager sharedConnectionManager].authenticatedUser) {
-        Author* authUser = [LTConnectionManager sharedConnectionManager].authenticatedUser;
+        LTAuthor *authUser = [LTConnectionManager sharedConnectionManager].authenticatedUser;
         self.userNameView.title = authUser.name;
         [avatarView_ setImageWithURL:[NSURL URLWithString:authUser.avatarURL]
                     placeholderImage:[UIImage imageNamed:@"default_avatar_medium"]];
@@ -220,7 +220,7 @@
 #pragma mark - LTAuthenticationSheetDelegate
 
 - (void)authenticationDidFinishWithSuccess:(BOOL)success {
-    Author* authenticatedUser = [LTConnectionManager sharedConnectionManager].authenticatedUser;
+    LTAuthor *authenticatedUser = [LTConnectionManager sharedConnectionManager].authenticatedUser;
     if (success && authenticatedUser) {
         self.userNameView.title = authenticatedUser.name;
         [self.avatarView setImageWithURL:[NSURL URLWithString:authenticatedUser.avatarURL]

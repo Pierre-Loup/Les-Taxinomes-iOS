@@ -1,16 +1,16 @@
 //
-//  License.m
+//  LTLicense.m
 //  LesTaxinomes
 //
-//  Created by Pierre-Loup Tristant on 29/03/13.
+//  Created by Pierre-Loup Tristant on 23/06/13.
 //  Copyright (c) 2013  Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
-#import "License.h"
-#import "Media.h"
+#import "LTLicense.h"
+#import "LTMedia.h"
 
 
-@implementation License
+@implementation LTLicense
 
 @dynamic abbr;
 @dynamic desc;

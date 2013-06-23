@@ -27,11 +27,11 @@
 
 #import "LTTableViewController.h"
 
-@class License;
+@class LTLicense;
 
 @protocol MediaLicenseChooserDelegate <NSObject>
 
-- (void)didChooseLicense:(License *)license;
+- (void)didChooseLicense:(LTLicense *)license;
 
 @end
 
@@ -43,6 +43,6 @@
 }
 
 @property (nonatomic, unsafe_unretained) id<MediaLicenseChooserDelegate> delegate;
-@property (nonatomic, strong) License * currentLicense;
+@property (nonatomic, strong) LTLicense *currentLicense;
 
 @end

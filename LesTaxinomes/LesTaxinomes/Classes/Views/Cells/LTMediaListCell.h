@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Media.h"
+#import "LTMedia.h"
 
 @interface LTMediaListCell : UITableViewCell
 
-@property (nonatomic, strong) Media* media;
+@property (nonatomic, strong) LTMedia *media;
 
 + (LTMediaListCell *)mediaListCell;
 

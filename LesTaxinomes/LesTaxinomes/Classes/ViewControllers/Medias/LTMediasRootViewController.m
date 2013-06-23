@@ -29,7 +29,7 @@
 #import "LTMediasRootViewController.h"
 
 // Model
-#import "Author.h"
+#import "LTAuthor.h"
 #import "LTConnectionManager.h"
 #import "Reachability.h"
 // Controllers
@@ -106,6 +106,7 @@ typedef enum {
     [self.navigationItem setRightBarButtonItem:self.displayBarButton animated:YES];
     
     [self.view addSubview:self.listViewController.view];
+    self.mediasResultController.delegate = self.listViewController;
     
     self.mediaDetailViewController = (MediaDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
@@ -138,16 +139,6 @@ typedef enum {
     [super didReceiveMemoryWarning];
     [NSFetchedResultsController deleteCacheWithName:self.mediasResultController.cacheName];
     self.mediasResultController = nil;
-}
-
-- (void)reloadData
-{
-    self.mediasResultController = nil;
-    if (self.displayMode == LTMediasDisplayModeList) {
-        [self.listViewController.tableView reloadData];
-    } else if (self.displayMode == LTMediasDisplayModeGrid) {
-        [self.gridViewController.collectionView reloadData];
-    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -194,13 +185,13 @@ typedef enum {
                                            withRange:mediasRange
     responseBlock:^(NSArray *medias, NSError *error) {
         if (medias) {
-            self.mediasResultController = nil;
+            //self.mediasResultController = nil;
         } else if ([error shouldBeDisplayed]) {
             [UIAlertView showWithError:error];
         } else {
             [self showErrorHudWithText:_T(@"common.hud.failure")];
         }
-        [self reloadData];
+
         self.listViewController.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
         self.gridViewController.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
         
@@ -209,14 +200,12 @@ typedef enum {
 
 - (void)refreshMedias
 {
-    self.mediasResultController = nil;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         ;
-        [Media truncateAll];
+        [LTMedia truncateAll];
         NSError* error;
         [[NSManagedObjectContext contextForCurrentThread] save:&error];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self reloadData];
             [self loadMoreMedias];
         });
     });
@@ -244,11 +233,14 @@ typedef enum {
     
     _displayMode = displayMode;
     
+    // Switch between grid and list display
     if (_displayMode == LTMediasDisplayModeList) {
-        
+        // Add the VC to display the root VC
         [self addChildViewController:self.listViewController];
         [self.listViewController didMoveToParentViewController:self];
         [self.view addSubview:self.listViewController.view];
+        // Subscibe to database modification for the media table
+        self.mediasResultController.delegate = self.listViewController;
         
         [self.listViewController.tableView reloadData];
         self.listViewController.firstVisibleMedia = self.gridViewController.firstVisibleMedia;
@@ -265,10 +257,12 @@ typedef enum {
         self.displayBarButton.image = [UIImage imageNamed:@"icon_grid"];
         
     } else if (_displayMode == LTMediasDisplayModeGrid) {
-        
+        // Add the VC to display the root VC
         [self addChildViewController:self.gridViewController];
         [self.gridViewController didMoveToParentViewController:self];
         [self.view addSubview:self.gridViewController.view];
+        // Subscibe to database modification for the media table
+        self.mediasResultController.delegate = self.gridViewController;
         
         [self.gridViewController.collectionView reloadData];
         self.gridViewController.firstVisibleMedia = self.listViewController.firstVisibleMedia;
@@ -297,7 +291,7 @@ typedef enum {
             predicate = [NSPredicate predicateWithFormat:@"status == %@",@"publie"];
         }
         
-        _mediasResultController = [Media fetchAllSortedBy:@"date"
+        _mediasResultController = [LTMedia fetchAllSortedBy:@"date"
                                                      ascending:NO
                                                  withPredicate:predicate
                                                        groupBy:nil

@@ -6,11 +6,11 @@
 //  Copyright (c) 2013  Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
-#import "License+Business.h"
+#import "LTLicense+Business.h"
 
-@implementation License (Business)
+@implementation LTLicense (Business)
 
-+ (License *)licenseWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error {
++ (LTLicense *)licenseWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error {
     if(response == nil){
         return nil;
     }
@@ -18,10 +18,10 @@
     NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
     
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d", [(NSString*)[response objectForKey:@"id"] intValue]];
-    License* license = [License findFirstWithPredicate:predicate inContext:context];
+    LTLicense *license = [LTLicense findFirstWithPredicate:predicate inContext:context];
     
     if (!license) {
-        license = [License createInContext:context];
+        license = [LTLicense createInContext:context];
         license.identifier = [NSNumber numberWithInt:[(NSString*)[response objectForKey:@"id"] intValue]];
     }
     
@@ -34,15 +34,15 @@
     return license;
 }
 
-+ (License *)licenseWithIdentifier:(NSNumber*)identifier {
++ (LTLicense *)licenseWithIdentifier:(NSNumber*)identifier {
     NSManagedObjectContext* context = [NSManagedObjectContext contextForCurrentThread];
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d", [identifier integerValue]];
-    License* license = [License findFirstWithPredicate:predicate inContext:context];
+    LTLicense *license = [LTLicense findFirstWithPredicate:predicate inContext:context];
     return  license;
 }
 
-+ (License *)defaultLicense {
-    return [License licenseWithIdentifier:[NSNumber numberWithInt:8]];
++ (LTLicense *)defaultLicense {
+    return [LTLicense licenseWithIdentifier:[NSNumber numberWithInt:8]];
 }
 
 

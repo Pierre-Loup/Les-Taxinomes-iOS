@@ -11,7 +11,7 @@
 
 #import "LTMediaListCell.h"
 
-#import "Author.h"
+#import "LTAuthor.h"
 #import "UIImageView+AFNetworking.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -54,7 +54,7 @@
 
 #pragma mark Properties
 
-- (void)setMedia:(Media *)media
+- (void)setMedia:(LTMedia *)media
 {
     _media = media;
     if (media.title.length) {

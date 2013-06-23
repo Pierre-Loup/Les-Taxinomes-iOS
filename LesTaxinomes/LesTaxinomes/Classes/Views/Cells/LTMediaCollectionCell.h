@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "Media.h"
+#import "LTMedia.h"
 
 @interface LTMediaCollectionCell : PSTCollectionViewCell
 
-@property (nonatomic, strong) Media* media;
+@property (nonatomic, strong) LTMedia *media;
 
 + (NSString *)reuseIdentifier;
 

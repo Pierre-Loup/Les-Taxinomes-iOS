@@ -35,7 +35,7 @@
 #import "UIImageView+PhotoFrame.h"
 
 // MODEL
-#import "License+Business.h"
+#import "LTLicense+Business.h"
 
 #define kLocalisationPickerCellId @"localisationPickerCell"
 #define kCityCellId @"CityCell"
@@ -76,7 +76,7 @@
 @property (nonatomic, strong) IBOutlet UISwitch* publishSwitch;
 
 @property (nonatomic, strong) NSURL* mediaAssetURL;
-@property (nonatomic, strong) License* license;
+@property (nonatomic, strong) LTLicense *license;
 @property (nonatomic, strong) CLLocation* mediaLocation;
 @property (unsafe_unretained, nonatomic, readonly) NSArray* rowsInSection;
 @property (nonatomic, readonly) NSMutableDictionary* cellForIndexPath;
@@ -102,7 +102,7 @@
                           [NSNumber numberWithInt:1],
                           [NSNumber numberWithInt:1],
                           [NSNumber numberWithInt:1]];
-        _license = [License defaultLicense];
+        _license = [LTLicense defaultLicense];
     }
     return self;
 }
@@ -324,7 +324,7 @@
                                  license:self.license
                                 location:self.mediaLocation
                                 assetURL:self.mediaAssetURL
-                           responseBlock:^(Media *media, NSError *error) {
+                           responseBlock:^(LTMedia *media, NSError *error) {
                                if (media && !error) {
                                    [self showConfirmHudWithText:_T(@"media_upload.confirm.title")];
                                    [self.navigationController popViewControllerAnimated:YES];
@@ -450,7 +450,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - MediaLicenseChooserDelegate
 
-- (void)didChooseLicense:(License *)license
+- (void)didChooseLicense:(LTLicense *)license
 {
     if (license) {
         self.license = license;

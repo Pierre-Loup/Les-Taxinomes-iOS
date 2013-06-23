@@ -1,17 +1,17 @@
 //
-//  Media.h
+//  LTMedia.h
 //  LesTaxinomes
 //
-//  Created by Pierre-Loup Tristant on 29/03/13.
+//  Created by Pierre-Loup Tristant on 23/06/13.
 //  Copyright (c) 2013  Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Author, License, Section;
+@class LTAuthor, LTLicense, LTSection;
 
-@interface Media : NSManagedObject
+@interface LTMedia : NSManagedObject
 
 @property (nonatomic, retain) NSDate * date;
 @property (nonatomic, retain) NSNumber * identifier;
@@ -31,8 +31,8 @@
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSDate * updateDate;
 @property (nonatomic, retain) NSNumber * visits;
-@property (nonatomic, retain) Author *author;
-@property (nonatomic, retain) License *license;
-@property (nonatomic, retain) Section *section;
+@property (nonatomic, retain) LTAuthor *author;
+@property (nonatomic, retain) LTLicense *license;
+@property (nonatomic, retain) LTSection *section;
 
 @end

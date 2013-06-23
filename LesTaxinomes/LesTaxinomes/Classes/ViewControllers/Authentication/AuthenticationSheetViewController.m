@@ -76,7 +76,7 @@
     LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
         [cm authWithLogin:self.loginTextField.text
                  password:self.passwordTextField.text
-            responseBlock:^(Author *authenticatedUser, NSError *error) {
+            responseBlock:^(LTAuthor *authenticatedUser, NSError *error) {
                 [self.hud hide:YES];
                 if (authenticatedUser && !error) {
                     [self.delegate authenticationDidFinishWithSuccess:YES];

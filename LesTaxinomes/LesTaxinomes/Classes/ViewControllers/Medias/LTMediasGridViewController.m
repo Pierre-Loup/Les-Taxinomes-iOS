@@ -43,7 +43,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Public methods
 
-- (Media*)firstVisibleMedia
+- (LTMedia *)firstVisibleMedia
 {
     if (self.collectionView.visibleCells.count == 0) {
         return nil;
@@ -65,7 +65,7 @@
     return cell.media;
 }
 
-- (void)setFirstVisibleMedia:(Media *)firstVisibleMedia
+- (void)setFirstVisibleMedia:(LTMedia *)firstVisibleMedia
 {
     NSIndexPath* indexPath = [self.dataSource.mediasResultController indexPathForObject:firstVisibleMedia];
     if (self.dataSource.mediasResultController.fetchedObjects.count > indexPath.row) {
@@ -129,6 +129,39 @@
 - (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
 {
     [self.delegate refreshMedias];
+}
+
+#pragma mark - NSFetchedResultsControllerDelegate
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    PSTCollectionView * collectionView = self.collectionView;
+    LTMedia *media = (LTMedia *)anObject;
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [collectionView insertItemsAtIndexPaths:@[newIndexPath]];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [collectionView deleteItemsAtIndexPaths:@[indexPath]];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            ((LTMediaCollectionCell*)[collectionView cellForItemAtIndexPath:indexPath]).media = media;
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [collectionView performBatchUpdates:^{
+                [collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                [collectionView insertItemsAtIndexPaths:@[newIndexPath]];
+            } completion:^(BOOL finished) {}];
+            break;
+    }
 }
 
 @end

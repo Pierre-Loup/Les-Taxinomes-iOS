@@ -33,7 +33,7 @@
 #import "MediaDetailViewController.h"
 // MODEL
 #import "Annotation.h"
-#import "Media+Business.h"
+#import "LTMedia+Business.h"
 
 @interface MediaDetailViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>{
     int asynchLoadCounter_;
@@ -108,7 +108,7 @@
 
 #pragma mark - Properties
 
-- (void)setMedia:(Media *)media {
+- (void)setMedia:(LTMedia *)media {
     if(media != _media) {
         _media = media;
         [self.scrollView scrollsToTop];
@@ -136,7 +136,7 @@
        ||  self.media.mediaMediumURL == nil
        || [[NSDate date] timeIntervalSinceDate: self.media.localUpdateDate] > kMediaCacheTime) {
         [cm getMediaWithId:self.media.identifier
-             responseBlock:^(Media* media, NSError *error) {
+             responseBlock:^(LTMedia *media, NSError *error) {
                  if ([error shouldBeDisplayed]) {
                      [UIAlertView showWithError:error];
                      [self.hud hide:NO];
@@ -158,7 +158,7 @@
        ||  self.media.author.avatarURL == nil
        || [[NSDate date] timeIntervalSinceDate: self.media.author.localUpdateDate] > kMediaCacheTime) {
         [cm getAuthorWithId:self.media.author.identifier
-              responseBlock:^(Author *author, NSError *error) {
+              responseBlock:^(LTAuthor *author, NSError *error) {
                   
                   if ([error shouldBeDisplayed]) {
                       [UIAlertView showWithError:error];
@@ -307,7 +307,7 @@
         [self displayLargeMediaPhotoViewer];
     } else {
         [self showDefaultHud];
-        [[LTConnectionManager sharedConnectionManager] getMediaLargeURLWithId:self.media.identifier responseBlock:^(Media *media, NSError *error) {
+        [[LTConnectionManager sharedConnectionManager] getMediaLargeURLWithId:self.media.identifier responseBlock:^(LTMedia *media, NSError *error) {
             
             if (!error) {
                 self.media = media;
