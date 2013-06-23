@@ -61,14 +61,15 @@
 
 //Color
 #ifdef GEODIV
-#define kPinColor MKPinAnnotationColorRed
-#define kLTColorMain [UIColor colorWithRed:(29.0f/255.0f) green:(176.0f/255.0f) blue:(252.0f/255.0f) alpha:1.0f]
-#define kLTColorSecondary [UIColor colorWithRed:(0.0f/255.0f) green:(0.0f/255.0f) blue:(0.0f/255.0f) alpha:1.0f]
+    #define kPinColor MKPinAnnotationColorRed
+    #define kLTColorNavigationBar [UIColor colorWithRed:(29.0f/255.0f) green:(176.0f/255.0f) blue:(252.0f/255.0f) alpha:1.0f]
+    #define kLTColorMain [UIColor colorWithRed:(29.0f/255.0f) green:(176.0f/255.0f) blue:(252.0f/255.0f) alpha:1.0f]
+    #define kLTColorSecondary [UIColor colorWithRed:(0.0f/255.0f) green:(0.0f/255.0f) blue:(0.0f/255.0f) alpha:1.0f]
 #else
-#define kPinColor MKPinAnnotationColorGreen
-#define kLTColorNavigationBar [UIColor colorWithRed:(203.0f/255.0f) green:(203.0f/255.0f) blue:(203.0/255.0f) alpha:1.0f]
-#define kLTColorMain [UIColor colorWithRed:(157.0f/255.0f) green:(125.0f/255.0f) blue:(66.0/255.0f) alpha:1.0f]
-#define kLTColorSecondary [UIColor colorWithRed:(138.0f/255.0f) green:(140.0f/255.0f) blue:(142.0f/255.0f) alpha:1.0f]
+    #define kPinColor MKPinAnnotationColorGreen
+    #define kLTColorNavigationBar [UIColor colorWithRed:(203.0f/255.0f) green:(203.0f/255.0f) blue:(203.0/255.0f) alpha:1.0f]
+    #define kLTColorMain [UIColor colorWithRed:(157.0f/255.0f) green:(125.0f/255.0f) blue:(66.0/255.0f) alpha:1.0f]
+    #define kLTColorSecondary [UIColor colorWithRed:(138.0f/255.0f) green:(140.0f/255.0f) blue:(142.0f/255.0f) alpha:1.0f]
 #endif
 // Sizes
 #define THUMBNAIL_MAX_HEIGHT 100.0f
