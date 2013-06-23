@@ -15,7 +15,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self.window makeKeyAndVisible];
-    [LTAppearance setup];
+    //[LTAppearance setup];
     return YES;
 }
 

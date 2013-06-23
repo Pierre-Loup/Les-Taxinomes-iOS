@@ -209,6 +209,8 @@
 		A5F6EFF917772CFE00C16C06 /* SRSlimeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SRSlimeView.m; sourceTree = "<group>"; };
 		A5F6EFFA17772CFE00C16C06 /* UIGlossyButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIGlossyButton.h; sourceTree = "<group>"; };
 		A5F6EFFB17772CFE00C16C06 /* UIGlossyButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIGlossyButton.m; sourceTree = "<group>"; };
+		A5F6EFFD17772D8000C16C06 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		A5F6EFFE17772D8000C16C06 /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
 		D4F5BA4032F04217879D4033 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = ../Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		ED7945A823D44B08AB80E718 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -306,6 +308,8 @@
 		A5E0B1CD1777159F00CD4CCF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A5F6EFFD17772D8000C16C06 /* Constants.h */,
+				A5F6EFFE17772D8000C16C06 /* Macros.h */,
 				A5E0B1CE1777159F00CD4CCF /* LesTaxinomes-Info.plist */,
 				A5E0B1D21777159F00CD4CCF /* main.m */,
 				A5E0B1D41777159F00CD4CCF /* LesTaxinomes-Prefix.pch */,

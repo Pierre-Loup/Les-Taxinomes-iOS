@@ -23,6 +23,9 @@
         UITextAttributeFont:[UIFont fontWithName:@"Jesaya Free" size:20]
     }];
     
+    //[[UITabBar appearance] setTintColor:kLTColorNavigationBar];
+    //[[UITabBar appearance] setSelectedImageTintColor:kLTColorMain];
+    
 }
 
 @end
