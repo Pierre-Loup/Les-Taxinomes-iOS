@@ -1,5 +1,5 @@
 PODS:
-  - AFNetworking (1.3.0)
+  - AFNetworking (1.3.1)
   - DCIntrospect (0.0.2)
   - EGOCache (2.0)
   - EGOImageLoading (0.0.1):
@@ -27,7 +27,7 @@ DEPENDENCIES:
   - xmlrpc (~> 2.3)
 
 SPEC CHECKSUMS:
-  AFNetworking: e528f20d06b1b818c3571266fb5efa20031a8ace
+  AFNetworking: 9ec8aafb9269236a7630bd8d9838ce2ba30fa2a0
   DCIntrospect: 2f5cab0b58b170459ebcb200f59042306fcb0c0d
   EGOCache: c7116e8a6692eecb542f001a9c71f9b71ae9644b
   EGOImageLoading: 36f4b972563da7dcd32d3e04027b4fe2d3ec0ae7

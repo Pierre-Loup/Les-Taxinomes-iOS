@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2CC454ED08A84C08A3C1E7F2"
-               BuildableName = "libPods.a"
-               BlueprintName = "Pods"
-               ReferencedContainer = "container:Pods.xcodeproj">
+               BlueprintIdentifier = "A5E0B1F81777180E00CD4CCF"
+               BuildableName = "Geodiversite.app"
+               BlueprintName = "Geodiversite"
+               ReferencedContainer = "container:LesTaxinomes.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,6 +29,15 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "A5E0B1F81777180E00CD4CCF"
+            BuildableName = "Geodiversite.app"
+            BlueprintName = "Geodiversite"
+            ReferencedContainer = "container:LesTaxinomes.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -39,6 +48,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "A5E0B1F81777180E00CD4CCF"
+            BuildableName = "Geodiversite.app"
+            BlueprintName = "Geodiversite"
+            ReferencedContainer = "container:LesTaxinomes.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -48,6 +66,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "A5E0B1F81777180E00CD4CCF"
+            BuildableName = "Geodiversite.app"
+            BlueprintName = "Geodiversite"
+            ReferencedContainer = "container:LesTaxinomes.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

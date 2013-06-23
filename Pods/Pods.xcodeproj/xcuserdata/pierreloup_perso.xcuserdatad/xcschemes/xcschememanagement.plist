@@ -7,17 +7,12 @@
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>4</integer>
+			<integer>2</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>2CC454ED08A84C08A3C1E7F2</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>49FD96CA28764C26B3C4AEB4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
