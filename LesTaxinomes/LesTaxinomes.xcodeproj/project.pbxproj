@@ -11,7 +11,7 @@
 		A569D72517774C3900ED24B9 /* LTTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF9317772CFE00C16C06 /* LTTableViewController.m */; };
 		A569D72617774C3900ED24B9 /* LTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF9517772CFE00C16C06 /* LTViewController.m */; };
 		A569D72717774C4200ED24B9 /* LTHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF9B17772CFE00C16C06 /* LTHomeViewController.m */; };
-		A569D72817774C4500ED24B9 /* LTLegalInformationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF9E17772CFE00C16C06 /* LTLegalInformationsViewController.m */; };
+		A569D72817774C4500ED24B9 /* LTLegalNoticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF9E17772CFE00C16C06 /* LTLegalNoticeViewController.m */; };
 		A569D72917774C4E00ED24B9 /* AuthenticationSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF8B17772CFE00C16C06 /* AuthenticationSheetViewController.m */; };
 		A577658E1777514500CC8EE6 /* MediaUploadFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFB917772CFE00C16C06 /* MediaUploadFormViewController.xib */; };
 		A577658F1777514800CC8EE6 /* MediaUploadFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFBD17772CFE00C16C06 /* MediaUploadFormViewController.m */; };
@@ -70,6 +70,7 @@
 		A57765D917779FC400CC8EE6 /* LTMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = A57765D817779FC400CC8EE6 /* LTMedia.m */; };
 		A57765DA17779FC400CC8EE6 /* LTMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = A57765D817779FC400CC8EE6 /* LTMedia.m */; };
 		A57765DB17779FC400CC8EE6 /* LTMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = A57765D817779FC400CC8EE6 /* LTMedia.m */; };
+		A5CD8DFA17DB2F0000E64A8E /* LTLegalNoticeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EF9F17772CFE00C16C06 /* LTLegalNoticeViewController.xib */; };
 		A5E0B1C71777159F00CD4CCF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5E0B1C61777159F00CD4CCF /* Foundation.framework */; };
 		A5E0B1C91777159F00CD4CCF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5E0B1C81777159F00CD4CCF /* CoreGraphics.framework */; };
 		A5E0B1CB1777159F00CD4CCF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5E0B1CA1777159F00CD4CCF /* UIKit.framework */; };
@@ -189,9 +190,9 @@
 		A5F6EF9A17772CFE00C16C06 /* LTHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTHomeViewController.h; sourceTree = "<group>"; };
 		A5F6EF9B17772CFE00C16C06 /* LTHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTHomeViewController.m; sourceTree = "<group>"; };
 		A5F6EF9C17772CFE00C16C06 /* LTHomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LTHomeViewController.xib; sourceTree = "<group>"; };
-		A5F6EF9D17772CFE00C16C06 /* LTLegalInformationsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTLegalInformationsViewController.h; sourceTree = "<group>"; };
-		A5F6EF9E17772CFE00C16C06 /* LTLegalInformationsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTLegalInformationsViewController.m; sourceTree = "<group>"; };
-		A5F6EF9F17772CFE00C16C06 /* LTLegalInformationsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LTLegalInformationsViewController.xib; sourceTree = "<group>"; };
+		A5F6EF9D17772CFE00C16C06 /* LTLegalNoticeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTLegalNoticeViewController.h; sourceTree = "<group>"; };
+		A5F6EF9E17772CFE00C16C06 /* LTLegalNoticeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTLegalNoticeViewController.m; sourceTree = "<group>"; };
+		A5F6EF9F17772CFE00C16C06 /* LTLegalNoticeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LTLegalNoticeViewController.xib; sourceTree = "<group>"; };
 		A5F6EFA017772CFE00C16C06 /* LTAuthorsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTAuthorsViewController.h; sourceTree = "<group>"; };
 		A5F6EFA117772CFE00C16C06 /* LTAuthorsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTAuthorsViewController.m; sourceTree = "<group>"; };
 		A5F6EFA317772CFE00C16C06 /* LTMediasGridViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTMediasGridViewController.h; sourceTree = "<group>"; };
@@ -423,11 +424,11 @@
 		A5F6EF5B17772CFE00C16C06 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				A5F6EF5C17772CFE00C16C06 /* Core */,
 				A5F6EF6B17772CFE00C16C06 /* LesTaxinomesAppDelegate.h */,
 				A5F6EF6C17772CFE00C16C06 /* LesTaxinomesAppDelegate.m */,
 				A5F6EF6D17772CFE00C16C06 /* MainWindow.xib */,
 				A5F6EF6E17772CFE00C16C06 /* MainWindow_iPad.xib */,
+				A5F6EF5C17772CFE00C16C06 /* Core */,
 				A5F6EF6F17772CFE00C16C06 /* Model */,
 				A5F6EF8417772CFE00C16C06 /* ViewControllers */,
 				A5F6EFC217772CFE00C16C06 /* Views */,
@@ -564,9 +565,9 @@
 				A5F6EF9A17772CFE00C16C06 /* LTHomeViewController.h */,
 				A5F6EF9B17772CFE00C16C06 /* LTHomeViewController.m */,
 				A5F6EF9C17772CFE00C16C06 /* LTHomeViewController.xib */,
-				A5F6EF9D17772CFE00C16C06 /* LTLegalInformationsViewController.h */,
-				A5F6EF9E17772CFE00C16C06 /* LTLegalInformationsViewController.m */,
-				A5F6EF9F17772CFE00C16C06 /* LTLegalInformationsViewController.xib */,
+				A5F6EF9D17772CFE00C16C06 /* LTLegalNoticeViewController.h */,
+				A5F6EF9E17772CFE00C16C06 /* LTLegalNoticeViewController.m */,
+				A5F6EF9F17772CFE00C16C06 /* LTLegalNoticeViewController.xib */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -856,6 +857,7 @@
 				A57765A91777536100CC8EE6 /* MediaUploadFormCells.xib in Resources */,
 				A5E0B1D91777159F00CD4CCF /* Images.xcassets in Resources */,
 				A57765A31777534200CC8EE6 /* MediaDetailViewController.xib in Resources */,
+				A5CD8DFA17DB2F0000E64A8E /* LTLegalNoticeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -933,7 +935,7 @@
 				A569D72617774C3900ED24B9 /* LTViewController.m in Sources */,
 				A57765941777525D00CC8EE6 /* LTPhotoSharingManager.m in Sources */,
 				A57765CB1777628000CC8EE6 /* LTSection.m in Sources */,
-				A569D72817774C4500ED24B9 /* LTLegalInformationsViewController.m in Sources */,
+				A569D72817774C4500ED24B9 /* LTLegalNoticeViewController.m in Sources */,
 				A5E0B1D71777159F00CD4CCF /* LTAppDelegate.m in Sources */,
 				A57765A81777534D00CC8EE6 /* MediaDetailViewController.m in Sources */,
 				A57765921777524800CC8EE6 /* Annotation.m in Sources */,

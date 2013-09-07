@@ -98,7 +98,7 @@ typedef enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.title = _T(@"tabbar.medias");
     self.displayBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_grid"]
                                                              style:UIBarButtonItemStyleBordered
                                                             target:self

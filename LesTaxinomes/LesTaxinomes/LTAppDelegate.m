@@ -21,6 +21,24 @@
         [LTAppearance setup];
 
     }
+    
+    // Setup tabBar titles
+    UITabBarController* tabBarController = (UITabBarController*)self.window.rootViewController;
+    NSArray* tabItemsTitles = @[_T(@"tabbar.home")
+                                ,_T(@"tabbar.medias")
+                                ,_T(@"tabbar.explore")
+                                ,_T(@"tabbar.myaccount")
+                                ,_T(@"tabbar.authors")
+                                ];
+    
+    for (NSInteger i = 0;
+         i < tabBarController.tabBar.items.count;
+         i++) {
+        UINavigationController* navigationController = tabBarController.viewControllers[i];
+        ((UIViewController*)navigationController.viewControllers[0]).title = tabItemsTitles[i];
+        ((UITabBarItem*)tabBarController.tabBar.items[i]).title = tabItemsTitles[i];
+    }
+    
     return YES;
 }
 

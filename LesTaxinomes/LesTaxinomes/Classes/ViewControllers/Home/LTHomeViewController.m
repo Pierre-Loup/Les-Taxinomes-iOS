@@ -26,7 +26,7 @@
 #import "LTHomeViewController.h"
 
 #import "AuthenticationSheetViewController.h"
-#import "LTLegalInformationsViewController.h"
+#import "LTLegalNoticeViewController.h"
 #import "MediaUploadFormViewController.h"
 #import "UIActionSheet+PhotoAssetPickerAddition.h"
 
@@ -107,12 +107,14 @@
 
 #pragma mark Actions
 
-- (IBAction)infoButtonAction:(id) sender {
-    LTLegalInformationsViewController *legalInformationsViewController = [[LTLegalInformationsViewController alloc] initWithNibName:@"LegalInformationsViewController" bundle:nil];
+- (IBAction)infoButtonAction:(id) sender
+{
+    LTLegalNoticeViewController *legalInformationsViewController = [[LTLegalNoticeViewController alloc] initWithNibName:@"LTLegalInformationsViewController" bundle:nil];
     [self.navigationController pushViewController:legalInformationsViewController animated:YES];
 }
 
-- (void)cameraButtonAction:(id) sender {
+- (void)cameraButtonAction:(id) sender
+{
     [UIActionSheet photoAssetPickerWithTitle:nil
                              showInView:self.view.window
                               presentVC:self

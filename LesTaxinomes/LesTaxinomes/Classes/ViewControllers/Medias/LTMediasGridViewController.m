@@ -24,7 +24,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.title = _T(@"tabbar.medias");
     self.slimeView = [SRRefreshView new];
     self.slimeView.delegate = self;
     [self.collectionView addSubview:self.slimeView];

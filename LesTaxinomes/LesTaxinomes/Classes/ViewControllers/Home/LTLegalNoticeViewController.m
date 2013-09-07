@@ -1,5 +1,5 @@
 //
-//  LegalInformationsViewController.h
+//  LegalInformationsViewController.m
 //  LesTaxinomes
 //
 //  Created by Pierre-Loup Tristant on 06/12/11.
@@ -23,8 +23,21 @@
  
  */
 
-#import <UIKit/UIKit.h>
-#import "LTViewController.h"
+#import "LTLegalNoticeViewController.h"
 
-@interface LTLegalInformationsViewController : LTViewController
+@interface LTLegalNoticeViewController ()
+@property (nonatomic, strong) IBOutlet UITextView* cguTextView;
+@end
+
+@implementation LTLegalNoticeViewController
+
+#pragma mark - View lifecycle
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.navigationItem.title = _T(@"legal_informations.title");
+    self.cguTextView.text = NSLocalizedStringFromTable(@"cgu.text", @"CGU", @"");
+}
+
 @end
