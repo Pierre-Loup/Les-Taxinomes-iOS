@@ -27,6 +27,7 @@
 "common.by" = "By";
 "common.license" = "License";
 "common.hud.failure" = "Failure";
+"common.submit" = "Submit";
 
 /* TAB NAR */
 "tabbar.home"       = "Home";
@@ -48,6 +49,13 @@
 "media_detail.no_text" = "No description";
 "media_detail.publish_info_patern" = "Shared by %@ the %@\n%d looks";
 
+/* AUTHENTICATION */
+
+"authentication.login_label.text" = "Login";
+"authentication.password_label.text" = "Password";
+"authentication.forgotten_password_button.text" = "Password forgotten ?";
+"authentication.signup_button.text" = "Signup";
+
 /* ACCOUNT */
 "account_uploas_media" = "Share a média";
 "account_my_medias" = "My medias";
@@ -57,7 +65,7 @@
 "media_upload_no_title" = "No title";
 "media_upload_no_license_text" = "No license";
 "media_upload.location_picker_cell.text" = "Localize a media";
-"media_upload.text_prefix" = "Media shared with LesTaxinomes app";
+"media_upload.text_prefix" = "\n\nMedia shared with LesTaxinomes app";
 "media_upload.confirm.title" = "Sharing succeeded";
 "media_upload.confirm.text" = "The media has been shared with succes.";
 

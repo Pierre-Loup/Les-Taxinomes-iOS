@@ -1,35 +1,47 @@
 //
-//  UIActionSheet+PhotoAssetPickerAddition.m
+//  LTPhotoAssetManager.m
 //  LesTaxinomes
 //
-//  Created by Pierre-Loup Tristant on 02/11/12.
-//  Copyright (c) 2012  Les Petits Débrouillards Bretagne. All rights reserved.
+//  Created by Pierre-Loup Tristant on 07/09/13.
+//  Copyright (c) 2013 Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
-#import <AssetsLibrary/ALAsset.h>
+#import <AssetsLibrary/AssetsLibrary.h>
+#import "LTPhotoAssetManager.h"
 
-#import "UIActionSheet+PhotoAssetPickerAddition.h"
+@interface LTPhotoAssetManager () <UIActionSheetDelegate, UIImagePickerControllerDelegate>
 
-static CancelBlock _cancelBlock;
-static PhotoAssetPickedBlock _photoAssetPickedBlock;
-static UIViewController *_presentVC;
+@end
 
-@implementation UIActionSheet (PhotoAssetPickerAddition)
+@implementation LTPhotoAssetManager
 
-+ (void) photoAssetPickerWithTitle:(NSString*) title
++ (LTPhotoAssetManager *)sharedManager
+{
+    static LTPhotoAssetManager* sharedManager = nil;
+    static dispatch_once_t  sharedManagerOnceToken;
+    
+    dispatch_once(&sharedManagerOnceToken, ^{
+        sharedManager = [[LTPhotoAssetManager alloc] init];
+    });
+    
+    return sharedManager;
+}
+
+- (void) photoAssetPickerWithTitle:(NSString*) title
                         showInView:(UIView*) view
                          presentVC:(UIViewController*) presentVC
                      onPhotoPicked:(PhotoAssetPickedBlock) photoAssetPicked
                           onCancel:(CancelBlock) cancelled;
 {
-    _cancelBlock  = cancelled;    
-    _photoAssetPickedBlock  = photoAssetPicked;
-    _presentVC = presentVC;
+    
+    self.cancelBlock  = cancelled;
+    self.photoAssetPickedBlock  = photoAssetPicked;
+    self.presentVC = presentVC;
     
     int cancelButtonIndex = -1;
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:title
-                                                             delegate:(id)[self class]
+                                                             delegate:self
 													cancelButtonTitle:nil
 											   destructiveButtonTitle:nil
 													otherButtonTitles:nil];
@@ -58,15 +70,15 @@ static UIViewController *_presentVC;
     
     if([view isKindOfClass:[UIBarButtonItem class]])
         [actionSheet showFromBarButtonItem:(UIBarButtonItem*) view animated:YES];
-
+    
 }
 
 
-+ (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     NSURL* assertURL = [info objectForKey:UIImagePickerControllerReferenceURL];
     if (assertURL) {
-        _photoAssetPickedBlock(assertURL, nil);
+        self.photoAssetPickedBlock(assertURL, nil);
     } else {
         
         UIImage *editedImage = (UIImage*) [info valueForKey:UIImagePickerControllerEditedImage];
@@ -82,25 +94,25 @@ static UIViewController *_presentVC;
         [assetsLibrary writeImageToSavedPhotosAlbum:editedImage.CGImage
                                            metadata:metadata
                                     completionBlock:^(NSURL *recAssertURL, NSError *error) {
-                                        _photoAssetPickedBlock(recAssertURL, error);
+                                        self.photoAssetPickedBlock(recAssertURL, error);
                                     }];
     }
     [picker dismissModalViewControllerAnimated:YES];
 }
 
 
-+ (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     // Dismiss the image selection and close the program
-    [_presentVC dismissModalViewControllerAnimated:YES];
-    _cancelBlock();
+    [self.presentVC dismissModalViewControllerAnimated:YES];
+    self.cancelBlock();
 }
 
-+(void)actionSheet:(UIActionSheet*) actionSheet didDismissWithButtonIndex:(NSInteger) buttonIndex
+- (void)actionSheet:(UIActionSheet*) actionSheet didDismissWithButtonIndex:(NSInteger) buttonIndex
 {
     if(buttonIndex == [actionSheet cancelButtonIndex])
     {
-        _cancelBlock();
+        self.cancelBlock();
     }
     else
     {
@@ -116,7 +128,7 @@ static UIViewController *_presentVC;
         
         
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-        picker.delegate = (id)[self class];
+        picker.delegate = self;
         //picker.allowsEditing = YES;
         
         if(buttonIndex == 1)
@@ -128,9 +140,8 @@ static UIViewController *_presentVC;
             picker.sourceType = UIImagePickerControllerSourceTypeCamera;;
         }
         
-        [_presentVC presentModalViewController:picker animated:YES];
+        [self.presentVC presentModalViewController:picker animated:YES];
     }
 }
-
 
 @end

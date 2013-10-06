@@ -24,7 +24,7 @@
  */
 
 #import "AccountViewController.h"
-#import "MediaUploadFormViewController.h"
+#import "LTMediaUploadFormViewController.h"
 #import "LTMediasRootViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "LTTitleView.h"
@@ -120,7 +120,7 @@
 #pragma mark - IBAction
 
 - (void)displayAuthenticationSheetAnimated:(BOOL)animated {
-    AuthenticationSheetViewController * authenticationSheetViewController = [[AuthenticationSheetViewController alloc] initWithNibName:@"AuthenticationSheetViewController" bundle:nil];
+    LTAuthenticationSheetViewController * authenticationSheetViewController = [[LTAuthenticationSheetViewController alloc] initWithNibName:@"LTAuthenticationSheetViewController" bundle:nil];
     authenticationSheetViewController.delegate = self;
     UINavigationController * navigationController = [[UINavigationController alloc] initWithRootViewController:authenticationSheetViewController];
     authenticationSheetViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;

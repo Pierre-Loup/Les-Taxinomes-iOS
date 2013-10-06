@@ -179,7 +179,7 @@ typedef enum {
     mediasRange.location = [[self.mediasResultController fetchedObjects] count];
     mediasRange.length = kLTMediasLoadingStep;
 
-    LTConnectionManager* connectionManager = [LTConnectionManager sharedConnectionManager];
+    LTConnectionManager* connectionManager = [LTConnectionManager sharedManager];
     [connectionManager getMediasSummariesByDateForAuthor:self.currentUser
                                         nearLocation:nil
                                            withRange:mediasRange

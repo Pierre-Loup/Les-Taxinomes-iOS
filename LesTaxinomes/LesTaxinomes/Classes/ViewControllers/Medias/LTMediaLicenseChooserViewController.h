@@ -1,9 +1,9 @@
 //
-//  MediaUploadFormViewController.h
+//  MediaLicenseChooserViewController.h
 //  LesTaxinomes
 //
-//  Created by Pierre-Loup Tristant on 30/01/12.
-//  Copyright (c) 2011 Les Petits Débrouillards Bretagne. All rights reserved.
+//  Created by Pierre-Loup Personnel on 27/05/12.
+//  Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
 /*
@@ -24,18 +24,21 @@
  */
 
 #import <UIKit/UIKit.h>
-#import <MapKit/MapKit.h>
-#import <MobileCoreServices/UTCoreTypes.h>
-#import <CoreLocation/CoreLocation.h>
 
 #import "LTTableViewController.h"
-#import "AuthenticationSheetViewController.h"
-#import "MediaLicenseChooserViewController.h"
-#import "MediaLocalisationPickerViewController.h"
-#import "UIGlossyButton.h"
 
-@class License;
+@class LTLicense, LTMediaLicenseChooserViewController;
 
-@interface MediaUploadFormViewController : LTTableViewController
-- (id)initWithAssetURL:(NSURL*)assetURL;
+@protocol LTMediaLicenseChooserDelegate <NSObject>
+
+- (void)mediaLicenseViewController:(LTMediaLicenseChooserViewController*)controller
+                  didChooseLicense:(LTLicense*)license;
+
+@end
+
+@interface LTMediaLicenseChooserViewController : LTTableViewController
+
+@property (nonatomic, unsafe_unretained) id<LTMediaLicenseChooserDelegate> delegate;
+@property (nonatomic, strong) LTLicense *currentLicense;
+
 @end

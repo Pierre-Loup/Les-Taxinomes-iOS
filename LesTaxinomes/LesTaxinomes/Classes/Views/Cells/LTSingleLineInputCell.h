@@ -1,5 +1,5 @@
 //
-//  SingleLineInputCell.h
+//  LTSingleLineInputCell.h
 //  LesTaxinomes
 //
 //  Created by Pierre-Loup Personnel on 12/07/12.
@@ -8,12 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SingleLineInputCell : UITableViewCell
+@interface LTSingleLineInputCell : UITableViewCell
 
 @property (nonatomic, strong) IBOutlet UITextField* input;
+@property (nonatomic, strong) IBOutlet UILabel* titleLabel;
 
-+ (SingleLineInputCell *)singleLineInputCell;
-+ (SingleLineInputCell *)singleLineInputCellWithTitle:(NSString *)title;
 + (NSString *)reuseIdentifier;
 - (NSString *)reuseIdentifier;
 - (void)setTitle:(NSString *)title;

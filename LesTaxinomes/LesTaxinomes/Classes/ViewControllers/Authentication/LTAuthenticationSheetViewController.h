@@ -1,8 +1,8 @@
 //
-//  MediaLicenseChooserViewController.h
+//  LTAuthenticationSheetViewController.h
 //  LesTaxinomes
 //
-//  Created by Pierre-Loup Personnel on 27/05/12.
+//  Created by Pierre-Loup Tristant on 27/04/12.
 //  Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
@@ -24,25 +24,15 @@
  */
 
 #import <UIKit/UIKit.h>
-
 #import "LTTableViewController.h"
+#import "LTConnectionManager.h"
 
-@class LTLicense;
-
-@protocol MediaLicenseChooserDelegate <NSObject>
-
-- (void)didChooseLicense:(LTLicense *)license;
+@protocol LTAuthenticationSheetDelegate <NSObject>
+@required
+- (void)authenticationDidFinishWithSuccess:(BOOL)success;
 
 @end
 
-@interface MediaLicenseChooserViewController : LTTableViewController {
-    NSArray * licenses_;
-    NSIndexPath * currentLicenseIndexPath_;
-    UIBarButtonItem * rightBarButton_;
-    
-}
-
-@property (nonatomic, unsafe_unretained) id<MediaLicenseChooserDelegate> delegate;
-@property (nonatomic, strong) LTLicense *currentLicense;
-
+@interface LTAuthenticationSheetViewController : LTTableViewController
+@property (nonatomic, unsafe_unretained) id<LTAuthenticationSheetDelegate> delegate;
 @end

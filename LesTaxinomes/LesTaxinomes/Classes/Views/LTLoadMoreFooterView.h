@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "UIGlossyButton.h"
-
 typedef enum {
     LTLoadMoreFooterViewDisplayModeNormal
     ,LTLoadMoreFooterViewDisplayModeLoading
@@ -18,7 +16,7 @@ typedef enum {
 
 @interface LTLoadMoreFooterView : PSTCollectionReusableView
 
-@property (nonatomic, readonly) UIGlossyButton* loadMoreButton;
+@property (nonatomic, readonly) UIButton* loadMoreButton;
 @property (nonatomic) LTLoadMoreFooterViewDisplayMode displayMode;
 
 @end

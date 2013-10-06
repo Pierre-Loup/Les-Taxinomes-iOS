@@ -9,11 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-@interface MapCell : UITableViewCell
+@interface LTMapCell : UITableViewCell
 
-@property (nonatomic, strong) IBOutlet MKMapView* mapView;
+@property (nonatomic, readonly) IBOutlet MKMapView* mapView;
 
-+ (MapCell *)mapCell;
 + (NSString *)reuseIdentifier;
 - (NSString *)reuseIdentifier;
 

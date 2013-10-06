@@ -8,15 +8,22 @@
 #import <ImageIO/ImageIO.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
-/* Add this before each category implementation, so we don't have to use -all_load or -force_load
- * to load object files from static libraries that only contain categories and no classes.
- *
- * See http://developer.apple.com/library/mac/#qa/qa2006/qa1490.html for more info.
- */
-
 @implementation NSMutableDictionary (ImageMetadataCategory)
 
-@dynamic trueHeading;
+@dynamic location;
+
+- (NSString *)getUTCFormattedDate:(NSDate *)localDate {
+
+    static NSDateFormatter *dateFormatter;
+    if (dateFormatter == nil) {
+        dateFormatter = [[NSDateFormatter alloc] init];
+        NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+        [dateFormatter setTimeZone:timeZone];
+        [dateFormatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
+    }
+    NSString *dateString = [dateFormatter stringFromDate:localDate];
+    return dateString;
+}
 
 - (id)initWithImageSampleBuffer:(CMSampleBufferRef) imageDataSampleBuffer {
     
@@ -24,7 +31,7 @@
     CFDictionaryRef metadataDict = CMCopyDictionaryOfAttachments(NULL, imageDataSampleBuffer, kCMAttachmentMode_ShouldPropagate);
     
     // Just init with it....
-    self = [self initWithDictionary:(NSDictionary*)metadataDict];
+    self = [self initWithDictionary:(NSDictionary*)CFBridgingRelease(metadataDict)];
     
     // Release it
     CFRelease(metadataDict);
@@ -49,7 +56,6 @@
                          }
                         failureBlock:^(NSError *error) {
                         }];
-                [library autorelease];
             }
             else {
                 NSDictionary *metadata = [info objectForKey:UIImagePickerControllerMediaMetadata];
@@ -65,7 +71,6 @@
 - (id)initFromAssetURL:(NSURL*)assetURL {
 
     if ((self = [self init])) {
-        NSURL* assetURL = nil;
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         [library assetForURL:assetURL 
                  resultBlock:^(ALAsset *asset)  {
@@ -74,7 +79,6 @@
                  }
                 failureBlock:^(NSError *error) {
                 }];
-        [library autorelease];
     }
     
     return self;
@@ -108,7 +112,7 @@
         if ([self objectForKey:(NSString*)kCGImagePropertyGPSDictionary]) {
             [locDict addEntriesFromDictionary:[self objectForKey:(NSString*)kCGImagePropertyGPSDictionary]];
         }
-        [locDict setObject:location.timestamp forKey:(NSString*)kCGImagePropertyGPSTimeStamp];
+        [locDict setObject:[self getUTCFormattedDate:location.timestamp] forKey:(NSString*)kCGImagePropertyGPSTimeStamp];
         [locDict setObject:latRef forKey:(NSString*)kCGImagePropertyGPSLatitudeRef];
         [locDict setObject:[NSNumber numberWithFloat:exifLatitude] forKey:(NSString*)kCGImagePropertyGPSLatitude];
         [locDict setObject:lngRef forKey:(NSString*)kCGImagePropertyGPSLongitudeRef];
@@ -117,26 +121,26 @@
         [locDict setObject:[NSNumber numberWithFloat:location.altitude] forKey:(NSString*)kCGImagePropertyGPSAltitude];
         
         [self setObject:locDict forKey:(NSString*)kCGImagePropertyGPSDictionary];
-        [locDict release];    
     }
 }
 
 // Set heading while preserving location metadata, if it exists.
-- (void)setHeading:(CLHeading *)locatioHeading {
+- (void)setHeading:(CLHeading *)locationHeading {
     
-    if (locatioHeading) {
-        
-        CLLocationDirection trueDirection = locatioHeading.trueHeading;
-        NSMutableDictionary *locDict = [[NSMutableDictionary alloc] init];
-        if ([self objectForKey:(NSString*)kCGImagePropertyGPSDictionary]) {
-            [locDict addEntriesFromDictionary:[self objectForKey:(NSString*)kCGImagePropertyGPSDictionary]];
-        }
-        [locDict setObject:@"T" forKey:(NSString*)kCGImagePropertyGPSImgDirectionRef];
-        [locDict setObject:[NSNumber numberWithFloat:trueDirection] forKey:(NSString*)kCGImagePropertyGPSImgDirection];
-
-        [self setObject:locDict forKey:(NSString*)kCGImagePropertyGPSDictionary];
-        [locDict release];    
+    if (locationHeading) {
+        [self setTrueHeading:locationHeading.trueHeading];
     }
+}
+
+- (void)setTrueHeading:(CLLocationDirection)trueHeading {
+    NSMutableDictionary *locDict = [[NSMutableDictionary alloc] init];
+    if ([self objectForKey:(NSString*)kCGImagePropertyGPSDictionary]) {
+        [locDict addEntriesFromDictionary:[self objectForKey:(NSString*)kCGImagePropertyGPSDictionary]];
+    }
+    [locDict setObject:@"T" forKey:(NSString*)kCGImagePropertyGPSImgDirectionRef];
+    [locDict setObject:[NSNumber numberWithFloat:trueHeading] forKey:(NSString*)kCGImagePropertyGPSImgDirection];
+    
+    [self setObject:locDict forKey:(NSString*)kCGImagePropertyGPSDictionary];
 }
 
 - (CLLocation*)location {
@@ -153,7 +157,7 @@
         if ([@"W" isEqualToString:lngRef])
             lng *= -1.0f;
         
-        CLLocation *location = [[[CLLocation alloc] initWithLatitude:lat longitude:lng] autorelease];
+        CLLocation *location = [[CLLocation alloc] initWithLatitude:lat longitude:lng];
         return location;
     }
     
@@ -171,19 +175,19 @@
 }
 
 - (NSMutableDictionary *)dictionaryForKey:(CFStringRef)key {
-    NSDictionary *dict = [self objectForKey:(NSString*)key];
+    NSDictionary *dict = [self objectForKey:(NSString*)CFBridgingRelease(key)];
     NSMutableDictionary *mutableDict;
     
     if (dict == nil) {
         mutableDict = [NSMutableDictionary dictionaryWithCapacity:1];
-        [self setObject:mutableDict forKey:(NSString*)key];
+        [self setObject:mutableDict forKey:(NSString*)CFBridgingRelease(key)];
     } else {
         if ([dict isMemberOfClass:[NSMutableDictionary class]])
         {
             mutableDict = (NSMutableDictionary*)dict;
         } else {
-            mutableDict = [[dict mutableCopy] autorelease];
-            [self setObject:mutableDict forKey:(NSString*)key];
+            mutableDict = [dict mutableCopy];
+            [self setObject:mutableDict forKey:(NSString*)CFBridgingRelease(key)];
         }
     }
     
@@ -201,12 +205,14 @@
 }
 
 - (void)setDateOriginal:(NSDate *)date {
-    [EXIF_DICT setObject:date forKey:(NSString*)kCGImagePropertyExifDateTimeOriginal];
-    [TIFF_DICT setObject:date forKey:(NSString*)kCGImagePropertyTIFFDateTime];
+    NSString *dateString = [self getUTCFormattedDate:date];
+    [EXIF_DICT setObject:dateString forKey:(NSString*)kCGImagePropertyExifDateTimeOriginal];
+    [TIFF_DICT setObject:dateString forKey:(NSString*)kCGImagePropertyTIFFDateTime];
 }
 
 - (void)setDateDigitized:(NSDate *)date {
-    [EXIF_DICT setObject:date forKey:(NSString*)kCGImagePropertyExifDateTimeDigitized];
+    NSString *dateString = [self getUTCFormattedDate:date];
+    [EXIF_DICT setObject:dateString forKey:(NSString*)kCGImagePropertyExifDateTimeDigitized];
 }
 
 - (void)setMake:(NSString*)make model:(NSString*)model software:(NSString*)software {
@@ -243,7 +249,7 @@
  * If not present, a value of 1 is assumed. */ 
 
 // Reference: http://sylvana.net/jpegcrop/exif_orientation.html
-- (void)setImageOrientarion:(UIImageOrientation)orientation {
+- (void)setImageOrientation:(UIImageOrientation)orientation {
     int o = 1;
     switch (orientation) {
         case UIImageOrientationUp:

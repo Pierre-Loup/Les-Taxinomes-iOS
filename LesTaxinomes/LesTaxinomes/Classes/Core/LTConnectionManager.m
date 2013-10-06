@@ -68,7 +68,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
 #pragma mark - Public Methods
 #pragma mark Class Methods
 
-+ (LTConnectionManager *)sharedConnectionManager {
++ (LTConnectionManager *)sharedManager {
     static LTConnectionManager* connectionManager = nil;
     static dispatch_once_t  connectionManagerOnceToken;
     

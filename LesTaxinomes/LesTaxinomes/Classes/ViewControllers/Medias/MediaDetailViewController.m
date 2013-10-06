@@ -129,7 +129,7 @@
 - (void)configureView
 {
     [SVProgressHUD show];
-    LTConnectionManager *cm = [LTConnectionManager sharedConnectionManager];
+    LTConnectionManager *cm = [LTConnectionManager sharedManager];
     
     // Load media datas if not present or not up to date
     if( self.media == nil
@@ -306,7 +306,7 @@
         [self displayLargeMediaPhotoViewer];
     } else {
         [SVProgressHUD show];
-        [[LTConnectionManager sharedConnectionManager] getMediaLargeURLWithId:self.media.identifier responseBlock:^(LTMedia *media, NSError *error) {
+        [[LTConnectionManager sharedManager] getMediaLargeURLWithId:self.media.identifier responseBlock:^(LTMedia *media, NSError *error) {
             
             if (!error) {
                 self.media = media;

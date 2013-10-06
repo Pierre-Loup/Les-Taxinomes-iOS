@@ -56,7 +56,7 @@ typedef enum {
 @property (nonatomic, strong) LTAuthor *authenticatedUser;
 @property (nonatomic, unsafe_unretained) id<LTConnectionManagerDelegate> delegate;
 
-+ (LTConnectionManager *)sharedConnectionManager;
++ (LTConnectionManager *)sharedManager;
 - (void)getLicensesWithResponseBlock:(void (^)(NSArray* licenses, NSError *error))responseBlock;
 
 - (void)getMediasSummariesByDateForAuthor:(LTAuthor *)author

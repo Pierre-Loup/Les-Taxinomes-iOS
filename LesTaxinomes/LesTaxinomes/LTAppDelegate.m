@@ -9,6 +9,7 @@
 #import "LTAppDelegate.h"
 
 #import "LTAppearance.h"
+#import "LTConnectionManager.h"
 
 @implementation LTAppDelegate
 
@@ -17,10 +18,9 @@
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"Taxinomes.sqlite"];
     
     [self.window makeKeyAndVisible];
-    if (!IOS7_OR_GREATER) {
-        [LTAppearance setup];
+    
+    [LTAppearance setup];
 
-    }
     
     // Setup tabBar titles
     UITabBarController* tabBarController = (UITabBarController*)self.window.rootViewController;
@@ -38,6 +38,10 @@
         ((UIViewController*)navigationController.viewControllers[0]).title = tabItemsTitles[i];
         ((UITabBarItem*)tabBarController.tabBar.items[i]).title = tabItemsTitles[i];
     }
+    
+    // Retreive licenses
+    [[LTConnectionManager sharedManager] getLicensesWithResponseBlock:^(NSArray *licenses, NSError *error) {
+    }];
     
     return YES;
 }

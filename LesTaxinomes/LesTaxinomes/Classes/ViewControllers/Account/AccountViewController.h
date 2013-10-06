@@ -25,7 +25,7 @@
 
 #import <UIKit/UIKit.h>
 #import "LTConnectionManager.h"
-#import "AuthenticationSheetViewController.h"
+#import "LTAuthenticationSheetViewController.h"
 #import "LTAuthor.h"
 
 @interface AccountViewController : LTViewController

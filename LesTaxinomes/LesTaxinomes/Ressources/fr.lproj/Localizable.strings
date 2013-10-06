@@ -27,6 +27,7 @@
 "common.by" = "Par";
 "common.license" = "Licence";
 "common.hud.failure" = "Échec";
+"common.submit" = "Valider";
 
 /* TAB NAR */
 "tabbar.home"       = "Accueil";
@@ -48,6 +49,13 @@
 "media_detail.no_text" = "Pas de description";
 "media_detail.publish_info_patern" = "Publié par %@ le %@\n%d vues";
 
+/* AUTHENTICATION */
+
+"authentication.login_label.text" = "Identifiant";
+"authentication.password_label.text" = "Mot de passe";
+"authentication.forgotten_password_button.text" = "Mot de passe oublié ?";
+"authentication.signup_button.text" = "Inscription";
+
 /* ACCOUNT */
 "account_uploas_media" = "Publier un média";
 "account_my_medias" = "Mes médias";
@@ -57,7 +65,7 @@
 "media_upload_no_title" = "Sans titre";
 "media_upload_no_license_text" = "Aucune licence";
 "media_upload.location_picker_cell.text" = "Localisation du média";
-"media_upload.text_prefix" = "Média partagé avec l'application des Taxinomes pour iPhone";
+"media_upload.text_prefix" = "\n\nMédia partagé avec l'application des Taxinomes pour iPhone";
 "media_upload.confirm.title" = "Partage réussi";
 "media_upload.confirm.text" = "Le média a bien été partagé.";
 

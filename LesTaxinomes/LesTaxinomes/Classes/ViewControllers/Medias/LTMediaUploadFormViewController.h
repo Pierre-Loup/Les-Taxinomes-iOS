@@ -1,9 +1,9 @@
 //
-//  AuthenticationSheetViewController.h
+//  LTMediaUploadFormViewController.h
 //  LesTaxinomes
 //
-//  Created by Pierre-Loup Tristant on 27/04/12.
-//  Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
+//  Created by Pierre-Loup Tristant on 30/01/12.
+//  Copyright (c) 2011 Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
 /*
@@ -24,16 +24,21 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "LTViewController.h"
-#import "LTConnectionManager.h"
-#import "UIGlossyButton.h"
+#import <MapKit/MapKit.h>
+#import <MobileCoreServices/UTCoreTypes.h>
+#import <CoreLocation/CoreLocation.h>
 
-@protocol LTAuthenticationSheetDelegate <NSObject>
-@required
-- (void)authenticationDidFinishWithSuccess:(BOOL)success;
+#import "LTTableViewController.h"
+#import "LTAuthenticationSheetViewController.h"
+#import "LTMediaLicenseChooserViewController.h"
+#import "MediaLocalisationPickerViewController.h"
 
-@end
+@class License;
 
-@interface AuthenticationSheetViewController :LTViewController
-@property (nonatomic, unsafe_unretained) id<LTAuthenticationSheetDelegate> delegate;
+@interface LTMediaUploadFormViewController : LTTableViewController
+
+- (id)initWithAssetURL:(NSURL*)assetURL;
+
+@property (nonatomic, strong) NSURL* mediaAssetURL;
+
 @end

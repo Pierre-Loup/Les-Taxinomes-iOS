@@ -1,5 +1,5 @@
 //
-//  AuthenticationSheetViewController.m
+//  LTAuthenticationSheetViewController.m
 //  LesTaxinomes
 //
 //  Created by Pierre-Loup Tristant on 27/04/12.
@@ -23,18 +23,22 @@
  
  */
 
-#import "AuthenticationSheetViewController.h"
+#import "LTAuthenticationSheetViewController.h"
 
-@interface AuthenticationSheetViewController ()
+@interface LTAuthenticationSheetViewController ()
+
+@property (nonatomic, strong) IBOutlet UIBarButtonItem* cancelBarButton;
 @property (nonatomic, strong) IBOutlet UILabel* loginLabel;
 @property (nonatomic, strong) IBOutlet UITextField* loginTextField;
 @property (nonatomic, strong) IBOutlet UILabel* passwordLabel;
+@property (nonatomic, strong) IBOutlet UIButton* passwordForgottenButton;
+@property (nonatomic, strong) IBOutlet UIButton* signupButton;
 @property (nonatomic, strong) IBOutlet UITextField* passwordTextField;
-@property (nonatomic, strong) IBOutlet UIGlossyButton* signinButton;
+@property (nonatomic, strong) IBOutlet UIButton* signinButton;
 
 @end
 
-@implementation AuthenticationSheetViewController
+@implementation LTAuthenticationSheetViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,23 +49,22 @@
 }
 
 
-- (void)viewDidLoad {
-    
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    self.title = _T(@"common.signin");
-        UIBarButtonItem * cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:_T(@"common.cancel") style:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTouched:)];
-        [self.navigationItem setRightBarButtonItem:cancelBarButton];
+    self.title = _T(@"common.submit");
+    [self.cancelBarButton setTitle:_T(@"common.cancel")];
     
-    self.loginLabel.textColor = kLTColorMain;
-    self.passwordLabel.textColor = kLTColorMain;
-
-    self.signinButton.tintColor = kLTColorSecondary;
-    self.signinButton.buttonCornerRadius = 10.0;
-    [self.signinButton setGradientType:kUIGlossyButtonGradientTypeLinearGlossyStandard];
+    self.loginLabel.text = _T(@"authentication.login_label.text");
+    self.passwordLabel.text = _T(@"authentication.password_label.text");
+    [self.passwordForgottenButton setTitle:_T(@"authentication.forgotten_password_button.text")
+                                  forState:UIControlStateNormal];
+    [self.signupButton setTitle:_T(@"authentication.signup_button.text")
+                       forState:UIControlStateNormal];
 }
 
-- (void)viewDidUnload {
-    
+- (void)viewDidUnload
+{
     [super viewDidUnload];
     self.loginTextField = nil;
     self.passwordTextField = nil;
@@ -73,7 +76,7 @@
 - (IBAction)submitAuthentication:(id)sender {
     
     [SVProgressHUD show];
-    LTConnectionManager* cm = [LTConnectionManager sharedConnectionManager];
+    LTConnectionManager* cm = [LTConnectionManager sharedManager];
         [cm authWithLogin:self.loginTextField.text
                  password:self.passwordTextField.text
             responseBlock:^(LTAuthor *authenticatedUser, NSError *error) {
@@ -108,7 +111,7 @@
     if (textField == self.loginTextField) {
         [self.passwordTextField becomeFirstResponder];
     } else if (textField == self.passwordTextField) {
-        [self.passwordTextField resignFirstResponder];
+        [self submitAuthentication:textField];
     }
     return YES;
 }

@@ -7,11 +7,10 @@
 //
 
 #import "LTLoadMoreFooterView.h"
-#import "UIGlossyButton+LT.h"
 
 @interface LTLoadMoreFooterView ()
 
-@property (nonatomic, strong) UIGlossyButton* loadMoreButton;
+@property (nonatomic, strong) UIButton* loadMoreButton;
 @property (nonatomic, strong) UIActivityIndicatorView* loadingIndicator;
 @property (nonatomic, strong) UILabel* loadingLabel;
 
@@ -29,8 +28,7 @@
         
         self.backgroundColor = [UIColor whiteColor];
         
-        _loadMoreButton = [[UIGlossyButton alloc] initWithFrame:CGRectMake(0.f, 0.f, 120.f, 40.f)];
-        [_loadMoreButton setupStandardMainColorButton];
+        _loadMoreButton = [[UIButton alloc] initWithFrame:CGRectMake(0.f, 0.f, 120.f, 40.f)];
         [self addSubview:_loadMoreButton];
         
         _loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];

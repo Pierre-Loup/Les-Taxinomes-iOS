@@ -1,5 +1,5 @@
 //
-//  MediaUploadFormViewController.m
+//  LTMediaUploadFormViewController.m
 //  LesTaxinomes
 //
 //  Created by Pierre-Loup Tristant on 30/01/12.
@@ -26,16 +26,21 @@
 #import <AssetsLibrary/ALAsset.h>
 #import <AssetsLibrary/ALAssetRepresentation.h>
 
+// Core
+#import "LTMapCell.h"
 #import "LTConnectionManager.h"
-#import "MapCell.h"
-#import "MediaUploadFormViewController.h"
+// View
+#import "LTButtonCell.h"
+#import "LTSingleLineInputCell.h"
+#import "LTTextViewCell.h"
+#import "UIImageView+PhotoFrame.h"
+// ViewController
+#import "LTMediaUploadFormViewController.h"
+// Model
+#import "LTLicense+Business.h"
+// NSFoncation Categories
 #import "NSData+Base64.h"
 #import "NSMutableDictionary+ImageMetadata.h"
-#import "SingleLineInputCell.h"
-#import "UIImageView+PhotoFrame.h"
-
-// MODEL
-#import "LTLicense+Business.h"
 
 #define kLocalisationPickerCellId @"localisationPickerCell"
 #define kCityCellId @"CityCell"
@@ -51,31 +56,35 @@
 //SECTION 3
 #define kLocationSection 3
 #define kLocationPickerCellIndexPath [NSIndexPath indexPathForRow:0 inSection:3]
+//SECTION 4
+#define kSubmitCellIndexPath [NSIndexPath indexPathForRow:0 inSection:4]
 
-#define kSectionsNumber 4
+#define kSectionsNumber 5
 
-@interface MediaUploadFormViewController ()<UITableViewDelegate,
+@interface LTMediaUploadFormViewController ()<UITableViewDelegate,
                                             UITableViewDataSource,
                                             UITextFieldDelegate,
                                             UITextViewDelegate,
                                             UIImagePickerControllerDelegate,
-                                            MediaLicenseChooserDelegate,
+                                            LTMediaLicenseChooserDelegate,
                                             MediaLocationPickerDelegate,
                                             LTConnectionManagerDelegate>
 
-@property (nonatomic, strong) IBOutlet UITableViewCell* textCell;
-@property (nonatomic, strong) IBOutlet UITableViewCell* licenseCell;
-@property (nonatomic, strong) IBOutlet UITableViewCell* publishCell;
 @property (nonatomic, strong) IBOutlet UIImageView* mediaSnapshotView;
+
+@property (nonatomic, strong) LTSingleLineInputCell* titleCell;
+@property (nonatomic, strong) UITableViewCell* licenseCell;
+@property (nonatomic, strong) LTSingleLineInputCell* cityCell;
+@property (nonatomic, strong) LTSingleLineInputCell* zipcodeCell;
+@property (nonatomic, strong) LTSingleLineInputCell* countryCell;
+
 @property (nonatomic, strong) UITextField* titleInput;
-@property (nonatomic, strong) IBOutlet UITextView* textInput;
 @property (nonatomic, strong) UITextField* cityInput;
 @property (nonatomic, strong) UITextField* zipcodeInput;
 @property (nonatomic, strong) UITextField* countryInput;
-@property (nonatomic, strong) IBOutlet UIGlossyButton* shareButton;
-@property (nonatomic, strong) IBOutlet UISwitch* publishSwitch;
+@property (nonatomic, strong) UITextView* textInput;
+@property (nonatomic, strong) UIButton* shareButton;
 
-@property (nonatomic, strong) NSURL* mediaAssetURL;
 @property (nonatomic, strong) LTLicense *license;
 @property (nonatomic, strong) CLLocation* mediaLocation;
 @property (unsafe_unretained, nonatomic, readonly) NSArray* rowsInSection;
@@ -86,7 +95,7 @@
 - (void)refreshForm;
 @end
 
-@implementation MediaUploadFormViewController
+@implementation LTMediaUploadFormViewController
 @synthesize cellForIndexPath = _cellForIndexPath;
 @synthesize reverseGeocoder = _reverseGeocoder;
 
@@ -94,25 +103,13 @@
 
 - (id)initWithAssetURL:(NSURL*)assetURL
 {
-    self = [self initWithNibName:@"MediaUploadFormViewController" bundle:nil];
+    self = [self initWithNibName:@"LTMediaUploadFormViewController" bundle:nil];
     if (self) {
         self.mediaAssetURL = assetURL;
-        _rowsInSection = @[[NSNumber numberWithInt:1],
-                          [NSNumber numberWithInt:1],
-                          [NSNumber numberWithInt:1],
-                          [NSNumber numberWithInt:1],
-                          [NSNumber numberWithInt:1]];
+        _rowsInSection = @[@1, @1, @1, @1, @1];
         _license = [LTLicense defaultLicense];
     }
     return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
 
@@ -121,12 +118,9 @@
     [super viewDidLoad];
     
     // Load textCell, licenseCell and
-    [[NSBundle mainBundle] loadNibNamed:@"MediaUploadFormCells" owner:self options:nil];
     self.navigationItem.title = _T(@"media_upload_view_title");
     
     self.shareButton.tintColor = kLTColorSecondary;
-    self.shareButton.buttonCornerRadius = 10.0;
-    [self.shareButton setGradientType:kUIGlossyButtonGradientTypeLinearGlossyStandard];
     
     ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
     [library assetForURL:self.mediaAssetURL resultBlock:^(ALAsset *asset) {
@@ -155,6 +149,10 @@
     
     [self.mediaSnapshotView applyPhotoFrameEffect];
     
+    self.licenseCell = [self.tableView dequeueReusableCellWithIdentifier:@"LTLicenceCell"];
+    if ([[UIApplication sharedApplication].keyWindow respondsToSelector:@selector(tintColor)]) {
+        self.licenseCell.detailTextLabel.textColor = [UIApplication sharedApplication].keyWindow.tintColor;
+    }
     
     if (self.license) {
         self.licenseCell.detailTextLabel.text = self.license.name;
@@ -173,9 +171,6 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    self.textCell = nil;
-    self.licenseCell = nil;
-    self.publishCell = nil;
     self.mediaSnapshotView = nil;
     self.titleInput = nil;
     self.textInput = nil;
@@ -183,29 +178,44 @@
     self.zipcodeInput = nil;
     self.countryInput = nil;
     self.shareButton = nil;
-    self.publishSwitch = nil;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private methods
 
-- (void)refreshForm {
+- (void)refreshForm
+{
     [self.cellForIndexPath removeAllObjects];
-    if (self.textCell)
-        [self.cellForIndexPath setObject:self.textCell forKey:kTexteCellIndexPath];
+    LTTextViewCell* textViewCell = [self.tableView dequeueReusableCellWithIdentifier:@"LTTextViewCell"];
+    self.textInput = textViewCell.textView;
+    [self.cellForIndexPath setObject:textViewCell
+                              forKey:kTexteCellIndexPath];
+    
+    LTButtonCell* buttonCell = [self.tableView dequeueReusableCellWithIdentifier:@"LTButtonCell"];
+    [buttonCell.button addTarget:self
+                          action:@selector(uploadMedia:)
+                forControlEvents:UIControlEventTouchUpInside];
+    [buttonCell.button setTitle:_T(@"common.submit")
+                       forState:UIControlStateNormal];
+    [self.cellForIndexPath setObject:buttonCell
+                              forKey:kSubmitCellIndexPath];
+    
     if (self.licenseCell) {
-        [self.cellForIndexPath setObject:self.licenseCell forKey:kLicenseCellIndexPath];
+        [self.cellForIndexPath setObject:self.licenseCell
+                                  forKey:kLicenseCellIndexPath];
     }
     
     // Title cell
-    SingleLineInputCell* titleCell = [self.tableView dequeueReusableCellWithIdentifier:[SingleLineInputCell reuseIdentifier]];
-    if (!titleCell) {
-        titleCell = [SingleLineInputCell singleLineInputCell];
+    if (!self.titleCell) {
+        self.titleCell = [self.tableView dequeueReusableCellWithIdentifier:[LTSingleLineInputCell reuseIdentifier]];
+        [self.titleCell setTitle:_T(@"common.title")];
+        self.titleInput = self.titleCell.input;
+        self.titleCell.input.text = @"";
+        [self.titleInput setDelegate:self];
     }
-    [titleCell setTitle:_T(@"common.title")];
-    self.titleInput = titleCell.input;
-    [self.titleInput setDelegate:self];
-    [self.cellForIndexPath setObject:titleCell forKey:kTitleCellIndexPath];
+    [self.cellForIndexPath setObject:self.titleCell
+                              forKey:kTitleCellIndexPath];
+    
     // Location picker cell
     UITableViewCell* localisationPickerCell = [self.tableView dequeueReusableCellWithIdentifier:kLocalisationPickerCellId];
     if (!localisationPickerCell) {
@@ -220,55 +230,59 @@
     
     // Map cell
     if (self.mediaLocation) {
-        MapCell* mapCell = [self.tableView dequeueReusableCellWithIdentifier:[MapCell reuseIdentifier]];
-        if (!mapCell) {
-            mapCell = [MapCell mapCell];
-        }
+        LTMapCell* mapCell = [self.tableView dequeueReusableCellWithIdentifier:[LTMapCell reuseIdentifier]];
+
         MKPlacemark* annotation = [[MKPlacemark alloc] initWithCoordinate:self.mediaLocation.coordinate addressDictionary:nil];
         [mapCell.mapView removeAnnotations:mapCell.mapView.annotations];
         [mapCell.mapView addAnnotation:annotation];
         [mapCell.mapView setRegion:MKCoordinateRegionMake(self.mediaLocation.coordinate, MKCoordinateSpanMake(0.1, 0.1))];
-        NSIndexPath* mapCellIndexPath = [NSIndexPath indexPathForRow:rowNumberForSection inSection:kLocationSection];
+        NSIndexPath* mapCellIndexPath = [NSIndexPath indexPathForRow:rowNumberForSection
+                                                           inSection:kLocationSection];
         [self.cellForIndexPath setObject:mapCell forKey:mapCellIndexPath];
         rowNumberForSection++;
     }
     
     // City cell
-    SingleLineInputCell* cityCell = [self.tableView dequeueReusableCellWithIdentifier:[SingleLineInputCell reuseIdentifier]];
-    if (!cityCell) {
-        cityCell = [SingleLineInputCell singleLineInputCell];
+    if (!self.cityCell) {
+        self.cityCell = [self.tableView dequeueReusableCellWithIdentifier:[LTSingleLineInputCell reuseIdentifier]];
+        [self.cityCell setTitle:_T(@"common.city")];
+        self.cityInput = self.cityCell.input;
+        self.cityCell.input.text = @"";
+        [self.cityCell.input setDelegate:self];
     }
-    [cityCell setTitle:_T(@"common.city")];
-    self.cityInput = cityCell.input;
-    [cityCell.input setDelegate:self];
+    
     NSIndexPath* cityCellIndexPath = [NSIndexPath indexPathForRow:rowNumberForSection inSection:kLocationSection];
-    [self.cellForIndexPath setObject:cityCell forKey:cityCellIndexPath];
+    [self.cellForIndexPath setObject:self.cityCell
+                              forKey:cityCellIndexPath];
     rowNumberForSection++;
     
     // Zipcode cell
-    SingleLineInputCell* zipcodeCell = [self.tableView dequeueReusableCellWithIdentifier:[SingleLineInputCell reuseIdentifier]];
-    if (!zipcodeCell ) {
-        zipcodeCell  = [SingleLineInputCell singleLineInputCell];
+    if(!self.zipcodeCell) {
+        self.zipcodeCell = [self.tableView dequeueReusableCellWithIdentifier:[LTSingleLineInputCell reuseIdentifier]];
+        [self.zipcodeCell setTitle:_T(@"common.zipcode")];
+        self.zipcodeInput = self.zipcodeCell.input;
+        [self.zipcodeCell.input setDelegate:self];
+        self.zipcodeCell.input.text = @"";
     }
-    [zipcodeCell setTitle:_T(@"common.zipcode")];
-    self.zipcodeInput = zipcodeCell.input;
-    [zipcodeCell.input setDelegate:self];
     
     NSIndexPath* zipcodeCellIndexPath = [NSIndexPath indexPathForRow:rowNumberForSection inSection:kLocationSection];
-    [self.cellForIndexPath setObject:zipcodeCell forKey:zipcodeCellIndexPath];
+    [self.cellForIndexPath setObject:self.zipcodeCell
+                              forKey:zipcodeCellIndexPath];
     rowNumberForSection++;
     
     // Country cell
-    SingleLineInputCell* countryCell = [self.tableView dequeueReusableCellWithIdentifier:[SingleLineInputCell reuseIdentifier]];
-    if (!countryCell) {
-        countryCell = [SingleLineInputCell singleLineInputCell];
+    if (!self.countryCell)
+    {
+        self.countryCell = [self.tableView dequeueReusableCellWithIdentifier:[LTSingleLineInputCell reuseIdentifier]];
+        
+        [self.countryCell setTitle:_T(@"common.country")];
+        self.countryInput = self.countryCell.input;
+        [self.countryCell.input setDelegate:self];
+        self.countryCell.input.text = @"";
     }
-    [countryCell setTitle:_T(@"common.country")];
-    self.countryInput = countryCell.input;
-    [countryCell.input setDelegate:self];
     
     NSIndexPath* countryCellIndexPath = [NSIndexPath indexPathForRow:rowNumberForSection inSection:kLocationSection];
-    [self.cellForIndexPath setObject:countryCell forKey:countryCellIndexPath];
+    [self.cellForIndexPath setObject:self.countryCell forKey:countryCellIndexPath];
     rowNumberForSection++;
     
     [self.tableView reloadData];
@@ -317,7 +331,7 @@
     
     [SVProgressHUD show];
     
-    LTConnectionManager* connectionManager = [LTConnectionManager sharedConnectionManager];
+    LTConnectionManager* connectionManager = [LTConnectionManager sharedManager];
     connectionManager.delegate = self;
     [connectionManager addMediaWithTitle:self.titleInput.text
                                     text:self.textInput.text
@@ -357,7 +371,10 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell* cell = (UITableViewCell *)[self.cellForIndexPath objectForKey:indexPath];
+    // Fix issue : http://stackoverflow.com/questions/18919459
+    NSIndexPath* currentIndexPath = [NSIndexPath indexPathForRow:indexPath.row
+                                                       inSection:indexPath.section];
+    UITableViewCell* cell = (UITableViewCell *)[self.cellForIndexPath objectForKey:currentIndexPath];
     return cell.frame.size.height;
 }
 
@@ -371,7 +388,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([indexPath isEqual:kLicenseCellIndexPath]) {
-        MediaLicenseChooserViewController* mediaLicenseChooserVC = [[MediaLicenseChooserViewController alloc] init];
+        LTMediaLicenseChooserViewController* mediaLicenseChooserVC = [self.storyboard instantiateViewControllerWithIdentifier:@"LTMediaLicenseChooser"];
         mediaLicenseChooserVC.delegate = self;
         mediaLicenseChooserVC.currentLicense = self.license;
         [self.navigationController pushViewController:mediaLicenseChooserVC animated:YES];
@@ -413,7 +430,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:^{}];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -445,7 +462,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - MediaLicenseChooserDelegate
 
-- (void)didChooseLicense:(LTLicense *)license
+- (void)mediaLicenseViewController:(LTMediaLicenseChooserViewController*)controller
+                  didChooseLicense:(LTLicense*)license
 {
     if (license) {
         self.license = license;

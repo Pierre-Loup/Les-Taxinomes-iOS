@@ -118,7 +118,7 @@
         CLLocation* searchLocation = [[CLLocation alloc] initWithLatitude:self.referenceAnnotation.coordinate.latitude
                                                                 longitude:self.referenceAnnotation.coordinate.longitude];
         
-        [[LTConnectionManager sharedConnectionManager] getMediasSummariesByDateForAuthor:nil
+        [[LTConnectionManager sharedManager] getMediasSummariesByDateForAuthor:nil
                                                                         nearLocation:searchLocation
                                                                            withRange:range
         responseBlock:^(NSArray *medias, NSError *error) {
