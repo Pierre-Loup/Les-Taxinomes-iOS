@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A51800611812A594005CD602 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A51800601812A594005CD602 /* CFNetwork.framework */; };
+		A51800651812A912005CD602 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A51800641812A912005CD602 /* libicucore.dylib */; };
+		A53A60431807371F009ED623 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A53A60421807371F009ED623 /* Images.xcassets */; };
 		A5434CCD1801CFC0004F75C6 /* LTTextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5434CCC1801CFC0004F75C6 /* LTTextViewCell.m */; };
 		A5434CCE1801CFC0004F75C6 /* LTTextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5434CCC1801CFC0004F75C6 /* LTTextViewCell.m */; };
 		A5434CD11801D14C004F75C6 /* LTButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5434CD01801D14C004F75C6 /* LTButtonCell.m */; };
@@ -50,7 +53,7 @@
 		A57765B91777546200CC8EE6 /* UIImageView+PhotoFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFF117772CFE00C16C06 /* UIImageView+PhotoFrame.m */; };
 		A57765BA1777546200CC8EE6 /* SRRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFF717772CFE00C16C06 /* SRRefreshView.m */; };
 		A57765BB1777546200CC8EE6 /* SRSlimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFF917772CFE00C16C06 /* SRSlimeView.m */; };
-		A57765BC1777547900CC8EE6 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFC017772CFE00C16C06 /* MapViewController.m */; };
+		A57765BC1777547900CC8EE6 /* LTMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFC017772CFE00C16C06 /* LTMapViewController.m */; };
 		A57765BE1777625700CC8EE6 /* LesTaxinomes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF7217772CFE00C16C06 /* LesTaxinomes.xcdatamodeld */; };
 		A57765C61777627F00CC8EE6 /* LTAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = A57765C51777627F00CC8EE6 /* LTAuthor.m */; };
 		A57765C71777627F00CC8EE6 /* LTAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = A57765C51777627F00CC8EE6 /* LTAuthor.m */; };
@@ -72,7 +75,6 @@
 		A5E0B1CB1777159F00CD4CCF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5E0B1CA1777159F00CD4CCF /* UIKit.framework */; };
 		A5E0B1D31777159F00CD4CCF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E0B1D21777159F00CD4CCF /* main.m */; };
 		A5E0B1D71777159F00CD4CCF /* LTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A5E0B1D61777159F00CD4CCF /* LTAppDelegate.m */; };
-		A5E0B1D91777159F00CD4CCF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5E0B1D81777159F00CD4CCF /* Images.xcassets */; };
 		A5E0B1E01777159F00CD4CCF /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5E0B1DF1777159F00CD4CCF /* XCTest.framework */; };
 		A5E0B1E11777159F00CD4CCF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5E0B1C61777159F00CD4CCF /* Foundation.framework */; };
 		A5E0B1E21777159F00CD4CCF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5E0B1CA1777159F00CD4CCF /* UIKit.framework */; };
@@ -109,6 +111,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A51800601812A594005CD602 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		A51800621812A8D9005CD602 /* dylib1.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = dylib1.o; path = usr/lib/dylib1.o; sourceTree = SDKROOT; };
+		A51800641812A912005CD602 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		A53A60421807371F009ED623 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A5434CCB1801CFC0004F75C6 /* LTTextViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTTextViewCell.h; sourceTree = "<group>"; };
 		A5434CCC1801CFC0004F75C6 /* LTTextViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTTextViewCell.m; sourceTree = "<group>"; };
 		A5434CCF1801D14C004F75C6 /* LTButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTButtonCell.h; sourceTree = "<group>"; };
@@ -136,7 +142,6 @@
 		A5E0B1D41777159F00CD4CCF /* LesTaxinomes-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LesTaxinomes-Prefix.pch"; sourceTree = "<group>"; };
 		A5E0B1D51777159F00CD4CCF /* LTAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTAppDelegate.h; sourceTree = "<group>"; };
 		A5E0B1D61777159F00CD4CCF /* LTAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTAppDelegate.m; sourceTree = "<group>"; };
-		A5E0B1D81777159F00CD4CCF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A5E0B1DE1777159F00CD4CCF /* LesTaxinomesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LesTaxinomesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5E0B1DF1777159F00CD4CCF /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		A5E0B1E71777159F00CD4CCF /* LesTaxinomesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LesTaxinomesTests-Info.plist"; sourceTree = "<group>"; };
@@ -176,8 +181,8 @@
 		A5F6EF8117772CFE00C16C06 /* LTLicense+Business.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "LTLicense+Business.m"; sourceTree = "<group>"; };
 		A5F6EF8217772CFE00C16C06 /* LTMedia+Business.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LTMedia+Business.h"; sourceTree = "<group>"; };
 		A5F6EF8317772CFE00C16C06 /* LTMedia+Business.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "LTMedia+Business.m"; sourceTree = "<group>"; };
-		A5F6EF8617772CFE00C16C06 /* AccountViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
-		A5F6EF8717772CFE00C16C06 /* AccountViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
+		A5F6EF8617772CFE00C16C06 /* LTAccountViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTAccountViewController.h; sourceTree = "<group>"; };
+		A5F6EF8717772CFE00C16C06 /* LTAccountViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTAccountViewController.m; sourceTree = "<group>"; };
 		A5F6EF8817772CFE00C16C06 /* AccountViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountViewController.xib; sourceTree = "<group>"; };
 		A5F6EF8A17772CFE00C16C06 /* LTAuthenticationSheetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTAuthenticationSheetViewController.h; sourceTree = "<group>"; };
 		A5F6EF8B17772CFE00C16C06 /* LTAuthenticationSheetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTAuthenticationSheetViewController.m; sourceTree = "<group>"; };
@@ -209,9 +214,8 @@
 		A5F6EFB317772CFE00C16C06 /* MediaLocalisationPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaLocalisationPickerViewController.h; sourceTree = "<group>"; };
 		A5F6EFB417772CFE00C16C06 /* MediaLocalisationPickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MediaLocalisationPickerViewController.m; sourceTree = "<group>"; };
 		A5F6EFB517772CFE00C16C06 /* MediaLocalisationPickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaLocalisationPickerViewController.xib; sourceTree = "<group>"; };
-		A5F6EFBF17772CFE00C16C06 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
-		A5F6EFC017772CFE00C16C06 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
-		A5F6EFC117772CFE00C16C06 /* MapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
+		A5F6EFBF17772CFE00C16C06 /* LTMapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTMapViewController.h; sourceTree = "<group>"; };
+		A5F6EFC017772CFE00C16C06 /* LTMapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTMapViewController.m; sourceTree = "<group>"; };
 		A5F6EFC417772CFE00C16C06 /* LTAuthorCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTAuthorCollectionCell.h; sourceTree = "<group>"; };
 		A5F6EFC517772CFE00C16C06 /* LTAuthorCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTAuthorCollectionCell.m; sourceTree = "<group>"; };
 		A5F6EFCF17772CFE00C16C06 /* LTMediaCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTMediaCollectionCell.h; sourceTree = "<group>"; };
@@ -259,6 +263,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A51800651812A912005CD602 /* libicucore.dylib in Frameworks */,
+				A51800611812A594005CD602 /* CFNetwork.framework in Frameworks */,
 				A5E0B22E177719A800CD4CCF /* MessageUI.framework in Frameworks */,
 				A5E0B1C91777159F00CD4CCF /* CoreGraphics.framework in Frameworks */,
 				A5E0B1CB1777159F00CD4CCF /* UIKit.framework in Frameworks */,
@@ -318,6 +324,9 @@
 		A5E0B1C51777159F00CD4CCF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A51800641812A912005CD602 /* libicucore.dylib */,
+				A51800621812A8D9005CD602 /* dylib1.o */,
+				A51800601812A594005CD602 /* CFNetwork.framework */,
 				A5E0B22D177719A800CD4CCF /* MessageUI.framework */,
 				A5E0B1C61777159F00CD4CCF /* Foundation.framework */,
 				A5E0B1C81777159F00CD4CCF /* CoreGraphics.framework */,
@@ -337,7 +346,7 @@
 				A5F6ECDC1777284300C16C06 /* LesTaxinomes.storyboard */,
 				A5F6EF5B17772CFE00C16C06 /* Classes */,
 				A5F6EFE817772CFE00C16C06 /* ExternalSources */,
-				A5E0B1D81777159F00CD4CCF /* Images.xcassets */,
+				A53A60421807371F009ED623 /* Images.xcassets */,
 				A5F6ECDD17772A3400C16C06 /* Ressources */,
 				A5E0B1CD1777159F00CD4CCF /* Supporting Files */,
 			);
@@ -501,8 +510,8 @@
 		A5F6EF8517772CFE00C16C06 /* Account */ = {
 			isa = PBXGroup;
 			children = (
-				A5F6EF8617772CFE00C16C06 /* AccountViewController.h */,
-				A5F6EF8717772CFE00C16C06 /* AccountViewController.m */,
+				A5F6EF8617772CFE00C16C06 /* LTAccountViewController.h */,
+				A5F6EF8717772CFE00C16C06 /* LTAccountViewController.m */,
 				A5F6EF8817772CFE00C16C06 /* AccountViewController.xib */,
 			);
 			path = Account;
@@ -577,9 +586,8 @@
 		A5F6EFBE17772CFE00C16C06 /* Navigate */ = {
 			isa = PBXGroup;
 			children = (
-				A5F6EFBF17772CFE00C16C06 /* MapViewController.h */,
-				A5F6EFC017772CFE00C16C06 /* MapViewController.m */,
-				A5F6EFC117772CFE00C16C06 /* MapViewController.xib */,
+				A5F6EFBF17772CFE00C16C06 /* LTMapViewController.h */,
+				A5F6EFC017772CFE00C16C06 /* LTMapViewController.m */,
 			);
 			path = Navigate;
 			sourceTree = "<group>";
@@ -797,12 +805,12 @@
 				A5F6ECE917772A3400C16C06 /* Localizable.strings in Resources */,
 				A5F6ECEA17772A3400C16C06 /* JesayaFree.ttf in Resources */,
 				A57765AE1777537D00CC8EE6 /* LTMediaListCell.xib in Resources */,
+				A53A60431807371F009ED623 /* Images.xcassets in Resources */,
 				A5F6ECEC17772A9600C16C06 /* LesTaxinomes.storyboard in Resources */,
 				A5F6ECE717772A3400C16C06 /* Brest.gpx in Resources */,
 				A5F6ECEB17772A3400C16C06 /* oiseau.aif in Resources */,
 				A57765B41777539200CC8EE6 /* SpinnerCell.xib in Resources */,
 				A5F6ECE817772A3400C16C06 /* CGU.strings in Resources */,
-				A5E0B1D91777159F00CD4CCF /* Images.xcassets in Resources */,
 				A57765A31777534200CC8EE6 /* MediaDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -890,7 +898,7 @@
 				A57765B21777538C00CC8EE6 /* LTSingleLineInputCell.m in Sources */,
 				A57765B5177753A900CC8EE6 /* LTLoadMoreFooterView.m in Sources */,
 				A5434CD11801D14C004F75C6 /* LTButtonCell.m in Sources */,
-				A57765BC1777547900CC8EE6 /* MapViewController.m in Sources */,
+				A57765BC1777547900CC8EE6 /* LTMapViewController.m in Sources */,
 				A57765B91777546200CC8EE6 /* UIImageView+PhotoFrame.m in Sources */,
 				A57765A61777534D00CC8EE6 /* LTMediasListViewController.m in Sources */,
 				A57765D4177764C400CC8EE6 /* UIAlertView+LTErrorAdditions.m in Sources */,

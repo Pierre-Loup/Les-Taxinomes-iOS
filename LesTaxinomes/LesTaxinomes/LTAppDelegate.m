@@ -11,6 +11,10 @@
 #import "LTAppearance.h"
 #import "LTConnectionManager.h"
 
+#ifdef DEBUG
+#import <PonyDebugger/PonyDebugger.h>
+#endif
+
 @implementation LTAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -42,6 +46,16 @@
     // Retreive licenses
     [[LTConnectionManager sharedManager] getLicensesWithResponseBlock:^(NSArray *licenses, NSError *error) {
     }];
+    
+#ifdef DEBUG
+    PDDebugger *debugger = [PDDebugger defaultInstance];
+    [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
+    [debugger enableViewHierarchyDebugging];
+    [debugger enableCoreDataDebugging];
+    [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]
+                             withName:@"Main context"];
+    
+#endif
     
     return YES;
 }

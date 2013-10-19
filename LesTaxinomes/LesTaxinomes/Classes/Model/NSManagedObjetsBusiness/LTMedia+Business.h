@@ -14,5 +14,6 @@
 
 + (LTMedia *)mediaWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error;
 + (LTMedia *)mediaLargeURLWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error;
+@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 
 @end

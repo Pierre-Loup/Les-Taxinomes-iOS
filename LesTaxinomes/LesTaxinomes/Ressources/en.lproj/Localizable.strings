@@ -37,7 +37,7 @@
 "tabbar.authors"    = "Authors";
 
 /* HOME */
-"home.welcom_text" = "Welcome to Les Taxinomes !\n\nYou are curious by nature?\n\nHere, you will be able to share your love of nature!\n\n With the site and the iPhone application \"Les Taxinomes\", you are participating in the inventory of biodiversity.";
+"home.username.placeholder" = "Login";
 
 /* LEGAL INFORMATIONS*/
 "legal_informations.title" = "Legal notes";

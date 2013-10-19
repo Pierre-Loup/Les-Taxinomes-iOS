@@ -29,7 +29,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "UIImageView+PhotoFrame.h"
 // VC
-#import "MapViewController.h"
+#import "LTMapViewController.h"
 #import "MediaDetailViewController.h"
 // MODEL
 #import "Annotation.h"
@@ -378,7 +378,7 @@
 }
 
 - (void)mapTouched:(MKMapView *)sender {
-    MapViewController* mapVC = [[MapViewController alloc] initWithAnnotation:self.media];
+    LTMapViewController* mapVC = [[LTMapViewController alloc] initWithAnnotation:self.media];
     [self.navigationController pushViewController:mapVC animated:YES];
     mapVC.title = _T(@"common.map");
 }

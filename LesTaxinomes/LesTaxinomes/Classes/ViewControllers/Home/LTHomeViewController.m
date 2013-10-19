@@ -29,6 +29,8 @@
 #import "LTLegalNoticeViewController.h"
 #import "LTMediaUploadFormViewController.h"
 #import "LTPhotoAssetManager.h"
+#import "AGMedallionView.h"
+#import "UIImageView+AFNetworking.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -36,12 +38,15 @@
 
 @interface LTHomeViewController () <LTAuthenticationSheetDelegate>
 
-@property (nonatomic, strong) IBOutlet UIBarButtonItem *infoButton;
-@property (nonatomic, strong) IBOutlet UIBarButtonItem *cameraBarButton;
-@property (nonatomic, strong) IBOutlet UILabel* welcomLabel;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *infoButton;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *cameraBarButton;
+@property (nonatomic, weak) IBOutlet UILabel* userNameLabel;
+@property (nonatomic, weak) IBOutlet AGMedallionView* userAvatarView;
 
 @property (nonatomic, strong) NSURL* mediaToShareAssetURL;
 @property (nonatomic, assign) BOOL shouldPresentAuthenticationSheet;
+
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -64,26 +69,53 @@
 
 - (void)viewDidLoad
 {
+    
     [super viewDidLoad];
-    [self.welcomLabel setNumberOfLines:0];
-    [self.welcomLabel setLineBreakMode:UILineBreakModeTailTruncation];
-    [self.welcomLabel setContentMode:UIViewContentModeCenter];
-    [self.welcomLabel setTextAlignment:UITextAlignmentCenter];
-    [self.welcomLabel setFont:[UIFont fontWithName:@"Jesaya Free" size:17.0]];
-    self.welcomLabel.text = _T(@"home.welcom_text");
+    
+    // Medaillion view
+    UIImage* defaultAvatar = [UIImage imageNamed:@"default_avatar"];
+    self.userAvatarView.image = defaultAvatar;
+    
+    [self.userNameLabel setNumberOfLines:0];
+    [self.userNameLabel setLineBreakMode:UILineBreakModeTailTruncation];
+    [self.userNameLabel setContentMode:UIViewContentModeCenter];
+    [self.userNameLabel setTextAlignment:UITextAlignmentCenter];
+    [self.userNameLabel setFont:[UIFont fontWithName:@"Jesaya Free" size:17.0]];
+    self.userNameLabel.text = _T(@"home.username.placeholder");
     
     UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
     [infoButton addTarget:self action:@selector(infoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     self.infoButton = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
     [self.navigationItem setLeftBarButtonItem:self.infoButton animated:YES];
-    
     [self.navigationItem setRightBarButtonItem:self.cameraBarButton animated:YES];
+    
+    // Medaillion view
+    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                 action:@selector(medaillonTouchUpInside:)];
+    [self.userAvatarView addGestureRecognizer:tapGesture];
+    
+    [[LTConnectionManager sharedManager] authWithLogin:nil
+                                              password:nil
+                                         responseBlock:^(LTAuthor *authenticatedUser, NSError *error)
+    {
+        if (authenticatedUser) {
+            self.userNameLabel.text = authenticatedUser.name;
+            [self updateAvatar];
+        }
+    }];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self updateAvatar];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
-    if(self.shouldPresentAuthenticationSheet) {
+    if(self.shouldPresentAuthenticationSheet)
+    {
         self.shouldPresentAuthenticationSheet = NO;
         [self displayAuthenticationSheetAnimated:YES];
     }
@@ -92,7 +124,7 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    self.welcomLabel = nil;
+    self.userNameLabel = nil;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -107,6 +139,25 @@
     [self presentViewController:authenticationSheetNavigationController
                        animated:animated
                      completion:^{}];
+}
+
+- (void)updateAvatar
+{
+    LTAuthor* user = [LTConnectionManager sharedManager].authenticatedUser;
+    if (user)
+    {
+        NSURL* imageURL = [NSURL URLWithString:user.avatarURL];
+        NSURLRequest* request = [NSURLRequest requestWithURL:imageURL];
+        [[UIImageView new] setImageWithURLRequest:request
+                                 placeholderImage:nil
+                                          success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
+                                          {
+                                              self.userAvatarView.image = image;
+                                          }
+                                          failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {}];
+    }
+    
+    
 }
 
 #pragma mark Actions
@@ -157,22 +208,39 @@
     } onCancel:^{}];
 }
 
-
+- (void)medaillonTouchUpInside:(AGMedallionView*)medaillonView
+{
+    if (![LTConnectionManager sharedManager].authenticatedUser)
+    {
+        
+        [self displayAuthenticationSheetAnimated:YES];
+    }
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - LTAuthenticationSheetDelegate
 
-- (void)authenticationDidFinishWithSuccess:(BOOL)success {
+- (void)authenticationDidFinishWithSuccess:(BOOL)success
+{
     LTAuthor *authenticatedUser = [LTConnectionManager sharedManager].authenticatedUser;
-    if (success && authenticatedUser) {
+    if (success && authenticatedUser)
+    {
+        self.userNameLabel.text = authenticatedUser.name;
+        [self updateAvatar];
         [self dismissViewControllerAnimated:YES
                                  completion:^{}];
-        LTMediaUploadFormViewController* mediaUploadVC = [self.storyboard instantiateViewControllerWithIdentifier:@"LTMediaUploadFormViewController"];
-        mediaUploadVC.mediaAssetURL = self.mediaToShareAssetURL;
-        [self.navigationController pushViewController:mediaUploadVC animated:YES];
-    } else {
+        if (self.mediaToShareAssetURL)
+        {
+            LTMediaUploadFormViewController* mediaUploadVC = [self.storyboard instantiateViewControllerWithIdentifier:@"LTMediaUploadFormViewController"];
+            mediaUploadVC.mediaAssetURL = self.mediaToShareAssetURL;
+            self.mediaToShareAssetURL = nil;
+            [self.navigationController pushViewController:mediaUploadVC animated:YES];
+        }
+    }
+    else
+    {
         [self dismissViewControllerAnimated:YES
-                                 completion:^{}];;
+                                 completion:^{}];
     }
 }
 

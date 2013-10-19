@@ -12,6 +12,21 @@
 
 @implementation LTMedia (Business)
 
+- (CLLocationCoordinate2D)coordinate
+{
+    return CLLocationCoordinate2DMake(self.latitude.doubleValue, self.longitude.doubleValue);
+}
+
+- (NSString*)title
+{
+    return self.mediaTitle;
+}
+
+- (NSString *)subtitle
+{
+    return [NSString stringWithFormat:@"%@ %@", _T(@"common.by"), self.author.name];
+}
+
 + (LTMedia *)mediaWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error {
     
     if(response == nil){

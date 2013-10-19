@@ -88,11 +88,11 @@
 #ifdef LES_TAXINOMES
 #ifdef DEBUG
 
-#define kHost @"taxinomes.arscenic.org"
-#define kXMLRCPWebServiceURL @"http://taxinomes.arscenic.org/spip.php?action=xmlrpc_serveur"
-#define kHTTPHost @"http://taxinomes.arscenic.org/"
-#define kForgottenPasswordURL @"http://taxinomes.arscenic.org/spip.php?page=spip_pass"
-#define kSignupURL @"http://taxinomes.arscenic.org/spip.php?page=inscription"
+    #define kHost @"taxinomes.arscenic.org"
+    #define kXMLRCPWebServiceURL @"http://taxinomes.arscenic.org/spip.php?action=xmlrpc_serveur"
+    #define kHTTPHost @"http://taxinomes.arscenic.org/"
+    #define kForgottenPasswordURL @"http://taxinomes.arscenic.org/spip.php?page=spip_pass"
+    #define kSignupURL @"http://taxinomes.arscenic.org/spip.php?page=inscription"
 
 #else
 
