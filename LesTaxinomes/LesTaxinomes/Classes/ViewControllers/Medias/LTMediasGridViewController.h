@@ -14,12 +14,11 @@
 
 @class LTLoadMoreFooterView;
 @class LTMedia;
-@class SRRefreshView;
 
 @interface LTMediasGridViewController : LTCollectionViewController <NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, readonly) LTLoadMoreFooterView* footerView;
-@property (nonatomic, readonly) SRRefreshView* slimeView;
+@property (nonatomic, readonly) UIRefreshControl* refreshControl;
 @property (nonatomic, weak) id<LTMediasDataSource> dataSource;
 @property (nonatomic, weak) id<LTMediasDelegate> delegate;
 

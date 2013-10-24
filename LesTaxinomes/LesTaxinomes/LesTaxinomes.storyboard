@@ -37,7 +37,16 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="tabbar.medias" image="tabbar_medias" id="qK6-cK-ZN3"/>
-                    <navigationItem key="navigationItem" id="R6L-lD-4Pj"/>
+                    <navigationItem key="navigationItem" id="R6L-lD-4Pj">
+                        <barButtonItem key="rightBarButtonItem" image="icon_mosaik" id="ASm-A1-Jky">
+                            <connections>
+                                <action selector="displayBarButton:" destination="lLe-XB-aLT" id="ILp-Kf-snc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="displayBarButton" destination="ASm-A1-Jky" id="s3z-hL-cht"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qm9-sZ-iMp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -137,7 +146,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="vsj-Lc-s4Z" firstAttribute="top" secondItem="46C-ms-Psj" secondAttribute="bottom" constant="20" id="3AQ-Xx-c4W"/>
                             <constraint firstItem="46C-ms-Psj" firstAttribute="top" secondItem="mGG-Gf-Yx6" secondAttribute="bottom" constant="8" id="4yX-aG-VU5"/>
@@ -678,6 +687,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="icon_mosaik" width="30" height="30"/>
         <image name="tabbar_home" width="30" height="30"/>
         <image name="tabbar_map" width="30" height="30"/>
         <image name="tabbar_medias" width="30" height="30"/>

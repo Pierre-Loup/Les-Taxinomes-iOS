@@ -50,7 +50,7 @@
 /** 
  * Create NS_ENUM macro if it does not exist on the targeted version of iOS or OS X.
  *
- * @see http://nshipster.com/ns_enum-ns_options/
+ * @see http://nshiUIer.com/ns_enum-ns_options/
  **/
 #ifndef NS_ENUM
 #define NS_ENUM(_type, _name) enum _name : _type _name; enum _name : _type

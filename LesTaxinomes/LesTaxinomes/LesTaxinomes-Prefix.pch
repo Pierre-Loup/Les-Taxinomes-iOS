@@ -16,7 +16,6 @@
     #import <SystemConfiguration/SystemConfiguration.h>
     #import <MobileCoreServices/MobileCoreServices.h>
     #import "CoreData+MagicalRecord.h"
-    #import "PSTCollectionView.h"
     #import "MKBlockAdditions.h"
 #endif
 

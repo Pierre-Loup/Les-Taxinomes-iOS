@@ -1306,76 +1306,76 @@ id UITextInputTraits_valueForKey(id self, SEL _cmd, NSString *key)
 		webView.delegate = self;
 		[backingView addSubview:webView];
 		
-		NSMutableString *helpString = [NSMutableString stringWithString:@"<html>"];
-		[helpString appendString:@"<head><style>"];
-		[helpString appendString:@"body { background-color:rgba(0, 0, 0, 0.0); font:10pt helvetica; line-height: 15px margin-left:5px; margin-right:5px; margin-top:20px; color:rgb(240, 240, 240); } a { color:#45e0fe; font-weight:bold; } h1 { width:100%; font-size:14pt; border-bottom: 1px solid white; margin-top:22px; } h2 { font-size:11pt; margin-left:3px; margin-bottom:2px; } .name { margin-left:7px; } .key { float:right; margin-right:7px; } .key, .code { font-family:Courier; font-weight:bold; color:#CE8B39; } .spacer { height:10px; } p { margin-left: 7px; margin-right: 7px; }"];
+		NSMutableString *helUIring = [NSMutableString stringWithString:@"<html>"];
+		[helUIring appendString:@"<head><style>"];
+		[helUIring appendString:@"body { background-color:rgba(0, 0, 0, 0.0); font:10pt helvetica; line-height: 15px margin-left:5px; margin-right:5px; margin-top:20px; color:rgb(240, 240, 240); } a { color:#45e0fe; font-weight:bold; } h1 { width:100%; font-size:14pt; border-bottom: 1px solid white; margin-top:22px; } h2 { font-size:11pt; margin-left:3px; margin-bottom:2px; } .name { margin-left:7px; } .key { float:right; margin-right:7px; } .key, .code { font-family:Courier; font-weight:bold; color:#CE8B39; } .spacer { height:10px; } p { margin-left: 7px; margin-right: 7px; }"];
 		
 		if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
-			[helpString appendString:@"body { font-size:11pt; width:500px; margin:0 auto; }"];
+			[helUIring appendString:@"body { font-size:11pt; width:500px; margin:0 auto; }"];
 		
-		[helpString appendString:@"</style></head><body><h1>DCIntrospect</h1>"];
-		[helpString appendString:@"<p>Created by <a href='http://domesticcat.com.au'>Domestic Cat Software</a> 2011.</p>"];
-		[helpString appendString:@"<p>Twitter: <a href='http://twitter.com/patr'>@patr</a></p>"];
-		[helpString appendString:@"<p>More info and full documentation: <a href='http://domesticcat.com.au/projects/introspect'>domesticcat.com.au/projects/introspect</a></p>"];
-		[helpString appendString:@"<p>GitHub project: <a href='https://github.com/domesticcatsoftware/dcintrospect'>github.com/domesticcatsoftware/dcintrospect/</a></p>"];
+		[helUIring appendString:@"</style></head><body><h1>DCIntrospect</h1>"];
+		[helUIring appendString:@"<p>Created by <a href='http://domesticcat.com.au'>Domestic Cat Software</a> 2011.</p>"];
+		[helUIring appendString:@"<p>Twitter: <a href='http://twitter.com/patr'>@patr</a></p>"];
+		[helUIring appendString:@"<p>More info and full documentation: <a href='http://domesticcat.com.au/projects/introspect'>domesticcat.com.au/projects/introspect</a></p>"];
+		[helUIring appendString:@"<p>GitHub project: <a href='https://github.com/domesticcatsoftware/dcintrospect'>github.com/domesticcatsoftware/dcintrospect/</a></p>"];
 		
-		[helpString appendString:@"<div class='bindings'><h1>Key Bindings</h1>"];
-		[helpString appendString:@"<p>Edit DCIntrospectSettings.h to change key bindings.</p>"];
+		[helUIring appendString:@"<div class='bindings'><h1>Key Bindings</h1>"];
+		[helUIring appendString:@"<p>Edit DCIntrospectSettings.h to change key bindings.</p>"];
 		
-		[helpString appendString:@"<h2>General</h2>"];
+		[helUIring appendString:@"<h2>General</h2>"];
 		
-		[helpString appendFormat:@"<div><span class='name'>Invoke Introspector</span><div class='key'>%@</div></div>", ([kDCIntrospectKeysInvoke isEqualToString:@" "]) ? @"spacebar" : kDCIntrospectKeysInvoke];
-		[helpString appendFormat:@"<div><span class='name'>Toggle View Outlines</span><div class='key'>%@</div></div>", kDCIntrospectKeysToggleViewOutlines];
-		[helpString appendFormat:@"<div><span class='name'>Toggle Highlighting Non-Opaque Views</span><div class='key'>%@</div></div>", kDCIntrospectKeysToggleNonOpaqueViews];
-		[helpString appendFormat:@"<div><span class='name'>Toggle Help</span><div class='key'>%@</div></div>", kDCIntrospectKeysToggleHelp];
-		[helpString appendFormat:@"<div><span class='name'>Toggle flash on <span class='code'>drawRect:</span> (see below)</span><div class='key'>%@</div></div>", kDCIntrospectKeysToggleFlashViewRedraws];
-		[helpString appendFormat:@"<div><span class='name'>Toggle coordinates</span><div class='key'>%@</div></div>", kDCIntrospectKeysToggleShowCoordinates];
-		[helpString appendString:@"<div class='spacer'></div>"];
+		[helUIring appendFormat:@"<div><span class='name'>Invoke Introspector</span><div class='key'>%@</div></div>", ([kDCIntrospectKeysInvoke isEqualToString:@" "]) ? @"spacebar" : kDCIntrospectKeysInvoke];
+		[helUIring appendFormat:@"<div><span class='name'>Toggle View Outlines</span><div class='key'>%@</div></div>", kDCIntrospectKeysToggleViewOutlines];
+		[helUIring appendFormat:@"<div><span class='name'>Toggle Highlighting Non-Opaque Views</span><div class='key'>%@</div></div>", kDCIntrospectKeysToggleNonOpaqueViews];
+		[helUIring appendFormat:@"<div><span class='name'>Toggle Help</span><div class='key'>%@</div></div>", kDCIntrospectKeysToggleHelp];
+		[helUIring appendFormat:@"<div><span class='name'>Toggle flash on <span class='code'>drawRect:</span> (see below)</span><div class='key'>%@</div></div>", kDCIntrospectKeysToggleFlashViewRedraws];
+		[helUIring appendFormat:@"<div><span class='name'>Toggle coordinates</span><div class='key'>%@</div></div>", kDCIntrospectKeysToggleShowCoordinates];
+		[helUIring appendString:@"<div class='spacer'></div>"];
 		
-		[helpString appendString:@"<h2>When a view is selected</h2>"];
-		[helpString appendFormat:@"<div><span class='name'>Log Properties</span><div class='key'>%@</div></div>", kDCIntrospectKeysLogProperties];
-		[helpString appendFormat:@"<div><span class='name'>Log Accessibility Properties</span><div class='key'>%@</div></div>", kDCIntrospectKeysLogAccessibilityProperties];
-		[helpString appendFormat:@"<div><span class='name'>Log Recursive Description for View</span><div class='key'>%@</div></div>", kDCIntrospectKeysLogViewRecursive];
-		[helpString appendFormat:@"<div><span class='name'>Enter GDB</span><div class='key'>%@</div></div>", kDCIntrospectKeysEnterGDB];
-		[helpString appendFormat:@"<div><span class='name'>Move up in view hierarchy</span><div class='key'>%@</div></div>", ([kDCIntrospectKeysMoveUpInViewHierarchy isEqualToString:@""]) ? @"page up" : kDCIntrospectKeysMoveUpInViewHierarchy];
-		[helpString appendFormat:@"<div><span class='name'>Move back down in view hierarchy</span><div class='key'>%@</div></div>", ([kDCIntrospectKeysMoveBackInViewHierarchy isEqualToString:@""]) ? @"page down" : kDCIntrospectKeysMoveBackInViewHierarchy];
-		[helpString appendString:@"<div class='spacer'></div>"];
+		[helUIring appendString:@"<h2>When a view is selected</h2>"];
+		[helUIring appendFormat:@"<div><span class='name'>Log Properties</span><div class='key'>%@</div></div>", kDCIntrospectKeysLogProperties];
+		[helUIring appendFormat:@"<div><span class='name'>Log Accessibility Properties</span><div class='key'>%@</div></div>", kDCIntrospectKeysLogAccessibilityProperties];
+		[helUIring appendFormat:@"<div><span class='name'>Log Recursive Description for View</span><div class='key'>%@</div></div>", kDCIntrospectKeysLogViewRecursive];
+		[helUIring appendFormat:@"<div><span class='name'>Enter GDB</span><div class='key'>%@</div></div>", kDCIntrospectKeysEnterGDB];
+		[helUIring appendFormat:@"<div><span class='name'>Move up in view hierarchy</span><div class='key'>%@</div></div>", ([kDCIntrospectKeysMoveUpInViewHierarchy isEqualToString:@""]) ? @"page up" : kDCIntrospectKeysMoveUpInViewHierarchy];
+		[helUIring appendFormat:@"<div><span class='name'>Move back down in view hierarchy</span><div class='key'>%@</div></div>", ([kDCIntrospectKeysMoveBackInViewHierarchy isEqualToString:@""]) ? @"page down" : kDCIntrospectKeysMoveBackInViewHierarchy];
+		[helUIring appendString:@"<div class='spacer'></div>"];
 		
-		[helpString appendFormat:@"<div><span class='name'>Nudge Left</span><div class='key'>\uE235 / %@</div></div>", kDCIntrospectKeysNudgeViewLeft];
-		[helpString appendFormat:@"<div><span class='name'>Nudge Right</span><div class='key'>\uE234 / %@</div></div>", kDCIntrospectKeysNudgeViewRight];
-		[helpString appendFormat:@"<div><span class='name'>Nudge Up</span><div class='key'>\uE232 / %@</div></div>", kDCIntrospectKeysNudgeViewUp];
-		[helpString appendFormat:@"<div><span class='name'>Nudge Down</span><div class='key'>\uE233 / %@</div></div>", kDCIntrospectKeysNudgeViewDown];
-		[helpString appendFormat:@"<div><span class='name'>Center in Superview</span><div class='key'>%@</div></div>", kDCIntrospectKeysCenterInSuperview];
-		[helpString appendFormat:@"<div><span class='name'>Increase Width</span><div class='key'>alt + \uE234 / %@</div></div>", kDCIntrospectKeysIncreaseWidth];
-		[helpString appendFormat:@"<div><span class='name'>Decrease Width</span><div class='key'>alt + \uE235 / %@</div></div>", kDCIntrospectKeysDecreaseWidth];
-		[helpString appendFormat:@"<div><span class='name'>Increase Height</span><div class='key'>alt + \uE233 / %@</div></div>", kDCIntrospectKeysIncreaseHeight];
-		[helpString appendFormat:@"<div><span class='name'>Decrease Height</span><div class='key'>alt + \uE232 / %@</div></div>", kDCIntrospectKeysDecreaseHeight];
-		[helpString appendFormat:@"<div><span class='name'>Increase Alpha</span><div class='key'>%@</div></div>", kDCIntrospectKeysIncreaseViewAlpha];
-		[helpString appendFormat:@"<div><span class='name'>Decrease Alpha</span><div class='key'>%@</div></div>", kDCIntrospectKeysDecreaseViewAlpha];
-		[helpString appendFormat:@"<div><span class='name'>Log view code</span><div class='key'>%@</div></div>", kDCIntrospectKeysLogCodeForCurrentViewChanges];
-		[helpString appendString:@"<div class='spacer'></div>"];
+		[helUIring appendFormat:@"<div><span class='name'>Nudge Left</span><div class='key'>\uE235 / %@</div></div>", kDCIntrospectKeysNudgeViewLeft];
+		[helUIring appendFormat:@"<div><span class='name'>Nudge Right</span><div class='key'>\uE234 / %@</div></div>", kDCIntrospectKeysNudgeViewRight];
+		[helUIring appendFormat:@"<div><span class='name'>Nudge Up</span><div class='key'>\uE232 / %@</div></div>", kDCIntrospectKeysNudgeViewUp];
+		[helUIring appendFormat:@"<div><span class='name'>Nudge Down</span><div class='key'>\uE233 / %@</div></div>", kDCIntrospectKeysNudgeViewDown];
+		[helUIring appendFormat:@"<div><span class='name'>Center in Superview</span><div class='key'>%@</div></div>", kDCIntrospectKeysCenterInSuperview];
+		[helUIring appendFormat:@"<div><span class='name'>Increase Width</span><div class='key'>alt + \uE234 / %@</div></div>", kDCIntrospectKeysIncreaseWidth];
+		[helUIring appendFormat:@"<div><span class='name'>Decrease Width</span><div class='key'>alt + \uE235 / %@</div></div>", kDCIntrospectKeysDecreaseWidth];
+		[helUIring appendFormat:@"<div><span class='name'>Increase Height</span><div class='key'>alt + \uE233 / %@</div></div>", kDCIntrospectKeysIncreaseHeight];
+		[helUIring appendFormat:@"<div><span class='name'>Decrease Height</span><div class='key'>alt + \uE232 / %@</div></div>", kDCIntrospectKeysDecreaseHeight];
+		[helUIring appendFormat:@"<div><span class='name'>Increase Alpha</span><div class='key'>%@</div></div>", kDCIntrospectKeysIncreaseViewAlpha];
+		[helUIring appendFormat:@"<div><span class='name'>Decrease Alpha</span><div class='key'>%@</div></div>", kDCIntrospectKeysDecreaseViewAlpha];
+		[helUIring appendFormat:@"<div><span class='name'>Log view code</span><div class='key'>%@</div></div>", kDCIntrospectKeysLogCodeForCurrentViewChanges];
+		[helUIring appendString:@"<div class='spacer'></div>"];
 		
-		[helpString appendFormat:@"<div><span class='name'>Call setNeedsDisplay</span><div class='key'>%@</div></div>", kDCIntrospectKeysSetNeedsDisplay];
-		[helpString appendFormat:@"<div><span class='name'>Call setNeedsLayout</span><div class='key'>%@</div></div>", kDCIntrospectKeysSetNeedsLayout];
-		[helpString appendFormat:@"<div><span class='name'>Call reloadData (UITableView only)</span><div class='key'>%@</div></div>", kDCIntrospectKeysReloadData];
-		[helpString appendString:@"</div>"];
+		[helUIring appendFormat:@"<div><span class='name'>Call setNeedsDisplay</span><div class='key'>%@</div></div>", kDCIntrospectKeysSetNeedsDisplay];
+		[helUIring appendFormat:@"<div><span class='name'>Call setNeedsLayout</span><div class='key'>%@</div></div>", kDCIntrospectKeysSetNeedsLayout];
+		[helUIring appendFormat:@"<div><span class='name'>Call reloadData (UITableView only)</span><div class='key'>%@</div></div>", kDCIntrospectKeysReloadData];
+		[helUIring appendString:@"</div>"];
 		
-		[helpString appendFormat:@"<h1>GDB</h1><p>Push <span class='code'>%@</span> (backtick) to jump into GDB.  The currently selected view will be available as a variable named 'view'.</p>", kDCIntrospectKeysEnterGDB];
+		[helUIring appendFormat:@"<h1>GDB</h1><p>Push <span class='code'>%@</span> (backtick) to jump into GDB.  The currently selected view will be available as a variable named 'view'.</p>", kDCIntrospectKeysEnterGDB];
 		
-		[helpString appendFormat:@"<h1>Flash on <span class='code'>drawRect:</span> calls</h1><p>To implement, call <span class='code'>[[DCIntrospect sharedIntrospector] flashRect:inView:]</span> inside the <span class='code'>drawRect:</span> method of any view you want to track.</p><p>When Flash on <span class='code'>drawRect:</span> is toggled on (binding: <span class='code'>%@</span>) the view will flash whenever <span class='code'>drawRect:</span> is called.</p>", kDCIntrospectKeysToggleFlashViewRedraws];
+		[helUIring appendFormat:@"<h1>Flash on <span class='code'>drawRect:</span> calls</h1><p>To implement, call <span class='code'>[[DCIntrospect sharedIntrospector] flashRect:inView:]</span> inside the <span class='code'>drawRect:</span> method of any view you want to track.</p><p>When Flash on <span class='code'>drawRect:</span> is toggled on (binding: <span class='code'>%@</span>) the view will flash whenever <span class='code'>drawRect:</span> is called.</p>", kDCIntrospectKeysToggleFlashViewRedraws];
 		
-		[helpString appendFormat:@"<h1>Naming objects & logging code</h1><p>By providing names for objects using <span class='code'>setName:forObject:accessedWithSelf:</span>, that name will be shown in the status bar instead of the class of the view.</p><p>This is also used when logging view code (binding: <span class='code'>%@</span>).  Logging view code prints formatted code to the console for properties that have been changed.</p><p>For example, if you resize/move a view using the nudge keys, logging the view code will print <span class='code'>view.frame = CGRectMake(50.0 ..etc);</span> to the console.  If a name is provided then <span class='code'>view</span> is replaced by the name.</p>", kDCIntrospectKeysLogCodeForCurrentViewChanges];
+		[helUIring appendFormat:@"<h1>Naming objects & logging code</h1><p>By providing names for objects using <span class='code'>setName:forObject:accessedWithSelf:</span>, that name will be shown in the status bar instead of the class of the view.</p><p>This is also used when logging view code (binding: <span class='code'>%@</span>).  Logging view code prints formatted code to the console for properties that have been changed.</p><p>For example, if you resize/move a view using the nudge keys, logging the view code will print <span class='code'>view.frame = CGRectMake(50.0 ..etc);</span> to the console.  If a name is provided then <span class='code'>view</span> is replaced by the name.</p>", kDCIntrospectKeysLogCodeForCurrentViewChanges];
 		
-		[helpString appendString:@"<h1>License</h1><p>DCIntrospect is made available under the <a href='http://en.wikipedia.org/wiki/MIT_License'>MIT license</a>.</p>"];
+		[helUIring appendString:@"<h1>License</h1><p>DCIntrospect is made available under the <a href='http://en.wikipedia.org/wiki/MIT_License'>MIT license</a>.</p>"];
 		
-		[helpString appendString:@"<h2 style='text-align:center;'><a href='http://close'>Close Help</h2>"];
-		[helpString appendString:@"<div class='spacer'></div>"];
+		[helUIring appendString:@"<h2 style='text-align:center;'><a href='http://close'>Close Help</h2>"];
+		[helUIring appendString:@"<div class='spacer'></div>"];
 		
 		[UIView animateWithDuration:0.1
 						 animations:^{
 							 backingView.alpha = 1.0f;
 						 } completion:^(BOOL finished) {
-							 [webView loadHTMLString:helpString baseURL:nil];
+							 [webView loadHTMLString:helUIring baseURL:nil];
 						 }];
 	}
 	else

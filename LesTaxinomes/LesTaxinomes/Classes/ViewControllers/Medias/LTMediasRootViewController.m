@@ -38,7 +38,6 @@
 #import "MediaDetailViewController.h"
 // Views
 #import "SpinnerCell.h"
-#import "SRRefreshView.h"
 #import "UIImageView+AFNetworking.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -58,9 +57,9 @@ typedef enum {
 @interface LTMediasRootViewController ()
 
 @property (nonatomic, strong) IBOutlet MediaDetailViewController *mediaDetailViewController;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem* displayBarButton;
 @property (nonatomic, strong) LTMediasListViewController* listViewController;
 @property (nonatomic, strong) LTMediasGridViewController* gridViewController;
-@property (nonatomic, strong) UIBarButtonItem* displayBarButton;
 @property (nonatomic, strong) NSFetchedResultsController* mediasResultController;
 @property (nonatomic) LTMediasDisplayMode displayMode;
 @end
@@ -99,11 +98,6 @@ typedef enum {
 {
     [super viewDidLoad];
     self.title = _T(@"tabbar.medias");
-    self.displayBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_grid"]
-                                                             style:UIBarButtonItemStyleBordered
-                                                            target:self
-                                                            action:@selector(displayBarButton:)];
-    [self.navigationItem setRightBarButtonItem:self.displayBarButton animated:YES];
     
     [self.view addSubview:self.listViewController.view];
     self.mediasResultController.delegate = self.listViewController;
@@ -170,8 +164,8 @@ typedef enum {
 
 - (void)loadMoreMedias
 {
-    [self.listViewController.slimeView endRefresh];
-    [self.gridViewController.slimeView endRefresh];
+    [self.listViewController.refreshControl endRefreshing];
+    [self.gridViewController.refreshControl endRefreshing];
     self.listViewController.footerView.displayMode = LTLoadMoreFooterViewDisplayModeLoading;
     self.gridViewController.footerView.displayMode = LTLoadMoreFooterViewDisplayModeLoading;
     
@@ -209,7 +203,7 @@ typedef enum {
     });
 }
 
-- (void)displayBarButton:(id)sender
+- (IBAction)displayBarButton:(UIBarButtonItem*)barButtonItem
 {
     if (self.displayMode == LTMediasDisplayModeList) {
         

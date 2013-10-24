@@ -51,8 +51,6 @@
 		A57765B6177753A900CC8EE6 /* LTTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFE717772CFE00C16C06 /* LTTitleView.m */; };
 		A57765B81777546200CC8EE6 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFEF17772CFE00C16C06 /* UIImage+Resize.m */; };
 		A57765B91777546200CC8EE6 /* UIImageView+PhotoFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFF117772CFE00C16C06 /* UIImageView+PhotoFrame.m */; };
-		A57765BA1777546200CC8EE6 /* SRRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFF717772CFE00C16C06 /* SRRefreshView.m */; };
-		A57765BB1777546200CC8EE6 /* SRSlimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFF917772CFE00C16C06 /* SRSlimeView.m */; };
 		A57765BC1777547900CC8EE6 /* LTMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFC017772CFE00C16C06 /* LTMapViewController.m */; };
 		A57765BE1777625700CC8EE6 /* LesTaxinomes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF7217772CFE00C16C06 /* LesTaxinomes.xcdatamodeld */; };
 		A57765C61777627F00CC8EE6 /* LTAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = A57765C51777627F00CC8EE6 /* LTAuthor.m */; };
@@ -245,13 +243,6 @@
 		A5F6EFEF17772CFE00C16C06 /* UIImage+Resize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		A5F6EFF017772CFE00C16C06 /* UIImageView+PhotoFrame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+PhotoFrame.h"; sourceTree = "<group>"; };
 		A5F6EFF117772CFE00C16C06 /* UIImageView+PhotoFrame.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+PhotoFrame.m"; sourceTree = "<group>"; };
-		A5F6EFF317772CFE00C16C06 /* sr_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sr_refresh.png; sourceTree = "<group>"; };
-		A5F6EFF417772CFE00C16C06 /* sr_refresh@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sr_refresh@2X.png"; sourceTree = "<group>"; };
-		A5F6EFF517772CFE00C16C06 /* SRDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SRDefine.h; sourceTree = "<group>"; };
-		A5F6EFF617772CFE00C16C06 /* SRRefreshView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SRRefreshView.h; sourceTree = "<group>"; };
-		A5F6EFF717772CFE00C16C06 /* SRRefreshView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SRRefreshView.m; sourceTree = "<group>"; };
-		A5F6EFF817772CFE00C16C06 /* SRSlimeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SRSlimeView.h; sourceTree = "<group>"; };
-		A5F6EFF917772CFE00C16C06 /* SRSlimeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SRSlimeView.m; sourceTree = "<group>"; };
 		A5F6EFFD17772D8000C16C06 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		A5F6EFFE17772D8000C16C06 /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
 		D4F5BA4032F04217879D4033 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = ../Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -663,7 +654,6 @@
 			isa = PBXGroup;
 			children = (
 				A5F6EFE917772CFE00C16C06 /* Categories */,
-				A5F6EFF217772CFE00C16C06 /* SlimeRefresh */,
 			);
 			path = ExternalSources;
 			sourceTree = "<group>";
@@ -688,20 +678,6 @@
 				A5F6EFED17772CFE00C16C06 /* NSMutableDictionary+ImageMetadata.m */,
 			);
 			path = GusUtils;
-			sourceTree = "<group>";
-		};
-		A5F6EFF217772CFE00C16C06 /* SlimeRefresh */ = {
-			isa = PBXGroup;
-			children = (
-				A5F6EFF317772CFE00C16C06 /* sr_refresh.png */,
-				A5F6EFF417772CFE00C16C06 /* sr_refresh@2X.png */,
-				A5F6EFF517772CFE00C16C06 /* SRDefine.h */,
-				A5F6EFF617772CFE00C16C06 /* SRRefreshView.h */,
-				A5F6EFF717772CFE00C16C06 /* SRRefreshView.m */,
-				A5F6EFF817772CFE00C16C06 /* SRSlimeView.h */,
-				A5F6EFF917772CFE00C16C06 /* SRSlimeView.m */,
-			);
-			path = SlimeRefresh;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -905,10 +881,8 @@
 				A57765BE1777625700CC8EE6 /* LesTaxinomes.xcdatamodeld in Sources */,
 				A569D72417774C3900ED24B9 /* LTCollectionViewController.m in Sources */,
 				A569D72717774C4200ED24B9 /* LTHomeViewController.m in Sources */,
-				A57765BB1777546200CC8EE6 /* SRSlimeView.m in Sources */,
 				A57765B6177753A900CC8EE6 /* LTTitleView.m in Sources */,
 				A5434CCD1801CFC0004F75C6 /* LTTextViewCell.m in Sources */,
-				A57765BA1777546200CC8EE6 /* SRRefreshView.m in Sources */,
 				A57765D917779FC400CC8EE6 /* LTMedia.m in Sources */,
 				A57765A51777534D00CC8EE6 /* LTMediasGridViewController.m in Sources */,
 				A577659F1777532200CC8EE6 /* LTMedia+Business.m in Sources */,

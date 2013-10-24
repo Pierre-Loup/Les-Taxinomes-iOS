@@ -13,12 +13,10 @@
 #import "LTLoadMoreFooterView.h"
 
 @class LTMedia;
-@class SRRefreshView;
 
 @interface LTMediasListViewController : LTTableViewController <NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, readonly) LTLoadMoreFooterView* footerView;
-@property (nonatomic, readonly) SRRefreshView* slimeView;
 @property (nonatomic, weak) id<LTMediasDataSource> dataSource;
 @property (nonatomic, weak) id<LTMediasDelegate> delegate;
 

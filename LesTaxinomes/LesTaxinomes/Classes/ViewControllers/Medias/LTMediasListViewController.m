@@ -12,7 +12,6 @@
 #import "LTMediasListViewController.h"
 
 // UI
-#import "SRRefreshView.h"
 #import "LTMediaListCell.h"
 #import "LTLoadMoreFooterView.h"
 ////////////////////////////////////////////////////////////////////////////////
@@ -24,8 +23,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private interface
 
-@interface LTMediasListViewController () <SRRefreshDelegate>
-@property (nonatomic, strong) SRRefreshView* slimeView;
+@interface LTMediasListViewController ()
 @property (nonatomic, strong) LTLoadMoreFooterView* footerView;
 @end
 
@@ -42,9 +40,11 @@
     [super viewDidLoad];
     
     // Puff to refresh top view
-    self.slimeView = [SRRefreshView new];
-    self.slimeView.delegate = self;
-    [self.tableView addSubview:self.slimeView];
+    self.refreshControl = [UIRefreshControl new];
+    [self.refreshControl addTarget:self
+                            action:@selector(slimeRefreshStartRefresh:)
+                  forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:self.refreshControl];
     
     // Footer load more view
     CGRect footerViewFrame = CGRectMake(0.f, 0.f,
@@ -62,12 +62,12 @@
 {
     [super viewDidUnload];
     self.footerView = nil;
-    self.slimeView = nil;
+    self.refreshControl = nil;
 }
 
 - (void)dealloc
 {
-    [self.slimeView removeFromSuperview];
+    [self.refreshControl removeFromSuperview];
 }
 
 
@@ -206,27 +206,15 @@
 }
 
 
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
     [self.tableView endUpdates];
-}
-
-////////////////////////////////////////////////////////////////////////////////
-#pragma mark - UITableViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [self.slimeView scrollViewDidScroll];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    [self.slimeView scrollViewDidEndDraging];
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - SRRRefreshViewDelegate
 
-- (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
+- (void)slimeRefreshStartRefresh:(UIRefreshControl *)refreshControl
 {
     [self.delegate refreshMedias];
 }

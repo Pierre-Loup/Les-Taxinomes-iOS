@@ -10,7 +10,7 @@
 
 #import "LTMedia.h"
 
-@interface LTMediaCollectionCell : PSTCollectionViewCell
+@interface LTMediaCollectionCell : UICollectionViewCell
 
 @property (nonatomic, strong) LTMedia *media;
 

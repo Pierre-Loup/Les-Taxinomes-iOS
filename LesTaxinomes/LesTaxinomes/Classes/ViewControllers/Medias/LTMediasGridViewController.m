@@ -9,13 +9,14 @@
 #import "LTMediasGridViewController.h"
 
 // UI
-#import "SRRefreshView.h"
 #import "LTCollectionViewFlowLayout.h"
 #import "LTMediaCollectionCell.h"
 #import "LTLoadMoreFooterView.h"
 
-@interface LTMediasGridViewController () <SRRefreshDelegate>
-@property (nonatomic, strong) SRRefreshView* slimeView;
+static NSString* const kLTMediasGridViewControllerFooterIdentifier = @"kLTMediasGridViewControllerFooterIdentifier";
+
+@interface LTMediasGridViewController ()
+@property (nonatomic, strong) UIRefreshControl* refreshControl;
 @property (nonatomic, strong) LTLoadMoreFooterView* footerView;
 @end
 
@@ -25,19 +26,20 @@
 {
     [super viewDidLoad];
     self.title = _T(@"tabbar.medias");
-    self.slimeView = [SRRefreshView new];
-    self.slimeView.delegate = self;
-    [self.collectionView addSubview:self.slimeView];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self
+                            action:@selector(slimeRefreshStartRefresh:)
+                  forControlEvents:UIControlEventValueChanged];
+    [self.collectionView addSubview:self.refreshControl];
     
     [self.collectionView registerClass:[LTMediaCollectionCell class]
             forCellWithReuseIdentifier:[LTMediaCollectionCell reuseIdentifier]];
     
-    CGRect footerViewFrame = CGRectNull;
+    CGRect footerViewFrame = CGRectZero;
     footerViewFrame.size = ((LTCollectionViewFlowLayout*)self.collectionView.collectionViewLayout).footerReferenceSize;
-    self.footerView = [[LTLoadMoreFooterView alloc] initWithFrame:footerViewFrame];
-    [self.footerView.loadMoreButton addTarget:self.delegate
-                                       action:@selector(loadMoreMedias)
-                             forControlEvents:UIControlEventTouchUpInside];
+    [self.collectionView registerClass:[LTLoadMoreFooterView class]
+            forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
+                   withReuseIdentifier:kLTMediasGridViewControllerFooterIdentifier];
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -70,7 +72,7 @@
     NSIndexPath* indexPath = [self.dataSource.mediasResultController indexPathForObject:firstVisibleMedia];
     if (self.dataSource.mediasResultController.fetchedObjects.count > indexPath.row) {
         [self.collectionView scrollToItemAtIndexPath:indexPath
-                                    atScrollPosition:PSTCollectionViewScrollPositionTop
+                                    atScrollPosition:UICollectionViewScrollPositionTop
                                             animated:NO];
     }
 }
@@ -83,14 +85,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UICollectionViewDataSource
 
-- (NSInteger)collectionView:(PSTCollectionView *)view numberOfItemsInSection:(NSInteger)section
+- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
     return [[self.dataSource.mediasResultController fetchedObjects] count];
 }
 
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-- (PSTCollectionViewCell *)collectionView:(PSTCollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     LTMediaCollectionCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:[LTMediaCollectionCell reuseIdentifier]
                                                                             forIndexPath:indexPath];
@@ -98,11 +100,17 @@
     return cell;
 }
 
-- (PSTCollectionReusableView *)collectionView:(PSTCollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    PSTCollectionReusableView* view;
-    if ([kind isEqualToString:PSTCollectionElementKindSectionFooter]) {
+    UICollectionReusableView* view;
+    if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
         
+        self.footerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                                  withReuseIdentifier:kLTMediasGridViewControllerFooterIdentifier
+                                                                         forIndexPath:indexPath];
+        [self.footerView.loadMoreButton addTarget:self.delegate
+                                           action:@selector(loadMoreMedias)
+                                 forControlEvents:UIControlEventTouchUpInside];
         view = self.footerView;
     }
     
@@ -111,22 +119,9 @@
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-#pragma mark - UICollectionViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [self.slimeView scrollViewDidScroll];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    [self.slimeView scrollViewDidEndDraging];
-}
-
-////////////////////////////////////////////////////////////////////////////////
 #pragma mark - SRRRefreshViewDelegate
 
-- (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
+- (void)slimeRefreshStartRefresh:(UIRefreshControl *)refreshControl
 {
     [self.delegate refreshMedias];
 }
@@ -138,7 +133,7 @@
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath {
     
-    PSTCollectionView * collectionView = self.collectionView;
+    UICollectionView * collectionView = self.collectionView;
     LTMedia *media = (LTMedia *)anObject;
     
     switch(type) {

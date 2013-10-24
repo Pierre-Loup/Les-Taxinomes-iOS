@@ -29,6 +29,8 @@
         self.backgroundColor = [UIColor whiteColor];
         
         _loadMoreButton = [[UIButton alloc] initWithFrame:CGRectMake(0.f, 0.f, 120.f, 40.f)];
+        [_loadMoreButton setTitle:@"+" forState:UIControlStateNormal];
+        UIButton* tintColor = _loadMoreButton.tintColor;
         [self addSubview:_loadMoreButton];
         
         _loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];

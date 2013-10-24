@@ -14,7 +14,7 @@ typedef enum {
     
 } LTLoadMoreFooterViewDisplayMode;
 
-@interface LTLoadMoreFooterView : PSTCollectionReusableView
+@interface LTLoadMoreFooterView : UICollectionReusableView
 
 @property (nonatomic, readonly) UIButton* loadMoreButton;
 @property (nonatomic) LTLoadMoreFooterViewDisplayMode displayMode;

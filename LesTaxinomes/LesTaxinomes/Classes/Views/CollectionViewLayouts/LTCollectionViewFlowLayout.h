@@ -6,8 +6,6 @@
 //  Copyright (c) 2013  Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
-#import "PSTCollectionViewFlowLayout.h"
-
-@interface LTCollectionViewFlowLayout : PSTCollectionViewFlowLayout
+@interface LTCollectionViewFlowLayout : UICollectionViewFlowLayout
 
 @end

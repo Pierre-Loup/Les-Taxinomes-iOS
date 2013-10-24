@@ -85,25 +85,11 @@
 // Times
 #define kMediaCacheTime 3600.0f
 
-#ifdef LES_TAXINOMES
-#ifdef DEBUG
-
-    #define kHost @"taxinomes.arscenic.org"
-    #define kXMLRCPWebServiceURL @"http://taxinomes.arscenic.org/spip.php?action=xmlrpc_serveur"
-    #define kHTTPHost @"http://taxinomes.arscenic.org/"
-    #define kForgottenPasswordURL @"http://taxinomes.arscenic.org/spip.php?page=spip_pass"
-    #define kSignupURL @"http://taxinomes.arscenic.org/spip.php?page=inscription"
-
-#else
-
-    #define kHost @"www.lestaxinomes.org"
-    #define kXMLRCPWebServiceURL @"http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur"
-    #define kHTTPHost @"http://www.lestaxinomes.org"
-    #define kForgottenPasswordURL @"http://www.lestaxinomes.org/spip.php?page=spip_pass"
-    #define kSignupURL @"http://www.lestaxinomes.org/spip.php?page=inscription"
-
-#endif
-#endif
+#define kHost @"www.lestaxinomes.org"
+#define kXMLRCPWebServiceURL @"http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur"
+#define kHTTPHost @"http://www.lestaxinomes.org"
+#define kForgottenPasswordURL @"http://www.lestaxinomes.org/spip.php?page=spip_pass"
+#define kSignupURL @"http://www.lestaxinomes.org/spip.php?page=inscription"
 
 #ifdef GEODIV
 #define kHost @"http://www.geodiversite.net/"

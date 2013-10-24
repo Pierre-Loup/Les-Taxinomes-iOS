@@ -14,12 +14,11 @@
 #import "LTAuthorCollectionCell.h"
 #import "LTCollectionViewFlowLayout.h"
 #import "LTLoadMoreFooterView.h"
-#import "SRRefreshView.h"
 // MODEL
 #import "LTAuthor.h"
 
 @interface LTAuthorsViewController () <SRRefreshDelegate>
-@property (nonatomic, strong) SRRefreshView* slimeView;
+@property (nonatomic, strong) UIRefreshControl* refreshControl;
 @property (nonatomic, strong) LTLoadMoreFooterView* footerView;
 @property (nonatomic, strong) NSFetchedResultsController* authorsResultController;
 @property (nonatomic) LTAuthorsSortType sortType;
@@ -178,14 +177,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UICollectionViewDataSource
 
-- (NSInteger)collectionView:(PSTCollectionView *)view numberOfItemsInSection:(NSInteger)section
+- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
     return [[self.authorsResultController fetchedObjects] count];
 }
 
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-- (PSTCollectionViewCell *)collectionView:(PSTCollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     LTAuthorCollectionCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:[LTAuthorCollectionCell reuseIdentifier]
                                                                             forIndexPath:indexPath];
@@ -193,10 +192,10 @@
     return cell;
 }
 
-- (PSTCollectionReusableView *)collectionView:(PSTCollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    PSTCollectionReusableView* view;
-    if ([kind isEqualToString:PSTCollectionElementKindSectionFooter]) {
+    UICollectionReusableView* view;
+    if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
         
         view = self.footerView;
     }

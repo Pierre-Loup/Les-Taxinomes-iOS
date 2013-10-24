@@ -19,7 +19,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"Taxinomes.sqlite"];
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"LesTaxinomes.sqlite"];
     
     [self.window makeKeyAndVisible];
     
@@ -48,13 +48,14 @@
     }];
     
 #ifdef DEBUG
+#if TARGET_IPHONE_SIMULATOR
     PDDebugger *debugger = [PDDebugger defaultInstance];
     [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
     [debugger enableViewHierarchyDebugging];
     [debugger enableCoreDataDebugging];
     [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]
                              withName:@"Main context"];
-    
+#endif
 #endif
     
     return YES;

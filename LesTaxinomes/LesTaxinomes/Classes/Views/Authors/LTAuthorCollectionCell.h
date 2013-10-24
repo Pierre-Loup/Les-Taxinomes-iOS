@@ -6,11 +6,11 @@
 //  Copyright (c) 2013  Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
-#import "PSTCollectionView.h"
+#import "UICollectionView.h"
 
 @class LTAuthor;
 
-@interface LTAuthorCollectionCell : PSTCollectionViewCell
+@interface LTAuthorCollectionCell : UICollectionViewCell
 
 @property (nonatomic, strong) LTAuthor *author;
 

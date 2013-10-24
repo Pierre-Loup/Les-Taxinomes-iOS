@@ -529,7 +529,8 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
 
 - (void)authWithLogin:(NSString *)login
              password:(NSString *)password
-        responseBlock:(void (^)(LTAuthor *authenticatedUser, NSError *error))responseBlock {
+        responseBlock:(void (^)(LTAuthor *authenticatedUser, NSError *error))responseBlock
+{
     
     NSMutableArray* identifiers = [NSMutableArray array];
     if (login) {
@@ -564,7 +565,8 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                         }];
 }
 
-- (void)unAuthenticate {
+- (void)unAuthenticate
+{
     NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[[NSURL URLWithString:kHTTPHost] absoluteURL]];
     for (NSHTTPCookie * cookie in cookies) {
         if([cookie.name isEqualToString:kSessionCookieName]) {

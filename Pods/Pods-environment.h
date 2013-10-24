@@ -54,12 +54,6 @@
 #define COCOAPODS_VERSION_MINOR_NSData_Base64 0
 #define COCOAPODS_VERSION_PATCH_NSData_Base64 0
 
-// PSTCollectionView
-#define COCOAPODS_POD_AVAILABLE_PSTCollectionView
-#define COCOAPODS_VERSION_MAJOR_PSTCollectionView 1
-#define COCOAPODS_VERSION_MINOR_PSTCollectionView 2
-#define COCOAPODS_VERSION_PATCH_PSTCollectionView 0
-
 // PonyDebugger
 #define COCOAPODS_POD_AVAILABLE_PonyDebugger
 #define COCOAPODS_VERSION_MAJOR_PonyDebugger 0
