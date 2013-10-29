@@ -57,6 +57,7 @@
     
     self.loginLabel.text = _T(@"authentication.login_label.text");
     self.passwordLabel.text = _T(@"authentication.password_label.text");
+    
     [self.passwordForgottenButton setTitle:_T(@"authentication.forgotten_password_button.text")
                                   forState:UIControlStateNormal];
     [self.signupButton setTitle:_T(@"authentication.signup_button.text")
@@ -73,8 +74,8 @@
                                                                                                                                                                 
 #pragma mark Actions                                                                                                                                                            
 
-- (IBAction)submitAuthentication:(id)sender {
-    
+- (IBAction)submitAuthentication:(id)sender
+{
     [SVProgressHUD show];
     LTConnectionManager* cm = [LTConnectionManager sharedManager];
         [cm authWithLogin:self.loginTextField.text
@@ -90,24 +91,28 @@
             }];
 }
 
-- (IBAction)forgottenPasswordButtonTouched:(UIButton *)button {
+- (IBAction)forgottenPasswordButtonTouched:(UIButton *)button
+{
     NSURL* forgottenPasswordURL = [NSURL URLWithString:kForgottenPasswordURL];
     [[UIApplication sharedApplication] openURL:forgottenPasswordURL];
 }
 
-- (IBAction)signupButtonTouched:(UIButton *)button {
+- (IBAction)signupButtonTouched:(UIButton *)button
+{
     NSURL* signupURL = [NSURL URLWithString:kSignupURL];
     [[UIApplication sharedApplication] openURL:signupURL];
 }
 
-- (IBAction)cancelButtonTouched:(UIBarButtonItem *)barButton {
+- (IBAction)cancelButtonTouched:(UIBarButtonItem *)barButton
+{
     [self.delegate authenticationDidFinishWithSuccess:NO];
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UITextField delegate
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
     if (textField == self.loginTextField) {
         [self.passwordTextField becomeFirstResponder];
     } else if (textField == self.passwordTextField) {

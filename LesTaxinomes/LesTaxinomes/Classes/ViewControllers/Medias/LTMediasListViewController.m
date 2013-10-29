@@ -39,10 +39,11 @@
 {
     [super viewDidLoad];
     
+    self.tableView.backgroundColor = [UIColor clearColor];
     // Puff to refresh top view
     self.refreshControl = [UIRefreshControl new];
-    [self.refreshControl addTarget:self
-                            action:@selector(slimeRefreshStartRefresh:)
+    [self.refreshControl addTarget:self.delegate
+                            action:@selector(refreshMedias)
                   forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
     
@@ -209,14 +210,6 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView endUpdates];
-}
-
-////////////////////////////////////////////////////////////////////////////////
-#pragma mark - SRRRefreshViewDelegate
-
-- (void)slimeRefreshStartRefresh:(UIRefreshControl *)refreshControl
-{
-    [self.delegate refreshMedias];
 }
 
 @end

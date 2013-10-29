@@ -120,7 +120,10 @@
     // Load textCell, licenseCell and
     self.navigationItem.title = _T(@"media_upload_view_title");
     
-    self.shareButton.tintColor = kLTColorSecondary;
+    if ([self.shareButton respondsToSelector:@selector(tintColor)])
+    {
+        self.shareButton.tintColor = kLTColorSecondary;
+    }
     
     ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
     [library assetForURL:self.mediaAssetURL resultBlock:^(ALAsset *asset) {

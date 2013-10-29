@@ -12,7 +12,6 @@
 
 @property (nonatomic, strong) UIButton* loadMoreButton;
 @property (nonatomic, strong) UIActivityIndicatorView* loadingIndicator;
-@property (nonatomic, strong) UILabel* loadingLabel;
 
 @end
 
@@ -24,30 +23,53 @@
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
+    if (self)
+    {
+        self.backgroundColor = [UIColor clearColor];
         
-        self.backgroundColor = [UIColor whiteColor];
-        
-        _loadMoreButton = [[UIButton alloc] initWithFrame:CGRectMake(0.f, 0.f, 120.f, 40.f)];
+        _loadMoreButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        //_loadMoreButton.frame = CGRectMake(0.f, 0.f, 120.f, 40.f);
         [_loadMoreButton setTitle:@"+" forState:UIControlStateNormal];
-        UIButton* tintColor = _loadMoreButton.tintColor;
+        _loadMoreButton.titleLabel.font = [UIFont boldSystemFontOfSize:34.0];
+        [_loadMoreButton sizeToFit];
+        _loadMoreButton.center = CGPointMake(self.bounds.size.width/2,
+                                             self.bounds.size.height/2);
         [self addSubview:_loadMoreButton];
+        [self addConstraints:@[
+        [NSLayoutConstraint constraintWithItem:_loadMoreButton
+                                     attribute:NSLayoutAttributeCenterX
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:_loadMoreButton.superview
+                                     attribute:NSLayoutAttributeCenterX
+                                    multiplier:1.f constant:0.f],
+        [NSLayoutConstraint constraintWithItem:_loadMoreButton
+                                     attribute:NSLayoutAttributeCenterY
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:nil
+                                     attribute:NSLayoutAttributeCenterY
+                                    multiplier:1.f constant:0.f]]];
         
         _loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         _loadingIndicator.hidden = YES;
         _loadingIndicator.hidesWhenStopped = YES;
+        _loadingIndicator.center = CGPointMake(self.bounds.size.width/2,
+                                             self.bounds.size.height/2);
         [self addSubview:_loadingIndicator];
+        [self addConstraints:@[
+        [NSLayoutConstraint constraintWithItem:_loadingIndicator
+                                     attribute:NSLayoutAttributeCenterX
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:_loadingIndicator.superview
+                                     attribute:NSLayoutAttributeCenterX
+                                    multiplier:1.f constant:0.f],
+        [NSLayoutConstraint constraintWithItem:_loadingIndicator.superview
+                                     attribute:NSLayoutAttributeCenterY
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:nil
+                                     attribute:NSLayoutAttributeCenterY
+                                    multiplier:1.f constant:0.f]]];
     }
     return self;
-}
-
-- (void)setFrame:(CGRect)frame
-{
-    [super setFrame:frame];
-    CGPoint viewCenter = CGPointMake(self.bounds.size.width/2,
-                                     self.bounds.size.height/2);
-    self.loadMoreButton.center = viewCenter;
-    self.loadingIndicator.center = viewCenter;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -70,7 +92,6 @@
         [self.loadingIndicator stopAnimating];
     }
     self.loadMoreButton.hidden = (displayMode == LTLoadMoreFooterViewDisplayModeLoading);
-    self.loadingLabel.hidden = (displayMode == LTLoadMoreFooterViewDisplayModeNormal);
 }
 
 @end

@@ -212,7 +212,7 @@
                                                     <rect key="frame" x="20" y="11" width="80" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="80" id="Kje-L8-PCY"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="Kje-L8-PCY"/>
                                                         <constraint firstAttribute="height" constant="21" id="WWg-dm-LoJ"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -251,7 +251,7 @@
                                                     <rect key="frame" x="20" y="11" width="80" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="80" id="1Gt-SV-Ark"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="1Gt-SV-Ark"/>
                                                         <constraint firstAttribute="height" constant="21" id="XLS-KM-3wO"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>

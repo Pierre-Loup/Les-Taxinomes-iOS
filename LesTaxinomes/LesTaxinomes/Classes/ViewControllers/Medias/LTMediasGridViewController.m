@@ -13,11 +13,14 @@
 #import "LTMediaCollectionCell.h"
 #import "LTLoadMoreFooterView.h"
 
+typedef void (^UICollectionViewUpdateBlock)();
+
 static NSString* const kLTMediasGridViewControllerFooterIdentifier = @"kLTMediasGridViewControllerFooterIdentifier";
 
 @interface LTMediasGridViewController ()
 @property (nonatomic, strong) UIRefreshControl* refreshControl;
 @property (nonatomic, strong) LTLoadMoreFooterView* footerView;
+@property (strong, nonatomic) NSMutableSet *updates;
 @end
 
 @implementation LTMediasGridViewController
@@ -26,9 +29,11 @@ static NSString* const kLTMediasGridViewControllerFooterIdentifier = @"kLTMedias
 {
     [super viewDidLoad];
     self.title = _T(@"tabbar.medias");
+    self.collectionView.backgroundColor = [UIColor clearColor];
+    self.collectionView.alwaysBounceVertical = YES;
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self
-                            action:@selector(slimeRefreshStartRefresh:)
+    [self.refreshControl addTarget:self.delegate
+                            action:@selector(refreshMedias)
                   forControlEvents:UIControlEventValueChanged];
     [self.collectionView addSubview:self.refreshControl];
     
@@ -119,44 +124,58 @@ static NSString* const kLTMediasGridViewControllerFooterIdentifier = @"kLTMedias
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-#pragma mark - SRRRefreshViewDelegate
-
-- (void)slimeRefreshStartRefresh:(UIRefreshControl *)refreshControl
-{
-    [self.delegate refreshMedias];
-}
-
 #pragma mark - NSFetchedResultsControllerDelegate
 
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    self.updates = [NSMutableSet new];
+}
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-      newIndexPath:(NSIndexPath *)newIndexPath {
+      newIndexPath:(NSIndexPath *)newIndexPath
+{
     
-    UICollectionView * collectionView = self.collectionView;
-    LTMedia *media = (LTMedia *)anObject;
-    
-    switch(type) {
-            
-        case NSFetchedResultsChangeInsert:
-            [collectionView insertItemsAtIndexPaths:@[newIndexPath]];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [collectionView deleteItemsAtIndexPaths:@[indexPath]];
-            break;
-            
-        case NSFetchedResultsChangeUpdate:
-            ((LTMediaCollectionCell*)[collectionView cellForItemAtIndexPath:indexPath]).media = media;
-            break;
-            
-        case NSFetchedResultsChangeMove:
-            [collectionView performBatchUpdates:^{
-                [collectionView deleteItemsAtIndexPaths:@[indexPath]];
+    UICollectionViewUpdateBlock update;
+    __weak UICollectionView *collectionView = self.collectionView;
+    switch (type)
+    {
+        case NSFetchedResultsChangeInsert: {
+            update = ^{
                 [collectionView insertItemsAtIndexPaths:@[newIndexPath]];
-            } completion:^(BOOL finished) {}];
+            };
             break;
+        }
+        case NSFetchedResultsChangeDelete: {
+            update = ^{
+                [collectionView deleteItemsAtIndexPaths:@[indexPath]];
+            };
+            break;
+        }
+        case NSFetchedResultsChangeUpdate: {
+            update = ^{
+                //((LTMediaCollectionCell*)[collectionView cellForItemAtIndexPath:indexPath]).media = media;
+                [collectionView reloadItemsAtIndexPaths:@[indexPath]];
+            };
+            break;
+        }
+        case NSFetchedResultsChangeMove: {
+            update = ^{
+                [collectionView moveItemAtIndexPath:indexPath toIndexPath:newIndexPath];
+            };
+            break;
+        }
     }
+    [self.updates addObject:update];
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.collectionView performBatchUpdates:^{
+        for (UICollectionViewUpdateBlock update in self.updates) update();
+    } completion:^(BOOL finished) {
+        self.updates = nil;
+    }];
 }
 
 @end

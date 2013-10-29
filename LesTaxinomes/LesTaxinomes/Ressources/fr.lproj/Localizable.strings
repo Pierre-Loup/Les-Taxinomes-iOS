@@ -32,7 +32,7 @@
 /* TAB NAR */
 "tabbar.home"       = "Accueil";
 "tabbar.medias"     = "Médias";
-"tabbar.navigate"   = "Explorer";
+"tabbar.explore"    = "Explorer";
 "tabbar.myaccount"  = "Mon espace";
 "tabbar.authors"    = "Auteurs";
 
