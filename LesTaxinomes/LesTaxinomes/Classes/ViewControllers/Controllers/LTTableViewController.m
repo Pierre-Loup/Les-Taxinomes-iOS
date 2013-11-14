@@ -12,4 +12,10 @@
 @end
 
 @implementation LTTableViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.automaticallyAdjustsScrollViewInsets = YES;
+}
 @end

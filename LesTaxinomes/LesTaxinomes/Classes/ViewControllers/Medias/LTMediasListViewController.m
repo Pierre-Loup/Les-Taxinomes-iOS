@@ -40,6 +40,7 @@
     [super viewDidLoad];
     
     self.tableView.backgroundColor = [UIColor clearColor];
+    
     // Puff to refresh top view
     self.refreshControl = [UIRefreshControl new];
     [self.refreshControl addTarget:self.delegate
@@ -57,6 +58,18 @@
                         forControlEvents:UIControlEventTouchUpInside];
     
     self.tableView.tableFooterView = self.footerView;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self updateScrollViewInsets];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self updateScrollViewInsets];
 }
 
 - (void)viewDidUnload
@@ -109,6 +122,14 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private methods
+
+- (void)updateScrollViewInsets
+{
+    UIEdgeInsets insets = UIEdgeInsetsMake(self.parentViewController.topLayoutGuide.length, 0
+                                           ,self.parentViewController.bottomLayoutGuide.length , 0);
+    self.tableView.contentInset = insets;
+    self.tableView.scrollIndicatorInsets = insets;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UITableViewDataSource

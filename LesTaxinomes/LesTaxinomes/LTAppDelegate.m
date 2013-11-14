@@ -20,7 +20,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"LesTaxinomes.sqlite"];
-    
+    self.window.backgroundColor = [UIColor clearColor];
+    self.window.opaque = NO;
     [self.window makeKeyAndVisible];
     
     [LTAppearance setup];
@@ -37,7 +38,8 @@
     
     for (NSInteger i = 0;
          i < tabBarController.tabBar.items.count;
-         i++) {
+         i++)
+    {
         UINavigationController* navigationController = tabBarController.viewControllers[i];
         ((UIViewController*)navigationController.viewControllers[0]).title = tabItemsTitles[i];
         ((UITabBarItem*)tabBarController.tabBar.items[i]).title = tabItemsTitles[i];
@@ -49,12 +51,12 @@
     
 #ifdef DEBUG
 #if TARGET_IPHONE_SIMULATOR
-//    PDDebugger *debugger = [PDDebugger defaultInstance];
-//    [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
-//    [debugger enableViewHierarchyDebugging];
-//    [debugger enableCoreDataDebugging];
-//    [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]
-//                             withName:@"Main context"];
+    PDDebugger *debugger = [PDDebugger defaultInstance];
+    [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
+    [debugger enableViewHierarchyDebugging];
+    [debugger enableCoreDataDebugging];
+    [debugger addManagedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]
+                             withName:@"Main context"];
 #endif
 #endif
     

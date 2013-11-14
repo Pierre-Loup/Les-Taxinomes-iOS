@@ -111,6 +111,7 @@ typedef enum {
     [super viewWillAppear:animated];
     self.listViewController.view.frame = self.view.bounds;
     self.gridViewController.view.frame = self.view.bounds;
+    
     if ([[self.mediasResultController fetchedObjects] count] == 0) {
         [self loadMoreMedias];
     }

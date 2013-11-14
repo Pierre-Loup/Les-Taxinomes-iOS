@@ -27,4 +27,5 @@
 #import "SVProgressHUD.h"
 
 @interface LTTableViewController : UITableViewController
+
 @end
