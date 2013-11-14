@@ -8,7 +8,7 @@
 
 #import "LTMapViewController.h"
 // VCs
-#import "MediaDetailViewController.h"
+#import "LTMediaDetailViewController.h"
 // MODEL
 #import "LTMedia+Business.h"
 
@@ -203,8 +203,8 @@
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
     if ([view.annotation isKindOfClass:[LTMedia class]]) {
         LTMedia *media = (LTMedia *)view.annotation;
-        MediaDetailViewController * mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailViewController"
-                                                                                                            bundle:nil];
+        LTMediaDetailViewController* mediaDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LTMediaDetailViewController"];
+
         mediaDetailViewController.media = media;
         mediaDetailViewController.title = _T(@"common.media");
         [self.navigationController pushViewController:mediaDetailViewController animated:YES];

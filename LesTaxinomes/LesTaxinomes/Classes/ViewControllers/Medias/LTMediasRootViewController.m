@@ -35,7 +35,7 @@
 // Controllers
 #import "LTMediasListViewController.h"
 #import "LTMediasGridViewController.h"
-#import "MediaDetailViewController.h"
+#import "LTMediaDetailViewController.h"
 // Views
 #import "SpinnerCell.h"
 #import "UIImageView+AFNetworking.h"
@@ -56,7 +56,7 @@ typedef enum {
 
 @interface LTMediasRootViewController ()
 
-@property (nonatomic, strong) IBOutlet MediaDetailViewController *mediaDetailViewController;
+@property (nonatomic, strong) IBOutlet LTMediaDetailViewController *LTMediaDetailViewController;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem* displayBarButton;
 @property (nonatomic, strong) LTMediasListViewController* listViewController;
 @property (nonatomic, strong) LTMediasGridViewController* gridViewController;
@@ -102,7 +102,7 @@ typedef enum {
     [self.view addSubview:self.listViewController.view];
     self.mediasResultController.delegate = self.listViewController;
     
-    self.mediaDetailViewController = (MediaDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    self.LTMediaDetailViewController = (LTMediaDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
 }
 

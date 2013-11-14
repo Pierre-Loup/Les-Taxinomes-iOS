@@ -12,8 +12,12 @@
 #import "LTMediasListViewController.h"
 
 // UI
+#import "LTMediaDetailViewController.h"
 #import "LTMediaListCell.h"
 #import "LTLoadMoreFooterView.h"
+// Model
+#import "LTMedia.h"
+
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Defines & contants
 
@@ -167,19 +171,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    LTMedia *media = [self.mediasResultController objectAtIndexPath:indexPath];
-//    if (self.dataSource.mediaDetailViewController) {
-//        [self.dataSource.mediaDetailViewController.navigationController popToRootViewControllerAnimated:YES];
-//        self.mediaDetailViewController.media = media;
-//        self.dataSource.mediaDetailViewController.title = media.title;
-//    } else {
-//        if(media != nil){
-//            MediaDetailViewController* mediaDetailViewController = [[MediaDetailViewController alloc] initWithNibName:@"MediaDetailViewController" bundle:nil];
-//            mediaDetailViewController.media = media;
-//            mediaDetailViewController.title = media.title;
-//            [self.navigationController pushViewController:mediaDetailViewController animated:YES];
-//        }
-//    }
+    LTMedia *media = [self.dataSource.mediasResultController objectAtIndexPath:indexPath];
+
+    if(media != nil)
+    {
+        LTMediaDetailViewController* mediaDetailViewController = [self.parentViewController.storyboard instantiateViewControllerWithIdentifier:@"LTMediaDetailViewController"];
+        mediaDetailViewController.media = media;
+        mediaDetailViewController.title = media.mediaTitle;
+        [self.navigationController pushViewController:mediaDetailViewController
+                                             animated:YES];
+    }
 }
 
 

@@ -35,11 +35,10 @@
 		A577659E1777532200CC8EE6 /* LTLicense+Business.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF8117772CFE00C16C06 /* LTLicense+Business.m */; };
 		A577659F1777532200CC8EE6 /* LTMedia+Business.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF8317772CFE00C16C06 /* LTMedia+Business.m */; };
 		A57765A01777533300CC8EE6 /* LTMediaLicenseChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFAE17772CFE00C16C06 /* LTMediaLicenseChooserViewController.m */; };
-		A57765A31777534200CC8EE6 /* MediaDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFAC17772CFE00C16C06 /* MediaDetailViewController.xib */; };
 		A57765A51777534D00CC8EE6 /* LTMediasGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFA417772CFE00C16C06 /* LTMediasGridViewController.m */; };
 		A57765A61777534D00CC8EE6 /* LTMediasListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFA617772CFE00C16C06 /* LTMediasListViewController.m */; };
 		A57765A71777534D00CC8EE6 /* LTMediasRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFA817772CFE00C16C06 /* LTMediasRootViewController.m */; };
-		A57765A81777534D00CC8EE6 /* MediaDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFAB17772CFE00C16C06 /* MediaDetailViewController.m */; };
+		A57765A81777534D00CC8EE6 /* LTMediaDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFAB17772CFE00C16C06 /* LTMediaDetailViewController.m */; };
 		A57765AC1777537900CC8EE6 /* LTMediaCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFD017772CFE00C16C06 /* LTMediaCollectionCell.m */; };
 		A57765AD1777537900CC8EE6 /* LTMediaListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFD217772CFE00C16C06 /* LTMediaListCell.m */; };
 		A57765AE1777537D00CC8EE6 /* LTMediaListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFD317772CFE00C16C06 /* LTMediaListCell.xib */; };
@@ -204,9 +203,8 @@
 		A5F6EFA617772CFE00C16C06 /* LTMediasListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTMediasListViewController.m; sourceTree = "<group>"; };
 		A5F6EFA717772CFE00C16C06 /* LTMediasRootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTMediasRootViewController.h; sourceTree = "<group>"; };
 		A5F6EFA817772CFE00C16C06 /* LTMediasRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTMediasRootViewController.m; sourceTree = "<group>"; };
-		A5F6EFAA17772CFE00C16C06 /* MediaDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaDetailViewController.h; sourceTree = "<group>"; };
-		A5F6EFAB17772CFE00C16C06 /* MediaDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MediaDetailViewController.m; sourceTree = "<group>"; };
-		A5F6EFAC17772CFE00C16C06 /* MediaDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaDetailViewController.xib; sourceTree = "<group>"; };
+		A5F6EFAA17772CFE00C16C06 /* LTMediaDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTMediaDetailViewController.h; sourceTree = "<group>"; };
+		A5F6EFAB17772CFE00C16C06 /* LTMediaDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTMediaDetailViewController.m; sourceTree = "<group>"; };
 		A5F6EFAD17772CFE00C16C06 /* LTMediaLicenseChooserViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTMediaLicenseChooserViewController.h; sourceTree = "<group>"; };
 		A5F6EFAE17772CFE00C16C06 /* LTMediaLicenseChooserViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTMediaLicenseChooserViewController.m; sourceTree = "<group>"; };
 		A5F6EFB317772CFE00C16C06 /* MediaLocalisationPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaLocalisationPickerViewController.h; sourceTree = "<group>"; };
@@ -560,9 +558,8 @@
 				A5F6EFA617772CFE00C16C06 /* LTMediasListViewController.m */,
 				A5F6EFA717772CFE00C16C06 /* LTMediasRootViewController.h */,
 				A5F6EFA817772CFE00C16C06 /* LTMediasRootViewController.m */,
-				A5F6EFAA17772CFE00C16C06 /* MediaDetailViewController.h */,
-				A5F6EFAB17772CFE00C16C06 /* MediaDetailViewController.m */,
-				A5F6EFAC17772CFE00C16C06 /* MediaDetailViewController.xib */,
+				A5F6EFAA17772CFE00C16C06 /* LTMediaDetailViewController.h */,
+				A5F6EFAB17772CFE00C16C06 /* LTMediaDetailViewController.m */,
 				A5F6EFAD17772CFE00C16C06 /* LTMediaLicenseChooserViewController.h */,
 				A5F6EFAE17772CFE00C16C06 /* LTMediaLicenseChooserViewController.m */,
 				A5F6EFB317772CFE00C16C06 /* MediaLocalisationPickerViewController.h */,
@@ -787,7 +784,6 @@
 				A5F6ECEB17772A3400C16C06 /* oiseau.aif in Resources */,
 				A57765B41777539200CC8EE6 /* SpinnerCell.xib in Resources */,
 				A5F6ECE817772A3400C16C06 /* CGU.strings in Resources */,
-				A57765A31777534200CC8EE6 /* MediaDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -866,7 +862,7 @@
 				A57765CB1777628000CC8EE6 /* LTSection.m in Sources */,
 				A569D72817774C4500ED24B9 /* LTLegalNoticeViewController.m in Sources */,
 				A5E0B1D71777159F00CD4CCF /* LTAppDelegate.m in Sources */,
-				A57765A81777534D00CC8EE6 /* MediaDetailViewController.m in Sources */,
+				A57765A81777534D00CC8EE6 /* LTMediaDetailViewController.m in Sources */,
 				A57765921777524800CC8EE6 /* Annotation.m in Sources */,
 				A57765D01777628000CC8EE6 /* LTLicense.m in Sources */,
 				A577659D1777532200CC8EE6 /* LTAuthor+Business.m in Sources */,

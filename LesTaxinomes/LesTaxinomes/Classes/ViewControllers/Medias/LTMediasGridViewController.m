@@ -9,9 +9,13 @@
 #import "LTMediasGridViewController.h"
 
 // UI
+#import "LTMediaDetailViewController.h"
 #import "LTCollectionViewFlowLayout.h"
 #import "LTMediaCollectionCell.h"
 #import "LTLoadMoreFooterView.h"
+
+// Model
+#import "LTMedia.h"
 
 typedef void (^UICollectionViewUpdateBlock)();
 
@@ -142,6 +146,23 @@ static NSString* const kLTMediasGridViewControllerFooterIdentifier = @"kLTMedias
     
     return view;
     
+}
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    LTMedia *media = [self.dataSource.mediasResultController objectAtIndexPath:indexPath];
+    
+    if(media != nil)
+    {
+        LTMediaDetailViewController* mediaDetailViewController = [self.parentViewController.storyboard instantiateViewControllerWithIdentifier:@"LTMediaDetailViewController"];
+        mediaDetailViewController.media = media;
+        mediaDetailViewController.title = media.mediaTitle;
+        [self.navigationController pushViewController:mediaDetailViewController
+                                             animated:YES];
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

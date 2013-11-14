@@ -1,5 +1,5 @@
 //
-//  MediaDetailViewController.m
+//  LTMediaDetailViewController.m
 //  LesTaxinomes
 //
 //  Created by Pierre-Loup Tristant on 28/11/11.
@@ -30,32 +30,28 @@
 #import "UIImageView+PhotoFrame.h"
 // VC
 #import "LTMapViewController.h"
-#import "MediaDetailViewController.h"
+#import "LTMediaDetailViewController.h"
 // MODEL
 #import "Annotation.h"
 #import "LTMedia+Business.h"
 
-@interface MediaDetailViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>{
+@interface LTMediaDetailViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>{
     int asynchLoadCounter_;
 }
 
-@property (nonatomic, strong) IBOutlet UIScrollView * scrollView;
-@property (nonatomic, strong) IBOutlet UIImageView * mediaImageView;
-@property (nonatomic, strong) IBOutlet UIActivityIndicatorView* placeholderAIView;
-@property (nonatomic, strong) IBOutlet LTTitleView * authorTitleView;
-@property (nonatomic, strong) IBOutlet UIImageView * authorAvatarView;
-@property (nonatomic, strong) IBOutlet UILabel * authorNameLabel;
-@property (nonatomic, strong) IBOutlet LTTitleView * descTitleView;
-@property (nonatomic, strong) IBOutlet UITextView * descTextView;
-@property (nonatomic, strong) IBOutlet LTTitleView * licenseTitleView;
-@property (nonatomic, strong) IBOutlet UILabel * licenseNameLabel;
-@property (nonatomic, strong) IBOutlet LTTitleView * mapTitleView;
-@property (nonatomic, strong) IBOutlet MKMapView * mapView;
+@property (nonatomic, weak) IBOutlet UIScrollView * scrollView;
+@property (nonatomic, weak) IBOutlet UIImageView * mediaImageView;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView* placeholderAIView;
+@property (nonatomic, weak) IBOutlet UIImageView * authorAvatarView;
+@property (nonatomic, weak) IBOutlet UILabel * authorNameLabel;
+@property (nonatomic, weak) IBOutlet UITextView * descTextView;
+@property (nonatomic, weak) IBOutlet UILabel * licenseNameLabel;
+@property (nonatomic, weak) IBOutlet MKMapView * mapView;
 @property (nonatomic, readonly) IBOutlet UIImageView* downloadImageView;
 
 @end
 
-@implementation MediaDetailViewController
+@implementation LTMediaDetailViewController
 @synthesize downloadImageView = _downloadImageView;
 
 #pragma mark - Overrides
@@ -69,7 +65,8 @@
 }
 
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.title = self.media.mediaTitle;
     
@@ -89,26 +86,13 @@
     [tapGestureRecognizer setDelegate:self];
     [self.mapView addGestureRecognizer:tapGestureRecognizer];
     
-    [self.scrollView setHidden:YES];
-}
-
-- (void) viewDidUnload {
-    [super viewDidUnload];
-    self.scrollView = nil;
-    self.mediaImageView = nil;
-    self.placeholderAIView = nil;
-    self.mediaImageView = nil;
-    self.authorAvatarView = nil;
-    self.authorNameLabel = nil;
-    self.descTitleView = nil;
-    self.descTextView = nil;
-    self.mapTitleView = nil;
-    self.mapView = nil;
+    self.scrollView.hidden = YES;
 }
 
 #pragma mark - Properties
 
-- (void)setMedia:(LTMedia *)media {
+- (void)setMedia:(LTMedia *)media
+{
     if(media != _media) {
         _media = media;
         [self.scrollView scrollsToTop];
@@ -176,125 +160,84 @@
     [self displayContentIfNeeded];
 }
 
-- (void)refreshView {
-    CGFloat currentContentHeight = 0;
-    CGFloat commonMargin = 10.0;
-    
-    if (self.mediaImageView.image) {
+- (void)refreshView
+{
+    if (self.mediaImageView.image)
+    {
         self.mediaImageView.frame = CGRectMake(self.mediaImageView.frame.origin.x,
                                                self.mediaImageView.frame.origin.y,
                                                self.mediaImageView.frame.size.width,
                                                self.mediaImageView.frame.size.width);
         self.placeholderAIView.center = CGPointMake(self.mediaImageView.bounds.size.width/2 + self.mediaImageView.frame.origin.x, (self.mediaImageView.bounds.size.height/2) + 100.0 + self.mediaImageView.frame.origin.y);
     }
-    currentContentHeight += self.mediaImageView.frame.origin.y + self.mediaImageView.frame.size.height + commonMargin;
-    
-    // Author section
-    self.authorTitleView.frame = CGRectMake(self.authorTitleView.frame.origin.x,
-                                            currentContentHeight,
-                                            self.authorTitleView.frame.size.width,
-                                            self.authorTitleView.frame.size.height);
-    currentContentHeight += self.authorTitleView.frame.size.height + commonMargin;
     
     [self.authorAvatarView setImageWithURL:[NSURL URLWithString:self.media.author.avatarURL]
                           placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
-    self.authorAvatarView.frame = CGRectMake(self.authorAvatarView.frame.origin.x,
-                                             currentContentHeight,
-                                             self.authorAvatarView.frame.size.width,
-                                             self.authorAvatarView.frame.size.height);
-    self.authorNameLabel.frame = CGRectMake(self.authorNameLabel.frame.origin.x,
-                                            currentContentHeight,
-                                            self.authorNameLabel.frame.size.width,
-                                            self.authorNameLabel.frame.size.height);
+
     NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"dd/MM/yyyy"];
     self.authorNameLabel.text = [NSString stringWithFormat:_T(@"media_detail.publish_info_patern"),
                                  self.media.author.name,
                                  [dateFormatter stringFromDate:self.media.date],
                                  [self.media.visits integerValue]];
-    currentContentHeight += self.authorAvatarView.frame.size.height + commonMargin;
-    
-    // Description section
-    self.descTitleView.frame = CGRectMake(self.descTitleView.frame.origin.x,
-                                          currentContentHeight,
-                                          self.descTitleView.frame.size.width,
-                                          self.descTitleView.frame.size.height);
-    currentContentHeight += self.descTitleView.frame.size.height + commonMargin;
     
     if(self.media.text
-       && ![self.media.text isEqualToString:@""]){
+       && ![self.media.text isEqualToString:@""])
+    {
         self.descTextView.text = self.media.text;
-    } else {
+    }
+    else
+    {
         self.descTextView.text = _T(@"media_detail.no_text");
     }
-    self.descTextView.frame = CGRectMake(self.descTextView.frame.origin.x,
-                                         currentContentHeight,
-                                         self.descTextView.frame.size.width,
-                                         self.descTextView.contentSize.height);
-    currentContentHeight += self.descTextView.frame.size.height + commonMargin;
     
-    // License section
     if ([self.media.license.name length]) {
-        self.licenseTitleView.frame = CGRectMake(self.licenseTitleView.frame.origin.x,
-                                                 currentContentHeight,
-                                                 self.licenseTitleView.frame.size.width,
-                                                 self.licenseTitleView.frame.size.height);
-        currentContentHeight += self.licenseTitleView.frame.size.height + commonMargin;
         
         self.licenseNameLabel.text = self.media.license.name;
         
-        self.licenseNameLabel.frame = CGRectMake(self.licenseNameLabel.frame.origin.x,
-                                                 currentContentHeight,
-                                                 self.licenseNameLabel.frame.size.width,
-                                                 self.licenseNameLabel.frame.size.height);
-        currentContentHeight += self.licenseNameLabel.frame.size.height + commonMargin;
-    } else {
-        self.licenseTitleView.hidden = YES;
+    }
+    else
+    {
         self.licenseNameLabel.hidden = YES;
     }
     
     // Map section if media as coordinates
     if (self.media.coordinate.latitude
-        && self.media.coordinate.longitude) {
-        
-        self.mapTitleView.frame = CGRectMake(self.mapTitleView.frame.origin.x,
-                                             currentContentHeight,
-                                             self.mapTitleView.frame.size.width,
-                                             self.mapTitleView.frame.size.height);
-        currentContentHeight += self.mapTitleView.frame.size.height + commonMargin;
-        
-        self.mapView.frame = CGRectMake(self.mapView.frame.origin.x,
-                                        currentContentHeight,
-                                        self.mapView.frame.size.width,
-                                        self.mapView.frame.size.width);
-        if ([[self.mapView annotations] count]) {
+        && self.media.coordinate.longitude)
+    {
+        if ([[self.mapView annotations] count])
+        {
             [self.mapView removeAnnotations:[self.mapView annotations]];
         }
         [self.mapView addAnnotation:self.media];
         self.mapView.region = MKCoordinateRegionMake(self.media.coordinate, MKCoordinateSpanMake(20.0, 20.0));
-        self.mapTitleView.hidden = NO;
+
         self.mapView.hidden = NO;
         
-        
-        currentContentHeight += self.mapView.frame.size.height + commonMargin;
-    } else {
-        self.mapTitleView.hidden = YES;
+    }
+    else
+    {
         self.mapView.hidden = YES;
     }
     
-    [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, currentContentHeight)];
-    if (asynchLoadCounter_ > 0) {
+    if (asynchLoadCounter_ > 0)
+    {
         [SVProgressHUD show];
-    } else {
+    }
+    else
+    {
         self.scrollView.hidden = NO;
     }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
+    {
         return (interfaceOrientation == UIInterfaceOrientationPortrait);
-    } else {
+    }
+    else
+    {
         return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
                 interfaceOrientation == UIInterfaceOrientationLandscapeRight);
     }
@@ -302,9 +245,12 @@
 
 - (void)mediaImageTouched:(UIImage *)sender
 {    
-    if (self.media.mediaLargeURL.length) {
+    if (self.media.mediaLargeURL.length)
+    {
         [self displayLargeMediaPhotoViewer];
-    } else {
+    }
+    else
+    {
         [SVProgressHUD show];
         [[LTConnectionManager sharedManager] getMediaLargeURLWithId:self.media.identifier responseBlock:^(LTMedia *media, NSError *error) {
             
@@ -350,11 +296,8 @@
     //Don't forget to set the userInteractionEnabled UIView property to YES, default is NO.
     self.mediaImageView.userInteractionEnabled = YES;
     [self.mediaImageView addGestureRecognizer:tapGestureRecognizer];
-    self.descTitleView.title = _T(@"common.description");
-    self.licenseTitleView.title = _T(@"common.license");
-    self.mapTitleView.title = _T(@"common.map");
     [self.placeholderAIView startAnimating];
-    __block MediaDetailViewController* weakSelf = self;
+    __block LTMediaDetailViewController* weakSelf = self;
     [self.mediaImageView setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.media.mediaMediumURL]]
                                placeholderImage:[UIImage imageNamed:@"egopv_photo_placeholder"]
                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
@@ -372,12 +315,12 @@
 
 - (void)updateAuthorInformations
 {
-    self.authorTitleView.title = _T(@"common.author");
     [self.authorAvatarView setImageWithURL:[NSURL URLWithString:self.media.author.avatarURL]
                           placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
 }
 
-- (void)mapTouched:(MKMapView *)sender {
+- (void)mapTouched:(MKMapView *)sender
+{
     LTMapViewController* mapVC = [[LTMapViewController alloc] initWithAnnotation:self.media];
     [self.navigationController pushViewController:mapVC animated:YES];
     mapVC.title = _T(@"common.map");

@@ -1,5 +1,5 @@
 //
-//  MediaDetailViewController.h
+//  LTMediaDetailViewController.h
 //  LesTaxinomes
 //
 //  Created by Pierre-Loup Tristant on 28/11/11.
@@ -31,7 +31,7 @@
 
 @class LTMedia;
 
-@interface MediaDetailViewController : LTViewController
+@interface LTMediaDetailViewController : LTViewController
 
 @property (nonatomic, strong) LTMedia *media;
 
