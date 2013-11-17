@@ -40,6 +40,7 @@
 }
 
 @property (nonatomic, weak) IBOutlet UIScrollView * scrollView;
+@property (nonatomic, weak) IBOutlet UIView * containerView;
 @property (nonatomic, weak) IBOutlet UIImageView * mediaImageView;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView* placeholderAIView;
 @property (nonatomic, weak) IBOutlet UIImageView * authorAvatarView;
@@ -80,6 +81,8 @@
     self.scrollView.opaque = NO;
     self.scrollView.delegate = self;
     
+    self.containerView.translatesAutoresizingMaskIntoConstraints = YES;
+    
     UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                    action:@selector(mapTouched:)];
     [tapGestureRecognizer setNumberOfTouchesRequired:1];
@@ -87,6 +90,13 @@
     [self.mapView addGestureRecognizer:tapGestureRecognizer];
     
     self.scrollView.hidden = YES;
+    [self configureView];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self refreshView];
 }
 
 #pragma mark - Properties
@@ -96,7 +106,6 @@
     if(media != _media) {
         _media = media;
         [self.scrollView scrollsToTop];
-        [self configureView];
     }
 }
 
@@ -157,6 +166,11 @@
         [self updateAuthorInformations];
     }
     
+    if (asynchLoadCounter_ > 0)
+    {
+        [SVProgressHUD dismiss];
+    }
+    
     [self displayContentIfNeeded];
 }
 
@@ -181,20 +195,33 @@
                                  [dateFormatter stringFromDate:self.media.date],
                                  [self.media.visits integerValue]];
     
-    if(self.media.text
-       && ![self.media.text isEqualToString:@""])
+    
+    if (self.descTextView)
     {
-        self.descTextView.text = self.media.text;
-    }
-    else
-    {
-        self.descTextView.text = _T(@"media_detail.no_text");
+        if(self.media.text
+           && ![self.media.text isEqualToString:@""])
+        {
+            self.descTextView.text = self.media.text;
+        }
+        else
+        {
+            self.descTextView.text = _T(@"media_detail.no_text");
+        }
+        
+        [self.descTextView sizeToFit];
+        [self.descTextView removeConstraints:self.descTextView.constraints];
+        NSDictionary* views = @{@"text" : self.descTextView};
+        NSString* visualFormat = [NSString stringWithFormat:@"V:[text(==%f)]", self.descTextView.frame.size.height];
+        NSArray* constraints = [NSLayoutConstraint constraintsWithVisualFormat:visualFormat
+                                                                       options:0
+                                                                       metrics:nil
+                                                                         views:views];
+        [self.descTextView addConstraints:constraints];
     }
     
-    if ([self.media.license.name length]) {
-        
+    if ([self.media.license.name length])
+    {
         self.licenseNameLabel.text = self.media.license.name;
-        
     }
     else
     {
@@ -228,6 +255,14 @@
     {
         self.scrollView.hidden = NO;
     }
+
+    [self.scrollView layoutIfNeeded];
+    
+    CGRect containerViewFrame = self.containerView.frame;
+    containerViewFrame.size.width = self.scrollView.bounds.size.width;
+    containerViewFrame.size.height = CGRectGetMaxY(self.mapView.frame);
+    self.containerView.frame = containerViewFrame;
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
