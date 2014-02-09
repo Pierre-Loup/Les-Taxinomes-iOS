@@ -52,7 +52,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = _T(@"common.submit");
+    self.title = _T(@"authentication.title");
     [self.cancelBarButton setTitle:_T(@"common.cancel")];
     
     self.loginLabel.text = _T(@"authentication.login_label.text");
@@ -61,6 +61,8 @@
     [self.passwordForgottenButton setTitle:_T(@"authentication.forgotten_password_button.text")
                                   forState:UIControlStateNormal];
     [self.signupButton setTitle:_T(@"authentication.signup_button.text")
+                       forState:UIControlStateNormal];
+    [self.signinButton setTitle:_T(@"common.submit")
                        forState:UIControlStateNormal];
 }
 

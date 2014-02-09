@@ -17,6 +17,15 @@ PonyDebugger is licensed under the Apache Licence, Version 2.0
 Changes
 -------
 
+### v0.3.1 - 2014-01-02
+
+ - Fix only building active arch in debug. (@kyleve)
+ - Fix view hierarchy debugging with complex key paths. (@ryanolsonk)
+ - Fix crash in swizzled exchangeSubviewAtIndex:withSubviewAtIndex:
+   (@ryanolsonk)
+ - Fix for crash when having a library that looks like a NSURLConnectionDelegate
+   (@peterwilli)
+
 ### v0.3.0 - 2013-05-01
 
  - Remote Logging and Introspection (@wlue)
@@ -136,6 +145,38 @@ requests and track your managed object contexts.
 
 Installing
 ----------
+
+#### CocoaPods
+
+[CocoaPods](http://cocoapods.org/) automates 3rd party dependencies in
+Objective-C.
+
+Install the ruby gem.
+
+    $ sudo gem install cocoapods
+    $ pod setup
+
+> Depending on your Ruby installation, you may not have to run as sudo to
+> install the cocoapods gem.
+
+Create a Podfile. You must be running on iOS 5 or above.
+
+    platform :ios, '5.0'
+    pod 'PonyDebugger', '~> 0.3.1'
+
+If you would like to use the latest version of PonyDebugger, point to the Github
+repository directly.
+
+    pod 'PonyDebugger', :git => 'https://github.com/square/PonyDebugger.git'
+
+Install dependencies.
+
+    $ pod install
+
+When using CocoaPods, you must open the `.xcworkspace` file instead of the
+project file when building your project.
+
+#### Manual Installation
 
 - Extract a tarball or zipball of the repository into your project directory.
   If you prefer, you may also add the project as a submodule.  The iOS client

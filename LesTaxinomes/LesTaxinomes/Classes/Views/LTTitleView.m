@@ -82,7 +82,7 @@
     CGRect titleLabelFrame = CGRectMake(kTitleLabelMarginLeft, 0, frame.size.width-kTitleLabelMarginLeft-kTitleLabelMarginRight, frame.size.height);
     titleLabel_ = [[UILabel alloc] initWithFrame:titleLabelFrame];
     titleLabel_.font = [UIFont boldSystemFontOfSize:20.0];
-    titleLabel_.minimumFontSize = 10.0;
+    titleLabel_.minimumScaleFactor = 0.5;
     titleLabel_.textColor = [UIColor whiteColor];
     titleLabel_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     titleLabel_.opaque = NO;

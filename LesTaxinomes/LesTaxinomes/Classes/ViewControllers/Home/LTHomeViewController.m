@@ -77,16 +77,17 @@
     self.userAvatarView.image = defaultAvatar;
     
     [self.userNameLabel setNumberOfLines:0];
-    [self.userNameLabel setLineBreakMode:UILineBreakModeTailTruncation];
+    [self.userNameLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
     [self.userNameLabel setContentMode:UIViewContentModeCenter];
-    [self.userNameLabel setTextAlignment:UITextAlignmentCenter];
+    [self.userNameLabel setTextAlignment:NSTextAlignmentCenter];
     [self.userNameLabel setFont:[UIFont fontWithName:@"Jesaya Free" size:17.0]];
     self.userNameLabel.text = _T(@"home.username.placeholder");
     
     UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
     [infoButton addTarget:self action:@selector(infoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    self.infoButton = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
-    [self.navigationItem setLeftBarButtonItem:self.infoButton animated:YES];
+    UIBarButtonItem* infoBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
+    self.infoButton = infoBarButtonItem;
+    [self.navigationItem setLeftBarButtonItem:infoBarButtonItem animated:YES];
     [self.navigationItem setRightBarButtonItem:self.cameraBarButton animated:YES];
     
     // Medaillion view

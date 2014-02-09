@@ -9,7 +9,7 @@
 
 @interface MagicalRecord (Internal)
 
-+ (void) cleanUUIack;
++ (void) cleanUpStack;
 + (void) cleanUpErrorHanding;
 
 @end
@@ -26,10 +26,10 @@
 + (void) cleanUp
 {
     [self cleanUpErrorHanding];
-    [self cleanUUIack];
+    [self cleanUpStack];
 }
 
-+ (void) cleanUUIack;
++ (void) cleanUpStack;
 {
 	[NSManagedObjectContext MR_cleanUp];
 	[NSManagedObjectModel MR_setDefaultManagedObjectModel:nil];

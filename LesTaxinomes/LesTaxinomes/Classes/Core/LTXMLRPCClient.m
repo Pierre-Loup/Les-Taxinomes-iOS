@@ -139,8 +139,6 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
                 }
             }
             
-            NSArray* cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[self.baseURL absoluteURL]];
-            
             // Succes block call
             if (!wsResponseError && success) {
                 dispatch_async(dispatch_get_main_queue(), ^{

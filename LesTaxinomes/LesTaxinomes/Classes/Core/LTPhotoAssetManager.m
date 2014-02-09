@@ -9,7 +9,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "LTPhotoAssetManager.h"
 
-@interface LTPhotoAssetManager () <UIActionSheetDelegate, UIImagePickerControllerDelegate>
+@interface LTPhotoAssetManager () <UINavigationControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate>
 
 @end
 
@@ -97,14 +97,14 @@
                                         self.photoAssetPickedBlock(recAssertURL, error);
                                     }];
     }
-    [picker dismissModalViewControllerAnimated:YES];
+    [picker dismissViewControllerAnimated:YES completion:^{}];
 }
 
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     // Dismiss the image selection and close the program
-    [self.presentVC dismissModalViewControllerAnimated:YES];
+    [self.presentVC dismissViewControllerAnimated:YES completion:^{}];
     self.cancelBlock();
 }
 
@@ -137,10 +137,10 @@
         }
         else if(buttonIndex == 2)
         {
-            picker.sourceType = UIImagePickerControllerSourceTypeCamera;;
+            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
         }
         
-        [self.presentVC presentModalViewController:picker animated:YES];
+        [self.presentVC presentViewController:picker animated:YES completion:^{}];
     }
 }
 

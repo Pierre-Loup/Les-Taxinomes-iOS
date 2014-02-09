@@ -97,7 +97,10 @@ typedef enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Navigation bar
     self.title = _T(@"tabbar.medias");
+    self.displayBarButton.image = [UIImage imageNamed:@"icon_grid"];
     
     [self.view addSubview:self.listViewController.view];
     self.mediasResultController.delegate = self.listViewController;

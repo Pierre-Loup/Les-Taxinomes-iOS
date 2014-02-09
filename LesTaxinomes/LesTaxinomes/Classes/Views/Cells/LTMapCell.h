@@ -11,7 +11,7 @@
 
 @interface LTMapCell : UITableViewCell
 
-@property (nonatomic, readonly) IBOutlet MKMapView* mapView;
+@property (nonatomic, readonly) MKMapView* mapView;
 
 + (NSString *)reuseIdentifier;
 - (NSString *)reuseIdentifier;

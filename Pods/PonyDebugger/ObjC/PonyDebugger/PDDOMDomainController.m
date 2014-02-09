@@ -10,10 +10,13 @@
 //
 
 #import "PDDOMDomainController.h"
-#import <objc/runtime.h>
-#import <QuartzCore/QuartzCore.h>
 #import "PDInspectorDomainController.h"
 #import "PDRuntimeTypes.h"
+
+#import <objc/runtime.h>
+#import <QuartzCore/QuartzCore.h>
+
+#pragma mark - Definitions
 
 // Constants defined in the DOM Level 2 Core: http://www.w3.org/TR/DOM-Level-2-Core/core.html#ID-1950641247
 static const int kPDDOMNodeTypeElement = 1;
@@ -23,6 +26,8 @@ static const int kPDDOMNodeTypeComment = 8;
 static const int kPDDOMNodeTypeDocument = 9;
 
 static NSString *const kPDDOMAttributeParsingRegex = @"[\"'](.*)[\"']";
+
+#pragma mark - Private Interface
 
 @interface PDDOMDomainController ()
 
@@ -41,6 +46,8 @@ static NSString *const kPDDOMAttributeParsingRegex = @"[\"'](.*)[\"']";
 @property (nonatomic, strong) UIView *inspectModeOverlay;
 
 @end
+
+#pragma mark - Implementation
 
 @implementation PDDOMDomainController
 
@@ -100,40 +107,40 @@ static NSString *const kPDDOMAttributeParsingRegex = @"[\"'](.*)[\"']";
     // Only do it once to avoid swapping back if this method is called again
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        
         Method original, swizzle;
         Class viewClass = [UIView class];
-        
+
+        // Using sel_registerName() because compiler complains about the swizzled selectors not being found.
         original = class_getInstanceMethod(viewClass, @selector(addSubview:));
-        swizzle = class_getInstanceMethod(viewClass, @selector(pd_swizzled_addSubview:));
+        swizzle = class_getInstanceMethod(viewClass, sel_registerName("pd_swizzled_addSubview:"));
         method_exchangeImplementations(original, swizzle);
         
         original = class_getInstanceMethod(viewClass, @selector(bringSubviewToFront:));
-        swizzle = class_getInstanceMethod(viewClass, @selector(pd_swizzled_bringSubviewToFront:));
+        swizzle = class_getInstanceMethod(viewClass, sel_registerName("pd_swizzled_bringSubviewToFront:"));
         method_exchangeImplementations(original, swizzle);
         
         original = class_getInstanceMethod(viewClass, @selector(sendSubviewToBack:));
-        swizzle = class_getInstanceMethod(viewClass, @selector(pd_swizzled_sendSubviewToBack:));
+        swizzle = class_getInstanceMethod(viewClass, sel_registerName("pd_swizzled_sendSubviewToBack:"));
         method_exchangeImplementations(original, swizzle);
         
         original = class_getInstanceMethod(viewClass, @selector(removeFromSuperview));
-        swizzle = class_getInstanceMethod(viewClass, @selector(pd_swizzled_removeFromSuperview));
+        swizzle = class_getInstanceMethod(viewClass, sel_registerName("pd_swizzled_removeFromSuperview"));
         method_exchangeImplementations(original, swizzle);
         
         original = class_getInstanceMethod(viewClass, @selector(insertSubview:atIndex:));
-        swizzle = class_getInstanceMethod(viewClass, @selector(pd_swizzled_insertSubview:atIndex:));
+        swizzle = class_getInstanceMethod(viewClass, sel_registerName("pd_swizzled_insertSubview:atIndex:"));
         method_exchangeImplementations(original, swizzle);
         
         original = class_getInstanceMethod(viewClass, @selector(insertSubview:aboveSubview:));
-        swizzle = class_getInstanceMethod(viewClass, @selector(pd_swizzled_insertSubview:aboveSubview:));
+        swizzle = class_getInstanceMethod(viewClass, sel_registerName("pd_swizzled_insertSubview:aboveSubview:"));
         method_exchangeImplementations(original, swizzle);
         
         original = class_getInstanceMethod(viewClass, @selector(insertSubview:belowSubview:));
-        swizzle = class_getInstanceMethod(viewClass, @selector(pd_swizzled_insertSubview:belowSubview:));
+        swizzle = class_getInstanceMethod(viewClass, sel_registerName("pd_swizzled_insertSubview:belowSubview:"));
         method_exchangeImplementations(original, swizzle);
         
         original = class_getInstanceMethod(viewClass, @selector(exchangeSubviewAtIndex:withSubviewAtIndex:));
-        swizzle = class_getInstanceMethod(viewClass, @selector(pd_swizzled_exchangeSubviewAtIndex:withSubviewAtIndex:));
+        swizzle = class_getInstanceMethod(viewClass, sel_registerName("pd_swizzled_exchangeSubviewAtIndex:withSubviewAtIndex:"));
         method_exchangeImplementations(original, swizzle);
     });
 }
@@ -198,6 +205,12 @@ static NSString *const kPDDOMAttributeParsingRegex = @"[\"'](.*)[\"']";
 
 - (void)domain:(PDDOMDomain *)domain setAttributesAsTextWithNodeId:(NSNumber *)nodeId text:(NSString *)text name:(NSString *)name callback:(void (^)(id))callback;
 {
+    // The "class" attribute cannot be edited. Bail early
+    if ([name isEqualToString:@"class"]) {
+        callback(nil);
+        return;
+    }
+    
     id nodeObject = [self.objectsForNodeIds objectForKey:nodeId];
     const char *typeEncoding = [self typeEncodingForKeyPath:name onObject:nodeObject];
     
@@ -221,6 +234,12 @@ static NSString *const kPDDOMAttributeParsingRegex = @"[\"'](.*)[\"']";
         } else if (typeEncoding && !strcmp(typeEncoding, @encode(CGRect))) {
             CGRect rect = CGRectFromString(valueString);
             [nodeObject setValue:[NSValue valueWithCGRect:rect] forKeyPath:name];
+        } else if (typeEncoding && !strcmp(typeEncoding, @encode(id))) {
+            // Only support editing for string objects (due to the trivial mapping between the string and its description)
+            id currentValue = [nodeObject valueForKeyPath:name];
+            if ([currentValue isKindOfClass:[NSString class]]) {
+                [nodeObject setValue:valueString forKeyPath:name];
+            }
         } else {
             NSNumber *number = @([valueString doubleValue]);
             [nodeObject setValue:number forKeyPath:name];
@@ -673,29 +692,12 @@ static NSString *const kPDDOMAttributeParsingRegex = @"[\"'](.*)[\"']";
         elementNode.nodeName = @"object";
     }
     
-    if ([object respondsToSelector:@selector(text)]) {
-        NSString *text = [object text];
-        if ([text length] > 0) {
-            children = [children arrayByAddingObject:[self textNodeForString:[object text]]];
-        }
-    }
-    
     elementNode.children = children;
     elementNode.childNodeCount = @([elementNode.children count]);
     elementNode.nodeId = [self getAndIncrementNodeIdCount];
     elementNode.attributes = [self attributesArrayForObject:object];
     
     return elementNode;
-}
-
-- (PDDOMNode *)textNodeForString:(NSString *)string;
-{
-    PDDOMNode *textNode = [[PDDOMNode alloc] init];
-    textNode.nodeId = [self getAndIncrementNodeIdCount];
-    textNode.nodeType = @(kPDDOMNodeTypeText);
-    textNode.nodeValue = string;
-    
-    return textNode;
 }
 
 #pragma mark - Attribute Generation
@@ -707,13 +709,37 @@ static NSString *const kPDDOMAttributeParsingRegex = @"[\"'](.*)[\"']";
         return nil;
     }
     
-    NSMutableArray *attributes = [NSMutableArray arrayWithArray:@[ @"class", [[object class] description] ]];
+    NSString *className = [[object class] description];
+    
+    // Thanks to http://petersteinberger.com/blog/2012/pimping-recursivedescription/
+    SEL viewDelSEL = NSSelectorFromString([NSString stringWithFormat:@"%@wDelegate", @"_vie"]);
+    if ([object respondsToSelector:viewDelSEL]) {
+        
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        UIViewController *vc = [object performSelector:viewDelSEL];
+#pragma clang diagnostic pop
+        
+        if (vc) {
+            className = [className stringByAppendingFormat:@" (%@)", [vc class]];
+        }
+    }
+    
+    NSMutableArray *attributes = [NSMutableArray arrayWithArray:@[ @"class", className ]];
     
     if ([object isKindOfClass:[UIView class]]) {
         // Get strings for all the key paths in viewKeyPathsToDisplay
         for (NSString *keyPath in self.viewKeyPathsToDisplay) {
             
-            NSValue *value = [object valueForKeyPath:keyPath];
+            NSValue *value = nil;
+            
+            @try {
+                value = [object valueForKeyPath:keyPath];
+            } @catch (NSException *exception) {
+                // Continue if valueForKeyPath fails (ie KVC non-compliance)
+                continue;
+            }
+            
             NSString *stringValue = [self stringForValue:value atKeyPath:keyPath onObject:object];
             if (stringValue) {
                 [attributes addObjectsFromArray:@[ keyPath, stringValue ]];
@@ -730,6 +756,7 @@ static NSString *const kPDDOMAttributeParsingRegex = @"[\"'](.*)[\"']";
     const char *typeEncoding = [self typeEncodingForKeyPath:keyPath onObject:object];
     
     if (typeEncoding) {
+        // Special structs
         if (!strcmp(typeEncoding,@encode(BOOL))) {
             stringValue = [(id)value boolValue] ? @"YES" : @"NO";
         } else if (!strcmp(typeEncoding,@encode(CGPoint))) {
@@ -741,8 +768,13 @@ static NSString *const kPDDOMAttributeParsingRegex = @"[\"'](.*)[\"']";
         }
     }
     
+    // Boxed numeric primitives
     if (!stringValue && [value isKindOfClass:[NSNumber class]]) {
         stringValue = [(NSNumber *)value stringValue];
+        
+    // Object types
+    } else if (!stringValue && typeEncoding && !strcmp(typeEncoding, @encode(id))) {
+        stringValue = [value description];
     }
     
     return stringValue;
@@ -751,13 +783,43 @@ static NSString *const kPDDOMAttributeParsingRegex = @"[\"'](.*)[\"']";
 - (const char *)typeEncodingForKeyPath:(NSString *)keyPath onObject:(id)object;
 {
     const char *encoding = NULL;
+    NSString *lastKeyPathComponent = nil;
+    id targetObject = nil;
+    
+    // Separate the key path components
+    NSArray *keyPathComponents = [keyPath componentsSeparatedByString:@"."];
+    
+    if ([keyPathComponents count] > 1) {
+        // Drill down to find the targetObject.key piece that we're interested in.
+        NSMutableArray *mutableComponents = [keyPathComponents mutableCopy];
+        lastKeyPathComponent = [mutableComponents lastObject];
+        [mutableComponents removeLastObject];
+        
+        NSString *targetKeyPath = [mutableComponents componentsJoinedByString:@"."];
+        @try {
+            targetObject = [object valueForKeyPath:targetKeyPath];
+        } @catch (NSException *exception) {
+            // Silently fail for KVC non-compliance
+        }
+    } else {
+        // This is the simple case with no dots. Use the full key and original target object
+        lastKeyPathComponent = keyPath;
+        targetObject = object;
+    }
     
     // Look for a matching set* method to infer the type
-    NSString *selectorString = [NSString stringWithFormat:@"set%@:", [keyPath stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[keyPath substringToIndex:1] uppercaseString]]];
-    NSMethodSignature *methodSignature = [object methodSignatureForSelector:NSSelectorFromString(selectorString)];
+    NSString *selectorString = [NSString stringWithFormat:@"set%@:", [lastKeyPathComponent stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[lastKeyPathComponent substringToIndex:1] uppercaseString]]];
+    NSMethodSignature *methodSignature = [targetObject methodSignatureForSelector:NSSelectorFromString(selectorString)];
     if (methodSignature) {
         // We don't care about arg0 (self) or arg1 (_cmd)
         encoding = [methodSignature getArgumentTypeAtIndex:2];
+    }
+    
+    // If we didn't find a setter, look for the getter
+    // We could be more exhasutive here with KVC conventions, but these two will cover the majority of cases
+    if (!encoding) {
+        NSMethodSignature *getterSignature = [targetObject methodSignatureForSelector:NSSelectorFromString(lastKeyPathComponent)];
+        encoding = [getterSignature methodReturnType];
     }
     
     return encoding;
@@ -821,11 +883,23 @@ static NSString *const kPDDOMAttributeParsingRegex = @"[\"'](.*)[\"']";
 
 - (void)pd_swizzled_exchangeSubviewAtIndex:(NSInteger)index1 withSubviewAtIndex:(NSInteger)index2;
 {
-    [[PDDOMDomainController defaultInstance] removeView:[[self subviews] objectAtIndex:index1]];
-    [[PDDOMDomainController defaultInstance] removeView:[[self subviews] objectAtIndex:index2]];
+    // Guard against calls with out-of-bounds indices.
+    // exchangeSubviewAtIndex:withSubviewAtIndex: doesn't crash in this case, so neither should we.
+    if (index1 >= 0 && index1 < [[self subviews] count]) {
+        [[PDDOMDomainController defaultInstance] removeView:[[self subviews] objectAtIndex:index1]];
+    }
+    if (index2 >= 0 && index2 < [[self subviews] count]) {
+        [[PDDOMDomainController defaultInstance] removeView:[[self subviews] objectAtIndex:index2]];
+    }
+    
     [self pd_swizzled_exchangeSubviewAtIndex:index1 withSubviewAtIndex:index2];
-    [[PDDOMDomainController defaultInstance] addView:[[self subviews] objectAtIndex:index1]];
-    [[PDDOMDomainController defaultInstance] addView:[[self subviews] objectAtIndex:index2]];
+    
+    if (index1 >= 0 && index1 < [[self subviews] count]) {
+        [[PDDOMDomainController defaultInstance] addView:[[self subviews] objectAtIndex:index1]];
+    }
+    if (index2 >= 0 && index2 < [[self subviews] count]) {
+        [[PDDOMDomainController defaultInstance] addView:[[self subviews] objectAtIndex:index2]];
+    }
 }
 
 @end

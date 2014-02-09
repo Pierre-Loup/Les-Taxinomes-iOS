@@ -18,12 +18,6 @@
 #define COCOAPODS_VERSION_MINOR_AGMedallionView 1
 #define COCOAPODS_VERSION_PATCH_AGMedallionView 0
 
-// DCIntrospect
-#define COCOAPODS_POD_AVAILABLE_DCIntrospect
-#define COCOAPODS_VERSION_MAJOR_DCIntrospect 0
-#define COCOAPODS_VERSION_MINOR_DCIntrospect 0
-#define COCOAPODS_VERSION_PATCH_DCIntrospect 2
-
 // EGOCache
 #define COCOAPODS_POD_AVAILABLE_EGOCache
 #define COCOAPODS_VERSION_MAJOR_EGOCache 2
@@ -48,6 +42,12 @@
 #define COCOAPODS_VERSION_MINOR_MagicalRecord 2
 #define COCOAPODS_VERSION_PATCH_MagicalRecord 0
 
+// MagicalRecord/Core
+#define COCOAPODS_POD_AVAILABLE_MagicalRecord_Core
+#define COCOAPODS_VERSION_MAJOR_MagicalRecord_Core 2
+#define COCOAPODS_VERSION_MINOR_MagicalRecord_Core 2
+#define COCOAPODS_VERSION_PATCH_MagicalRecord_Core 0
+
 // NSData+Base64
 #define COCOAPODS_POD_AVAILABLE_NSData_Base64
 #define COCOAPODS_VERSION_MAJOR_NSData_Base64 1
@@ -58,7 +58,7 @@
 #define COCOAPODS_POD_AVAILABLE_PonyDebugger
 #define COCOAPODS_VERSION_MAJOR_PonyDebugger 0
 #define COCOAPODS_VERSION_MINOR_PonyDebugger 3
-#define COCOAPODS_VERSION_PATCH_PonyDebugger 0
+#define COCOAPODS_VERSION_PATCH_PonyDebugger 1
 
 // Reachability
 #define COCOAPODS_POD_AVAILABLE_Reachability

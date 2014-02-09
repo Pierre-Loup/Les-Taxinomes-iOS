@@ -26,6 +26,7 @@
 "common.anonymous" = "Anonyme";
 "common.by" = "Par";
 "common.license" = "Licence";
+"common.connexion" = "Connexion";
 "common.hud.failure" = "Échec";
 "common.submit" = "Valider";
 
@@ -51,6 +52,7 @@
 
 /* AUTHENTICATION */
 
+"authentication.title" = "Se connecter";
 "authentication.login_label.text" = "Identifiant";
 "authentication.password_label.text" = "Mot de passe";
 "authentication.forgotten_password_button.text" = "Mot de passe oublié ?";

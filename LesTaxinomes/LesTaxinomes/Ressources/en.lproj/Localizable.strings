@@ -51,6 +51,7 @@
 
 /* AUTHENTICATION */
 
+"authentication.title" = "Connexion";
 "authentication.login_label.text" = "Login";
 "authentication.password_label.text" = "Password";
 "authentication.forgotten_password_button.text" = "Password forgotten ?";
