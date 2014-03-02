@@ -52,11 +52,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LesTaxinomes/LesTaxinomes/Classes/Core/LTConnectionManager.m"
-            timestampString = "415366295.063974"
+            timestampString = "415465923.90424"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
+            startingLineNumber = "208"
+            endingLineNumber = "208"
             landmarkName = "-getMediasSummariesByDateForAuthor:nearLocation:withRange:responseBlock:"
             landmarkType = "5">
          </BreakpointContent>
@@ -84,11 +84,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LesTaxinomes/LesTaxinomes/Classes/ViewControllers/Medias/LTMediasRootViewController.m"
-            timestampString = "415461507.794287"
+            timestampString = "415465923.90424"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "153"
-            endingLineNumber = "153"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
             landmarkName = "-dealloc"
             landmarkType = "5">
          </BreakpointContent>

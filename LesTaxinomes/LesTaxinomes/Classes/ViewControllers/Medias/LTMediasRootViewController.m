@@ -73,23 +73,29 @@ typedef enum {
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Supermethods overrides
 
-- (id)init {
+- (id)init
+{
     self = [super init];
-    if (self) {
+    if (self)
+    {
         [self commonInit];
     }
     return self;
 }
-- (id)initWithCoder:(NSCoder *)aDecoder {
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
     self = [super initWithCoder:aDecoder];
-    if (self) {
+    if (self)
+    {
         [self commonInit];
     }
     return self;
 }
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         [self commonInit];
     }
     return self;
@@ -120,7 +126,8 @@ typedef enum {
     self.listViewController.view.frame = self.view.bounds;
     self.gridViewController.view.frame = self.view.bounds;
     
-    if ([[self.mediasResultController fetchedObjects] count] == 0) {
+    if ([[self.mediasResultController fetchedObjects] count] == 0)
+    {
         [self loadMoreMedias];
     }
 }
@@ -155,9 +162,12 @@ typedef enum {
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
+    {
         return (interfaceOrientation == UIInterfaceOrientationPortrait);
-    } else {
+    }
+    else
+    {
         return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
                 interfaceOrientation == UIInterfaceOrientationLandscapeRight);
     }
@@ -336,10 +346,8 @@ typedef enum {
                                                      ascending:NO
                                                  withPredicate:predicate
                                                        groupBy:nil
-                                                      delegate:nil
+                                                      delegate:self
                                                      inContext:[NSManagedObjectContext MR_defaultContext]];
-        NSError* error;
-        [_mediasResultController performFetch:&error];
     }
     return _mediasResultController;
 }

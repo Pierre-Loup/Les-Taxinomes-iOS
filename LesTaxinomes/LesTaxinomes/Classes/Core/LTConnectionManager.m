@@ -186,11 +186,15 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
     [xmlrpcClient executeMethod:LTXMLRCPMethodGeoDivListeMedias
                      withObject:parameters
                authCookieEnable:cookieEnabled
-                        success:^(id response) {
-                            if([response isKindOfClass:[NSArray  class]]) {
-                                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                        success:^(id response)
+    {
+                            if([response isKindOfClass:[NSArray  class]])
+                            {
+                                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
+                                {
                                     NSMutableArray *medias = [NSMutableArray array];
                                     NSManagedObjectContext* context = [NSManagedObjectContext MR_contextWithParent:[NSManagedObjectContext MR_defaultContext]];
+                                    
                                     for(NSDictionary *mediaXML in (NSArray *)response)
                                     {
                                         NSError* mediaError;
@@ -205,9 +209,12 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                                                                       inContext:context];
                                         }
                                         
-                                        if (mediaObject && !mediaError) {
+                                        if (mediaObject && !mediaError)
+                                        {
                                             [medias addObject:mediaObject];
-                                        } else {
+                                        }
+                                        else
+                                        {
                                             LogError(@"%@", mediaError);
                                         }
                                     }
@@ -218,13 +225,15 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                     if (coredataError)
                                     {
                                         LogError(@"%@", coredataError);
-                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                        dispatch_async(dispatch_get_main_queue(), ^
+                                        {
                                             if(responseBlock) responseBlock(nil, coredataError);
                                         });
                                     }
                                     else
                                     {
-                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                        dispatch_async(dispatch_get_main_queue(), ^
+                                        {
                                             if(responseBlock) responseBlock(medias, nil);
                                         });
                                     }
