@@ -10,8 +10,7 @@
 
 @interface LTAuthor (Business)
 
-+ (LTAuthor *)authorWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error;
-+ (LTAuthor *)authorWithIdentifier: (NSNumber *)identifier;
-+ (NSArray *)allAuthors;
++ (LTAuthor *)authorWithXMLRPCResponse:(NSDictionary *)response inContext:(NSManagedObjectContext*)context error:(NSError **)error;
++ (LTAuthor *)authorWithIdentifier:(NSNumber*)identifier inContext:(NSManagedObjectContext*)context;
 
 @end

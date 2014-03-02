@@ -56,8 +56,9 @@ typedef enum {
 
 @interface LTMediasRootViewController ()
 
-@property (nonatomic, strong) IBOutlet LTMediaDetailViewController *LTMediaDetailViewController;
+@property (nonatomic, strong) IBOutlet LTMediaDetailViewController* mediaDetailViewController;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem* displayBarButton;
+@property (nonatomic, strong) UIViewController* contentViewController;
 @property (nonatomic, strong) LTMediasListViewController* listViewController;
 @property (nonatomic, strong) LTMediasGridViewController* gridViewController;
 @property (nonatomic, strong) NSFetchedResultsController* mediasResultController;
@@ -102,10 +103,14 @@ typedef enum {
     self.title = _T(@"tabbar.medias");
     self.displayBarButton.image = [UIImage imageNamed:@"icon_grid"];
     
+    [self addChildViewController:self.listViewController];
+    [self.listViewController didMoveToParentViewController:self];
     [self.view addSubview:self.listViewController.view];
     self.mediasResultController.delegate = self.listViewController;
+    self.contentViewController = self.listViewController;
+    [self updateContraints];
     
-    self.LTMediaDetailViewController = (LTMediaDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    self.mediaDetailViewController = (LTMediaDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
 }
 
@@ -120,12 +125,16 @@ typedef enum {
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     self.displayBarButton = nil;
 }
-
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -137,6 +146,11 @@ typedef enum {
     [super didReceiveMemoryWarning];
     [NSFetchedResultsController deleteCacheWithName:self.mediasResultController.cacheName];
     self.mediasResultController = nil;
+}
+
+- (void)dealloc
+{
+    NSLog(@"dealloc");
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -182,9 +196,12 @@ typedef enum {
                                         nearLocation:nil
                                            withRange:mediasRange
     responseBlock:^(NSArray *medias, NSError *error) {
-        if (medias) {
+        if (medias)
+        {
             //self.mediasResultController = nil;
-        }else {
+        }
+        else
+        {
             [SVProgressHUD showErrorWithStatus:_T(@"common.hud.failure")];
         }
 
@@ -219,18 +236,33 @@ typedef enum {
     }
 }
 
+- (void)updateContraints
+{
+//    if (self.contentViewController.view.superview == self.view)
+//    {
+//        UIView* contentView = self.contentViewController.view;
+//        id topLayoutGuide = self.topLayoutGuide;
+//        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[contentView]|"
+//                                                                          options:0
+//                                                                          metrics:nil
+//                                                                            views:NSDictionaryOfVariableBindings(contentView)]];
+//        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|"
+//                                                                          options:0
+//                                                                          metrics:nil
+//                                                                            views:NSDictionaryOfVariableBindings(contentView, topLayoutGuide)]];
+//    }
+}
+
 #pragma mark Properties
 
 - (void)setDisplayMode:(LTMediasDisplayMode)displayMode
 {
-    if (displayMode == _displayMode) {
-        return;
-    }
-    
     _displayMode = displayMode;
     
     // Switch between grid and list display
-    if (_displayMode == LTMediasDisplayModeList) {
+    if (_displayMode == LTMediasDisplayModeList &&
+        self.contentViewController != self.listViewController)
+    {
         // Add the VC to display the root VC
         [self addChildViewController:self.listViewController];
         [self.listViewController didMoveToParentViewController:self];
@@ -245,14 +277,20 @@ typedef enum {
                             toView:self.listViewController.view
                           duration:1.0
                            options:UIViewAnimationOptionTransitionFlipFromRight|UIViewAnimationOptionShowHideTransitionViews
-                        completion:^(BOOL finished) {
+                        completion:^(BOOL finished)
+                        {
+                            self.contentViewController = self.listViewController;
+                            [self updateContraints];
                             [self.gridViewController willMoveToParentViewController:self];
                             [self.gridViewController removeFromParentViewController];
                         }];
         
         self.displayBarButton.image = [UIImage imageNamed:@"icon_grid"];
         
-    } else if (_displayMode == LTMediasDisplayModeGrid) {
+    }
+    else if (_displayMode == LTMediasDisplayModeGrid &&
+               self.contentViewController != self.gridViewController)
+    {
         // Add the VC to display the root VC
         [self addChildViewController:self.gridViewController];
         [self.gridViewController didMoveToParentViewController:self];
@@ -267,7 +305,10 @@ typedef enum {
                             toView:self.gridViewController.view
                           duration:1.0
                            options:UIViewAnimationOptionTransitionFlipFromLeft|UIViewAnimationOptionShowHideTransitionViews
-                        completion:^(BOOL finished) {
+                        completion:^(BOOL finished)
+                        {
+                            self.contentViewController = self.gridViewController;
+                            [self updateContraints];
                             [self.listViewController willMoveToParentViewController:nil];
                             [self.listViewController removeFromParentViewController];
                         }];
@@ -279,11 +320,15 @@ typedef enum {
 
 - (NSFetchedResultsController*)mediasResultController
 {    
-    if (!_mediasResultController) {
+    if (!_mediasResultController)
+    {
         NSPredicate* predicate = nil;
-        if (self.currentUser) {
+        if (self.currentUser)
+        {
             predicate = [NSPredicate predicateWithFormat:@"status == %@ && author == %@",@"publie",self.currentUser];
-        } else {
+        }
+        else
+        {
             predicate = [NSPredicate predicateWithFormat:@"status == %@",@"publie"];
         }
         
@@ -291,7 +336,10 @@ typedef enum {
                                                      ascending:NO
                                                  withPredicate:predicate
                                                        groupBy:nil
-                                                      delegate:nil];
+                                                      delegate:nil
+                                                     inContext:[NSManagedObjectContext MR_defaultContext]];
+        NSError* error;
+        [_mediasResultController performFetch:&error];
     }
     return _mediasResultController;
 }

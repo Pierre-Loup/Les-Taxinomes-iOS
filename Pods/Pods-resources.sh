@@ -41,17 +41,7 @@ install_resource()
       ;;
   esac
 }
-install_resource "EGOPhotoViewer/EGOPhotoViewer/Resources/egopv_error_placeholder.png"
-install_resource "EGOPhotoViewer/EGOPhotoViewer/Resources/egopv_error_placeholder@2x.png"
-install_resource "EGOPhotoViewer/EGOPhotoViewer/Resources/egopv_fullscreen_button.png"
-install_resource "EGOPhotoViewer/EGOPhotoViewer/Resources/egopv_fullscreen_button@2x.png"
-install_resource "EGOPhotoViewer/EGOPhotoViewer/Resources/egopv_left.png"
-install_resource "EGOPhotoViewer/EGOPhotoViewer/Resources/egopv_left@2x.png"
-install_resource "EGOPhotoViewer/EGOPhotoViewer/Resources/egopv_minimize_fullscreen_button.png"
-install_resource "EGOPhotoViewer/EGOPhotoViewer/Resources/egopv_photo_placeholder.png"
-install_resource "EGOPhotoViewer/EGOPhotoViewer/Resources/egopv_photo_placeholder@2x.png"
-install_resource "EGOPhotoViewer/EGOPhotoViewer/Resources/egopv_right.png"
-install_resource "EGOPhotoViewer/EGOPhotoViewer/Resources/egopv_right@2x.png"
+install_resource "MWPhotoBrowser/MWPhotoBrowser/MWPhotoBrowser.bundle"
 install_resource "SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle"
 
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

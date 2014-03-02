@@ -47,8 +47,6 @@ static NSString* const kLTMediasGridViewControllerFooterIdentifier = @"kLTMedias
     [self.collectionView registerClass:[LTMediaCollectionCell class]
             forCellWithReuseIdentifier:[LTMediaCollectionCell reuseIdentifier]];
     
-    CGRect footerViewFrame = CGRectZero;
-    footerViewFrame.size = ((LTCollectionViewFlowLayout*)self.collectionView.collectionViewLayout).footerReferenceSize;
     [self.collectionView registerClass:[LTLoadMoreFooterView class]
             forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
                    withReuseIdentifier:kLTMediasGridViewControllerFooterIdentifier];
@@ -64,6 +62,11 @@ static NSString* const kLTMediasGridViewControllerFooterIdentifier = @"kLTMedias
 {
     [super viewDidAppear:animated];
     [self updateScrollViewInsets];
+}
+
+- (void)dealloc
+{
+    NSLog(@"dealloc");
 }
 
 ////////////////////////////////////////////////////////////////////////////////

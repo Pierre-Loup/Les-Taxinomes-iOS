@@ -18,23 +18,23 @@
 #define COCOAPODS_VERSION_MINOR_AGMedallionView 1
 #define COCOAPODS_VERSION_PATCH_AGMedallionView 0
 
-// EGOCache
-#define COCOAPODS_POD_AVAILABLE_EGOCache
-#define COCOAPODS_VERSION_MAJOR_EGOCache 2
-#define COCOAPODS_VERSION_MINOR_EGOCache 0
-#define COCOAPODS_VERSION_PATCH_EGOCache 0
+// DACircularProgress
+#define COCOAPODS_POD_AVAILABLE_DACircularProgress
+#define COCOAPODS_VERSION_MAJOR_DACircularProgress 2
+#define COCOAPODS_VERSION_MINOR_DACircularProgress 1
+#define COCOAPODS_VERSION_PATCH_DACircularProgress 0
 
-// EGOImageLoading
-#define COCOAPODS_POD_AVAILABLE_EGOImageLoading
-#define COCOAPODS_VERSION_MAJOR_EGOImageLoading 0
-#define COCOAPODS_VERSION_MINOR_EGOImageLoading 0
-#define COCOAPODS_VERSION_PATCH_EGOImageLoading 1
+// MBProgressHUD
+#define COCOAPODS_POD_AVAILABLE_MBProgressHUD
+#define COCOAPODS_VERSION_MAJOR_MBProgressHUD 0
+#define COCOAPODS_VERSION_MINOR_MBProgressHUD 8
+#define COCOAPODS_VERSION_PATCH_MBProgressHUD 0
 
-// EGOPhotoViewer
-#define COCOAPODS_POD_AVAILABLE_EGOPhotoViewer
-#define COCOAPODS_VERSION_MAJOR_EGOPhotoViewer 0
-#define COCOAPODS_VERSION_MINOR_EGOPhotoViewer 0
-#define COCOAPODS_VERSION_PATCH_EGOPhotoViewer 1
+// MWPhotoBrowser
+#define COCOAPODS_POD_AVAILABLE_MWPhotoBrowser
+#define COCOAPODS_VERSION_MAJOR_MWPhotoBrowser 1
+#define COCOAPODS_VERSION_MINOR_MWPhotoBrowser 2
+#define COCOAPODS_VERSION_PATCH_MWPhotoBrowser 1
 
 // MagicalRecord
 #define COCOAPODS_POD_AVAILABLE_MagicalRecord
@@ -54,6 +54,12 @@
 #define COCOAPODS_VERSION_MINOR_NSData_Base64 0
 #define COCOAPODS_VERSION_PATCH_NSData_Base64 0
 
+// PSTCollectionView
+#define COCOAPODS_POD_AVAILABLE_PSTCollectionView
+#define COCOAPODS_VERSION_MAJOR_PSTCollectionView 1
+#define COCOAPODS_VERSION_MINOR_PSTCollectionView 2
+#define COCOAPODS_VERSION_PATCH_PSTCollectionView 0
+
 // PonyDebugger
 #define COCOAPODS_POD_AVAILABLE_PonyDebugger
 #define COCOAPODS_VERSION_MAJOR_PonyDebugger 0
@@ -65,6 +71,18 @@
 #define COCOAPODS_VERSION_MAJOR_Reachability 3
 #define COCOAPODS_VERSION_MINOR_Reachability 1
 #define COCOAPODS_VERSION_PATCH_Reachability 1
+
+// SDWebImage
+#define COCOAPODS_POD_AVAILABLE_SDWebImage
+#define COCOAPODS_VERSION_MAJOR_SDWebImage 3
+#define COCOAPODS_VERSION_MINOR_SDWebImage 5
+#define COCOAPODS_VERSION_PATCH_SDWebImage 2
+
+// SDWebImage/Core
+#define COCOAPODS_POD_AVAILABLE_SDWebImage_Core
+#define COCOAPODS_VERSION_MAJOR_SDWebImage_Core 3
+#define COCOAPODS_VERSION_MINOR_SDWebImage_Core 5
+#define COCOAPODS_VERSION_PATCH_SDWebImage_Core 2
 
 // SVProgressHUD
 #define COCOAPODS_POD_AVAILABLE_SVProgressHUD

@@ -88,6 +88,12 @@
     [self.refreshControl removeFromSuperview];
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    NSLog(@"didReceiveMemoryWarning");
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Public methods
@@ -191,7 +197,8 @@
 
 #pragma mark - NSFetchedResultsControllerDelegate
 
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
     [self.tableView beginUpdates];
 }
 

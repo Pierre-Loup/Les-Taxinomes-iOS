@@ -32,7 +32,6 @@
     NSArray* tabItemsTitles = @[_T(@"tabbar.home")
                                 ,_T(@"tabbar.medias")
                                 ,_T(@"tabbar.explore")
-                                ,_T(@"tabbar.myaccount")
                                 ,_T(@"tabbar.authors")
                                 ];
     

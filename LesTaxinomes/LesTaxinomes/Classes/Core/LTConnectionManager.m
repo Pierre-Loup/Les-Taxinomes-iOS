@@ -81,35 +81,55 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
 
 #pragma mark Instance Methods
 
-- (void)getLicensesWithResponseBlock:(void (^)(NSArray* licenses, NSError *error))responseBlock {
+- (void)getLicensesWithResponseBlock:(void (^)(NSArray* licenses, NSError *error))responseBlock
+{
     LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
     [xmlrpcClient executeMethod:LTXMLRCPMethodSPIPListeLicences
                      withObject:nil
                authCookieEnable:NO
-                        success:^(XMLRPCResponse *response) {
-                            if([response isKindOfClass:[NSDictionary class]]) {
+                        success:^(XMLRPCResponse *response)
+    {
+                            if([response isKindOfClass:[NSDictionary class]])
+                            {
                                 NSDictionary* responseDict = (NSDictionary*)response;
                                 NSMutableArray* licenses = [NSMutableArray array];
-                                for(NSString *key in (NSDictionary*)response){
-                                    if ([[responseDict objectForKey:key] isKindOfClass:[NSDictionary class]]) {
+                                for(NSString *key in (NSDictionary*)response)
+                                {
+                                    if ([[responseDict objectForKey:key] isKindOfClass:[NSDictionary class]])
+                                    {
                                         NSDictionary *xmlLicenseDict = [responseDict objectForKey:key];
                                         NSError* licenseError;
+                                        NSManagedObjectContext* context = [NSManagedObjectContext MR_defaultContext];
                                         LTLicense *license = [LTLicense licenseWithXMLRPCResponse:xmlLicenseDict
-                                                                                        error:&licenseError];
-                                        if (license && ! licenseError) {
+                                                                                        inContext:context
+                                                                                            error:&licenseError];
+                                        if (license && ! licenseError)
+                                        {
                                             [licenses addObject:license];
-                                        } else {
+                                            
+                                            NSError* coredataError;
+                                            [context save:&coredataError];
+                                            if (coredataError)
+                                            {
+                                                LogError(@"%@", coredataError);
+                                                if(responseBlock) responseBlock(nil, coredataError);
+                                            }
+                                            else
+                                            {
+                                                if(responseBlock) responseBlock(licenses, nil);
+                                            }
+                                            
+                                        }
+                                        else
+                                        {
                                             LogError(@"%@", licenseError);
+                                            if(responseBlock) responseBlock(nil, licenseError);
                                         }
                                     }
                                 }
-                                
-                                NSError* coredataError;
-                                [[NSManagedObjectContext MR_contextForCurrentThread] save:&coredataError];
-                                if (coredataError) LogError(@"%@", coredataError);
-                                
-                                if(responseBlock) responseBlock(licenses, nil);
-                            } else {
+                            }
+                            else
+                            {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
                                                                  userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodSPIPListeLicences}];
@@ -141,6 +161,13 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                        @"vignette_hauteur":    thumbnailHeight,
                                        @"statut":              @"publie"
                                        }];
+    
+    NSNumber* authorId = author.identifier;
+    if (author)
+    {
+        [parameters addEntriesFromDictionary:@{@"id_auteur": authorId}];
+    }
+    
     // Optional
     if (location) {
         [parameters setValue:[NSString stringWithFormat:@"%f",location.coordinate.latitude]
@@ -152,18 +179,31 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
         [parameters setValue:@[@"date DESC"] forKey:@"tri"];
     }
     
+    BOOL cookieEnabled = ([LTConnectionManager sharedManager].authenticatedUser.identifier && author.identifier &&
+                          [author.identifier isEqualToNumber:[LTConnectionManager sharedManager].authenticatedUser.identifier]);
+    
     LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
     [xmlrpcClient executeMethod:LTXMLRCPMethodGeoDivListeMedias
                      withObject:parameters
-               authCookieEnable:author?YES:NO
+               authCookieEnable:cookieEnabled
                         success:^(id response) {
                             if([response isKindOfClass:[NSArray  class]]) {
                                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
                                     NSMutableArray *medias = [NSMutableArray array];
-                                    for(NSDictionary *mediaXML in (NSArray *)response){
+                                    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextWithParent:[NSManagedObjectContext MR_defaultContext]];
+                                    for(NSDictionary *mediaXML in (NSArray *)response)
+                                    {
                                         NSError* mediaError;
+                                        
                                         LTMedia *mediaObject = [LTMedia mediaWithXMLRPCResponse:mediaXML
-                                                                                       error:&mediaError];
+                                                                                      inContext:context
+                                                                                          error:&mediaError];
+                                        if(authorId &&
+                                           !mediaObject.author)
+                                        {
+                                            mediaObject.author = [LTAuthor authorWithIdentifier:authorId
+                                                                                      inContext:context];
+                                        }
                                         
                                         if (mediaObject && !mediaError) {
                                             [medias addObject:mediaObject];
@@ -173,12 +213,21 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                     }
                                     
                                     NSError* coredataError;
-                                    [[NSManagedObjectContext MR_contextForCurrentThread] save:&coredataError];
-                                    if (coredataError) LogError(@"%@",coredataError);
-                                    
-                                    dispatch_async(dispatch_get_main_queue(), ^{
-                                        if(responseBlock) responseBlock(medias, nil);
-                                    });
+                                    [context save:&coredataError];
+                                    [context reset];
+                                    if (coredataError)
+                                    {
+                                        LogError(@"%@", coredataError);
+                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                            if(responseBlock) responseBlock(nil, coredataError);
+                                        });
+                                    }
+                                    else
+                                    {
+                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                            if(responseBlock) responseBlock(medias, nil);
+                                        });
+                                    }
                                 });
                             } else {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
@@ -195,7 +244,8 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
 }
 
 - (void)getMediaWithId:(NSNumber *)mediaIdentifier
-         responseBlock:(void (^)(LTMedia *media, NSError *error))responseBlock {
+         responseBlock:(void (^)(LTMedia *media, NSError *error))responseBlock
+{
     
     if (!mediaIdentifier) {
         
@@ -219,18 +269,28 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                authCookieEnable:NO
                         success:^(id response) {
                             
-                            if([response isKindOfClass:[NSDictionary class]]) {
+                            if([response isKindOfClass:[NSDictionary class]])
+                            {
                                 NSError* error;
+                                NSManagedObjectContext* context = [NSManagedObjectContext MR_defaultContext];
                                 LTMedia *mediaObject = [LTMedia mediaWithXMLRPCResponse:(NSDictionary *)response
-                                                                               error:&error];
+                                                                              inContext:context
+                                                                                  error:&error];
                                 
                                 NSError* coredataError;
-                                [[NSManagedObjectContext MR_contextForCurrentThread] save:&coredataError];
-                                if (coredataError) LogError(@"%@",coredataError);
-                                
-                                if(responseBlock) responseBlock(mediaObject, error);
-                                
-                            } else {
+                                [context save:&coredataError];
+                                if (coredataError)
+                                {
+                                    LogError(@"%@", coredataError);
+                                    if(responseBlock) responseBlock(nil, coredataError);
+                                }
+                                else
+                                {
+                                    if(responseBlock) responseBlock(mediaObject, nil);
+                                }
+                            }
+                            else
+                            {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
                                                                  userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodGeoDivLireMedia}];
@@ -238,15 +298,19 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                 if(responseBlock) responseBlock(nil, error);
                                 
                             }
-                        } failure:^(NSError* error) {
+                        }
+                        failure:^(NSError* error)
+                        {
                             
                             if(responseBlock) responseBlock(nil, error);
                         }];
 }
 
 - (void)getMediaLargeURLWithId:(NSNumber *)mediaIdentifier
-                 responseBlock:(void (^)(LTMedia *media, NSError *error))responseBlock {
-    if (!mediaIdentifier) {
+                 responseBlock:(void (^)(LTMedia *media, NSError *error))responseBlock
+{
+    if (!mediaIdentifier)
+    {
         
         NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                              code:LTConnectionManagerBadArgsError
@@ -273,16 +337,25 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             if([response isKindOfClass:[NSDictionary class]]) {
                                 
                                 NSError* error;
+                                NSManagedObjectContext* context = [NSManagedObjectContext MR_defaultContext];
                                 LTMedia *mediaObject = [LTMedia mediaLargeURLWithXMLRPCResponse:(NSDictionary *)response
-                                                                                       error:&error];
+                                                                                      inContext:context
+                                                                                          error:&error];
                                 
                                 NSError* coredataError;
-                                [[NSManagedObjectContext MR_contextForCurrentThread] save:&coredataError];
-                                if (coredataError) LogError(@"%@",coredataError);
-                                
-                                if(responseBlock) responseBlock(mediaObject, error);
-                                
-                            } else {
+                                [context save:&coredataError];
+                                if (coredataError)
+                                {
+                                    LogError(@"%@", coredataError);
+                                    if(responseBlock) responseBlock(nil, coredataError);
+                                }
+                                else
+                                {
+                                    if(responseBlock) responseBlock(mediaObject, nil);
+                                }
+                            }
+                            else
+                            {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
                                                                  userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodGeoDivLireMedia}];
@@ -298,7 +371,8 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
 }
 
 - (void)getAuthorWithId:(NSNumber *)authorIdentifier
-          responseBlock:(void (^)(LTAuthor *author, NSError *error))responseBlock {
+          responseBlock:(void (^)(LTAuthor *author, NSError *error))responseBlock
+{
     if (!authorIdentifier) {
         NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                              code:LTConnectionManagerBadArgsError
@@ -318,16 +392,25 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             if([response isKindOfClass:[NSDictionary class]]) {
                                 
                                 NSError *error;
+                                NSManagedObjectContext* context = [NSManagedObjectContext MR_defaultContext];
                                 LTAuthor *authorObject = [LTAuthor authorWithXMLRPCResponse:response
-                                                                                  error:&error];
+                                                                                  inContext:context
+                                                                                      error:&error];
                                 
-                                NSError *coredataError;
-                                [[NSManagedObjectContext MR_contextForCurrentThread] save:&coredataError];
-                                if (coredataError) LogError(@"%@",coredataError);
-                                
-                                if(responseBlock) responseBlock(authorObject, error);
-                                
-                            } else {
+                                NSError* coredataError;
+                                [context save:&coredataError];
+                                if (coredataError)
+                                {
+                                    LogError(@"%@", coredataError);
+                                    if(responseBlock) responseBlock(nil, coredataError);
+                                }
+                                else
+                                {
+                                    if(responseBlock) responseBlock(authorObject, nil);
+                                }
+                            }
+                            else
+                            {
                                 NSError *error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
                                                                  userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodSPIPLireAuteur}];
@@ -364,18 +447,18 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                         success:^(id response) {
                             if([response isKindOfClass:[NSArray  class]]) {
                                 
-                                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
+                                {
                                     NSMutableArray* authors = [NSMutableArray array];
+                                    
+                                    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextWithParent:[NSManagedObjectContext MR_defaultContext]];
                                     
                                     for(NSDictionary* authorDict in (NSArray *)response){
                                         
                                         NSError *authorError;
                                         LTAuthor *authorObject = [LTAuthor authorWithXMLRPCResponse:authorDict
-                                                                                          error:&authorError];
-                                        
-                                        NSError* coredataError;
-                                        [[NSManagedObjectContext MR_contextForCurrentThread] save:&coredataError];
-                                        if (coredataError) LogError(@"%@",coredataError);
+                                                                                          inContext:context
+                                                                                              error:&authorError];
                                         
                                         if (authorObject && !authorError) {
                                             
@@ -386,12 +469,30 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                         }
                                     }
                                     
-                                    // Dispatch the result on the main thread
-                                    dispatch_async(dispatch_get_main_queue(), ^{
-                                        if(responseBlock) responseBlock(authors, nil);
-                                    });
+                                    NSError* coredataError;
+                                    [context save:&coredataError];
+                                    [context reset];
+                                    if (coredataError)
+                                    {
+                                        LogError(@"%@", coredataError);
+                                        // Dispatch the result on the main thread
+                                        dispatch_async(dispatch_get_main_queue(), ^
+                                        {
+                                            if(responseBlock) responseBlock(nil, coredataError);
+                                        });
+                                    }
+                                    else
+                                    {
+                                        // Dispatch the result on the main thread
+                                        dispatch_async(dispatch_get_main_queue(), ^
+                                        {
+                                            if(responseBlock) responseBlock(authors, nil);
+                                        });
+                                    }
                                 });
-                            } else {
+                            }
+                            else
+                            {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
                                                                  userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodGeoDivListeMedias}];
@@ -400,7 +501,9 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                 if(responseBlock) responseBlock(nil, error);
                                 
                             }
-                        } failure:^(NSError *error) {
+                        }
+                        failure:^(NSError *error)
+                        {
                             if(responseBlock) responseBlock(nil, error);
                         }];
 }
@@ -410,9 +513,11 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                   license:(LTLicense *)license
                  location:(CLLocation*)location
                  assetURL:(NSURL *)assetURL
-            responseBlock:(void (^)(LTMedia *media, NSError *error))responseBlock {
+            responseBlock:(void (^)(LTMedia *media, NSError *error))responseBlock
+{
     
-    if (!assetURL) {
+    if (!assetURL)
+    {
         NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                              code:LTConnectionManagerBadArgsError
                                          userInfo:nil];
@@ -445,7 +550,8 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
     [parameters setValue:@"publie" forKey:@"statut"];
     
     ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
-    [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
+    [library assetForURL:assetURL resultBlock:^(ALAsset *asset)
+    {
         ALAssetRepresentation* assetRepresentation = [asset defaultRepresentation];
         
         // Media location (GIS)
@@ -470,9 +576,11 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
         
         // Media
         CGImageRef iref = [assetRepresentation fullResolutionImage];
-        if (iref) {
+        if (iref)
+        {
             UIImage* mediaImage = [UIImage imageWithCGImage:iref scale:1 orientation:orientation];
-            if (mediaImage.size.width > MEDIA_MAX_WIDHT) {
+            if (mediaImage.size.width > MEDIA_MAX_WIDHT)
+            {
                 CGFloat imageHeight = (MEDIA_MAX_WIDHT/mediaImage.size.width)*mediaImage.size.height;
                 CGSize newSize = CGSizeMake(MEDIA_MAX_WIDHT, imageHeight);
                 mediaImage = [mediaImage resizedImageToFitInSize:newSize scaleIfSmaller:YES];
@@ -490,37 +598,43 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
             [xmlrpcClient executeMethod:LTXMLRCPMethodGeoDivCreerMedia
                              withObject:parameters
                        authCookieEnable:YES
-                    uploadProgressBlock:^(CGFloat progress) {
-                        if ([self.delegate respondsToSelector:@selector(uploadDeterminationDidUpdate:)]) {
-                            NSLog(@"progress: %f",progress);
-                            [self.delegate uploadDeterminationDidUpdate:progress];
-                        }
-                    }
-                  downloadProgressBlock:nil
-                                success:^(id response) {
-                                    if([response isKindOfClass:[NSDictionary class]]) {
-                                        NSError *error;
-                                        LTMedia *mediaObject = [LTMedia mediaWithXMLRPCResponse:response
-                                                                                          error:&error];
-                                        
-                                        NSError *coredataError;
-                                        [[NSManagedObjectContext MR_contextForCurrentThread] save:&coredataError];
-                                        if (coredataError) LogError(@"%@",coredataError);
-                                        
-                                        if(responseBlock) responseBlock(mediaObject, error);
-                                        
-                                    } else {
-                                        NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
-                                                                             code:LTConnectionManagerInternalError
-                                                                         userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodGeoDivCreerMedia}];
-                                        
-                                        
-                                        if(responseBlock) responseBlock(nil, error);
-                                        
-                                    }
-                                } failure:^(NSError* error) {
-                                    if(responseBlock) responseBlock(nil,error);
-                                }];
+            uploadProgressBlock:^(CGFloat progress)
+            {
+                if ([self.delegate respondsToSelector:@selector(uploadDeterminationDidUpdate:)])
+                {
+                    NSLog(@"progress: %f",progress);
+                    [self.delegate uploadDeterminationDidUpdate:progress];
+                }
+            }
+            downloadProgressBlock:nil
+            success:^(id response)
+            {
+                if([response isKindOfClass:[NSDictionary class]])
+                {
+                    NSError *error;
+                    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextWithParent:[NSManagedObjectContext MR_defaultContext]];
+                    LTMedia *mediaObject = [LTMedia mediaWithXMLRPCResponse:response
+                                                                  inContext:context
+                                                                      error:&error];
+                    
+                    NSError *coredataError;
+                    [[NSManagedObjectContext MR_contextForCurrentThread] save:&coredataError];
+                    if (coredataError) LogError(@"%@",coredataError);
+                    
+                    if(responseBlock) responseBlock(mediaObject, error);
+                    
+                } else {
+                    NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                                         code:LTConnectionManagerInternalError
+                                                     userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodGeoDivCreerMedia}];
+                    
+                    
+                    if(responseBlock) responseBlock(nil, error);
+                    
+                }
+            } failure:^(NSError* error) {
+                if(responseBlock) responseBlock(nil,error);
+            }];
         }
     } failureBlock:^(NSError *error) {
         if(responseBlock) responseBlock(nil,error);
@@ -545,12 +659,26 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                      withObject:identifiers
                authCookieEnable:YES
                         success:^(id response) {
-                            if([response isKindOfClass:[NSDictionary class]]){
+                            if([response isKindOfClass:[NSDictionary class]])
+                            {
                                 NSError* error;
+                                NSManagedObjectContext* context = [NSManagedObjectContext MR_defaultContext];
                                 self.authenticatedUser = [LTAuthor authorWithXMLRPCResponse:response
-                                                                                    error:&error];
-                                [[NSManagedObjectContext MR_contextForCurrentThread] save:&error];
-                                if(responseBlock) responseBlock(self.authenticatedUser, error);
+                                                                                  inContext:context
+                                                                                      error:&error];
+                                
+                                NSError* coredataError;
+                                [context save:&coredataError];
+                                if (coredataError)
+                                {
+                                    LogError(@"%@", coredataError);
+                                    if(responseBlock) responseBlock(nil, coredataError);
+                                }
+                                else
+                                {
+                                   if(responseBlock) responseBlock(self.authenticatedUser, nil);
+                                }
+                                
                             } else {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError

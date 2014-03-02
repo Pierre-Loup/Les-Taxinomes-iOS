@@ -1,1 +1,0 @@
-../../EGOPhotoViewer/EGOPhotoViewer/Model/EGOQuickPhoto/EGOQuickPhotoSource.h

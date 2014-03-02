@@ -27,7 +27,8 @@
     return [NSString stringWithFormat:@"%@ %@", _T(@"common.by"), self.author.name];
 }
 
-+ (LTMedia *)mediaWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error {
++ (LTMedia *)mediaWithXMLRPCResponse:(NSDictionary*)response inContext:(NSManagedObjectContext*) context error:(NSError**)error
+{
     
     if(response == nil){
         return nil;
@@ -41,8 +42,6 @@
     } else {
         return nil;
     }
-    
-    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];
     
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d",[mediaIdentifier integerValue]];
     LTMedia *media = [LTMedia MR_findFirstWithPredicate:predicate
@@ -120,7 +119,7 @@
     
     if([[response objectForKey:@"auteurs"] isKindOfClass:[NSArray class]]){
         NSDictionary * authorDict = [[response objectForKey:@"auteurs"] objectAtIndex:0];
-        media.author = [LTAuthor authorWithXMLRPCResponse:authorDict error:error];
+        media.author = [LTAuthor authorWithXMLRPCResponse:authorDict inContext:context error:error];
     }
     
     if ([[response objectForKey:@"gis"] isKindOfClass:[NSArray class]]) {
@@ -139,7 +138,8 @@
     
 }
 
-+ (LTMedia *)mediaLargeURLWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error {
++ (LTMedia *)mediaLargeURLWithXMLRPCResponse:(NSDictionary*)response inContext:(NSManagedObjectContext*)context error:(NSError**)error
+{
     if(response == nil){
         return nil;
     }
@@ -152,7 +152,9 @@
         return nil;
     }
     
-    LTMedia *media = [LTMedia MR_findFirstByAttribute:@"identifier" withValue:mediaIdentifier];
+    LTMedia *media = [LTMedia MR_findFirstByAttribute:@"identifier"
+                                            withValue:mediaIdentifier
+                                            inContext:context];
     
     if (!media) {
         return nil;

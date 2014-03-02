@@ -25,17 +25,22 @@
 #import <QuickLook/QuickLook.h>
 
 // UI
-#import "EGOPhotoGlobal.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIImageView+PhotoFrame.h"
 // VC
 #import "LTMapViewController.h"
 #import "LTMediaDetailViewController.h"
+#import "MWPhotoBrowser.h"
 // MODEL
 #import "Annotation.h"
 #import "LTMedia+Business.h"
 
-@interface LTMediaDetailViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>{
+static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId";
+
+@interface LTMediaDetailViewController () <UIScrollViewDelegate,
+                                            UIGestureRecognizerDelegate,
+                                            MWPhotoBrowserDelegate>
+{
     int asynchLoadCounter_;
 }
 
@@ -93,13 +98,23 @@
     [self configureView];
 }
 
--(void)viewWillAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self refreshView];
 }
 
-#pragma mark - Properties
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:LTMapViewControllerSegueId])
+    {
+        LTMapViewController* mapVC = (LTMapViewController*)segue.destinationViewController;
+        mapVC.referenceAnnotation = self.media;
+    }
+}
+
+#pragma mark - Public methodes
+#pragma mark Properties
 
 - (void)setMedia:(LTMedia *)media
 {
@@ -302,10 +317,13 @@
 
 - (void)displayLargeMediaPhotoViewer
 {
-    if (self.media.mediaLargeURL.length) {
-        NSURL* imageURL = [NSURL URLWithString:self.media.mediaLargeURL];
-        EGOPhotoViewController* photoController = [[EGOPhotoViewController alloc] initWithImageURL:imageURL];
-        [self.navigationController pushViewController:photoController animated:YES];
+    if (self.media.mediaLargeURL.length)
+    {
+        // Create browser
+        MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+        
+        // Present
+        [self.navigationController pushViewController:browser animated:YES];
         [SVProgressHUD dismiss];
     } else {
         [SVProgressHUD showErrorWithStatus:nil];
@@ -356,9 +374,21 @@
 
 - (void)mapTouched:(MKMapView *)sender
 {
-    LTMapViewController* mapVC = [[LTMapViewController alloc] initWithAnnotation:self.media];
-    [self.navigationController pushViewController:mapVC animated:YES];
-    mapVC.title = _T(@"common.map");
+    [self performSegueWithIdentifier:LTMapViewControllerSegueId sender:self];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - MWPhotoBrowserDelegate methods
+
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser
+{
+    return 1;
+}
+
+- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index
+{
+    NSURL* imageURL = [NSURL URLWithString:self.media.mediaLargeURL];
+    return [MWPhoto photoWithURL:imageURL];
 }
 
 @end

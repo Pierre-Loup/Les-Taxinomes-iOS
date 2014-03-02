@@ -12,8 +12,8 @@
 
 @interface LTMedia (Business) <MKAnnotation>
 
-+ (LTMedia *)mediaWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error;
-+ (LTMedia *)mediaLargeURLWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error;
++ (LTMedia *)mediaWithXMLRPCResponse:(NSDictionary*)response inContext:(NSManagedObjectContext*) context error:(NSError**)error;
++ (LTMedia *)mediaLargeURLWithXMLRPCResponse:(NSDictionary*)response inContext:(NSManagedObjectContext*)context error:(NSError**)error;
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 
 @end

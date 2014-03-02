@@ -10,12 +10,11 @@
 
 @implementation LTLicense (Business)
 
-+ (LTLicense *)licenseWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error {
++ (LTLicense *)licenseWithXMLRPCResponse:(NSDictionary*)response inContext:(NSManagedObjectContext*)context error:(NSError**)error
+{
     if(response == nil){
         return nil;
     }
-    
-    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];
     
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d", [(NSString*)[response objectForKey:@"id"] intValue]];
     LTLicense *license = [LTLicense MR_findFirstWithPredicate:predicate inContext:context];
@@ -34,15 +33,16 @@
     return license;
 }
 
-+ (LTLicense *)licenseWithIdentifier:(NSNumber*)identifier {
-    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];
++ (LTLicense *)licenseWithIdentifier:(NSNumber*)identifier inContext:(NSManagedObjectContext*)context
+{
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d", [identifier integerValue]];
     LTLicense *license = [LTLicense MR_findFirstWithPredicate:predicate inContext:context];
     return  license;
 }
 
-+ (LTLicense *)defaultLicense {
-    return [LTLicense licenseWithIdentifier:[NSNumber numberWithInt:8]];
++ (LTLicense *)defaultLicenseInContext:(NSManagedObjectContext*)context
+{
+    return [LTLicense licenseWithIdentifier:[NSNumber numberWithInt:8] inContext:context];
 }
 
 

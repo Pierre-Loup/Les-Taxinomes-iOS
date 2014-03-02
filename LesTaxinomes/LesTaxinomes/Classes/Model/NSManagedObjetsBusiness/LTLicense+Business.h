@@ -10,8 +10,8 @@
 
 @interface LTLicense (Business)
 
-+ (LTLicense *)licenseWithXMLRPCResponse:(NSDictionary*)response error:(NSError**)error;
-+ (LTLicense *)licenseWithIdentifier:(NSNumber*)identifier;
-+ (LTLicense *)defaultLicense;
++ (LTLicense *)licenseWithXMLRPCResponse:(NSDictionary*)response inContext:(NSManagedObjectContext*)context error:(NSError**)error;
++ (LTLicense *)licenseWithIdentifier:(NSNumber*)identifier inContext:(NSManagedObjectContext*)context;
++ (LTLicense *)defaultLicenseInContext:(NSManagedObjectContext*)context;
 
 @end

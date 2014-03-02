@@ -28,7 +28,7 @@
         self.backgroundColor = [UIColor clearColor];
         
         _loadMoreButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        //_loadMoreButton.frame = CGRectMake(0.f, 0.f, 120.f, 40.f);
+        _loadMoreButton.translatesAutoresizingMaskIntoConstraints = NO;
         [_loadMoreButton setTitle:@"+" forState:UIControlStateNormal];
         _loadMoreButton.titleLabel.font = [UIFont boldSystemFontOfSize:34.0];
         [_loadMoreButton sizeToFit];
@@ -45,11 +45,13 @@
         [NSLayoutConstraint constraintWithItem:_loadMoreButton
                                      attribute:NSLayoutAttributeCenterY
                                      relatedBy:NSLayoutRelationEqual
-                                        toItem:nil
+                                        toItem:_loadMoreButton.superview
                                      attribute:NSLayoutAttributeCenterY
                                     multiplier:1.f constant:0.f]]];
         
         _loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        
+        _loadingIndicator.translatesAutoresizingMaskIntoConstraints = NO;
         _loadingIndicator.hidden = YES;
         _loadingIndicator.hidesWhenStopped = YES;
         _loadingIndicator.center = CGPointMake(self.bounds.size.width/2,
@@ -65,7 +67,7 @@
         [NSLayoutConstraint constraintWithItem:_loadingIndicator.superview
                                      attribute:NSLayoutAttributeCenterY
                                      relatedBy:NSLayoutRelationEqual
-                                        toItem:nil
+                                        toItem:_loadingIndicator.superview
                                      attribute:NSLayoutAttributeCenterY
                                     multiplier:1.f constant:0.f]]];
     }

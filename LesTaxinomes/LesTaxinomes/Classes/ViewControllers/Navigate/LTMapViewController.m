@@ -26,17 +26,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 # pragma mark - Superclass overrides
 
-- (id)initWithAnnotation:(id<MKAnnotation>)annotation {
-    self = [super initWithNibName:NSStringFromClass([self class]) bundle:nil];
-    if (self) {
-        _referenceAnnotation = annotation;
-    }
-    return self;
-}
-
-
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
+    
+    self.title = _T(@"common.map");
     
     self.scanBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(scanButtonAction:)];
     [self.navigationItem setRightBarButtonItem:self.scanBarButton];
@@ -46,10 +40,13 @@
     self.mapView.delegate = self;
     
     // Display the reference location of the map if already set
-    if (self.referenceAnnotation) {
+    if (self.referenceAnnotation)
+    {
         [self.mapView addAnnotation:self.referenceAnnotation];
         [self.mapView setRegion:MKCoordinateRegionMake(self.referenceAnnotation.coordinate, MKCoordinateSpanMake(1, 1)) animated:YES];
-    } else {
+    }
+    else
+    {
         self.mapView.showsUserLocation = YES;
         [SVProgressHUD show];
     }
@@ -63,7 +60,8 @@
     [super viewDidUnload];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
     if ([self.referenceAnnotation isKindOfClass:[MKUserLocation class]]
         || !self.referenceAnnotation) {
@@ -71,11 +69,25 @@
     }
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated
+{
     [super viewWillDisappear:animated];
     self.mapView.showsUserLocation = NO;
     self.locationManager = nil;
+    [SVProgressHUD dismiss];
 }
+
+- (void)dealloc
+{
+    NSLog(@"dealloc");
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    NSLog(@"didReceiveMemoryWarning");
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private methods
 #pragma mark Properties

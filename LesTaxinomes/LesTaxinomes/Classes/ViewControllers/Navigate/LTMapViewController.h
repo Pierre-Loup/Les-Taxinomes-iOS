@@ -14,9 +14,7 @@
 
 @interface LTMapViewController : LTViewController <MKMapViewDelegate, CLLocationManagerDelegate>
 
-@property (strong, readonly) id<MKAnnotation> referenceAnnotation;
+@property (strong, nonatomic) id<MKAnnotation> referenceAnnotation;
 @property (strong, nonatomic) IBOutlet MKMapView * mapView;
-
-- (id)initWithAnnotation:(id<MKAnnotation>)annotation;
 
 @end

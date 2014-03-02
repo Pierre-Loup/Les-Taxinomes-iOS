@@ -27,11 +27,13 @@
 
 #import "LTAuthenticationSheetViewController.h"
 #import "LTLegalNoticeViewController.h"
+#import "LTMediasRootViewController.h"
 #import "LTMediaUploadFormViewController.h"
 #import "LTPhotoAssetManager.h"
 #import "AGMedallionView.h"
 #import "UIImageView+AFNetworking.h"
 
+static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewControllerSegueId";
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private interface
@@ -128,6 +130,26 @@
     self.userNameLabel = nil;
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:LTMediasRootViewControllerSegueId])
+    {
+        LTMediasRootViewController* homeVC = (LTMediasRootViewController*)segue.destinationViewController;
+        homeVC.currentUser = [LTConnectionManager sharedManager].authenticatedUser;
+    }
+}
+
+- (void)dealloc
+{
+    NSLog(@"dealloc");
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    NSLog(@"didReceiveMemoryWarning");
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private methods
 
@@ -215,6 +237,11 @@
     {
         
         [self displayAuthenticationSheetAnimated:YES];
+    }
+    else
+    {
+        [self performSegueWithIdentifier:LTMediasRootViewControllerSegueId
+                                  sender:self];
     }
 }
 

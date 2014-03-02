@@ -10,7 +10,8 @@
 
 @implementation LTAuthor (Business)
 
-+ (LTAuthor *)authorWithXMLRPCResponse:(NSDictionary *)response error:(NSError **)error {
++ (LTAuthor *)authorWithXMLRPCResponse:(NSDictionary *)response inContext:(NSManagedObjectContext*)context error:(NSError **)error
+{
     
     if(response == nil){
         return nil;
@@ -25,8 +26,6 @@
     } else {
         return nil;
     }
-    
-    NSManagedObjectContext* context = [NSManagedObjectContext MR_contextForCurrentThread];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier = %d", [authorIdentifier integerValue]];
     LTAuthor *author = [LTAuthor MR_findFirstWithPredicate:predicate inContext:context];
@@ -79,14 +78,11 @@
     return author;
 }
 
-+ (LTAuthor *)authorWithIdentifier: (NSNumber *)identifier {
++ (LTAuthor *)authorWithIdentifier:(NSNumber*)identifier inContext:(NSManagedObjectContext*)context
+{
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier = %d", [identifier integerValue]];
-    LTAuthor *author = [LTAuthor MR_findFirstWithPredicate:predicate];
+    LTAuthor *author = [LTAuthor MR_findFirstWithPredicate:predicate inContext:context];
     return  author;
-}
-
-+ (NSArray *)allAuthors {
-    return [LTAuthor MR_findAll];
 }
 
 @end

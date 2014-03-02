@@ -107,7 +107,7 @@
     if (self) {
         self.mediaAssetURL = assetURL;
         _rowsInSection = @[@1, @1, @1, @1, @1];
-        _license = [LTLicense defaultLicense];
+        _license = [LTLicense defaultLicenseInContext:[NSManagedObjectContext MR_defaultContext]];
     }
     return self;
 }
@@ -181,6 +181,11 @@
     self.zipcodeInput = nil;
     self.countryInput = nil;
     self.shareButton = nil;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

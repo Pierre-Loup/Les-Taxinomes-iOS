@@ -40,4 +40,9 @@
     self.cguTextView.text = NSLocalizedStringFromTable(@"cgu.text", @"CGU", @"");
 }
 
+- (void)dealloc
+{
+    NSLog(@"dealloc");
+}
+
 @end

@@ -1,1 +1,0 @@
-../../EGOPhotoViewer/EGOPhotoViewer/EGOPhotoGlobal.h

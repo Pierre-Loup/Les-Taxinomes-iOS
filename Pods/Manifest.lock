@@ -1,18 +1,24 @@
 PODS:
   - AFNetworking (1.3.3)
   - AGMedallionView (1.1.0)
-  - EGOCache (2.0)
-  - EGOImageLoading (0.0.1):
-    - EGOCache
-  - EGOPhotoViewer (0.0.1):
-    - EGOImageLoading (~> 0.0.1)
+  - DACircularProgress (2.1.0)
   - MagicalRecord (2.2):
     - MagicalRecord/Core
   - MagicalRecord/Core (2.2)
+  - MBProgressHUD (0.8)
+  - MWPhotoBrowser (1.2.1):
+    - DACircularProgress
+    - MBProgressHUD
+    - PSTCollectionView (~> 1.2)
+    - SDWebImage (~> 3.5)
   - NSData+Base64 (1.0.0)
   - PonyDebugger (0.3.1):
     - SocketRocket
+  - PSTCollectionView (1.2.0)
   - Reachability (3.1.1)
+  - SDWebImage (3.5.2):
+    - SDWebImage/Core
+  - SDWebImage/Core (3.5.2)
   - SocketRocket (0.3.1-beta2)
   - SVProgressHUD (0.9)
   - UIKitCategoryAdditions (0.0.1)
@@ -22,8 +28,8 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 1.3)
   - AGMedallionView (~> 1.1)
-  - EGOPhotoViewer (~> 0.0)
   - MagicalRecord (~> 2.1)
+  - MWPhotoBrowser (~> 1.2)
   - PonyDebugger (~> 0.3)
   - Reachability (~> 3.1)
   - SVProgressHUD (~> 0.9)
@@ -33,13 +39,15 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 61fdd49e2ffe6380378df37b3b6e70630bb9dd66
   AGMedallionView: 0c7c7e3eca4a0feb7c4c1347c31bc3b7576650d8
-  EGOCache: c7116e8a6692eecb542f001a9c71f9b71ae9644b
-  EGOImageLoading: 36f4b972563da7dcd32d3e04027b4fe2d3ec0ae7
-  EGOPhotoViewer: 3fc07a25d0e3275241178ed17c9e66fd8811f2b3
+  DACircularProgress: 8c8f20c8dffdd647fbf570ddecbc2b1b59da5888
   MagicalRecord: 95d49d74ef752cd52f6ad87bcb474817fc3978cf
+  MBProgressHUD: 2bbc6f470111daf7f3eaa4eb12b8cbf01c4c0622
+  MWPhotoBrowser: cd204e6b02686f6fae5034932ad8382f9963f2fc
   NSData+Base64: 4819562faee4544e3cf5703f2139820b09732b28
   PonyDebugger: d31607145d785b2315cd6f6a4ebaa378eb0c1340
+  PSTCollectionView: fb2ad2790c6efa306b2caf10315b2c1464d1f5c6
   Reachability: be4883bb93f31e38266ae3365e5600a317aae735
+  SDWebImage: fe7ce01ae4e0a884d168f59c9dd82d35baf8429e
   SocketRocket: 7ac946bcce46287a791dfff3c1f8daa692821dae
   SVProgressHUD: 03d4845ec8e64591726428a08236c6a5489d45f8
   UIKitCategoryAdditions: 393e65777c35ce92af6b32797d2e456c2df411ac

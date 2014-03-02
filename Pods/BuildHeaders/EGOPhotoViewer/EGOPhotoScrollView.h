@@ -1,1 +1,0 @@
-../../EGOPhotoViewer/EGOPhotoViewer/Views/EGOPhotoScrollView/EGOPhotoScrollView.h

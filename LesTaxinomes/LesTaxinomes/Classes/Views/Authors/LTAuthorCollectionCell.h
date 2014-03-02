@@ -6,8 +6,6 @@
 //  Copyright (c) 2013  Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
-#import "UICollectionView.h"
-
 @class LTAuthor;
 
 @interface LTAuthorCollectionCell : UICollectionViewCell

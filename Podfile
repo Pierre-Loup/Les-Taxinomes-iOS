@@ -1,7 +1,7 @@
 xcodeproj 'LesTaxinomes/LesTaxinomes.xcodeproj'
 
 pod 'AFNetworking',             '~> 1.3'
-pod 'EGOPhotoViewer',           '~> 0.0'
+pod 'MWPhotoBrowser',           '~> 1.2'
 pod 'MagicalRecord',            '~> 2.1'
 pod 'SVProgressHUD',            '~> 0.9'
 pod 'Reachability',             '~> 3.1'

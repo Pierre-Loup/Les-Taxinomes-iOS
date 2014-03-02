@@ -14,10 +14,15 @@
 #import "LTAuthorCollectionCell.h"
 #import "LTCollectionViewFlowLayout.h"
 #import "LTLoadMoreFooterView.h"
+// VCs
+#import "LTMediasRootViewController.h"
 // MODEL
 #import "LTAuthor.h"
 
-@interface LTAuthorsViewController () <SRRefreshDelegate>
+static NSString* const LTAuthorsViewControllerFooterIdentifier = @"LTAuthorsViewControllerFooterIdentifier";
+static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewControllerSegueId";
+
+@interface LTAuthorsViewController ()
 @property (nonatomic, strong) UIRefreshControl* refreshControl;
 @property (nonatomic, strong) LTLoadMoreFooterView* footerView;
 @property (nonatomic, strong) NSFetchedResultsController* authorsResultController;
@@ -64,26 +69,26 @@
 {
     [super viewDidLoad];
     
-    self.slimeView = [SRRefreshView new];
-    self.slimeView.delegate = self;
-    [self.collectionView addSubview:self.slimeView];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self
+                            action:@selector(refreshAuthors)
+                  forControlEvents:UIControlEventValueChanged];
+    [self.collectionView addSubview:self.refreshControl];
+    
     ((LTCollectionViewFlowLayout*)self.collectionView.collectionViewLayout).itemSize = CGSizeMake(70.f, 90.f);
     
     [self.collectionView registerClass:[LTAuthorCollectionCell class]
             forCellWithReuseIdentifier:[LTAuthorCollectionCell reuseIdentifier]];
     
-    CGRect footerViewFrame = CGRectNull;
-    footerViewFrame.size = ((LTCollectionViewFlowLayout*)self.collectionView.collectionViewLayout).footerReferenceSize;
-    self.footerView = [[LTLoadMoreFooterView alloc] initWithFrame:footerViewFrame];
-    [self.footerView.loadMoreButton addTarget:self
-                                       action:@selector(loadMoreAuthors)
-                             forControlEvents:UIControlEventTouchUpInside];
+    [self.collectionView registerClass:[LTLoadMoreFooterView class]
+            forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
+                   withReuseIdentifier:LTAuthorsViewControllerFooterIdentifier];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if ([[self.authorsResultController fetchedObjects] count] == 0) {
+    if ([[self.authorsResultController fetchedObjects] count] <= 1) {
         [self loadMoreAuthors];
     }
 }
@@ -92,6 +97,30 @@
 {
     [super viewWillDisappear:animated];
     self.authorsResultController = nil;
+}
+
+- (void)dealloc
+{
+    NSLog(@"dealloc");
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    NSLog(@"didReceiveMemoryWarning");
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:LTMediasRootViewControllerSegueId])
+    {
+        LTMediasRootViewController* homeVC = (LTMediasRootViewController*)segue.destinationViewController;
+        if ([sender isKindOfClass:[LTAuthorCollectionCell class]])
+        {
+            LTAuthorCollectionCell* cell = (LTAuthorCollectionCell*)sender;
+            homeVC.currentUser = cell.author;
+        }
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -108,41 +137,46 @@
 
 - (void)loadMoreAuthors
 {
+    [self.refreshControl endRefreshing];
     self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeLoading;
-    [self.slimeView endRefresh];
     
     NSRange authorsRange;
     authorsRange.location = [[self.authorsResultController fetchedObjects] count];
     authorsRange.length = kLTAuthorsLoadingStep;
     
-    LTConnectionManager* connectionManager = [LTConnectionManager sharedConnectionManager];
+    __block LTAuthorsViewController* weakSelf = self;
+    LTConnectionManager* connectionManager = [LTConnectionManager sharedManager];
     [connectionManager getAuthorsSummariesWithRange:authorsRange
                                     withSortKey:self.sortType
     responseBlock:^(NSArray *authors, NSError *error) {
         NSLog(@"authors: %@", authors);
-        if (authors) {
-            self.authorsResultController = nil;
-        } else if ([error shouldBeDisplayed]) {
-            [UIAlertView showWithError:error];
-        } else {
-            [self showErrorHudWithText:_T(@"common.hud.failure")];
+        if (authors)
+        {
+            weakSelf.authorsResultController = nil;
         }
-        [self.collectionView reloadData];
-        self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
+        else
+        {
+            [SVProgressHUD showErrorWithStatus:_T(@"common.hud.failure")];
+        }
+        [weakSelf.collectionView reloadData];
+        weakSelf.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
     }];
 }
 
 - (void)refreshAuthors
 {
+    __block LTAuthorsViewController* weakSelf = self;
+    
     self.authorsResultController = nil;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        ;
-        [LTAuthor truncateAll];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
+    {
+        [LTAuthor MR_truncateAll];
         NSError* error;
         [[NSManagedObjectContext MR_contextForCurrentThread] save:&error];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.collectionView reloadData];
-            [self loadMoreAuthors];
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            [weakSelf.collectionView reloadData];
+            [weakSelf loadMoreAuthors];
         });
     });
 }
@@ -158,11 +192,11 @@
             sortAttribute = @"signupDate";
         }
         
-        _authorsResultController = [LTAuthor fetchAllSortedBy:sortAttribute
-                                                ascending:YES
-                                            withPredicate:nil
-                                                  groupBy:nil
-                                                 delegate:nil];
+        _authorsResultController = [LTAuthor MR_fetchAllSortedBy:sortAttribute
+                                                       ascending:YES
+                                                   withPredicate:nil
+                                                         groupBy:nil
+                                                        delegate:nil];
     }
     return _authorsResultController;
 }
@@ -195,8 +229,15 @@
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionReusableView* view;
-    if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
+    if ([kind isEqualToString:UICollectionElementKindSectionFooter])
+    {
         
+        self.footerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                                  withReuseIdentifier:LTAuthorsViewControllerFooterIdentifier
+                                                                         forIndexPath:indexPath];
+        [self.footerView.loadMoreButton addTarget:self
+                                           action:@selector(loadMoreAuthors)
+                                 forControlEvents:UIControlEventTouchUpInside];
         view = self.footerView;
     }
     
@@ -207,22 +248,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UICollectionViewDelegate
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.slimeView scrollViewDidScroll];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    [self.slimeView scrollViewDidEndDraging];
-}
-
-////////////////////////////////////////////////////////////////////////////////
-#pragma mark - SRRRefreshViewDelegate
-
-- (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
-{
-    [self refreshAuthors];
+    LTAuthorCollectionCell* cell = (LTAuthorCollectionCell*)[collectionView cellForItemAtIndexPath:indexPath];
+    [self performSegueWithIdentifier:LTMediasRootViewControllerSegueId sender:cell];
 }
 
 @end
