@@ -76,7 +76,6 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="300" id="U82-bW-axZ"/>
                                                     <constraint firstAttribute="height" constant="300" id="fja-G8-4xx"/>
                                                 </constraints>
                                             </imageView>
@@ -115,7 +114,6 @@
                                                 <rect key="frame" x="10" y="399" width="300" height="300"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="300" id="5aZ-8M-1j4"/>
                                                     <constraint firstAttribute="height" constant="300" id="Gkd-fC-nFW"/>
                                                 </constraints>
                                             </mapView>
@@ -135,13 +133,13 @@
                                             <constraint firstItem="Nhj-wd-I4c" firstAttribute="centerX" secondItem="MgN-T0-Fkq" secondAttribute="centerX" id="aSC-A0-V5m"/>
                                             <constraint firstItem="3Lp-DB-ywz" firstAttribute="top" secondItem="Nhj-wd-I4c" secondAttribute="bottom" constant="8" id="asV-tn-grR"/>
                                             <constraint firstItem="Nhj-wd-I4c" firstAttribute="top" secondItem="8wf-GN-6l9" secondAttribute="top" id="emx-9w-CuP"/>
+                                            <constraint firstAttribute="width" constant="320" id="gFS-zi-9Ds"/>
                                             <constraint firstItem="Nhj-wd-I4c" firstAttribute="centerY" secondItem="MgN-T0-Fkq" secondAttribute="centerY" id="hug-7O-11e"/>
                                             <constraint firstItem="H3i-N2-nTW" firstAttribute="top" secondItem="Nhj-wd-I4c" secondAttribute="bottom" constant="8" id="jAO-eQ-mvU"/>
                                             <constraint firstAttribute="height" constant="568" id="kpc-Bw-Wbp"/>
                                             <constraint firstItem="3Lp-DB-ywz" firstAttribute="leading" secondItem="H3i-N2-nTW" secondAttribute="trailing" constant="8" id="lxa-wO-e7g"/>
                                             <constraint firstItem="pDf-Oa-MhP" firstAttribute="top" secondItem="HlK-KW-z9k" secondAttribute="bottom" constant="8" id="p37-Bt-GZT"/>
                                             <constraint firstItem="HlK-KW-z9k" firstAttribute="top" secondItem="3Lp-DB-ywz" secondAttribute="bottom" constant="8" id="pfz-vq-NHg"/>
-                                            <constraint firstAttribute="width" constant="320" id="tLv-kW-29K"/>
                                             <constraint firstItem="pDf-Oa-MhP" firstAttribute="leading" secondItem="8wf-GN-6l9" secondAttribute="leading" constant="10" id="uld-AS-jF7"/>
                                             <constraint firstAttribute="trailing" secondItem="HlK-KW-z9k" secondAttribute="trailing" constant="10" id="yPE-jd-UW3"/>
                                         </constraints>
@@ -171,6 +169,8 @@
                         <outlet property="authorAvatarView" destination="H3i-N2-nTW" id="44Z-Wb-Xft"/>
                         <outlet property="authorNameLabel" destination="3Lp-DB-ywz" id="J3V-iY-gXw"/>
                         <outlet property="containerView" destination="8wf-GN-6l9" id="hza-mq-d12"/>
+                        <outlet property="containerViewHeightConstraint" destination="kpc-Bw-Wbp" id="UhL-cM-fub"/>
+                        <outlet property="containerViewWidthConstraint" destination="gFS-zi-9Ds" id="9O7-44-HCR"/>
                         <outlet property="descTextView" destination="HlK-KW-z9k" id="8d2-Bv-Yi5"/>
                         <outlet property="mapView" destination="pDf-Oa-MhP" id="6SH-b4-QuK"/>
                         <outlet property="mediaImageView" destination="Nhj-wd-I4c" id="fri-rt-MeB"/>

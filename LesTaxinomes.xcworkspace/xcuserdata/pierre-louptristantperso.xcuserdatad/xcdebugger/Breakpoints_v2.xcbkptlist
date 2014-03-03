@@ -115,22 +115,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "LesTaxinomes/LesTaxinomes/Classes/ViewControllers/Home/LTLegalNoticeViewController.m"
-            timestampString = "415461582.518562"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "-dealloc"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "LesTaxinomes/LesTaxinomes/Classes/ViewControllers/Medias/LTMediasListViewController.m"
             timestampString = "415461752.843848"
             startingColumnNumber = "9223372036854775807"

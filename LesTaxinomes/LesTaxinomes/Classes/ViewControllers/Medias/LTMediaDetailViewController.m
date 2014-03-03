@@ -46,6 +46,8 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
 
 @property (nonatomic, weak) IBOutlet UIScrollView * scrollView;
 @property (nonatomic, weak) IBOutlet UIView * containerView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* containerViewWidthConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* containerViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet UIImageView * mediaImageView;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView* placeholderAIView;
 @property (nonatomic, weak) IBOutlet UIImageView * authorAvatarView;
@@ -86,7 +88,7 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
     self.scrollView.opaque = NO;
     self.scrollView.delegate = self;
     
-    self.containerView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.containerView.translatesAutoresizingMaskIntoConstraints = NO;
     
     UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                    action:@selector(mapTouched:)];
@@ -102,6 +104,25 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
 {
     [super viewWillAppear:animated];
     [self refreshView];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [SVProgressHUD dismiss];
+}
+
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    self.containerViewWidthConstraint.constant = self.view.bounds.size.width;
+    self.containerViewHeightConstraint.constant = CGRectGetMaxY(self.mapView.frame);
+//    
+//    CGRect containerViewFrame = self.containerView.frame;
+//    containerViewFrame.size.width = self.view.bounds.size.width;
+//    containerViewFrame.size.height = CGRectGetMaxY(self.mapView.frame);
+//    self.containerView.frame = containerViewFrame;
+    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -232,6 +253,7 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
                                                                        metrics:nil
                                                                          views:views];
         [self.descTextView addConstraints:constraints];
+        [self.view needsUpdateConstraints];
     }
     
     if ([self.media.license.name length])
@@ -291,6 +313,11 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
         return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
                 interfaceOrientation == UIInterfaceOrientationLandscapeRight);
     }
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self refreshView];
 }
 
 - (void)mediaImageTouched:(UIImage *)sender
