@@ -77,6 +77,9 @@
 "photo_action_sheet.camera" = "Camera";
 "photo_action_sheet.photo_library" = "Photo library";
 
+/* EXPLORE (MAP) */
+"explore.positionupdate.hud.status" = "Updating position";
+
 /* ERROR */
 "error.network.title" = "Network problem";
 "error.network.text" = "Checkout your wifi or your mobile internet connection";

@@ -248,19 +248,19 @@ typedef enum {
 
 - (void)updateContraints
 {
-//    if (self.contentViewController.view.superview == self.view)
-//    {
-//        UIView* contentView = self.contentViewController.view;
-//        id topLayoutGuide = self.topLayoutGuide;
-//        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[contentView]|"
-//                                                                          options:0
-//                                                                          metrics:nil
-//                                                                            views:NSDictionaryOfVariableBindings(contentView)]];
-//        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|"
-//                                                                          options:0
-//                                                                          metrics:nil
-//                                                                            views:NSDictionaryOfVariableBindings(contentView, topLayoutGuide)]];
-//    }
+    if (self.contentViewController.view.superview == self.view)
+    {
+        UIView* contentView = self.contentViewController.view;
+        id topLayoutGuide = self.topLayoutGuide;
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[contentView]|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:NSDictionaryOfVariableBindings(contentView)]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:NSDictionaryOfVariableBindings(contentView, topLayoutGuide)]];
+    }
 }
 
 #pragma mark Properties

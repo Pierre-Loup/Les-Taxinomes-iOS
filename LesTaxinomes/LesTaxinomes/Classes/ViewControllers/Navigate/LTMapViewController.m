@@ -22,6 +22,9 @@
 @property (nonatomic, strong) UIBarButtonItem* scanBarButton;
 @property (nonatomic, strong) NSFetchedResultsController* mediasResultController;
 
+@property (nonatomic, assign) NSInteger insertedMedias;
+@property (nonatomic, assign) NSInteger updatedMedias;
+
 @end
 
 @implementation LTMapViewController
@@ -70,6 +73,7 @@
         || !self.referenceAnnotation)
     {
         self.mapView.showsUserLocation = YES;
+        [self setupLocationManager];
     }
     [self resetMediasResultController];
 }
@@ -78,20 +82,10 @@
 {
     [super viewWillDisappear:animated];
     self.mapView.showsUserLocation = NO;
+    [self.locationManager stopMonitoringSignificantLocationChanges];
     self.locationManager = nil;
     self.mediasResultController = nil;
     [SVProgressHUD dismiss];
-}
-
-- (void)dealloc
-{
-    NSLog(@"dealloc");
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    NSLog(@"didReceiveMemoryWarning");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -109,15 +103,15 @@
                                                          inContext:[NSManagedObjectContext MR_defaultContext]];
 }
 
-- (CLLocationManager*)locationManager
+- (void)setupLocationManager
 {
-    if (!_locationManager) {
-        _locationManager = [[CLLocationManager alloc] init];
-        [_locationManager setDelegate:self];
+    self.locationManager = [[CLLocationManager alloc] init];
+    [self.locationManager setDelegate:self];
+    if ([CLLocationManager significantLocationChangeMonitoringAvailable])
+    {
         // Start monitoring the user location changes
-        [_locationManager startMonitoringSignificantLocationChanges];
+        [self.locationManager startMonitoringSignificantLocationChanges];
     }
-    return _locationManager;
 }
 
 #pragma mark Actions
@@ -156,9 +150,8 @@
                                                                            withRange:range
         responseBlock:^(NSArray *medias, NSError *error)
         {
-            self.searchStartIndex += medias.count;
-            if ([[self.mediasResultController fetchedObjects] count] &&
-                !error)
+            self.searchStartIndex += (self.insertedMedias + self.updatedMedias);
+            if (!error)
             {
                 [SVProgressHUD dismiss];
                 self.reloadBarButton.enabled = YES;
@@ -227,104 +220,74 @@
 
 #pragma mark CLLocationManagerDelegate
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    self.searchStartIndex = 0;
-}
-
-#pragma mark - LTConnectionManagerDelegate
-
-//- (void)didRetrievedShortMedias:(NSArray *)medias
-//{
-//    BOOL shouldLoadMoreMedias = YES;
-//    for (LTMedia *newMedia in medias)
-//    {
-//        __unsafe_unretained LTMedia *blockNewMedia = newMedia;
-//        NSInteger mediaFoundIndex = [self.mapView.annotations indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop)
-//        {
-//            if ([obj isKindOfClass:[LTMedia class]])
-//            {
-//                LTMedia *displayedMedia = (LTMedia *)obj;
-//                if ([blockNewMedia.identifier intValue] == [displayedMedia.identifier intValue])
-//                {
-//                    *stop = YES;
-//                    return YES;
-//                }
-//            }
-//            return NO;
-//        }];
-//        if (mediaFoundIndex == NSNotFound)
-//        {
-//            shouldLoadMoreMedias = NO;
-//        }
-//        else
-//        {
-//            LogDebug(@"Media already displayed");
-//        }
-//    }
-//    
-//    self.searchStartIndex += [medias count];
-//    if (shouldLoadMoreMedias)
-//    {
-//        [self loadMoreCloseMedias];
-//    }
-//    else
-//    {
-//        [self.mapView addAnnotations:medias];
-//        [SVProgressHUD dismiss];
-//        self.reloadBarButton.enabled = YES;
-//        self.scanBarButton.enabled = YES;
-//        
-//        LTMedia *lastMedia = (LTMedia *)[medias lastObject];
-//        CGFloat latDif = fabs(fabs(self.referenceAnnotation.coordinate.latitude) - fabs(lastMedia.coordinate.latitude));
-//        CGFloat lonDif = fabs(fabs(self.referenceAnnotation.coordinate.longitude) - fabs(lastMedia.coordinate.longitude));
-//        CGFloat lonDelta = MIN(2*MAX(latDif, lonDif), 360.0);
-//        CGFloat latDelta = MIN(2*MAX(latDif, lonDif), 180.0);
-//        // Display the closest region with all the medias displayed
-//        [self.mapView setRegion:MKCoordinateRegionMake(self.referenceAnnotation.coordinate, MKCoordinateSpanMake(latDelta, lonDelta)) animated:YES];
-//    }
-//}
-
-- (void)didFailWithError:(NSError *)error
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    [SVProgressHUD dismiss];
-    self.reloadBarButton.enabled = YES;
-    self.scanBarButton.enabled = YES;
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:_T(@"alert_network_unreachable_title") message:_T(@"alert_network_unreachable_text") delegate:self cancelButtonTitle:_T(@"common.ok") otherButtonTitles:nil];
-    [alert show];
+    CLLocation* newLocation = [locations lastObject];
+    if (self.referenceAnnotation
+        && self.mapView.showsUserLocation
+        && CLLocationCoordinate2DIsValid(newLocation.coordinate))
+    {
+        
+        self.reloadBarButton.enabled = NO;
+        self.scanBarButton.enabled = NO;
+        [SVProgressHUD showWithStatus:_T(@"explore.positionupdate.hud.status")];
+        
+        NSRange range;
+        range.location = 0;
+        range.length = kLTMediasLoadingStep;
+        
+        [[LTConnectionManager sharedManager] getMediasSummariesByDateForAuthor:nil
+                                                                  nearLocation:newLocation
+                                                                     withRange:range
+                                                                 responseBlock:^(NSArray *medias, NSError *error)
+         {
+             if (!error)
+             {
+                 if (self.insertedMedias != 0)
+                 {
+                     self.searchStartIndex = self.insertedMedias + self.updatedMedias;
+                 }
+                 
+                 [SVProgressHUD dismiss];
+                 self.reloadBarButton.enabled = YES;
+                 self.scanBarButton.enabled = YES;
+             }
+             else
+             {
+                 [SVProgressHUD showErrorWithStatus:nil];
+                 self.reloadBarButton.enabled = YES;
+                 self.scanBarButton.enabled = YES;
+             }
+         }];
+    }
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
 
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    self.insertedMedias = 0;
+    self.updatedMedias = 0;
+}
+
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-      newIndexPath:(NSIndexPath *)newIndexPath {
-    
-//    UITableView *tableView = self.tableView;
+      newIndexPath:(NSIndexPath *)newIndexPath
+{
     LTMedia *media = (LTMedia *)anObject;
     
-    switch(type) {
-            
+    switch(type)
+    {
         case NSFetchedResultsChangeInsert:
+            self.insertedMedias++;
         case NSFetchedResultsChangeUpdate:
+            self.updatedMedias++;
             [self.mapView addAnnotation:media];
-//            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
-//                             withRowAnimation:UITableViewRowAnimationFade];
             break;
-            
         case NSFetchedResultsChangeDelete:
             [self.mapView removeAnnotation:media];
-//            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
-//                             withRowAnimation:UITableViewRowAnimationFade];
             break;
-            
-            //((LTMediaListCell*)[tableView cellForRowAtIndexPath:indexPath]).media = media;
-            break;
-            
         case NSFetchedResultsChangeMove:
-//            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
-//                             withRowAnimation:UITableViewRowAnimationFade];
-//            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
-//                             withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
 }

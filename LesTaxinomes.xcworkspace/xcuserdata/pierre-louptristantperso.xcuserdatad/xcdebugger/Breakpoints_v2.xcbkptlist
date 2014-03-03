@@ -67,22 +67,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "LesTaxinomes/LesTaxinomes/Classes/ViewControllers/Home/LTHomeViewController.m"
-            timestampString = "415461586.256719"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
-            landmarkName = "-updateAvatar"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "LesTaxinomes/LesTaxinomes/Classes/ViewControllers/Medias/LTMediasRootViewController.m"
             timestampString = "415465923.90424"
             startingColumnNumber = "9223372036854775807"

@@ -87,7 +87,7 @@
 		A5E0B22B1777197200CD4CCF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED7945A823D44B08AB80E718 /* libPods.a */; };
 		A5E0B22C1777197300CD4CCF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED7945A823D44B08AB80E718 /* libPods.a */; };
 		A5E0B22E177719A800CD4CCF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5E0B22D177719A800CD4CCF /* MessageUI.framework */; };
-		A5F6ECE717772A3400C16C06 /* Brest.gpx in Resources */ = {isa = PBXBuildFile; fileRef = A5F6ECDE17772A3400C16C06 /* Brest.gpx */; };
+		A5F6ECE717772A3400C16C06 /* Brest-LPDB.gpx in Resources */ = {isa = PBXBuildFile; fileRef = A5F6ECDE17772A3400C16C06 /* Brest-LPDB.gpx */; };
 		A5F6ECE817772A3400C16C06 /* CGU.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5F6ECDF17772A3400C16C06 /* CGU.strings */; };
 		A5F6ECE917772A3400C16C06 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5F6ECE117772A3400C16C06 /* Localizable.strings */; };
 		A5F6ECEA17772A3400C16C06 /* JesayaFree.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5F6ECE517772A3400C16C06 /* JesayaFree.ttf */; };
@@ -96,6 +96,7 @@
 		A5F6EFFC17772D1400C16C06 /* LTAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFE117772CFE00C16C06 /* LTAppearance.m */; };
 		C808AA2B18A80575002FEF19 /* LTAuthorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFA117772CFE00C16C06 /* LTAuthorsViewController.m */; };
 		C808AA2C18A83FF6002FEF19 /* LTAuthorCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFC517772CFE00C16C06 /* LTAuthorCollectionCell.m */; };
+		C881233518C4CE5900DBDF3F /* Brest-ISEN.gpx in Resources */ = {isa = PBXBuildFile; fileRef = C881233418C4CE5900DBDF3F /* Brest-ISEN.gpx */; };
 		CCE20FCD975442CD9DF96DC4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED7945A823D44B08AB80E718 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -152,7 +153,7 @@
 		A5E0B20E1777180E00CD4CCF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A5E0B22D177719A800CD4CCF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		A5F6ECDC1777284300C16C06 /* LesTaxinomes.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LesTaxinomes.storyboard; sourceTree = "<group>"; };
-		A5F6ECDE17772A3400C16C06 /* Brest.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Brest.gpx; sourceTree = "<group>"; };
+		A5F6ECDE17772A3400C16C06 /* Brest-LPDB.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Brest-LPDB.gpx"; sourceTree = "<group>"; };
 		A5F6ECE017772A3400C16C06 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CGU.strings; sourceTree = "<group>"; };
 		A5F6ECE217772A3400C16C06 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A5F6ECE317772A3400C16C06 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/CGU.strings; sourceTree = "<group>"; };
@@ -240,6 +241,7 @@
 		A5F6EFF117772CFE00C16C06 /* UIImageView+PhotoFrame.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+PhotoFrame.m"; sourceTree = "<group>"; };
 		A5F6EFFD17772D8000C16C06 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		A5F6EFFE17772D8000C16C06 /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
+		C881233418C4CE5900DBDF3F /* Brest-ISEN.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Brest-ISEN.gpx"; sourceTree = "<group>"; };
 		D4F5BA4032F04217879D4033 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = ../Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		ED7945A823D44B08AB80E718 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -389,7 +391,8 @@
 		A5F6ECDD17772A3400C16C06 /* Ressources */ = {
 			isa = PBXGroup;
 			children = (
-				A5F6ECDE17772A3400C16C06 /* Brest.gpx */,
+				A5F6ECDE17772A3400C16C06 /* Brest-LPDB.gpx */,
+				C881233418C4CE5900DBDF3F /* Brest-ISEN.gpx */,
 				A5F6ECDF17772A3400C16C06 /* CGU.strings */,
 				A5F6ECE117772A3400C16C06 /* Localizable.strings */,
 				A5F6ECE517772A3400C16C06 /* JesayaFree.ttf */,
@@ -763,8 +766,9 @@
 				A5F6ECEA17772A3400C16C06 /* JesayaFree.ttf in Resources */,
 				A57765AE1777537D00CC8EE6 /* LTMediaListCell.xib in Resources */,
 				A53A60431807371F009ED623 /* Images.xcassets in Resources */,
+				C881233518C4CE5900DBDF3F /* Brest-ISEN.gpx in Resources */,
 				A5F6ECEC17772A9600C16C06 /* LesTaxinomes.storyboard in Resources */,
-				A5F6ECE717772A3400C16C06 /* Brest.gpx in Resources */,
+				A5F6ECE717772A3400C16C06 /* Brest-LPDB.gpx in Resources */,
 				A5F6ECEB17772A3400C16C06 /* oiseau.aif in Resources */,
 				A57765B41777539200CC8EE6 /* SpinnerCell.xib in Resources */,
 				A5F6ECE817772A3400C16C06 /* CGU.strings in Resources */,
