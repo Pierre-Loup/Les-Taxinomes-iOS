@@ -30,11 +30,13 @@
 // VC
 #import "LTMapViewController.h"
 #import "LTMediaDetailViewController.h"
+#import "LTMediasRootViewController.h"
 #import "MWPhotoBrowser.h"
 // MODEL
 #import "Annotation.h"
 #import "LTMedia+Business.h"
 
+static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewControllerSegueId";
 static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId";
 
 @interface LTMediaDetailViewController () <UIScrollViewDelegate,
@@ -64,9 +66,11 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
 
 #pragma mark - Overrides
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         
     }
     return self;
@@ -91,10 +95,17 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
     self.containerView.translatesAutoresizingMaskIntoConstraints = NO;
     
     UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                   action:@selector(mapTouched:)];
+                                                                                           action:@selector(mapTouched:)];
     [tapGestureRecognizer setNumberOfTouchesRequired:1];
     [tapGestureRecognizer setDelegate:self];
     [self.mapView addGestureRecognizer:tapGestureRecognizer];
+    
+    tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                   action:@selector(authorAvatarTouched:)];
+    [tapGestureRecognizer setNumberOfTouchesRequired:1];
+    [tapGestureRecognizer setDelegate:self];
+    self.authorAvatarView.userInteractionEnabled =YES;
+    [self.authorAvatarView addGestureRecognizer:tapGestureRecognizer];
     
     self.scrollView.hidden = YES;
     [self configureView];
@@ -125,6 +136,11 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
     {
         LTMapViewController* mapVC = (LTMapViewController*)segue.destinationViewController;
         mapVC.referenceAnnotation = self.media;
+    }
+    else if ([segue.identifier isEqualToString: LTMediasRootViewControllerSegueId])
+    {
+        LTMediasRootViewController* authorMediasVC = (LTMediasRootViewController*)segue.destinationViewController;
+        authorMediasVC.currentUser = self.media.author;
     }
 }
 
@@ -179,7 +195,8 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
     // Load media datas if not present or not up to date
     if( self.media.author == nil
        ||  self.media.author.avatarURL == nil
-       || [[NSDate date] timeIntervalSinceDate: self.media.author.localUpdateDate] > kMediaCacheTime) {
+       || [[NSDate date] timeIntervalSinceDate: self.media.author.localUpdateDate] > kMediaCacheTime)
+    {
         [cm getAuthorWithId:self.media.author.identifier
               responseBlock:^(LTAuthor *author, NSError *error) {
                   
@@ -188,7 +205,6 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
                   }
                   
                   asynchLoadCounter_--;
-                  [self updateAuthorInformations];
                   [self displayContentIfNeeded];
               }];
         asynchLoadCounter_++;
@@ -389,8 +405,15 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
 
 - (void)updateAuthorInformations
 {
-    [self.authorAvatarView setImageWithURL:[NSURL URLWithString:self.media.author.avatarURL]
-                          placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
+//    [self.authorAvatarView setImageWithURL:[NSURL URLWithString:self.media.author.avatarURL]
+//                          placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
+}
+
+#pragma mark Actions
+
+- (void)authorAvatarTouched:(UIImageView *)sender
+{
+    [self performSegueWithIdentifier:LTMediasRootViewControllerSegueId sender:self];
 }
 
 - (void)mapTouched:(MKMapView *)sender

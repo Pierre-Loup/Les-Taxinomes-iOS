@@ -176,6 +176,7 @@
                         <outlet property="mediaImageView" destination="Nhj-wd-I4c" id="fri-rt-MeB"/>
                         <outlet property="scrollView" destination="HaT-XB-htv" id="Q2o-Nf-3cJ"/>
                         <segue destination="VcQ-df-K83" kind="push" identifier="LTMapViewControllerSegueId" id="qJ1-Py-9AV"/>
+                        <segue destination="lLe-XB-aLT" kind="push" identifier="LTMediasRootViewControllerSegueId" id="KG8-TJ-q1e"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LMH-Tx-JNN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -959,7 +960,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="8uH-qf-60E"/>
         <segue reference="qJ1-Py-9AV"/>
+        <segue reference="KG8-TJ-q1e"/>
     </inferredMetricsTieBreakers>
 </document>
