@@ -117,12 +117,6 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
     [super viewWillLayoutSubviews];
     self.containerViewWidthConstraint.constant = self.view.bounds.size.width;
     self.containerViewHeightConstraint.constant = CGRectGetMaxY(self.mapView.frame);
-//    
-//    CGRect containerViewFrame = self.containerView.frame;
-//    containerViewFrame.size.width = self.view.bounds.size.width;
-//    containerViewFrame.size.height = CGRectGetMaxY(self.mapView.frame);
-//    self.containerView.frame = containerViewFrame;
-    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

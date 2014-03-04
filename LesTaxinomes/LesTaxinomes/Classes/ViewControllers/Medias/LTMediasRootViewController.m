@@ -132,16 +132,12 @@ typedef enum {
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillLayoutSubviews
 {
-    [super viewDidAppear:animated];
+    [super viewWillLayoutSubviews];
+    [self updateContraints];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    self.displayBarButton = nil;
-}
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -153,6 +149,7 @@ typedef enum {
     [super didReceiveMemoryWarning];
     [NSFetchedResultsController deleteCacheWithName:self.mediasResultController.cacheName];
     self.mediasResultController = nil;
+    self.displayBarButton = nil;
 }
 
 - (void)dealloc
@@ -251,6 +248,8 @@ typedef enum {
     if (self.contentViewController.view.superview == self.view)
     {
         UIView* contentView = self.contentViewController.view;
+        self.contentViewController.view.frame = self.view.bounds;
+        //[self.view removeConstraints:self.view.constraints];
         id topLayoutGuide = self.topLayoutGuide;
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[contentView]|"
                                                                           options:0
@@ -283,14 +282,16 @@ typedef enum {
         [self.listViewController.tableView reloadData];
         self.listViewController.firstVisibleMedia = self.gridViewController.firstVisibleMedia;
         
+        self.listViewController.view.hidden = YES;
+        [self.view addSubview:self.listViewController.view];
+        self.contentViewController = self.listViewController;
+        
         [UIView transitionFromView:self.gridViewController.view
                             toView:self.listViewController.view
                           duration:1.0
                            options:UIViewAnimationOptionTransitionFlipFromRight|UIViewAnimationOptionShowHideTransitionViews
                         completion:^(BOOL finished)
                         {
-                            self.contentViewController = self.listViewController;
-                            [self updateContraints];
                             [self.gridViewController willMoveToParentViewController:self];
                             [self.gridViewController removeFromParentViewController];
                         }];
@@ -311,14 +312,16 @@ typedef enum {
         [self.gridViewController.collectionView reloadData];
         self.gridViewController.firstVisibleMedia = self.listViewController.firstVisibleMedia;
         
+        self.gridViewController.view.hidden = YES;
+        [self.view addSubview:self.gridViewController.view];
+        self.contentViewController = self.gridViewController;
+        
         [UIView transitionFromView:self.listViewController.view
                             toView:self.gridViewController.view
                           duration:1.0
                            options:UIViewAnimationOptionTransitionFlipFromLeft|UIViewAnimationOptionShowHideTransitionViews
                         completion:^(BOOL finished)
                         {
-                            self.contentViewController = self.gridViewController;
-                            [self updateContraints];
                             [self.listViewController willMoveToParentViewController:nil];
                             [self.listViewController removeFromParentViewController];
                         }];

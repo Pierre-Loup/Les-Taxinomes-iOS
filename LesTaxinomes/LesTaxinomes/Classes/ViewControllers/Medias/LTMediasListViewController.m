@@ -64,9 +64,10 @@
     self.tableView.tableFooterView = self.footerView;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+
+- (void)viewWillLayoutSubviews
 {
-    [super viewWillAppear:animated];
+    [super viewWillLayoutSubviews];
     [self updateScrollViewInsets];
 }
 

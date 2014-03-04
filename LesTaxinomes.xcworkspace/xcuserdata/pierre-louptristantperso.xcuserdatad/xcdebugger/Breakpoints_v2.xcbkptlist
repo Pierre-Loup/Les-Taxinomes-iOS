@@ -67,22 +67,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "LesTaxinomes/LesTaxinomes/Classes/ViewControllers/Medias/LTMediasRootViewController.m"
-            timestampString = "415465923.90424"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "160"
-            endingLineNumber = "160"
-            landmarkName = "-dealloc"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "LesTaxinomes/LesTaxinomes/Classes/ViewControllers/Home/LTHomeViewController.m"
             timestampString = "415461524.543719"
             startingColumnNumber = "9223372036854775807"
@@ -112,16 +96,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LesTaxinomes/LesTaxinomes/Classes/ViewControllers/Medias/LTMediasListViewController.m"
-            timestampString = "415461752.843848"
+            timestampString = "415650113.476219"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
-            landmarkName = "-didReceiveMemoryWarning"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "-updateScrollViewInsets"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

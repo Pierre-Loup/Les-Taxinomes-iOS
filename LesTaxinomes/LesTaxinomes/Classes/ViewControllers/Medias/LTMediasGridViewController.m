@@ -52,9 +52,9 @@ static NSString* const kLTMediasGridViewControllerFooterIdentifier = @"kLTMedias
                    withReuseIdentifier:kLTMediasGridViewControllerFooterIdentifier];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewWillLayoutSubviews
 {
-    [super viewWillAppear:animated];
+    [super viewWillLayoutSubviews];
     [self updateScrollViewInsets];
 }
 
@@ -97,7 +97,8 @@ static NSString* const kLTMediasGridViewControllerFooterIdentifier = @"kLTMedias
 - (void)setFirstVisibleMedia:(LTMedia *)firstVisibleMedia
 {
     NSIndexPath* indexPath = [self.dataSource.mediasResultController indexPathForObject:firstVisibleMedia];
-    if (self.dataSource.mediasResultController.fetchedObjects.count > indexPath.row) {
+    if (self.dataSource.mediasResultController.fetchedObjects.count > indexPath.row)
+    {
         [self.collectionView scrollToItemAtIndexPath:indexPath
                                     atScrollPosition:UICollectionViewScrollPositionTop
                                             animated:NO];
