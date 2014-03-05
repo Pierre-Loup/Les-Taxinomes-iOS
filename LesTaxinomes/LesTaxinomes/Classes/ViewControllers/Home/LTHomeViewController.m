@@ -25,28 +25,39 @@
 
 #import "LTHomeViewController.h"
 
+// Views
+#import "AGMedallionView.h"
+#import "JBKenBurnsView.h"
+#import "UIImageView+AFNetworking.h"
+// VCs
 #import "LTAuthenticationSheetViewController.h"
 #import "LTLegalNoticeViewController.h"
 #import "LTMediasRootViewController.h"
 #import "LTMediaUploadFormViewController.h"
+// Model
 #import "LTPhotoAssetManager.h"
-#import "AGMedallionView.h"
-#import "UIImageView+AFNetworking.h"
+#import "SDWebImageManager.h"
 
+static NSTimeInterval const LTHomeCoverTransitionTimeInterval = 10.0;
+
+// Segue
 static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewControllerSegueId";
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private interface
 
-@interface LTHomeViewController () <LTAuthenticationSheetDelegate>
+@interface LTHomeViewController () <LTAuthenticationSheetDelegate,
+                                    JBKenBurnsViewDatasource>
 
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *infoButton;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *cameraBarButton;
 @property (nonatomic, weak) IBOutlet UILabel* userNameLabel;
+@property (nonatomic, weak) IBOutlet JBKenBurnsView *kenBurnsView;
 @property (nonatomic, weak) IBOutlet AGMedallionView* userAvatarView;
 
 @property (nonatomic, strong) NSURL* mediaToShareAssetURL;
 @property (nonatomic, assign) BOOL shouldPresentAuthenticationSheet;
+@property (nonatomic, strong) NSArray* mediaCoverURLs;
 
 
 @end
@@ -71,7 +82,6 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
 
 - (void)viewDidLoad
 {
-    
     [super viewDidLoad];
     
     // Medaillion view
@@ -106,6 +116,15 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
             [self updateAvatar];
         }
     }];
+    
+    [[LTConnectionManager sharedManager] getHomeCoversWithResponseBlock:^(NSArray *mediaCoverURLs, NSError *error)
+    {
+        self.mediaCoverURLs = mediaCoverURLs;
+        [self.kenBurnsView startAnimationWithDatasource:self
+                                                   loop:YES
+                                                rotates:NO
+                                            isLandscape:YES];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -124,12 +143,6 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
     }
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    self.userNameLabel = nil;
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:LTMediasRootViewControllerSegueId])
@@ -139,15 +152,14 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
     }
 }
 
-- (void)dealloc
+- (BOOL)shouldAutorotate
 {
-    NSLog(@"dealloc");
+    return NO;
 }
 
-- (void)didReceiveMemoryWarning
+- (NSUInteger)supportedInterfaceOrientation
 {
-    [super didReceiveMemoryWarning];
-    NSLog(@"didReceiveMemoryWarning");
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -199,15 +211,18 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
     onPhotoPicked:^(NSURL* chosenImageAssetURL, NSError* error) {
         if (chosenImageAssetURL && !error) {
             LTConnectionManager* cm = [LTConnectionManager sharedManager];
-            if (!cm.authenticatedUser) {
+            if (!cm.authenticatedUser)
+            {
                 [SVProgressHUD show];
                 [cm authWithLogin:nil
                          password:nil
-                    responseBlock:^(LTAuthor *authenticatedUser, NSError *error) {
+                    responseBlock:^(LTAuthor *authenticatedUser, NSError *error)
+                {
                         [SVProgressHUD dismiss];
                         if (!authenticatedUser) {
                             self.mediaToShareAssetURL = chosenImageAssetURL;
-                            if(self.presentedViewController) {
+                            if(self.presentedViewController)
+                            {
                                 self.shouldPresentAuthenticationSheet = YES;
                             } else {
                                 [self displayAuthenticationSheetAnimated:YES];
@@ -270,6 +285,31 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
         [self dismissViewControllerAnimated:YES
                                  completion:^{}];
     }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - JBKenBurnsViewDatasource
+
+- (NSInteger)numberOfImagesInKenBurnsView:(JBKenBurnsView*)kenBurnsView
+{
+    return [self.mediaCoverURLs count];
+}
+
+- (CGFloat)kenBurnsView:(JBKenBurnsView*)kenBurnsView transitionDurationForImageAtIndex:(NSInteger)imageIndex
+{
+    return LTHomeCoverTransitionTimeInterval;
+}
+
+- (void)kenBurnsView:(JBKenBurnsView*)kenBurnsView loadImageAtIndex:(NSInteger)imageIndex completed:(void(^)(UIImage *image))completed
+{
+    NSURL* mediaCoverURL = self.mediaCoverURLs[imageIndex];
+    [[SDWebImageManager sharedManager] downloadWithURL:mediaCoverURL
+                                               options:0
+                                              progress:^(NSUInteger receivedSize, long long expectedSize) {}
+                                             completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
+                                             {
+                                                 completed(image);
+                                             }];
 }
 
 @end

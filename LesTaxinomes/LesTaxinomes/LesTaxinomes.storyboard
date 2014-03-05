@@ -317,8 +317,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xeo-rK-tKf" customClass="JBKenBurnsView">
+                                <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mGG-Gf-Yx6" customClass="AGMedallionView">
-                                <rect key="frame" x="96" y="220" width="128" height="128"/>
+                                <rect key="frame" x="96" y="371" width="128" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
@@ -329,8 +334,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="mGG-Gf-Yx6" secondAttribute="centerX" id="VgM-zS-OuZ"/>
-                            <constraint firstAttribute="centerY" secondItem="mGG-Gf-Yx6" secondAttribute="centerY" id="cPj-eN-TWq"/>
+                            <constraint firstAttribute="trailing" secondItem="Xeo-rK-tKf" secondAttribute="trailing" id="6th-ks-zO4"/>
+                            <constraint firstItem="Xeo-rK-tKf" firstAttribute="leading" secondItem="Cf3-RE-dCJ" secondAttribute="leading" id="F9m-u6-8NH"/>
+                            <constraint firstItem="vsj-Lc-s4Z" firstAttribute="top" secondItem="Xeo-rK-tKf" secondAttribute="bottom" id="GcA-No-sWj"/>
+                            <constraint firstItem="vsj-Lc-s4Z" firstAttribute="top" secondItem="mGG-Gf-Yx6" secondAttribute="bottom" constant="20" id="Jco-y2-29n"/>
+                            <constraint firstItem="Xeo-rK-tKf" firstAttribute="top" secondItem="gze-uA-lhY" secondAttribute="bottom" id="b4T-qi-oLj"/>
+                            <constraint firstAttribute="centerX" secondItem="mGG-Gf-Yx6" secondAttribute="centerX" id="c42-W7-shJ"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="tabbar.home" image="tabbar_home" id="JUi-fm-lnU"/>
@@ -343,6 +352,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cameraBarButton" destination="5bu-ir-jDG" id="axI-sg-3ko"/>
+                        <outlet property="kenBurnsView" destination="Xeo-rK-tKf" id="weA-6Z-7Jv"/>
                         <outlet property="userAvatarView" destination="mGG-Gf-Yx6" id="Ccj-W5-uMI"/>
                         <segue destination="lLe-XB-aLT" kind="push" identifier="LTMediasRootViewControllerSegueId" id="8uH-qf-60E"/>
                     </connections>
@@ -961,6 +971,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="qJ1-Py-9AV"/>
-        <segue reference="KG8-TJ-q1e"/>
+        <segue reference="8uH-qf-60E"/>
     </inferredMetricsTieBreakers>
 </document>

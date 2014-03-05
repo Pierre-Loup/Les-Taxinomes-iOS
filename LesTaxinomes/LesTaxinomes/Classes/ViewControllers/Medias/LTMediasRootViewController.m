@@ -349,7 +349,7 @@ typedef enum {
                                                      ascending:NO
                                                  withPredicate:predicate
                                                        groupBy:nil
-                                                      delegate:self
+                                                      delegate:nil
                                                      inContext:[NSManagedObjectContext MR_defaultContext]];
     }
     return _mediasResultController;
