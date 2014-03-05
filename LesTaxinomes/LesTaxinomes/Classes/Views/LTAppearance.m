@@ -49,6 +49,8 @@
        UITextAttributeFont:[UIFont fontWithName:@"Jesaya Free" size:20]
        }];
     
+    [[UIBarButtonItem appearance] setBackgroundImage:[UIImage new] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
     [[UITabBar appearance] setTintColor:kLTColorNavigationBar];
     [[UITabBar appearance] setSelectedImageTintColor:kLTColorMain];
     [[UITabBar appearance] setSelectionIndicatorImage:[[UIImage alloc] init]];

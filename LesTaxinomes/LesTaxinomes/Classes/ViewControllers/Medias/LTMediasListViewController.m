@@ -136,10 +136,14 @@
 
 - (void)updateScrollViewInsets
 {
-    UIEdgeInsets insets = UIEdgeInsetsMake(self.parentViewController.topLayoutGuide.length, 0
-                                           ,self.parentViewController.bottomLayoutGuide.length , 0);
-    self.tableView.contentInset = insets;
-    self.tableView.scrollIndicatorInsets = insets;
+    if ([self.parentViewController respondsToSelector:@selector(topLayoutGuide)] &&
+        [self.parentViewController respondsToSelector:@selector(bottomLayoutGuide)])
+    {
+        UIEdgeInsets insets = UIEdgeInsetsMake(self.parentViewController.topLayoutGuide.length, 0
+                                               ,self.parentViewController.bottomLayoutGuide.length , 0);
+        self.tableView.contentInset = insets;
+        self.tableView.scrollIndicatorInsets = insets;
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

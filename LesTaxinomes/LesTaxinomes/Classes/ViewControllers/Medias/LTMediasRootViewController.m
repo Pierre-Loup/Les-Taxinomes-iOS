@@ -249,8 +249,6 @@ typedef enum {
     {
         UIView* contentView = self.contentViewController.view;
         self.contentViewController.view.frame = self.view.bounds;
-        //[self.view removeConstraints:self.view.constraints];
-        id topLayoutGuide = self.topLayoutGuide;
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[contentView]|"
                                                                           options:0
                                                                           metrics:nil
@@ -258,7 +256,7 @@ typedef enum {
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|"
                                                                           options:0
                                                                           metrics:nil
-                                                                            views:NSDictionaryOfVariableBindings(contentView, topLayoutGuide)]];
+                                                                            views:NSDictionaryOfVariableBindings(contentView)]];
     }
 }
 

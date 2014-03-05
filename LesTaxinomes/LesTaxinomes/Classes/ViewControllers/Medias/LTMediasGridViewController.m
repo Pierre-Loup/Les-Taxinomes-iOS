@@ -34,8 +34,6 @@ static NSString* const kLTMediasGridViewControllerFooterIdentifier = @"kLTMedias
     [super viewDidLoad];
     self.title = _T(@"tabbar.medias");
     
-    self.collectionView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0,
-                                                   self.bottomLayoutGuide.length, 0);
     self.collectionView.backgroundColor = [UIColor clearColor];
     self.collectionView.alwaysBounceVertical = YES;
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -110,10 +108,14 @@ static NSString* const kLTMediasGridViewControllerFooterIdentifier = @"kLTMedias
 
 - (void)updateScrollViewInsets
 {
-    UIEdgeInsets insets = UIEdgeInsetsMake(self.parentViewController.topLayoutGuide.length, 0
-                                           ,self.parentViewController.bottomLayoutGuide.length , 0);
-    self.collectionView.contentInset = insets;
-    self.collectionView.scrollIndicatorInsets = insets;
+    if ([self.parentViewController respondsToSelector:@selector(topLayoutGuide)] &&
+        [self.parentViewController respondsToSelector:@selector(bottomLayoutGuide)])
+    {
+        UIEdgeInsets insets = UIEdgeInsetsMake(self.parentViewController.topLayoutGuide.length, 0
+                                               ,self.parentViewController.bottomLayoutGuide.length , 0);
+        self.collectionView.contentInset = insets;
+        self.collectionView.scrollIndicatorInsets = insets;
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

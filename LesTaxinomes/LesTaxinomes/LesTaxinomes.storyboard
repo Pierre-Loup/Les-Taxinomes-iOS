@@ -37,7 +37,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="tabbar.medias" image="tabbar_medias" id="qK6-cK-ZN3"/>
                     <navigationItem key="navigationItem" id="R6L-lD-4Pj">
-                        <barButtonItem key="rightBarButtonItem" image="icon_mosaik" id="ASm-A1-Jky">
+                        <barButtonItem key="rightBarButtonItem" image="icon_mosaik" style="plain" id="ASm-A1-Jky">
                             <connections>
                                 <action selector="displayBarButton:" destination="lLe-XB-aLT" id="ILp-Kf-snc"/>
                             </connections>
@@ -970,7 +970,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="7bE-t7-2ka"/>
         <segue reference="qJ1-Py-9AV"/>
-        <segue reference="8uH-qf-60E"/>
     </inferredMetricsTieBreakers>
 </document>
