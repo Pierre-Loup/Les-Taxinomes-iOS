@@ -36,8 +36,9 @@
 
 #import "LTAuthor+Business.h"
 #import "LTLicense+Business.h"
-#import "LTXMLRPCClient.h"
+#import "LTSection.h"
 #import "LTMedia+Business.h"
+#import "LTXMLRPCClient.h"
 #import "NSMutableDictionary+ImageMetadata.h"
 #import "UIImage+Resize.h"
 #import "XMLRPCResponse.h"
@@ -379,7 +380,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                         }];
 }
 
-- (void)getHomeCoversWithResponseBlock:(void (^)(NSArray* mediaCoverURLs, NSError *error))responseBlock
+- (void)getHomeCoversWithResponseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock
 {
     NSString* limite = [NSString stringWithFormat:@"%d,%d", 0, kLTConnectionManagerMaxItemsStep];
     NSArray *requestedFields = @[@"id_media", @"titre", @"date", @"statut", @"vignette", @"auteurs", @"document"];
@@ -406,7 +407,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
          {
              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
              {
-                 NSMutableArray *mediaURLs = [NSMutableArray array];
+                 NSMutableArray *mediasId = [NSMutableArray array];
                  NSManagedObjectContext* context = [NSManagedObjectContext MR_contextWithParent:[NSManagedObjectContext MR_defaultContext]];
                  
                  for(NSDictionary *mediaXML in (NSArray *)response)
@@ -420,10 +421,9 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                                                   inContext:context
                                                                       error:&mediaError];
                      
-                     NSURL* mediaLargeURL = [NSURL URLWithString:mediaObject.mediaLargeURL];
-                     if (mediaLargeURL && !mediaError)
+                     if (mediaObject)
                      {
-                         [mediaURLs addObject:mediaLargeURL];
+                         [mediasId addObject:mediaObject.identifier];
                      }
                      else
                      {
@@ -432,23 +432,28 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                  }
                  
                  NSError* coredataError;
-                 [context save:&coredataError];
-                 [context reset];
-                 if (coredataError)
+                 [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError*vcoredataError)
                  {
-                     LogError(@"%@", coredataError);
-                     dispatch_async(dispatch_get_main_queue(), ^
-                                    {
-                                        if(responseBlock) responseBlock(nil, coredataError);
-                                    });
-                 }
-                 else
-                 {
-                     dispatch_async(dispatch_get_main_queue(), ^
+                     [context reset];
+                     if (coredataError)
                      {
-                         if(responseBlock) responseBlock(mediaURLs, nil);
-                     });
-                 }
+                         LogError(@"%@", coredataError);
+                         dispatch_async(dispatch_get_main_queue(), ^
+                         {
+                             if(responseBlock) responseBlock(nil, coredataError);
+                         });
+                     }
+                     else
+                     {
+                         dispatch_async(dispatch_get_main_queue(), ^
+                         {
+                             NSPredicate* predicate = [NSPredicate predicateWithFormat:@"self.identifier IN %@", mediasId];
+                             NSArray* medias = [LTMedia MR_findAllWithPredicate:predicate
+                                                                      inContext:[NSManagedObjectContext MR_defaultContext]];
+                             if(responseBlock) responseBlock(medias, nil);
+                         });
+                     }
+                 }];
              });
          }
          else

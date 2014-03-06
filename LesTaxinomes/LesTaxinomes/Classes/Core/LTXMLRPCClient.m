@@ -44,7 +44,8 @@ static dispatch_queue_t xmlrpc_request_operation_processing_queue() {
 
 #pragma mark - Public
 
-+ (LTXMLRPCClient *)sharedClient {
++ (LTXMLRPCClient *)sharedClient
+{
     static LTXMLRPCClient*    _sharedClient = nil;
     static dispatch_once_t  onceToken;
     
@@ -183,7 +184,8 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
 
 #pragma mark - Private
 
-- (void)setDefaultHeader {
+- (void)setDefaultHeader
+{
     [self setDefaultHeader:@"Content-Type" value:@"text/xml"];
     [self setDefaultHeader:@"Accept" value:@"text/xml"];
 }

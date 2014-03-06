@@ -32,6 +32,7 @@
 // VCs
 #import "LTAuthenticationSheetViewController.h"
 #import "LTLegalNoticeViewController.h"
+#import "LTMediaDetailViewController.h"
 #import "LTMediasRootViewController.h"
 #import "LTMediaUploadFormViewController.h"
 // Model
@@ -41,7 +42,8 @@
 static NSTimeInterval const LTHomeCoverTransitionTimeInterval = 10.0;
 
 // Segue
-static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewControllerSegueId";
+static NSString* const LTMediasRootViewControllerSegueId    = @"LTMediasRootViewControllerSegueId";
+static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailViewControllerSegueId";
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private interface
@@ -57,7 +59,8 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
 
 @property (nonatomic, strong) NSURL* mediaToShareAssetURL;
 @property (nonatomic, assign) BOOL shouldPresentAuthenticationSheet;
-@property (nonatomic, strong) NSArray* mediaCoverURLs;
+@property (nonatomic, strong) NSArray* mediasForCover;
+@property (nonatomic, assign) NSInteger mediaCoverIndex;
 
 
 @end
@@ -107,23 +110,42 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
                                                                                  action:@selector(medaillonTouchUpInside:)];
     [self.userAvatarView addGestureRecognizer:tapGesture];
     
+    // Medias cover view
+    self.mediaCoverIndex = -1;
+    [[LTConnectionManager sharedManager] getHomeCoversWithResponseBlock:^(NSArray *medias, NSError *error)
+     {
+         if (!error)
+         {
+             self.mediasForCover = medias;
+         }
+         else
+         {
+             NSPredicate* predicate = [NSPredicate predicateWithFormat:@"self.mediaLargeURL != nil"];
+             self.mediasForCover = [LTMedia MR_findAllWithPredicate:predicate
+                                                          inContext:[NSManagedObjectContext MR_defaultContext]];
+         }
+         
+         if ([self.mediasForCover count])
+         {
+             [self.kenBurnsView startAnimationWithDatasource:self
+                                                        loop:YES
+                                                     rotates:NO
+                                                 isLandscape:YES];
+             UITapGestureRecognizer* mediasCoverTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                                     action:@selector(mediasCoverTouchUpInside:)];
+             [self.kenBurnsView addGestureRecognizer:mediasCoverTapGesture];
+         }
+     }];
+    
     [[LTConnectionManager sharedManager] authWithLogin:nil
                                               password:nil
                                          responseBlock:^(LTAuthor *authenticatedUser, NSError *error)
     {
-        if (authenticatedUser) {
+        if (authenticatedUser)
+        {
             self.userNameLabel.text = authenticatedUser.name;
             [self updateAvatar];
         }
-    }];
-    
-    [[LTConnectionManager sharedManager] getHomeCoversWithResponseBlock:^(NSArray *mediaCoverURLs, NSError *error)
-    {
-        self.mediaCoverURLs = mediaCoverURLs;
-        [self.kenBurnsView startAnimationWithDatasource:self
-                                                   loop:YES
-                                                rotates:NO
-                                            isLandscape:YES];
     }];
 }
 
@@ -149,6 +171,11 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
     {
         LTMediasRootViewController* homeVC = (LTMediasRootViewController*)segue.destinationViewController;
         homeVC.currentUser = [LTConnectionManager sharedManager].authenticatedUser;
+    }
+    else if ([segue.identifier isEqualToString:LTMediaDetailViewControllerSegueId])
+    {
+        LTMediaDetailViewController* mediaDetailVC = (LTMediaDetailViewController*)segue.destinationViewController;
+        mediaDetailVC.media = self.mediasForCover[self.mediaCoverIndex];
     }
 }
 
@@ -260,6 +287,16 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
     }
 }
 
+- (void)mediasCoverTouchUpInside:(JBKenBurnsView*)kenBurnsView
+{
+    if (self.mediaCoverIndex >= 0 &&
+        self.mediaCoverIndex < [self.mediasForCover count])
+    {
+        [self performSegueWithIdentifier:LTMediaDetailViewControllerSegueId
+                                  sender:self];
+    }
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - LTAuthenticationSheetDelegate
 
@@ -292,7 +329,7 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
 
 - (NSInteger)numberOfImagesInKenBurnsView:(JBKenBurnsView*)kenBurnsView
 {
-    return [self.mediaCoverURLs count];
+    return [self.mediasForCover count];
 }
 
 - (CGFloat)kenBurnsView:(JBKenBurnsView*)kenBurnsView transitionDurationForImageAtIndex:(NSInteger)imageIndex
@@ -302,14 +339,19 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
 
 - (void)kenBurnsView:(JBKenBurnsView*)kenBurnsView loadImageAtIndex:(NSInteger)imageIndex completed:(void(^)(UIImage *image))completed
 {
-    NSURL* mediaCoverURL = self.mediaCoverURLs[imageIndex];
-    [[SDWebImageManager sharedManager] downloadWithURL:mediaCoverURL
-                                               options:0
-                                              progress:^(NSUInteger receivedSize, long long expectedSize) {}
-                                             completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
-                                             {
-                                                 completed(image);
-                                             }];
+    LTMedia* mediaToDisplay = self.mediasForCover[imageIndex];
+    NSURL* mediaCoverURL = [NSURL URLWithString:mediaToDisplay.mediaLargeURL];
+    if (mediaCoverURL)
+    {
+        [[SDWebImageManager sharedManager] downloadWithURL:mediaCoverURL
+                                                   options:0
+                                                  progress:^(NSUInteger receivedSize, long long expectedSize) {}
+                                                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
+         {
+             self.mediaCoverIndex = imageIndex;
+             completed(image);
+         }];
+    }
 }
 
 @end
