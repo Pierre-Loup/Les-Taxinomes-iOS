@@ -10,6 +10,13 @@
 
 #import <MapKit/MapKit.h>
 
+typedef NS_ENUM(NSInteger, LTMediaType)
+{
+    LTMediaTypeNormal   = 0,
+    LTMediaTypeAudio    = 1,
+    LTMediaTypeVideo    = 2
+};
+
 @interface LTMedia (Business) <MKAnnotation>
 
 + (LTMedia *)mediaWithXMLRPCResponse:(NSDictionary*)response inContext:(NSManagedObjectContext*) context error:(NSError**)error;
