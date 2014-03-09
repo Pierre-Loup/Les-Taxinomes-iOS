@@ -149,7 +149,8 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
 
 - (void)setMedia:(LTMedia *)media
 {
-    if(media != _media) {
+    if(media != _media)
+    {
         _media = media;
         [self.scrollView scrollsToTop];
     }
@@ -157,7 +158,8 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
 
 - (UIImageView*)downloadImageView
 {
-    if (!_downloadImageView) {
+    if (!_downloadImageView)
+    {
         _downloadImageView = [UIImageView new];
     }
     return _downloadImageView;
@@ -172,8 +174,9 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
     
     // Load media datas if not present or not up to date
     if( self.media == nil
-       ||  self.media.mediaMediumURL == nil
-       || [[NSDate date] timeIntervalSinceDate: self.media.localUpdateDate] > kMediaCacheTime) {
+       ||  self.media.text == nil
+       || [[NSDate date] timeIntervalSinceDate: self.media.localUpdateDate] > kMediaCacheTime)
+    {
         [cm getMediaWithId:self.media.identifier
              responseBlock:^(LTMedia *media, NSError *error) {
                  if (error) {
@@ -188,7 +191,9 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
                  [self displayContentIfNeeded];
              }];
         asynchLoadCounter_++;
-    } else {
+    }
+    else
+    {
         [self updateMediaInformation];
     }
     
@@ -198,7 +203,8 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
        || [[NSDate date] timeIntervalSinceDate: self.media.author.localUpdateDate] > kMediaCacheTime)
     {
         [cm getAuthorWithId:self.media.author.identifier
-              responseBlock:^(LTAuthor *author, NSError *error) {
+              responseBlock:^(LTAuthor *author, NSError *error)
+        {
                   
                   if (error) {
                       [SVProgressHUD showErrorWithStatus:nil];
