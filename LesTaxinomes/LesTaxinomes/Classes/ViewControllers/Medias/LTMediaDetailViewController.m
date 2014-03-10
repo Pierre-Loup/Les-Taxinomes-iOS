@@ -58,12 +58,10 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
 @property (nonatomic, weak) IBOutlet UITextView * descTextView;
 @property (nonatomic, weak) IBOutlet UILabel * licenseNameLabel;
 @property (nonatomic, weak) IBOutlet MKMapView * mapView;
-@property (nonatomic, readonly) IBOutlet UIImageView* downloadImageView;
 
 @end
 
 @implementation LTMediaDetailViewController
-@synthesize downloadImageView = _downloadImageView;
 
 #pragma mark - Overrides
 
@@ -155,15 +153,6 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
         _media = media;
         [self.scrollView scrollsToTop];
     }
-}
-
-- (UIImageView*)downloadImageView
-{
-    if (!_downloadImageView)
-    {
-        _downloadImageView = [UIImageView new];
-    }
-    return _downloadImageView;
 }
 
 #pragma mark - Private methodes
@@ -265,7 +254,7 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
         [self.descTextView sizeToFit];
         [self.descTextView removeConstraints:self.descTextView.constraints];
         NSDictionary* views = @{@"text" : self.descTextView};
-        NSString* visualFormat = [NSString stringWithFormat:@"V:[text(==%f)]", self.descTextView.frame.size.height];
+        NSString* visualFormat = [NSString stringWithFormat:@"V:[text(==%f)]", self.descTextView.contentSize.height];
         NSArray* constraints = [NSLayoutConstraint constraintsWithVisualFormat:visualFormat
                                                                        options:0
                                                                        metrics:nil

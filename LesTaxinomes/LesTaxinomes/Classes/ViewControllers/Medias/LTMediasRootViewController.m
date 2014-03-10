@@ -58,7 +58,7 @@ typedef enum {
 
 @property (nonatomic, strong) IBOutlet LTMediaDetailViewController* mediaDetailViewController;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem* displayBarButton;
-@property (nonatomic, strong) UIViewController* contentViewController;
+@property (nonatomic, strong) UIViewController<NSFetchedResultsControllerDelegate>* contentViewController;
 @property (nonatomic, strong) LTMediasListViewController* listViewController;
 @property (nonatomic, strong) LTMediasGridViewController* gridViewController;
 @property (nonatomic, strong) NSFetchedResultsController* mediasResultController;
@@ -130,6 +130,11 @@ typedef enum {
     {
         [self loadMoreMedias];
     }
+    else
+    {
+        self.mediasResultController.delegate = self.contentViewController;
+    }
+        
 }
 
 - (void)viewWillLayoutSubviews
