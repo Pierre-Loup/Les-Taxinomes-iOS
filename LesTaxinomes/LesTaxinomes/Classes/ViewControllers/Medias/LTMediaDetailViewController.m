@@ -23,6 +23,7 @@
  
  */
 #import <QuickLook/QuickLook.h>
+#import <MediaPlayer/MediaPlayer.h>
 
 // UI
 #import "UIImageView+AFNetworking.h"
@@ -179,10 +180,11 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
     {
         [cm getMediaWithId:self.media.identifier
              responseBlock:^(LTMedia *media, NSError *error) {
-                 if (error) {
+                 if (error)
+                 {
                      [SVProgressHUD showErrorWithStatus:nil];
-                     
-                 } else {
+                 } else
+                 {
                      self.media = media;
                  }
                  
@@ -340,36 +342,48 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
 {    
     if (self.media.mediaLargeURL.length)
     {
-        [self displayLargeMediaPhotoViewer];
+        [self displayMedia];
     }
     else
     {
         [SVProgressHUD show];
-        [[LTConnectionManager sharedManager] getMediaLargeURLWithId:self.media.identifier responseBlock:^(LTMedia *media, NSError *error) {
-            
-            if (!error) {
-                self.media = media;
-                [self displayLargeMediaPhotoViewer];
-            } else {
+        [[LTConnectionManager sharedManager] getMediaLargeURLWithId:self.media.identifier responseBlock:^(LTMedia *media, NSError *error)
+        {
+            if (!error)
+            {
+                [self displayMedia];
+                [SVProgressHUD dismiss];
+            }
+            else
+            {
                 [SVProgressHUD showErrorWithStatus:nil];
             }
-            
         }];
     }
 }
 
-- (void)displayLargeMediaPhotoViewer
+
+
+- (void)displayMedia
 {
     if (self.media.mediaLargeURL.length)
     {
-        // Create browser
-        MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
-        
-        // Present
-        [self.navigationController pushViewController:browser animated:YES];
-        [SVProgressHUD dismiss];
-    } else {
-        [SVProgressHUD showErrorWithStatus:nil];
+        LTMediaType mediaType = [self.media.type integerValue];
+        if (mediaType == LTMediaTypeNormal)
+        {
+            // Create browser
+            MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+            
+            // Present
+            [self.navigationController pushViewController:browser animated:YES];
+        }
+        else if ([self.media.type integerValue] == LTMediaTypeAudio ||
+                 [self.media.type integerValue] == LTMediaTypeVideo)
+        {
+            NSURL* contentURL = [NSURL URLWithString:self.media.mediaLargeURL];
+            MPMoviePlayerViewController* playerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:contentURL];
+            [self presentMoviePlayerViewControllerAnimated:playerViewController];
+        }
     }
 }
 
@@ -395,7 +409,7 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
     [self.placeholderAIView startAnimating];
     __block LTMediaDetailViewController* weakSelf = self;
     [self.mediaImageView setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.media.mediaMediumURL]]
-                               placeholderImage:[UIImage imageNamed:@"egopv_photo_placeholder"]
+                               placeholderImage:[UIImage imageNamed:@"placeholder"]
                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                                             weakSelf.mediaImageView.image = image;
                                             [SVProgressHUD dismiss];
