@@ -345,7 +345,7 @@ static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailVie
     {
         [[SDWebImageManager sharedManager] downloadWithURL:mediaCoverURL
                                                    options:0
-                                                  progress:^(NSUInteger receivedSize, long long expectedSize) {}
+                                                  progress:^(NSInteger receivedSize, NSInteger expectedSize) {}
                                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
          {
              self.mediaCoverIndex = imageIndex;

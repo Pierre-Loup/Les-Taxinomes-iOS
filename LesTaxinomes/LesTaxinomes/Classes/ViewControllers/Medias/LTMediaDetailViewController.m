@@ -397,8 +397,24 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
     [self.mediaImageView addGestureRecognizer:tapGestureRecognizer];
     [self.placeholderAIView startAnimating];
     __block LTMediaDetailViewController* weakSelf = self;
+    
+    NSString* placeholderImageName;
+    LTMediaType mediaType = [self.media.type integerValue];
+    if (mediaType == LTMediaTypeNormal)
+    {
+        placeholderImageName = @"placeholder_image";
+    }
+    else if (mediaType == LTMediaTypeAudio)
+    {
+        placeholderImageName = @"placeholder_audio";
+    }
+    else if (mediaType == LTMediaTypeVideo)
+    {
+        placeholderImageName = @"placeholder_video";
+    }
+    
     [self.mediaImageView setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.media.mediaMediumURL]]
-                               placeholderImage:[UIImage imageNamed:@"placeholder"]
+                               placeholderImage:[UIImage imageNamed:placeholderImageName]
                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                                             weakSelf.mediaImageView.image = image;
                                             [SVProgressHUD dismiss];

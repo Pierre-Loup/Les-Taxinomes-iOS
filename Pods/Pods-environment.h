@@ -21,7 +21,7 @@
 // DACircularProgress
 #define COCOAPODS_POD_AVAILABLE_DACircularProgress
 #define COCOAPODS_VERSION_MAJOR_DACircularProgress 2
-#define COCOAPODS_VERSION_MINOR_DACircularProgress 1
+#define COCOAPODS_VERSION_MINOR_DACircularProgress 2
 #define COCOAPODS_VERSION_PATCH_DACircularProgress 0
 
 // JBKenBurnsView
@@ -39,7 +39,7 @@
 // MWPhotoBrowser
 #define COCOAPODS_POD_AVAILABLE_MWPhotoBrowser
 #define COCOAPODS_VERSION_MAJOR_MWPhotoBrowser 1
-#define COCOAPODS_VERSION_MINOR_MWPhotoBrowser 2
+#define COCOAPODS_VERSION_MINOR_MWPhotoBrowser 3
 #define COCOAPODS_VERSION_PATCH_MWPhotoBrowser 1
 
 // MagicalRecord
@@ -82,19 +82,19 @@
 #define COCOAPODS_POD_AVAILABLE_SDWebImage
 #define COCOAPODS_VERSION_MAJOR_SDWebImage 3
 #define COCOAPODS_VERSION_MINOR_SDWebImage 5
-#define COCOAPODS_VERSION_PATCH_SDWebImage 2
+#define COCOAPODS_VERSION_PATCH_SDWebImage 4
 
 // SDWebImage/Core
 #define COCOAPODS_POD_AVAILABLE_SDWebImage_Core
 #define COCOAPODS_VERSION_MAJOR_SDWebImage_Core 3
 #define COCOAPODS_VERSION_MINOR_SDWebImage_Core 5
-#define COCOAPODS_VERSION_PATCH_SDWebImage_Core 2
+#define COCOAPODS_VERSION_PATCH_SDWebImage_Core 4
 
 // SVProgressHUD
 #define COCOAPODS_POD_AVAILABLE_SVProgressHUD
-#define COCOAPODS_VERSION_MAJOR_SVProgressHUD 0
-#define COCOAPODS_VERSION_MINOR_SVProgressHUD 9
-#define COCOAPODS_VERSION_PATCH_SVProgressHUD 0
+#define COCOAPODS_VERSION_MAJOR_SVProgressHUD 1
+#define COCOAPODS_VERSION_MINOR_SVProgressHUD 0
+#define COCOAPODS_VERSION_PATCH_SVProgressHUD 1
 
 // SocketRocket
 #define COCOAPODS_POD_AVAILABLE_SocketRocket
