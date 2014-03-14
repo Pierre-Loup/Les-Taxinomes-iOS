@@ -44,11 +44,11 @@
 {
     UIColor* navigationBarColor;
 #ifdef GEODIV
-    navigationBarColor = [UIColor colorWithRed:(29.0f/255.0f) green:(176.0f/255.0f) blue:(252.0f/255.0f) alpha:1.0f];
+    navigationBarColor = [UIColor colorWithRed:(203.0f/255.0f) green:(203.0f/255.0f) blue:(203.0/255.0f) alpha:1.0f];
 #endif
     
 #ifdef LES_TAXINOMES
-    navigationBarColor = [UIColor colorWithRed:(29.0f/255.0f) green:(176.0f/255.0f) blue:(252.0f/255.0f) alpha:1.0f];
+    navigationBarColor = [UIColor colorWithRed:(203.0f/255.0f) green:(203.0f/255.0f) blue:(203.0/255.0f) alpha:1.0f];
 #endif
     
     return navigationBarColor;
