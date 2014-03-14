@@ -94,7 +94,7 @@
 
 - (void)resetMediasResultController
 {
-        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"status == %@",@"publie"];;
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"status == %@",@"publie"];
         self.mediasResultController = [LTMedia MR_fetchAllSortedBy:@"date"
                                                          ascending:NO
                                                      withPredicate:predicate
@@ -140,7 +140,7 @@
         
         NSRange range;
         range.location = self.searchStartIndex;
-        range.length = kLTMediasLoadingStep;
+        range.length = LTMediasLoadingStep;
         
         CLLocation* searchLocation = [[CLLocation alloc] initWithLatitude:self.referenceAnnotation.coordinate.latitude
                                                                 longitude:self.referenceAnnotation.coordinate.longitude];
@@ -234,7 +234,7 @@
         
         NSRange range;
         range.location = 0;
-        range.length = kLTMediasLoadingStep;
+        range.length = LTMediasLoadingStep;
         
         [[LTConnectionManager sharedManager] getMediasSummariesByDateForAuthor:nil
                                                                   nearLocation:newLocation

@@ -37,7 +37,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="tabbar.medias" image="tabbar_medias" id="qK6-cK-ZN3"/>
                     <navigationItem key="navigationItem" id="R6L-lD-4Pj">
-                        <barButtonItem key="rightBarButtonItem" image="icon_mosaik" style="plain" id="ASm-A1-Jky">
+                        <barButtonItem key="rightBarButtonItem" image="icon_mosaik" id="ASm-A1-Jky">
                             <connections>
                                 <action selector="displayBarButton:" destination="lLe-XB-aLT" id="ILp-Kf-snc"/>
                             </connections>
@@ -230,20 +230,7 @@
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="otU-fY-wbm">
-                                <rect key="frame" x="0.0" y="64" width="50" height="50"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                                <connections>
-                                    <segue destination="lLe-XB-aLT" kind="push" identifier="LTMediasRootViewControllerSegueId" id="Yru-Ve-brF"/>
-                                </connections>
-                            </collectionViewCell>
-                        </cells>
+                        <cells/>
                         <connections>
                             <outlet property="dataSource" destination="qTA-Zl-YyY" id="6od-vn-cp3"/>
                             <outlet property="delegate" destination="qTA-Zl-YyY" id="oYD-WF-VeA"/>

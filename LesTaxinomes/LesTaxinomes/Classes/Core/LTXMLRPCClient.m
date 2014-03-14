@@ -49,7 +49,7 @@ static dispatch_queue_t xmlrpc_request_operation_processing_queue() {
     static LTXMLRPCClient*    _sharedClient = nil;
     static dispatch_once_t  onceToken;
     
-    NSString *baseUrl = kXMLRCPWebServiceURL;
+    NSString *baseUrl = LTXMLRCPWebServiceURL;
     
     dispatch_once(&onceToken, ^{
         _sharedClient = [[self alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
@@ -104,14 +104,14 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
     NSString* cookieHeaderValue = @"";
     for (NSHTTPCookie * cookie in cookies) {
         //Add cookies other than session cookie
-        if(![cookie.name isEqualToString: kSessionCookieName]) {
+        if(![cookie.name isEqualToString: LTSessionCookieName]) {
             if ([cookieHeaderValue isEqualToString:@""]) {
 				cookieHeaderValue = [NSString stringWithFormat: @"%@=%@",cookie.name,cookie.value];
 			} else {
 				cookieHeaderValue = [NSString stringWithFormat: @"%@; %@=%@",cookieHeaderValue,cookie.name,cookie.value];
 			}
             // Add session cookie only if authCookieEnable is YES
-        } else if ([cookie.name isEqualToString: kSessionCookieName] &&
+        } else if ([cookie.name isEqualToString: LTSessionCookieName] &&
                    authCookieEnable) {
             if ([cookieHeaderValue isEqualToString:@""]) {
 				cookieHeaderValue = [NSString stringWithFormat: @"%@=%@",cookie.name,cookie.value];
@@ -136,7 +136,7 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
                 if (faultCode && faultString) {
                     wsResponseError = [NSError errorWithDomain:LTXMLRPCServerErrorDomain
                                                           code:[faultCode integerValue]
-                                                      userInfo:@{NSLocalizedDescriptionKey:faultString,kLTXMLRPCMethodKey:method}];
+                                                      userInfo:@{NSLocalizedDescriptionKey:faultString,LTXMLRPCMethodKey:method}];
                 }
             }
             

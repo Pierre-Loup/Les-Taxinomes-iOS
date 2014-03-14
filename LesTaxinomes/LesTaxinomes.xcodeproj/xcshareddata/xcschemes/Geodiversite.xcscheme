@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0500"
+   LastUpgradeVersion = "0510"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A5E0B1F81777180E00CD4CCF"
-               BuildableName = "Geodiversite.app"
+               BlueprintIdentifier = "C8EBB57318D37E0100D27596"
+               BuildableName = "LesTaxinomes copy.app"
                BlueprintName = "Geodiversite"
                ReferencedContainer = "container:LesTaxinomes.xcodeproj">
             </BuildableReference>
@@ -32,8 +32,8 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A5E0B1F81777180E00CD4CCF"
-            BuildableName = "Geodiversite.app"
+            BlueprintIdentifier = "C8EBB57318D37E0100D27596"
+            BuildableName = "LesTaxinomes copy.app"
             BlueprintName = "Geodiversite"
             ReferencedContainer = "container:LesTaxinomes.xcodeproj">
          </BuildableReference>
@@ -51,8 +51,8 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A5E0B1F81777180E00CD4CCF"
-            BuildableName = "Geodiversite.app"
+            BlueprintIdentifier = "C8EBB57318D37E0100D27596"
+            BuildableName = "LesTaxinomes copy.app"
             BlueprintName = "Geodiversite"
             ReferencedContainer = "container:LesTaxinomes.xcodeproj">
          </BuildableReference>
@@ -69,8 +69,8 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A5E0B1F81777180E00CD4CCF"
-            BuildableName = "Geodiversite.app"
+            BlueprintIdentifier = "C8EBB57318D37E0100D27596"
+            BuildableName = "LesTaxinomes copy.app"
             BlueprintName = "Geodiversite"
             ReferencedContainer = "container:LesTaxinomes.xcodeproj">
          </BuildableReference>

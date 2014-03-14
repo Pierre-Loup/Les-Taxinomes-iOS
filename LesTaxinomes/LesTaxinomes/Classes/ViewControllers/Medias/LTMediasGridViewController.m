@@ -19,7 +19,7 @@
 
 typedef void (^UICollectionViewUpdateBlock)();
 
-static NSString* const kLTMediasGridViewControllerFooterIdentifier = @"kLTMediasGridViewControllerFooterIdentifier";
+static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGridViewControllerFooterIdentifier";
 
 @interface LTMediasGridViewController ()
 @property (nonatomic, strong) UIRefreshControl* refreshControl;
@@ -47,7 +47,7 @@ static NSString* const kLTMediasGridViewControllerFooterIdentifier = @"kLTMedias
     
     [self.collectionView registerClass:[LTLoadMoreFooterView class]
             forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
-                   withReuseIdentifier:kLTMediasGridViewControllerFooterIdentifier];
+                   withReuseIdentifier:LTMediasGridViewControllerFooterIdentifier];
 }
 
 - (void)viewWillLayoutSubviews
@@ -142,7 +142,7 @@ static NSString* const kLTMediasGridViewControllerFooterIdentifier = @"kLTMedias
     if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
         
         self.footerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                                                  withReuseIdentifier:kLTMediasGridViewControllerFooterIdentifier
+                                                                  withReuseIdentifier:LTMediasGridViewControllerFooterIdentifier
                                                                          forIndexPath:indexPath];
         [self.footerView.loadMoreButton addTarget:self.delegate
                                            action:@selector(loadMoreMedias)

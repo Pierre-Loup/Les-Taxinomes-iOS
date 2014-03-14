@@ -4,12 +4,12 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Geodiversite.xcscheme</key>
+		<key>Geodiversite.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
-		<key>LesTaxinomes.xcscheme</key>
+		<key>LesTaxinomes.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -28,6 +28,11 @@
 			<true/>
 		</dict>
 		<key>A5E0B1F81777180E00CD4CCF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C8EBB57318D37E0100D27596</key>
 		<dict>
 			<key>primary</key>
 			<true/>

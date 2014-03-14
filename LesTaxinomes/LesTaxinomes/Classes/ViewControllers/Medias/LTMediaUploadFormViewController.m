@@ -122,7 +122,7 @@
     
     if ([self.shareButton respondsToSelector:@selector(tintColor)])
     {
-        self.shareButton.tintColor = kLTColorSecondary;
+        self.shareButton.tintColor = [UIColor secondaryColor];
     }
     
     ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];

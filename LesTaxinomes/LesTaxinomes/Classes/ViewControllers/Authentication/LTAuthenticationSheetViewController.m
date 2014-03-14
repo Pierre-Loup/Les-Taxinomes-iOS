@@ -95,13 +95,13 @@
 
 - (IBAction)forgottenPasswordButtonTouched:(UIButton *)button
 {
-    NSURL* forgottenPasswordURL = [NSURL URLWithString:kForgottenPasswordURL];
+    NSURL* forgottenPasswordURL = [NSURL URLWithString:LTForgottenPasswordURL];
     [[UIApplication sharedApplication] openURL:forgottenPasswordURL];
 }
 
 - (IBAction)signupButtonTouched:(UIButton *)button
 {
-    NSURL* signupURL = [NSURL URLWithString:kSignupURL];
+    NSURL* signupURL = [NSURL URLWithString:LTSignupURL];
     [[UIApplication sharedApplication] openURL:signupURL];
 }
 

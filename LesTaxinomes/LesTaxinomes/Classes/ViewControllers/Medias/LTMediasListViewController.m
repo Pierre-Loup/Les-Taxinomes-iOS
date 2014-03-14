@@ -21,8 +21,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Defines & contants
 
-#define kLTMediaListCellIdentifier  @"MediasListCell"
-#define kLTMediasListCommonRowHeight  55.f
+#define LTMediaListCellIdentifier  @"MediasListCell"
+#define LTMediasListCommonRowHeight  55.f
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private interface
@@ -55,7 +55,7 @@
     // Footer load more view
     CGRect footerViewFrame = CGRectMake(0.f, 0.f,
                                         self.tableView.frame.size.width,
-                                        kLTMediasListCommonRowHeight);
+                                        LTMediasListCommonRowHeight);
     self.footerView = [[LTLoadMoreFooterView alloc] initWithFrame:footerViewFrame];
     [self.footerView.loadMoreButton addTarget:self.delegate
                                   action:@selector(loadMoreMedias)
@@ -166,7 +166,7 @@
     LTMedia *media = [self.dataSource.mediasResultController objectAtIndexPath:indexPath];
     LTMediaListCell* cell = nil;
     
-    cell = [aTableView dequeueReusableCellWithIdentifier:kLTMediaListCellIdentifier];
+    cell = [aTableView dequeueReusableCellWithIdentifier:LTMediaListCellIdentifier];
     if (!cell) {
         cell = [LTMediaListCell mediaListCell];
     }
@@ -197,7 +197,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return kLTMediasListCommonRowHeight;
+    return LTMediasListCommonRowHeight;
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate

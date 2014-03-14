@@ -27,7 +27,6 @@
 #import <MapKit/MapKit.h>
 
 #import "LTViewController.h"
-#import "LTTitleView.h"
 
 @class LTMedia;
 

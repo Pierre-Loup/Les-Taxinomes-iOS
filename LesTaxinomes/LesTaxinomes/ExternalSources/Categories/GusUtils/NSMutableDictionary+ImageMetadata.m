@@ -33,8 +33,6 @@
     // Just init with it....
     self = [self initWithDictionary:(NSDictionary*)CFBridgingRelease(metadataDict)];
     
-    // Release it
-    CFRelease(metadataDict);
     return self;
 }
 

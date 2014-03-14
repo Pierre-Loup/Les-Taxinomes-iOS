@@ -1,6 +1,7 @@
 xcodeproj 'LesTaxinomes/LesTaxinomes.xcodeproj'
 
 inhibit_all_warnings!
+link_with 'LesTaxinomes', 'Geodiversite'
 
 pod 'AFNetworking',             '~> 1.3'
 pod 'AGMedallionView',          '~> 1.1'

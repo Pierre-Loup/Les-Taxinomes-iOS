@@ -67,7 +67,7 @@
     CGRect authorNameFrame = CGRectMake(0, self.bounds.size.width, self.bounds.size.width, 20);
     self.nameLabel = [[UILabel alloc] initWithFrame:authorNameFrame];
     self.nameLabel.font = [UIFont systemFontOfSize:14.0];
-    self.nameLabel.textColor = kLTColorMain;
+    self.nameLabel.textColor = [UIColor mainColor];
     [self addSubview:self.nameLabel];
 }
 

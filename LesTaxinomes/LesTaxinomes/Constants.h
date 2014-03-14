@@ -23,56 +23,52 @@
  
  */
 
+#import <MapKit/MapKit.h>
+
 //CORE DATA
 //Entities
-#define kLicenseEntityName @"License"
-#define kAuthorEntityName @"Author"
-#define kMediaEntityName @"Media"
-#define kSectionEntityName @"Section"
+extern NSString* const LTLicenseEntityName;
+extern NSString* const LTAuthorEntityName;
+extern NSString* const LTMediaEntityName;
+extern NSString* const LTSectionEntityName;
 //LicenseEntity
-#define kLicenseEntityIdentifierField @"identifier"
+extern NSString* const LTLicenseEntityIdentifierField;
 //AuthorEntity
-#define kAuthorEntityIdentifierField @"identifier"
+extern NSString* const LTAuthorEntityIdentifierField;
 //MediaEntity
-#define kMediaEntityIdentifierField @"identifier"
-#define kMediaEntityTitleField @"title"
-#define kMediaEntityTextField @"text"
-#define kMediaEntityStatusField @"status"
-#define kMediaEntityDateField @"date"
-#define kMediaEntityVisitsField @"visits"
-#define kMediaEntityPopularityField @"popularity"
-#define kMediaEntityUpdateDateField @"updateDate"
-#define kMediaEntityMediaThumbnailUrlField @"mediaThumbnailUrl"
-#define kMediaEntityMediaThumbnailLocalFileField @"mediaThumbnailLocalFile"
-#define kMediaEntityMediaMediumLocalFileField @"mediaMediumLocalFile"
-#define kMediaEntityMediaMediumURLField @"mediaMediumURL"
-#define kMediaEntityMediaLargeURLField @"mediaLargeURL"
-#define kMediaEntityMediaLargeLocalFileField @"mediaLargeLocalFile"
-#define kMediaEntityLocalUpdateDateField @"localUpdateDate"
-#define kMediaEntityLicenseField @"license"
-#define kMediaEntityAuthorsField @"author"
-#define kMediaEntitySectionField @"section"
+extern NSString* const LTMediaEntityIdentifierField;
+extern NSString* const LTMediaEntityTitleField;
+extern NSString* const LTMediaEntityTextField;
+extern NSString* const LTMediaEntityStatusField;
+extern NSString* const LTMediaEntityDateField;
+extern NSString* const LTMediaEntityVisitsField;
+extern NSString* const LTMediaEntityPopularityField;
+extern NSString* const LTMediaEntityUpdateDateField;
+extern NSString* const LTMediaEntityMediaThumbnailUrlField;
+extern NSString* const LTMediaEntityMediaThumbnailLocalFileField;
+extern NSString* const LTMediaEntityMediaMediumLocalFileField;
+extern NSString* const LTMediaEntityMediaMediumURLField;
+extern NSString* const LTMediaEntityMediaLargeURLField;
+extern NSString* const LTMediaEntityMediaLargeLocalFileField;
+extern NSString* const LTMediaEntityLocalUpdateDateField;
+extern NSString* const LTMediaEntityLicenseField;
+extern NSString* const LTMediaEntityAuthorsField;
+extern NSString* const LTMediaEntitySectionField;
 //MediaEntity
-#define kSectionEntityIdentifierField @"identifiant"
-#define kSectionEntityDescriptionField @"desription"
-#define kSectionEntityImageURLField @"imageURL"
-#define kSectionEntityTitleField @"title"
-#define kSectionEntityParentField @"parent"
+extern NSString* const LTSectionEntityIdentifierField;
+extern NSString* const LTSectionEntityDescriptionField;
+extern NSString* const LTSectionEntityImageURLField;
+extern NSString* const LTSectionEntityTitleField;
+extern NSString* const LTSectionEntityParentField;
 
-//Color
 #ifdef GEODIV
-    #define kPinColor MKPinAnnotationColorRed
-    #define kLTColorNavigationBar [UIColor colorWithRed:(29.0f/255.0f) green:(176.0f/255.0f) blue:(252.0f/255.0f) alpha:1.0f]
-    #define kLTColorMain [UIColor colorWithRed:(29.0f/255.0f) green:(176.0f/255.0f) blue:(252.0f/255.0f) alpha:1.0f]
-    #define kLTColorSecondary [UIColor colorWithRed:(0.0f/255.0f) green:(0.0f/255.0f) blue:(0.0f/255.0f) alpha:1.0f]
+extern MKPinAnnotationColor const LTPinColor;
 #endif
 
 #ifdef LES_TAXINOMES
-    #define kPinColor MKPinAnnotationColorGreen
-    #define kLTColorNavigationBar [UIColor colorWithRed:(203.0f/255.0f) green:(203.0f/255.0f) blue:(203.0/255.0f) alpha:1.0f]
-    #define kLTColorMain [UIColor colorWithRed:(157.0f/255.0f) green:(125.0f/255.0f) blue:(66.0/255.0f) alpha:1.0f]
-    #define kLTColorSecondary [UIColor colorWithRed:(138.0f/255.0f) green:(140.0f/255.0f) blue:(142.0f/255.0f) alpha:1.0f]
+extern MKPinAnnotationColor const LTPinColor;
 #endif
+
 // Sizes
 #define THUMBNAIL_MAX_HEIGHT 100.0f
 #define THUMBNAIL_MAX_WIDHT 100.0f
@@ -80,38 +76,40 @@
 #define MEDIA_MAX_WIDHT_LARGE 1024.0f
 
 // Texts
-#define kPhotoGroupName @"LesTaxinomes"
+extern NSString* const LTPhotoGroupName;
 
 // Times
-#define kMediaCacheTime 3600.0f
+extern NSTimeInterval const LTMediaCacheTime;
 
-#define kHost @"www.lestaxinomes.org"
-#define kXMLRCPWebServiceURL @"http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur"
-#define kHTTPHost @"http://www.lestaxinomes.org"
-#define kForgottenPasswordURL @"http://www.lestaxinomes.org/spip.php?page=spip_pass"
-#define kSignupURL @"http://www.lestaxinomes.org/spip.php?page=inscription"
+#ifdef LES_TAXINOMES
+extern NSString* const LTHost;
+extern NSString* const LTXMLRCPWebServiceURL;
+extern NSString* const LTHTTPHost;
+extern NSString* const LTForgottenPasswordURL;
+extern NSString* const LTSignupURL;
+#endif
 
 #ifdef GEODIV
-#define kHost @"http://www.geodiversite.net/"
-#define kXMLRCPWebServiceURL @"http://www.geodiversite.net/spip.php?action=xmlrpc_serveur"
-#define kHTTPHost @"http://www.geodiversite.net/"
-#define kForgottenPasswordURL @"http://www.geodiversite.net/spip.php?page=spip_pass"
-#define kSignupURL @"http://www.geodiversite.net/spip.php?page=inscription"
+extern NSString* const LTHost;
+extern NSString* const LTXMLRCPWebServiceURL;
+extern NSString* const LTHTTPHost;
+extern NSString* const LTForgottenPasswordURL;
+extern NSString* const LTSignupURL;
 #endif
 
 #ifdef TESTS
-#define kHost @"taxinomes.arscenic.org/"
-#define kXMLRCPWebServiceURL @"http://taxinomes.arscenic.org//spip.php?action=xmlrpc_serveur"
-#define kHTTPHost @"http://taxinomes.arscenic.org/"
-#define kForgottenPasswordURL @"http://taxinomes.arscenic.org/spip.php?page=spip_pass"
-#define kSignupURL @"http://taxinomes.arscenic.org/spip.php?page=inscription"
+extern NSString* const LTHost;
+extern NSString* const LTXMLRCPWebServiceURL;
+extern NSString* const LTHTTPHost;
+extern NSString* const LTForgottenPasswordURL;
+extern NSString* const LTSignupURL;
 #endif
 
 
 // WS
-#define kLTMediasLoadingStep 20;
-#define kLTAuthorsLoadingStep 20;
-#define kLimitParamName @"limite"
-#define kSortParamName @"tri"
-#define kSessionCookieName @"spip_session"
-#define kLTXMLRPCMethodKey @"LTXMLRPCMethodKey"
+extern NSInteger const LTMediasLoadingStep;
+extern NSInteger const LTAuthorsLoadingStep;
+extern NSString* const LTLimitParamName;
+extern NSString* const LTSortParamName;
+extern NSString* const LTSessionCookieName;
+extern NSString* const LTXMLRPCMethodKey;

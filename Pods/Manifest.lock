@@ -7,9 +7,9 @@ PODS:
     - MagicalRecord/Core
   - MagicalRecord/Core (2.2)
   - MBProgressHUD (0.8)
-  - MWPhotoBrowser (1.3.1):
+  - MWPhotoBrowser (1.4.0):
     - DACircularProgress
-    - MBProgressHUD
+    - MBProgressHUD (~> 0.8)
     - PSTCollectionView (~> 1.2)
     - SDWebImage (~> 3.5.4)
   - NSData+Base64 (1.0.0)
@@ -51,7 +51,7 @@ SPEC CHECKSUMS:
   JBKenBurnsView: 0a6fe2d298935f12d6784f81c8e9455cb8bd11d0
   MagicalRecord: 95d49d74ef752cd52f6ad87bcb474817fc3978cf
   MBProgressHUD: 2bbc6f470111daf7f3eaa4eb12b8cbf01c4c0622
-  MWPhotoBrowser: 84ae189a810c3b1982e542c7079355c2eeb93b0f
+  MWPhotoBrowser: b85e89fcf0575062f32c472d389265dce1f068e1
   NSData+Base64: 4819562faee4544e3cf5703f2139820b09732b28
   PonyDebugger: d31607145d785b2315cd6f6a4ebaa378eb0c1340
   PSTCollectionView: fb2ad2790c6efa306b2caf10315b2c1464d1f5c6

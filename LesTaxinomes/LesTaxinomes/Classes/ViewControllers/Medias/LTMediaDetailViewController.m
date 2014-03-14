@@ -165,7 +165,7 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
     // Load media datas if not present or not up to date
     if( self.media == nil
        ||  self.media.text == nil
-       || [[NSDate date] timeIntervalSinceDate: self.media.localUpdateDate] > kMediaCacheTime)
+       || [[NSDate date] timeIntervalSinceDate: self.media.localUpdateDate] > LTMediaCacheTime)
     {
         [cm getMediaWithId:self.media.identifier
              responseBlock:^(LTMedia *media, NSError *error) {
@@ -191,7 +191,7 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
     // Load media datas if not present or not up to date
     if( self.media.author == nil
        ||  self.media.author.avatarURL == nil
-       || [[NSDate date] timeIntervalSinceDate: self.media.author.localUpdateDate] > kMediaCacheTime)
+       || [[NSDate date] timeIntervalSinceDate: self.media.author.localUpdateDate] > LTMediaCacheTime)
     {
         [cm getAuthorWithId:self.media.author.identifier
               responseBlock:^(LTAuthor *author, NSError *error)

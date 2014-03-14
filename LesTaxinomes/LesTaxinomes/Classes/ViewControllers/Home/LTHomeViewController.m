@@ -246,7 +246,8 @@ static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailVie
                     responseBlock:^(LTAuthor *authenticatedUser, NSError *error)
                 {
                         [SVProgressHUD dismiss];
-                        if (!authenticatedUser) {
+                        if (!authenticatedUser)
+                        {
                             self.mediaToShareAssetURL = chosenImageAssetURL;
                             if(self.presentedViewController)
                             {
@@ -254,7 +255,9 @@ static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailVie
                             } else {
                                 [self displayAuthenticationSheetAnimated:YES];
                             }
-                        } else {
+                        }
+                        else
+                        {
                             [self dismissViewControllerAnimated:YES
                                                      completion:^{}];
                             LTMediaUploadFormViewController* mediaUploadVC = [self.storyboard instantiateViewControllerWithIdentifier:@"LTMediaUploadFormViewController"];

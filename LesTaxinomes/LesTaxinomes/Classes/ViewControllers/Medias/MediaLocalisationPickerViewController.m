@@ -90,7 +90,7 @@
                                     initWithAnnotation:annotation reuseIdentifier:nil];
     [pinView setDraggable:YES];
     [pinView setAnimatesDrop:YES];
-    [pinView setPinColor:kPinColor];
+    [pinView setPinColor:LTPinColor];
     return pinView;
 }
 

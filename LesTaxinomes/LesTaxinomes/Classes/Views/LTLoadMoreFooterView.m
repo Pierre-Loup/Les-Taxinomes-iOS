@@ -31,7 +31,7 @@
         _loadMoreButton.translatesAutoresizingMaskIntoConstraints = NO;
         [_loadMoreButton setTitle:@"+" forState:UIControlStateNormal];
         _loadMoreButton.titleLabel.font = [UIFont boldSystemFontOfSize:34.0];
-        [_loadMoreButton setTitleColor:kLTColorMain forState:UIControlStateNormal];
+        [_loadMoreButton setTitleColor:[UIColor mainColor] forState:UIControlStateNormal];
         [_loadMoreButton sizeToFit];
         _loadMoreButton.center = CGPointMake(self.bounds.size.width/2,
                                              self.bounds.size.height/2);

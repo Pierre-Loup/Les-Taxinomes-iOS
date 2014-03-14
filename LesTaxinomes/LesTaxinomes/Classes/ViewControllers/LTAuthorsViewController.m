@@ -142,7 +142,7 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
     
     NSRange authorsRange;
     authorsRange.location = [[self.authorsResultController fetchedObjects] count];
-    authorsRange.length = kLTAuthorsLoadingStep;
+    authorsRange.length = LTAuthorsLoadingStep;
     
     __block LTAuthorsViewController* weakSelf = self;
     LTConnectionManager* connectionManager = [LTConnectionManager sharedManager];

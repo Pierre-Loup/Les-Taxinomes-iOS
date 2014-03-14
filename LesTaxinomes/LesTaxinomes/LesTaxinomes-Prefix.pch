@@ -15,9 +15,12 @@
     #import <Foundation/Foundation.h>
     #import <SystemConfiguration/SystemConfiguration.h>
     #import <MobileCoreServices/MobileCoreServices.h>
+
     #import "CoreData+MagicalRecord.h"
     #import "MKBlockAdditions.h"
+
+    #import "Constants.h"
+    #import "Macros.h"
+    #import "UIColor+LT.h"
 #endif
 
-#import "Constants.h"
-#import "Macros.h"

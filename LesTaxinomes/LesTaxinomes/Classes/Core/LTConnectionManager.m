@@ -43,7 +43,7 @@
 #import "UIImage+Resize.h"
 #import "XMLRPCResponse.h"
 
-#define kLTConnectionManagerMaxItemsStep 20
+#define LTConnectionManagerMaxItemsStep 20
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Defines & contants
@@ -133,7 +133,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
          {
              NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                   code:LTConnectionManagerInternalError
-                                              userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodSPIPListeLicences}];
+                                              userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodSPIPListeLicences}];
              if(responseBlock) responseBlock(nil, error);
          }
      } failure:^(NSError *error) {
@@ -147,8 +147,8 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                 withRange:(NSRange)range
                             responseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock {
     
-    if(range.length == 0 || range.length > kLTConnectionManagerMaxItemsStep)
-        range.length = kLTConnectionManagerMaxItemsStep;
+    if(range.length == 0 || range.length > LTConnectionManagerMaxItemsStep)
+        range.length = LTConnectionManagerMaxItemsStep;
     NSString* limite = [NSString stringWithFormat:@"%d,%d", range.location,range.length];
     NSArray *requestedFields = @[@"id_media", @"titre", @"date", @"statut", @"vignette", @"auteurs", @"gis"];
     NSNumber* thumbnailWidth = [NSNumber numberWithDouble:(THUMBNAIL_MAX_WIDHT)];
@@ -242,7 +242,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
          } else {
              NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                   code:LTConnectionManagerInternalError
-                                              userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodGeoDivListeMedias}];
+                                              userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodGeoDivListeMedias}];
              
              
              if(responseBlock) responseBlock(nil, error);
@@ -263,6 +263,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                                              code:LTConnectionManagerBadArgsError
                                          userInfo:nil];
         if(responseBlock) responseBlock(nil, error);
+        return;
     }
     
     NSNumber* mediaMaxHeight = [NSNumber numberWithDouble:MEDIA_MAX_WIDHT];
@@ -303,7 +304,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
-                                                                 userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodGeoDivLireMedia}];
+                                                                 userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodGeoDivLireMedia}];
                                 
                                 if(responseBlock) responseBlock(nil, error);
                                 
@@ -368,7 +369,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
-                                                                 userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodGeoDivLireMedia}];
+                                                                 userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodGeoDivLireMedia}];
                                 
                                 
                                 if(responseBlock) responseBlock(nil, error);
@@ -382,7 +383,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
 
 - (void)getHomeCoversWithResponseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock
 {
-    NSString* limite = [NSString stringWithFormat:@"%d,%d", 0, kLTConnectionManagerMaxItemsStep];
+    NSString* limite = [NSString stringWithFormat:@"%d,%d", 0, LTConnectionManagerMaxItemsStep];
     NSArray *requestedFields = @[@"id_media", @"titre", @"date", @"statut", @"vignette", @"auteurs", @"document"];
     NSMutableDictionary* parameters = [NSMutableDictionary dictionaryWithDictionary:
                                        @{
@@ -414,10 +415,10 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                  {
                      NSError* mediaError;
                      
-                     LTMedia *mediaObject = [LTMedia mediaWithXMLRPCResponse:mediaXML
-                                                                   inContext:context
-                                                                       error:&mediaError];
-                     mediaObject = [LTMedia mediaLargeURLWithXMLRPCResponse:mediaXML
+                     [LTMedia mediaWithXMLRPCResponse:mediaXML
+                                            inContext:context
+                                                error:&mediaError];
+                     LTMedia *mediaObject = [LTMedia mediaLargeURLWithXMLRPCResponse:mediaXML
                                                                   inContext:context
                                                                       error:&mediaError];
                      
@@ -460,7 +461,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
          {
              NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                   code:LTConnectionManagerInternalError
-                                              userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodGeoDivListeMedias}];
+                                              userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodGeoDivListeMedias}];
              
              
              if(responseBlock) responseBlock(nil, error);
@@ -515,7 +516,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             {
                                 NSError *error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
-                                                                 userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodSPIPLireAuteur}];
+                                                                 userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodSPIPLireAuteur}];
                                 
                                 
                                 if(responseBlock) responseBlock(nil, error);
@@ -531,8 +532,8 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                          withSortKey:(LTAuthorsSortType)sortType
                        responseBlock:(void (^)(NSArray* authors, NSError *error))responseBlock
 {
-    if(range.length == 0 || range.length > kLTConnectionManagerMaxItemsStep)
-        range.length = kLTConnectionManagerMaxItemsStep;
+    if(range.length == 0 || range.length > LTConnectionManagerMaxItemsStep)
+        range.length = LTConnectionManagerMaxItemsStep;
     
     NSString* limite = [NSString stringWithFormat:@"%d,%d", range.location,range.length];
     NSString* sortKey;
@@ -597,7 +598,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
-                                                                 userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodGeoDivListeMedias}];
+                                                                 userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodGeoDivListeMedias}];
                                 
                                 
                                 if(responseBlock) responseBlock(nil, error);
@@ -728,7 +729,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                   } else {
                       NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                            code:LTConnectionManagerInternalError
-                                                       userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodGeoDivCreerMedia}];
+                                                       userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodGeoDivCreerMedia}];
                       
                       
                       if(responseBlock) responseBlock(nil, error);
@@ -784,7 +785,7 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
                             } else {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                                                      code:LTConnectionManagerInternalError
-                                                                 userInfo:@{kLTXMLRPCMethodKey:LTXMLRCPMethodSPIPAuth}];
+                                                                 userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodSPIPAuth}];
                                 
                                 
                                 if(responseBlock) responseBlock(nil, error);
@@ -797,9 +798,9 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
 
 - (void)unAuthenticate
 {
-    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[[NSURL URLWithString:kHTTPHost] absoluteURL]];
+    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[[NSURL URLWithString:LTHTTPHost] absoluteURL]];
     for (NSHTTPCookie * cookie in cookies) {
-        if([cookie.name isEqualToString:kSessionCookieName]) {
+        if([cookie.name isEqualToString:LTSessionCookieName]) {
             [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
         }
     }
