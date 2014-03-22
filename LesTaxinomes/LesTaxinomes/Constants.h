@@ -82,24 +82,22 @@ extern NSString* const LTPhotoGroupName;
 extern NSTimeInterval const LTMediaCacheTime;
 
 #ifdef LES_TAXINOMES
-extern NSString* const LTHost;
-extern NSString* const LTXMLRCPWebServiceURL;
+extern NSString* const LTPWebServiceURL;
+extern NSString* const LTXMLRCPTreeURL;
 extern NSString* const LTHTTPHost;
 extern NSString* const LTForgottenPasswordURL;
 extern NSString* const LTSignupURL;
 #endif
 
 #ifdef GEODIV
-extern NSString* const LTHost;
-extern NSString* const LTXMLRCPWebServiceURL;
+extern NSString* const LTPWebServiceURL;
 extern NSString* const LTHTTPHost;
 extern NSString* const LTForgottenPasswordURL;
 extern NSString* const LTSignupURL;
 #endif
 
 #ifdef TESTS
-extern NSString* const LTHost;
-extern NSString* const LTXMLRCPWebServiceURL;
+extern NSString* const LTPWebServiceURL;
 extern NSString* const LTHTTPHost;
 extern NSString* const LTForgottenPasswordURL;
 extern NSString* const LTSignupURL;

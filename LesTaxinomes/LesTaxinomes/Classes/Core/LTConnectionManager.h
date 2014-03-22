@@ -25,20 +25,14 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+
+#import "LTConnectionManagerError.h"
+
 #import "LTMedia.h"
 #import "LTAuthor.h"
 #import "LTLicense.h"
 #import "XMLRPCRequest.h"
 
-/**
- Indicates an error occured in LTConnectionManager.
- */
-extern NSString* const LTConnectionManagerErrorDomain;
-
-typedef enum  {
-    LTConnectionManagerBadArgsError = 77001,
-    LTConnectionManagerInternalError = 77002
-} LTConnectionManagerError;
 
 typedef enum {
     LTAuthorsSortBySignupDate,
@@ -91,5 +85,7 @@ typedef enum {
         responseBlock:(void (^)(LTAuthor *authenticatedUser, NSError *error))responseBlock;
 
 - (void)unAuthenticate;
+
+- (void)fetchFullTreeWithCompletion:(void (^)(NSError *error))completion;
 
 @end

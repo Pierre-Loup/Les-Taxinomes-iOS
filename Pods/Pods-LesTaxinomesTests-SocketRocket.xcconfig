@@ -1,0 +1,1 @@
+PODS_LESTAXINOMESTESTS_SOCKETROCKET_OTHER_LDFLAGS = -licucore -framework CFNetwork -framework Security

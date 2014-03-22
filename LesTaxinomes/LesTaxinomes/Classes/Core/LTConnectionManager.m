@@ -29,16 +29,19 @@
 
 #import "LTConnectionManager.h"
 
+
 #import <AssetsLibrary/ALAsset.h>
 #import <AssetsLibrary/ALAssetRepresentation.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <CoreLocation/CoreLocation.h>
 
+#import "AFJSONRequestOperation.h"
 #import "LTAuthor+Business.h"
 #import "LTLicense+Business.h"
-#import "LTSection.h"
+#import "LTSection+Business.h"
 #import "LTMedia+Business.h"
 #import "LTXMLRPCClient.h"
+#import "LTJSONClient.h"
 #import "NSMutableDictionary+ImageMetadata.h"
 #import "UIImage+Resize.h"
 #import "XMLRPCResponse.h"
@@ -48,7 +51,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Defines & contants
 
-NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.LesTaxinomes.LTConnectionManagerError";
+NSString* const LTConnectionManagerErrorDomain = @"LTConnectionManagerErrorDomain";
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private interface
@@ -69,7 +72,8 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
 #pragma mark - Public Methods
 #pragma mark Class Methods
 
-+ (LTConnectionManager *)sharedManager {
++ (LTConnectionManager *)sharedManager
+{
     static LTConnectionManager* connectionManager = nil;
     static dispatch_once_t  connectionManagerOnceToken;
     
@@ -805,6 +809,84 @@ NSString* const LTConnectionManagerErrorDomain = @"org.lestaxinomes.app.iphone.L
         }
     }
     self.authenticatedUser = nil;
+}
+
+- (void)fetchFullTreeWithCompletion:(void (^)(NSError *error))completion
+{
+    LTJSONClient* jsonClient = [LTJSONClient sharedClient];
+    NSDictionary* parameters = @{@"page" : @"arbre.json"};
+    NSURLRequest* request = [jsonClient requestWithMethod:@"GET"
+                                                     path:nil
+                                               parameters:parameters];
+    AFJSONRequestOperation* jsonOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+    success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
+    {
+        if([JSON isKindOfClass:[NSDictionary class]])
+        {
+            NSDictionary* jsonDict = JSON;
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
+            {
+                NSManagedObjectContext* defaultContext = [NSManagedObjectContext MR_defaultContext];
+                NSManagedObjectContext* context = [NSManagedObjectContext MR_contextWithParent:defaultContext];
+                
+                NSError* error;
+                [LTSection sectonWithJSONResponse:jsonDict inContext:context error:&error];
+                if (error)
+                {
+                    LogError(@"%@", error);
+                    // Dispatch the result on the main thread
+                    dispatch_async(dispatch_get_main_queue(), ^
+                                   {
+                                       if(completion) completion(error);
+                                   });
+                }
+                else
+                {
+                    NSError* coredataError;
+                    [context save:&coredataError];
+                    [context reset];
+                    if (coredataError)
+                    {
+                        LogError(@"%@", coredataError);
+                        // Dispatch the result on the main thread
+                        dispatch_async(dispatch_get_main_queue(), ^
+                                       {
+                                           if(completion) completion(coredataError);
+                                       });
+                    }
+                    else
+                    {
+                        // Dispatch the result on the main thread
+                        dispatch_async(dispatch_get_main_queue(), ^
+                                       {
+                                           if(completion) completion(nil);
+                                       });
+                    }
+                }
+            });
+        }
+        else
+        {
+            NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                                 code:LTConnectionManagerBadResponse
+                                             userInfo:nil];
+            
+            
+            if(completion) completion(error);
+            
+        }
+    }
+    failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *afError, id JSON)
+    {
+        NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                             code:LTConnectionManagerBadResponse
+                                         userInfo:@{NSUnderlyingErrorKey:afError}];
+        
+        if(completion) completion(error);
+    }];
+    
+    [AFJSONRequestOperation addAcceptableContentTypes:[NSSet setWithObjects:@"text/plain", nil]];
+    [jsonOperation start];
 }
 
 @end

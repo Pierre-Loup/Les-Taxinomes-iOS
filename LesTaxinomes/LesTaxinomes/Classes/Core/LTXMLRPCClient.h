@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
-#import "AFHTTPClient.h"
+#import "LTHTTPClient.h"
 #import "XMLRPCResponse.h"
 
 extern NSString* const LTXMLRPCServerErrorDomain;
@@ -19,7 +19,7 @@ extern NSString* const LTXMLRCPMethodGeoDivListeMedias;
 extern NSString* const LTXMLRCPMethodGeoDivLireMedia;
 extern NSString* const LTXMLRCPMethodGeoDivCreerMedia;
 
-@interface LTXMLRPCClient : AFHTTPClient
+@interface LTXMLRPCClient : LTHTTPClient
 
 /**
  LTXMLRPCClient shared instance. 

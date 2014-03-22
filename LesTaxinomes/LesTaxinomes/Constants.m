@@ -81,24 +81,21 @@ NSString* const LTPhotoGroupName = @"LesTaxinomes";
 NSTimeInterval const LTMediaCacheTime = 3600.0f;
 
 #ifdef LES_TAXINOMES
-NSString* const LTHost = @"www.lestaxinomes.org";
-NSString* const LTXMLRCPWebServiceURL = @"http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur";
+NSString* const LTPWebServiceURL = @"http://www.lestaxinomes.org/spip.php";
 NSString* const LTHTTPHost = @"http://www.lestaxinomes.org";
 NSString* const LTForgottenPasswordURL = @"http://www.lestaxinomes.org/spip.php?page=spip_pass";
 NSString* const LTSignupURL = @"http://www.lestaxinomes.org/spip.php?page=inscription";
 #endif
 
 #ifdef GEODIV
-NSString* const LTHost = @"http://www.geodiversite.net/";
-NSString* const LTXMLRCPWebServiceURL = @"http://www.geodiversite.net/spip.php?action=xmlrpc_serveur";
+NSString* const LTPWebServiceURL = @"http://www.geodiversite.net/spip.php";
 NSString* const LTHTTPHost = @"http://www.geodiversite.net/";
 NSString* const LTForgottenPasswordURL = @"http://www.geodiversite.net/spip.php?page=spip_pass";
 NSString* const LTSignupURL = @"http://www.geodiversite.net/spip.php?page=inscription";
 #endif
 
 #ifdef TESTS
-NSString* const LTHost = @"taxinomes.arscenic.org/";
-NSString* const LTXMLRCPWebServiceURL = @"http://taxinomes.arscenic.org//spip.php?action=xmlrpc_serveur";
+NSString* const LTPWebServiceURL = @"http://ws-base-ur";
 NSString* const LTHTTPHost = @"http://taxinomes.arscenic.org/";
 NSString* const LTForgottenPasswordURL = @"http://taxinomes.arscenic.org/spip.php?page=spip_pass";
 NSString* const LTSignupURL = @"http://taxinomes.arscenic.org/spip.php?page=inscription";

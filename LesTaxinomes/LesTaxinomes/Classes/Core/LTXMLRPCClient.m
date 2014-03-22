@@ -49,10 +49,9 @@ static dispatch_queue_t xmlrpc_request_operation_processing_queue() {
     static LTXMLRPCClient*    _sharedClient = nil;
     static dispatch_once_t  onceToken;
     
-    NSString *baseUrl = LTXMLRCPWebServiceURL;
-    
-    dispatch_once(&onceToken, ^{
-        _sharedClient = [[self alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
+    dispatch_once(&onceToken, ^
+    {
+        _sharedClient = [[self alloc] init];
     });
     
     return _sharedClient;
@@ -164,7 +163,7 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
         failure(error);
     };
     
-    NSMutableURLRequest *request = [self requestWithMethod:@"POST" path:@"" parameters:nil];
+    NSMutableURLRequest *request = [self requestWithMethod:@"POST" path:@"?action=xmlrpc_serveur" parameters:nil];
     [request setHTTPBody:[[xmlrpcRequest body] dataUsingEncoding:self.stringEncoding]];
 	AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request
                                                                       success:successBlock
