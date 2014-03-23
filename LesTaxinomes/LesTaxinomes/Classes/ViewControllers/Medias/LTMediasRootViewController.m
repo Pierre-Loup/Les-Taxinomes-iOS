@@ -338,16 +338,18 @@ typedef enum {
 {    
     if (!_mediasResultController)
     {
-        NSPredicate* predicate = nil;
+        NSMutableString* predicateFormat = [@"status == 'publie'" mutableCopy];
         if (self.currentUser)
         {
-            predicate = [NSPredicate predicateWithFormat:@"status == %@ && author == %@",@"publie",self.currentUser];
-        }
-        else
-        {
-            predicate = [NSPredicate predicateWithFormat:@"status == %@",@"publie"];
+            [predicateFormat appendFormat:@" && author == %@", self.currentUser];
         }
         
+        if (self.section)
+        {
+            [predicateFormat appendFormat:@" && section.identifier == %ld", [self.section.identifier longValue]];
+        }
+        
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:predicateFormat];
         _mediasResultController = [LTMedia MR_fetchAllSortedBy:@"date"
                                                      ascending:NO
                                                  withPredicate:predicate

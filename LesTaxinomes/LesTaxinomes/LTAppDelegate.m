@@ -33,6 +33,7 @@
                                 ,_T(@"tabbar.medias")
                                 ,_T(@"tabbar.explore")
                                 ,_T(@"tabbar.authors")
+                                ,_T(@"tabbar.tree")
                                 ];
     
     for (NSInteger i = 0;
@@ -47,6 +48,15 @@
     // Retreive licenses
     [[LTConnectionManager sharedManager] getLicensesWithResponseBlock:^(NSArray *licenses, NSError *error) {
     }];
+    
+    // Retrieve Tree
+    [[LTConnectionManager sharedManager] fetchFullTreeWithCompletion:^(NSError *error)
+     {
+         if (error)
+         {
+             LogError(@"%@", error);
+         }
+     }];
     
 #ifdef DEBUG
 #if TARGET_IPHONE_SIMULATOR

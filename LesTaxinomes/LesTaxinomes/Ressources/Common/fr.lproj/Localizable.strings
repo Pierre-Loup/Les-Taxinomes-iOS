@@ -36,6 +36,7 @@
 "tabbar.explore"    = "Explorer";
 "tabbar.myaccount"  = "Mon espace";
 "tabbar.authors"    = "Auteurs";
+"tabbar.tree"    = "Arbre";
 
 /* HOME */
 "home.username.placeholder" = "Se connecter";

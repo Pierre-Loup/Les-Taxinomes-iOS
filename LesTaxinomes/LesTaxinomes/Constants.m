@@ -54,7 +54,7 @@ NSString* const LTMediaEntityLicenseField = @"license";
 NSString* const LTMediaEntityAuthorsField = @"author";
 NSString* const LTMediaEntitySectionField = @"section";
 //MediaEntity
-NSString* const LTSectionEntityIdentifierField = @"identifiant";
+NSString* const LTSectionEntityIdentifierField = @"identifier";
 NSString* const LTSectionEntityDescriptionField = @"desription";
 NSString* const LTSectionEntityImageURLField = @"imageURL";
 NSString* const LTSectionEntityTitleField = @"title";
