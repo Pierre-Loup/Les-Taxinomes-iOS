@@ -288,6 +288,9 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="0zl-VL-6sq"/>
+                    <connections>
+                        <segue destination="lLe-XB-aLT" kind="push" identifier="LTMediasRootViewControllerSegueId" id="ecV-tc-gAU"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cjB-cP-Hbd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1011,8 +1014,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="c4d-w2-jjD"/>
-        <segue reference="i59-Hs-waA"/>
+        <segue reference="ecV-tc-gAU"/>
         <segue reference="qJ1-Py-9AV"/>
+        <segue reference="c4d-w2-jjD"/>
     </inferredMetricsTieBreakers>
 </document>

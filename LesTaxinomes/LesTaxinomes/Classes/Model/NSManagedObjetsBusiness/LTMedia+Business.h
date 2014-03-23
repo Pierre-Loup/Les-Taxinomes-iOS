@@ -12,9 +12,10 @@
 
 typedef NS_ENUM(NSInteger, LTMediaType)
 {
-    LTMediaTypeNormal   = 0,
+    LTMediaTypeImage    = 0,
     LTMediaTypeAudio    = 1,
-    LTMediaTypeVideo    = 2
+    LTMediaTypeVideo    = 2,
+    LTMediaTypeOther    = 99,
 };
 
 @interface LTMedia (Business) <MKAnnotation>

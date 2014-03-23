@@ -341,7 +341,7 @@ typedef enum {
         NSMutableString* predicateFormat = [@"status == 'publie'" mutableCopy];
         if (self.currentUser)
         {
-            [predicateFormat appendFormat:@" && author == %@", self.currentUser];
+            [predicateFormat appendFormat:@" && author.identifier == %@", self.currentUser.identifier];
         }
         
         if (self.section)

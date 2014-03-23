@@ -358,7 +358,7 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
     if (self.media.mediaLargeURL.length)
     {
         LTMediaType mediaType = [self.media.type integerValue];
-        if (mediaType == LTMediaTypeNormal)
+        if (mediaType == LTMediaTypeImage)
         {
             // Create browser
             MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
@@ -400,32 +400,33 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
     
     NSString* placeholderImageName;
     LTMediaType mediaType = [self.media.type integerValue];
-    if (mediaType == LTMediaTypeNormal)
+    if (mediaType == LTMediaTypeImage)
     {
         placeholderImageName = @"placeholder_image";
+        [self.mediaImageView setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.media.mediaMediumURL]]
+                                   placeholderImage:[UIImage imageNamed:placeholderImageName]
+                                            success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                                weakSelf.mediaImageView.image = image;
+                                                [SVProgressHUD dismiss];
+                                                [weakSelf.placeholderAIView stopAnimating];
+                                                [weakSelf refreshView];
+                                            }
+                                            failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                                [SVProgressHUD showErrorWithStatus:nil];
+                                                [weakSelf.placeholderAIView stopAnimating];
+                                                [weakSelf refreshView];
+                                            }];
     }
     else if (mediaType == LTMediaTypeAudio)
     {
         placeholderImageName = @"placeholder_audio";
+        self.mediaImageView.image = [UIImage imageNamed:placeholderImageName];
     }
     else if (mediaType == LTMediaTypeVideo)
     {
         placeholderImageName = @"placeholder_video";
+        self.mediaImageView.image = [UIImage imageNamed:placeholderImageName];
     }
-    
-    [self.mediaImageView setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.media.mediaMediumURL]]
-                               placeholderImage:[UIImage imageNamed:placeholderImageName]
-                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                            weakSelf.mediaImageView.image = image;
-                                            [SVProgressHUD dismiss];
-                                            [weakSelf.placeholderAIView stopAnimating];
-                                            [weakSelf refreshView];
-                                        }
-                                        failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                            [SVProgressHUD showErrorWithStatus:nil];
-                                            [weakSelf.placeholderAIView stopAnimating];
-                                            [weakSelf refreshView];
-                                        }];
 }
 
 - (void)updateAuthorInformations

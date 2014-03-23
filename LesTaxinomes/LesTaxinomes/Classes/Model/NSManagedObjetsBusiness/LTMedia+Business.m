@@ -20,7 +20,7 @@ static NSString* const LTMediaVisitsKey     = @"visites";
 static NSString* const LTMediaPopularityKey = @"popularite";
 static NSString* const LTMediaEditDateKey   = @"date_modif";
 static NSString* const LTMediaThumbnailKey  = @"vignette";
-static NSString* const LTMediaTypeKey       = @"em_type";
+static NSString* const LTMediaExentionKey   = @"extension";
 static NSString* const LTMediaDocumentKey   = @"document";
 static NSString* const LTMediaLicenceIdKey  = @"id_licence";
 static NSString* const LTMediaAuthorIdKey   = @"auteurs";
@@ -30,9 +30,11 @@ static NSString* const LTMediaGisLonKey     = @"lon";
 
 // LTMediaType values
 
-static NSString* const LTMediaTypeNormalValue   = @"normal";
-static NSString* const LTMediaTypeAudioValue    = @"audio";
-static NSString* const LTMediaTypeVideoValue    = @"video";
+static NSString* const LTMediaTypeImageJPGValue = @"jpg";
+static NSString* const LTMediaTypeImagePNGValue = @"png";
+static NSString* const LTMediaTypeImageGIFValue = @"gif";
+static NSString* const LTMediaTypeAudioMP3Value = @"mp3";
+static NSString* const LTMediaTypeVideoMP4Value = @"mp4";
 
 @implementation LTMedia (Business)
 
@@ -144,20 +146,27 @@ static NSString* const LTMediaTypeVideoValue    = @"video";
         media.mediaThumbnailUrl = [response objectForKey:LTMediaThumbnailKey];
     }
 
-    if ([[response objectForKey:LTMediaTypeKey] isKindOfClass:[NSString class]])
+    if ([[response objectForKey:LTMediaExentionKey] isKindOfClass:[NSString class]])
     {
-        NSString* emType = [response objectForKey:LTMediaTypeKey];
-        if ([emType isEqualToString:LTMediaTypeNormalValue])
+        NSString* emType = [response objectForKey:LTMediaExentionKey];
+        
+        if ([emType isEqualToString:LTMediaTypeImageJPGValue] ||
+            [emType isEqualToString:LTMediaTypeImagePNGValue] ||
+            [emType isEqualToString:LTMediaTypeImageGIFValue])
         {
-            media.type = @(LTMediaTypeNormal);
+            media.type = @(LTMediaTypeImage);
         }
-        else if ([emType isEqualToString:LTMediaTypeAudioValue])
+        else if ([emType isEqualToString:LTMediaTypeAudioMP3Value])
         {
             media.type = @(LTMediaTypeAudio);
         }
-        else if ([emType isEqualToString:LTMediaTypeVideoValue])
+        else if ([emType isEqualToString:LTMediaTypeVideoMP4Value])
         {
             media.type = @(LTMediaTypeVideo);
+        }
+        else
+        {
+            media.type = @(LTMediaTypeOther);
         }
     }
     
