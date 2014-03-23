@@ -5,4 +5,6 @@ before_install:
     - brew upgrade xctool
     - bundle install
     - bundle exec pod install
-script: xctool -workspace LesTaxinomes.xcworkspace -scheme LesTaxinomes test
+script:
+  - xctool -workspace LesTaxinomes.xcworkspace -scheme LesTaxinomes -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+  - xctool test -workspace LesTaxinomes.xcworkspace -scheme LesTaxinomes -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
