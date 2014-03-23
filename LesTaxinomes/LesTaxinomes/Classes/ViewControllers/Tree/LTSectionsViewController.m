@@ -17,7 +17,7 @@ static NSString* const LTSectionCellId = @"LTSectionCellId";
 static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewControllerSegueId";
 static NSString* const LTSectionsViewControllerSegueId = @"LTSectionsViewControllerSegueId";
 
-@interface LTSectionsViewController ()
+@interface LTSectionsViewController () <NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController* sectionsResultController;
 @property (nonatomic, readonly) NSArray* sections;
