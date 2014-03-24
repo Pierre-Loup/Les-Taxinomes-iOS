@@ -1,4 +1,5 @@
 [![License](http://img.shields.io/:license-gpl3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
+[![Build](https://travis-ci.org/Pierre-Loup/Les-Taxinomes-iOS.svg)](https://travis-ci.org/Pierre-Loup/Les-Taxinomes-iOS)
 
 This project is the iPhone application dedicated to the website http://www.lestaxinomes.org/.
 
