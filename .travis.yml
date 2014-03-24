@@ -5,5 +5,5 @@ before_install:
     - brew upgrade xctool
     - gem install cocoapods -v 0.29.0 --no-ri --no-rdoc
 script: 
-    - xctool -workspace LesTaxinomes.xcworkspace -scheme LesTaxinomes -sdk iphonesimulator clean build
-    - xctool -workspace LesTaxinomes.xcworkspace -scheme LesTaxinomesTests -sdk iphonesimulator clean test -freshInstall ONLY_ACTIVE_ARCH=NO
+    - xctool -workspace LesTaxinomes.xcworkspace -scheme LesTaxinomes -sdk iphonesimulator build -freshInstall ONLY_ACTIVE_ARCH=NO
+    - xctool -workspace LesTaxinomes.xcworkspace -scheme LesTaxinomesTest -sdk iphonesimulator test -freshInstall ONLY_ACTIVE_ARCH=NO
