@@ -10,7 +10,7 @@
             <objects>
                 <navigationController definesPresentationContext="YES" id="uae-RE-1Bg" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <tabBarItem key="tabBarItem" title="Item" id="7VP-m8-VFZ"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="tabbar_medias_gold" id="7VP-m8-VFZ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="rfV-QP-Mga">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -188,7 +188,7 @@
         <scene sceneID="BbR-Y9-2uo">
             <objects>
                 <navigationController definesPresentationContext="YES" id="i6T-78-K2r" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" image="tabbar_map" id="Zi4-lL-unS"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="tabbar_map_gold" id="Zi4-lL-unS"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Nnm-KW-Cte">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -200,11 +200,11 @@
             </objects>
             <point key="canvasLocation" x="909" y="1037"/>
         </scene>
-        <!--Navigation Controller - Auteurs-->
+        <!--Navigation Controller - Item-->
         <scene sceneID="jTI-fT-1ye">
             <objects>
                 <navigationController definesPresentationContext="YES" id="OEr-gP-RoT" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Auteurs" image="tabbar_authors" id="CXX-fU-UZ5"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="tabbar_authors_gold" id="CXX-fU-UZ5"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="G6Z-3M-21B">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -255,7 +255,7 @@
         <scene sceneID="7Zu-hx-NMa">
             <objects>
                 <navigationController definesPresentationContext="YES" id="yap-JB-3ZU" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="pHp-SK-vwz"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="tabbar_tree_gold" id="pHp-SK-vwz"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="0oS-D3-SHq">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -335,7 +335,7 @@
             <objects>
                 <navigationController definesPresentationContext="YES" id="4el-eo-dx7" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <tabBarItem key="tabBarItem" title="Item" id="g2W-1R-vZx"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="tabbar_home_gold" id="g2W-1R-vZx"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="LjV-Jl-6hu">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1002,10 +1002,13 @@
     </scenes>
     <resources>
         <image name="icon_mosaik" width="30" height="30"/>
-        <image name="tabbar_authors" width="32" height="21"/>
+        <image name="tabbar_authors_gold" width="30" height="30"/>
         <image name="tabbar_home" width="30" height="30"/>
-        <image name="tabbar_map" width="30" height="30"/>
+        <image name="tabbar_home_gold" width="40" height="40"/>
+        <image name="tabbar_map_gold" width="40" height="40"/>
         <image name="tabbar_medias" width="30" height="30"/>
+        <image name="tabbar_medias_gold" width="40" height="40"/>
+        <image name="tabbar_tree_gold" width="30" height="30"/>
     </resources>
     <color key="tintColor" red="0.61568627450000002" green="0.49019607840000001" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -1014,8 +1017,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ecV-tc-gAU"/>
-        <segue reference="qJ1-Py-9AV"/>
+        <segue reference="nRh-Ej-mZT"/>
         <segue reference="c4d-w2-jjD"/>
+        <segue reference="7bE-t7-2ka"/>
     </inferredMetricsTieBreakers>
 </document>

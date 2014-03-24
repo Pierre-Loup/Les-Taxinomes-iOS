@@ -427,6 +427,11 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
         placeholderImageName = @"placeholder_video";
         self.mediaImageView.image = [UIImage imageNamed:placeholderImageName];
     }
+    else
+    {
+        placeholderImageName = @"placeholder_other";
+        self.mediaImageView.image = [UIImage imageNamed:placeholderImageName];
+    }
 }
 
 - (void)updateAuthorInformations

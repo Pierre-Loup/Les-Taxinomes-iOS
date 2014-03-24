@@ -35,14 +35,37 @@
                                 ,_T(@"tabbar.authors")
                                 ,_T(@"tabbar.tree")
                                 ];
+    NSArray* tabItemsImagesBaseNames = @[_T(@"tabbar_home")
+                                         ,_T(@"tabbar_medias")
+                                         ,_T(@"tabbar_map")
+                                         ,_T(@"tabbar_authors")
+                                         ,_T(@"tabbar_tree")
+                                         ];
     
+    NSString* imageNormalSuffix = @"_white";
+    NSString* imageSelectedSuffix = @"_gold";
     for (NSInteger i = 0;
          i < tabBarController.tabBar.items.count;
          i++)
     {
         UINavigationController* navigationController = tabBarController.viewControllers[i];
         ((UIViewController*)navigationController.viewControllers[0]).title = tabItemsTitles[i];
-        ((UITabBarItem*)tabBarController.tabBar.items[i]).title = tabItemsTitles[i];
+         UITabBarItem* tabbarItem = tabBarController.tabBar.items[i];
+         tabbarItem.title = tabItemsTitles[i];
+        
+        NSString* imageBaseName = tabItemsImagesBaseNames[i];
+        NSString* normalImageName = [NSString stringWithFormat:@"%@%@", imageBaseName, imageNormalSuffix];
+        NSString* selectedImageName = [NSString stringWithFormat:@"%@%@", imageBaseName, imageSelectedSuffix];
+        if (IOS7_OR_GREATER)
+        {
+            tabbarItem.image = [UIImage imageNamed:selectedImageName];
+        }
+        else
+        {
+            [tabbarItem setFinishedSelectedImage:[UIImage imageNamed:selectedImageName]
+               withFinishedUnselectedImage:[UIImage imageNamed:normalImageName]];
+        }
+        
     }
     
     // Retreive licenses

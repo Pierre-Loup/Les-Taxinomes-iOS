@@ -3,11 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "112-group.png"
+      "filename" : "tabbar_map_gold.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "tabbar_map_gold@2x.png"
     }
   ],
   "info" : {

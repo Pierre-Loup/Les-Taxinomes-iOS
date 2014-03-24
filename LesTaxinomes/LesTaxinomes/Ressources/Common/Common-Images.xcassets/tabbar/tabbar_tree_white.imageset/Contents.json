@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "monespace30X30-gold.png"
+      "filename" : "tabbar_tree_white.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "monespace60X60gold.png"
+      "filename" : "tabbar_tree_white@2x.png"
     }
   ],
   "info" : {

@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "carte30X30-gold.png"
+      "filename" : "tabbar_account_gold.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "carte60X60gold.png"
+      "filename" : "tabbar_account_gold@2x.png"
     }
   ],
   "info" : {

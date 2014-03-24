@@ -64,6 +64,8 @@
                                                         UITextAttributeTextColor: [UIColor mainColor]
                                                         }
                                              forState:UIControlStateSelected];
+    
+    
 }
 
 @end
