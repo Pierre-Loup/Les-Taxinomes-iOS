@@ -3,7 +3,6 @@ rvm: 1.9.3
 before_install:
     - brew update
     - brew upgrade xctool
-    - bundle install
-    - bundle exec pod install
+    - gem install cocoapods -v 0.29.0 --no-ri --no-rdoc
 script: 
     - xctool -workspace LesTaxinomes.xcworkspace -scheme LesTaxinomes -sdk iphonesimulator clean build test -freshInstall ONLY_ACTIVE_ARCH=NO
