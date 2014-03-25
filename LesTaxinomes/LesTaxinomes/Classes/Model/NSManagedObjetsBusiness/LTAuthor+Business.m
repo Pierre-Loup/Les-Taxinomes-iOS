@@ -65,7 +65,8 @@
             author.signupDate = [NSDate dateWithTimeIntervalSince1970:0];
     }
     
-    if ([response objectForKey:@"logo"]) {
+    if ([response objectForKey:@"logo"])
+    {
         author.avatarURL = [response objectForKey:@"logo"];
     }
     

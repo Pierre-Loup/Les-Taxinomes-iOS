@@ -99,7 +99,7 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
     if (method != LTXMLRCPMethodGeoDivCreerMedia) LogDebug(@"REQUEST: %@",[xmlrpcRequest body]);
     
     // Cookies management
-    NSArray* cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[self.baseURL absoluteURL]];
+    NSArray* cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:self.baseURL];
     NSString* cookieHeaderValue = @"";
     for (NSHTTPCookie * cookie in cookies) {
         //Add cookies other than session cookie

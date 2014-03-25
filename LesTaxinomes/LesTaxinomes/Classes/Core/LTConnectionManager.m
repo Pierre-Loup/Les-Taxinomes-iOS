@@ -775,16 +775,18 @@ NSString* const LTConnectionManagerErrorDomain = @"LTConnectionManagerErrorDomai
                                                                                       error:&error];
                                 
                                 NSError* coredataError;
-                                [context save:&coredataError];
-                                if (coredataError)
+                                [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error)
                                 {
-                                    LogError(@"%@", coredataError);
-                                    if(responseBlock) responseBlock(nil, coredataError);
-                                }
-                                else
-                                {
-                                    if(responseBlock) responseBlock(self.authenticatedUser, nil);
-                                }
+                                    if (coredataError)
+                                    {
+                                        LogError(@"%@", coredataError);
+                                        if(responseBlock) responseBlock(nil, coredataError);
+                                    }
+                                    else
+                                    {
+                                        if(responseBlock) responseBlock(self.authenticatedUser, nil);
+                                    }
+                                }];
                                 
                             } else {
                                 NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
