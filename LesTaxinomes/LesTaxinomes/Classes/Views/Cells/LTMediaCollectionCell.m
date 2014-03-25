@@ -7,7 +7,7 @@
 //
 
 #import "LTMediaCollectionCell.h"
-#import "UIImageView+AFNetworking.h"
+#import "UIImageView+LT.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private inteface
@@ -71,8 +71,7 @@
 - (void)setMedia:(LTMedia *)media
 {
     _media = media;
-    [self.imageView setImageWithURL:[NSURL URLWithString:media.mediaThumbnailUrl]
-               placeholderImage:[UIImage imageNamed:@"Icon"]];
+    [self.imageView setImageWithMedia:media];
 }
 
 @end

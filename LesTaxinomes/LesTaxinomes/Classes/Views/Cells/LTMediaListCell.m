@@ -12,15 +12,15 @@
 #import "LTMediaListCell.h"
 
 #import "LTAuthor.h"
-#import "UIImageView+AFNetworking.h"
+#import "UIImageView+LT.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private interface
 
 @interface LTMediaListCell ()
 @property (nonatomic, strong) IBOutlet UIImageView* image;
-@property (nonatomic, strong) IBOutlet UILabel* title;
-@property (nonatomic, strong) IBOutlet UILabel* author;
+@property (nonatomic, strong) IBOutlet UILabel* titleLabel;
+@property (nonatomic, strong) IBOutlet UILabel* authorLabel;
 @end
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -37,7 +37,6 @@
     UIView* view = [views objectAtIndex:0];
     if ([view isKindOfClass:[self class]]) {
         self = (LTMediaListCell *)view;
-        self.author.textColor = [UIColor mainColor];
         return self;
     } else {
         return nil;
@@ -57,16 +56,34 @@
 - (void)setMedia:(LTMedia *)media
 {
     _media = media;
-    if (media.mediaTitle.length) {
-        self.title.text = media.mediaTitle;
-    } else {
-        self.title.text = _T(@"media_upload_no_title");
+    if (media.mediaTitle.length)
+    {
+        self.titleLabel.text = media.mediaTitle;
+    }
+    else
+    {
+        self.titleLabel.text = _T(@"media_upload_no_title");
     }
     
-    self.author.text = media.author.name;
+    if (media.author)
+    {
+        NSString* from = _T(@"common.from");
+        NSString* text = [NSString stringWithFormat:@"%@ %@", from, media.author.name];
+        NSRange authorNameRange = {[from length], [text length]-[from length]};
+        NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:text];
+        [attributedString addAttribute:NSForegroundColorAttributeName
+                                 value:[UIColor mainColor]
+                                 range:authorNameRange];
+        self.authorLabel.attributedText = attributedString;
+        
+    }
+    else
+    {
+        self.authorLabel.attributedText = nil;
+    }
     
-    [self.image setImageWithURL:[NSURL URLWithString:media.mediaThumbnailUrl]
-               placeholderImage:[UIImage imageNamed:@"Icon"]];
+    
+    [self.image setImageWithMedia:media];
 }
 
 @end

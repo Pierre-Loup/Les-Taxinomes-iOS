@@ -22,7 +22,7 @@
             </objects>
             <point key="canvasLocation" x="909" y="351"/>
         </scene>
-        <!--Medias Root View Controller - tabbar.medias-->
+        <!--Medias Root View Controller-->
         <scene sceneID="AH8-bb-JEK">
             <objects>
                 <viewController id="lLe-XB-aLT" customClass="LTMediasRootViewController" sceneMemberID="viewController">
@@ -35,7 +35,6 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="tabbar.medias" image="tabbar_medias" id="qK6-cK-ZN3"/>
                     <navigationItem key="navigationItem" id="R6L-lD-4Pj">
                         <barButtonItem key="rightBarButtonItem" image="icon_mosaik" id="ASm-A1-Jky">
                             <connections>
@@ -330,12 +329,12 @@
             </objects>
             <point key="canvasLocation" x="1472" y="1037"/>
         </scene>
-        <!--Navigation Controller - Item-->
+        <!--Navigation Controller-->
         <scene sceneID="lFZ-NX-HF6">
             <objects>
                 <navigationController definesPresentationContext="YES" id="4el-eo-dx7" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <tabBarItem key="tabBarItem" title="Item" image="tabbar_home_gold" id="g2W-1R-vZx"/>
+                    <tabBarItem key="tabBarItem" title="" image="tabbar_home_gold" id="g2W-1R-vZx"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="LjV-Jl-6hu">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -347,7 +346,7 @@
             </objects>
             <point key="canvasLocation" x="909" y="-330"/>
         </scene>
-        <!--Home View Controller - tabbar.home-->
+        <!--Home View Controller-->
         <scene sceneID="Lcw-dz-CGN">
             <objects>
                 <viewController id="WO0-2K-lTh" customClass="LTHomeViewController" sceneMemberID="viewController">
@@ -384,7 +383,6 @@
                             <constraint firstAttribute="centerX" secondItem="mGG-Gf-Yx6" secondAttribute="centerX" id="c42-W7-shJ"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="tabbar.home" image="tabbar_home" id="JUi-fm-lnU"/>
                     <navigationItem key="navigationItem" id="uVg-s7-IgA">
                         <barButtonItem key="rightBarButtonItem" systemItem="camera" id="5bu-ir-jDG">
                             <connections>
@@ -1003,10 +1001,8 @@
     <resources>
         <image name="icon_mosaik" width="30" height="30"/>
         <image name="tabbar_authors_gold" width="30" height="30"/>
-        <image name="tabbar_home" width="30" height="30"/>
         <image name="tabbar_home_gold" width="40" height="40"/>
         <image name="tabbar_map_gold" width="40" height="40"/>
-        <image name="tabbar_medias" width="30" height="30"/>
         <image name="tabbar_medias_gold" width="40" height="40"/>
         <image name="tabbar_tree_gold" width="30" height="30"/>
     </resources>

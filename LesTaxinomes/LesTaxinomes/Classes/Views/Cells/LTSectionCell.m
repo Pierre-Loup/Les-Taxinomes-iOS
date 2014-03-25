@@ -84,7 +84,7 @@
 
     
     NSDictionary* views = NSDictionaryOfVariableBindings(sectionNameLabel, infoButton);
-    NSArray* constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-[sectionNameLabel]-[infoButton]-|"
+    NSArray* constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-[sectionNameLabel]-[infoButton]-8-|"
                                                                    options:0
                                                                    metrics:nil
                                                                      views:views];

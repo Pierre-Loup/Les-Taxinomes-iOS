@@ -57,6 +57,64 @@
     
     self.loginLabel.text = _T(@"authentication.login_label.text");
     self.passwordLabel.text = _T(@"authentication.password_label.text");
+
+    
+    if (!IOS7_OR_GREATER)
+    {
+        self.tableView.backgroundView = nil;
+        self.tableView.backgroundColor = [UIColor whiteColor];
+        
+        UIButton* signinButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        signinButton.frame = self.signinButton.frame;
+        signinButton.titleLabel.font = [UIFont systemFontOfSize:15.0];
+        signinButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        [signinButton addTarget:self
+                         action:@selector(submitAuthentication:)
+               forControlEvents:UIControlEventTouchUpInside];
+        
+        [self.signinButton.superview addSubview:signinButton];
+        [self.signinButton removeFromSuperview];
+        self.signinButton = signinButton;
+        [self.signinButton setTitleColor:[UIColor mainColor]
+                                forState:UIControlStateNormal];
+        [self.signinButton setTitleColor:[UIColor whiteColor]
+                                forState:UIControlStateHighlighted];
+        
+        UIButton* signupButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        signupButton.frame = self.signupButton.frame;
+        signupButton.titleLabel.font = [UIFont systemFontOfSize:15.0];
+        signupButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        [signupButton addTarget:self
+                         action:@selector(signupButtonTouched:)
+               forControlEvents:UIControlEventTouchUpInside];
+        
+        [self.signupButton.superview addSubview:signupButton];
+        [self.signupButton removeFromSuperview];
+        self.signupButton = signupButton;
+        [self.signupButton setTitleColor:[UIColor mainColor]
+                                forState:UIControlStateNormal];
+        [self.signupButton setTitleColor:[UIColor whiteColor]
+                                forState:UIControlStateHighlighted];
+        
+        
+        UIButton* passwordForgottenButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        passwordForgottenButton.frame = self.passwordForgottenButton.frame;
+        passwordForgottenButton.titleLabel.font = [UIFont systemFontOfSize:15.0];
+        passwordForgottenButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        [passwordForgottenButton addTarget:self
+                                    action:@selector(forgottenPasswordButtonTouched:)
+                          forControlEvents:UIControlEventTouchUpInside];
+        
+        [self.passwordForgottenButton.superview addSubview:passwordForgottenButton];
+        [self.passwordForgottenButton removeFromSuperview];
+        self.passwordForgottenButton = passwordForgottenButton;
+        [self.passwordForgottenButton setTitleColor:[UIColor mainColor]
+                                           forState:UIControlStateNormal];
+        [self.passwordForgottenButton setTitleColor:[UIColor whiteColor]
+                                           forState:UIControlStateHighlighted];
+
+    }
+    
     
     [self.passwordForgottenButton setTitle:_T(@"authentication.forgotten_password_button.text")
                                   forState:UIControlStateNormal];

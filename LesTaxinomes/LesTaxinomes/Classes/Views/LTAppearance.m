@@ -25,7 +25,6 @@
 + (void)setupiOS7Apprearance
 {
     [[[UIApplication sharedApplication] delegate] window].tintColor = [UIColor mainColor];
-    [[UIView appearance] setTintColor:[UIColor mainColor]];
     
     // Customize the title text for *all* UINavigationBars
     UIFont* font = [UIFont fontWithName:@"Jesaya Free" size:20];

@@ -9,6 +9,7 @@
 "common.cancel" = "Annuler";
 "common.ok" = "OK";
 "common.back" = "Retour";
+"common.from" = "de";
 "common.loading" = "Chargement";
 "common.logout" = "Déconnexion";
 "common.signin" = "Connexion";

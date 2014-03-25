@@ -27,6 +27,7 @@
 
 // UI
 #import "UIImageView+AFNetworking.h"
+#import "UIImageView+LT.h"
 #import "UIImageView+PhotoFrame.h"
 // VC
 #import "LTMapViewController.h"
@@ -333,7 +334,7 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
     {
         [self displayMedia];
     }
-    else
+    else if([self.media.type integerValue] != LTMediaTypeOther)
     {
         [SVProgressHUD show];
         [[LTConnectionManager sharedManager] getMediaLargeURLWithId:self.media.identifier responseBlock:^(LTMedia *media, NSError *error)
@@ -396,42 +397,10 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
     self.mediaImageView.userInteractionEnabled = YES;
     [self.mediaImageView addGestureRecognizer:tapGestureRecognizer];
     [self.placeholderAIView startAnimating];
-    __block LTMediaDetailViewController* weakSelf = self;
     
     NSString* placeholderImageName;
     LTMediaType mediaType = [self.media.type integerValue];
-    if (mediaType == LTMediaTypeImage)
-    {
-        placeholderImageName = @"placeholder_image";
-        [self.mediaImageView setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.media.mediaMediumURL]]
-                                   placeholderImage:[UIImage imageNamed:placeholderImageName]
-                                            success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                                weakSelf.mediaImageView.image = image;
-                                                [SVProgressHUD dismiss];
-                                                [weakSelf.placeholderAIView stopAnimating];
-                                                [weakSelf refreshView];
-                                            }
-                                            failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                                [SVProgressHUD showErrorWithStatus:nil];
-                                                [weakSelf.placeholderAIView stopAnimating];
-                                                [weakSelf refreshView];
-                                            }];
-    }
-    else if (mediaType == LTMediaTypeAudio)
-    {
-        placeholderImageName = @"placeholder_audio";
-        self.mediaImageView.image = [UIImage imageNamed:placeholderImageName];
-    }
-    else if (mediaType == LTMediaTypeVideo)
-    {
-        placeholderImageName = @"placeholder_video";
-        self.mediaImageView.image = [UIImage imageNamed:placeholderImageName];
-    }
-    else
-    {
-        placeholderImageName = @"placeholder_other";
-        self.mediaImageView.image = [UIImage imageNamed:placeholderImageName];
-    }
+    [self.mediaImageView setImageWithMedia:self.media];
 }
 
 - (void)updateAuthorInformations

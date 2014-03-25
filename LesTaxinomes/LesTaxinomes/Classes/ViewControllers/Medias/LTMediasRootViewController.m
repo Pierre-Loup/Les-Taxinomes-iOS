@@ -38,7 +38,6 @@
 #import "LTMediaDetailViewController.h"
 // Views
 #import "SpinnerCell.h"
-#import "UIImageView+AFNetworking.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Defines & contants

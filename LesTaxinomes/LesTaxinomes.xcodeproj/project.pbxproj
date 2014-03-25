@@ -83,6 +83,9 @@
 		C832824618DE0C780003ACA0 /* LTSectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C832824418DE0C780003ACA0 /* LTSectionsViewController.m */; };
 		C861985618DEED18000B85B0 /* LTSectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C861985518DEED18000B85B0 /* LTSectionCell.m */; };
 		C861985718DEED18000B85B0 /* LTSectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C861985518DEED18000B85B0 /* LTSectionCell.m */; };
+		C862044118E102FE00E159D7 /* UIImageView+LT.m in Sources */ = {isa = PBXBuildFile; fileRef = C862044018E102FE00E159D7 /* UIImageView+LT.m */; };
+		C862044218E102FE00E159D7 /* UIImageView+LT.m in Sources */ = {isa = PBXBuildFile; fileRef = C862044018E102FE00E159D7 /* UIImageView+LT.m */; };
+		C862044318E102FE00E159D7 /* UIImageView+LT.m in Sources */ = {isa = PBXBuildFile; fileRef = C862044018E102FE00E159D7 /* UIImageView+LT.m */; };
 		C898ECDD18D3728700AC5F0B /* Brest-ISEN.gpx in Resources */ = {isa = PBXBuildFile; fileRef = C898ECCD18D3727D00AC5F0B /* Brest-ISEN.gpx */; };
 		C898ECDE18D3728700AC5F0B /* Brest-LPDB.gpx in Resources */ = {isa = PBXBuildFile; fileRef = C898ECCE18D3727D00AC5F0B /* Brest-LPDB.gpx */; };
 		C898ECDF18D3728700AC5F0B /* JesayaFree.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C898ECD518D3727D00AC5F0B /* JesayaFree.ttf */; };
@@ -301,6 +304,8 @@
 		C832824418DE0C780003ACA0 /* LTSectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSectionsViewController.m; sourceTree = "<group>"; };
 		C861985418DEED18000B85B0 /* LTSectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSectionCell.h; sourceTree = "<group>"; };
 		C861985518DEED18000B85B0 /* LTSectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSectionCell.m; sourceTree = "<group>"; };
+		C862043F18E102FE00E159D7 /* UIImageView+LT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+LT.h"; sourceTree = "<group>"; };
+		C862044018E102FE00E159D7 /* UIImageView+LT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+LT.m"; sourceTree = "<group>"; };
 		C898ECCD18D3727D00AC5F0B /* Brest-ISEN.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Brest-ISEN.gpx"; sourceTree = "<group>"; };
 		C898ECCE18D3727D00AC5F0B /* Brest-LPDB.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Brest-LPDB.gpx"; sourceTree = "<group>"; };
 		C898ECD018D3727D00AC5F0B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CGU.strings; sourceTree = "<group>"; };
@@ -780,6 +785,8 @@
 			children = (
 				C8EBB5C718D3845B00D27596 /* UIColor+LT.h */,
 				C8EBB5C818D3845B00D27596 /* UIColor+LT.m */,
+				C862043F18E102FE00E159D7 /* UIImageView+LT.h */,
+				C862044018E102FE00E159D7 /* UIImageView+LT.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1032,6 +1039,7 @@
 				C8EBB5C918D3845B00D27596 /* UIColor+LT.m in Sources */,
 				C8EBB5C518D3829300D27596 /* Constants.m in Sources */,
 				A57765AD1777537900CC8EE6 /* LTMediaListCell.m in Sources */,
+				C862044118E102FE00E159D7 /* UIImageView+LT.m in Sources */,
 				A57765B81777546200CC8EE6 /* UIImage+Resize.m in Sources */,
 				A57765931777525D00CC8EE6 /* LTConnectionManager.m in Sources */,
 				A569D72517774C3900ED24B9 /* LTTableViewController.m in Sources */,
@@ -1085,6 +1093,7 @@
 			files = (
 				C83281F218DDC6AD0003ACA0 /* LTConnectionManagerTests.m in Sources */,
 				C832823E18DDE83F0003ACA0 /* LTTestCase.m in Sources */,
+				C862044318E102FE00E159D7 /* UIImageView+LT.m in Sources */,
 				C83281F318DDC6AD0003ACA0 /* LTSectionTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1101,6 +1110,7 @@
 				C8EBB5CA18D3845B00D27596 /* UIColor+LT.m in Sources */,
 				C8EBB5C418D3829200D27596 /* Constants.m in Sources */,
 				C8EBB57B18D37E0100D27596 /* LTMediaListCell.m in Sources */,
+				C862044218E102FE00E159D7 /* UIImageView+LT.m in Sources */,
 				C8EBB57C18D37E0100D27596 /* UIImage+Resize.m in Sources */,
 				C8EBB57D18D37E0100D27596 /* LTConnectionManager.m in Sources */,
 				C8EBB57E18D37E0100D27596 /* LTTableViewController.m in Sources */,

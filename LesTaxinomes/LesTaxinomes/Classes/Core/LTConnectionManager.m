@@ -154,7 +154,7 @@ NSString* const LTConnectionManagerErrorDomain = @"LTConnectionManagerErrorDomai
     if(range.length == 0 || range.length > LTConnectionManagerMaxItemsStep)
         range.length = LTConnectionManagerMaxItemsStep;
     NSString* limite = [NSString stringWithFormat:@"%d,%d", range.location,range.length];
-    NSArray *requestedFields = @[@"id_media", @"titre", @"date", @"statut", @"vignette", @"auteurs", @"gis"];
+    NSArray *requestedFields = @[@"id_media", @"titre", @"date", @"statut", @"vignette", @"auteurs", @"gis", @"extension"];
     NSNumber* thumbnailWidth = [NSNumber numberWithDouble:(THUMBNAIL_MAX_WIDHT)];
     NSNumber* thumbnailHeight = [NSNumber numberWithDouble:(THUMBNAIL_MAX_HEIGHT)];
     NSMutableDictionary* parameters = [NSMutableDictionary dictionaryWithDictionary:
@@ -388,7 +388,7 @@ NSString* const LTConnectionManagerErrorDomain = @"LTConnectionManagerErrorDomai
 - (void)getHomeCoversWithResponseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock
 {
     NSString* limite = [NSString stringWithFormat:@"%d,%d", 0, LTConnectionManagerMaxItemsStep];
-    NSArray *requestedFields = @[@"id_media", @"titre", @"date", @"statut", @"vignette", @"auteurs", @"document"];
+    NSArray *requestedFields = @[@"id_media", @"titre", @"date", @"statut", @"vignette", @"auteurs", @"document", @"extension"];
     NSMutableDictionary* parameters = [NSMutableDictionary dictionaryWithDictionary:
                                        @{
                                          @"limite":              limite,
