@@ -754,10 +754,12 @@ NSString* const LTConnectionManagerErrorDomain = @"LTConnectionManagerErrorDomai
 {
     
     NSMutableArray* identifiers = [NSMutableArray array];
-    if (login) {
+    if (login)
+    {
         [identifiers addObject:login];
     }
-    if (password) {
+    if (password)
+    {
         [identifiers addObject:password];
     }
     
@@ -765,48 +767,53 @@ NSString* const LTConnectionManagerErrorDomain = @"LTConnectionManagerErrorDomai
     [xmlrpcClient executeMethod:LTXMLRCPMethodSPIPAuth
                      withObject:identifiers
                authCookieEnable:YES
-                        success:^(id response) {
-                            if([response isKindOfClass:[NSDictionary class]])
-                            {
-                                NSError* error;
-                                NSManagedObjectContext* context = [NSManagedObjectContext MR_defaultContext];
-                                self.authenticatedUser = [LTAuthor authorWithXMLRPCResponse:response
-                                                                                  inContext:context
-                                                                                      error:&error];
-                                
-                                NSError* coredataError;
-                                [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error)
-                                {
-                                    if (coredataError)
-                                    {
-                                        LogError(@"%@", coredataError);
-                                        if(responseBlock) responseBlock(nil, coredataError);
-                                    }
-                                    else
-                                    {
-                                        if(responseBlock) responseBlock(self.authenticatedUser, nil);
-                                    }
-                                }];
-                                
-                            } else {
-                                NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
-                                                                     code:LTConnectionManagerInternalError
-                                                                 userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodSPIPAuth}];
-                                
-                                
-                                if(responseBlock) responseBlock(nil, error);
-                                
-                            }
-                        } failure:^(NSError* error) {
-                            if(responseBlock) responseBlock(nil, error);
-                        }];
+                        success:^(id response)
+    {
+        if([response isKindOfClass:[NSDictionary class]])
+        {
+            NSError* error;
+            NSManagedObjectContext* context = [NSManagedObjectContext MR_defaultContext];
+            self.authenticatedUser = [LTAuthor authorWithXMLRPCResponse:response
+                                                              inContext:context
+                                                                  error:&error];
+            
+            NSError* coredataError;
+            [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error)
+             {
+                 if (coredataError)
+                 {
+                     LogError(@"%@", coredataError);
+                     if(responseBlock) responseBlock(nil, coredataError);
+                 }
+                 else
+                 {
+                     if(responseBlock) responseBlock(self.authenticatedUser, nil);
+                 }
+             }];
+            
+        } else {
+            NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                                 code:LTConnectionManagerInternalError
+                                             userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodSPIPAuth}];
+            
+            
+            if(responseBlock) responseBlock(nil, error);
+            
+        }
+    }
+    failure:^(NSError* error)
+    {
+        if(responseBlock) responseBlock(nil, error);
+    }];
 }
 
 - (void)unAuthenticate
 {
     NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[[NSURL URLWithString:LTHTTPHost] absoluteURL]];
-    for (NSHTTPCookie * cookie in cookies) {
-        if([cookie.name isEqualToString:LTSessionCookieName]) {
+    for (NSHTTPCookie * cookie in cookies)
+    {
+        if([cookie.name isEqualToString:LTSessionCookieName])
+        {
             [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
         }
     }

@@ -71,10 +71,16 @@
     [self updateScrollViewInsets];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self updateScrollViewInsets];
+    CGPoint contentOffset = {0, -self.parentViewController.topLayoutGuide.length};
+    self.tableView.contentOffset = contentOffset;
 }
 
 - (void)viewDidUnload
@@ -101,30 +107,24 @@
 
 - (LTMedia *)firstVisibleMedia
 {
-    if (self.tableView.visibleCells.count == 0) {
+    if (self.tableView.visibleCells.count == 0)
+    {
         return nil;
     }
     
-    NSArray* sortedVisibleCells = [self.tableView.visibleCells sortedArrayUsingComparator:^NSComparisonResult(LTMediaListCell *cell1, LTMediaListCell *cell2) {
-        NSIndexPath* indexPath1 = [self.tableView indexPathForCell:cell1];
-        NSIndexPath* indexPath2 = [self.tableView indexPathForCell:cell2];
-        
-        if (indexPath1.row < indexPath2.row)
-            return NSOrderedAscending;
-        else if (indexPath1.row > indexPath2.row)
-            return NSOrderedDescending;
-        else
-            return NSOrderedSame;
-    }];
+    CGPoint top = {0, self.tableView.contentOffset.y + self.tableView.contentInset.top};
+    NSIndexPath* topVisibleCellIndexPath = [self.tableView indexPathForRowAtPoint:top];
     
-    LTMediaListCell* cell = sortedVisibleCells[0];
-    return cell.media;
+    LTMedia* media = [self.dataSource.mediasResultController objectAtIndexPath:topVisibleCellIndexPath];
+    return media;
 }
 
 - (void)setFirstVisibleMedia:(LTMedia *)firstVisibleMedia
 {
     NSIndexPath* indexPath = [self.dataSource.mediasResultController indexPathForObject:firstVisibleMedia];
-    if (self.dataSource.mediasResultController.fetchedObjects.count > indexPath.row) {
+    
+    if (self.dataSource.mediasResultController.fetchedObjects.count > indexPath.row)
+    {
         [self.tableView scrollToRowAtIndexPath:indexPath
                           atScrollPosition:UITableViewScrollPositionTop
                                   animated:NO];

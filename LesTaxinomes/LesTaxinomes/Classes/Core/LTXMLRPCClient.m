@@ -81,7 +81,8 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
               failure:(void (^)(NSError *error))failure
 {
     
-    if (!method) {
+    if (!method)
+    {
         NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
                                              code:LTConnectionManagerInternalError
                                          userInfo:nil];
@@ -101,20 +102,30 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
     // Cookies management
     NSArray* cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:self.baseURL];
     NSString* cookieHeaderValue = @"";
-    for (NSHTTPCookie * cookie in cookies) {
+    for (NSHTTPCookie * cookie in cookies)
+    {
         //Add cookies other than session cookie
-        if(![cookie.name isEqualToString: LTSessionCookieName]) {
-            if ([cookieHeaderValue isEqualToString:@""]) {
+        if(![cookie.name isEqualToString: LTSessionCookieName])
+        {
+            if ([cookieHeaderValue isEqualToString:@""])
+            {
 				cookieHeaderValue = [NSString stringWithFormat: @"%@=%@",cookie.name,cookie.value];
-			} else {
+			}
+            else
+            {
 				cookieHeaderValue = [NSString stringWithFormat: @"%@; %@=%@",cookieHeaderValue,cookie.name,cookie.value];
 			}
             // Add session cookie only if authCookieEnable is YES
-        } else if ([cookie.name isEqualToString: LTSessionCookieName] &&
-                   authCookieEnable) {
-            if ([cookieHeaderValue isEqualToString:@""]) {
+        }
+        else if ([cookie.name isEqualToString: LTSessionCookieName] &&
+                   authCookieEnable)
+        {
+            if ([cookieHeaderValue isEqualToString:@""])
+            {
 				cookieHeaderValue = [NSString stringWithFormat: @"%@=%@",cookie.name,cookie.value];
-			} else {
+			}
+            else
+            {
 				cookieHeaderValue = [NSString stringWithFormat: @"%@; %@=%@",cookieHeaderValue,cookie.name,cookie.value];
 			}
         }
@@ -127,12 +138,15 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
     successBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
         id response = [[[XMLRPCResponse alloc] initWithData:responseObject] object];
         LogDebug(@"RESPONSE: %@",response);
-        if (![response isKindOfClass:[NSError class]]) {
+        if (![response isKindOfClass:[NSError class]])
+        {
             NSError* wsResponseError = nil;
-            if ([response isKindOfClass:[NSDictionary class]]) {
+            if ([response isKindOfClass:[NSDictionary class]])
+            {
                 NSString* faultCode = [(NSDictionary *)response objectForKey:kFaultCodeKey];
                 NSString* faultString = [(NSDictionary *)response objectForKey:kFaultStringKey];
-                if (faultCode && faultString) {
+                if (faultCode && faultString)
+                {
                     wsResponseError = [NSError errorWithDomain:LTXMLRPCServerErrorDomain
                                                           code:[faultCode integerValue]
                                                       userInfo:@{NSLocalizedDescriptionKey:faultString,LTXMLRPCMethodKey:method}];
@@ -140,26 +154,34 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
             }
             
             // Succes block call
-            if (!wsResponseError && success) {
-                dispatch_async(dispatch_get_main_queue(), ^{
+            if (!wsResponseError && success)
+            {
+                dispatch_async(dispatch_get_main_queue(), ^
+                {
                     success(response);
                 });
             }
             // Failure block calls
-            else if (failure) {
-                dispatch_async(dispatch_get_main_queue(), ^{
+            else if (failure)
+            {
+                dispatch_async(dispatch_get_main_queue(), ^
+                {
                     failure(wsResponseError);
                 });
             }
-        } else if (failure) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+        }
+        else if (failure)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^
+            {
                 failure((NSError *)response);
             });
         }
     };
     
     void (^failureBlock)(AFHTTPRequestOperation *operation, NSError *error);
-    failureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+    failureBlock = ^(AFHTTPRequestOperation *operation, NSError *error)
+    {
         failure(error);
     };
     
@@ -169,14 +191,21 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
                                                                       success:successBlock
                                                                       failure:failureBlock];
     if (downloadProgressBlock)
-        [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+    {
+        [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead)
+        {
             downloadProgressBlock(((CGFloat)totalBytesRead)/((CGFloat)totalBytesExpectedToRead));
         }];
+    }
 
     if (uploadProgressBlock)
-        [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+    {
+        [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite)
+        {
             uploadProgressBlock(((CGFloat)totalBytesWritten)/((CGFloat)totalBytesExpectedToWrite));
         }];
+    }
+    
     operation.successCallbackQueue = xmlrpc_request_operation_processing_queue();
     [self enqueueHTTPRequestOperation:operation];
 }

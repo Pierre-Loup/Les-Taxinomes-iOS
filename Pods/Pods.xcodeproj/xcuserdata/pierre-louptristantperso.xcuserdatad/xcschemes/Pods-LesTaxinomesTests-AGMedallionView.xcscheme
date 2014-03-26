@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CAFA6350F5774FBA90073C75"
+               BlueprintIdentifier = "6398119830D848C8A1BD8722"
                BuildableName = "libPods-LesTaxinomesTests-AGMedallionView.a"
                BlueprintName = "Pods-LesTaxinomesTests-AGMedallionView"
                ReferencedContainer = "container:Pods.xcodeproj">

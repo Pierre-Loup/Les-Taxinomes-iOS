@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ZjQ-WO-pTj">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
@@ -359,7 +358,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xeo-rK-tKf" customClass="JBKenBurnsView">
-                                <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -375,12 +374,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Xeo-rK-tKf" firstAttribute="top" secondItem="Cf3-RE-dCJ" secondAttribute="top" id="5cP-kn-unJ"/>
                             <constraint firstAttribute="trailing" secondItem="Xeo-rK-tKf" secondAttribute="trailing" id="6th-ks-zO4"/>
                             <constraint firstItem="Xeo-rK-tKf" firstAttribute="leading" secondItem="Cf3-RE-dCJ" secondAttribute="leading" id="F9m-u6-8NH"/>
-                            <constraint firstItem="vsj-Lc-s4Z" firstAttribute="top" secondItem="Xeo-rK-tKf" secondAttribute="bottom" id="GcA-No-sWj"/>
                             <constraint firstItem="vsj-Lc-s4Z" firstAttribute="top" secondItem="mGG-Gf-Yx6" secondAttribute="bottom" constant="20" id="Jco-y2-29n"/>
-                            <constraint firstItem="Xeo-rK-tKf" firstAttribute="top" secondItem="gze-uA-lhY" secondAttribute="bottom" id="b4T-qi-oLj"/>
                             <constraint firstAttribute="centerX" secondItem="mGG-Gf-Yx6" secondAttribute="centerX" id="c42-W7-shJ"/>
+                            <constraint firstAttribute="bottom" secondItem="Xeo-rK-tKf" secondAttribute="bottom" id="shU-fK-Anv"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="uVg-s7-IgA">
@@ -1015,6 +1014,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="nRh-Ej-mZT"/>
         <segue reference="c4d-w2-jjD"/>
-        <segue reference="7bE-t7-2ka"/>
+        <segue reference="8uH-qf-60E"/>
     </inferredMetricsTieBreakers>
 </document>

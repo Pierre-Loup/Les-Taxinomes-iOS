@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9CD7E9BA4AE6401A8256A69A"
+               BlueprintIdentifier = "6837DD842C4049AC90B54938"
                BuildableName = "libPods-LesTaxinomesTests-xmlrpc.a"
                BlueprintName = "Pods-LesTaxinomesTests-xmlrpc"
                ReferencedContainer = "container:Pods.xcodeproj">

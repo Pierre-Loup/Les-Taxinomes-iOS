@@ -72,29 +72,22 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
 
 - (LTMedia *)firstVisibleMedia
 {
-    if (self.collectionView.visibleCells.count == 0) {
+    if (self.collectionView.visibleCells.count == 0)
+    {
         return nil;
     }
     
-    NSArray* sortedVisibleCells = [self.collectionView.visibleCells sortedArrayUsingComparator:^NSComparisonResult(LTMediaCollectionCell *cell1, LTMediaCollectionCell *cell2) {
-        NSIndexPath* indexPath1 = [self.collectionView indexPathForCell:cell1];
-        NSIndexPath* indexPath2 = [self.collectionView indexPathForCell:cell2];
-        
-        if (indexPath1.row < indexPath2.row)
-            return NSOrderedAscending;
-        else if (indexPath1.row > indexPath2.row)
-            return NSOrderedDescending;
-        else
-            return NSOrderedSame;
-    }];
+    CGPoint top = {10, self.collectionView.contentOffset.y + self.collectionView.contentInset.top +10};
+    NSIndexPath* topVisibleCellIndexPath = [self.collectionView indexPathForItemAtPoint:top];
     
-    LTMediaCollectionCell* cell = sortedVisibleCells[0];
-    return cell.media;
+    LTMedia* media = [self.dataSource.mediasResultController objectAtIndexPath:topVisibleCellIndexPath];
+    return media;
 }
 
 - (void)setFirstVisibleMedia:(LTMedia *)firstVisibleMedia
 {
     NSIndexPath* indexPath = [self.dataSource.mediasResultController indexPathForObject:firstVisibleMedia];
+
     if (self.dataSource.mediasResultController.fetchedObjects.count > indexPath.row)
     {
         [self.collectionView scrollToItemAtIndexPath:indexPath
@@ -139,7 +132,8 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionReusableView* view;
-    if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
+    if ([kind isEqualToString:UICollectionElementKindSectionFooter])
+    {
         
         self.footerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                                   withReuseIdentifier:LTMediasGridViewControllerFooterIdentifier
@@ -188,27 +182,35 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
     __weak UICollectionView *collectionView = self.collectionView;
     switch (type)
     {
-        case NSFetchedResultsChangeInsert: {
-            update = ^{
+        case NSFetchedResultsChangeInsert:
+        {
+            update = ^
+            {
                 [collectionView insertItemsAtIndexPaths:@[newIndexPath]];
             };
             break;
         }
-        case NSFetchedResultsChangeDelete: {
-            update = ^{
+        case NSFetchedResultsChangeDelete:
+        {
+            update = ^
+            {
                 [collectionView deleteItemsAtIndexPaths:@[indexPath]];
             };
             break;
         }
-        case NSFetchedResultsChangeUpdate: {
-            update = ^{
+        case NSFetchedResultsChangeUpdate:
+        {
+            update = ^
+            {
                 //((LTMediaCollectionCell*)[collectionView cellForItemAtIndexPath:indexPath]).media = media;
                 [collectionView reloadItemsAtIndexPaths:@[indexPath]];
             };
             break;
         }
-        case NSFetchedResultsChangeMove: {
-            update = ^{
+        case NSFetchedResultsChangeMove:
+        {
+            update = ^
+            {
                 [collectionView moveItemAtIndexPath:indexPath toIndexPath:newIndexPath];
             };
             break;
@@ -219,9 +221,12 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    [self.collectionView performBatchUpdates:^{
+    [self.collectionView performBatchUpdates:^
+    {
         for (UICollectionViewUpdateBlock update in self.updates) update();
-    } completion:^(BOOL finished) {
+    }
+    completion:^(BOOL finished)
+    {
         self.updates = nil;
     }];
 }

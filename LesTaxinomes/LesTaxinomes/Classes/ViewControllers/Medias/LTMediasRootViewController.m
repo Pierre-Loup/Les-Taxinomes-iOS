@@ -114,6 +114,7 @@ typedef enum {
     self.mediasResultController.delegate = self.listViewController;
     self.contentViewController = self.listViewController;
     [self updateContraints];
+    [self.listViewController.tableView scrollsToTop];
     
     self.mediaDetailViewController = (LTMediaDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
@@ -133,7 +134,6 @@ typedef enum {
     {
         self.mediasResultController.delegate = self.contentViewController;
     }
-        
 }
 
 - (void)viewWillLayoutSubviews
@@ -312,11 +312,12 @@ typedef enum {
         self.mediasResultController.delegate = self.gridViewController;
         
         [self.gridViewController.collectionView reloadData];
-        self.gridViewController.firstVisibleMedia = self.listViewController.firstVisibleMedia;
+        LTMedia* firstVisibleMedia = self.listViewController.firstVisibleMedia;
         
         self.gridViewController.view.hidden = YES;
         [self.view addSubview:self.gridViewController.view];
         self.contentViewController = self.gridViewController;
+        self.gridViewController.firstVisibleMedia = firstVisibleMedia;
         
         [UIView transitionFromView:self.listViewController.view
                             toView:self.gridViewController.view
