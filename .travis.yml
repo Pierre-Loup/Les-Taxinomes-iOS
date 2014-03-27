@@ -2,7 +2,7 @@ language: objective-c
 rvm: 1.9.3
 before_install:
     - brew update
-    - brew upgrade xctool
+    - brew upgrade xctool --HEAD
     - gem install cocoapods -v 0.29.0 --no-ri --no-rdoc
 script: 
     - xctool -workspace LesTaxinomes.xcworkspace -scheme LesTaxinomes -sdk iphonesimulator build
