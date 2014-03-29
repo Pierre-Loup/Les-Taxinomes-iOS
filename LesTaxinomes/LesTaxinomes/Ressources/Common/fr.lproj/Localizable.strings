@@ -16,7 +16,7 @@
 "common.finish" = "Terminer";
 "common.share" = "Partager";
 "common.title" = "Titre";
-"common.texte" = "Texte";
+"common.text" = "Texte";
 "common.city" = "Ville";
 "common.zipcode" = "Code postal";
 "common.country" = "Pays";

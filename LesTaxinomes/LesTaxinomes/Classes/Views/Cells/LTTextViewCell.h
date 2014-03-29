@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface LTTextViewCell : UITableViewCell
+@property (nonatomic, retain) IBOutlet UILabel* infoLabel;
 @property (nonatomic, retain) IBOutlet UITextView* textView;
 @end

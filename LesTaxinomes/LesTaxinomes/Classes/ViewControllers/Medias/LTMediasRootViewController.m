@@ -249,17 +249,29 @@ typedef enum {
         UIView* contentView = self.contentViewController.view;
         contentView.translatesAutoresizingMaskIntoConstraints = NO;
         self.contentViewController.view.frame = self.view.bounds;
-        id topLayoutGuide = self.topLayoutGuide;
-        id bottomLaoutGuide = self.bottomLayoutGuide;
+ 
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[contentView]|"
                                                                           options:0
                                                                           metrics:nil
                                                                             views:NSDictionaryOfVariableBindings(contentView)]];
-        NSDictionary* viewsDict = NSDictionaryOfVariableBindings(contentView, topLayoutGuide, bottomLaoutGuide);
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topLayoutGuide][contentView][bottomLaoutGuide]"
-                                                                          options:0
-                                                                          metrics:nil
-                                                                            views:viewsDict]];
+        
+        if (IOS7_OR_GREATER)
+        {
+            id topLayoutGuide = self.topLayoutGuide;
+            id bottomLaoutGuide = self.bottomLayoutGuide;
+            NSDictionary* viewsDict = NSDictionaryOfVariableBindings(contentView, topLayoutGuide, bottomLaoutGuide);
+            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topLayoutGuide][contentView][bottomLaoutGuide]"
+                                                                              options:0
+                                                                              metrics:nil
+                                                                                views:viewsDict]];
+        }
+        else
+        {
+            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|"
+                                                                              options:0
+                                                                              metrics:nil
+                                                                                views:NSDictionaryOfVariableBindings(contentView)]];
+        }
     }
 }
 

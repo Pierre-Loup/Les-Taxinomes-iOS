@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C2EDACA854D042D3B3FF4933"
+               BlueprintIdentifier = "A72B52C8843540BA82B5FA94"
                BuildableName = "libPods-LesTaxinomesTests-PSTCollectionView.a"
                BlueprintName = "Pods-LesTaxinomesTests-PSTCollectionView"
                ReferencedContainer = "container:Pods.xcodeproj">

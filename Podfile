@@ -1,3 +1,4 @@
+platform :ios, '6.0'
 xcodeproj 'LesTaxinomes/LesTaxinomes.xcodeproj'
 
 inhibit_all_warnings!

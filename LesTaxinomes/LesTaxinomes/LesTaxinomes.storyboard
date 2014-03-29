@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ZjQ-WO-pTj">
     <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
@@ -721,7 +722,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="109"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RTF-Fm-gyh">
+                                        <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RTF-Fm-gyh">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="109"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <connections>
@@ -729,6 +730,12 @@
                                             </connections>
                                         </mapView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="RTF-Fm-gyh" firstAttribute="leading" secondItem="7Hu-Jb-9eh" secondAttribute="leading" id="1NN-jN-d9L"/>
+                                        <constraint firstItem="RTF-Fm-gyh" firstAttribute="top" secondItem="7Hu-Jb-9eh" secondAttribute="top" id="9sF-zV-Ofk"/>
+                                        <constraint firstAttribute="bottom" secondItem="RTF-Fm-gyh" secondAttribute="bottom" id="JaL-I2-OBN"/>
+                                        <constraint firstAttribute="trailing" secondItem="RTF-Fm-gyh" secondAttribute="trailing" id="wyC-kc-9Iz"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="mapView" destination="RTF-Fm-gyh" id="Ihj-zD-qM0"/>
@@ -776,7 +783,7 @@
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Of5-3P-tbw">
                                             <rect key="frame" x="20" y="49" width="280" height="100"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             <connections>
@@ -795,6 +802,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="infoLabel" destination="CjF-WO-1fL" id="BBb-Af-6Ub"/>
                                     <outlet property="textView" destination="Of5-3P-tbw" id="aRZ-Yx-wRo"/>
                                 </connections>
                             </tableViewCell>

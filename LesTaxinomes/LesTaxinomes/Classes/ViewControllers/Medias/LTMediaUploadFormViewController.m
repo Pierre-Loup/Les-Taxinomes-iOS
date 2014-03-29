@@ -83,7 +83,6 @@
 @property (nonatomic, strong) UITextField* zipcodeInput;
 @property (nonatomic, strong) UITextField* countryInput;
 @property (nonatomic, strong) UITextView* textInput;
-@property (nonatomic, strong) UIButton* shareButton;
 
 @property (nonatomic, strong) LTLicense *license;
 @property (nonatomic, strong) CLLocation* mediaLocation;
@@ -120,9 +119,10 @@
     // Load textCell, licenseCell and
     self.navigationItem.title = _T(@"media_upload_view_title");
     
-    if ([self.shareButton respondsToSelector:@selector(tintColor)])
+    if (!IOS7_OR_GREATER)
     {
-        self.shareButton.tintColor = [UIColor secondaryColor];
+        self.tableView.backgroundView = nil;
+        self.tableView.backgroundColor = [UIColor whiteColor];
     }
     
     ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
@@ -166,7 +166,8 @@
     [self refreshForm];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated
+{
     [super viewWillDisappear:animated];
     [SVProgressHUD dismiss];
 }
@@ -180,7 +181,6 @@
     self.cityInput = nil;
     self.zipcodeInput = nil;
     self.countryInput = nil;
-    self.shareButton = nil;
 }
 
 - (NSUInteger)supportedInterfaceOrientations
@@ -195,6 +195,7 @@
 {
     [self.cellForIndexPath removeAllObjects];
     LTTextViewCell* textViewCell = [self.tableView dequeueReusableCellWithIdentifier:@"LTTextViewCell"];
+    textViewCell.infoLabel.text = _T(@"common.text");
     self.textInput = textViewCell.textView;
     [self.cellForIndexPath setObject:textViewCell
                               forKey:kTexteCellIndexPath];
@@ -209,6 +210,7 @@
                               forKey:kSubmitCellIndexPath];
     
     if (self.licenseCell) {
+        self.licenseCell.selectionStyle = UITableViewCellSelectionStyleGray;
         [self.cellForIndexPath setObject:self.licenseCell
                                   forKey:kLicenseCellIndexPath];
     }
@@ -226,12 +228,13 @@
     
     // Location picker cell
     UITableViewCell* localisationPickerCell = [self.tableView dequeueReusableCellWithIdentifier:kLocalisationPickerCellId];
-    if (!localisationPickerCell) {
+    if (!localisationPickerCell)
+    {
         localisationPickerCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                          reuseIdentifier:kLocalisationPickerCellId];
     }
-    [localisationPickerCell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-    [localisationPickerCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    localisationPickerCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    localisationPickerCell.selectionStyle = UITableViewCellSelectionStyleGray;
     localisationPickerCell.textLabel.text = _T(@"media_upload.location_picker_cell.text");
     [self.cellForIndexPath setObject:localisationPickerCell forKey:kLocationPickerCellIndexPath];
     NSInteger rowNumberForSection = 1;
