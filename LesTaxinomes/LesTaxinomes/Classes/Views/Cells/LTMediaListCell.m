@@ -83,7 +83,7 @@
     }
     
     
-    [self.image setImageWithMedia:media];
+    [self.image setImageWithMedia:media completion:^{}];
 }
 
 @end

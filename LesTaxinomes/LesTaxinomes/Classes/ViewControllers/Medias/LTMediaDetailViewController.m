@@ -36,6 +36,7 @@
 #import "MWPhotoBrowser.h"
 // MODEL
 #import "Annotation.h"
+#import "LTLicense+Business.h"
 #import "LTMedia+Business.h"
 
 static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewControllerSegueId";
@@ -44,21 +45,18 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
 @interface LTMediaDetailViewController () <UIScrollViewDelegate,
                                             UIGestureRecognizerDelegate,
                                             MWPhotoBrowserDelegate>
-{
-    int asynchLoadCounter_;
-}
 
 @property (nonatomic, weak) IBOutlet UIScrollView * scrollView;
-@property (nonatomic, weak) IBOutlet UIView * containerView;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* containerViewWidthConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* containerViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet UIImageView * mediaImageView;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView* placeholderAIView;
 @property (nonatomic, weak) IBOutlet UIImageView * authorAvatarView;
 @property (nonatomic, weak) IBOutlet UILabel * authorNameLabel;
-@property (nonatomic, weak) IBOutlet UITextView * descTextView;
-@property (nonatomic, weak) IBOutlet UILabel * licenseNameLabel;
+@property (nonatomic, weak) IBOutlet UITextView * textView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* textViewHeightConstraint;
+@property (nonatomic, weak) IBOutlet UIImageView * licenseImageView;
 @property (nonatomic, weak) IBOutlet MKMapView * mapView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* mapViewHeightConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* contentViewHeightConstraint;
 
 @end
 
@@ -87,13 +85,6 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
                                                                        target:nil action:nil];
     self.navigationItem.backBarButtonItem = backButtonItem;
     
-    asynchLoadCounter_ = 0;
-    self.scrollView.backgroundColor = [UIColor clearColor];
-    self.scrollView.opaque = NO;
-    self.scrollView.delegate = self;
-    
-    self.containerView.translatesAutoresizingMaskIntoConstraints = NO;
-    
     UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                            action:@selector(mapTouched:)];
     [tapGestureRecognizer setNumberOfTouchesRequired:1];
@@ -107,27 +98,46 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
     self.authorAvatarView.userInteractionEnabled =YES;
     [self.authorAvatarView addGestureRecognizer:tapGestureRecognizer];
     
-    self.scrollView.hidden = YES;
-    [self configureView];
+    [self setupView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self refreshView];
+}
+
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    
+    CGFloat textViewContentHeight = 0.f;
+    if (IOS7_OR_GREATER)
+    {
+        CGSize sizeThatFits = [self.textView sizeThatFits:self.textView.frame.size];
+        textViewContentHeight = sizeThatFits.height;
+    }
+    else
+    {
+        CGSize contentSize = self.textView.contentSize;
+        textViewContentHeight = contentSize.height;
+    }
+    self.textViewHeightConstraint.constant = textViewContentHeight;
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [SVProgressHUD dismiss];
-}
-
-- (void)viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
-    self.containerViewWidthConstraint.constant = self.view.bounds.size.width;
-    self.containerViewHeightConstraint.constant = CGRectGetMaxY(self.mapView.frame);
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -158,38 +168,33 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
 
 #pragma mark - Private methodes
 
-- (void)configureView
+- (void)setupView
 {
-    [SVProgressHUD show];
     LTConnectionManager *cm = [LTConnectionManager sharedManager];
     
-    // Load media datas if not present or not up to date
     if( self.media == nil
        ||  self.media.text == nil
        || [[NSDate date] timeIntervalSinceDate: self.media.localUpdateDate] > LTMediaCacheTime)
     {
+        [SVProgressHUD show];
         [cm getMediaWithId:self.media.identifier
-             responseBlock:^(LTMedia *media, NSError *error) {
-                 if (error)
-                 {
-                     [SVProgressHUD showErrorWithStatus:nil];
-                 } else
-                 {
-                     self.media = media;
-                 }
-                 
-                 asynchLoadCounter_--;
-                 [self updateMediaInformation];
-                 [self displayContentIfNeeded];
-             }];
-        asynchLoadCounter_++;
+             responseBlock:^(LTMedia *media, NSError *error)
+        {
+            if (error)
+            {
+                [SVProgressHUD showErrorWithStatus:nil];
+            }
+            else
+            {
+                self.media = media;
+                [SVProgressHUD dismiss];
+            }
+            
+            [self refreshMedia];
+        }];
     }
-    else
-    {
-        [self updateMediaInformation];
-    }
+    [self refreshMedia];
     
-    // Load media datas if not present or not up to date
     if( self.media.author == nil
        ||  self.media.author.avatarURL == nil
        || [[NSDate date] timeIntervalSinceDate: self.media.author.localUpdateDate] > LTMediaCacheTime)
@@ -197,162 +202,17 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
         [cm getAuthorWithId:self.media.author.identifier
               responseBlock:^(LTAuthor *author, NSError *error)
         {
-                  
-                  if (error) {
-                      [SVProgressHUD showErrorWithStatus:nil];
-                  }
-                  
-                  asynchLoadCounter_--;
-                  [self displayContentIfNeeded];
-              }];
-        asynchLoadCounter_++;
-    } else {
-        [self updateAuthorInformations];
-    }
-    
-    if (asynchLoadCounter_ > 0)
-    {
-        [SVProgressHUD dismiss];
-    }
-    
-    [self displayContentIfNeeded];
-}
-
-- (void)refreshView
-{
-    if (self.mediaImageView.image)
-    {
-        self.mediaImageView.frame = CGRectMake(self.mediaImageView.frame.origin.x,
-                                               self.mediaImageView.frame.origin.y,
-                                               self.mediaImageView.frame.size.width,
-                                               self.mediaImageView.frame.size.width);
-        self.placeholderAIView.center = CGPointMake(self.mediaImageView.bounds.size.width/2 + self.mediaImageView.frame.origin.x, (self.mediaImageView.bounds.size.height/2) + 100.0 + self.mediaImageView.frame.origin.y);
-    }
-    
-    [self.authorAvatarView setImageWithURL:[NSURL URLWithString:self.media.author.avatarURL]
-                          placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
-
-    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"dd/MM/yyyy"];
-    self.authorNameLabel.text = [NSString stringWithFormat:_T(@"media_detail.publish_info_patern"),
-                                 self.media.author.name,
-                                 [dateFormatter stringFromDate:self.media.date],
-                                 [self.media.visits integerValue]];
-    
-    
-    if (self.descTextView)
-    {
-        if(self.media.text
-           && ![self.media.text isEqualToString:@""])
-        {
-            self.descTextView.text = self.media.text;
-        }
-        else
-        {
-            self.descTextView.text = _T(@"media_detail.no_text");
-        }
-        
-        [self.descTextView sizeToFit];
-        [self.descTextView removeConstraints:self.descTextView.constraints];
-        NSDictionary* views = @{@"text" : self.descTextView};
-        NSString* visualFormat = [NSString stringWithFormat:@"V:[text(==%f)]", self.descTextView.contentSize.height];
-        NSArray* constraints = [NSLayoutConstraint constraintsWithVisualFormat:visualFormat
-                                                                       options:0
-                                                                       metrics:nil
-                                                                         views:views];
-        [self.descTextView addConstraints:constraints];
-        [self.view needsUpdateConstraints];
-    }
-    
-    if ([self.media.license.name length])
-    {
-        self.licenseNameLabel.text = self.media.license.name;
-    }
-    else
-    {
-        self.licenseNameLabel.hidden = YES;
-    }
-    
-    // Map section if media as coordinates
-    if (self.media.coordinate.latitude
-        && self.media.coordinate.longitude)
-    {
-        if ([[self.mapView annotations] count])
-        {
-            [self.mapView removeAnnotations:[self.mapView annotations]];
-        }
-        [self.mapView addAnnotation:self.media];
-        self.mapView.region = MKCoordinateRegionMake(self.media.coordinate, MKCoordinateSpanMake(20.0, 20.0));
-
-        self.mapView.hidden = NO;
-        
-    }
-    else
-    {
-        self.mapView.hidden = YES;
-    }
-    
-    if (asynchLoadCounter_ > 0)
-    {
-        [SVProgressHUD show];
-    }
-    else
-    {
-        self.scrollView.hidden = NO;
-    }
-
-    [self.scrollView layoutIfNeeded];
-    
-    CGRect containerViewFrame = self.containerView.frame;
-    containerViewFrame.size.width = self.scrollView.bounds.size.width;
-    containerViewFrame.size.height = CGRectGetMaxY(self.mapView.frame);
-    self.containerView.frame = containerViewFrame;
-    
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-    {
-        return (interfaceOrientation == UIInterfaceOrientationPortrait);
-    }
-    else
-    {
-        return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-                interfaceOrientation == UIInterfaceOrientationLandscapeRight);
-    }
-}
-
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [self refreshView];
-}
-
-- (void)mediaImageTouched:(UIImage *)sender
-{    
-    if (self.media.mediaLargeURL.length)
-    {
-        [self displayMedia];
-    }
-    else if([self.media.type integerValue] != LTMediaTypeOther)
-    {
-        [SVProgressHUD show];
-        [[LTConnectionManager sharedManager] getMediaLargeURLWithId:self.media.identifier responseBlock:^(LTMedia *media, NSError *error)
-        {
-            if (!error)
-            {
-                [self displayMedia];
-                [SVProgressHUD dismiss];
-            }
-            else
+            if (error)
             {
                 [SVProgressHUD showErrorWithStatus:nil];
             }
+            
+            
+            
         }];
     }
+    [self refreshAuthor];
 }
-
-
 
 - (void)displayMedia
 {
@@ -377,39 +237,122 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
     }
 }
 
-- (void)displayContentIfNeeded
+- (void)refreshMedia
 {
-    if (asynchLoadCounter_ <= 0) {
-        [SVProgressHUD dismiss];
-        [self refreshView];
-        [self.scrollView setHidden:NO];
-    }
-}
-
-- (void)updateMediaInformation
-{
+    UIView* bottomView = self.mediaImageView;
+    
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                            action:@selector(mediaImageTouched:)];
     [tapGestureRecognizer setNumberOfTouchesRequired:1];
     [tapGestureRecognizer setDelegate:self];
     
-    //Don't forget to set the userInteractionEnabled UIView property to YES, default is NO.
     self.mediaImageView.userInteractionEnabled = YES;
     [self.mediaImageView addGestureRecognizer:tapGestureRecognizer];
-    [self.placeholderAIView startAnimating];
+    //[self.placeholderAIView startAnimating];
     
-    NSString* placeholderImageName;
-    LTMediaType mediaType = [self.media.type integerValue];
-    [self.mediaImageView setImageWithMedia:self.media];
+    [self.mediaImageView setImageWithMedia:self.media completion:^
+    {
+        
+    }];
+    
+    if (self.media.license.icon.length)
+    {
+        NSURL* licenseIconURL = [NSURL URLWithString:self.media.license.icon];
+        [self.licenseImageView setImageWithURL:licenseIconURL];
+    }
+    
+    if(self.media)
+    {
+        self.textView.text = [self.media.text length] ? self.media.text : _T(@"media_detail.no_text");
+        self.textView.hidden = NO;
+        bottomView = self.textView;
+    }
+    else
+    {
+        self.textView.hidden = YES;
+    }
+    
+    // Map section if media as coordinates
+    if (self.media.coordinate.latitude
+        && self.media.coordinate.longitude)
+    {
+        if ([[self.mapView annotations] count])
+        {
+            [self.mapView removeAnnotations:[self.mapView annotations]];
+        }
+        [self.mapView addAnnotation:self.media];
+        self.mapView.region = MKCoordinateRegionMake(self.media.coordinate, MKCoordinateSpanMake(20.0, 20.0));
+        
+        self.mapView.hidden = NO;
+        bottomView = self.mapView;
+    }
+    else
+    {
+        self.mapView.hidden = YES;
+    }
+    
+    [self.scrollView removeConstraint:self.contentViewHeightConstraint];
+    self.contentViewHeightConstraint = [NSLayoutConstraint constraintWithItem:self.scrollView
+                                                                    attribute:NSLayoutAttributeBottom
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:bottomView
+                                                                    attribute:NSLayoutAttributeBottom
+                                                                   multiplier:1
+                                                                     constant:10];
+    [self.scrollView addConstraint:self.contentViewHeightConstraint];
+    [self.scrollView needsUpdateConstraints];
+    
 }
 
-- (void)updateAuthorInformations
+- (void)refreshAuthor
 {
-//    [self.authorAvatarView setImageWithURL:[NSURL URLWithString:self.media.author.avatarURL]
-//                          placeholderImage:[UIImage imageNamed:@"default_avatar.png"]];
+    UIImage* authorAvatarPlaceholderImage = [UIImage imageNamed:@"default_avatar.png"];
+    if (self.media.author)
+    {
+        [self.authorAvatarView setImageWithURL:[NSURL URLWithString:self.media.author.avatarURL]
+                              placeholderImage:authorAvatarPlaceholderImage];
+        
+        NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"dd/MM/yyyy"];
+        self.authorNameLabel.text = [NSString stringWithFormat:_T(@"media_detail.publish_info_patern"),
+                                     self.media.author.name,
+                                     [dateFormatter stringFromDate:self.media.date],
+                                     [self.media.visits integerValue]];
+        self.authorNameLabel.hidden = NO;
+    }
+    else
+    {
+        self.authorAvatarView.image = authorAvatarPlaceholderImage;
+        self.authorNameLabel.hidden = YES;
+    }
+    
 }
 
 #pragma mark Actions
+
+- (void)mediaImageTouched:(UIImage *)sender
+{
+    if (self.media.mediaLargeURL.length)
+    {
+        [self displayMedia];
+    }
+    else if([self.media.type integerValue] != LTMediaTypeOther)
+    {
+        [SVProgressHUD show];
+        [[LTConnectionManager sharedManager] getMediaLargeURLWithId:self.media.identifier responseBlock:^(LTMedia *media, NSError *error)
+         {
+             if (!error)
+             {
+                 [self displayMedia];
+                 [SVProgressHUD dismiss];
+             }
+             else
+             {
+                 [SVProgressHUD showErrorWithStatus:nil];
+             }
+         }];
+    }
+}
 
 - (void)authorAvatarTouched:(UIImageView *)sender
 {

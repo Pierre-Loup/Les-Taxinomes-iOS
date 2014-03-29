@@ -10,6 +10,17 @@
 
 @implementation LTLicense (Business)
 
+#pragma mark - Instance methods
+#pragma mark Properties
+
+- (UIImage*)licenseImage
+{
+    // TODO : implementation
+    return nil;
+}
+
+#pragma mark - Class methods
+
 + (LTLicense *)licenseWithXMLRPCResponse:(NSDictionary*)response inContext:(NSManagedObjectContext*)context error:(NSError**)error
 {
     if(response == nil){

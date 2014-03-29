@@ -15,7 +15,7 @@ static NSString* const LTMediaPlaceholderThumbnailSuffix = @"_thumbnail";
 
 @implementation UIImageView (LT)
 
--(void)setImageWithMedia:(LTMedia*)media
+-(void)setImageWithMedia:(LTMedia*)media completion:(void(^)())completion
 {
     
     CGSize viewSize = self.frame.size;
@@ -26,30 +26,46 @@ static NSString* const LTMediaPlaceholderThumbnailSuffix = @"_thumbnail";
     }
     BOOL isThumbnail = (viewSize.width <= 110 || viewSize.width <= 110);
     
-    NSString* placeholderImageName;
     LTMediaType  mediaType = [media.type integerValue];
     NSString* suffix = isThumbnail ? LTMediaPlaceholderThumbnailSuffix : @"";
     if (mediaType == LTMediaTypeImage)
     {
-        placeholderImageName = [NSString stringWithFormat:@"%@%@", @"placeholder_image", suffix];
-        NSString* mediaURLString = isThumbnail ? media.mediaThumbnailUrl : media.mediaMediumURL;
-        [self setImageWithURL:[NSURL URLWithString:mediaURLString]
-             placeholderImage:[UIImage imageNamed:placeholderImageName]];
+        NSString* placeholderImageName = [NSString stringWithFormat:@"%@%@", @"placeholder_image", suffix];
+        UIImage* placeholderImage = [UIImage imageNamed:placeholderImageName];
+        NSString* imageURLString = isThumbnail ? media.mediaThumbnailUrl : media.mediaMediumURL;
+        NSURL* imageURL = [NSURL URLWithString:imageURLString];
+        NSURLRequest* request = [NSURLRequest requestWithURL:imageURL];
+        
+         __weak UIImageView* weakSelf = self;
+        [self setImageWithURLRequest:request
+                    placeholderImage:placeholderImage
+        success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
+        {
+            weakSelf.image = image;
+            if (completion) completion();
+        }
+        failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error)
+        {
+            if (completion) completion();
+        }];
     }
     else if (mediaType == LTMediaTypeAudio)
     {
-        placeholderImageName = [NSString stringWithFormat:@"%@%@", @"placeholder_audio", suffix];
+        NSString* placeholderImageName = [NSString stringWithFormat:@"%@%@", @"placeholder_audio", suffix];
         self.image = [UIImage imageNamed:placeholderImageName];
+        if (completion) completion();
     }
     else if (mediaType == LTMediaTypeVideo)
     {
-        placeholderImageName = [NSString stringWithFormat:@"%@%@", @"placeholder_video", suffix];
+        NSString* placeholderImageName = [NSString stringWithFormat:@"%@%@", @"placeholder_video", suffix];
         self.image = [UIImage imageNamed:placeholderImageName];
+        if (completion) completion();
     }
     else
     {
-        placeholderImageName = [NSString stringWithFormat:@"%@%@", @"placeholder_other", suffix];
+        NSString* placeholderImageName = [NSString stringWithFormat:@"%@%@", @"placeholder_other", suffix];
         self.image = [UIImage imageNamed:placeholderImageName];
+        if (completion) completion();
     }
 }
 

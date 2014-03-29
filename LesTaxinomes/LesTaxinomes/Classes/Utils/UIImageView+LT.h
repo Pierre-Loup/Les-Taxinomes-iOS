@@ -12,6 +12,6 @@
 
 @interface UIImageView (LT)
 
-- (void)setImageWithMedia:(LTMedia*)media;
+-(void)setImageWithMedia:(LTMedia*)media completion:(void(^)())completion;
 
 @end

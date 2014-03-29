@@ -71,7 +71,7 @@
 - (void)setMedia:(LTMedia *)media
 {
     _media = media;
-    [self.imageView setImageWithMedia:media];
+    [self.imageView setImageWithMedia:media completion:^{}];
 }
 
 @end

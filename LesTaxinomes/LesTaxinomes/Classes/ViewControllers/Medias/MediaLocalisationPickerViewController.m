@@ -21,7 +21,8 @@
 @synthesize mapView = mapView_;
 @synthesize location = location_;
 
-- (id)init {
+- (id)init
+{
     self = [super initWithNibName:NSStringFromClass([self class]) bundle:nil];
     if (self) {
         // Custom initialization
@@ -33,15 +34,18 @@
     [super viewDidLoad];
     rightBarButton_ = [[UIBarButtonItem alloc] initWithTitle:_T(@"common.ok") style:UIBarButtonItemStylePlain target:self action:@selector(okButtonButtonPressed:)];
     [self.navigationItem setRightBarButtonItem:rightBarButton_ animated:NO];
-    if (location_) {
+    if (location_)
+    {
         [self refreshMap];
-    } else {
+    } else
+    {
         self.location = [[CLLocation alloc] initWithLatitude:0.0 longitude:0.0];
         [mapView_ setRegion:MKCoordinateRegionMake(location_.coordinate, MKCoordinateSpanMake(180.0, 180.0))];
     }
 }
 
-- (void)viewDidUnload {
+- (void)viewDidUnload
+{
     [super viewDidUnload];
     rightBarButton_ = nil;
     self.mapView = nil;
@@ -50,9 +54,11 @@
 }
 
 
-- (void)okButtonButtonPressed:(UIBarButtonItem *)sender {
+- (void)okButtonButtonPressed:(UIBarButtonItem *)sender
+{
     if ([delegate_ respondsToSelector:@selector(mediaLocationPicker:didPickLocation:)]
-        && location_) {
+        && location_)
+    {
         [delegate_ mediaLocationPicker:self didPickLocation:location_];
     }
     [self.navigationController popViewControllerAnimated:YES];
@@ -64,9 +70,10 @@
     [self refreshMap];
 }
 
-- (void)refreshMap {
-    
-    if (mapView_) {
+- (void)refreshMap
+{
+    if (mapView_)
+    {
         [mapView_ removeAnnotations:mapView_.annotations];
         
         Annotation* annotation = [[Annotation alloc] init];
