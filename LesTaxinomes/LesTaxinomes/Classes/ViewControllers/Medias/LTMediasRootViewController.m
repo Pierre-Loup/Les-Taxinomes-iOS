@@ -252,15 +252,19 @@ typedef enum {
     if (self.contentViewController.view.superview == self.view)
     {
         UIView* contentView = self.contentViewController.view;
+        contentView.translatesAutoresizingMaskIntoConstraints = NO;
         self.contentViewController.view.frame = self.view.bounds;
+        id topLayoutGuide = self.topLayoutGuide;
+        id bottomLaoutGuide = self.bottomLayoutGuide;
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[contentView]|"
                                                                           options:0
                                                                           metrics:nil
                                                                             views:NSDictionaryOfVariableBindings(contentView)]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|"
+        NSDictionary* viewsDict = NSDictionaryOfVariableBindings(contentView, topLayoutGuide, bottomLaoutGuide);
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topLayoutGuide][contentView][bottomLaoutGuide]"
                                                                           options:0
                                                                           metrics:nil
-                                                                            views:NSDictionaryOfVariableBindings(contentView)]];
+                                                                            views:viewsDict]];
     }
 }
 

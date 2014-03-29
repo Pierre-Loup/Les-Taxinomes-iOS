@@ -68,7 +68,6 @@
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    [self updateScrollViewInsets];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -79,8 +78,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    CGPoint contentOffset = {0, -self.parentViewController.topLayoutGuide.length};
-    self.tableView.contentOffset = contentOffset;
 }
 
 - (void)viewDidUnload
@@ -112,9 +109,9 @@
         return nil;
     }
     
-    CGPoint top = {0, self.tableView.contentOffset.y + self.tableView.contentInset.top};
+    CGPoint top = CGPointMake(0, self.tableView.contentOffset.y);
     NSIndexPath* topVisibleCellIndexPath = [self.tableView indexPathForRowAtPoint:top];
-    
+
     LTMedia* media = [self.dataSource.mediasResultController objectAtIndexPath:topVisibleCellIndexPath];
     return media;
 }
@@ -133,18 +130,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private methods
-
-- (void)updateScrollViewInsets
-{
-    if ([self.parentViewController respondsToSelector:@selector(topLayoutGuide)] &&
-        [self.parentViewController respondsToSelector:@selector(bottomLayoutGuide)])
-    {
-        UIEdgeInsets insets = UIEdgeInsetsMake(self.parentViewController.topLayoutGuide.length, 0
-                                               ,self.parentViewController.bottomLayoutGuide.length , 0);
-        self.tableView.contentInset = insets;
-        self.tableView.scrollIndicatorInsets = insets;
-    }
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UITableViewDataSource

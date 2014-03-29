@@ -53,13 +53,11 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    [self updateScrollViewInsets];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self updateScrollViewInsets];
 }
 
 - (void)dealloc
@@ -77,7 +75,7 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
         return nil;
     }
     
-    CGPoint top = {10, self.collectionView.contentOffset.y + self.collectionView.contentInset.top +10};
+    CGPoint top = {10, self.collectionView.contentOffset.y+10};
     NSIndexPath* topVisibleCellIndexPath = [self.collectionView indexPathForItemAtPoint:top];
     
     LTMedia* media = [self.dataSource.mediasResultController objectAtIndexPath:topVisibleCellIndexPath];
@@ -98,18 +96,6 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private methods
-
-- (void)updateScrollViewInsets
-{
-    if ([self.parentViewController respondsToSelector:@selector(topLayoutGuide)] &&
-        [self.parentViewController respondsToSelector:@selector(bottomLayoutGuide)])
-    {
-        UIEdgeInsets insets = UIEdgeInsetsMake(self.parentViewController.topLayoutGuide.length, 0
-                                               ,self.parentViewController.bottomLayoutGuide.length , 0);
-        self.collectionView.contentInset = insets;
-        self.collectionView.scrollIndicatorInsets = insets;
-    }
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UICollectionViewDataSource
