@@ -135,8 +135,10 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
     
     // Create success block
     void (^successBlock)(AFHTTPRequestOperation *operation, id responseObject);
-    successBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        id response = [[[XMLRPCResponse alloc] initWithData:responseObject] object];
+    successBlock = ^(AFHTTPRequestOperation *operation, id responseObject)
+    {
+        XMLRPCResponse* xmlrpcResponse = [[XMLRPCResponse alloc] initWithData:responseObject];
+        id response = [xmlrpcResponse object];
         LogDebug(@"RESPONSE: %@",response);
         if (![response isKindOfClass:[NSError class]])
         {

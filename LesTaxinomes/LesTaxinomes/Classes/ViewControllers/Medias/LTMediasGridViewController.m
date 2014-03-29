@@ -60,11 +60,6 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
     [super viewDidAppear:animated];
 }
 
-- (void)dealloc
-{
-    NSLog(@"dealloc");
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Public methods
 

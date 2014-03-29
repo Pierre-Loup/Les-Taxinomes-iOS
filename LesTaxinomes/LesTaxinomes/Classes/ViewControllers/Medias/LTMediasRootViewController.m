@@ -156,11 +156,6 @@ typedef enum {
     self.displayBarButton = nil;
 }
 
-- (void)dealloc
-{
-    NSLog(@"dealloc");
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)

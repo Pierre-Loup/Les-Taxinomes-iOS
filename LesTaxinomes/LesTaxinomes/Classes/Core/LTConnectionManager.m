@@ -709,7 +709,6 @@ NSString* const LTConnectionManagerErrorDomain = @"LTConnectionManagerErrorDomai
               {
                   if ([self.delegate respondsToSelector:@selector(uploadDeterminationDidUpdate:)])
                   {
-                      NSLog(@"progress: %f",progress);
                       [self.delegate uploadDeterminationDidUpdate:progress];
                   }
               }

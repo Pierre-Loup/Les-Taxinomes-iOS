@@ -99,15 +99,10 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
     self.authorsResultController = nil;
 }
 
-- (void)dealloc
-{
-    NSLog(@"dealloc");
-}
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    NSLog(@"didReceiveMemoryWarning");
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -148,8 +143,8 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
     LTConnectionManager* connectionManager = [LTConnectionManager sharedManager];
     [connectionManager getAuthorsSummariesWithRange:authorsRange
                                     withSortKey:self.sortType
-    responseBlock:^(NSArray *authors, NSError *error) {
-        NSLog(@"authors: %@", authors);
+    responseBlock:^(NSArray *authors, NSError *error)
+    {
         if (authors)
         {
             weakSelf.authorsResultController = nil;

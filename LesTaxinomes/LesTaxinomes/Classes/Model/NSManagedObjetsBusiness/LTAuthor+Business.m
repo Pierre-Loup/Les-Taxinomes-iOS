@@ -57,7 +57,6 @@
         NSString *strSignupDate = [response objectForKey:@"date_inscription"];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        NSLog(@"%@", [dateFormatter dateFromString:strSignupDate]);
         NSDate *signupDate = [dateFormatter dateFromString:strSignupDate];
         if(signupDate != nil)
             author.signupDate = signupDate;
