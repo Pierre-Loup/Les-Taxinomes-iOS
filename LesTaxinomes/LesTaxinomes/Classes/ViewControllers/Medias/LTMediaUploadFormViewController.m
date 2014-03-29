@@ -23,6 +23,7 @@
  
  */
 
+#import <AddressBook/AddressBook.h>
 #import <AssetsLibrary/ALAsset.h>
 #import <AssetsLibrary/ALAssetRepresentation.h>
 
@@ -86,7 +87,8 @@
 
 @property (nonatomic, strong) LTLicense *license;
 @property (nonatomic, strong) CLLocation* mediaLocation;
-@property (unsafe_unretained, nonatomic, readonly) NSArray* rowsInSection;
+@property (nonatomic, strong) NSMutableDictionary* addressDict;
+@property (nonatomic, readonly) NSArray* rowsInSection;
 @property (nonatomic, readonly) NSMutableDictionary* cellForIndexPath;
 @property (nonatomic, readonly) CLGeocoder* reverseGeocoder;
 
@@ -126,7 +128,8 @@
     }
     
     ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
-    [library assetForURL:self.mediaAssetURL resultBlock:^(ALAsset *asset) {
+    [library assetForURL:self.mediaAssetURL resultBlock:^(ALAsset *asset)
+    {
         ALAssetRepresentation* assetRepresentation = [asset defaultRepresentation];
         
         // Media location (GIS)
@@ -136,30 +139,37 @@
         // Retrieve the image orientation from the ALAsset
         UIImageOrientation orientation = UIImageOrientationUp;
         NSNumber* orientationValue = [asset valueForProperty:@"ALAssetPropertyOrientation"];
-        if (orientationValue != nil) {
+        if (orientationValue != nil)
+        {
             orientation = [orientationValue intValue];
         }
         
         // Media
         CGImageRef iref = [assetRepresentation fullResolutionImage];
-        if (iref) {
+        if (iref)
+        {
             self.mediaSnapshotView.image = [UIImage imageWithCGImage:iref scale:1 orientation:orientation];
         }
-    } failureBlock:^(NSError *error) {
-        
+    }
+    failureBlock:^(NSError *error)
+    {
         [self.navigationController popViewControllerAnimated:YES];
     }];
     
     [self.mediaSnapshotView applyPhotoFrameEffect];
     
     self.licenseCell = [self.tableView dequeueReusableCellWithIdentifier:@"LTLicenceCell"];
-    if ([[UIApplication sharedApplication].keyWindow respondsToSelector:@selector(tintColor)]) {
+    if ([[UIApplication sharedApplication].keyWindow respondsToSelector:@selector(tintColor)])
+    {
         self.licenseCell.detailTextLabel.textColor = [UIApplication sharedApplication].keyWindow.tintColor;
     }
     
-    if (self.license) {
+    if (self.license)
+    {
         self.licenseCell.detailTextLabel.text = self.license.name;
-    } else {
+    }
+    else
+    {
         self.licenseCell.detailTextLabel.text = _T(@"media_upload_no_license_text");
     }
     
@@ -209,14 +219,16 @@
     [self.cellForIndexPath setObject:buttonCell
                               forKey:kSubmitCellIndexPath];
     
-    if (self.licenseCell) {
+    if (self.licenseCell)
+    {
         self.licenseCell.selectionStyle = UITableViewCellSelectionStyleGray;
         [self.cellForIndexPath setObject:self.licenseCell
                                   forKey:kLicenseCellIndexPath];
     }
     
     // Title cell
-    if (!self.titleCell) {
+    if (!self.titleCell)
+    {
         self.titleCell = [self.tableView dequeueReusableCellWithIdentifier:[LTSingleLineInputCell reuseIdentifier]];
         [self.titleCell setTitle:_T(@"common.title")];
         self.titleInput = self.titleCell.input;
@@ -240,7 +252,8 @@
     NSInteger rowNumberForSection = 1;
     
     // Map cell
-    if (self.mediaLocation) {
+    if (self.mediaLocation)
+    {
         LTMapCell* mapCell = [self.tableView dequeueReusableCellWithIdentifier:[LTMapCell reuseIdentifier]];
 
         MKPlacemark* annotation = [[MKPlacemark alloc] initWithCoordinate:self.mediaLocation.coordinate addressDictionary:nil];
@@ -254,7 +267,8 @@
     }
     
     // City cell
-    if (!self.cityCell) {
+    if (!self.cityCell)
+    {
         self.cityCell = [self.tableView dequeueReusableCellWithIdentifier:[LTSingleLineInputCell reuseIdentifier]];
         [self.cityCell setTitle:_T(@"common.city")];
         self.cityInput = self.cityCell.input;
@@ -268,7 +282,8 @@
     rowNumberForSection++;
     
     // Zipcode cell
-    if(!self.zipcodeCell) {
+    if(!self.zipcodeCell)
+    {
         self.zipcodeCell = [self.tableView dequeueReusableCellWithIdentifier:[LTSingleLineInputCell reuseIdentifier]];
         [self.zipcodeCell setTitle:_T(@"common.zipcode")];
         self.zipcodeInput = self.zipcodeCell.input;
@@ -301,62 +316,82 @@
 
 #pragma mark Properties
 
-- (NSMutableDictionary *)cellForIndexPath {
-    if (!_cellForIndexPath) {
+- (NSMutableDictionary *)cellForIndexPath
+{
+    if (!_cellForIndexPath)
+    {
         _cellForIndexPath = [NSMutableDictionary new];
     }
     return _cellForIndexPath;
 }
 
-- (CLGeocoder *)reverseGeocoder {
-    if (!_reverseGeocoder) {
+- (CLGeocoder *)reverseGeocoder
+{
+    if (!_reverseGeocoder)
+    {
         _reverseGeocoder = [[CLGeocoder alloc] init];
     }    return _reverseGeocoder;
 }
 
-- (UIImage *)mediaImage {
+- (UIImage *)mediaImage
+{
     return self.mediaSnapshotView.image;
 }
 
-- (void)setMediaLocation:(CLLocation *)mediaLocation {
+- (void)setMediaLocation:(CLLocation *)mediaLocation
+{
     if (mediaLocation &&
         ![self.mediaLocation isEqual:mediaLocation] &&
-        (mediaLocation.coordinate.latitude || mediaLocation.coordinate.longitude)) {
+        (mediaLocation.coordinate.latitude || mediaLocation.coordinate.longitude))
+    {
         _mediaLocation = mediaLocation;
         [self.reverseGeocoder reverseGeocodeLocation:self.mediaLocation
-                                   completionHandler:^(NSArray *placemarks, NSError *error) {
-                                       CLPlacemark* placemark = [placemarks objectAtIndex:0];
-                                       if (placemark) {
-                                           self.cityInput.text = placemark.locality;
-                                           self.zipcodeInput.text = placemark.postalCode;
-                                           self.countryInput.text = placemark.country;
-                                       }
-                                   }];
+        completionHandler:^(NSArray *placemarks, NSError *error)
+        {
+            if ([placemarks count] > 0)
+            {
+                CLPlacemark* placemark = [placemarks objectAtIndex:0];
+                if (placemark)
+                {
+                    self.addressDict = [placemark.addressDictionary mutableCopy];
+                    self.cityInput.text = placemark.locality;
+                    self.zipcodeInput.text = placemark.postalCode;
+                    self.countryInput.text = placemark.country;
+                }
+            }
+        }];
         [self refreshForm];
     }
 }
 
 #pragma mark Actions
 
-- (IBAction)uploadMedia:(id)sender {
+- (IBAction)uploadMedia:(id)sender
+{
     
     [SVProgressHUD show];
     
     LTConnectionManager* connectionManager = [LTConnectionManager sharedManager];
     connectionManager.delegate = self;
+    [self.addressDict setValue:self.cityInput.text forKey:(NSString*)kABPersonAddressCityKey];
+    [self.addressDict setValue:self.zipcodeInput.text forKey:(NSString*)kABPersonAddressZIPKey];
+    [self.addressDict setValue:self.countryInput.text forKey:(NSString*)kABPersonAddressCountryKey];
     [connectionManager addMediaWithTitle:self.titleInput.text
                                     text:self.textInput.text
                                  license:self.license
                                 location:self.mediaLocation
+                                 address:self.addressDict
                                 assetURL:self.mediaAssetURL
-                           responseBlock:^(LTMedia *media, NSError *error) {
-                               if (media && !error) {
-                                   [SVProgressHUD showSuccessWithStatus:_T(@"media_upload.confirm.title")];
-                                   [self.navigationController popViewControllerAnimated:YES];
-                               } else {
-                                   [SVProgressHUD showErrorWithStatus:_T(@"error.upload_failed.title")];
-                               }
-                           }];
+    responseBlock:^(LTMedia *media, NSError *error)
+    {
+        if (media && !error)
+        {
+            [SVProgressHUD showSuccessWithStatus:_T(@"media_upload.confirm.title")];
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            [SVProgressHUD showErrorWithStatus:_T(@"error.upload_failed.title")];
+        }
+    }];
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -381,7 +416,8 @@
     return rowCounter;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     // Fix issue : http://stackoverflow.com/questions/18919459
     NSIndexPath* currentIndexPath = [NSIndexPath indexPathForRow:indexPath.row
                                                        inSection:indexPath.section];
@@ -397,16 +433,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark UITableViewDelegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([indexPath isEqual:kLicenseCellIndexPath]) {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([indexPath isEqual:kLicenseCellIndexPath])
+    {
         LTMediaLicenseChooserViewController* mediaLicenseChooserVC = [self.storyboard instantiateViewControllerWithIdentifier:@"LTMediaLicenseChooser"];
         mediaLicenseChooserVC.delegate = self;
         mediaLicenseChooserVC.currentLicense = self.license;
         [self.navigationController pushViewController:mediaLicenseChooserVC animated:YES];
-    } else if ([indexPath isEqual:kLocationPickerCellIndexPath]){
+    }
+    else if ([indexPath isEqual:kLocationPickerCellIndexPath])
+    {
         MediaLocalisationPickerViewController* mediaLocationPickerVC = [[MediaLocalisationPickerViewController alloc] init];
         mediaLocationPickerVC.delegate = self;
-        if (self.mediaLocation) {
+        if (self.mediaLocation)
+        {
             mediaLocationPickerVC.location = self.mediaLocation;
         }
         [self.navigationController pushViewController:mediaLocationPickerVC animated:YES];
@@ -448,12 +489,14 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UIImageTextFieldDelegate
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
     [textField resignFirstResponder];
     return YES;
 }
 
--(void)textFieldDidEndEditing:(UITextField *)textField {
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
     [textField resignFirstResponder];
 }
 
@@ -463,7 +506,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     
-    if([text isEqualToString:@"\n"]) {
+    if([text isEqualToString:@"\n"])
+    {
         [textView resignFirstResponder];
         return NO;
     }
@@ -476,10 +520,13 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 - (void)mediaLicenseViewController:(LTMediaLicenseChooserViewController*)controller
                   didChooseLicense:(LTLicense*)license
 {
-    if (license) {
+    if (license)
+    {
         self.license = license;
         self.licenseCell.detailTextLabel.text = license.name;
-    } else {
+    }
+    else
+    {
         self.license = nil;
         self.licenseCell.detailTextLabel.text = _T(@"media_upload_no_license_text");
     }
@@ -498,7 +545,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - MediaLocationPickerDelegate 
 
-- (void)uploadDeterminationDidUpdate:(CGFloat)determination {
+- (void)uploadDeterminationDidUpdate:(CGFloat)determination
+{
     [SVProgressHUD showProgress:determination];
 }
 

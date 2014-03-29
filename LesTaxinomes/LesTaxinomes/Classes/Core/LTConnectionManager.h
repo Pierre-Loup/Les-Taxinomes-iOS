@@ -77,6 +77,7 @@ typedef enum {
                      text:(NSString *)text
                   license:(LTLicense *)license
                  location:(CLLocation*)location
+                  address:(NSDictionary*)addressDict
                  assetURL:(NSURL *)assetURL
             responseBlock:(void (^)(LTMedia *media, NSError *error))responseBlock;
 

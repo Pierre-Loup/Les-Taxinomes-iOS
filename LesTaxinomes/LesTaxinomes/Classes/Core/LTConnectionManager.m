@@ -29,7 +29,7 @@
 
 #import "LTConnectionManager.h"
 
-
+#import <AddressBook/AddressBook.h>
 #import <AssetsLibrary/ALAsset.h>
 #import <AssetsLibrary/ALAssetRepresentation.h>
 #import <SystemConfiguration/SystemConfiguration.h>
@@ -619,6 +619,7 @@ NSString* const LTConnectionManagerErrorDomain = @"LTConnectionManagerErrorDomai
                      text:(NSString *)text
                   license:(LTLicense *)license
                  location:(CLLocation*)location
+                  address:(NSDictionary*)addressDict
                  assetURL:(NSURL *)assetURL
             responseBlock:(void (^)(LTMedia *media, NSError *error))responseBlock
 {
@@ -650,7 +651,8 @@ NSString* const LTConnectionManagerErrorDomain = @"LTConnectionManagerErrorDomai
     [parameters setValue:fullText forKey:@"texte"];
     
     // License
-    if (license) {
+    if (license)
+    {
         [parameters setValue:[NSString stringWithFormat:@"%@",[license.identifier stringValue]] forKey:@"id_licence"];
     }
     
@@ -662,17 +664,44 @@ NSString* const LTConnectionManagerErrorDomain = @"LTConnectionManagerErrorDomai
          ALAssetRepresentation* assetRepresentation = [asset defaultRepresentation];
          
          // Media location (GIS)
+         NSMutableDictionary* gisDict = [NSMutableDictionary new];
          NSString* latitudeStr = nil;
          NSString* longitudeStr = nil;
-         if (location) {
+         if (location)
+         {
              latitudeStr = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
              longitudeStr = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
-         } else {
+         }
+         else
+         {
              NSMutableDictionary* imageMetadata = [NSMutableDictionary dictionaryWithDictionary:[assetRepresentation metadata]];
              latitudeStr = [NSString stringWithFormat:@"%f", [imageMetadata location].coordinate.latitude];
              longitudeStr = [NSString stringWithFormat:@"%f", [imageMetadata location].coordinate.longitude];
          }
-         [parameters setValue:@{@"lat" : latitudeStr, @"lon" : longitudeStr} forKey:@"gis"];
+         [gisDict addEntriesFromDictionary:@{@"lat" : latitudeStr, @"lon" : longitudeStr}];
+         
+         if (addressDict)
+         {
+             NSString* city = addressDict[(NSString*)kABPersonAddressCityKey];
+             if ([city length])
+             {
+                 [gisDict setValue:city forKey:@"ville"];
+             }
+             
+             NSString* zipCode = addressDict[(NSString*)kABPersonAddressZIPKey];
+             if ([zipCode length])
+             {
+                 [gisDict setValue:zipCode forKey:@"code_postal"];
+             }
+             
+             NSString* country = addressDict[(NSString*)kABPersonAddressCountryKey];
+             if ([country length])
+             {
+                 [gisDict setValue:country forKey:@"pays"];
+             }
+         }
+         
+         [parameters setValue:gisDict forKey:@"gis"];
          
          // Retrieve the image orientation from the ALAsset
          UIImageOrientation orientation = UIImageOrientationUp;
