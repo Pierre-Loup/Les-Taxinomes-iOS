@@ -21,5 +21,7 @@
 @property (nonatomic, weak) id<LTMediasDelegate> delegate;
 
 @property (nonatomic, weak) LTMedia *firstVisibleMedia;
+@property (nonatomic, assign) CGFloat topBarOffset;
+@property (nonatomic, assign) CGFloat bottomBarOffset;
 
 @end

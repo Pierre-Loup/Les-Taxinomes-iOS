@@ -29,6 +29,7 @@
 
 @interface LTMediasListViewController ()
 @property (nonatomic, strong) LTLoadMoreFooterView* footerView;
+@property (nonatomic, assign) BOOL shouldScrollToTop;
 @end
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -43,6 +44,7 @@
 {
     [super viewDidLoad];
     
+    self.tableView.clipsToBounds = NO;
     self.tableView.backgroundColor = [UIColor clearColor];
     
     // Puff to refresh top view
@@ -62,12 +64,25 @@
                         forControlEvents:UIControlEventTouchUpInside];
     
     self.tableView.tableFooterView = self.footerView;
+    self.shouldScrollToTop = YES;
 }
 
 
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
+    [self updateScrollViewInsets];
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    if (self.shouldScrollToTop)
+    {
+        CGPoint contentOffset = {0, -self.topBarOffset};
+        self.tableView.contentOffset = contentOffset;
+        self.shouldScrollToTop = NO;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -108,7 +123,7 @@
         return nil;
     }
     
-    CGPoint top = CGPointMake(0, self.tableView.contentOffset.y);
+    CGPoint top = {0, self.tableView.contentOffset.y + self.tableView.contentInset.top};
     NSIndexPath* topVisibleCellIndexPath = [self.tableView indexPathForRowAtPoint:top];
 
     LTMedia* media = [self.dataSource.mediasResultController objectAtIndexPath:topVisibleCellIndexPath];
@@ -127,8 +142,28 @@
     }
 }
 
+- (void)setTopBarOffset:(CGFloat)topBarOffset
+{
+    _topBarOffset = topBarOffset;
+    [self updateScrollViewInsets];
+}
+
+- (void)setBottomBarOffset:(CGFloat)bottomBarOffset
+{
+    _bottomBarOffset = bottomBarOffset;
+    [self updateScrollViewInsets];
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private methods
+
+- (void)updateScrollViewInsets
+{
+    UIEdgeInsets insets = UIEdgeInsetsMake(self.topBarOffset, 0
+                                            ,self.bottomBarOffset , 0);
+    self.tableView.contentInset = insets;
+    self.tableView.scrollIndicatorInsets = insets;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UITableViewDataSource

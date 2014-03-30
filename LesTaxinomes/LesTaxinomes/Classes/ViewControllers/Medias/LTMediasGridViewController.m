@@ -24,7 +24,10 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
 @interface LTMediasGridViewController ()
 @property (nonatomic, strong) UIRefreshControl* refreshControl;
 @property (nonatomic, strong) LTLoadMoreFooterView* footerView;
-@property (strong, nonatomic) NSMutableSet *updates;
+@property (nonatomic, strong) NSMutableSet *updates;
+
+@property (nonatomic, assign) BOOL shouldScrollToTop;
+
 @end
 
 @implementation LTMediasGridViewController
@@ -55,6 +58,17 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
     [super viewWillLayoutSubviews];
 }
 
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    if (self.shouldScrollToTop)
+    {
+        CGPoint contentOffset = {0, -self.topBarOffset};
+        self.collectionView.contentOffset = contentOffset;
+        self.shouldScrollToTop = NO;
+    }
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -70,7 +84,7 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
         return nil;
     }
     
-    CGPoint top = {10, self.collectionView.contentOffset.y+10};
+    CGPoint top = {10, self.collectionView.contentOffset.y + self.collectionView.contentInset.top +10};
     NSIndexPath* topVisibleCellIndexPath = [self.collectionView indexPathForItemAtPoint:top];
     
     LTMedia* media = [self.dataSource.mediasResultController objectAtIndexPath:topVisibleCellIndexPath];
@@ -89,8 +103,28 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
     }
 }
 
+- (void)setTopBarOffset:(CGFloat)topBarOffset
+{
+    _topBarOffset = topBarOffset;
+    [self updateScrollViewInsets];
+}
+
+- (void)setBottomBarOffset:(CGFloat)bottomBarOffset
+{
+    _bottomBarOffset = bottomBarOffset;
+    [self updateScrollViewInsets];
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private methods
+
+- (void)updateScrollViewInsets
+{
+    UIEdgeInsets insets = UIEdgeInsetsMake(self.topBarOffset, 0
+                                           ,self.bottomBarOffset , 0);
+    self.collectionView.contentInset = insets;
+    self.collectionView.scrollIndicatorInsets = insets;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UICollectionViewDataSource

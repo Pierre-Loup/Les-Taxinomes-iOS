@@ -108,14 +108,6 @@ typedef enum {
     self.title = _T(@"tabbar.medias");
     self.displayBarButton.image = [UIImage imageNamed:@"icon_grid"];
     
-    [self addChildViewController:self.listViewController];
-    [self.listViewController didMoveToParentViewController:self];
-    [self.view addSubview:self.listViewController.view];
-    self.mediasResultController.delegate = self.listViewController;
-    self.contentViewController = self.listViewController;
-    [self updateContraints];
-    [self.listViewController.tableView scrollsToTop];
-    
     self.mediaDetailViewController = (LTMediaDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
 }
@@ -134,12 +126,36 @@ typedef enum {
     {
         self.mediasResultController.delegate = self.contentViewController;
     }
+    
+    if (!self.contentViewController)
+    {
+        [self addChildViewController:self.listViewController];
+        [self.listViewController didMoveToParentViewController:self];
+        [self.view addSubview:self.listViewController.view];
+        self.mediasResultController.delegate = self.listViewController;
+        self.contentViewController = self.listViewController;
+    }
 }
 
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
     [self updateContraints];
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    if ([self.parentViewController respondsToSelector:@selector(topLayoutGuide)] &&
+        [self.parentViewController respondsToSelector:@selector(bottomLayoutGuide)])
+    {
+        self.listViewController.topBarOffset = self.topLayoutGuide.length;
+        self.gridViewController.topBarOffset = self.topLayoutGuide.length;
+        self.listViewController.bottomBarOffset = self.bottomLayoutGuide.length;
+        self.gridViewController.bottomBarOffset = self.bottomLayoutGuide.length;
+    }
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -199,9 +215,11 @@ typedef enum {
 
     LTConnectionManager* connectionManager = [LTConnectionManager sharedManager];
     [connectionManager getMediasSummariesByDateForAuthor:self.currentUser
-                                        nearLocation:nil
+                                            nearLocation:nil
+                                            searchFilter:nil
                                            withRange:mediasRange
-    responseBlock:^(NSArray *medias, NSError *error) {
+    responseBlock:^(NSArray *medias, NSError *error)
+    {
         if (medias)
         {
             //self.mediasResultController = nil;
@@ -219,12 +237,13 @@ typedef enum {
 
 - (void)refreshMedias
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        ;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
+    {
         [LTMedia MR_truncateAll];
         NSError* error;
         [[NSManagedObjectContext MR_contextForCurrentThread] save:&error];
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
             [self loadMoreMedias];
         });
     });
@@ -232,12 +251,12 @@ typedef enum {
 
 - (IBAction)displayBarButton:(UIBarButtonItem*)barButtonItem
 {
-    if (self.displayMode == LTMediasDisplayModeList) {
-        
+    if (self.displayMode == LTMediasDisplayModeList)
+    {
         self.displayMode = LTMediasDisplayModeGrid;
-        
-    } else if (self.displayMode == LTMediasDisplayModeGrid) {
-        
+    }
+    else if (self.displayMode == LTMediasDisplayModeGrid)
+    {
         self.displayMode = LTMediasDisplayModeList;
     }
 }
@@ -249,29 +268,16 @@ typedef enum {
         UIView* contentView = self.contentViewController.view;
         contentView.translatesAutoresizingMaskIntoConstraints = NO;
         self.contentViewController.view.frame = self.view.bounds;
- 
+        
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[contentView]|"
                                                                           options:0
                                                                           metrics:nil
                                                                             views:NSDictionaryOfVariableBindings(contentView)]];
         
-        if (IOS7_OR_GREATER)
-        {
-            id topLayoutGuide = self.topLayoutGuide;
-            id bottomLaoutGuide = self.bottomLayoutGuide;
-            NSDictionary* viewsDict = NSDictionaryOfVariableBindings(contentView, topLayoutGuide, bottomLaoutGuide);
-            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topLayoutGuide][contentView][bottomLaoutGuide]"
-                                                                              options:0
-                                                                              metrics:nil
-                                                                                views:viewsDict]];
-        }
-        else
-        {
-            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|"
-                                                                              options:0
-                                                                              metrics:nil
-                                                                                views:NSDictionaryOfVariableBindings(contentView)]];
-        }
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:NSDictionaryOfVariableBindings(contentView)]];
     }
 }
 
@@ -303,11 +309,11 @@ typedef enum {
                             toView:self.listViewController.view
                           duration:1.0
                            options:UIViewAnimationOptionTransitionFlipFromRight|UIViewAnimationOptionShowHideTransitionViews
-                        completion:^(BOOL finished)
-                        {
-                            [self.gridViewController willMoveToParentViewController:self];
-                            [self.gridViewController removeFromParentViewController];
-                        }];
+        completion:^(BOOL finished)
+        {
+            [self.gridViewController willMoveToParentViewController:self];
+            [self.gridViewController removeFromParentViewController];
+        }];
         
         self.displayBarButton.image = [UIImage imageNamed:@"icon_grid"];
         
@@ -334,11 +340,11 @@ typedef enum {
                             toView:self.gridViewController.view
                           duration:1.0
                            options:UIViewAnimationOptionTransitionFlipFromLeft|UIViewAnimationOptionShowHideTransitionViews
-                        completion:^(BOOL finished)
-                        {
-                            [self.listViewController willMoveToParentViewController:nil];
-                            [self.listViewController removeFromParentViewController];
-                        }];
+        completion:^(BOOL finished)
+        {
+            [self.listViewController willMoveToParentViewController:nil];
+            [self.listViewController removeFromParentViewController];
+        }];
         
         self.displayBarButton.image = [UIImage imageNamed:@"icon_list"];
         
