@@ -39,18 +39,18 @@ extern NSString* const LTXMLRCPMethodGeoDivCreerMedia;
  
  @see HTTPRequestOperationWithRequest:success:failure
  */
-- (void)executeMethod:(NSString *)method
-           withObject:(id)object
-     authCookieEnable:(BOOL)authCookieEnable
-  uploadProgressBlock:(void (^)(CGFloat progress))uploadProgressBlock
-downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
-              success:(void (^)(id response))success
-              failure:(void (^)(NSError *error))failure;
+- (AFHTTPRequestOperation*)executeMethod:(NSString *)method
+                              withObject:(id)object
+                        authCookieEnable:(BOOL)authCookieEnable
+                     uploadProgressBlock:(void (^)(CGFloat progress))uploadProgressBlock
+                   downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
+                                 success:(void (^)(id response))success
+                                 failure:(void (^)(NSError *error))failure;
 /* Same than previous with no progress*/
-- (void)executeMethod:(NSString *)method
-           withObject:(id)object
-     authCookieEnable:(BOOL)authCookieEnable
-              success:(void (^)(id response))success
-              failure:(void (^)(NSError *error))failure;
+- (AFHTTPRequestOperation*)executeMethod:(NSString *)method
+                              withObject:(id)object
+                        authCookieEnable:(BOOL)authCookieEnable
+                                 success:(void (^)(id response))success
+                                 failure:(void (^)(NSError *error))failure;
 
 @end

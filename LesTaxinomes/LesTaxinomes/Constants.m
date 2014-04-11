@@ -74,6 +74,9 @@ MKPinAnnotationColor const LTPinColor = MKPinAnnotationColorGreen;
 #define MEDIA_MAX_WIDHT 512.0f
 #define MEDIA_MAX_WIDHT_LARGE 1024.0f
 
+// UI
+CGFloat const LTMediasListCommonRowHeight = 55.f;
+
 // Texts
 NSString* const LTPhotoGroupName = @"LesTaxinomes";
 
@@ -103,8 +106,9 @@ NSString* const LTSignupURL = @"http://taxinomes.arscenic.org/spip.php?page=insc
 
 
 // WS
-NSInteger const LTMediasLoadingStep = 20;;
-NSInteger const LTAuthorsLoadingStep = 20;;
+NSInteger const LTMediasLoadingStep = 20;
+NSInteger const LTMediasSearchStep = 10;
+NSInteger const LTAuthorsLoadingStep = 20;
 NSString* const LTLimitParamName = @"limite";
 NSString* const LTSortParamName = @"tri";
 NSString* const LTSessionCookieName = @"spip_session";

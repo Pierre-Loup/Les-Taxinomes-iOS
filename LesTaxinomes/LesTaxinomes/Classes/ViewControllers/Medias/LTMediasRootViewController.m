@@ -204,8 +204,6 @@ typedef enum {
 
 - (void)loadMoreMedias
 {
-    [self.listViewController.refreshControl endRefreshing];
-    [self.gridViewController.refreshControl endRefreshing];
     self.listViewController.footerView.displayMode = LTLoadMoreFooterViewDisplayModeLoading;
     self.gridViewController.footerView.displayMode = LTLoadMoreFooterViewDisplayModeLoading;
     
@@ -214,21 +212,19 @@ typedef enum {
     mediasRange.length = LTMediasLoadingStep;
 
     LTConnectionManager* connectionManager = [LTConnectionManager sharedManager];
-    [connectionManager getMediasSummariesByDateForAuthor:self.currentUser
+    [connectionManager fetchMediasSummariesByDateForAuthor:self.currentUser
                                             nearLocation:nil
                                             searchFilter:nil
                                            withRange:mediasRange
     responseBlock:^(NSArray *medias, NSError *error)
     {
-        if (medias)
-        {
-            //self.mediasResultController = nil;
-        }
-        else
+        if (!medias)
         {
             [SVProgressHUD showErrorWithStatus:_T(@"common.hud.failure")];
         }
-
+        
+        [self.listViewController.refreshControl endRefreshing];
+        [self.gridViewController.refreshControl endRefreshing];
         self.listViewController.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
         self.gridViewController.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
         

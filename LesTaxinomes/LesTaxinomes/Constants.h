@@ -75,6 +75,9 @@ extern MKPinAnnotationColor const LTPinColor;
 #define MEDIA_MAX_WIDHT 512.0f
 #define MEDIA_MAX_WIDHT_LARGE 1024.0f
 
+// UI
+extern CGFloat const LTMediasListCommonRowHeight;
+
 // Texts
 extern NSString* const LTPhotoGroupName;
 
@@ -106,6 +109,7 @@ extern NSString* const LTSignupURL;
 
 // WS
 extern NSInteger const LTMediasLoadingStep;
+extern NSInteger const LTMediasSearchStep;
 extern NSInteger const LTAuthorsLoadingStep;
 extern NSString* const LTLimitParamName;
 extern NSString* const LTSortParamName;

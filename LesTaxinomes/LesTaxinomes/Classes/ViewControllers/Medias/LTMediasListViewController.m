@@ -21,8 +21,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Defines & contants
 
-#define LTMediaListCellIdentifier  @"MediasListCell"
-#define LTMediasListCommonRowHeight  55.f
+static NSString* const LTMediaListCellIdentifier = @"MediasListCell";
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private interface
@@ -186,7 +185,8 @@
     LTMediaListCell* cell = nil;
     
     cell = [aTableView dequeueReusableCellWithIdentifier:LTMediaListCellIdentifier];
-    if (!cell) {
+    if (!cell)
+    {
         cell = [LTMediaListCell mediaListCell];
     }
     

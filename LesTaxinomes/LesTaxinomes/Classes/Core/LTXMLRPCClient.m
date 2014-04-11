@@ -57,28 +57,28 @@ static dispatch_queue_t xmlrpc_request_operation_processing_queue() {
     return _sharedClient;
 }
 
-- (void)executeMethod:(NSString *)method
-           withObject:(id)object
-     authCookieEnable:(BOOL)authCookieEnable
-              success:(void (^)(id response))success
-              failure:(void (^)(NSError *error))failure
+- (AFHTTPRequestOperation*)executeMethod:(NSString *)method
+                              withObject:(id)object
+                        authCookieEnable:(BOOL)authCookieEnable
+                                 success:(void (^)(id response))success
+                                 failure:(void (^)(NSError *error))failure
 {
-    [self executeMethod:method
-             withObject:object
-       authCookieEnable:authCookieEnable
-    uploadProgressBlock:nil
-  downloadProgressBlock:nil
-                success:success
-                failure:failure];
+    return [self executeMethod:method
+                    withObject:object
+              authCookieEnable:authCookieEnable
+           uploadProgressBlock:nil
+         downloadProgressBlock:nil
+                       success:success
+                       failure:failure];
 }
 
-- (void)executeMethod:(NSString *)method
-           withObject:(id)object
-     authCookieEnable:(BOOL)authCookieEnable
-  uploadProgressBlock:(void (^)(CGFloat progress))uploadProgressBlock
-downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
-              success:(void (^)(id response))success
-              failure:(void (^)(NSError *error))failure
+- (AFHTTPRequestOperation*)executeMethod:(NSString *)method
+                              withObject:(id)object
+                        authCookieEnable:(BOOL)authCookieEnable
+                     uploadProgressBlock:(void (^)(CGFloat progress))uploadProgressBlock
+                   downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
+                                 success:(void (^)(id response))success
+                                 failure:(void (^)(NSError *error))failure
 {
     
     if (!method)
@@ -210,6 +210,7 @@ downloadProgressBlock:(void (^)(CGFloat progress))downloadProgressBlock
     
     operation.successCallbackQueue = xmlrpc_request_operation_processing_queue();
     [self enqueueHTTPRequestOperation:operation];
+    return operation;
 }
 
 #pragma mark - Private

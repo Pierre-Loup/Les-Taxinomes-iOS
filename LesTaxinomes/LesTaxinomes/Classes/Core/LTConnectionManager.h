@@ -45,6 +45,8 @@ typedef enum {
 - (void)downloadDeterminationDidUpdate:(CGFloat)determination;
 @end
 
+@class AFHTTPRequestOperation;
+
 @interface LTConnectionManager : NSObject
 
 @property (nonatomic, strong) LTAuthor *authenticatedUser;
@@ -53,10 +55,11 @@ typedef enum {
 + (LTConnectionManager *)sharedManager;
 - (void)getLicensesWithResponseBlock:(void (^)(NSArray* licenses, NSError *error))responseBlock;
 
-- (void)getMediasSummariesByDateForAuthor:(LTAuthor *)author
-                             nearLocation:(CLLocation *)location
-                                withRange:(NSRange)range
-                            responseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock;
+- (AFHTTPRequestOperation*)fetchMediasSummariesByDateForAuthor:(LTAuthor *)author
+                                                  nearLocation:(CLLocation *)location
+                                                  searchFilter:(NSString *)searchFilter
+                                                     withRange:(NSRange)range
+                                                 responseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock;
 
 - (void)getMediaWithId:(NSNumber *)mediaIdentifier
          responseBlock:(void (^)(LTMedia *media, NSError *error))responseBlock;

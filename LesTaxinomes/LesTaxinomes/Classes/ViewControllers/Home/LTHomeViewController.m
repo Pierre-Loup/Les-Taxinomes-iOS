@@ -28,6 +28,7 @@
 // Views
 #import "AGMedallionView.h"
 #import "JBKenBurnsView.h"
+#import "LTMediaListCell.h"
 #import "UIImageView+AFNetworking.h"
 // VCs
 #import "LTAuthenticationSheetViewController.h"
@@ -39,6 +40,7 @@
 #import "LTPhotoAssetManager.h"
 #import "SDWebImageManager.h"
 
+static NSString* const LTMediaListCellIdentifier = @"";
 static NSTimeInterval const LTHomeCoverTransitionTimeInterval = 10.0;
 
 // Segue
@@ -61,6 +63,8 @@ static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailVie
 @property (nonatomic, assign) BOOL shouldPresentAuthenticationSheet;
 @property (nonatomic, strong) NSArray* mediasForCover;
 @property (nonatomic, assign) NSInteger mediaCoverIndex;
+@property (nonatomic, strong) AFHTTPRequestOperation* searchRequestOperation;
+@property (nonatomic, strong) NSArray* mediasSearchResult;
 
 
 @end
@@ -76,7 +80,8 @@ static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailVie
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         _shouldPresentAuthenticationSheet = NO;
     }
     return self;
@@ -86,6 +91,12 @@ static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailVie
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UITableView* searchResultsTableView = self.searchDisplayController.searchResultsTableView;
+    if ([searchResultsTableView respondsToSelector:@selector(separatorInset)])
+    {
+        searchResultsTableView.separatorInset = UIEdgeInsetsZero;
+    }
     
     // Medaillion view
     UIImage* defaultAvatar = [UIImage imageNamed:@"default_avatar"];
@@ -212,11 +223,11 @@ static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailVie
         NSURLRequest* request = [NSURLRequest requestWithURL:imageURL];
         [[UIImageView new] setImageWithURLRequest:request
                                  placeholderImage:nil
-                                          success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
-                                          {
-                                              self.userAvatarView.image = image;
-                                          }
-                                          failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {}];
+        success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
+        {
+            self.userAvatarView.image = image;
+        }
+        failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {}];
     }
     
     
@@ -356,5 +367,119 @@ static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailVie
          }];
     }
 }
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Return the number of sections.
+    if(self.searchRequestOperation)
+    {
+        
+    }
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
+    return [self.mediasSearchResult count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    LTMedia *media = self.mediasSearchResult[indexPath.row];
+    
+    LTMediaListCell* cell = [aTableView dequeueReusableCellWithIdentifier:LTMediaListCellIdentifier];
+    if (!cell)
+    {
+        cell = [LTMediaListCell mediaListCell];
+    }
+    
+    cell.media = media;
+    
+    return cell;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return LTMediasListCommonRowHeight;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    LTMedia *media = self.mediasSearchResult[indexPath.row];
+    
+    if(media)
+    {
+        LTMediaDetailViewController* mediaDetailViewController = [self.parentViewController.storyboard instantiateViewControllerWithIdentifier:@"LTMediaDetailViewController"];
+        mediaDetailViewController.media = media;
+        mediaDetailViewController.title = media.mediaTitle;
+        [self.navigationController pushViewController:mediaDetailViewController
+                                             animated:YES];
+    }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - UISearchDisplayDelegate
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    // return YES to cause the search result table view to be reloaded
+    if ([searchString length] >= 3)
+    {
+        NSRange range;
+        range.location = 0;
+        range.length = LTMediasSearchStep;
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        [self.searchRequestOperation cancel];
+        self.searchRequestOperation = [[LTConnectionManager sharedManager] fetchMediasSummariesByDateForAuthor:nil
+                                                                  nearLocation:nil
+                                                                  searchFilter:searchString
+                                                                     withRange:range
+                                                                 responseBlock:^(NSArray *medias, NSError *error)
+         {
+             if ([medias count])
+             {
+                 self.mediasSearchResult = medias;
+                 [controller.searchResultsTableView reloadData];
+             }
+             
+             if (!error ||
+                 !([error.domain isEqualToString:NSURLErrorDomain] &&
+                  error.code == NSURLErrorCancelled))
+             {
+                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+             }
+             self.searchRequestOperation = nil;
+         }];
+        return NO;
+    }
+    else
+    {
+        if(self.searchRequestOperation)
+        {
+            self.searchRequestOperation = nil;
+            [controller.searchResultsTableView reloadData];
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            
+        }
+        return YES;
+    }
+}
+
+- (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
+{
+    [self.searchRequestOperation cancel];
+    self.searchRequestOperation = nil;
+    [controller.searchResultsTableView reloadData];
+}
+
+
 
 @end

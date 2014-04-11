@@ -145,9 +145,10 @@
         CLLocation* searchLocation = [[CLLocation alloc] initWithLatitude:self.referenceAnnotation.coordinate.latitude
                                                                 longitude:self.referenceAnnotation.coordinate.longitude];
         
-        [[LTConnectionManager sharedManager] getMediasSummariesByDateForAuthor:nil
-                                                                        nearLocation:searchLocation
-                                                                           withRange:range
+        [[LTConnectionManager sharedManager] fetchMediasSummariesByDateForAuthor:nil
+                                                                  nearLocation:searchLocation
+                                                                  searchFilter:nil
+                                                                     withRange:range
         responseBlock:^(NSArray *medias, NSError *error)
         {
             self.searchStartIndex += (self.insertedMedias + self.updatedMedias);
@@ -236,8 +237,9 @@
         range.location = 0;
         range.length = LTMediasLoadingStep;
         
-        [[LTConnectionManager sharedManager] getMediasSummariesByDateForAuthor:nil
+        [[LTConnectionManager sharedManager] fetchMediasSummariesByDateForAuthor:nil
                                                                   nearLocation:newLocation
+                                                                  searchFilter:nil
                                                                      withRange:range
                                                                  responseBlock:^(NSArray *medias, NSError *error)
          {

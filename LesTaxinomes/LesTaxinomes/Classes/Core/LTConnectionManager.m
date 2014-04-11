@@ -146,10 +146,12 @@ NSString* const LTConnectionManagerErrorDomain = @"LTConnectionManagerErrorDomai
     
 }
 
-- (void)getMediasSummariesByDateForAuthor:(LTAuthor *)author
-                             nearLocation:(CLLocation *)location
-                                withRange:(NSRange)range
-                            responseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock {
+- (AFHTTPRequestOperation*)fetchMediasSummariesByDateForAuthor:(LTAuthor *)author
+                                                  nearLocation:(CLLocation *)location
+                                                  searchFilter:(NSString *)searchFilter
+                                                     withRange:(NSRange)range
+                                                 responseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock
+{
     
     if(range.length == 0 || range.length > LTConnectionManagerMaxItemsStep)
         range.length = LTConnectionManagerMaxItemsStep;
@@ -166,38 +168,46 @@ NSString* const LTConnectionManagerErrorDomain = @"LTConnectionManagerErrorDomai
                                          @"vignette_hauteur":    thumbnailHeight,
                                          @"statut":              @"publie"
                                          }];
-    
+
+    NSMutableArray* sortKeys = [NSMutableArray new];
     NSNumber* authorId = author.identifier;
     if (author)
     {
         [parameters addEntriesFromDictionary:@{@"id_auteur": authorId}];
     }
     
-    // Optional
-    if (location) {
+    if (location)
+    {
         [parameters setValue:[NSString stringWithFormat:@"%f",location.coordinate.latitude]
                       forKey:@"lat"];
         [parameters setValue:[NSString stringWithFormat:@"%f",location.coordinate.longitude]
                       forKey:@"lon"];
-        [parameters setValue:@[@"distance"] forKey:@"tri"];
-    } else {
-        [parameters setValue:@[@"date DESC"] forKey:@"tri"];
+        [sortKeys addObject:@"distance"];
     }
+    
+    if ([searchFilter length])
+    {
+        [parameters setValue:searchFilter forKey:@"recherche"];
+        [sortKeys addObject:@"titre"];
+    }
+    
+    [sortKeys addObject:@"date DESC"];
+    [parameters setValue:sortKeys forKey:@"tri"];
     
     BOOL cookieEnabled = ([LTConnectionManager sharedManager].authenticatedUser.identifier && author.identifier &&
                           [author.identifier isEqualToNumber:[LTConnectionManager sharedManager].authenticatedUser.identifier]);
     
     LTXMLRPCClient* xmlrpcClient = [LTXMLRPCClient sharedClient];
-    [xmlrpcClient executeMethod:LTXMLRCPMethodGeoDivListeMedias
-                     withObject:parameters
-               authCookieEnable:cookieEnabled
-                        success:^(id response)
+    AFHTTPRequestOperation* operation = [xmlrpcClient executeMethod:LTXMLRCPMethodGeoDivListeMedias
+                                                         withObject:parameters
+                                                   authCookieEnable:cookieEnabled
+                                                            success:^(id response)
      {
          if([response isKindOfClass:[NSArray  class]])
          {
              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
                             {
-                                NSMutableArray *medias = [NSMutableArray array];
+                                NSMutableArray* mediasInChildContext = [NSMutableArray array];
                                 NSManagedObjectContext* context = [NSManagedObjectContext MR_contextWithParent:[NSManagedObjectContext MR_defaultContext]];
                                 
                                 for(NSDictionary *mediaXML in (NSArray *)response)
@@ -216,7 +226,7 @@ NSString* const LTConnectionManagerErrorDomain = @"LTConnectionManagerErrorDomai
                                     
                                     if (mediaObject && !mediaError)
                                     {
-                                        [medias addObject:mediaObject];
+                                        [mediasInChildContext addObject:mediaObject];
                                     }
                                     else
                                     {
@@ -224,24 +234,26 @@ NSString* const LTConnectionManagerErrorDomain = @"LTConnectionManagerErrorDomai
                                     }
                                 }
                                 
-                                NSError* coredataError;
-                                [context save:&coredataError];
-                                [context reset];
-                                if (coredataError)
+                                [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError* coredataError)
                                 {
-                                    LogError(@"%@", coredataError);
-                                    dispatch_async(dispatch_get_main_queue(), ^
-                                                   {
-                                                       if(responseBlock) responseBlock(nil, coredataError);
-                                                   });
-                                }
-                                else
-                                {
-                                    dispatch_async(dispatch_get_main_queue(), ^
-                                                   {
-                                                       if(responseBlock) responseBlock(medias, nil);
-                                                   });
-                                }
+                                    NSMutableArray* mediasInDefaultContext = [NSMutableArray new];
+                                    NSManagedObjectContext* deflautContext = [NSManagedObjectContext MR_defaultContext];
+                                    for (LTMedia* mediaInChildContext in mediasInChildContext)
+                                    {
+                                        LTMedia* mediaInDefalutContext = [mediaInChildContext MR_inContext:deflautContext];
+                                        [mediasInDefaultContext addObject:mediaInDefalutContext];
+                                    }
+                                    [context reset];
+                                    if (coredataError)
+                                    {
+                                        if(responseBlock) responseBlock(nil, coredataError);
+                                    }
+                                    else
+                                    {
+                                        if(responseBlock) responseBlock(mediasInDefaultContext, nil);
+                                    }
+                                }];
+                                
                             });
          } else {
              NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
@@ -255,6 +267,7 @@ NSString* const LTConnectionManagerErrorDomain = @"LTConnectionManagerErrorDomai
      } failure:^(NSError *error) {
          if(responseBlock) responseBlock(nil, error);
      }];
+    return operation;
 }
 
 - (void)getMediaWithId:(NSNumber *)mediaIdentifier

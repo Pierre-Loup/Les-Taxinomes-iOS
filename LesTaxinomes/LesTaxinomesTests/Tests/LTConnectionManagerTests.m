@@ -97,7 +97,7 @@ static NSString* const LTDefaultRangeString = @"0,10";
 //    NSRange mediasRange = kDefaultRange;
 //    
 //    LTConnectionManager* cm = [LTConnectionManager sharedManager];
-//    [cm getMediasSummariesByDateForAuthor:nil
+//    [cm fetchMediasSummariesByDateForAuthor:nil
 //                         nearLocation:nil
 //                            withRange:mediasRange
 //                        responseBlock:^(NSArray *medias, NSError *error) {
@@ -120,7 +120,7 @@ static NSString* const LTDefaultRangeString = @"0,10";
 //    NSRange mediasRange = kDefaultRange;
 //    
 //    LTConnectionManager* cm = [LTConnectionManager sharedManager];
-//    [cm getMediasSummariesByDateForAuthor:kDefaultAuthor
+//    [cm fetchMediasSummariesByDateForAuthor:kDefaultAuthor
 //                             nearLocation:nil
 //                                withRange:mediasRange
 //    responseBlock:^(NSArray *medias, NSError *error)
@@ -146,7 +146,7 @@ static NSString* const LTDefaultRangeString = @"0,10";
 //    
 //    
 //    LTConnectionManager* cm = [LTConnectionManager sharedManager];
-//    [cm getMediasSummariesByDateForAuthor:nil
+//    [cm fetchMediasSummariesByDateForAuthor:nil
 //                         nearLocation:location
 //                            withRange:mediasRange
 //                        responseBlock:^(NSArray *medias, NSError *error) {
