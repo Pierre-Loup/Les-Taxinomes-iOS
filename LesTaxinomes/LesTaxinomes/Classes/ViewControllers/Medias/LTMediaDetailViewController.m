@@ -259,6 +259,12 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
     {
         NSURL* licenseIconURL = [NSURL URLWithString:self.media.license.icon];
         [self.licenseImageView setImageWithURL:licenseIconURL];
+        
+        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                               action:@selector(licenseImageTouched:)];
+        [tapGestureRecognizer setNumberOfTouchesRequired:1];
+        self.licenseImageView.userInteractionEnabled = YES;
+        [self.licenseImageView addGestureRecognizer:tapGestureRecognizer];
     }
     
     if(self.media)
@@ -351,6 +357,18 @@ static NSString* const LTMapViewControllerSegueId = @"LTMapViewControllerSegueId
                  [SVProgressHUD showErrorWithStatus:nil];
              }
          }];
+    }
+}
+
+- (void)licenseImageTouched:(UIImage *)sender
+{
+    if ([self.media.license.link length])
+    {
+        NSURL* licenseURL = [NSURL URLWithString:self.media.license.link];
+        if (licenseURL)
+        {
+            [[UIApplication sharedApplication] openURL:licenseURL];
+        }
     }
 }
 
