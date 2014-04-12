@@ -444,9 +444,15 @@ static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailVie
                                                                      withRange:range
                                                                  responseBlock:^(NSArray *medias, NSError *error)
          {
+             NSLog(@"%@", error);
              if ([medias count])
              {
                  self.mediasSearchResult = medias;
+                 [controller.searchResultsTableView reloadData];
+             }
+             else if (!error)
+             {
+                 self.mediasSearchResult = nil;
                  [controller.searchResultsTableView reloadData];
              }
              
@@ -456,7 +462,6 @@ static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailVie
              {
                  [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
              }
-             self.searchRequestOperation = nil;
          }];
         return NO;
     }
