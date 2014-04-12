@@ -27,18 +27,15 @@
 #import "LTAuthor.h"
 #import "LTSection.h"
 #import "LTViewController.h"
-#import "LTMediasDataSource.h"
-#import "LTMediasDelegate.h"
 
-@interface LTMediasRootViewController : LTViewController    <LTMediasDataSource
-                                                            ,LTMediasDelegate>
+@interface LTMediasRootViewController : LTViewController
 
 @property (nonatomic, strong) LTAuthor *currentUser;
 @property (nonatomic, strong) LTSection *section;
-@property (nonatomic, readonly) NSFetchedResultsController* mediasResultController;
+@property (nonatomic, readonly) NSArray* medias;
 
-- (void)loadMoreMedias;
-- (void)refreshMedias;
+- (void)loadMoreMediaWithCompletion:(void (^)(NSArray* medias, NSError *error))completion;
+- (void)refreshMediasWithCompletion:(void (^)(NSArray* medias, NSError *error))completion;
 
 @end
 

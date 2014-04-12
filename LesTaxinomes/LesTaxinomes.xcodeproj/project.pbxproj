@@ -231,8 +231,6 @@
 		A5F6EF9317772CFE00C16C06 /* LTTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTTableViewController.m; sourceTree = "<group>"; };
 		A5F6EF9417772CFE00C16C06 /* LTViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTViewController.h; sourceTree = "<group>"; };
 		A5F6EF9517772CFE00C16C06 /* LTViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTViewController.m; sourceTree = "<group>"; };
-		A5F6EF9717772CFE00C16C06 /* LTMediasDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTMediasDataSource.h; sourceTree = "<group>"; };
-		A5F6EF9817772CFE00C16C06 /* LTMediasDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTMediasDelegate.h; sourceTree = "<group>"; };
 		A5F6EF9A17772CFE00C16C06 /* LTHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTHomeViewController.h; sourceTree = "<group>"; };
 		A5F6EF9B17772CFE00C16C06 /* LTHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTHomeViewController.m; sourceTree = "<group>"; };
 		A5F6EF9D17772CFE00C16C06 /* LTLegalNoticeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTLegalNoticeViewController.h; sourceTree = "<group>"; };
@@ -568,18 +566,8 @@
 				A5F6EF9317772CFE00C16C06 /* LTTableViewController.m */,
 				A5F6EF9417772CFE00C16C06 /* LTViewController.h */,
 				A5F6EF9517772CFE00C16C06 /* LTViewController.m */,
-				A5F6EF9617772CFE00C16C06 /* Protocols */,
 			);
 			path = Controllers;
-			sourceTree = "<group>";
-		};
-		A5F6EF9617772CFE00C16C06 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				A5F6EF9717772CFE00C16C06 /* LTMediasDataSource.h */,
-				A5F6EF9817772CFE00C16C06 /* LTMediasDelegate.h */,
-			);
-			path = Protocols;
 			sourceTree = "<group>";
 		};
 		A5F6EF9917772CFE00C16C06 /* Home */ = {

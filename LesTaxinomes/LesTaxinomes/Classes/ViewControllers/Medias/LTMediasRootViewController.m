@@ -57,10 +57,10 @@ typedef enum {
 
 @property (nonatomic, strong) IBOutlet LTMediaDetailViewController* mediaDetailViewController;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem* displayBarButton;
-@property (nonatomic, strong) UIViewController<NSFetchedResultsControllerDelegate>* contentViewController;
+@property (nonatomic, strong) UIViewController* contentViewController;
 @property (nonatomic, strong) LTMediasListViewController* listViewController;
 @property (nonatomic, strong) LTMediasGridViewController* gridViewController;
-@property (nonatomic, strong) NSFetchedResultsController* mediasResultController;
+@property (nonatomic, strong) NSArray* medias;
 @property (nonatomic) LTMediasDisplayMode displayMode;
 @end
 
@@ -118,21 +118,11 @@ typedef enum {
     self.listViewController.view.frame = self.view.bounds;
     self.gridViewController.view.frame = self.view.bounds;
     
-    if ([[self.mediasResultController fetchedObjects] count] == 0)
-    {
-        [self loadMoreMedias];
-    }
-    else
-    {
-        self.mediasResultController.delegate = self.contentViewController;
-    }
-    
     if (!self.contentViewController)
     {
         [self addChildViewController:self.listViewController];
         [self.listViewController didMoveToParentViewController:self];
         [self.view addSubview:self.listViewController.view];
-        self.mediasResultController.delegate = self.listViewController;
         self.contentViewController = self.listViewController;
     }
 }
@@ -158,17 +148,9 @@ typedef enum {
     
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    self.mediasResultController = nil;
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    [NSFetchedResultsController deleteCacheWithName:self.mediasResultController.cacheName];
-    self.mediasResultController = nil;
     self.displayBarButton = nil;
 }
 
@@ -193,22 +175,17 @@ typedef enum {
     _displayMode = LTMediasDisplayModeList;
     
     _listViewController = [LTMediasListViewController new];
-    _listViewController.dataSource = self;
-    _listViewController.delegate = self;
+    _listViewController.mediasRootViewController = self;
     [self addChildViewController:_listViewController];
     
     _gridViewController = [LTMediasGridViewController new];
-    _gridViewController.dataSource = self;
-    _gridViewController.delegate = self;
+    _gridViewController.mediasRootViewController = self;
 }
 
-- (void)loadMoreMedias
+- (void)loadMoreMediaWithCompletion:(void (^)(NSArray* medias, NSError *error))completion
 {
-    self.listViewController.footerView.displayMode = LTLoadMoreFooterViewDisplayModeLoading;
-    self.gridViewController.footerView.displayMode = LTLoadMoreFooterViewDisplayModeLoading;
-    
     NSRange mediasRange;
-    mediasRange.location = [[self.mediasResultController fetchedObjects] count];
+    mediasRange.location = [self.medias count];
     mediasRange.length = LTMediasLoadingStep;
 
     LTConnectionManager* connectionManager = [LTConnectionManager sharedManager];
@@ -222,17 +199,32 @@ typedef enum {
         {
             [SVProgressHUD showErrorWithStatus:_T(@"common.hud.failure")];
         }
+        else if([medias count])
+        {
+            NSMutableArray* allMedias;
+            if (self.medias)
+            {
+                allMedias = [self.medias mutableCopy];
+            }
+            else
+            {
+                allMedias = [NSMutableArray new];
+            }
+            [allMedias addObjectsFromArray:medias];
+            self.medias = [NSArray arrayWithArray:allMedias];
+        }
         
-        [self.listViewController.refreshControl endRefreshing];
-        [self.gridViewController.refreshControl endRefreshing];
-        self.listViewController.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
-        self.gridViewController.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
-        
+        if (completion)
+        {
+            completion(medias, error);
+        }
     }];
 }
 
-- (void)refreshMedias
+
+- (void)refreshMediasWithCompletion:(void (^)(NSArray* medias, NSError *error))completion
 {
+    self.medias = nil;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
     {
         [LTMedia MR_truncateAll];
@@ -240,7 +232,7 @@ typedef enum {
         [[NSManagedObjectContext MR_contextForCurrentThread] save:&error];
         dispatch_async(dispatch_get_main_queue(), ^
         {
-            [self loadMoreMedias];
+            [self loadMoreMediaWithCompletion:completion];
         });
     });
 }
@@ -291,8 +283,6 @@ typedef enum {
         [self addChildViewController:self.listViewController];
         [self.listViewController didMoveToParentViewController:self];
         [self.view addSubview:self.listViewController.view];
-        // Subscibe to database modification for the media table
-        self.mediasResultController.delegate = self.listViewController;
         
         [self.listViewController.tableView reloadData];
         self.listViewController.firstVisibleMedia = self.gridViewController.firstVisibleMedia;
@@ -321,8 +311,6 @@ typedef enum {
         [self addChildViewController:self.gridViewController];
         [self.gridViewController didMoveToParentViewController:self];
         [self.view addSubview:self.gridViewController.view];
-        // Subscibe to database modification for the media table
-        self.mediasResultController.delegate = self.gridViewController;
         
         [self.gridViewController.collectionView reloadData];
         LTMedia* firstVisibleMedia = self.listViewController.firstVisibleMedia;
@@ -345,32 +333,6 @@ typedef enum {
         self.displayBarButton.image = [UIImage imageNamed:@"icon_list"];
         
     }
-}
-
-- (NSFetchedResultsController*)mediasResultController
-{    
-    if (!_mediasResultController)
-    {
-        NSMutableString* predicateFormat = [@"status == 'publie'" mutableCopy];
-        if (self.currentUser)
-        {
-            [predicateFormat appendFormat:@" && author.identifier == %@", self.currentUser.identifier];
-        }
-        
-        if (self.section)
-        {
-            [predicateFormat appendFormat:@" && section.identifier == %ld", [self.section.identifier longValue]];
-        }
-        
-        NSPredicate* predicate = [NSPredicate predicateWithFormat:predicateFormat];
-        _mediasResultController = [LTMedia MR_fetchAllSortedBy:@"date"
-                                                     ascending:NO
-                                                 withPredicate:predicate
-                                                       groupBy:nil
-                                                      delegate:nil
-                                                     inContext:[NSManagedObjectContext MR_defaultContext]];
-    }
-    return _mediasResultController;
 }
 
 @end

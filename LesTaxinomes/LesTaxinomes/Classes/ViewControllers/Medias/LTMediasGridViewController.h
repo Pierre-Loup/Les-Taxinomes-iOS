@@ -8,19 +8,13 @@
 
 #import "LTCollectionViewController.h"
 
-#import "LTMediasDataSource.h"
-#import "LTMediasDelegate.h"
-#import "LTLoadMoreFooterView.h"
+#import "LTMediasRootViewController.h"
 
-@class LTLoadMoreFooterView;
 @class LTMedia;
 
-@interface LTMediasGridViewController : LTCollectionViewController <NSFetchedResultsControllerDelegate>
+@interface LTMediasGridViewController : LTCollectionViewController
 
-@property (nonatomic, readonly) LTLoadMoreFooterView* footerView;
-@property (nonatomic, readonly) UIRefreshControl* refreshControl;
-@property (nonatomic, weak) id<LTMediasDataSource> dataSource;
-@property (nonatomic, weak) id<LTMediasDelegate> delegate;
+@property (nonatomic, weak) LTMediasRootViewController* mediasRootViewController;
 
 @property (nonatomic, weak) LTMedia *firstVisibleMedia;
 @property (nonatomic, assign) CGFloat topBarOffset;

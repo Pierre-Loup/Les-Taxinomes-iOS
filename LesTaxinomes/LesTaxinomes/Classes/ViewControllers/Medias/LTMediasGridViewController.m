@@ -6,6 +6,9 @@
 //  Copyright (c) 2013  Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Imports
+
 #import "LTMediasGridViewController.h"
 
 // UI
@@ -17,14 +20,19 @@
 // Model
 #import "LTMedia.h"
 
-typedef void (^UICollectionViewUpdateBlock)();
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Defines & contants
 
 static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGridViewControllerFooterIdentifier";
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Private interface
 
 @interface LTMediasGridViewController ()
 @property (nonatomic, strong) UIRefreshControl* refreshControl;
 @property (nonatomic, strong) LTLoadMoreFooterView* footerView;
 @property (nonatomic, strong) NSMutableSet *updates;
+@property (nonatomic, readonly) NSArray* medias;
 
 @property (nonatomic, assign) BOOL shouldScrollToTop;
 
@@ -40,8 +48,8 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
     self.collectionView.backgroundColor = [UIColor clearColor];
     self.collectionView.alwaysBounceVertical = YES;
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self.delegate
-                            action:@selector(refreshMedias)
+    [self.refreshControl addTarget:self
+                            action:@selector(refreshAction:)
                   forControlEvents:UIControlEventValueChanged];
     [self.collectionView addSubview:self.refreshControl];
     
@@ -51,6 +59,15 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
     [self.collectionView registerClass:[LTLoadMoreFooterView class]
             forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
                    withReuseIdentifier:LTMediasGridViewControllerFooterIdentifier];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if ([self.medias count] == 0)
+    {
+        [self loadMoreMediasAction:self];
+    }
 }
 
 - (void)viewWillLayoutSubviews
@@ -87,19 +104,23 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
     CGPoint top = {10, self.collectionView.contentOffset.y + self.collectionView.contentInset.top +10};
     NSIndexPath* topVisibleCellIndexPath = [self.collectionView indexPathForItemAtPoint:top];
     
-    LTMedia* media = [self.dataSource.mediasResultController objectAtIndexPath:topVisibleCellIndexPath];
+    LTMedia* media = self.medias[topVisibleCellIndexPath.row];
     return media;
 }
 
 - (void)setFirstVisibleMedia:(LTMedia *)firstVisibleMedia
 {
-    NSIndexPath* indexPath = [self.dataSource.mediasResultController indexPathForObject:firstVisibleMedia];
-
-    if (self.dataSource.mediasResultController.fetchedObjects.count > indexPath.row)
+    NSInteger rowIndex = [self.medias indexOfObject:firstVisibleMedia];
+    if (rowIndex != NSNotFound)
     {
-        [self.collectionView scrollToItemAtIndexPath:indexPath
-                                    atScrollPosition:UICollectionViewScrollPositionTop
-                                            animated:NO];
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+        
+        if ([self.medias count] > indexPath.row)
+        {
+            [self.collectionView scrollToItemAtIndexPath:indexPath
+                                        atScrollPosition:UICollectionViewScrollPositionTop
+                                                animated:NO];
+        }
     }
 }
 
@@ -126,12 +147,78 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
     self.collectionView.scrollIndicatorInsets = insets;
 }
 
+#pragma mark Properties
+
+- (NSArray*)medias
+{
+    return self.mediasRootViewController.medias;
+}
+
+#pragma mark Actions
+
+- (void)refreshAction:(id)sender
+{
+    NSInteger mediasNumber = [self.medias count];
+    __weak LTMediasGridViewController* weakSelf = self;
+    [self.mediasRootViewController refreshMediasWithCompletion:^(NSArray *medias, NSError *error)
+     {
+         [weakSelf.collectionView performBatchUpdates:^
+          {
+              for (NSInteger rowIndex = 0; rowIndex < [weakSelf.medias count]; rowIndex++)
+              {
+                  NSIndexPath* newIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+                  [weakSelf.collectionView insertItemsAtIndexPaths:@[newIndexPath]];
+              }
+          }
+                                           completion:^(BOOL finished)
+          {
+              [self.refreshControl endRefreshing];
+              self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
+          }];
+     }];
+    
+    // Delete all rows
+    [weakSelf.collectionView performBatchUpdates:^
+     {
+         for (NSInteger rowIndex = 0; rowIndex < mediasNumber; rowIndex++)
+         {
+             NSIndexPath* newIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+             [weakSelf.collectionView deleteItemsAtIndexPaths:@[newIndexPath]];
+         }
+     }
+     completion:^(BOOL finished){}];
+}
+
+- (void)loadMoreMediasAction:(id)sender
+{
+    self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeLoading;
+    
+    NSInteger mediaNumber = [self.medias count];
+    __weak LTMediasGridViewController* weakSelf = self;
+    [self.mediasRootViewController loadMoreMediaWithCompletion:^(NSArray *medias, NSError *error)
+     {
+         [weakSelf.collectionView performBatchUpdates:^
+          {
+              for (NSInteger rowIndex = mediaNumber; rowIndex < [weakSelf.medias count]; rowIndex++)
+              {
+                  NSIndexPath* newIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+                  [weakSelf.collectionView insertItemsAtIndexPaths:@[newIndexPath]];
+              }
+          }
+          completion:^(BOOL finished)
+          {
+              [self.refreshControl endRefreshing];
+              self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
+          }];
+     }];
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
-    return [[self.dataSource.mediasResultController fetchedObjects] count];
+    return [self.medias count];
 }
 
 
@@ -140,7 +227,7 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
 {
     LTMediaCollectionCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:[LTMediaCollectionCell reuseIdentifier]
                                                                             forIndexPath:indexPath];
-    cell.media = [self.dataSource.mediasResultController objectAtIndexPath:indexPath];
+    cell.media = self.medias[indexPath.row];
     return cell;
 }
 
@@ -153,8 +240,8 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
         self.footerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                                   withReuseIdentifier:LTMediasGridViewControllerFooterIdentifier
                                                                          forIndexPath:indexPath];
-        [self.footerView.loadMoreButton addTarget:self.delegate
-                                           action:@selector(loadMoreMedias)
+        [self.footerView.loadMoreButton addTarget:self
+                                           action:@selector(loadMoreMediasAction:)
                                  forControlEvents:UIControlEventTouchUpInside];
         view = self.footerView;
     }
@@ -168,7 +255,7 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    LTMedia *media = [self.dataSource.mediasResultController objectAtIndexPath:indexPath];
+    LTMedia *media = self.medias[indexPath.row];
     
     if(media != nil)
     {
@@ -178,72 +265,6 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
         [self.navigationController pushViewController:mediaDetailViewController
                                              animated:YES];
     }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-#pragma mark - NSFetchedResultsControllerDelegate
-
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
-{
-    self.updates = [NSMutableSet new];
-}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
-       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-      newIndexPath:(NSIndexPath *)newIndexPath
-{
-    
-    UICollectionViewUpdateBlock update;
-    __weak UICollectionView *collectionView = self.collectionView;
-    switch (type)
-    {
-        case NSFetchedResultsChangeInsert:
-        {
-            update = ^
-            {
-                [collectionView insertItemsAtIndexPaths:@[newIndexPath]];
-            };
-            break;
-        }
-        case NSFetchedResultsChangeDelete:
-        {
-            update = ^
-            {
-                [collectionView deleteItemsAtIndexPaths:@[indexPath]];
-            };
-            break;
-        }
-        case NSFetchedResultsChangeUpdate:
-        {
-            update = ^
-            {
-                //((LTMediaCollectionCell*)[collectionView cellForItemAtIndexPath:indexPath]).media = media;
-                [collectionView reloadItemsAtIndexPaths:@[indexPath]];
-            };
-            break;
-        }
-        case NSFetchedResultsChangeMove:
-        {
-            update = ^
-            {
-                [collectionView moveItemAtIndexPath:indexPath toIndexPath:newIndexPath];
-            };
-            break;
-        }
-    }
-    [self.updates addObject:update];
-}
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.collectionView performBatchUpdates:^
-    {
-        for (UICollectionViewUpdateBlock update in self.updates) update();
-    }
-    completion:^(BOOL finished)
-    {
-        self.updates = nil;
-    }];
 }
 
 @end

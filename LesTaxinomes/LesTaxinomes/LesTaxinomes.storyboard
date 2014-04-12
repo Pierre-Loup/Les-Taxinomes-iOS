@@ -951,7 +951,6 @@
                         <segue destination="uae-RE-1Bg" kind="relationship" relationship="viewControllers" id="3qi-0a-lXY"/>
                         <segue destination="i6T-78-K2r" kind="relationship" relationship="viewControllers" id="1Ec-Fs-oJ8"/>
                         <segue destination="OEr-gP-RoT" kind="relationship" relationship="viewControllers" id="NSb-hB-VsQ"/>
-                        <segue destination="yap-JB-3ZU" kind="relationship" relationship="viewControllers" id="abL-Uy-rJI"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6bp-0w-N8S" userLabel="First Responder" sceneMemberID="firstResponder"/>

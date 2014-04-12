@@ -15,6 +15,7 @@
 #import "LTMediaDetailViewController.h"
 #import "LTMediaListCell.h"
 #import "LTLoadMoreFooterView.h"
+
 // Model
 #import "LTMedia.h"
 
@@ -27,8 +28,10 @@ static NSString* const LTMediaListCellIdentifier = @"MediasListCell";
 #pragma mark - Private interface
 
 @interface LTMediasListViewController ()
+@property (nonatomic, strong) UIRefreshControl* refreshControl;
 @property (nonatomic, strong) LTLoadMoreFooterView* footerView;
 @property (nonatomic, assign) BOOL shouldScrollToTop;
+@property (nonatomic, readonly) NSArray* medias;
 @end
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -48,8 +51,8 @@ static NSString* const LTMediaListCellIdentifier = @"MediasListCell";
     
     // Puff to refresh top view
     self.refreshControl = [UIRefreshControl new];
-    [self.refreshControl addTarget:self.delegate
-                            action:@selector(refreshMedias)
+    [self.refreshControl addTarget:self
+                            action:@selector(refreshAction:)
                   forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
     
@@ -58,8 +61,8 @@ static NSString* const LTMediaListCellIdentifier = @"MediasListCell";
                                         self.tableView.frame.size.width,
                                         LTMediasListCommonRowHeight);
     self.footerView = [[LTLoadMoreFooterView alloc] initWithFrame:footerViewFrame];
-    [self.footerView.loadMoreButton addTarget:self.delegate
-                                  action:@selector(loadMoreMedias)
+    [self.footerView.loadMoreButton addTarget:self
+                                  action:@selector(loadMoreMediasAction:)
                         forControlEvents:UIControlEventTouchUpInside];
     
     self.tableView.tableFooterView = self.footerView;
@@ -87,6 +90,10 @@ static NSString* const LTMediaListCellIdentifier = @"MediasListCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    if ([self.medias count] == 0)
+    {
+        [self loadMoreMediasAction:self];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -125,19 +132,23 @@ static NSString* const LTMediaListCellIdentifier = @"MediasListCell";
     CGPoint top = {0, self.tableView.contentOffset.y + self.tableView.contentInset.top};
     NSIndexPath* topVisibleCellIndexPath = [self.tableView indexPathForRowAtPoint:top];
 
-    LTMedia* media = [self.dataSource.mediasResultController objectAtIndexPath:topVisibleCellIndexPath];
+    LTMedia* media = self.medias[topVisibleCellIndexPath.row];
     return media;
 }
 
 - (void)setFirstVisibleMedia:(LTMedia *)firstVisibleMedia
 {
-    NSIndexPath* indexPath = [self.dataSource.mediasResultController indexPathForObject:firstVisibleMedia];
-    
-    if (self.dataSource.mediasResultController.fetchedObjects.count > indexPath.row)
+    NSInteger rowIndex = [self.medias indexOfObject:firstVisibleMedia];
+    if (rowIndex != NSNotFound)
     {
-        [self.tableView scrollToRowAtIndexPath:indexPath
-                          atScrollPosition:UITableViewScrollPositionTop
-                                  animated:NO];
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+    
+        if ([self.medias count] > indexPath.row)
+        {
+            [self.tableView scrollToRowAtIndexPath:indexPath
+                                  atScrollPosition:UITableViewScrollPositionTop
+                                          animated:NO];
+        }
     }
 }
 
@@ -164,6 +175,67 @@ static NSString* const LTMediaListCellIdentifier = @"MediasListCell";
     self.tableView.scrollIndicatorInsets = insets;
 }
 
+#pragma mark Properties
+
+- (NSArray*)medias
+{
+    return self.mediasRootViewController.medias;
+}
+
+#pragma mark Actions
+
+- (void)refreshAction:(id)sender
+{
+    NSInteger mediasNumber = [self.medias count];
+    __weak LTMediasListViewController* weakSelf = self;
+    [self.mediasRootViewController refreshMediasWithCompletion:^(NSArray *medias, NSError *error)
+    {
+        [self.tableView beginUpdates];
+        for (NSInteger rowIndex = 0; rowIndex < [weakSelf.medias count]; rowIndex++)
+        {
+            NSIndexPath* newIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+            [weakSelf.tableView insertRowsAtIndexPaths:@[newIndexPath]
+                                      withRowAnimation:UITableViewRowAnimationFade];
+        }
+        [self.tableView endUpdates];
+        
+        [self.refreshControl endRefreshing];
+        self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
+    }];
+    
+    // Delete all rows
+    [self.tableView beginUpdates];
+    for (NSInteger rowIndex = 0; rowIndex < mediasNumber; rowIndex++)
+    {
+        NSIndexPath* newIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+        [self.tableView deleteRowsAtIndexPaths:@[newIndexPath]
+                              withRowAnimation:UITableViewRowAnimationFade];
+    }
+    [self.tableView endUpdates];
+}
+
+- (void)loadMoreMediasAction:(id)sender
+{
+    self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeLoading;
+    
+    NSInteger mediaNumber = [self.medias count];
+    __weak LTMediasListViewController* weakSelf = self;
+    [self.mediasRootViewController loadMoreMediaWithCompletion:^(NSArray *medias, NSError *error)
+    {
+        [self.tableView beginUpdates];
+        for (NSInteger rowIndex = mediaNumber; rowIndex < [weakSelf.medias count]; rowIndex++)
+        {
+            NSIndexPath* newIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+            [weakSelf.tableView insertRowsAtIndexPaths:@[newIndexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+        }
+        [self.tableView endUpdates];
+        
+        [self.refreshControl endRefreshing];
+        self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
+    }];
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UITableViewDataSource
 
@@ -176,12 +248,12 @@ static NSString* const LTMediaListCellIdentifier = @"MediasListCell";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [[self.dataSource.mediasResultController fetchedObjects] count];
+    return [self.medias count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LTMedia *media = [self.dataSource.mediasResultController objectAtIndexPath:indexPath];
+    LTMedia *media = self.medias[indexPath.row];
     LTMediaListCell* cell = nil;
     
     cell = [aTableView dequeueReusableCellWithIdentifier:LTMediaListCellIdentifier];
@@ -201,7 +273,7 @@ static NSString* const LTMediaListCellIdentifier = @"MediasListCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LTMedia *media = [self.dataSource.mediasResultController objectAtIndexPath:indexPath];
+    LTMedia *media = self.medias[indexPath.row];
 
     if(media != nil)
     {
@@ -217,52 +289,6 @@ static NSString* const LTMediaListCellIdentifier = @"MediasListCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return LTMediasListCommonRowHeight;
-}
-
-#pragma mark - NSFetchedResultsControllerDelegate
-
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView beginUpdates];
-}
-
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
-       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-      newIndexPath:(NSIndexPath *)newIndexPath {
-    
-    UITableView *tableView = self.tableView;
-    LTMedia *media = (LTMedia *)anObject;
-    
-    switch(type) {
-            
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
-                             withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
-                             withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeUpdate:
-            ((LTMediaListCell*)[tableView cellForRowAtIndexPath:indexPath]).media = media;
-            break;
-            
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
-                             withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
-                             withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView endUpdates];
 }
 
 @end
