@@ -20,10 +20,7 @@
 @property (nonatomic, assign) NSInteger searchStartIndex;
 @property (nonatomic, strong) UIBarButtonItem* reloadBarButton;
 @property (nonatomic, strong) UIBarButtonItem* scanBarButton;
-@property (nonatomic, strong) NSFetchedResultsController* mediasResultController;
-
-@property (nonatomic, assign) NSInteger insertedMedias;
-@property (nonatomic, assign) NSInteger updatedMedias;
+@property (nonatomic, strong) NSMutableSet* medias;
 
 @end
 
@@ -38,6 +35,8 @@
     
     self.title = _T(@"common.map");
     
+    self.medias = [NSMutableSet new];
+    
     self.scanBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(scanButtonAction:)];
     [self.navigationItem setRightBarButtonItem:self.scanBarButton];
     
@@ -49,7 +48,6 @@
     if (self.referenceAnnotation)
     {
         [self.mapView addAnnotation:self.referenceAnnotation];
-        [self.mapView setRegion:MKCoordinateRegionMake(self.referenceAnnotation.coordinate, MKCoordinateSpanMake(1, 1)) animated:YES];
     }
     else
     {
@@ -73,9 +71,12 @@
         || !self.referenceAnnotation)
     {
         self.mapView.showsUserLocation = YES;
-        [self setupLocationManager];
+        if (self.referenceAnnotation &&
+            self.locationManager)
+        {
+            [self.locationManager startMonitoringSignificantLocationChanges];
+        }
     }
-    [self resetMediasResultController];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -84,24 +85,22 @@
     self.mapView.showsUserLocation = NO;
     [self.locationManager stopMonitoringSignificantLocationChanges];
     self.locationManager = nil;
-    self.mediasResultController = nil;
     [SVProgressHUD dismiss];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    if (!self.view.window)
+    {
+        [self.mapView removeAnnotations:self.mapView.annotations];
+        [self.medias removeAllObjects];
+    }
+    [super didReceiveMemoryWarning];
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private methods
 #pragma mark Properties
-
-- (void)resetMediasResultController
-{
-        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"status == %@",@"publie"];
-        self.mediasResultController = [LTMedia MR_fetchAllSortedBy:@"date"
-                                                         ascending:NO
-                                                     withPredicate:predicate
-                                                           groupBy:nil
-                                                          delegate:self
-                                                         inContext:[NSManagedObjectContext MR_defaultContext]];
-}
 
 - (void)setupLocationManager
 {
@@ -151,9 +150,19 @@
                                                                      withRange:range
         responseBlock:^(NSArray *medias, NSError *error)
         {
-            self.searchStartIndex += (self.insertedMedias + self.updatedMedias);
+            
             if (!error)
             {
+                NSMutableSet* newMediasSet = [NSMutableSet setWithArray:medias];
+                
+                [newMediasSet minusSet:self.medias];
+                [self.mapView addAnnotations: [newMediasSet allObjects]];
+                
+                self.searchStartIndex += [newMediasSet count];
+                [self.medias addObjectsFromArray:[newMediasSet allObjects]];
+                
+                [self updateDisplayedRegion];
+                
                 [SVProgressHUD dismiss];
                 self.reloadBarButton.enabled = YES;
                 self.scanBarButton.enabled = YES;
@@ -178,7 +187,9 @@
     {
         _referenceAnnotation = self.mapView.userLocation;
         [self.mapView setRegion:MKCoordinateRegionMake(self.referenceAnnotation.coordinate, MKCoordinateSpanMake(1, 1)) animated:YES];
-        [self loadMoreCloseMedias];
+        CLLocation* newLocation = [[CLLocation alloc] initWithLatitude:userLocation.coordinate.latitude
+                                                                longitude:userLocation.coordinate.longitude];
+        [self updateLocation:newLocation];
     }
 }
 
@@ -226,75 +237,63 @@
     CLLocation* newLocation = [locations lastObject];
     if (self.referenceAnnotation
         && self.mapView.showsUserLocation
-        && CLLocationCoordinate2DIsValid(newLocation.coordinate))
+        && CLLocationCoordinate2DIsValid(newLocation.coordinate)
+        && ![SVProgressHUD isVisible])
     {
-        
-        self.reloadBarButton.enabled = NO;
-        self.scanBarButton.enabled = NO;
-        [SVProgressHUD showWithStatus:_T(@"explore.positionupdate.hud.status")];
-        
-        NSRange range;
-        range.location = 0;
-        range.length = LTMediasLoadingStep;
-        
-        [[LTConnectionManager sharedManager] fetchMediasSummariesByDateForAuthor:nil
-                                                                  nearLocation:newLocation
-                                                                  searchFilter:nil
-                                                                     withRange:range
-                                                                 responseBlock:^(NSArray *medias, NSError *error)
-         {
-             if (!error)
-             {
-                 if (self.insertedMedias != 0)
-                 {
-                     self.searchStartIndex = self.insertedMedias + self.updatedMedias;
-                 }
-                 
-                 [SVProgressHUD dismiss];
-                 self.reloadBarButton.enabled = YES;
-                 self.scanBarButton.enabled = YES;
-             }
-             else
-             {
-                 [SVProgressHUD showErrorWithStatus:nil];
-                 self.reloadBarButton.enabled = YES;
-                 self.scanBarButton.enabled = YES;
-             }
-         }];
+        [self updateLocation:newLocation];
     }
 }
 
-#pragma mark - NSFetchedResultsControllerDelegate
-
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+- (void)updateLocation:(CLLocation*)newLocation
 {
-    self.insertedMedias = 0;
-    self.updatedMedias = 0;
-}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
-       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-      newIndexPath:(NSIndexPath *)newIndexPath
-{
-    LTMedia *media = (LTMedia *)anObject;
+    self.reloadBarButton.enabled = NO;
+    self.scanBarButton.enabled = NO;
+    [SVProgressHUD showWithStatus:_T(@"explore.positionupdate.hud.status")];
     
-    switch(type)
-    {
-        case NSFetchedResultsChangeInsert:
-            self.insertedMedias++;
-        case NSFetchedResultsChangeUpdate:
-            self.updatedMedias++;
-            [self.mapView addAnnotation:media];
-            break;
-        case NSFetchedResultsChangeDelete:
-            [self.mapView removeAnnotation:media];
-            break;
-        case NSFetchedResultsChangeMove:
-            break;
-    }
+    NSRange range;
+    range.location = 0;
+    range.length = LTMediasLoadingStep;
+    
+    [[LTConnectionManager sharedManager] fetchMediasSummariesByDateForAuthor:nil
+                                                                nearLocation:newLocation
+                                                                searchFilter:nil
+                                                                   withRange:range
+                                                               responseBlock:^(NSArray *medias, NSError *error)
+     {
+         if (!error)
+         {
+             // If there is at least one media that is already display it means that
+             // there has been a significant location changer : reset de search start index
+             NSMutableSet* newMediasSet = [NSMutableSet setWithArray:medias];
+             [newMediasSet minusSet:self.medias];
+             if ([newMediasSet count] == [medias count])
+             {
+                 self.searchStartIndex = [newMediasSet count];
+                 if (!self.locationManager)
+                 {
+                     [self setupLocationManager];
+                 }
+             }
+             
+             [self.mapView addAnnotations: [newMediasSet allObjects]];
+             [self.medias addObjectsFromArray:[newMediasSet allObjects]];
+             
+             [self updateDisplayedRegion];
+             
+             [SVProgressHUD dismiss];
+             self.reloadBarButton.enabled = YES;
+             self.scanBarButton.enabled = YES;
+         }
+         else
+         {
+             [SVProgressHUD showErrorWithStatus:nil];
+             self.reloadBarButton.enabled = YES;
+             self.scanBarButton.enabled = YES;
+         }
+     }];
 }
 
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+- (void)updateDisplayedRegion
 {
     CGFloat maxLatDif = 0;
     CGFloat maxLonDif = 0;
