@@ -73,13 +73,13 @@
     }];
     
     // Retrieve Tree
-    [[LTConnectionManager sharedManager] fetchFullTreeWithCompletion:^(NSError *error)
-     {
-         if (error)
-         {
-             LogError(@"%@", error);
-         }
-     }];
+//    [[LTConnectionManager sharedManager] fetchFullTreeWithCompletion:^(NSError *error)
+//     {
+//         if (error)
+//         {
+//             LogError(@"%@", error);
+//         }
+//     }];
     
 #ifdef DEBUG
 #if TARGET_IPHONE_SIMULATOR

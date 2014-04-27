@@ -54,6 +54,12 @@
         self.mapView.showsUserLocation = YES;
         [SVProgressHUD show];
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillTerminateNotification
+                                                      object:self queue:nil usingBlock:^(NSNotification *note)
+     {
+         [self stopMonitoringSignificantLocationChanges];
+     }];
 }
 
 - (void)viewDidUnload
@@ -83,7 +89,7 @@
 {
     [super viewWillDisappear:animated];
     self.mapView.showsUserLocation = NO;
-    [self.locationManager stopMonitoringSignificantLocationChanges];
+    [self stopMonitoringSignificantLocationChanges];
     self.locationManager = nil;
     [SVProgressHUD dismiss];
 }
@@ -96,6 +102,11 @@
         [self.medias removeAllObjects];
     }
     [super didReceiveMemoryWarning];
+}
+
+- (void)dealloc
+{
+    [self stopMonitoringSignificantLocationChanges];
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -183,7 +194,8 @@
 {
     if (!self.referenceAnnotation
         && self.mapView.showsUserLocation
-        && CLLocationCoordinate2DIsValid(userLocation.coordinate))
+        && CLLocationCoordinate2DIsValid(userLocation.coordinate)
+        && self.view.window)
     {
         _referenceAnnotation = self.mapView.userLocation;
         [self.mapView setRegion:MKCoordinateRegionMake(self.referenceAnnotation.coordinate, MKCoordinateSpanMake(1, 1)) animated:YES];
@@ -238,7 +250,8 @@
     if (self.referenceAnnotation
         && self.mapView.showsUserLocation
         && CLLocationCoordinate2DIsValid(newLocation.coordinate)
-        && ![SVProgressHUD isVisible])
+        && ![SVProgressHUD isVisible]
+        && self.view.window)
     {
         [self updateLocation:newLocation];
     }
@@ -319,6 +332,14 @@
     
     // Display the closest region with all the medias displayed
     [self.mapView setRegion:MKCoordinateRegionMake(self.referenceAnnotation.coordinate, MKCoordinateSpanMake(latDelta, lonDelta)) animated:YES];
+}
+
+- (void)stopMonitoringSignificantLocationChanges
+{
+    if ([CLLocationManager significantLocationChangeMonitoringAvailable])
+    {
+        [self.locationManager stopMonitoringSignificantLocationChanges];
+    }
 }
 
 @end

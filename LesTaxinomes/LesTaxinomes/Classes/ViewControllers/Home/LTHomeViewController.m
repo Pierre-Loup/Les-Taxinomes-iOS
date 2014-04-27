@@ -123,28 +123,29 @@ static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailVie
     
     // Medias cover view
     self.mediaCoverIndex = -1;
+    __weak LTHomeViewController* weakSelf = self;
     [[LTConnectionManager sharedManager] getHomeCoversWithResponseBlock:^(NSArray *medias, NSError *error)
      {
          if (!error)
          {
-             self.mediasForCover = medias;
+             weakSelf.mediasForCover = medias;
          }
          else
          {
              NSPredicate* predicate = [NSPredicate predicateWithFormat:@"self.mediaLargeURL != nil"];
-             self.mediasForCover = [LTMedia MR_findAllWithPredicate:predicate
-                                                          inContext:[NSManagedObjectContext MR_defaultContext]];
+             weakSelf.mediasForCover = [LTMedia MR_findAllWithPredicate:predicate
+                                                              inContext:[NSManagedObjectContext MR_defaultContext]];
          }
          
-         if ([self.mediasForCover count])
+         if ([weakSelf.mediasForCover count])
          {
-             [self.kenBurnsView startAnimationWithDatasource:self
-                                                        loop:YES
-                                                     rotates:NO
-                                                 isLandscape:YES];
-             UITapGestureRecognizer* mediasCoverTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
+             [weakSelf.kenBurnsView startAnimationWithDatasource:weakSelf
+                                                            loop:YES
+                                                         rotates:NO
+                                                     isLandscape:YES];
+             UITapGestureRecognizer* mediasCoverTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:weakSelf
                                                                                                      action:@selector(mediasCoverTouchUpInside:)];
-             [self.kenBurnsView addGestureRecognizer:mediasCoverTapGesture];
+             [weakSelf.kenBurnsView addGestureRecognizer:mediasCoverTapGesture];
          }
      }];
     
@@ -154,8 +155,8 @@ static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailVie
     {
         if (authenticatedUser)
         {
-            self.userNameLabel.text = authenticatedUser.name;
-            [self updateAvatar];
+            weakSelf.userNameLabel.text = authenticatedUser.name;
+            [weakSelf updateAvatar];
         }
     }];
 }
@@ -221,11 +222,13 @@ static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailVie
     {
         NSURL* imageURL = [NSURL URLWithString:user.avatarURL];
         NSURLRequest* request = [NSURLRequest requestWithURL:imageURL];
+        
+        __weak LTHomeViewController* weakSelf = self;
         [[UIImageView new] setImageWithURLRequest:request
                                  placeholderImage:nil
         success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image)
         {
-            self.userAvatarView.image = image;
+            weakSelf.userAvatarView.image = image;
         }
         failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {}];
     }
@@ -243,10 +246,12 @@ static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailVie
 
 - (IBAction)cameraButtonAction:(id) sender
 {
+    __weak LTHomeViewController* weakSelf = self;
     [[LTPhotoAssetManager sharedManager] photoAssetPickerWithTitle:nil
                                                         showInView:self.view.window
                                                          presentVC:self
-    onPhotoPicked:^(NSURL* chosenImageAssetURL, NSError* error) {
+    onPhotoPicked:^(NSURL* chosenImageAssetURL, NSError* error)
+    {
         if (chosenImageAssetURL && !error) {
             LTConnectionManager* cm = [LTConnectionManager sharedManager];
             if (!cm.authenticatedUser)
@@ -259,29 +264,31 @@ static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailVie
                         [SVProgressHUD dismiss];
                         if (!authenticatedUser)
                         {
-                            self.mediaToShareAssetURL = chosenImageAssetURL;
-                            if(self.presentedViewController)
+                            weakSelf.mediaToShareAssetURL = chosenImageAssetURL;
+                            if(weakSelf.presentedViewController)
                             {
-                                self.shouldPresentAuthenticationSheet = YES;
+                                weakSelf.shouldPresentAuthenticationSheet = YES;
                             } else {
-                                [self displayAuthenticationSheetAnimated:YES];
+                                [weakSelf displayAuthenticationSheetAnimated:YES];
                             }
                         }
                         else
                         {
-                            [self dismissViewControllerAnimated:YES
+                            [weakSelf dismissViewControllerAnimated:YES
                                                      completion:^{}];
-                            LTMediaUploadFormViewController* mediaUploadVC = [self.storyboard instantiateViewControllerWithIdentifier:@"LTMediaUploadFormViewController"];
+                            LTMediaUploadFormViewController* mediaUploadVC = [weakSelf.storyboard instantiateViewControllerWithIdentifier:@"LTMediaUploadFormViewController"];
                             mediaUploadVC.mediaAssetURL = chosenImageAssetURL;
-                            [self.navigationController pushViewController:mediaUploadVC animated:YES];
+                            [weakSelf.navigationController pushViewController:mediaUploadVC animated:YES];
                         }
                     }];
-            } else {
-                [self dismissViewControllerAnimated:YES
+            }
+            else
+            {
+                [weakSelf dismissViewControllerAnimated:YES
                                          completion:^{}];
-                LTMediaUploadFormViewController* mediaUploadVC = [self.storyboard instantiateViewControllerWithIdentifier:@"LTMediaUploadFormViewController"];
+                LTMediaUploadFormViewController* mediaUploadVC = [weakSelf.storyboard instantiateViewControllerWithIdentifier:@"LTMediaUploadFormViewController"];
                 mediaUploadVC.mediaAssetURL = chosenImageAssetURL;
-                [self.navigationController pushViewController:mediaUploadVC animated:YES];
+                [weakSelf.navigationController pushViewController:mediaUploadVC animated:YES];
             }
         }
     } onCancel:^{}];
@@ -357,12 +364,13 @@ static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailVie
     NSURL* mediaCoverURL = [NSURL URLWithString:mediaToDisplay.mediaLargeURL];
     if (mediaCoverURL)
     {
+        __weak LTHomeViewController* weakSelf = self;
         [[SDWebImageManager sharedManager] downloadWithURL:mediaCoverURL
                                                    options:0
                                                   progress:^(NSInteger receivedSize, NSInteger expectedSize) {}
                                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
          {
-             self.mediaCoverIndex = imageIndex;
+             weakSelf.mediaCoverIndex = imageIndex;
              completed(image);
          }];
     }
@@ -438,6 +446,8 @@ static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailVie
         range.length = LTMediasSearchStep;
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         [self.searchRequestOperation cancel];
+        
+        __weak LTHomeViewController* weakSelf = self;
         self.searchRequestOperation = [[LTConnectionManager sharedManager] fetchMediasSummariesByDateForAuthor:nil
                                                                   nearLocation:nil
                                                                   searchFilter:searchString
@@ -447,12 +457,12 @@ static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailVie
              NSLog(@"%@", error);
              if ([medias count])
              {
-                 self.mediasSearchResult = medias;
+                 weakSelf.mediasSearchResult = medias;
                  [controller.searchResultsTableView reloadData];
              }
              else if (!error)
              {
-                 self.mediasSearchResult = nil;
+                 weakSelf.mediasSearchResult = nil;
                  [controller.searchResultsTableView reloadData];
              }
              
