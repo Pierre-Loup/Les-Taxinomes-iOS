@@ -61,6 +61,7 @@ typedef enum {
 @property (nonatomic, strong) LTMediasListViewController* listViewController;
 @property (nonatomic, strong) LTMediasGridViewController* gridViewController;
 @property (nonatomic, strong) NSArray* medias;
+@property (nonatomic, assign) BOOL isFetchingMedias;
 @property (nonatomic) LTMediasDisplayMode displayMode;
 @end
 
@@ -168,6 +169,81 @@ typedef enum {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Public Methods
+
+- (void)loadMoreMediaWithCompletion:(void (^)(NSArray* medias, NSError *error))completion
+{
+    NSRange mediasRange;
+    mediasRange.location = [self.medias count];
+    mediasRange.length = LTMediasLoadingStep;
+    
+    self.isFetchingMedias = YES;
+    
+    LTConnectionManager* connectionManager = [LTConnectionManager sharedManager];
+    [connectionManager fetchMediasSummariesByDateForAuthor:self.currentUser
+                                              nearLocation:nil
+                                              searchFilter:nil
+                                                 withRange:mediasRange
+                                             responseBlock:^(NSArray *medias, NSError *error)
+     {
+         if (!medias)
+         {
+             [SVProgressHUD showErrorWithStatus:_T(@"common.hud.failure")];
+         }
+         else if([medias count])
+         {
+             NSMutableArray* allMedias;
+             if (self.medias)
+             {
+                 allMedias = [self.medias mutableCopy];
+             }
+             else
+             {
+                 allMedias = [NSMutableArray new];
+             }
+             [allMedias addObjectsFromArray:medias];
+             self.medias = [NSArray arrayWithArray:allMedias];
+         }
+         
+         if (completion)
+         {
+             completion(medias, error);
+         }
+         
+         if (self.contentViewController == self.listViewController)
+         {
+             [self.gridViewController.collectionView reloadData];
+         }
+         else if (self.contentViewController == self.gridViewController)
+         {
+             [self.listViewController.tableView reloadData];
+         }
+         
+         self.isFetchingMedias = NO;
+         
+     }];
+}
+
+
+- (void)refreshMediasWithCompletion:(void (^)(NSArray* medias, NSError *error))completion
+{
+    self.medias = nil;
+    
+    self.isFetchingMedias = YES;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
+    {
+        [LTMedia MR_truncateAll];
+        NSError* error;
+        [[NSManagedObjectContext MR_contextForCurrentThread] save:&error];
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            [self loadMoreMediaWithCompletion:completion];
+        });
+    });
+}
+
+////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Private Methods
 
 - (void)commonInit
@@ -180,61 +256,6 @@ typedef enum {
     
     _gridViewController = [LTMediasGridViewController new];
     _gridViewController.mediasRootViewController = self;
-}
-
-- (void)loadMoreMediaWithCompletion:(void (^)(NSArray* medias, NSError *error))completion
-{
-    NSRange mediasRange;
-    mediasRange.location = [self.medias count];
-    mediasRange.length = LTMediasLoadingStep;
-
-    LTConnectionManager* connectionManager = [LTConnectionManager sharedManager];
-    [connectionManager fetchMediasSummariesByDateForAuthor:self.currentUser
-                                            nearLocation:nil
-                                            searchFilter:nil
-                                           withRange:mediasRange
-    responseBlock:^(NSArray *medias, NSError *error)
-    {
-        if (!medias)
-        {
-            [SVProgressHUD showErrorWithStatus:_T(@"common.hud.failure")];
-        }
-        else if([medias count])
-        {
-            NSMutableArray* allMedias;
-            if (self.medias)
-            {
-                allMedias = [self.medias mutableCopy];
-            }
-            else
-            {
-                allMedias = [NSMutableArray new];
-            }
-            [allMedias addObjectsFromArray:medias];
-            self.medias = [NSArray arrayWithArray:allMedias];
-        }
-        
-        if (completion)
-        {
-            completion(medias, error);
-        }
-    }];
-}
-
-
-- (void)refreshMediasWithCompletion:(void (^)(NSArray* medias, NSError *error))completion
-{
-    self.medias = nil;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
-    {
-        [LTMedia MR_truncateAll];
-        NSError* error;
-        [[NSManagedObjectContext MR_contextForCurrentThread] save:&error];
-        dispatch_async(dispatch_get_main_queue(), ^
-        {
-            [self loadMoreMediaWithCompletion:completion];
-        });
-    });
 }
 
 - (IBAction)displayBarButton:(UIBarButtonItem*)barButtonItem
@@ -271,67 +292,78 @@ typedef enum {
 
 #pragma mark Properties
 
+- (void)setIsFetchingMedias:(BOOL)isFetchingMedias
+{
+    if (_isFetchingMedias != isFetchingMedias)
+    {
+        _isFetchingMedias = isFetchingMedias;
+        self.displayBarButton.enabled = !isFetchingMedias;
+    }
+}
+
 - (void)setDisplayMode:(LTMediasDisplayMode)displayMode
 {
-    _displayMode = displayMode;
-    
-    // Switch between grid and list display
-    if (_displayMode == LTMediasDisplayModeList &&
-        self.contentViewController != self.listViewController)
+    if (!self.isFetchingMedias)
     {
-        // Add the VC to display the root VC
-        [self addChildViewController:self.listViewController];
-        [self.listViewController didMoveToParentViewController:self];
-        [self.view addSubview:self.listViewController.view];
+        _displayMode = displayMode;
         
-        [self.listViewController.tableView reloadData];
-        self.listViewController.firstVisibleMedia = self.gridViewController.firstVisibleMedia;
-        
-        self.listViewController.view.hidden = YES;
-        [self.view addSubview:self.listViewController.view];
-        self.contentViewController = self.listViewController;
-        
-        [UIView transitionFromView:self.gridViewController.view
-                            toView:self.listViewController.view
-                          duration:1.0
-                           options:UIViewAnimationOptionTransitionFlipFromRight|UIViewAnimationOptionShowHideTransitionViews
-        completion:^(BOOL finished)
+        // Switch between grid and list display
+        if (_displayMode == LTMediasDisplayModeList &&
+            self.contentViewController != self.listViewController)
         {
-            [self.gridViewController willMoveToParentViewController:self];
-            [self.gridViewController removeFromParentViewController];
-        }];
-        
-        self.displayBarButton.image = [UIImage imageNamed:@"icon_grid"];
-        
-    }
-    else if (_displayMode == LTMediasDisplayModeGrid &&
-               self.contentViewController != self.gridViewController)
-    {
-        // Add the VC to display the root VC
-        [self addChildViewController:self.gridViewController];
-        [self.gridViewController didMoveToParentViewController:self];
-        [self.view addSubview:self.gridViewController.view];
-        
-        [self.gridViewController.collectionView reloadData];
-        LTMedia* firstVisibleMedia = self.listViewController.firstVisibleMedia;
-        
-        self.gridViewController.view.hidden = YES;
-        [self.view addSubview:self.gridViewController.view];
-        self.contentViewController = self.gridViewController;
-        self.gridViewController.firstVisibleMedia = firstVisibleMedia;
-        
-        [UIView transitionFromView:self.listViewController.view
-                            toView:self.gridViewController.view
-                          duration:1.0
-                           options:UIViewAnimationOptionTransitionFlipFromLeft|UIViewAnimationOptionShowHideTransitionViews
-        completion:^(BOOL finished)
+            // Add the VC to display the root VC
+            [self addChildViewController:self.listViewController];
+            [self.listViewController didMoveToParentViewController:self];
+            [self.view addSubview:self.listViewController.view];
+            
+            [self.listViewController.tableView reloadData];
+            self.listViewController.firstVisibleMedia = self.gridViewController.firstVisibleMedia;
+            
+            self.listViewController.view.hidden = YES;
+            [self.view addSubview:self.listViewController.view];
+            self.contentViewController = self.listViewController;
+            
+            [UIView transitionFromView:self.gridViewController.view
+                                toView:self.listViewController.view
+                              duration:1.0
+                               options:UIViewAnimationOptionTransitionFlipFromRight|UIViewAnimationOptionShowHideTransitionViews
+                            completion:^(BOOL finished)
+             {
+                 [self.gridViewController willMoveToParentViewController:self];
+                 [self.gridViewController removeFromParentViewController];
+             }];
+            
+            self.displayBarButton.image = [UIImage imageNamed:@"icon_grid"];
+            
+        }
+        else if (_displayMode == LTMediasDisplayModeGrid &&
+                 self.contentViewController != self.gridViewController)
         {
-            [self.listViewController willMoveToParentViewController:nil];
-            [self.listViewController removeFromParentViewController];
-        }];
-        
-        self.displayBarButton.image = [UIImage imageNamed:@"icon_list"];
-        
+            // Add the VC to display the root VC
+            [self addChildViewController:self.gridViewController];
+            [self.gridViewController didMoveToParentViewController:self];
+            [self.view addSubview:self.gridViewController.view];
+            
+            [self.gridViewController.collectionView reloadData];
+            LTMedia* firstVisibleMedia = self.listViewController.firstVisibleMedia;
+            
+            self.gridViewController.view.hidden = YES;
+            [self.view addSubview:self.gridViewController.view];
+            self.contentViewController = self.gridViewController;
+            self.gridViewController.firstVisibleMedia = firstVisibleMedia;
+            
+            [UIView transitionFromView:self.listViewController.view
+                                toView:self.gridViewController.view
+                              duration:1.0
+                               options:UIViewAnimationOptionTransitionFlipFromLeft|UIViewAnimationOptionShowHideTransitionViews
+                            completion:^(BOOL finished)
+             {
+                 [self.listViewController willMoveToParentViewController:nil];
+                 [self.listViewController removeFromParentViewController];
+             }];
+            
+            self.displayBarButton.image = [UIImage imageNamed:@"icon_list"];
+        }
     }
 }
 

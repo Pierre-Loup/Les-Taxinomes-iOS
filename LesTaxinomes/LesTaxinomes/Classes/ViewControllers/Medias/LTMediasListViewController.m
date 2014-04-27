@@ -94,6 +94,15 @@ static NSString* const LTMediaListCellIdentifier = @"MediasListCell";
     {
         [self loadMoreMediasAction:self];
     }
+    
+    if (self.mediasRootViewController.isFetchingMedias)
+    {
+        self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeLoading;
+    }
+    else
+    {
+        self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -186,54 +195,62 @@ static NSString* const LTMediaListCellIdentifier = @"MediasListCell";
 
 - (void)refreshAction:(id)sender
 {
-    NSInteger mediasNumber = [self.medias count];
-    __weak LTMediasListViewController* weakSelf = self;
-    [self.mediasRootViewController refreshMediasWithCompletion:^(NSArray *medias, NSError *error)
+    if (!self.mediasRootViewController.isFetchingMedias)
     {
+        NSInteger mediasNumber = [self.medias count];
+        NSLog(@"[TV]mediasNumber:%d", (int)mediasNumber);
+        __weak LTMediasListViewController* weakSelf = self;
+        [self.mediasRootViewController refreshMediasWithCompletion:^(NSArray *medias, NSError *error)
+         {
+             NSLog(@"[TV]medias:%d", (int)medias);
+             [self.tableView beginUpdates];
+             for (NSInteger rowIndex = 0; rowIndex < [weakSelf.medias count]; rowIndex++)
+             {
+                 NSIndexPath* newIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+                 [weakSelf.tableView insertRowsAtIndexPaths:@[newIndexPath]
+                                           withRowAnimation:UITableViewRowAnimationFade];
+             }
+             [self.tableView endUpdates];
+             
+             [self.refreshControl endRefreshing];
+             self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
+         }];
+        
+        // Delete all rows
         [self.tableView beginUpdates];
-        for (NSInteger rowIndex = 0; rowIndex < [weakSelf.medias count]; rowIndex++)
+        for (NSInteger rowIndex = 0; rowIndex < mediasNumber; rowIndex++)
         {
             NSIndexPath* newIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
-            [weakSelf.tableView insertRowsAtIndexPaths:@[newIndexPath]
-                                      withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView deleteRowsAtIndexPaths:@[newIndexPath]
+                                  withRowAnimation:UITableViewRowAnimationFade];
         }
         [self.tableView endUpdates];
-        
-        [self.refreshControl endRefreshing];
-        self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
-    }];
-    
-    // Delete all rows
-    [self.tableView beginUpdates];
-    for (NSInteger rowIndex = 0; rowIndex < mediasNumber; rowIndex++)
-    {
-        NSIndexPath* newIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
-        [self.tableView deleteRowsAtIndexPaths:@[newIndexPath]
-                              withRowAnimation:UITableViewRowAnimationFade];
     }
-    [self.tableView endUpdates];
 }
 
 - (void)loadMoreMediasAction:(id)sender
 {
-    self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeLoading;
-    
-    NSInteger mediaNumber = [self.medias count];
-    __weak LTMediasListViewController* weakSelf = self;
-    [self.mediasRootViewController loadMoreMediaWithCompletion:^(NSArray *medias, NSError *error)
+    if (!self.mediasRootViewController.isFetchingMedias)
     {
-        [self.tableView beginUpdates];
-        for (NSInteger rowIndex = mediaNumber; rowIndex < [weakSelf.medias count]; rowIndex++)
-        {
-            NSIndexPath* newIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
-            [weakSelf.tableView insertRowsAtIndexPaths:@[newIndexPath]
-                             withRowAnimation:UITableViewRowAnimationFade];
-        }
-        [self.tableView endUpdates];
+        self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeLoading;
         
-        [self.refreshControl endRefreshing];
-        self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
-    }];
+        NSInteger mediaNumber = [self.medias count];
+        __weak LTMediasListViewController* weakSelf = self;
+        [self.mediasRootViewController loadMoreMediaWithCompletion:^(NSArray *medias, NSError *error)
+         {
+             [self.tableView beginUpdates];
+             for (NSInteger rowIndex = mediaNumber; rowIndex < [weakSelf.medias count]; rowIndex++)
+             {
+                 NSIndexPath* newIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+                 [weakSelf.tableView insertRowsAtIndexPaths:@[newIndexPath]
+                                           withRowAnimation:UITableViewRowAnimationFade];
+             }
+             [self.tableView endUpdates];
+             
+             [self.refreshControl endRefreshing];
+             self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
+         }];
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

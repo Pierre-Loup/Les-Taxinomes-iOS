@@ -26,7 +26,8 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
 @property (nonatomic, strong) UIRefreshControl* refreshControl;
 @property (nonatomic, strong) LTLoadMoreFooterView* footerView;
 @property (nonatomic, strong) NSFetchedResultsController* authorsResultController;
-@property (nonatomic) LTAuthorsSortType sortType;
+@property (nonatomic, assign) NSInteger searchIndex;
+@property (nonatomic, assign) LTAuthorsSortType sortType;
 @end
 
 @implementation LTAuthorsViewController
@@ -69,6 +70,8 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
 {
     [super viewDidLoad];
     
+    self.searchIndex = 0;
+    
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self
                             action:@selector(refreshAuthors)
@@ -88,7 +91,8 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if ([[self.authorsResultController fetchedObjects] count] <= 1) {
+    if ([[self.authorsResultController fetchedObjects] count] <= 1)
+    {
         [self loadMoreAuthors];
     }
 }
@@ -136,7 +140,7 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
     self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeLoading;
     
     NSRange authorsRange;
-    authorsRange.location = [[self.authorsResultController fetchedObjects] count];
+    authorsRange.location = self.searchIndex;
     authorsRange.length = LTAuthorsLoadingStep;
     
     __block LTAuthorsViewController* weakSelf = self;
@@ -148,6 +152,7 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
         if (authors)
         {
             weakSelf.authorsResultController = nil;
+            self.searchIndex += [authors count];
         }
         else
         {
@@ -162,18 +167,10 @@ static NSString* const LTMediasRootViewControllerSegueId = @"LTMediasRootViewCon
 {
     __block LTAuthorsViewController* weakSelf = self;
     
+    self.searchIndex = 0;
     self.authorsResultController = nil;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
-    {
-        [LTAuthor MR_truncateAll];
-        NSError* error;
-        [[NSManagedObjectContext MR_contextForCurrentThread] save:&error];
-        dispatch_async(dispatch_get_main_queue(), ^
-        {
-            [weakSelf.collectionView reloadData];
-            [weakSelf loadMoreAuthors];
-        });
-    });
+    [weakSelf.collectionView reloadData];
+    [weakSelf loadMoreAuthors];
 }
 
 #pragma mark Properties

@@ -552,7 +552,7 @@ NSString* const LTConnectionManagerErrorDomain = @"LTConnectionManagerErrorDomai
     if(range.length == 0 || range.length > LTConnectionManagerMaxItemsStep)
         range.length = LTConnectionManagerMaxItemsStep;
     
-    NSString* limite = [NSString stringWithFormat:@"%d,%d", range.location,range.length];
+    NSString* limite = [NSString stringWithFormat:@"%ld,%ld", (long)range.location, (long)range.length];
     NSString* sortKey;
     if (sortType == LTAuthorsSortAlphabeticOrder) {
         sortKey = @"nom";
@@ -564,68 +564,70 @@ NSString* const LTConnectionManagerErrorDomain = @"LTConnectionManagerErrorDomai
     [xmlrpcClient executeMethod:LTXMLRCPMethodSPIPListeAuteurs
                      withObject:@{ @"limite": limite, @"tri" : sortKey}
                authCookieEnable:NO
-                        success:^(id response) {
-                            if([response isKindOfClass:[NSArray  class]]) {
-                                
-                                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
-                                               {
-                                                   NSMutableArray* authors = [NSMutableArray array];
-                                                   
-                                                   NSManagedObjectContext* context = [NSManagedObjectContext MR_contextWithParent:[NSManagedObjectContext MR_defaultContext]];
-                                                   
-                                                   for(NSDictionary* authorDict in (NSArray *)response){
-                                                       
-                                                       NSError *authorError;
-                                                       LTAuthor *authorObject = [LTAuthor authorWithXMLRPCResponse:authorDict
-                                                                                                         inContext:context
-                                                                                                             error:&authorError];
-                                                       
-                                                       if (authorObject && !authorError) {
-                                                           
-                                                           [authors addObject:authorObject];
-                                                       } else {
-                                                           
-                                                           LogError(@"%@", authorError);
-                                                       }
-                                                   }
-                                                   
-                                                   NSError* coredataError;
-                                                   [context save:&coredataError];
-                                                   [context reset];
-                                                   if (coredataError)
-                                                   {
-                                                       LogError(@"%@", coredataError);
-                                                       // Dispatch the result on the main thread
-                                                       dispatch_async(dispatch_get_main_queue(), ^
-                                                                      {
-                                                                          if(responseBlock) responseBlock(nil, coredataError);
-                                                                      });
-                                                   }
-                                                   else
-                                                   {
-                                                       // Dispatch the result on the main thread
-                                                       dispatch_async(dispatch_get_main_queue(), ^
-                                                                      {
-                                                                          if(responseBlock) responseBlock(authors, nil);
-                                                                      });
-                                                   }
-                                               });
-                            }
-                            else
-                            {
-                                NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
-                                                                     code:LTConnectionManagerInternalError
-                                                                 userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodGeoDivListeMedias}];
-                                
-                                
-                                if(responseBlock) responseBlock(nil, error);
-                                
-                            }
-                        }
-                        failure:^(NSError *error)
-     {
-         if(responseBlock) responseBlock(nil, error);
-     }];
+    success:^(id response)
+    {
+        if([response isKindOfClass:[NSArray  class]])
+        {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
+            {
+                NSMutableArray* authorsInChildContext = [NSMutableArray array];
+                
+                NSManagedObjectContext* childContext = [NSManagedObjectContext MR_contextWithParent:[NSManagedObjectContext MR_defaultContext]];
+                
+                for(NSDictionary* authorDict in (NSArray *)response)
+                {
+                    
+                    NSError *authorError;
+                    LTAuthor *authorObject = [LTAuthor authorWithXMLRPCResponse:authorDict
+                                                                      inContext:childContext
+                                                                          error:&authorError];
+                    
+                    if (authorObject && !authorError)
+                    {
+                        [authorsInChildContext addObject:authorObject];
+                    }
+                    else
+                    {
+                        LogError(@"%@", authorError);
+                    }
+                }
+                
+                [childContext MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError* coredataError)
+                {
+                     NSMutableArray* authorsInDefaultContext = [NSMutableArray new];
+                     NSManagedObjectContext* deflautContext = [NSManagedObjectContext MR_defaultContext];
+                     for (LTMedia* mediaInChildContext in authorsInChildContext)
+                     {
+                         LTMedia* mediaInDefalutContext = [mediaInChildContext MR_inContext:deflautContext];
+                         [authorsInDefaultContext addObject:mediaInDefalutContext];
+                     }
+                     [childContext reset];
+                     if (coredataError)
+                     {
+                         if(responseBlock) responseBlock(nil, coredataError);
+                     }
+                     else
+                     {
+                         if(responseBlock) responseBlock(authorsInDefaultContext, nil);
+                     }
+                }];
+            });
+        }
+        else
+        {
+            NSError* error = [NSError errorWithDomain:LTConnectionManagerErrorDomain
+                                                 code:LTConnectionManagerInternalError
+                                             userInfo:@{LTXMLRPCMethodKey:LTXMLRCPMethodGeoDivListeMedias}];
+            
+            
+            if(responseBlock) responseBlock(nil, error);
+            
+        }
+    }
+    failure:^(NSError *error)
+    {
+        if(responseBlock) responseBlock(nil, error);
+    }];
 }
 
 - (void)addMediaWithTitle:(NSString *)title

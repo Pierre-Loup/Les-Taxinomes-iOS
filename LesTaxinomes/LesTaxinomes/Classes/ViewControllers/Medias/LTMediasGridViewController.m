@@ -68,6 +68,15 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
     {
         [self loadMoreMediasAction:self];
     }
+    
+    if (self.mediasRootViewController.isFetchingMedias)
+    {
+        self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeLoading;
+    }
+    else
+    {
+        self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
+    }
 }
 
 - (void)viewWillLayoutSubviews
@@ -158,59 +167,71 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
 
 - (void)refreshAction:(id)sender
 {
-    NSInteger mediasNumber = [self.medias count];
-    __weak LTMediasGridViewController* weakSelf = self;
-    [self.mediasRootViewController refreshMediasWithCompletion:^(NSArray *medias, NSError *error)
-     {
-         [weakSelf.collectionView performBatchUpdates:^
-          {
-              for (NSInteger rowIndex = 0; rowIndex < [weakSelf.medias count]; rowIndex++)
-              {
-                  NSIndexPath* newIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
-                  [weakSelf.collectionView insertItemsAtIndexPaths:@[newIndexPath]];
-              }
-          }
-                                           completion:^(BOOL finished)
-          {
-              [self.refreshControl endRefreshing];
-              self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
-          }];
-     }];
-    
-    // Delete all rows
-    [weakSelf.collectionView performBatchUpdates:^
-     {
-         for (NSInteger rowIndex = 0; rowIndex < mediasNumber; rowIndex++)
+    if (!self.mediasRootViewController.isFetchingMedias)
+    {
+        NSInteger mediasNumber = [self.medias count];
+        NSLog(@"[CV]mediasNumber:%d", (int)mediasNumber);
+        __weak LTMediasGridViewController* weakSelf = self;
+        [self.mediasRootViewController refreshMediasWithCompletion:^(NSArray *medias, NSError *error)
+        {
+            NSLog(@"[CV]medias:%d", (int)medias);
+            [weakSelf.collectionView performBatchUpdates:^
+            {
+                for (NSInteger rowIndex = 0; rowIndex < [weakSelf.medias count]; rowIndex++)
+                {
+                      NSIndexPath* newIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+                      [weakSelf.collectionView insertItemsAtIndexPaths:@[newIndexPath]];
+                }
+            }
+            completion:^(BOOL finished)
+            {
+                [self.refreshControl endRefreshing];
+                self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
+            }];
+         }];
+        
+        // Delete all rows
+        [weakSelf.collectionView performBatchUpdates:^
          {
-             NSIndexPath* newIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
-             [weakSelf.collectionView deleteItemsAtIndexPaths:@[newIndexPath]];
+             for (NSInteger rowIndex = 0; rowIndex < mediasNumber; rowIndex++)
+             {
+                 NSIndexPath* newIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+                 [weakSelf.collectionView deleteItemsAtIndexPaths:@[newIndexPath]];
+             }
          }
-     }
-     completion:^(BOOL finished){}];
+                                          completion:^(BOOL finished){}];
+    }
+    else
+    {
+        [self.refreshControl endRefreshing];
+    }
 }
 
 - (void)loadMoreMediasAction:(id)sender
 {
-    self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeLoading;
+    if (!self.mediasRootViewController.isFetchingMedias)
+    {
+        self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeLoading;
     
-    NSInteger mediaNumber = [self.medias count];
-    __weak LTMediasGridViewController* weakSelf = self;
-    [self.mediasRootViewController loadMoreMediaWithCompletion:^(NSArray *medias, NSError *error)
-     {
-         [weakSelf.collectionView performBatchUpdates:^
-          {
-              for (NSInteger rowIndex = mediaNumber; rowIndex < [weakSelf.medias count]; rowIndex++)
-              {
-                  NSIndexPath* newIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
-                  [weakSelf.collectionView insertItemsAtIndexPaths:@[newIndexPath]];
-              }
-          }
-          completion:^(BOOL finished)
-          {
-              [self.refreshControl endRefreshing];
-              self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
-          }];
-     }];
+        NSInteger mediaNumber = [self.medias count];
+        __weak LTMediasGridViewController* weakSelf = self;
+        [self.mediasRootViewController loadMoreMediaWithCompletion:^(NSArray *medias, NSError *error)
+        {
+            [weakSelf.collectionView performBatchUpdates:^
+            {
+                for (NSInteger rowIndex = mediaNumber; rowIndex < [weakSelf.medias count]; rowIndex++)
+                {
+                     NSIndexPath* newIndexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+                     [weakSelf.collectionView insertItemsAtIndexPaths:@[newIndexPath]];
+                }
+            }
+            completion:^(BOOL finished)
+            {
+                [self.refreshControl endRefreshing];
+                self.footerView.displayMode = LTLoadMoreFooterViewDisplayModeNormal;
+            }];
+        }];
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

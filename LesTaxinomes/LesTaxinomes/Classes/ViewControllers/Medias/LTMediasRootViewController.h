@@ -33,6 +33,7 @@
 @property (nonatomic, strong) LTAuthor *currentUser;
 @property (nonatomic, strong) LTSection *section;
 @property (nonatomic, readonly) NSArray* medias;
+@property (nonatomic, readonly) BOOL isFetchingMedias;
 
 - (void)loadMoreMediaWithCompletion:(void (^)(NSArray* medias, NSError *error))completion;
 - (void)refreshMediasWithCompletion:(void (^)(NSArray* medias, NSError *error))completion;
