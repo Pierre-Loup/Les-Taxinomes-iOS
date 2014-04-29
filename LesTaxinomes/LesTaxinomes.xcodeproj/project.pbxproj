@@ -86,6 +86,8 @@
 		C862044118E102FE00E159D7 /* UIImageView+LT.m in Sources */ = {isa = PBXBuildFile; fileRef = C862044018E102FE00E159D7 /* UIImageView+LT.m */; };
 		C862044218E102FE00E159D7 /* UIImageView+LT.m in Sources */ = {isa = PBXBuildFile; fileRef = C862044018E102FE00E159D7 /* UIImageView+LT.m */; };
 		C862044318E102FE00E159D7 /* UIImageView+LT.m in Sources */ = {isa = PBXBuildFile; fileRef = C862044018E102FE00E159D7 /* UIImageView+LT.m */; };
+		C876E3EA190E8E3200B38300 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C876E3E9190E8E3200B38300 /* Crashlytics.framework */; };
+		C876E3EB190E8E3300B38300 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C876E3E9190E8E3200B38300 /* Crashlytics.framework */; };
 		C898ECDD18D3728700AC5F0B /* Brest-ISEN.gpx in Resources */ = {isa = PBXBuildFile; fileRef = C898ECCD18D3727D00AC5F0B /* Brest-ISEN.gpx */; };
 		C898ECDE18D3728700AC5F0B /* Brest-LPDB.gpx in Resources */ = {isa = PBXBuildFile; fileRef = C898ECCE18D3727D00AC5F0B /* Brest-LPDB.gpx */; };
 		C898ECDF18D3728700AC5F0B /* JesayaFree.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C898ECD518D3727D00AC5F0B /* JesayaFree.ttf */; };
@@ -304,6 +306,7 @@
 		C861985518DEED18000B85B0 /* LTSectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSectionCell.m; sourceTree = "<group>"; };
 		C862043F18E102FE00E159D7 /* UIImageView+LT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+LT.h"; sourceTree = "<group>"; };
 		C862044018E102FE00E159D7 /* UIImageView+LT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+LT.m"; sourceTree = "<group>"; };
+		C876E3E9190E8E3200B38300 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		C898ECCD18D3727D00AC5F0B /* Brest-ISEN.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Brest-ISEN.gpx"; sourceTree = "<group>"; };
 		C898ECCE18D3727D00AC5F0B /* Brest-LPDB.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Brest-LPDB.gpx"; sourceTree = "<group>"; };
 		C898ECD018D3727D00AC5F0B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CGU.strings; sourceTree = "<group>"; };
@@ -333,6 +336,7 @@
 			files = (
 				A51800651812A912005CD602 /* libicucore.dylib in Frameworks */,
 				A51800611812A594005CD602 /* CFNetwork.framework in Frameworks */,
+				C876E3EA190E8E3200B38300 /* Crashlytics.framework in Frameworks */,
 				A5E0B22E177719A800CD4CCF /* MessageUI.framework in Frameworks */,
 				A5E0B1C91777159F00CD4CCF /* CoreGraphics.framework in Frameworks */,
 				A5E0B1CB1777159F00CD4CCF /* UIKit.framework in Frameworks */,
@@ -358,6 +362,7 @@
 			files = (
 				C8EBB5A418D37E0100D27596 /* libicucore.dylib in Frameworks */,
 				C8EBB5A518D37E0100D27596 /* CFNetwork.framework in Frameworks */,
+				C876E3EB190E8E3300B38300 /* Crashlytics.framework in Frameworks */,
 				C8EBB5A618D37E0100D27596 /* MessageUI.framework in Frameworks */,
 				C8EBB5A718D37E0100D27596 /* CoreGraphics.framework in Frameworks */,
 				C8EBB5A818D37E0100D27596 /* UIKit.framework in Frameworks */,
@@ -395,6 +400,7 @@
 		A5E0B1C51777159F00CD4CCF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C876E3E9190E8E3200B38300 /* Crashlytics.framework */,
 				A51800641812A912005CD602 /* libicucore.dylib */,
 				A51800621812A8D9005CD602 /* dylib1.o */,
 				A51800601812A594005CD602 /* CFNetwork.framework */,
@@ -791,6 +797,7 @@
 				A5E0B1C01777159F00CD4CCF /* Frameworks */,
 				A5E0B1C11777159F00CD4CCF /* Resources */,
 				E982CF8679FE471C94DE2F2A /* Copy Pods Resources */,
+				C876E3E8190E8DFD00B38300 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -969,6 +976,19 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		C876E3E8190E8DFD00B38300 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 744c63c57b7c0e4947e58c9543bcd663662848bc f01dafe2998a8141037712d661620c0c8a189daf6c7a6a050a9aa9c58748ff33";
 		};
 		C8EBB57418D37E0100D27596 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1266,6 +1286,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LesTaxinomes/LesTaxinomes-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1307,6 +1331,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LesTaxinomes/LesTaxinomes-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1396,6 +1424,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LesTaxinomes/LesTaxinomes-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1436,6 +1468,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LesTaxinomes/LesTaxinomes-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (

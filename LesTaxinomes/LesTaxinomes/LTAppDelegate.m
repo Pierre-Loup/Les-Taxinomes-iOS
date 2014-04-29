@@ -15,6 +15,8 @@
 #import <PonyDebugger/PonyDebugger.h>
 #endif
 
+#import <Crashlytics/Crashlytics.h>
+
 @implementation LTAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -91,6 +93,8 @@
                              withName:@"Main context"];
 #endif
 #endif
+    
+    [Crashlytics startWithAPIKey:@"744c63c57b7c0e4947e58c9543bcd663662848bc"];
     
     return YES;
 }
