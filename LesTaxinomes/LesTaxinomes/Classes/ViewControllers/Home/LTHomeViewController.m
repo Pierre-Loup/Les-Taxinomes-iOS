@@ -124,7 +124,7 @@ static NSString* const LTMediaDetailViewControllerSegueId   = @"LTMediaDetailVie
     // Medias cover view
     self.mediaCoverIndex = -1;
     __weak LTHomeViewController* weakSelf = self;
-    [[LTConnectionManager sharedManager] getHomeCoversWithResponseBlock:^(NSArray *medias, NSError *error)
+    [[LTConnectionManager sharedManager] fetchHomeCoversWithResponseBlock:^(NSArray *medias, NSError *error)
      {
          if (!error)
          {

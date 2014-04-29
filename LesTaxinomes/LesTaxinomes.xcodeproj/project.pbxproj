@@ -41,8 +41,8 @@
 		A57765AE1777537D00CC8EE6 /* LTMediaListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFD317772CFE00C16C06 /* LTMediaListCell.xib */; };
 		A57765AF1777538200CC8EE6 /* LTMapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFD517772CFE00C16C06 /* LTMapCell.m */; };
 		A57765B21777538C00CC8EE6 /* LTSingleLineInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFD817772CFE00C16C06 /* LTSingleLineInputCell.m */; };
-		A57765B31777538F00CC8EE6 /* SpinnerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFDB17772CFE00C16C06 /* SpinnerCell.m */; };
-		A57765B41777539200CC8EE6 /* SpinnerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFDC17772CFE00C16C06 /* SpinnerCell.xib */; };
+		A57765B31777538F00CC8EE6 /* LTSpinnerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFDB17772CFE00C16C06 /* LTSpinnerCell.m */; };
+		A57765B41777539200CC8EE6 /* LTSpinnerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFDC17772CFE00C16C06 /* LTSpinnerCell.xib */; };
 		A57765B5177753A900CC8EE6 /* LTLoadMoreFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFE517772CFE00C16C06 /* LTLoadMoreFooterView.m */; };
 		A57765B81777546200CC8EE6 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFEF17772CFE00C16C06 /* UIImage+Resize.m */; };
 		A57765B91777546200CC8EE6 /* UIImageView+PhotoFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFF117772CFE00C16C06 /* UIImageView+PhotoFrame.m */; };
@@ -96,6 +96,7 @@
 		C898ECEA18D372ED00AC5F0B /* LesTaxinomes-Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C898ECE918D372ED00AC5F0B /* LesTaxinomes-Images.xcassets */; };
 		C898ECEC18D3732400AC5F0B /* Common-Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C898ECEB18D3732400AC5F0B /* Common-Images.xcassets */; };
 		C8C830C718CA802B007702AD /* LTMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C830C618CA802B007702AD /* LTMedia.m */; };
+		C8D2B53C19101C41008F4BB4 /* fetchHomeCovers.xml in Resources */ = {isa = PBXBuildFile; fileRef = C8D2B53B19101C41008F4BB4 /* fetchHomeCovers.xml */; };
 		C8EBB57618D37E0100D27596 /* LTMediaCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFD017772CFE00C16C06 /* LTMediaCollectionCell.m */; };
 		C8EBB57718D37E0100D27596 /* LTMediaUploadFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A557201A17F4D81E00015AF8 /* LTMediaUploadFormViewController.m */; };
 		C8EBB57818D37E0100D27596 /* LTLicense+Business.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF8117772CFE00C16C06 /* LTLicense+Business.m */; };
@@ -109,7 +110,7 @@
 		C8EBB58018D37E0100D27596 /* LTMediaLicenseChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFAE17772CFE00C16C06 /* LTMediaLicenseChooserViewController.m */; };
 		C8EBB58118D37E0100D27596 /* LTAuthorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFA117772CFE00C16C06 /* LTAuthorsViewController.m */; };
 		C8EBB58218D37E0100D27596 /* LTMediasRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFA817772CFE00C16C06 /* LTMediasRootViewController.m */; };
-		C8EBB58318D37E0100D27596 /* SpinnerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFDB17772CFE00C16C06 /* SpinnerCell.m */; };
+		C8EBB58318D37E0100D27596 /* LTSpinnerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFDB17772CFE00C16C06 /* LTSpinnerCell.m */; };
 		C8EBB58418D37E0100D27596 /* LTAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFE117772CFE00C16C06 /* LTAppearance.m */; };
 		C8EBB58518D37E0100D27596 /* LTCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFDF17772CFE00C16C06 /* LTCollectionViewFlowLayout.m */; };
 		C8EBB58618D37E0100D27596 /* LTXMLRPCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF6A17772CFE00C16C06 /* LTXMLRPCClient.m */; };
@@ -156,7 +157,7 @@
 		C8EBB5B318D37E0100D27596 /* LesTaxinomes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5F6ECDC1777284300C16C06 /* LesTaxinomes.storyboard */; };
 		C8EBB5B418D37E0100D27596 /* Common-Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C898ECEB18D3732400AC5F0B /* Common-Images.xcassets */; };
 		C8EBB5B518D37E0100D27596 /* Brest-ISEN.gpx in Resources */ = {isa = PBXBuildFile; fileRef = C898ECCD18D3727D00AC5F0B /* Brest-ISEN.gpx */; };
-		C8EBB5B618D37E0100D27596 /* SpinnerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFDC17772CFE00C16C06 /* SpinnerCell.xib */; };
+		C8EBB5B618D37E0100D27596 /* LTSpinnerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5F6EFDC17772CFE00C16C06 /* LTSpinnerCell.xib */; };
 		C8EBB5BD18D37F0400D27596 /* Geodiversite-Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C898ECE718D372D800AC5F0B /* Geodiversite-Images.xcassets */; };
 		C8EBB5C418D3829200D27596 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EBB5C118D3808A00D27596 /* Constants.m */; };
 		C8EBB5C518D3829300D27596 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EBB5C118D3808A00D27596 /* Constants.m */; };
@@ -265,9 +266,9 @@
 		A5F6EFD517772CFE00C16C06 /* LTMapCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTMapCell.m; sourceTree = "<group>"; };
 		A5F6EFD717772CFE00C16C06 /* LTSingleLineInputCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTSingleLineInputCell.h; sourceTree = "<group>"; };
 		A5F6EFD817772CFE00C16C06 /* LTSingleLineInputCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTSingleLineInputCell.m; sourceTree = "<group>"; };
-		A5F6EFDA17772CFE00C16C06 /* SpinnerCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpinnerCell.h; sourceTree = "<group>"; };
-		A5F6EFDB17772CFE00C16C06 /* SpinnerCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpinnerCell.m; sourceTree = "<group>"; };
-		A5F6EFDC17772CFE00C16C06 /* SpinnerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpinnerCell.xib; sourceTree = "<group>"; };
+		A5F6EFDA17772CFE00C16C06 /* LTSpinnerCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTSpinnerCell.h; sourceTree = "<group>"; };
+		A5F6EFDB17772CFE00C16C06 /* LTSpinnerCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTSpinnerCell.m; sourceTree = "<group>"; };
+		A5F6EFDC17772CFE00C16C06 /* LTSpinnerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LTSpinnerCell.xib; sourceTree = "<group>"; };
 		A5F6EFDE17772CFE00C16C06 /* LTCollectionViewFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		A5F6EFDF17772CFE00C16C06 /* LTCollectionViewFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		A5F6EFE017772CFE00C16C06 /* LTAppearance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTAppearance.h; sourceTree = "<group>"; };
@@ -319,6 +320,7 @@
 		C898ECEB18D3732400AC5F0B /* Common-Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Common-Images.xcassets"; sourceTree = "<group>"; };
 		C8C830C518CA802B007702AD /* LTMedia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTMedia.h; path = LesTaxinomes/Classes/Model/NSManagedObjects/LTMedia.h; sourceTree = SOURCE_ROOT; };
 		C8C830C618CA802B007702AD /* LTMedia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTMedia.m; path = LesTaxinomes/Classes/Model/NSManagedObjects/LTMedia.m; sourceTree = SOURCE_ROOT; };
+		C8D2B53B19101C41008F4BB4 /* fetchHomeCovers.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = fetchHomeCovers.xml; sourceTree = "<group>"; };
 		C8EBB5BB18D37E0100D27596 /* Geodiversite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Geodiversite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8EBB5BC18D37E0200D27596 /* LesTaxinomes copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "LesTaxinomes copy-Info.plist"; path = "/Users/pierre-louptristantperso/Developer/iOS/Les-Taxinomes-iOS/LesTaxinomes/LesTaxinomes copy-Info.plist"; sourceTree = "<absolute>"; };
 		C8EBB5BE18D37FCE00D27596 /* Geodiversite-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Geodiversite-Info.plist"; sourceTree = "<group>"; };
@@ -653,9 +655,9 @@
 				A5F6EFD517772CFE00C16C06 /* LTMapCell.m */,
 				A5F6EFD717772CFE00C16C06 /* LTSingleLineInputCell.h */,
 				A5F6EFD817772CFE00C16C06 /* LTSingleLineInputCell.m */,
-				A5F6EFDA17772CFE00C16C06 /* SpinnerCell.h */,
-				A5F6EFDB17772CFE00C16C06 /* SpinnerCell.m */,
-				A5F6EFDC17772CFE00C16C06 /* SpinnerCell.xib */,
+				A5F6EFDA17772CFE00C16C06 /* LTSpinnerCell.h */,
+				A5F6EFDB17772CFE00C16C06 /* LTSpinnerCell.m */,
+				A5F6EFDC17772CFE00C16C06 /* LTSpinnerCell.xib */,
 				A5434CCB1801CFC0004F75C6 /* LTTextViewCell.h */,
 				A5434CCC1801CFC0004F75C6 /* LTTextViewCell.m */,
 				A5434CCF1801D14C004F75C6 /* LTButtonCell.h */,
@@ -713,6 +715,7 @@
 				C83281F418DDCC220003ACA0 /* fetchFullTree.json */,
 				C83281E718DDBFCA0003ACA0 /* section-with-children.json */,
 				C83281E818DDBFCA0003ACA0 /* section-without-children.json */,
+				C8D2B53B19101C41008F4BB4 /* fetchHomeCovers.xml */,
 			);
 			path = Fixtures;
 			sourceTree = "<group>";
@@ -897,7 +900,7 @@
 				A5F6ECEC17772A9600C16C06 /* LesTaxinomes.storyboard in Resources */,
 				C898ECEC18D3732400AC5F0B /* Common-Images.xcassets in Resources */,
 				C898ECDD18D3728700AC5F0B /* Brest-ISEN.gpx in Resources */,
-				A57765B41777539200CC8EE6 /* SpinnerCell.xib in Resources */,
+				A57765B41777539200CC8EE6 /* LTSpinnerCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -907,6 +910,7 @@
 			files = (
 				C83281EE18DDBFCA0003ACA0 /* section-without-children.json in Resources */,
 				C83281EB18DDBFCA0003ACA0 /* section-with-children.json in Resources */,
+				C8D2B53C19101C41008F4BB4 /* fetchHomeCovers.xml in Resources */,
 				A5E0B1EA1777159F00CD4CCF /* InfoPlist.strings in Resources */,
 				C83281F518DDCC220003ACA0 /* fetchFullTree.json in Resources */,
 			);
@@ -926,7 +930,7 @@
 				C8EBB5B318D37E0100D27596 /* LesTaxinomes.storyboard in Resources */,
 				C8EBB5B418D37E0100D27596 /* Common-Images.xcassets in Resources */,
 				C8EBB5B518D37E0100D27596 /* Brest-ISEN.gpx in Resources */,
-				C8EBB5B618D37E0100D27596 /* SpinnerCell.xib in Resources */,
+				C8EBB5B618D37E0100D27596 /* LTSpinnerCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1056,7 +1060,7 @@
 				C808AA2B18A80575002FEF19 /* LTAuthorsViewController.m in Sources */,
 				A57765A71777534D00CC8EE6 /* LTMediasRootViewController.m in Sources */,
 				C83281C518DD9AEF0003ACA0 /* LTJSONClient.m in Sources */,
-				A57765B31777538F00CC8EE6 /* SpinnerCell.m in Sources */,
+				A57765B31777538F00CC8EE6 /* LTSpinnerCell.m in Sources */,
 				A5F6EFFC17772D1400C16C06 /* LTAppearance.m in Sources */,
 				A5776596177752EC00CC8EE6 /* LTCollectionViewFlowLayout.m in Sources */,
 				A57765951777525D00CC8EE6 /* LTXMLRPCClient.m in Sources */,
@@ -1127,7 +1131,7 @@
 				C8EBB58118D37E0100D27596 /* LTAuthorsViewController.m in Sources */,
 				C8EBB58218D37E0100D27596 /* LTMediasRootViewController.m in Sources */,
 				C83281C618DD9AEF0003ACA0 /* LTJSONClient.m in Sources */,
-				C8EBB58318D37E0100D27596 /* SpinnerCell.m in Sources */,
+				C8EBB58318D37E0100D27596 /* LTSpinnerCell.m in Sources */,
 				C8EBB58418D37E0100D27596 /* LTAppearance.m in Sources */,
 				C8EBB58518D37E0100D27596 /* LTCollectionViewFlowLayout.m in Sources */,
 				C8EBB58618D37E0100D27596 /* LTXMLRPCClient.m in Sources */,
@@ -1294,7 +1298,6 @@
 				GCC_PREFIX_HEADER = "LesTaxinomes/LesTaxinomes-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					"COCOAPODS=1",
 					LES_TAXINOMES,
 				);
 				INFOPLIST_FILE = "LesTaxinomes/LesTaxinomes-Info.plist";
@@ -1339,7 +1342,6 @@
 				GCC_PREFIX_HEADER = "LesTaxinomes/LesTaxinomes-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					"COCOAPODS=1",
 					LES_TAXINOMES,
 				);
 				INFOPLIST_FILE = "LesTaxinomes/LesTaxinomes-Info.plist";
@@ -1376,14 +1378,12 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
-					"$(SYSTEM_APPS_DIR)/Xcode5-DP.app/Contents/Developer/Library/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LesTaxinomes/LesTaxinomes-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"$(inherited)",
-					"TESTS=1",
+					TESTS,
 				);
 				INFOPLIST_FILE = "LesTaxinomesTests/LesTaxinomesTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1400,14 +1400,12 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
-					"$(SYSTEM_APPS_DIR)/Xcode5-DP.app/Contents/Developer/Library/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LesTaxinomes/LesTaxinomes-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					"COCOAPODS=1",
-					"TESTS=1",
+					TESTS,
 				);
 				INFOPLIST_FILE = "LesTaxinomesTests/LesTaxinomesTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1432,7 +1430,6 @@
 				GCC_PREFIX_HEADER = "LesTaxinomes/LesTaxinomes-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					"COCOAPODS=1",
 					GEODIV,
 				);
 				INFOPLIST_FILE = "LesTaxinomes/Geodiversite-Info.plist";
@@ -1476,7 +1473,6 @@
 				GCC_PREFIX_HEADER = "LesTaxinomes/LesTaxinomes-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					"COCOAPODS=1",
 					GEODIV,
 				);
 				INFOPLIST_FILE = "LesTaxinomes/Geodiversite-Info.plist";

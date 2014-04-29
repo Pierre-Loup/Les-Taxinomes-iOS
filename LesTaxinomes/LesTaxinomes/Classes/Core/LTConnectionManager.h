@@ -67,7 +67,7 @@ typedef enum {
 - (void)getMediaLargeURLWithId:(NSNumber *)mediaIdentifier
                  responseBlock:(void (^)(LTMedia *media, NSError *error))responseBlock;
 
-- (void)getHomeCoversWithResponseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock;
+- (void)fetchHomeCoversWithResponseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock;
 
 - (void)getAuthorWithId:(NSNumber *)authorIdentifier
           responseBlock:(void (^)(LTAuthor *author, NSError *error))responseBlock;

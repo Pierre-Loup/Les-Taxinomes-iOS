@@ -37,7 +37,7 @@
 #import "LTMediasGridViewController.h"
 #import "LTMediaDetailViewController.h"
 // Views
-#import "SpinnerCell.h"
+#import "LTSpinnerCell.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Defines & contants

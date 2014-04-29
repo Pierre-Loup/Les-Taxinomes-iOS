@@ -199,6 +199,38 @@ static NSString* const LTDefaultRangeString = @"0,10";
 //    
 //}
 
+- (void)testFetchHomeCovers
+{
+    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request)
+     {
+         return YES;
+         
+     } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request)
+     {
+         NSString* filePath = OHPathForFileInBundle(@"fetchHomeCovers.xml",nil);
+         NSData* fixtureData = [NSData dataWithContentsOfFile:filePath];
+         return [OHHTTPStubsResponse responseWithData:fixtureData
+                                           statusCode:200
+                                              headers:@{@"Content-Type":@"text/xml"}];
+     }];
+    
+    __block NSArray* coverMedias;
+    
+    [[LTConnectionManager sharedManager] fetchHomeCoversWithResponseBlock:^(NSArray *medias, NSError *error)
+    {
+        coverMedias = medias;
+        self.error = error;
+        [self notifyAsyncOperationDone];
+    }];
+    
+    [self waitForAsyncOperationWithTimeout:LTDefaultTestTimeout];
+    
+    XCTAssertNil(self.error, @"error should be nil");
+
+    NSInteger expectedCoverMedias = 20;
+    XCTAssertEqual((NSInteger)[coverMedias count], expectedCoverMedias, @"Medias number is %d. Expected %d", [coverMedias count], expectedCoverMedias);
+}
+
 - (void)testFetchFullTree
 {
     

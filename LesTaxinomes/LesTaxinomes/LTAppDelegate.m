@@ -71,17 +71,7 @@
     }
     
     // Retreive licenses
-    [[LTConnectionManager sharedManager] getLicensesWithResponseBlock:^(NSArray *licenses, NSError *error) {
-    }];
-    
-    // Retrieve Tree
-//    [[LTConnectionManager sharedManager] fetchFullTreeWithCompletion:^(NSError *error)
-//     {
-//         if (error)
-//         {
-//             LogError(@"%@", error);
-//         }
-//     }];
+    [[LTConnectionManager sharedManager] getLicensesWithResponseBlock:^(NSArray *licenses, NSError *error) {}];
     
 #ifdef DEBUG
 #if TARGET_IPHONE_SIMULATOR

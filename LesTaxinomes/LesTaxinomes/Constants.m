@@ -99,9 +99,9 @@ NSString* const LTSignupURL = @"http://www.geodiversite.net/spip.php?page=inscri
 
 #ifdef TESTS
 NSString* const LTPWebServiceURL = @"http://ws-base-ur";
-NSString* const LTHTTPHost = @"http://taxinomes.arscenic.org/";
-NSString* const LTForgottenPasswordURL = @"http://taxinomes.arscenic.org/spip.php?page=spip_pass";
-NSString* const LTSignupURL = @"http://taxinomes.arscenic.org/spip.php?page=inscription";
+NSString* const LTHTTPHost = @"http://www.lestaxinomes.org";
+NSString* const LTForgottenPasswordURL = @"http://www.lestaxinomes.org/spip.php?page=spip_pass";
+NSString* const LTSignupURL = @"http://www.lestaxinomes.org/spip.php?page=inscription";
 #endif
 
 

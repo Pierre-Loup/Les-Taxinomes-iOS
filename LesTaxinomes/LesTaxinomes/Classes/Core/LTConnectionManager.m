@@ -398,7 +398,7 @@ NSString* const LTConnectionManagerErrorDomain = @"LTConnectionManagerErrorDomai
                         }];
 }
 
-- (void)getHomeCoversWithResponseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock
+- (void)fetchHomeCoversWithResponseBlock:(void (^)(NSArray* medias, NSError *error))responseBlock
 {
     NSString* limite = [NSString stringWithFormat:@"%d,%d", 0, LTConnectionManagerMaxItemsStep];
     NSArray *requestedFields = @[@"id_media", @"titre", @"date", @"statut", @"vignette", @"auteurs", @"document", @"extension"];

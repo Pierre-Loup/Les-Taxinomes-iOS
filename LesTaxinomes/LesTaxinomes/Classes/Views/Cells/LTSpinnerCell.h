@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SpinnerCell : UITableViewCell
+@interface LTSpinnerCell : UITableViewCell
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView* spinner;
-+ (SpinnerCell *)spinnerCell;
++ (LTSpinnerCell *)spinnerCell;
 @end

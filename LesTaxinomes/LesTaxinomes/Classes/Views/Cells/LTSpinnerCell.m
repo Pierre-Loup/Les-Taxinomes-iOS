@@ -6,22 +6,26 @@
 //  Copyright (c) 2012 Les Petits Débrouillards Bretagne. All rights reserved.
 //
 
-#import "SpinnerCell.h"
+#import "LTSpinnerCell.h"
 
-@implementation SpinnerCell
+@implementation LTSpinnerCell
 
-+ (SpinnerCell *)spinnerCell {
++ (LTSpinnerCell *)spinnerCell {
     return [[self alloc] init];
 }
 
-- (id)init {
+- (id)init
+{
     NSArray* views = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class]) owner:self options:nil];
     UIView* view = [views objectAtIndex:0];
-    if ([view isKindOfClass:[self class]]) {
-        self = (SpinnerCell *)view;
+    if ([view isKindOfClass:[self class]])
+    {
+        self = (LTSpinnerCell *)view;
         [self.spinner startAnimating];
         return self;
-    } else {
+    }
+    else
+    {
         return nil;
     }
 }
