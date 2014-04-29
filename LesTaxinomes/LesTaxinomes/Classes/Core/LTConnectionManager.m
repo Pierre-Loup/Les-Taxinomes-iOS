@@ -155,7 +155,7 @@ NSString* const LTConnectionManagerErrorDomain = @"LTConnectionManagerErrorDomai
     
     if(range.length == 0 || range.length > LTConnectionManagerMaxItemsStep)
         range.length = LTConnectionManagerMaxItemsStep;
-    NSString* limite = [NSString stringWithFormat:@"%d,%d", range.location,range.length];
+    NSString* limite = [NSString stringWithFormat:@"%ld,%ld", (long)range.location, (long)range.length];
     NSArray *requestedFields = @[@"id_media", @"titre", @"date", @"statut", @"vignette", @"auteurs", @"gis", @"extension"];
     NSNumber* thumbnailWidth = [NSNumber numberWithDouble:(THUMBNAIL_MAX_WIDHT)];
     NSNumber* thumbnailHeight = [NSNumber numberWithDouble:(THUMBNAIL_MAX_HEIGHT)];
