@@ -6,4 +6,4 @@ before_install:
     - gem install cocoapods -v 0.32.1 --no-ri --no-rdoc
 script: 
     - xctool -workspace LesTaxinomes.xcworkspace -scheme LesTaxinomes -sdk iphonesimulator clean build
-    - xctool -workspace LesTaxinomes.xcworkspace -scheme LesTaxinomesTests -sdk iphonesimulator -destination platform='iOS Simulator',OS=7.0,name='iPhone Retina (4-inch)' -resetSimulator ONLY_ACTIVE_ARCH=NO clean test
+    - xctool -workspace LesTaxinomes.xcworkspace -scheme LesTaxinomesTests -sdk iphonesimulator -destination platform='iOS Simulator',OS=7.0,name='iPhone Retina (4-inch)' ONLY_ACTIVE_ARCH=NO clean test
