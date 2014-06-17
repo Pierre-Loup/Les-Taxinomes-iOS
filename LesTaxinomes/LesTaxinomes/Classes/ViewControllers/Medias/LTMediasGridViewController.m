@@ -170,11 +170,10 @@ static NSString* const LTMediasGridViewControllerFooterIdentifier = @"LTMediasGr
     if (!self.mediasRootViewController.isFetchingMedias)
     {
         NSInteger mediasNumber = [self.medias count];
-        NSLog(@"[CV]mediasNumber:%d", (int)mediasNumber);
+
         __weak LTMediasGridViewController* weakSelf = self;
         [self.mediasRootViewController refreshMediasWithCompletion:^(NSArray *medias, NSError *error)
         {
-            NSLog(@"[CV]medias:%d", (int)medias);
             [weakSelf.collectionView performBatchUpdates:^
             {
                 for (NSInteger rowIndex = 0; rowIndex < [weakSelf.medias count]; rowIndex++)

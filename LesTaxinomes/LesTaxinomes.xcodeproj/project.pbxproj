@@ -63,8 +63,9 @@
 		A5E0B22E177719A800CD4CCF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5E0B22D177719A800CD4CCF /* MessageUI.framework */; };
 		A5F6ECEC17772A9600C16C06 /* LesTaxinomes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5F6ECDC1777284300C16C06 /* LesTaxinomes.storyboard */; };
 		A5F6EFFC17772D1400C16C06 /* LTAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFE117772CFE00C16C06 /* LTAppearance.m */; };
-		C808AA2B18A80575002FEF19 /* LTAuthorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFA117772CFE00C16C06 /* LTAuthorsViewController.m */; };
 		C808AA2C18A83FF6002FEF19 /* LTAuthorCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFC517772CFE00C16C06 /* LTAuthorCollectionCell.m */; };
+		C809A61B1912390200D94DDE /* LTAuthorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C809A61A1912390200D94DDE /* LTAuthorsViewController.m */; };
+		C809A61C1912390200D94DDE /* LTAuthorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C809A61A1912390200D94DDE /* LTAuthorsViewController.m */; };
 		C83281C018DD965D0003ACA0 /* LTHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C83281BF18DD965D0003ACA0 /* LTHTTPClient.m */; };
 		C83281C118DD965D0003ACA0 /* LTHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C83281BF18DD965D0003ACA0 /* LTHTTPClient.m */; };
 		C83281C518DD9AEF0003ACA0 /* LTJSONClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C83281C418DD9AEF0003ACA0 /* LTJSONClient.m */; };
@@ -108,7 +109,6 @@
 		C8EBB57E18D37E0100D27596 /* LTTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF9317772CFE00C16C06 /* LTTableViewController.m */; };
 		C8EBB57F18D37E0100D27596 /* LTAuthenticationSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EF8B17772CFE00C16C06 /* LTAuthenticationSheetViewController.m */; };
 		C8EBB58018D37E0100D27596 /* LTMediaLicenseChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFAE17772CFE00C16C06 /* LTMediaLicenseChooserViewController.m */; };
-		C8EBB58118D37E0100D27596 /* LTAuthorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFA117772CFE00C16C06 /* LTAuthorsViewController.m */; };
 		C8EBB58218D37E0100D27596 /* LTMediasRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFA817772CFE00C16C06 /* LTMediasRootViewController.m */; };
 		C8EBB58318D37E0100D27596 /* LTSpinnerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFDB17772CFE00C16C06 /* LTSpinnerCell.m */; };
 		C8EBB58418D37E0100D27596 /* LTAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F6EFE117772CFE00C16C06 /* LTAppearance.m */; };
@@ -238,8 +238,6 @@
 		A5F6EF9B17772CFE00C16C06 /* LTHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTHomeViewController.m; sourceTree = "<group>"; };
 		A5F6EF9D17772CFE00C16C06 /* LTLegalNoticeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTLegalNoticeViewController.h; sourceTree = "<group>"; };
 		A5F6EF9E17772CFE00C16C06 /* LTLegalNoticeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTLegalNoticeViewController.m; sourceTree = "<group>"; };
-		A5F6EFA017772CFE00C16C06 /* LTAuthorsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTAuthorsViewController.h; sourceTree = "<group>"; };
-		A5F6EFA117772CFE00C16C06 /* LTAuthorsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTAuthorsViewController.m; sourceTree = "<group>"; };
 		A5F6EFA317772CFE00C16C06 /* LTMediasGridViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTMediasGridViewController.h; sourceTree = "<group>"; };
 		A5F6EFA417772CFE00C16C06 /* LTMediasGridViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTMediasGridViewController.m; sourceTree = "<group>"; };
 		A5F6EFA517772CFE00C16C06 /* LTMediasListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTMediasListViewController.h; sourceTree = "<group>"; };
@@ -285,6 +283,8 @@
 		A5F6EFFD17772D8000C16C06 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		A5F6EFFE17772D8000C16C06 /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
 		A8EC93CC19FB464B834F3ED9 /* libPods-LesTaxinomesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LesTaxinomesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C809A6191912390200D94DDE /* LTAuthorsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTAuthorsViewController.h; sourceTree = "<group>"; };
+		C809A61A1912390200D94DDE /* LTAuthorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTAuthorsViewController.m; sourceTree = "<group>"; };
 		C83281BE18DD965D0003ACA0 /* LTHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTHTTPClient.h; sourceTree = "<group>"; };
 		C83281BF18DD965D0003ACA0 /* LTHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTHTTPClient.m; sourceTree = "<group>"; };
 		C83281C318DD9AEF0003ACA0 /* LTJSONClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTJSONClient.h; sourceTree = "<group>"; };
@@ -547,8 +547,7 @@
 				A5F6EF8917772CFE00C16C06 /* Authentication */,
 				A5F6EF8F17772CFE00C16C06 /* Controllers */,
 				A5F6EF9917772CFE00C16C06 /* Home */,
-				A5F6EFA017772CFE00C16C06 /* LTAuthorsViewController.h */,
-				A5F6EFA117772CFE00C16C06 /* LTAuthorsViewController.m */,
+				C809A6181912390200D94DDE /* Authors */,
 				A5F6EFA217772CFE00C16C06 /* Medias */,
 				A5F6EFBE17772CFE00C16C06 /* Navigate */,
 				C832824218DE0C2E0003ACA0 /* Tree */,
@@ -709,6 +708,15 @@
 			path = GusUtils;
 			sourceTree = "<group>";
 		};
+		C809A6181912390200D94DDE /* Authors */ = {
+			isa = PBXGroup;
+			children = (
+				C809A6191912390200D94DDE /* LTAuthorsViewController.h */,
+				C809A61A1912390200D94DDE /* LTAuthorsViewController.m */,
+			);
+			path = Authors;
+			sourceTree = "<group>";
+		};
 		C83281CF18DD9F770003ACA0 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
@@ -800,7 +808,7 @@
 				A5E0B1C01777159F00CD4CCF /* Frameworks */,
 				A5E0B1C11777159F00CD4CCF /* Resources */,
 				E982CF8679FE471C94DE2F2A /* Copy Pods Resources */,
-				C876E3E8190E8DFD00B38300 /* ShellScript */,
+				C876E3E8190E8DFD00B38300 /* Crashlytics upload symbols script */,
 			);
 			buildRules = (
 			);
@@ -860,8 +868,14 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Les Petits Débrouillards Bretagne";
 				TargetAttributes = {
+					A5E0B1C21777159F00CD4CCF = {
+						DevelopmentTeam = RS4NMFZD59;
+					};
 					A5E0B1DD1777159F00CD4CCF = {
 						TestTargetID = A5E0B1C21777159F00CD4CCF;
+					};
+					C8EBB57318D37E0100D27596 = {
+						DevelopmentTeam = RS4NMFZD59;
 					};
 				};
 			};
@@ -981,13 +995,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		C876E3E8190E8DFD00B38300 /* ShellScript */ = {
+		C876E3E8190E8DFD00B38300 /* Crashlytics upload symbols script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Crashlytics upload symbols script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1057,13 +1072,13 @@
 				A569D72517774C3900ED24B9 /* LTTableViewController.m in Sources */,
 				A569D72917774C4E00ED24B9 /* LTAuthenticationSheetViewController.m in Sources */,
 				A57765A01777533300CC8EE6 /* LTMediaLicenseChooserViewController.m in Sources */,
-				C808AA2B18A80575002FEF19 /* LTAuthorsViewController.m in Sources */,
 				A57765A71777534D00CC8EE6 /* LTMediasRootViewController.m in Sources */,
 				C83281C518DD9AEF0003ACA0 /* LTJSONClient.m in Sources */,
 				A57765B31777538F00CC8EE6 /* LTSpinnerCell.m in Sources */,
 				A5F6EFFC17772D1400C16C06 /* LTAppearance.m in Sources */,
 				A5776596177752EC00CC8EE6 /* LTCollectionViewFlowLayout.m in Sources */,
 				A57765951777525D00CC8EE6 /* LTXMLRPCClient.m in Sources */,
+				C809A61B1912390200D94DDE /* LTAuthorsViewController.m in Sources */,
 				A569D72617774C3900ED24B9 /* LTViewController.m in Sources */,
 				C8C830C718CA802B007702AD /* LTMedia.m in Sources */,
 				A57765941777525D00CC8EE6 /* LTPhotoSharingManager.m in Sources */,
@@ -1128,13 +1143,13 @@
 				C8EBB57E18D37E0100D27596 /* LTTableViewController.m in Sources */,
 				C8EBB57F18D37E0100D27596 /* LTAuthenticationSheetViewController.m in Sources */,
 				C8EBB58018D37E0100D27596 /* LTMediaLicenseChooserViewController.m in Sources */,
-				C8EBB58118D37E0100D27596 /* LTAuthorsViewController.m in Sources */,
 				C8EBB58218D37E0100D27596 /* LTMediasRootViewController.m in Sources */,
 				C83281C618DD9AEF0003ACA0 /* LTJSONClient.m in Sources */,
 				C8EBB58318D37E0100D27596 /* LTSpinnerCell.m in Sources */,
 				C8EBB58418D37E0100D27596 /* LTAppearance.m in Sources */,
 				C8EBB58518D37E0100D27596 /* LTCollectionViewFlowLayout.m in Sources */,
 				C8EBB58618D37E0100D27596 /* LTXMLRPCClient.m in Sources */,
+				C809A61C1912390200D94DDE /* LTAuthorsViewController.m in Sources */,
 				C8EBB58718D37E0100D27596 /* LTViewController.m in Sources */,
 				C8EBB58818D37E0100D27596 /* LTMedia.m in Sources */,
 				C8EBB58918D37E0100D27596 /* LTPhotoSharingManager.m in Sources */,
@@ -1288,7 +1303,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1332,7 +1347,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1420,7 +1435,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1463,7 +1478,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1495,6 +1510,7 @@
 					UIKit,
 				);
 				PRODUCT_NAME = Geodiversite;
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

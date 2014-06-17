@@ -198,11 +198,10 @@ static NSString* const LTMediaListCellIdentifier = @"MediasListCell";
     if (!self.mediasRootViewController.isFetchingMedias)
     {
         NSInteger mediasNumber = [self.medias count];
-        NSLog(@"[TV]mediasNumber:%d", (int)mediasNumber);
+
         __weak LTMediasListViewController* weakSelf = self;
         [self.mediasRootViewController refreshMediasWithCompletion:^(NSArray *medias, NSError *error)
          {
-             NSLog(@"[TV]medias:%d", (int)medias);
              [self.tableView beginUpdates];
              for (NSInteger rowIndex = 0; rowIndex < [weakSelf.medias count]; rowIndex++)
              {
